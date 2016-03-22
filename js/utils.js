@@ -303,6 +303,9 @@ define('Node', () => {
 
 
 
+/**
+ * Wraps a node list to allow iterating it with for of loops
+ */
 define('NodeListIterator', function() {
 
 	const NodeListIterator = class NodeListIterator {
@@ -314,15 +317,9 @@ define('NodeListIterator', function() {
 
 		// iterador for of
 		*[Symbol.iterator]() {
-
-			// TODO
-			// se adicionar alguma propriedade entre as chamadas, teria que prever isso aqui chamando
-			// getOwnPropertyNames novamente
-
 			for (let i = 0; i < this._nodeList.length; i++) {
 				yield this._nodeList.item(i);
 			}
-
 		}
 
 	}

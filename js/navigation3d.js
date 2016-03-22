@@ -1046,7 +1046,6 @@ define('Menu', ['NodeListIterator'], (NodeListIterator) => {
 		}
 
 		_addSceneLinks() {
-			// TODO pegar links do menu e colocar _ depois do #
 			let link = null;
 			for (link of this._links) {
 				link.href = link.href.replace('#', '#_');

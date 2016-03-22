@@ -22,68 +22,68 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 			.build();
 
 		const numeroDeObjetos = 5.3;
-		const intervaloRotacaoB = 360 - (360 / numeroDeObjetos);
+		const intervaloRotacaoBiografia = 360 - (360 / numeroDeObjetos);
 		const radiusB = -320;
 		const offsetBX = 250;
 		const offsetBZ = 260;
-		const bioSpiralOffset = 250;
+		const offsetEspiralBiografia = 250;
 
-		const ancoraB = new THREE.Object3D();
-		ancoraB.position.copy(objectB.position);
-		ancoraB.rotation.copy(objectB.rotation);
-		ancoraB.translateX(offsetBX);
-		ancoraB.translateZ(radiusB);
+		const ancoraBiografia = new THREE.Object3D();
+		ancoraBiografia.position.copy(objectB.position);
+		ancoraBiografia.rotation.copy(objectB.rotation);
+		ancoraBiografia.translateX(offsetBX);
+		ancoraBiografia.translateZ(radiusB);
 
 		const objectB1 = new Css3DObjectBuilder()
 			.element('idiomas')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB)
-			.translateX(bioSpiralOffset)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia)
+			.translateX(offsetEspiralBiografia)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectB2 = new Css3DObjectBuilder()
 			.element('formacaoacademica')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB * 2)
-			.translateX(bioSpiralOffset * 2)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia * 2)
+			.translateX(offsetEspiralBiografia * 2)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectB3 = new Css3DObjectBuilder()
 			.element('dominiotecnico')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB * 3)
-			.translateX(bioSpiralOffset * 3)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia * 3)
+			.translateX(offsetEspiralBiografia * 3)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectB4 = new Css3DObjectBuilder()
 			.element('softwares')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB * 4)
-			.translateX(bioSpiralOffset * 4)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia * 4)
+			.translateX(offsetEspiralBiografia * 4)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectB5 = new Css3DObjectBuilder()
 			.element('experiencia')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB * 5)
-			.translateX(bioSpiralOffset * 5)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia * 5)
+			.translateX(offsetEspiralBiografia * 5)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectB6 = new Css3DObjectBuilder()
 			.element('etc')
-			.copy(ancoraB)
-			.rotateX(intervaloRotacaoB * 6)
-			.translateX(bioSpiralOffset * 6)
+			.copy(ancoraBiografia)
+			.rotateX(intervaloRotacaoBiografia * 6)
+			.translateX(offsetEspiralBiografia * 6)
 			.translateZ(offsetBZ)
 			.build();
 
 		const objectC = new Css3DObjectBuilder()
-			.element('desenhos')
+			.element('mapas')
 			.copy(objectB)
 			.translateX(-350)
 			.translateY(380)
@@ -100,8 +100,9 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 			.rotateX(-35)
 			.build();
 
+
 		const objectE = new Css3DObjectBuilder()
-			.element('mapas')
+			.element('desenhos')
 			.copy(objectD)
 			.translateX(-350)
 			.translateY(380)
@@ -118,11 +119,13 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 		sceneManager.add(objectB4);
 		sceneManager.add(objectB5);
 		sceneManager.add(objectB6);
+
 		sceneManager.add(objectC);
 		sceneManager.add(objectD);
 		sceneManager.add(objectE);
 
-		// sceneManager.frame(objectA, false); // TODO ver melhor maneira de verificar enquadramento inicial
+		sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+		window.location.hash = '_desenhos'
 
 	};
 
@@ -177,7 +180,8 @@ define(
 
 				const loopManager = LoopManager.getInstance();
 				const sceneManager = new SceneManager();
-				const menu = new Menu('menuNav');
+				const menuNav = new Menu('menuNav');
+				const menuBio = new Menu('menuBio');
 
 				buildScene(sceneManager); // TODO não focar em um inicialmente, mas deixar o círculo rodando suavemente e posicionar a câmera no meio
 
