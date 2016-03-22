@@ -17,10 +17,10 @@ define('getKey' , () => {
 	_keysMap[34]	= 'PageDown';
 	_keysMap[35]	= 'End';
 	_keysMap[36]	= 'Home';
-	_keysMap[37]	= 'Left';
-	_keysMap[38]	= 'Up';
-	_keysMap[39]	= 'Right';
-	_keysMap[40]	= 'Down';
+	_keysMap[37]	= 'ArrowLeft';
+	_keysMap[38]	= 'ArrowUp';
+	_keysMap[39]	= 'ArrowRight';
+	_keysMap[40]	= 'ArrowDown';
 	_keysMap[49]	= '0';
 	_keysMap[49]	= '1';
 	_keysMap[50]	= '2';
@@ -107,10 +107,10 @@ define('KeysManager', ['getKey'], (getKey) => {
 
 			const keys = {
 				'Backspace': false,
-				'Left': false,
-				'Right': false,
-				'Up': false,
-				'Down': false,
+				'ArrowLeft': false,
+				'ArrowRight': false,
+				'ArrowUp': false,
+				'ArrowDown': false,
 				'Spacebar': false,
 				'Enter': false,
 				'Tab': false,
@@ -552,15 +552,15 @@ define(
 
 			// TODO não usar strings para as teclas especiais seria muito bom
 
-			if (this.keysManager.isPressed('Left')) {
+			if (this.keysManager.isPressed('ArrowLeft')) {
 				this.camera.track(1, 0);
-			} else if (this.keysManager.isPressed('Right')) {
+			} else if (this.keysManager.isPressed('ArrowRight')) {
 				this.camera.track(-1, 0);
 			}
 
-			if (this.keysManager.isPressed('Up')) {
+			if (this.keysManager.isPressed('ArrowUp')) {
 				this.camera.track(0, -1);
-			} else if (this.keysManager.isPressed('Down')) {
+			} else if (this.keysManager.isPressed('ArrowDown')) {
 				this.camera.track(0, 1);
 			}
 
@@ -568,15 +568,15 @@ define(
 
 		_tumbleControls() {
 
-			if (this.keysManager.isPressed('Left')) {
+			if (this.keysManager.isPressed('ArrowLeft')) {
 				this.camera.tumble(-_oneDegree, 0);
-			} else if (this.keysManager.isPressed('Right')) {
+			} else if (this.keysManager.isPressed('ArrowRight')) {
 				this.camera.tumble(_oneDegree, 0);
 			}
 
-			if (this.keysManager.isPressed('Up')) {
+			if (this.keysManager.isPressed('ArrowUp')) {
 				this.camera.tumble(0, _oneDegree);
-			} else if (this.keysManager.isPressed('Down')) {
+			} else if (this.keysManager.isPressed('ArrowDown')) {
 				this.camera.tumble(0, -_oneDegree);
 			}
 
