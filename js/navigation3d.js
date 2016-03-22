@@ -759,10 +759,6 @@ define(
 
 				Object.defineProperties(this, {
 
-					sceneContainer: {
-						value: document.getElementById('conteinerSecoes') // TODO não usado?
-					},
-
 					_width: {
 						writable: true,
 						value: 0
@@ -826,6 +822,7 @@ define(
 				this._width = window.innerWidth;
 				this._height = window.innerHeight;
 
+				this._iniciarEventos();
 				this._iniciarRenderer();
 				this._iniciarCamera();
 				this._iniciarCena();
@@ -840,13 +837,13 @@ define(
 				// TODO colocar classes nos cartões em foco
 
 				if (this.isAnimating) {
-					this._timeline.remove(context._currentAnimation);
+					this._timeline.remove(this._currentAnimation);
 				}
 
 				this._currentFocus = alvo;
 
 				if (!animarEnquadramento) {
-					this._moveCamera({position: alvo.position, rotation: alvo.quaternion});
+					this._moveCamera(Object.freeze({position: alvo.position, rotation: alvo.quaternion}));
 					this.camera.translateZ(CinemaCamera.DEFAULT_CAMERA_OFFSET);
 					return;
 				}
@@ -871,6 +868,7 @@ define(
 				.then(() => {
 					context._currentAnimation = null;
 					context.isAnimating = false;
+					// TODO colocar foco programático no elemento
 				});
 
 			}
@@ -889,18 +887,44 @@ define(
 				this._loopClosure(deltaTime);
 			}
 
-			handleEvent(event) {
+			handleEvent(evento) {
+				switch (evento.type) {
+					case 'hashchange':
+						this._handleHashChangeEvent(evento);
+						break;
+					case 'click':
+						this._handleClickEvent(evento);
+						break;
+					default:
+						break;
+				}
+			}
 
-				let css3DObject = this._findSceneObject(event.currentTarget);
+			_handleHashChangeEvent(evento) {
+				evento.preventDefault();
+				this._preventSceneScroll();
+				let targetId = this._getTargetId(evento.newURL);
+				let targetObject = this._getTargetObject(targetId);
+				if (targetObject) {
+					this.frame(targetObject, true);
+				}
+			}
+
+			_handleClickEvent(evento) {
+
+				// evento.preventDefault();
+				// history.pushState({}, '', window.location.? + '#' + evento.currentTarget.id);
+
+				let css3DObject = this._findSceneObject(evento.currentTarget);
 
 				if (this.isAnimating
 					|| (css3DObject && css3DObject !== this._currentFocus)
 					) {
 
-					event.stopImmediatePropagation();
+					evento.stopImmediatePropagation();
 
-					if (event.type === 'click') {
-						this.frame(css3DObject, true);
+					if (evento.type === 'click') {
+						window.location.hash = '_' + evento.currentTarget.id;
 					}
 
 				}
@@ -913,9 +937,13 @@ define(
 				// this._target.position.copy(target.position); // FIXME tenho que ver como mover o target
 			}
 
+			_iniciarEventos() {
+				window.addEventListener('hashchange', this);
+			}
+
 			_iniciarRenderer() {
 				this._renderer.setSize(this._width, this._height);
-				this._renderer.domElement.style.position = 'relative'; // será que precisa?
+				//this._renderer.domElement.style.position = 'relative'; // será que precisa?
 				document.body.appendChild(this._renderer.domElement);
 			}
 
@@ -969,6 +997,27 @@ define(
 				return css3DObject;
 			}
 
+			_getTargetId(url) {
+				let hashIndex = url.indexOf('#');
+				let targetId = url.substr(hashIndex + 2); // 2 elimina tb o _ inicial do hash que previne scroll
+				return targetId;
+			}
+
+			_getTargetObject(targetId) {
+				let targetObject = null;
+				for (targetObject of this._renderList) {
+					if (targetObject.element.id === targetId) {
+						return targetObject;
+					}
+				}
+				return;
+			}
+
+			_preventSceneScroll() {
+				this._renderer.domElement.scrollTop = 0;
+				this._renderer.domElement.scrollLeft = 0;
+			}
+
 		};
 
 		return SceneManager;
@@ -976,3 +1025,36 @@ define(
 	}
 
 );
+
+
+
+define('Menu', ['NodeListIterator'], (NodeListIterator) => {
+
+	const Menu = class Menu {
+
+		constructor(containerId) {
+
+			const links = document.querySelectorAll(`#${containerId} a`);
+
+			Object.defineProperties(this, {
+				_links: {value: new NodeListIterator(links)}
+			});
+			Object.seal(this);
+
+			this._addSceneLinks();
+
+		}
+
+		_addSceneLinks() {
+			// TODO pegar links do menu e colocar _ depois do #
+			let link = null;
+			for (link of this._links) {
+				link.href = link.href.replace('#', '#_');
+			}
+		}
+
+	};
+
+	return Menu;
+
+});

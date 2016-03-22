@@ -214,7 +214,7 @@ define('converter', () => {
 /**
  * Wraps a dom node and adds method to manipulate its class attribute
  */
-define('node', () => {
+define('Node', () => {
 
 	return Object.create(Object.prototype, {
 
@@ -298,6 +298,36 @@ define('node', () => {
 
 
 	});
+
+});
+
+
+
+define('NodeListIterator', function() {
+
+	const NodeListIterator = class NodeListIterator {
+
+		constructor(nodeList) {
+			Object.defineProperty(this, '_nodeList', {value: nodeList});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+
+			// TODO
+			// se adicionar alguma propriedade entre as chamadas, teria que prever isso aqui chamando
+			// getOwnPropertyNames novamente
+
+			for (let i = 0; i < this._nodeList.length; i++) {
+				yield this._nodeList.item(i);
+			}
+
+		}
+
+	}
+
+	return NodeListIterator;
 
 });
 
