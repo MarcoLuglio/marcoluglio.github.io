@@ -1,0 +1,259 @@
+@font-face {
+	font-family: 'Code';
+	src: url('fonts/code_light.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Code';
+	src: url('fonts/code_bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+
+html * {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 22px;
+	padding: 20px;
+}
+
+h1 {
+	margin-bottom: 20px;
+}
+
+h2 {
+	font-family: Code, Arial, Helvetica, sans-serif;
+	font-size: 45px;
+	line-height: 50px;
+	margin-top: 85px;
+	margin-bottom: 45px;
+}
+
+h2 span {
+	font-size: 25px;
+	display: block;
+}
+
+p {
+	margin-bottom: 20px;
+}
+
+ul,
+ol {
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+blockquote {
+	font-size: 13px;
+	margin: 20px;
+}
+
+code {
+	font-family: Consolas, Menlo, 'Courier New', Courier;
+	white-space: pre;
+	color: #666666; /* em homenagem à Mari */
+	background-color: #EEEEEE;
+}
+
+code strong,
+code strong * {
+	font-weight: normal;
+}
+
+code.highlight strong,
+code.highlight strong * {
+	/*color: #FF0000 !important;*/
+	background-color: #FFFFFF;
+	box-shadow: 0 0 10px 4px #FFFFFF; /* h v blus spread color */
+	opacity: 1 !important;
+	font-weight: bold;
+	border-radius: 40px;
+}
+
+code > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+code > a:hover {
+	text-decoration: underline;
+}
+
+div code {
+	display: block;
+	padding: 25px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	-moz-tab-size: 4;
+	tab-size: 4;
+}
+
+.terminal {
+	white-space: normal;
+}
+
+.javascript .keyword,
+.javascript .functionName,
+.javascript .boolean {
+	/*color: #0077FF;*/
+	color: #004499;
+}
+
+/*.javascript .keyword {
+	font-weight: bold;
+}*/
+
+.javascript .string {
+	color: #0099FF;
+}
+
+.javascript .comment,
+.javascript strong .comment,
+.html .comment,
+.html strong .comment,
+.javascript .comment a,
+.javascript strong .comment a,
+.html .comment a,
+.html strong .comment a {
+	font-weight: normal;
+	color: #FF6600 !important;
+}
+
+.javascript .operator {
+	color: #FF6600;
+}
+
+.javascript .memberAccessOperator {
+	color: inherit;
+}
+
+.javascript .argumentsDelimiter,
+.javascript .argumentsSeparator,
+.javascript .objectDelimiter,
+.javascript .objectSeparator,
+.javascript .propertySeparator,
+.javascript .arrayDelimiter,
+.javascript .arraySeparator {
+	color: #000000;
+}
+
+/* parei aqui */
+/*.javascript .argumentsDelimiter,
+.javascript .argumentsSeparator {
+	color: #FF00FF !important;
+	font-style: italic;
+}*/
+
+.javascript .keyword,
+.javascript .variableName,
+.javascript .functionName,
+.javascript .argumentsDelimiter,
+.javascript .argumentsSeparator,
+.javascript .objectDelimiter,
+.javascript .objectSeparator,
+.javascript .objectProperty,
+.javascript .objectMethod,
+.javascript .propertyName,
+.javascript .propertySeparator,
+.javascript .arrayDelimiter,
+.javascript .arraySeparator,
+.javascript .statementSeparator,
+.javascript .string,
+.javascript .exceptionStub,
+.javascript .comment,
+.javascript strong .comment,
+.javascript .number,
+.javascript .boolean,
+.html .comment,
+.html strong .comment,
+.javascript .comment a,
+.javascript strong .comment a,
+.html .comment a,
+.html strong .comment a,
+.javascript .operator {
+	transition: opacity 500ms, color 300ms;
+}
+
+.highlight.javascript .keyword,
+.highlight.javascript .variableName,
+.highlight.javascript .functionName,
+.highlight.javascript .argumentsDelimiter,
+.highlight.javascript .argumentsSeparator,
+.highlight.javascript .objectDelimiter,
+.highlight.javascript .objectSeparator,
+.highlight.javascript .objectProperty,
+.highlight.javascript .objectMethod,
+.highlight.javascript .propertyName,
+.highlight.javascript .propertySeparator,
+.highlight.javascript .arrayDelimiter,
+.highlight.javascript .arraySeparator,
+.highlight.javascript .statementSeparator,
+.highlight.javascript .string,
+.highlight.javascript .comment,
+.highlight.javascript strong .comment,
+.highlight.javascript .number,
+.highlight.javascript .boolean,
+.highlight.javascript .null,
+.highlight.javascript .undefined,
+.highlight.html .comment,
+.highlight.html strong .comment,
+.highlight.javascript .comment a,
+.highlight.javascript strong .comment a,
+.highlight.html .comment a,
+.highlight.html strong .comment a,
+.highlight.javascript .operator {
+	opacity: 0.4;
+	color: inherit;
+}
+
+.highlight.javascript .comment a,
+.highlight.javascript strong .comment a,
+.highlight.javascript .propertyName * {
+	opacity: 1;
+}
+
+.html .tag {
+	color: #004499;
+}
+
+/* highlight enhancer */
+
+code {
+	position: relative;
+}
+
+.highlightControls {
+	font-family: Arial, Helvetica, sans-serif;
+	transition: opacity 500ms;
+	opacity: 0;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	/*width: 100px;
+	height: 100px;*/
+}
+
+.highlightControls input {
+	vertical-align: bottom;
+}
+
+.highlightControls input[type=checkbox] {
+	margin-bottom: 3px;
+}
+
+.highlightControls label {
+	padding-left: 5px;
+}
+
+code:hover .highlightControls {
+	opacity: 1;
+}
