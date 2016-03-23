@@ -1,0 +1,262 @@
+/* Cabeçalho */
+/* ========= */
+
+.topo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	padding: 5px;
+	background-color: #2E2F31;
+	display: flex;
+	flex-direction: row;
+}
+
+header {
+	padding: 5px;
+	padding-bottom: 0;
+}
+
+header h1 {
+	color: #FFFFFF;
+}
+
+header h2 {
+	color: #B6C2D3;
+}
+
+.topo nav {
+	font-size: 14px;
+}
+
+.topo nav div {
+	display: flex;
+	flex-direction: row;
+}
+
+.topo ul {
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+}
+
+.topo a {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+/* Seções */
+/* ====== */
+
+section {
+	padding: 10px;
+	width: 960px;
+	height: 280px;
+	position: relative; /* three.js vai mudar para absolut */
+	overflow: hidden;
+	background-color: #ffffff;
+	opacity: 0.2;
+	transition: background-color 500ms, opacity 500ms;
+}
+
+.foco {
+	opacity: 1;
+	background-color: #FBFBFB;
+}
+
+/*section:nth-child(2n) {
+	border-color: hsl(66, 59%, 75%);
+	background-color: hsl(66, 59%, 98%);
+}
+
+section:nth-child(2n + 1) {
+	border-color: hsl(0, 0%, 30%);
+	background-color: hsl(0, 0%, 98%);
+}*/
+
+/*hsla(0, 100%, 100%, 1);*/
+section h2 {
+	font-family: Oswald;
+	font-weight: 300;
+	text-transform: uppercase;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 60px;
+	line-height: 60px;
+	transform-origin: left top;
+	transform: rotateZ(90deg) translateY(-62px);/* translateX(-430px);*/
+}
+
+section > div {
+	margin-left: 70px;
+	margin-top: -60px;
+}
+
+.desenhos {
+	width: 400px;
+}
+
+.desenhos p {
+	margin-left: 32px;
+	margin-top: 3px;
+}
+
+#tangente {
+	cursor: default;
+}
+
+.interacoes {
+	cursor: default;
+	width: 620px;
+}
+
+.interacoes > div {
+	margin-left: 92px;
+	margin-top: -44px;
+}
+
+.interacoes img {
+	position: absolute;
+	right: 20px;
+	top: 146px;
+}
+
+.paralaxe {
+	font-family: Menlo, Consolas, monospace;
+	font-size: 26px;
+	position: relative;
+	margin-top: 50px;
+}
+
+.paralaxe p {
+	position: absolute;
+	transform-origin: left center;
+}
+
+.paralaxe p:last-child {
+	background-position: right bottom;
+	background-repeat: no-repeat;
+	background-image: url(../imagens/rotate.svg);
+	background-size: 32px 32px;
+	padding-right: 40px;
+	padding-bottom: 35px;
+}
+
+.mapas {
+	width: 825px;
+}
+
+.mapa {
+	width: 750px;
+	height: 275px;
+}
+
+/* texto dos balões do google maps */
+.gm-style .gm-style-iw {
+	color: hsl(0, 0%, 30%);
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.biografia > div {
+	margin-left: 86px;
+}
+
+.biografia h3 {
+	margin-top: 15px;
+	margin-bottom: 3px;
+}
+
+.biografia ul {
+	margin-top: 15px;
+}
+
+.linksBio li {
+	display: inline;
+	margin-left: 10px;
+}
+
+.linksBio li:first-child {
+	margin-left: 0;
+}
+
+.contato {
+	width: 550px;
+	height: 210px;
+}
+
+.contato > div {
+	margin-left: 86px;
+}
+
+.contato > div > :first-child {
+	font-size: 22px;
+}
+
+.contato ul {
+	list-style-type: none;
+	margin-top: 12px;
+	margin-bottom: 15px;
+}
+
+/* Subseções da biografia */
+/* ====================== */
+
+.sub {
+	color: #B6C2D3;
+}
+
+.sub.foco {
+	background-color: #2E2F31;
+}
+
+.sub h2 {
+	font-family: Code;
+	font-weight: bold;
+	display: block;
+	vertical-align: baseline;
+	font-size: 25px;
+	line-height: 31px;
+	color: #E72E88;
+	/*color: hsl(0, 0%, 30%);
+	transform-origin: left top;*/
+	transform: none;
+}
+
+.sub > div {
+	margin-left: 0;
+	margin-top: 0;
+}
+
+.sub date {
+	color: #E72E88;
+}
+
+.formacaoacademica h2 {
+	margin-bottom: 8px;
+}
+
+.formacaoacademica p {
+	color: #788598;
+}
+
+.formacaoacademica p:nth-child(2n) {
+	margin-bottom: 11px;
+}
+
+.formacaoacademica strong {
+	color: #B6C2D3;
+}
+
+.dominiotecnico div {
+	display: flex;
+	flex-direction: row;
+}
+
+.dominiotecnico ol {
+	list-style-position: inside;
+	margin-right: 10px;
+}

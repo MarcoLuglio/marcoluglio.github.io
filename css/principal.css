@@ -1,0 +1,92 @@
+/* Fontes */
+/* ====== */
+
+@font-face {
+	font-family: 'Oswald';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Oswald Light'), local('Oswald-Light'), url(https://fonts.gstatic.com/s/oswald/v10/HqHm7BVC_nzzTui2lzQTDZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'Oswald';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Oswald Regular'), local('Oswald-Regular'), url(https://fonts.gstatic.com/s/oswald/v10/_P8jt3Y65hJ9c4AzRE0V1OvvDin1pK8aKteLpeZ5c0A.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'Code';
+	src: url('../fontes/code_light.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Code';
+	src: url('../fontes/code_bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+
+/* Geral */
+/* ===== */
+
+html * {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #505B66;
+	background-color: #ffffff;
+}
+
+/* Cabeçalho */
+/* ========= */
+
+header {
+	display: flex;
+	flex-direction: column;
+}
+
+header h1 {
+	order: 2;
+}
+
+header h2 {
+	order: 1;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Code;
+}
+
+h1 {
+	font-size: 38px;
+	line-height: 38px;
+}
+
+h2 {
+	font-size: 19px; /* Rever esse tamanho nos diferentes navegadores e suavizações de fonte */
+	line-height: 19px;
+}
+
+h3 {
+	/**/
+}
+
+a {
+	color: #D10077;
+}
+
+/* ? */
+/* ====== */
+
+body {
+	/*display: flex;
+	flex-direction: column;*/
+}
