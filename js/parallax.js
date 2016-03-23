@@ -1,6 +1,6 @@
 'use strict';
 
-define('Parallax', ['converter'], (converter) => {
+define('Parallax', ['converter', 'StringIterator'], (converter, StringIterator) => {
 
 	const Parallax = class Parallax {
 
@@ -16,7 +16,7 @@ define('Parallax', ['converter'], (converter) => {
 				originalCard: {writable: true, value: null},
 				card1: {value: document.createElement('p')},
 				card2: {value: document.createElement('p')},
-				lineWidth: {value: 40},
+				lineWidth: {value: 25}, // 40
 
 				anchorX: {writable: true, value: 0},
 				anchorY: {writable: true, value: 0},
@@ -32,6 +32,9 @@ define('Parallax', ['converter'], (converter) => {
 
 			this.card1.style.whiteSpace = 'pre';
 			this.card2.style.whiteSpace = 'pre';
+
+			this.rotationDegrees = -6.25;
+			this.card2.style.transform = 'rotate3d(0, 0, 1, ' + this.rotationDegrees + 'deg)';
 
 			this.card2.addEventListener('mousedown', this);
 			document.body.addEventListener('mousemove', this);
@@ -109,8 +112,9 @@ define('Parallax', ['converter'], (converter) => {
 
 		_splitCharacters() {
 
-			const text = this.container.innerText.trim();
-			const textLength = text.length;
+			const trimmedText = this.container.innerText.trim();
+			const text = new StringIterator(trimmedText);
+			//const textLength = text.length;
 			let character = null;
 			let buffer = [];
 			let randomIndex = {
@@ -119,8 +123,8 @@ define('Parallax', ['converter'], (converter) => {
 				repeatCounter: 0
 			};
 
-			for (let i = 0; i < textLength; i++) {
-				character = text.substr(i, 1);
+			let i = 0;
+			for (let character of text) {
 				randomIndex = this._randomize(randomIndex, 3);
 				buffer[randomIndex.firstIndex] = character;
 				buffer[randomIndex.secondIndex] = ' ';
@@ -132,6 +136,7 @@ define('Parallax', ['converter'], (converter) => {
 					this.card1Array.push(lineBreak);
 					this.card2Array.push(lineBreak);
 				}
+				i += 1;
 			}
 			this.card1.innerHTML = this.card1Array.join('');
 			this.card2.innerHTML = this.card2Array.join('');
@@ -147,7 +152,7 @@ define('Parallax', ['converter'], (converter) => {
 			let index = Math.round(Math.random());
 
 			if (randomIndex.firstIndex === index) {
-				randomIndex.repeatCounter++;
+				randomIndex.repeatCounter += 1;
 			}
 
 			if (randomIndex.repeatCounter >= repeatLimit) {

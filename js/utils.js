@@ -42,14 +42,12 @@ const define = (() => {
 		let listModuleFunction = null;
 
 		//assemble modules based on list
-		for (let i = 0; i < modulesList.length; i++) {
+		for (let moduleName of modulesList) {
 
-			moduleName = modulesList[i];
+			for (let moduleObject of modulesIndex) {
 
-			for (let j = 0; j < modulesIndex.length; j++) {
-
-				listModuleName = modulesIndex[j][0];
-				listModuleFunction = modulesIndex[j][1];
+				listModuleName = moduleObject[0];
+				listModuleFunction = moduleObject[1];
 
 				if (moduleName === listModuleName) {
 					modules.push(listModuleFunction);
@@ -211,93 +209,65 @@ define('converter', () => {
 
 
 
-/**
- * Wraps a dom node and adds method to manipulate its class attribute
- */
 define('Node', () => {
 
-	return Object.create(Object.prototype, {
+	const Node = class Node {
 
-
-		init: {
-			enumerable: true,
-			value: function(node) {
-				try {
-					Object.defineProperties(this, {
-						node: {
-							value: node
-						}
-					});
-					Object.seal(this);
-					return this;
-				} catch (erro) {
-					console.log('Erro ao iniciar um nó');
-					console.log(erro);
-				}
-			}
-		},
-
-
-		addClass: {
-			enumerable: true,
-			value: function(className) {
-				if (!this.hasClass(className)) {
-					this.node.className += ' ' + className;
-				}
-			}
-		},
-
-
-		removeClass: {
-			enumerable: true,
-			value: function(className) {
-				var currentClass = ' ' + this.node.className + ' ';
-				currentClass = currentClass.replace(' ' + className + ' ', ' ');
-				currentClass = this.normalize(currentClass);
-				// TODO if className != currentClass
-				this.node.className = currentClass;
-			}
-		},
-
-
-		toggleClass: {
-			enumerable: true,
-			value: function(className) {
-				if (this.hasClass(className)) {
-					this.removeClass(className);
-					return;
-				}
-				this.addClass(className);
-			}
-		},
-
-
-		hasClass: {
-			enumerable: true,
-			value: function(className) {
-				var currentClass = ' ' + this.node.className + ' ';
-				if (currentClass.indexOf(' ' + className + ' ') > -1) {
-					return true;
-				}
-				return false;
-			}
-		},
-
-
-		normalize: {
-			value: function(classString) {
-				// TODO if string has more than one space, convert to single space
-				return classString;
-			}
-		},
-
-
-		node: {
-			value: null
+		constructor(htmlNode) {
+			Object.defineProperty(this, '_htmlNode', {value: htmlNode});
+			Object.seal(this);
 		}
 
+		addClass(className) {
+			if (!this.hasClass(className)) {
+				this._htmlNode.className += ' ' + className;
+			}
+		}
 
-	});
+		removeClass(className) {
+			var currentClass = ' ' + this._htmlNode.className + ' ';
+			currentClass = currentClass.replace(' ' + className + ' ', ' ');
+			currentClass = this._normalize(currentClass);
+			// TODO if className != currentClass
+			this._htmlNode.className = currentClass;
+		}
+
+		toggleClass(className) {
+			if (this.hasClass(className)) {
+				this.removeClass(className);
+				return;
+			}
+			this.addClass(className);
+		}
+
+		hasClass(className) {
+			var currentClass = ' ' + this._htmlNode.className + ' ';
+			if (currentClass.indexOf(' ' + className + ' ') > -1) {
+				return true;
+			}
+			return false;
+		}
+
+		appendChild(node) {
+			this._htmlNode.appendChild(node);
+		}
+
+		get innerHTML() {
+			return this._htmlNode.innerHTML;
+		}
+
+		set innerHTML(source) {
+			this._htmlNode.innerHTML = source;
+		}
+
+		_normalize(classString) {
+			// TODO if string has more than one space, convert to single space
+			return classString;
+		}
+
+	};
+
+	return Node;
 
 });
 
@@ -325,6 +295,113 @@ define('NodeListIterator', function() {
 	}
 
 	return NodeListIterator;
+
+});
+
+
+
+/**
+ * Provides iterator to traverse strings
+ */
+define('StringIterator', () => {
+
+	const StringIterator = class StringIterator {
+
+		constructor(rawString) {
+			const pointerLimit = rawString.length;
+			Object.defineProperties(this, {
+				 _string: {value: rawString},
+				 _pointer: {value: -1, writable: true},
+				 _pointerLimit: {value: pointerLimit}
+			});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			while ((this._pointer + 1) < this._pointerLimit) {
+				this._advancePointer();
+				yield this._string.substr(this._pointer, 1);
+			}
+			this.reset();
+		}
+
+		hasNext() {
+			if (this._pointer + 1 < this._pointerLimit) {
+				return true;
+			}
+			return false;
+		}
+
+		next(numberOfCharacters) {
+			if (!numberOfCharacters) {
+				numberOfCharacters = 1;
+			}
+			this._advancePointer();
+			return this._string.substr(this._pointer, numberOfCharacters);
+		}
+
+		reset() {
+			this._pointer = -1;
+		}
+
+		get pointer() {
+			return this._pointer;
+		}
+
+		_advancePointer() {
+			if (this._pointer + 1 >= this._pointerLimit) {
+				this._pointer = -1;
+			}
+			this._pointer += 1;
+		}
+
+	};
+
+	return StringIterator;
+
+});
+
+
+
+define('RangeIterator', () => {
+
+	const RangeIterator = class RangeIterator {
+
+		/**
+		 * Gera uma faixa de números inteiros. Inclusivo.
+		 * @param {Number} rangeStart
+		 * @param {Number} rangeEnd
+		 */
+		constructor(rangeStart, rangeEnd) {
+
+			let iterateStart = rangeStart;
+			let iterateEnd = rangeEnd;
+
+			if (rangeStart > rangeEnd) {
+				let iterateStart = rangeStart;
+				let iterateEnd = rangeEnd;
+			}
+
+			Object.defineProperties(this, {
+				_rangeStart: {value: rangeStart},
+				_rangeEnd: {value: rangeEnd},
+				_iterateStart: {value: iterateStart},
+				_iterateEnd: {value: iterateEnd}
+			});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			for (let i = this._iterateStart; i <= this._iterateEnd; i++) {
+				yield i;
+			}
+		}
+
+	};
+
+	return RangeIterator;
 
 });
 

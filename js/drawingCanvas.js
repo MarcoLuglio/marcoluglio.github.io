@@ -141,6 +141,9 @@ define('pathUtils', () => {
 
 define('MLArc', ['converter'], (converter) => {
 
+	/**
+	 * Ângulo simples. Permite pegar os componentes vertical e horizontal do ângulo. Funciona quase como um vetor na verdade.
+	 */
 	const MLAngle = class MLAngle {
 
 		constructor(degrees) {
@@ -200,6 +203,9 @@ define('MLArc', ['converter'], (converter) => {
 
 	};
 
+	/**
+	 * Âgulo que pode ser girado e possui um raio
+	 */
 	const MLAngleDecorator = class MLAngleDecorator {
 
 		constructor(angle, arc) {
@@ -248,6 +254,9 @@ define('MLArc', ['converter'], (converter) => {
 
 	}
 
+	/**
+	 * Arco com centro, raio e ângulo
+	 */
 	const MLArc = class MLArc {
 
 		constructor(x, y, radius, startAngle, endAngle) {
@@ -730,7 +739,7 @@ define('lineTo', ['pathUtils'], (pathUtils) => {
 
 		while (true)  {
 
-			i++;
+			i += 1;
 			if (i > 4097) {
 				console.log('guarddog');
 				break;
@@ -1156,7 +1165,7 @@ define(
 		}
 
 		_startObjects() {
-			this.objects.push(new PinhaoPath(this.context, 120, 120));
+			this.objects.push(new PinhaoPath(this.context, 120, 70));
 		}
 
 		_startTools() {

@@ -89,7 +89,7 @@ define('Map', () => {
 			}, {
 				'featureType': 'landscape.natural',
 				'stylers': [
-					{'color': '#eaeaea'}
+					{'color': '#FBFBFB'}
 				]
 			}, {
 				'featureType': 'landscape.man_made',

@@ -11,7 +11,7 @@ define('getKey' , () => {
 	_keysMap[8]	= 'Backspace';
 	_keysMap[9]	= 'Tab';
 	_keysMap[13]	= 'Enter';
-	_keysMap[27]	= 'Esc';
+	_keysMap[27]	= 'Escape';
 	_keysMap[32]	= 'Spacebar';
 	_keysMap[33]	= 'PageUp';
 	_keysMap[34]	= 'PageDown';
@@ -21,6 +21,7 @@ define('getKey' , () => {
 	_keysMap[38]	= 'ArrowUp';
 	_keysMap[39]	= 'ArrowRight';
 	_keysMap[40]	= 'ArrowDown';
+	_keysMap[46]	= 'Delete';
 	_keysMap[49]	= '0';
 	_keysMap[49]	= '1';
 	_keysMap[50]	= '2';
@@ -57,6 +58,19 @@ define('getKey' , () => {
 	_keysMap[88]	= 'x';
 	_keysMap[89]	= 'y';
 	_keysMap[90]	= 'z';
+	_keysMap[96]	= 'Numpad0';
+	_keysMap[97]	= 'Numpad1';
+	_keysMap[98]	= 'Numpad2';
+	_keysMap[99]	= 'Numpad3';
+	_keysMap[100]	= 'Numpad4';
+	_keysMap[101]	= 'Numpad5';
+	_keysMap[102]	= 'Numpad6';
+	_keysMap[103]	= 'Numpad7';
+	_keysMap[104]	= 'Numpad8';
+	_keysMap[105]	= 'Numpad9';
+	_keysMap[106]	= 'NumpadMultiply';
+	_keysMap[107]	= 'NumpadAdd';
+	_keysMap[109]	= 'NumpadSubtract';
 	Object.freeze(_keysMap);
 
 	const getKey = (evento) => {
@@ -107,6 +121,7 @@ define('KeysManager', ['getKey'], (getKey) => {
 
 			const keys = {
 				'Backspace': false,
+				'Delete': false,
 				'ArrowLeft': false,
 				'ArrowRight': false,
 				'ArrowUp': false,
@@ -114,7 +129,7 @@ define('KeysManager', ['getKey'], (getKey) => {
 				'Spacebar': false,
 				'Enter': false,
 				'Tab': false,
-				'Esc': false,
+				'Escape': false,
 				'PageUp': false,
 				'PageDown': false,
 				'End': false,
@@ -154,7 +169,20 @@ define('KeysManager', ['getKey'], (getKey) => {
 				'7': false,
 				'8': false,
 				'9': false,
-				'0': false
+				'0': false,
+				'Numpad0': false,
+				'Numpad1': false,
+				'Numpad2': false,
+				'Numpad3': false,
+				'Numpad4': false,
+				'Numpad5': false,
+				'Numpad6': false,
+				'Numpad7': false,
+				'Numpad8': false,
+				'Numpad9': false,
+				'NumpadMultiply': false,
+				'NumpadAdd': false,
+				'NumpadSubtract': false
 			};
 			Object.seal(keys);
 			Object.defineProperty(this, '_keys', {value: keys});
@@ -736,7 +764,10 @@ define(
 		// animation
 		'easing2',
 		'animate3D',
-		'Timeline'
+		'Timeline',
+
+		// Etc
+		'Node'
 
 	], (
 
@@ -749,7 +780,10 @@ define(
 		// animation
 		easing2,
 		animate3D,
-		Timeline
+		Timeline,
+
+		// Etc
+		Node
 
 	) => {
 
@@ -840,7 +874,13 @@ define(
 					this._timeline.remove(this._currentAnimation);
 				}
 
+				if (this._currentFocus) {
+					new Node(this._currentFocus.element).removeClass('foco');
+				}
+
 				this._currentFocus = alvo;
+
+				new Node(this._currentFocus.element).addClass('foco');
 
 				if (!animarEnquadramento) {
 					this._moveCamera(Object.freeze({position: alvo.position, rotation: alvo.quaternion}));

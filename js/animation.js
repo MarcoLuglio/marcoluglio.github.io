@@ -210,7 +210,7 @@ define('easing2', () => {
 				if ((t /= d/2) < 1) {
 					return c / 2 * t * t + b;
 				}
-				return -c / 2 * ((--t) * (t - 2) - 1) + b;
+				return -c / 2 * ((t - 1) * (t - 2) - 1) + b;
 			}
 		}
 	});
@@ -299,7 +299,7 @@ define('easingExponetial', () => {
 		if (t==0) return b;
 		if (t==d) return b+c;
 		if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-		return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+		return c/2 * (-Math.pow(2, -10 * (t - 1) + 2) + b;
 	},
 	*/
 });
@@ -609,9 +609,7 @@ define('Timeline', ['Deferred'], (Deferred) => {
 			let activeAnimations = [];
 			let animation;
 
-			for (let i = 0; i < this._animations.length; i++) {
-
-				timelineAnimation = this._animations[i];
+			for (let timelineAnimation of this._animations) {
 
 				// como a array é ordenada pelo startTime, posso abortar cedo
 				if (timelineAnimation.startTime > this._timelineTime) {
