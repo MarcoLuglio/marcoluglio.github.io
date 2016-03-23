@@ -217,6 +217,10 @@ section > div {
 	height: 210px;
 }
 
+.contato h2 {
+	margin-top: 4px;
+}
+
 .contato > div {
 	margin-left: 86px;
 }
@@ -229,6 +233,17 @@ section > div {
 	list-style-type: none;
 	margin-top: 12px;
 	margin-bottom: 15px;
+}
+
+.contato li {
+	/*display: block;*/
+	margin-top: 12px;
+}
+
+.contato img {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
 }
 
 /* Subseções da biografia */
@@ -260,8 +275,12 @@ section > div {
 	margin-top: 0;
 }
 
-.sub date {
+.sub time {
 	color: #E72E88;
+}
+
+.idiomas {
+	width: 800px;
 }
 
 .idiomas meter {
@@ -275,7 +294,8 @@ section > div {
 	);*/
 }
 
-.formacaoacademica h2 {
+.formacaoacademica h2,
+.experiencia h2 {
 	margin-bottom: 8px;
 }
 
@@ -288,7 +308,8 @@ section > div {
 	align-items: center;
 }
 
-.formacaoacademica date {
+.formacaoacademica time,
+.experiencia div > time {
 	padding-left: 27px;
 	padding-top: 4px;
 	padding-bottom: 4px;
@@ -317,18 +338,144 @@ section > div {
 	list-style-type: none;
 }
 
+/* Linguagens */
+/* ========== */
+
+/* Ver uma fonte condensada pra isso? */
+
 .linguagens {
 	color: #E72E88;
+}
+
+.linguagens li:nth-child(1),
+.linguagens li:nth-child(2),
+.linguagens li:nth-child(3) {
+	font-size: 44px;
+	line-height: 44px;
+}
+
+.linguagens li:nth-child(4),
+.linguagens li:nth-child(5) {
+	font-size: 32px;
+	line-height: 32px;
+}
+
+.linguagens li:nth-child(6) {
+	font-size: 25px;
+	line-height: 25px;
+}
+
+.linguagens li:nth-child(7) {
+	font-size: 16px;
+	line-height: 16px;
 }
 
 .destaque1 {
 	color: #ffffff;
 }
 
+.destaque1 li:nth-child(1),
+.destaque1 li:nth-child(2),
+.destaque1 li:nth-child(3) {
+	font-size: 84px;
+	line-height: 84px;
+}
+
+.destaque1 li:nth-child(4) {
+	font-size: 60px;
+	line-height: 60px;
+}
+
+.destaque1 li:nth-child(5) {
+	font-size: 49px;
+	line-height: 49px;
+}
+
+.destaque1 li:nth-child(6),
+.destaque1 li:nth-child(7),
+.destaque1 li:nth-child(8) {
+	font-size: 43px;
+	line-height: 43px;
+}
+
+.destaque1 li:nth-child(9),
+.destaque1 li:nth-child(10),
+.destaque1 li:nth-child(11) {
+	font-size: 38px;
+	line-height: 38px;
+}
+
+.destaque1 li:nth-child(12) {
+	font-size: 31px;
+	line-height: 31px;
+}
+
+.destaque1 li:nth-child(13),
+.destaque1 li:nth-child(14),
+.destaque1 li:nth-child(15),
+.destaque1 li:nth-child(16) {
+	font-size: 24px;
+	line-height: 24px;
+}
+
 .destaque2 {
 	color: #B6C2D3;
 }
 
+.destaque2 li:nth-child(1),
+.destaque2 li:nth-child(2),
+.destaque2 li:nth-child(3) {
+	font-size: 29px;
+	line-height: 29px;
+}
+
+.destaque2 li:nth-child(4),
+.destaque2 li:nth-child(5) {
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.destaque2 li:nth-child(6) {
+	font-size: 19px;
+	line-height: 19px;
+}
+
 .destaque3 {
 	color: #788598;
+}
+
+/* Experiencia */
+/* =========== */
+
+.experiencia {
+	height: 334px;
+}
+
+.experiencia > div > div {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 11px;
+	/* ver fontes */
+}
+
+.experiencia div > time {
+	background-position: left top;
+}
+
+.experiencia p,
+.experiencia p a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 15px;
+}
+
+.experiencia p span,
+.experiencia p span a {
+	color: #788598;
+	font-size: 15px;
+}
+
+.experiencia p:first-child {
+	color: #B6C2D3;
+	font-size: 18px;
 }

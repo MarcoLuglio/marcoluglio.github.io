@@ -24,9 +24,9 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 		const numeroDeObjetos = 8;
 		const intervaloRotacaoBiografia = -(360 - (360 / numeroDeObjetos));
 		const radiusB = -420;
-		const offsetBX = -250;
+		const offsetBX = -350;
 		const offsetBZ = 390;
-		const offsetEspiralBiografia = -250;
+		const offsetEspiralBiografia = -180;
 
 		const ancoraBiografia = new THREE.Object3D();
 		ancoraBiografia.position.copy(objectB.position);
