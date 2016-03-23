@@ -1,13 +1,13 @@
 @font-face {
 	font-family: 'Code';
-	src: url('../fonts/code_light.woff') format('woff');
+	src: url('../fontes/code_light.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Code';
-	src: url('../fonts/code_bold.woff') format('woff');
+	src: url('../fontes/code_bold.woff') format('woff');
 	font-weight: bold;
 	font-style: normal;
 }
@@ -276,9 +276,7 @@ div.codeblock.bubaloop p + code.javascript {
 }
 
 .bubaloop.javascript .comment,
-.bubaloop.javascript .comment a,
-.html .comment,
-.html .comment a {
+.bubaloop.javascript .comment a {
 	color: #D10077;
 }
 

@@ -4,62 +4,6 @@
 
 
 
-/**
- * Provides iterator to traverse strings
- * TODO verificar se √© multibyte safe
- */
-define('StringIterator', () => {
-
-	const StringIterator = class StringIterator {
-
-		constructor(rawString) {
-			const pointerLimit = rawString.length;
-			Object.defineProperties(this, {
-				 _string: {value: rawString},
-				 _pointer: {value: -1, writable: true},
-				 _pointerLimit: {value: pointerLimit}
-			});
-			Object.seal(this);
-		}
-
-		hasNext() {
-			if (this._pointer + 1 < this._pointerLimit) {
-				return true;
-			}
-			return false;
-		}
-
-		next(numberOfCharacters) {
-			if (!numberOfCharacters) {
-				numberOfCharacters = 1;
-			}
-			this._advancePointer();
-			return this._string.substr(this._pointer, numberOfCharacters);
-		}
-
-		reset() {
-			this._pointer = -1;
-		}
-
-		get pointer() {
-			return this._pointer;
-		}
-
-		_advancePointer() {
-			if (this._pointer + 1 >= this._pointerLimit) {
-				this._pointer = -1;
-			}
-			this._pointer++;
-		}
-
-	};
-
-	return StringIterator;
-
-});
-
-
-
 define('JSPatternIterator', () => {
 
 	const JSPatternIterator = class JSPatternIterator {
@@ -556,8 +500,9 @@ define('JSRegExpPatternIterator', ['JSPatternIterator'], (JSPatternIterator) => 
 
 			let flag = '';
 
-			for (let i = 0; i < this._flags.length; i++) {
-				flag = this._flags[i];
+			//for (let i = 0; i < this._flags.length; i++) {
+			for (let flag of this._flags) {
+				//flag = this._flags[i];
 				if (matchCharacter === flag) {
 					return true;
 				}
@@ -977,7 +922,7 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 			}
 
-			this._keywordPointer++;
+			this._keywordPointer += 1;
 
 			if (this._keywordsPool.length > 0) {
 				return true;
@@ -1414,7 +1359,7 @@ define('Lexer', ['StringIterator'], (StringIterator) => {
 			}
 
 			this._characters = END_OF_FILE;
-			this._index++;
+			this._index += 1;
 			this._iterate(tokenSequence);
 
 			return tokenSequence;
@@ -2657,7 +2602,7 @@ define('HighlightEnhancer', ['Node'], (Node) => { // TODO ou fazer decorator, n√
 	const HighlightEnhancer = class HighlightEnhancer {
 
 		static get nextId() {
-			nextId++;
+			nextId += 1;
 			return nextId;
 		}
 

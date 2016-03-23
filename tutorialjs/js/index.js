@@ -3,7 +3,7 @@
 /**
  * Gera um índice da estrutura da página (seções, títulos, etc.)
  */
-define('Index', () => {
+define('Index', ['RangeIterator', 'NodeListIterator'], (RangeIterator, NodeListIterator) => {
 
 	const Index = class Index {
 
@@ -40,12 +40,13 @@ define('Index', () => {
 		getHeadings(levels, firstLevel) {
 
 			let headingSelector = '';
-			for (let i = firstLevel; i <= levels; i++) {
-				headingSelector += ', h' + i;
+			const levelRange = new RangeIterator(firstLevel, firstLevel + levels - 1);
+			for (let level of levelRange) {
+				headingSelector += ', h' + level;
 			}
 			headingSelector = headingSelector.substr(2);
 
-			const headings = document.querySelectorAll(headingSelector);
+			const headings = new NodeListIterator(document.querySelectorAll(headingSelector));
 
 			return headings;
 
@@ -66,9 +67,7 @@ define('Index', () => {
 			let headingId = '';
 			let listBuffer = '';
 
-			for (let i = 0; i < headings.length; i++) {
-
-				heading = headings.item(i);
+			for (let heading of headings) {
 
 				this.changeLevel(heading, levelStack);
 
@@ -90,7 +89,6 @@ define('Index', () => {
 					listBuffer += '<ul>';
 				}
 
-				heading = headings.item(i);
 				headingId = this.getIndex(levelStack, firstLevel); // TODO melhorar pra não ter que chamar sempre
 				headingId = heading.id || headingId;
 				heading.id = headingId;
@@ -134,12 +132,12 @@ define('Index', () => {
 
 			let headingId = 'indice';
 			let stackLength = levelStack.stack.length;
+			const levelRange = new RangeIterator(firstLevel, stackLength - 1);
 
-			levelStack.stack[levelStack.currentLevel]++;
+			levelStack.stack[levelStack.currentLevel] += 1;
 
-			for (let i = firstLevel; i < stackLength; i++) {
-				// + currentLevel + '-' + levelStack[currentLevel];
-				headingId += '-' + i + levelStack.stack[i];
+			for (let level of levelRange) {
+				headingId += '-' + level + levelStack.stack[level];
 			}
 
 			return headingId;

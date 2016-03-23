@@ -19,7 +19,7 @@ var highlightEnhancer = (function(){
 			enumeable: true,
 			get: (function() {
 				var boundNextId = function() {
-					_private.nextId++;
+					_private.nextId += 1;
 					return _private.nextId;
 				};
 				boundNextId = boundNextId.bind(highlightEnhancer);

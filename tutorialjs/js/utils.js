@@ -42,14 +42,12 @@ const define = (() => {
 		let listModuleFunction = null;
 
 		//assemble modules based on list
-		for (let i = 0; i < modulesList.length; i++) {
+		for (let moduleName of modulesList) {
 
-			moduleName = modulesList[i];
+			for (let moduleObject of modulesIndex) {
 
-			for (let j = 0; j < modulesIndex.length; j++) {
-
-				listModuleName = modulesIndex[j][0];
-				listModuleFunction = modulesIndex[j][1];
+				listModuleName = moduleObject[0];
+				listModuleFunction = moduleObject[1];
 
 				if (moduleName === listModuleName) {
 					modules.push(listModuleFunction);
@@ -191,6 +189,140 @@ define('Node', () => {
 	};
 
 	return Node;
+
+});
+
+
+
+/**
+ * Wraps a node list to allow iterating it with for of loops
+ */
+define('NodeListIterator', function() {
+
+	const NodeListIterator = class NodeListIterator {
+
+		constructor(nodeList) {
+			Object.defineProperty(this, '_nodeList', {value: nodeList});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			for (let i = 0; i < this._nodeList.length; i++) {
+				yield this._nodeList.item(i);
+			}
+		}
+
+	}
+
+	return NodeListIterator;
+
+});
+
+
+
+/**
+ * Provides iterator to traverse strings
+ */
+define('StringIterator', () => {
+
+	const StringIterator = class StringIterator {
+
+		constructor(rawString) {
+			const pointerLimit = rawString.length;
+			Object.defineProperties(this, {
+				 _string: {value: rawString},
+				 _pointer: {value: -1, writable: true},
+				 _pointerLimit: {value: pointerLimit}
+			});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			while ((this._pointer + 1) < this._pointerLimit) {
+				this._advancePointer();
+				yield this._string.substr(this._pointer, 1);
+			}
+			this.reset();
+		}
+
+		hasNext() {
+			if (this._pointer + 1 < this._pointerLimit) {
+				return true;
+			}
+			return false;
+		}
+
+		next(numberOfCharacters) {
+			if (!numberOfCharacters) {
+				numberOfCharacters = 1;
+			}
+			this._advancePointer();
+			return this._string.substr(this._pointer, numberOfCharacters);
+		}
+
+		reset() {
+			this._pointer = -1;
+		}
+
+		get pointer() {
+			return this._pointer;
+		}
+
+		_advancePointer() {
+			if (this._pointer + 1 >= this._pointerLimit) {
+				this._pointer = -1;
+			}
+			this._pointer += 1;
+		}
+
+	};
+
+	return StringIterator;
+
+});
+
+
+
+define('RangeIterator', () => {
+
+	const RangeIterator = class RangeIterator {
+
+		/**
+		 * Gera uma faixa de números inteiros. Inclusivo.
+		 * @param {Number} rangeStart
+		 * @param {Number} rangeEnd
+		 */
+		constructor(rangeStart, rangeEnd) {
+
+			let iterateStart = rangeStart;
+			let iterateEnd = rangeEnd;
+
+			if (rangeStart > rangeEnd) {
+				let iterateStart = rangeStart;
+				let iterateEnd = rangeEnd;
+			}
+
+			Object.defineProperties(this, {
+				_rangeStart: {value: rangeStart},
+				_rangeEnd: {value: rangeEnd},
+				_iterateStart: {value: iterateStart},
+				_iterateEnd: {value: iterateEnd}
+			});
+			Object.seal(this);
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			for (let i = this._iterateStart; i <= this._iterateEnd; i++) {
+				yield i;
+			}
+		}
+
+	};
+
+	return RangeIterator;
 
 });
 

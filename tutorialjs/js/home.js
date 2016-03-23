@@ -11,6 +11,7 @@ define(
 		'HtmlLexer',
 		'Highlighter',
 		'HighlightEnhancer',
+		'NodeListIterator',
 		'domReadyPromise'
 
 	], (
@@ -20,6 +21,7 @@ define(
 		HtmlLexer,
 		Highlighter,
 		HighlightEnhancer,
+		NodeListIterator,
 		domReadyPromise
 
 	) => {
@@ -33,32 +35,29 @@ define(
 					// ver se o corpo laço pode rodar async com setTimeout
 					// ou se consigo fazer um laço async já que são vários blocos...
 
-					const divsDeCodigo = document.querySelectorAll('div.codeblock');
-					const blocosDeCodigo = document.querySelectorAll('code.generic');
-					const blocosDeJavaScript = document.querySelectorAll('code.javascript');
-					const blocosDeHtml = document.querySelectorAll('code.html');
+					const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
+					const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
+					const blocosDeJavaScript = new NodeListIterator(document.querySelectorAll('code.javascript'));
+					const blocosDeHtml = new NodeListIterator(document.querySelectorAll('code.html'));
 
 					const index = new Index('indice', 3, false);
 
 					const highlighter = new Highlighter()
 					// const highlighterWorker = new Worker('highlighterWorker.js'); // TODO testar num server
 
-					for (let i = 0; i < divsDeCodigo.length; i++) {
-						let divCodigo = divsDeCodigo.item(i);
+					for (let divCodigo of divsDeCodigo) {
 						divCodigo.className += ' bubaloop';
 					}
 
-					for (let i = 0; i < blocosDeCodigo.length; i++) {
-						let blocoDeCodigo = blocosDeCodigo.item(i);
+					for (let blocoDeCodigo of blocosDeCodigo) {
 						blocoDeCodigo.className += ' bubaloop';
 						const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 					}
 
 					const javaScriptLexer = new JavaScriptLexer();
 
-					for (let i = 0; i < blocosDeJavaScript.length; i++) {
+					for (let blocoDeCodigo of blocosDeJavaScript) {
 
-						const blocoDeCodigo = blocosDeJavaScript.item(i);
 						const source = blocoDeCodigo.innerHTML;
 
 						blocoDeCodigo.className += ' bubaloop';
@@ -76,9 +75,8 @@ define(
 
 					const htmlLexer = new HtmlLexer();
 
-					for (let i = 0; i < blocosDeHtml.length; i++) {
+					for (let blocoDeHtml of blocosDeHtml) {
 
-						const blocoDeHtml = blocosDeHtml.item(i);
 						const source = blocoDeHtml.innerHTML;
 
 						blocoDeHtml.className += ' bubaloop';
