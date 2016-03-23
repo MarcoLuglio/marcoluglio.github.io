@@ -55,12 +55,14 @@ section {
 	height: 280px;
 	position: relative; /* three.js vai mudar para absolut */
 	overflow: hidden;
+	cursor: pointer;
 	background-color: #ffffff;
 	opacity: 0.2;
 	transition: background-color 500ms, opacity 500ms;
 }
 
 .foco {
+	cursor: default;
 	opacity: 1;
 	background-color: #FBFBFB;
 }
