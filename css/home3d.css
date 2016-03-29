@@ -69,6 +69,17 @@ header h2 {
 	text-decoration: underline;
 }
 
+.rodape {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	padding: 3px;
+	background-color: #FBFBFB;
+	font-size: 11px;
+}
+
 .tutoriais a {
 	color: #00A6FF;
 }
