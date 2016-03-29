@@ -213,13 +213,13 @@ define('KeysManager', ['getKey'], (getKey) => {
 			switch(evento.type) {
 
 				case 'keydown':
-					evento.preventDefault();
+					this._prevent(evento);
 					key = getKey(evento);
 					this.press(key);
 					break;
 
 				case 'keyup':
-					evento.preventDefault();
+					this._prevent(evento);
 					key = getKey(evento);
 					if (this.isPressed(key)) { // talvez eu possar soltar sem verificar, não sei ainda
 						this.release(key);
@@ -227,6 +227,24 @@ define('KeysManager', ['getKey'], (getKey) => {
 					break;
 
 			}
+
+		}
+
+		/**
+		 * Se for algum atalho do próprio navegador, como Ctrl + T, deixa executar a ação padrão
+		 */
+		_prevent(evento) {
+
+			if (evento.altKey
+				|| evento.ctrlKey
+				|| evento.metaKey
+				|| evento.shiftKey
+				) {
+
+				return;
+			}
+
+			evento.preventDefault();
 
 		}
 
