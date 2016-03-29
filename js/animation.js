@@ -502,7 +502,7 @@ define('AnimationDispatcher', () => { // TODO ver o nome de acordo com convenç�
 
 
 
-define('Timeline', ['Deferred'], (Deferred) => {
+define('Timeline', ['ArrayReverseIterator', 'Deferred'], (ArrayReverseIterator, Deferred) => {
 
 
 	const TimelineArray = class {
@@ -554,6 +554,9 @@ define('Timeline', ['Deferred'], (Deferred) => {
 			this._iterate(deltaTime);
 		}
 
+		/**
+		 * TODO pq fiz async?
+		 */
 		add(animationIterator, startTime, callback) {
 
 			const deferred = new Deferred();
@@ -589,10 +592,14 @@ define('Timeline', ['Deferred'], (Deferred) => {
 		}
 
 		remove(animationIterator) {
-			// PAREI AQUI
-			// TODO procurar e remover o iterador de
-			// this._animations
-			// this._activeAnimations
+
+			let removed = this._removeFrom(animationIterator, this._activeAnimations);
+			if (!removed) {
+				removed = this._removeFrom(animationIterator, this._animations);
+			}
+
+			return removed;
+
 		}
 
 		get isActive() {
@@ -648,82 +655,23 @@ define('Timeline', ['Deferred'], (Deferred) => {
 
 		}
 
+		_removeFrom(animationIterator, array) {
+
+			const activeAnimationsReverseIterator = new ArrayReverseIterator(array);
+
+			for (let timelineAnimation of activeAnimationsReverseIterator) {
+				if (timelineAnimation.animationIterator === animationIterator) {
+					array.splice(activeAnimationsReverseIterator.currentIndex, 1);
+					return true;
+				}
+			}
+
+			return false;
+
+		}
+
 	};
 
 	return Timeline;
 
 });
-
-
-
-/**
- * Função de entrada
- */
-/*define(
-
-	[
-
-		// util
-		'domReadyPromise',
-		'LoopManager',
-
-		// animações
-		'easing2',
-		'animate',
-		'Timeline'
-
-	], (
-
-		// util
-		domReadyPromise,
-		LoopManager,
-
-		// animações
-		easing2,
-		animate,
-		Timeline
-
-	) => {
-
-		domReadyPromise()
-			.then(() => {
-
-				const gerenciadorDeLaco = LoopManager.getInstance();
-				const timeline = new Timeline();
-
-				let duration = 0;
-
-				//if (clicou) {
-					duration = 1000; // sem unidade definida, vou usar milissegundos pq vou medir tempoDelta com performance.now() que usa essa unidade
-					timeline.add(animate(easing2.out, 10, 100, duration));
-				//}
-
-				// testes timeline
-				duration = 1000;
-				timeline.add(animate(easing2.out, 50, 80, duration));
-
-				duration = 2000;
-				timeline.add(animate(easing2.out, 8, 387, duration), 500);
-
-				duration = 600;
-				timeline.add(animate(easing2.out, 0, 500, duration));
-
-				duration = 569;
-				timeline.add(animate(easing2.out, 69, 1001, duration), 200);
-
-				gerenciadorDeLaco.loop((tempoDelta) => {
-
-					timeline.next(tempoDelta);
-
-					if (!timeline.isActive) {
-						console.log('parando laço');
-						gerenciadorDeLaco.parar();
-					}
-
-				});
-
-			});
-
-	}
-
-);*/

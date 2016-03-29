@@ -123,7 +123,6 @@ define('Parallax', ['converter', 'StringIterator'], (converter, StringIterator) 
 				repeatCounter: 0
 			};
 
-			let i = 0;
 			for (let character of text) {
 				randomIndex = this._randomize(randomIndex, 3);
 				buffer[randomIndex.firstIndex] = character;
@@ -131,12 +130,11 @@ define('Parallax', ['converter', 'StringIterator'], (converter, StringIterator) 
 				this.card1Array.push(buffer[0]);
 				this.card2Array.push(buffer[1]);
 				// TODO melhorar isso aqui pra fazer um wrap decente
-				if (i && (i % this.lineWidth === 0)) {
+				if (text.currentIndex && (text.currentIndex % this.lineWidth === 0)) {
 					let lineBreak = '\n';
 					this.card1Array.push(lineBreak);
 					this.card2Array.push(lineBreak);
 				}
-				i += 1;
 			}
 			this.card1.innerHTML = this.card1Array.join('');
 			this.card2.innerHTML = this.card2Array.join('');

@@ -866,12 +866,10 @@ define(
 
 			frame(alvo, animarEnquadramento) {
 
-				//console.log(alvo.element.id);
-
-				// TODO colocar classes nos cartões em foco
-
 				if (this.isAnimating) {
 					this._timeline.remove(this._currentAnimation);
+					this._currentAnimation = null;
+					this.isAnimating = false;
 				}
 
 				if (this._currentFocus) {
@@ -879,7 +877,6 @@ define(
 				}
 
 				this._currentFocus = alvo;
-
 				new Node(this._currentFocus.element).addClass('foco');
 
 				if (!animarEnquadramento) {
@@ -900,10 +897,10 @@ define(
 				context.isAnimating = true;
 				context._currentAnimation = animation;
 
-				this._timeline.add(
+				context._timeline.add(
 					animation,
 					0,
-					this._moveCamera.bind(context)
+					context._moveCamera.bind(context)
 				)
 				.then(() => {
 					context._currentAnimation = null;
@@ -935,6 +932,11 @@ define(
 					case 'click':
 						this._handleClickEvent(evento);
 						break;
+					case 'mousedown': // fallthrough
+					case 'mouseup': // fallthrough
+					case 'mousemove':
+						this._handleMouseEvents(evento);
+						break;
 					default:
 						break;
 				}
@@ -952,7 +954,7 @@ define(
 
 			_handleClickEvent(evento) {
 
-				// evento.preventDefault();
+				evento.preventDefault();
 				// history.pushState({}, '', window.location.? + '#' + evento.currentTarget.id);
 
 				let css3DObject = this._findSceneObject(evento.currentTarget);
@@ -969,6 +971,13 @@ define(
 
 				}
 
+			}
+
+			_handleMouseEvents(evento) {
+				if (evento.currentTarget.className.indexOf('foco') == -1) {
+					evento.preventDefault();
+					evento.stopPropagation();
+				}
 			}
 
 			_moveCamera(value) {

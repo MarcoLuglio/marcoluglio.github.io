@@ -281,13 +281,21 @@ define('NodeListIterator', function() {
 	const NodeListIterator = class NodeListIterator {
 
 		constructor(nodeList) {
-			Object.defineProperty(this, '_nodeList', {value: nodeList});
+			Object.defineProperties(this, {
+				_currentIndex: {value: 0, writable: true},
+				_nodeList: {value: nodeList}
+			});
 			Object.seal(this);
+		}
+
+		get currentIndex() {
+			return this._currentIndex;
 		}
 
 		// iterador for of
 		*[Symbol.iterator]() {
 			for (let i = 0; i < this._nodeList.length; i++) {
+				this._currentIndex = i;
 				yield this._nodeList.item(i);
 			}
 		}
@@ -315,6 +323,10 @@ define('StringIterator', () => {
 				 _pointerLimit: {value: pointerLimit}
 			});
 			Object.seal(this);
+		}
+
+		get currentIndex() {
+			return this._pointer;
 		}
 
 		// iterador for of
@@ -384,6 +396,7 @@ define('RangeIterator', () => {
 			}
 
 			Object.defineProperties(this, {
+				_currentIndex: {value: 0, writable: true},
 				_rangeStart: {value: rangeStart},
 				_rangeEnd: {value: rangeEnd},
 				_iterateStart: {value: iterateStart},
@@ -392,9 +405,14 @@ define('RangeIterator', () => {
 			Object.seal(this);
 		}
 
+		get currentIndex() {
+			return this._currentIndex;
+		}
+
 		// iterador for of
 		*[Symbol.iterator]() {
 			for (let i = this._iterateStart; i <= this._iterateEnd; i++) {
+				this._currentIndex = i;
 				yield i;
 			}
 		}
@@ -402,6 +420,41 @@ define('RangeIterator', () => {
 	};
 
 	return RangeIterator;
+
+});
+
+
+
+/**
+ * Wraps an array to allow iterating it backwards with for of loops
+ */
+define('ArrayReverseIterator', function() {
+
+	const ArrayReverseIterator = class ArrayReverseIterator {
+
+		constructor(array) {
+			Object.defineProperties(this, {
+				_currentIndex: {value: 0, writable: true},
+				_array: {value: array}
+			});
+			Object.seal(this);
+		}
+
+		get currentIndex() {
+			return this._currentIndex;
+		}
+
+		// iterador for of
+		*[Symbol.iterator]() {
+			for (let i = this._array.length - 1; i >= 0; i--) {
+				this._currentIndex = i;
+				yield this._array[i];
+			}
+		}
+
+	}
+
+	return ArrayReverseIterator;
 
 });
 
