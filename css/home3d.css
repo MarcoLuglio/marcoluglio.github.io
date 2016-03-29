@@ -96,6 +96,9 @@ section {
 	cursor: pointer;
 	background-color: #ffffff;
 	opacity: 0.2;
+	/* desabilitado pq fica muito pesado */
+	/*-webkit-filter: blur(3px);
+	filter: blur(3px);*/
 	transition: background-color 500ms, opacity 500ms;
 }
 
@@ -103,19 +106,11 @@ section {
 	cursor: default;
 	opacity: 1;
 	background-color: #FBFBFB;
+	/* desabilitado pq fica muito pesado */
+	/*-webkit-filter: none;
+	filter: none;*/
 }
 
-/*section:nth-child(2n) {
-	border-color: hsl(66, 59%, 75%);
-	background-color: hsl(66, 59%, 98%);
-}
-
-section:nth-child(2n + 1) {
-	border-color: hsl(0, 0%, 30%);
-	background-color: hsl(0, 0%, 98%);
-}*/
-
-/*hsla(0, 100%, 100%, 1);*/
 section h2 {
 	font-family: Oswald;
 	font-weight: 300;
@@ -296,13 +291,7 @@ section > div {
 
 .idiomas meter {
 	width: 300px;
-	/* ver https://css-tricks.com/html5-meter-element/ */
-	/*background-image: linear-gradient(
-		90deg,
-		#8bcf69 5%,
-		#e6d450 5%,
-		#e6d450 100%
-	);*/
+	/* ver https://css-tricks.com/html5-meter-element/ se eu quiser usar os prefixos etc */
 }
 
 .formacaoacademica h2,
@@ -338,15 +327,30 @@ section > div {
 	display: block;
 }
 
+.dominiotecnico {
+	background-repeat: no-repeat;
+	background-image: url(../imagens/cloud.png);
+	background-position: -23px -13px;
+}
+
 .dominiotecnico div {
-	display: flex;
-	flex-direction: row;
+	/*display: flex;
+	flex-direction: row;*/
+	position: relative;
 }
 
 .dominiotecnico ol {
+	position: absolute;
 	list-style-position: inside;
 	margin-right: 10px;
 	list-style-type: none;
+	font-family: Oswald;
+	font-weight: 300;
+}
+
+.dominiotecnico li {
+	position: absolute;
+	white-space: pre;
 }
 
 /* Linguagens */
@@ -361,24 +365,53 @@ section > div {
 .linguagens li:nth-child(1),
 .linguagens li:nth-child(2),
 .linguagens li:nth-child(3) {
-	font-size: 44px;
-	line-height: 44px;
+	font-size: 36px;
+	line-height: 36px;
+}
+
+.linguagens li:nth-child(1) {
+	left: 126px;
+	top: 56px;
+}
+
+.linguagens li:nth-child(2) {
+	left: 387px;
+	top: 145px;
+}
+
+.linguagens li:nth-child(3) {
+	left: 445px;
+	top: 208px;
 }
 
 .linguagens li:nth-child(4),
 .linguagens li:nth-child(5) {
-	font-size: 32px;
-	line-height: 32px;
-}
-
-.linguagens li:nth-child(6) {
 	font-size: 25px;
 	line-height: 25px;
 }
 
+.linguagens li:nth-child(4) {
+	left: 255px;
+	top: 215px;
+}
+
+.linguagens li:nth-child(5) {
+	left: 438px;
+	top: 108px;
+}
+
+.linguagens li:nth-child(6) {
+	font-size: 18px;
+	line-height: 18px;
+	left: 408px;
+	top: 52px;
+}
+
 .linguagens li:nth-child(7) {
-	font-size: 16px;
-	line-height: 16px;
+	font-size: 13px;
+	line-height: 13px;
+	left: 133px;
+	top: 165px;
 }
 
 .destaque1 {
@@ -388,45 +421,116 @@ section > div {
 .destaque1 li:nth-child(1),
 .destaque1 li:nth-child(2),
 .destaque1 li:nth-child(3) {
-	font-size: 84px;
-	line-height: 84px;
+	font-size: 61px;
+	line-height: 61px;
+}
+
+.destaque1 li:nth-child(1) {
+	left: 319px;
+	top: 74px;
+}
+
+.destaque1 li:nth-child(2) {
+	left: 441px;
+	top: 141px;
+}
+
+.destaque1 li:nth-child(3) {
+	left: 497px;
+	top: 39px;
 }
 
 .destaque1 li:nth-child(4) {
-	font-size: 60px;
-	line-height: 60px;
+	font-size: 46px;
+	line-height: 46px;
+	left: 238px;
+	top: 167px;
 }
 
 .destaque1 li:nth-child(5) {
-	font-size: 49px;
-	line-height: 49px;
+	font-size: 33px;
+	line-height: 33px;
+	left: 490px;
+	top: 106px;
 }
 
 .destaque1 li:nth-child(6),
 .destaque1 li:nth-child(7),
 .destaque1 li:nth-child(8) {
-	font-size: 43px;
-	line-height: 43px;
+	font-size: 32px;
+	line-height: 32px;
+}
+
+.destaque1 li:nth-child(6) {
+	left: 181px;
+	top: 101px;
+}
+
+.destaque1 li:nth-child(7) {
+	left: 185px;
+	top: 177px;
+}
+
+.destaque1 li:nth-child(8) {
+	left: 342px;
+	top: 11px;
 }
 
 .destaque1 li:nth-child(9),
 .destaque1 li:nth-child(10),
 .destaque1 li:nth-child(11) {
-	font-size: 38px;
-	line-height: 38px;
+	font-size: 27px;
+	line-height: 27px;
+}
+
+.destaque1 li:nth-child(9) {
+	left: 532px;
+	top: 17px;
+}
+
+.destaque1 li:nth-child(10) {
+	left: 204px;
+	top: 27px;
+}
+
+.destaque1 li:nth-child(11) {
+	left: 36px;
+	top: 52px;
 }
 
 .destaque1 li:nth-child(12) {
-	font-size: 31px;
-	line-height: 31px;
+	font-size: 23px;
+	line-height: 23px;
+	left: 50px;
+	top: 26px;
 }
 
 .destaque1 li:nth-child(13),
 .destaque1 li:nth-child(14),
 .destaque1 li:nth-child(15),
 .destaque1 li:nth-child(16) {
-	font-size: 24px;
-	line-height: 24px;
+	font-size: 17px;
+	line-height: 17px;
+}
+
+.destaque1 li:nth-child(13) {
+	left: 281px;
+	top: 23px;
+}
+
+.destaque1 li:nth-child(14) {
+	left: 387px;
+	top: 195px;
+}
+
+.destaque1 li:nth-child(15) {
+	left: 316px;
+	top: 222px;
+}
+
+.destaque1 li:nth-child(16) {
+	left: 437px;
+	top: 81px;
 }
 
 .destaque2 {
@@ -436,8 +540,23 @@ section > div {
 .destaque2 li:nth-child(1),
 .destaque2 li:nth-child(2),
 .destaque2 li:nth-child(3) {
-	font-size: 29px;
-	line-height: 29px;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.destaque2 li:nth-child(1) {
+	left: 141px;
+	top: 32px;
+}
+
+.destaque2 li:nth-child(2) {
+	left: 437px;
+	top: 81px;
+}
+
+.destaque2 li:nth-child(3) {
+	left: 437px;
+	top: 81px;
 }
 
 .destaque2 li:nth-child(4),
@@ -446,13 +565,33 @@ section > div {
 	line-height: 24px;
 }
 
+.destaque2 li:nth-child(4) {
+	left: 437px;
+	top: 81px;
+}
+
+.destaque2 li:nth-child(5) {
+	left: 437px;
+	top: 81px;
+}
+
 .destaque2 li:nth-child(6) {
 	font-size: 19px;
 	line-height: 19px;
+	left: 437px;
+	top: 81px;
 }
 
 .destaque3 {
 	color: #788598;
+	display: none;
+}
+
+/* Softwares */
+/* ========= */
+
+.softwares ul {
+	list-style-type: none;
 }
 
 /* Experiencia */
