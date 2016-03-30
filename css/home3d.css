@@ -70,7 +70,7 @@ header h2 {
 }
 
 .rodape {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -550,41 +550,40 @@ section > div {
 }
 
 .destaque2 li:nth-child(2) {
-	left: 437px;
-	top: 81px;
+	left: 149px;
+	top: 97px;
 }
 
 .destaque2 li:nth-child(3) {
-	left: 437px;
-	top: 81px;
+	left: 404px;
+	top: -9px;
 }
 
 .destaque2 li:nth-child(4),
 .destaque2 li:nth-child(5) {
-	font-size: 24px;
-	line-height: 24px;
+	font-size: 18px;
+	line-height: 18px;
 }
 
 .destaque2 li:nth-child(4) {
-	left: 437px;
-	top: 81px;
+	left: 322px;
+	top: 49px;
 }
 
 .destaque2 li:nth-child(5) {
-	left: 437px;
-	top: 81px;
+	left: 140px;
+	top: 183px;
 }
 
 .destaque2 li:nth-child(6) {
-	font-size: 19px;
-	line-height: 19px;
-	left: 437px;
-	top: 81px;
+	font-size: 14px;
+	line-height: 14px;
+	left: 43px;
+	top: 96px;
 }
 
 .destaque3 {
 	color: #788598;
-	display: none;
 }
 
 /* Softwares */
