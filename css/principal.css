@@ -3,16 +3,9 @@
 
 @font-face {
 	font-family: 'Oswald';
+	src: url('../fontes/oswald_light.woff') format('woff');
 	font-style: normal;
 	font-weight: 300;
-	src: local('Oswald Light'), local('Oswald-Light'), url(https://fonts.gstatic.com/s/oswald/v10/HqHm7BVC_nzzTui2lzQTDZBw1xU1rKptJj_0jans920.woff2) format('woff2');
-}
-
-@font-face {
-	font-family: 'Oswald';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Oswald Regular'), local('Oswald-Regular'), url(https://fonts.gstatic.com/s/oswald/v10/_P8jt3Y65hJ9c4AzRE0V1OvvDin1pK8aKteLpeZ5c0A.woff2) format('woff2');
 }
 
 @font-face {
