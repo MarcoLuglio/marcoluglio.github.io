@@ -972,21 +972,46 @@ define(
 
 			_handleClickEvent(evento) {
 
-				evento.preventDefault();
-				// history.pushState({}, '', window.location.? + '#' + evento.currentTarget.id);
+				if (this.isAnimating) {
+					evento.preventDefault();
+					return;
+				}
+
+				let isFocused = false;
 
 				let css3DObject = this._findSceneObject(evento.currentTarget);
+				if (css3DObject && css3DObject === this._currentFocus) {
+					isFocused = true;
+				}
 
-				if (this.isAnimating
-					|| (css3DObject && css3DObject !== this._currentFocus)
-					) {
 
-					evento.stopImmediatePropagation();
+				// FIXME se o currentTarget não for focado, esquece isso...
+				if (isFocused && evento.target.href) {
 
-					if (evento.type === 'click') {
-						window.location.hash = '_' + evento.currentTarget.id;
+					let hash = evento.target.hash.substr(2);
+
+					if (!hash) {
+						return;
 					}
 
+					evento.preventDefault();
+
+					if (hash === evento.currentTarget.id) {
+						return;
+					}
+
+					evento.stopImmediatePropagation();
+					window.location.hash = '_' + hash;
+
+					return;
+
+				}
+
+				if (!isFocused) {
+					evento.preventDefault();
+					evento.stopImmediatePropagation();
+					// history.pushState({}, '', window.location.? + '#' + evento.currentTarget.id);
+					window.location.hash = '_' + evento.currentTarget.id;
 				}
 
 			}
