@@ -4,6 +4,8 @@
 
 define('Map', () => {
 
+	const popUps = [];
+
 	const Map = class Map {
 
 		constructor(containerId, tipo) {
@@ -301,7 +303,14 @@ define('Map', () => {
 				content: popUpContent
 			});
 
+			popUps.push(popUp);
+
 			marker.addListener('click', () => {
+
+				for (let otherPopUp of popUps) {
+					otherPopUp.close();
+				}
+
 				popUp.open(this._mapa, marker);
 				// TODO salvar todos os popups e fechá-los antes de exibir o do marcador
 				// estilizar conteúdo
@@ -316,8 +325,8 @@ define('Map', () => {
 		}
 
 		removeMarker(index) {
-			//const marker =
-			marker.setMap();
+			// const marker =
+			// marker.setMap();
 		}
 
 		addKML(kmlDocument) {
