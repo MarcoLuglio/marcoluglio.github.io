@@ -289,6 +289,32 @@ section > div {
 	width: 800px;
 }
 
+.legendaIdiomas {
+	width: 300px;
+	margin-left: 90px;
+	display: flex;
+	flex-direction: row;
+}
+
+.legendaIdiomas span {
+	flex-grow: 1;
+}
+
+.legendaIdiomas span:last-child {
+	text-align: right;
+}
+
+.idiomas dl {
+	display: flex;
+	flex-flow: row wrap;
+	width: 410px;
+}
+
+.idiomas dt {
+	min-width: 70px;
+	margin-right: 20px;
+}
+
 .idiomas meter {
 	width: 300px;
 	/* ver https://css-tricks.com/html5-meter-element/ se eu quiser usar os prefixos etc */
