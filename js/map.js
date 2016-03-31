@@ -62,7 +62,7 @@ define('Map', () => {
 
 			const manMadeColor = '#EEEEEE';
 
-			const highwayColor = '#8300FF';
+			const highwayColor = '#BF0064'; // '#8300FF';
 			const arterialColor = '#00A7FF'; //'#00BDFF';
 			const localColor = '#d7d7d7';
 
@@ -337,3 +337,33 @@ define('Map', () => {
 	return Map;
 
 });
+
+
+
+function initMap() {
+
+	/**
+	 * Entry point function
+	 */
+	define(
+
+		[
+			'domReadyPromise',
+			'Map'
+		],
+
+		(
+			domReadyPromise,
+			Map
+		) => {
+
+			domReadyPromise()
+				.then(() => {
+					const map = new Map('mapa');
+				});
+
+		}
+
+	);
+
+}

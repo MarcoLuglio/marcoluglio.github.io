@@ -566,9 +566,9 @@ define(
 			}
 
 			// roll
-			if (this.keysManager.isPressed('q')) {
+			if (this.keysManager.isPressed('a')) {
 				this.camera.roll(-_oneDegree)
-			} else if (this.keysManager.isPressed('e')) {
+			} else if (this.keysManager.isPressed('d')) {
 				this.camera.roll(_oneDegree);
 			}
 

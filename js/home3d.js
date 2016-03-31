@@ -124,8 +124,11 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 		sceneManager.add(objectD);
 		sceneManager.add(objectE);
 
-		sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
-		window.location.hash = '_desenhos'
+		// sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+		// window.location.hash = '_desenhos';
+
+		sceneManager.frame(objectB1, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+		window.location.hash = '_idiomas';
 
 	};
 
@@ -145,7 +148,7 @@ define(
 
 		'DrawingCanvas',
 		'Parallax',
-		'Map',
+		'Languages',
 
 		// navegação
 		'LoopManager',
@@ -160,7 +163,7 @@ define(
 
 		DrawingCanvas,
 		Parallax,
-		Map,
+		Languages,
 
 		// navegação
 		LoopManager,
@@ -176,7 +179,7 @@ define(
 				// ver a melhor maneira de executar isso lazy
 				const drawingCanvas = new DrawingCanvas('tangente');
 				const parallax = new Parallax('paralaxe');
-				const map = new Map('mapa');
+				const languages = new Languages(312);
 
 				const loopManager = LoopManager.getInstance();
 				const sceneManager = new SceneManager();
@@ -185,7 +188,7 @@ define(
 
 				buildScene(sceneManager); // TODO não focar em um inicialmente, mas deixar o círculo rodando suavemente e posicionar a câmera no meio
 
-				// TODO loop manager pára quando a janela perde foco ou não tem foco
+				// TODO loop manager deveria pausar o loop quando a janela perde foco ou não tem foco
 				loopManager.loop((deltaTime) => {
 					sceneManager.next(deltaTime);
 				});
