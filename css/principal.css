@@ -5,7 +5,7 @@
 	font-family: 'Oswald';
 	src: url('../fontes/oswald_light.woff') format('woff');
 	font-style: normal;
-	font-weight: 300;
+	/*font-weight: 300;*/
 }
 
 @font-face {
@@ -34,6 +34,7 @@ html,
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
+	line-height: 20px;
 	color: #505B66;
 	background-color: #ffffff;
 }
@@ -56,24 +57,23 @@ header h2 {
 
 h1, h2, h3, h4, h5 {
 	font-family: Code;
+	font-weight: normal;
 }
 
 h1 {
-	font-size: 38px;
-	line-height: 38px;
+	font-size: 36px;
+	line-height: 36px;
+	font-weight: bold;
 }
 
 h2 {
-	font-size: 19px; /* Rever esse tamanho nos diferentes navegadores e suavizações de fonte */
-	line-height: 19px;
-}
-
-h3 {
-	/**/
+	font-size: 20px; /* Rever esse tamanho nos diferentes navegadores e suavizações de fonte */
+	line-height: 20px;
 }
 
 a {
 	color: #CE004F;
+	font-family: Oswald;
 }
 
 /* ? */

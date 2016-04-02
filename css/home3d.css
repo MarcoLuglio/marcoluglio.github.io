@@ -40,28 +40,39 @@ header h2 {
 	color: #B6C2D3;
 }
 
-.topo nav {
+nav {
 	font-size: 14px;
 	margin-top: 4px;
 	margin-left: 20px;
+	flex-grow: 1;
 }
 
-.topo nav div {
+nav div {
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
+	font-family: Oswald;
+	text-transform: uppercase;
 }
 
-.topo ul {
-	list-style-type: none;
-	display: flex;
-	flex-direction: row;
-}
-
-.topo a {
+nav a {
+	font-size: 18px;
 	color: #E52E78;
 	padding-left: 5px;
 	padding-right: 5px;
 	text-decoration: none;
+}
+
+/* nav pra ganhar especificidade */
+nav .menuBiografia,
+nav .menuArtigos {
+	display: none;
+	margin-top: 12px;
+}
+
+.menuBiografia a,
+.menuArtigos a {
+	color: #B6C2D3;
 }
 
 .topo a:hover,
@@ -78,10 +89,6 @@ header h2 {
 	padding: 3px;
 	background-color: #FBFBFB;
 	font-size: 11px;
-}
-
-.tutoriais a {
-	color: #00A6FF;
 }
 
 /* Seções */
@@ -113,7 +120,7 @@ section {
 
 section h2 {
 	font-family: Oswald;
-	font-weight: 300;
+	/*font-weight: 300;*/
 	text-transform: uppercase;
 	display: inline-block;
 	vertical-align: top;
@@ -201,8 +208,20 @@ section > div {
 }
 
 .biografia h3 {
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 20px;
 	margin-top: 15px;
 	margin-bottom: 3px;
+}
+
+.biografia p {
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.biografia p:first-child {
+	font-size: 16px;
 }
 
 .biografia ul {
@@ -218,9 +237,21 @@ section > div {
 	margin-left: 0;
 }
 
+.biografia a {
+	font-family: Code;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.biografia a:hover {
+	text-decoration: underline;
+}
+
 .contato {
 	width: 550px;
 	height: 210px;
+	font-size: 14px;
+	line-height: 18px;
 }
 
 .contato h2 {
@@ -231,19 +262,32 @@ section > div {
 	margin-left: 86px;
 }
 
-.contato > div > :first-child {
-	font-size: 22px;
+.contato h3 {
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 20px;
+	text-transform: uppercase;
+}
+
+.contato a {
+	font-family: Code;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.contato a:hover {
+	text-decoration: underline;
 }
 
 .contato ul {
 	list-style-type: none;
-	margin-top: 12px;
-	margin-bottom: 15px;
+	margin-top: 13px;
+	margin-bottom: 9px;
 }
 
 .contato li {
 	/*display: block;*/
-	margin-top: 12px;
+	margin-top: 7px;
 }
 
 .contato img {
@@ -265,10 +309,9 @@ section > div {
 
 .sub h2 {
 	font-family: Code;
-	font-weight: bold;
 	display: block;
 	vertical-align: baseline;
-	font-size: 25px;
+	font-size: 31px;
 	line-height: 31px;
 	color: #E52E78;
 	/*color: hsl(0, 0%, 30%);
@@ -291,8 +334,8 @@ section > div {
 
 .legendaIdiomas {
 	margin-left: 100px;
-	margin-top: 17px;
-	margin-bottom: 10px;
+	margin-top: 13px;
+	margin-bottom: 8px;
 	display: flex;
 	flex-direction: row;
 	font-size: 11px;
@@ -318,7 +361,9 @@ section > div {
 	margin-right: 15px;
 	margin-top: 7px;
 	margin-bottom: 12px;
+	font-family: Oswald;
 	font-size: 17px;
+	line-height: 20px;
 	text-align: right;
 }
 
@@ -381,6 +426,7 @@ section > div {
 	background-repeat: no-repeat;
 	background-image: url(../imagens/clock.svg);
 	background-size: 21px 21px;
+	font-family: Oswald;
 }
 
 .formacaoacademica strong {
@@ -471,7 +517,11 @@ section > div {
 }
 
 .destaque1 {
-	color: #ffffff;
+	color: #505B66;
+}
+
+.foco .destaque1 {
+	color: #FFFFFF;
 }
 
 .destaque1 li:nth-child(1),
@@ -718,6 +768,17 @@ section > div {
 /* Softwares */
 /* ========= */
 
+.softwares,
+.etc {
+	width: 870px;
+	height: 210px;
+}
+
+.softwares h2,
+.etc h2 {
+	margin-bottom: 12px;
+}
+
 .softwares ul {
 	list-style-type: none;
 }
@@ -726,7 +787,7 @@ section > div {
 /* =========== */
 
 .experiencia {
-	height: 350px;
+	height: 360px;
 }
 
 .experiencia > div > div {
@@ -738,13 +799,20 @@ section > div {
 
 .experiencia div > time {
 	background-position: left top;
+	line-height: 13px;
 }
 
 .experiencia p,
 .experiencia p a {
-	color: #ffffff;
+	color: #505B66;
 	text-decoration: none;
-	font-size: 15px;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.experiencia.foco p,
+.experiencia.foco p a {
+	color: #ffffff;
 }
 
 .experiencia p span,
@@ -756,4 +824,5 @@ section > div {
 .experiencia p:first-child {
 	color: #B6C2D3;
 	font-size: 18px;
+	line-height: 20px;
 }

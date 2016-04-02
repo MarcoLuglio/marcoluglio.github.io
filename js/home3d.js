@@ -124,11 +124,8 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 		sceneManager.add(objectD);
 		sceneManager.add(objectE);
 
-		// sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
-		// window.location.hash = '_desenhos';
-
-		sceneManager.frame(objectB1, false); // FIXME ver melhor maneira de verificar enquadramento inicial
-		window.location.hash = '_idiomas';
+		sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+		window.location.hash = '_desenhos';
 
 	};
 
@@ -184,7 +181,31 @@ define(
 				const loopManager = LoopManager.getInstance();
 				const sceneManager = new SceneManager();
 				const menuNav = new Menu('menuNav');
+				const menuBiografia = new Menu('menuBiografia');
 				const menuBio = new Menu('menuBio');
+
+				// TODO refactor isso abaixo
+
+				const domMenuBio = document.getElementById('menuBiografia');
+				const domMenuArtigos = document.getElementById('menuArtigos');
+
+				menuNav.addEventListener('click', (evento) => {
+					let label = evento.target.innerText.toLowerCase();
+					switch (label) {
+						case 'biografia':
+							domMenuArtigos.style.display = 'none';
+							domMenuBio.style.display = 'flex';
+							break;
+						case 'artigos':
+							domMenuBio.style.display = 'none';
+							domMenuArtigos.style.display = 'flex';
+							break;
+						default:
+							domMenuBio.style.display = 'none';
+							domMenuArtigos.style.display = 'none';
+							break;
+					}
+				});
 
 				buildScene(sceneManager); // TODO não focar em um inicialmente, mas deixar o círculo rodando suavemente e posicionar a câmera no meio
 

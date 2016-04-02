@@ -1000,7 +1000,7 @@ define(
 						return;
 					}
 
-					evento.stopImmediatePropagation();
+					// evento.stopImmediatePropagation();
 					window.location.hash = '_' + hash;
 
 					return;
@@ -1126,10 +1126,12 @@ define('Menu', ['NodeListIterator'], (NodeListIterator) => {
 
 		constructor(containerId) {
 
+			const linkRoot = document.getElementById(containerId);
 			const links = document.querySelectorAll(`#${containerId} a`);
 
 			Object.defineProperties(this, {
-				_links: {value: new NodeListIterator(links)}
+				_links: {value: new NodeListIterator(links)},
+				_linkRoot: {value: linkRoot}
 			});
 			Object.seal(this);
 
@@ -1137,11 +1139,22 @@ define('Menu', ['NodeListIterator'], (NodeListIterator) => {
 
 		}
 
+		addEventListener(type, listener, options) {
+			this._linkRoot.addEventListener(type, listener, options);
+		}
+
+		removeEventListener(type, listener, options) {
+			this._linkRoot.removeEventListener(type, listener, options);
+		}
+
 		_addSceneLinks() {
+
 			let link = null;
+
 			for (link of this._links) {
 				link.href = link.href.replace('#', '#_');
 			}
+
 		}
 
 	};
