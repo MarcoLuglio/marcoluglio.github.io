@@ -548,8 +548,8 @@ ctx.shadowBlur = 10; // integer
 
 			this._context.save();
 
-			this._context.strokeStyle = 'hsl(195, 70%, 35%)';
-			this._context.shadowColor = 'hsl(195, 70%, 35%)';
+			this._context.strokeStyle = 'hsl(216, 13%, 53%)';
+			this._context.shadowColor = 'hsl(216, 13%, 53%)';
 			//this._context.lineWidth = 3;
 
 			this._context.beginPath();
@@ -633,8 +633,8 @@ ctx.shadowBlur = 10; // integer
 
 			this._context.save();
 
-			this._context.strokeStyle = 'hsl(245, 60%, 30%)';
-			this._context.shadowColor = 'hsl(245, 60%, 30%)';
+			this._context.strokeStyle = 'hsl(336, 78%, 24%)';
+			this._context.shadowColor = 'hsl(336, 78%, 24%)';
 			this._context.lineWidth = 1;
 
 			this._context.beginPath();
@@ -665,8 +665,8 @@ ctx.shadowBlur = 10; // integer
 
 			this._context.save();
 
-			this._context.strokeStyle = 'hsl(270, 100%, 50%)';
-			this._context.shadowColor = 'hsl(270, 100%, 50%)';
+			this._context.strokeStyle = 'hsl(336, 78%, 54%)';
+			this._context.shadowColor = 'hsl(336, 78%, 54%)';
 			this._context.lineWidth = 1;
 
 			this._context.beginPath();
@@ -682,8 +682,8 @@ ctx.shadowBlur = 10; // integer
 
 			this._context.save();
 
-			this._context.strokeStyle = 'hsl(270, 100%, 50%)';
-			this._context.shadowColor = 'hsl(270, 100%, 50%)';
+			this._context.strokeStyle = 'hsl(336, 78%, 54%)';
+			this._context.shadowColor = 'hsl(336, 78%, 54%)';
 			this._context.lineWidth = 1;
 
 			this._context.beginPath();
