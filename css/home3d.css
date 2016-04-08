@@ -230,7 +230,7 @@ section > div {
 
 .linksBio li {
 	display: inline;
-	margin-left: 10px;
+	margin-left: 18px;
 }
 
 .linksBio li:first-child {
@@ -825,4 +825,8 @@ section > div {
 	color: #B6C2D3;
 	font-size: 18px;
 	line-height: 20px;
+}
+
+.experiencia p:first-child a {
+	color: #788598;
 }
