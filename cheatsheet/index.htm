@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='pt-BR'
+	xml:lang='pt-br'
+	>
+<head>
+	<title>Cheat Sheet</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='css/main.css' />
+	<!--<script src='js/utils.js'></script>
+	<script src='js/index.js'></script>
+	<script src='js/highlighter.js'></script>
+	<script src='js/home.js'></script>-->
+</head>
+<body>
+
+
+
+<h1>Cheat Sheet</h1>
+
+<section>
+
+<h2>Índice</h2>
+<nav id='indice'>
+</nav>
+
+</section>
+
+
+
+<section>
+
+<h2 id='olamundo'>Olá Mundo</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++ - Olá Mundo - main.cpp</p>
+<code class='cpp'
+>// requer uma biblioteca para IO
+#include &lt;iostream&gt;
+
+// requer uma função main na raiz
+int main(int argc, const char* argv[]) {
+	std::cout << "Olá Mundo";
+	// requer um código de retorno
+	return 0;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C - Olá Mundo - main.m</p>
+<code class='objectivec'
+>// requer uma biblioteca para IO
+#import &lt;Foundation/Foundation.h&gt;
+
+// requer uma função main
+int main(int argc, const char* argv[]) {
+	NSLog(@"Olá Mundo");
+	// requer um código de retorno
+	return 0;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift - Olá Mundo - main.swift</p>
+<code class='swift'
+>print("Olá Mundo")</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust - Olá Mundo - mais.rs</p>
+<code class='rust'
+>// requer uma função main
+fn main() {
+	println!("Olá Mundo");
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C# - Olá Mundo - OlaMundo.cs</p>
+<code class='cs'
+>public class OlaMundo {
+	// requer um método estático main em uma classe
+	public static void Main(string[] args) {
+		System.Console.WriteLine("Olá Mundo");
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java - Olá Mundo - OlaMundo.java</p>
+<code class='java'
+>public class OlaMundo {
+	// requer um método estático main em uma classe
+	public static void main(String[] args) {
+		System.out.println("Olá Mundo");
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript - Olá Mundo - main.js</p>
+<code class='javascript'
+>console.log('Olá Mundo')</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>Swift</li>
+	<li>JavaScript</li>
+	<li>Rust</li>
+	<li>C# / Java</li>
+	<li>C++ / Objective-C</li>
+</ol>
+
+<p>Swift é a mais simples de todas. Nem <code class='swift'>;</code> ela precisa, e seu uso nem é recomendado.<br />
+JavaScript perde por pouco. Também não requer <code class='javascript'>;</code> embora ao contrário do que ocorre com Swift, seu uso seja recomendado. Seu <code class='javascript'>console.log</code> também é um pouco maior que o método <code class='swift'>print</code>.<br />
+Rust ainda requer uma função <code class='rust'>main</code>, mas o retorno dela não precisa ser declarado explicitamente. Diferente das demais linguagens, usa um macro para IO, por isso <code class='rust'>print!</code> leva uma exclamação (não, não era porque eu estava entusiasmado quando escrevi o código).<br />
+C# e Java são idênticos, ambos requerendo uma classe que contenha o método <code class='generic'>main</code>. Sentiu uma leve pressão para escrever orientado a objeto aqui? Também é recomendado que o nome do arquivo tenha o mesmo nome da classe.<br />
+C++ e Objective-C são bastante parecidos pois possuem forte influência do C. São os mais verborrágicos.</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='declaracaodevariaveis'>Declaração de Variáveis</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>auto x{5}; // tipo implícito
+int x{5}; // tipo explícito
+int x(5); // estilo antigo
+int x = 5; // estilo c
+
+const int z{5}; // constante
+constexpr int x{5}; // expressão constante
+
+int* x; // ponteiro</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>int x = 5; // variável
+const int x = 5; // constante
+
+int* x; // ponteiro</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>let x = 5 // tipo implícito
+let x:Int = 5 // tipo explícito
+
+var x = 5 // variável
+let x = 5 // constante
+
+let (x, y) = (1, 2) // desestruturação</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let x = 5; // tipo implícito
+let x:i32 = 5; // tipo explícito
+
+let mut x = 5; // variável
+let x = 5; // constante
+
+let (x, y) = (1, 2); // desestruturação</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>var x = 5; // tipo implícito
+int a = 5; // tipo explícito
+
+var x = 5; // variável
+const int x = 5; // constante
+
+// tipo ignorado em tempo de compilação
+dynamic x = 5;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>int x = 5; // variável
+final int x = 5; // constante
+
+// não precisa ser inicializada na declaração
+final int x;
+x = 5;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
+
+let x = 5; // tipo dinâmico
+var x = 5; // estilo antigo
+
+// lança exceção em modo estrito
+// mas é aceito em modo normal
+x = 5;
+
+let x = 5; // variável
+const x = 5; // constante
+
+[x, y] = [1, 2]; // desestruturação</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>Rust / Swift</li>
+	<li>C#</li>
+	<li>JavaScript</li>
+	<li>C++</li>
+	<li>Java</li>
+	<li>Objective-C</li>
+</ol>
+
+<p>Quem diria que um tópico tão simples seria tão diverso entre as linguagens?</p>
+<p>Rust e Swift são quase idênticos, mudando apenas uma coisa. Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='swift'>const</code>?<br />
+JavaScript é a única das linguagens comparadas que possibilita mudar os tipos das variáveis dinamicamente. Sua sintaxe de desestruturação não permite declarar e atribuir um valor ao mesmo tempo. As variáveis já devem ser declaradas antes da atribuição. JavaScript possui um estilo legado de declaracão, que cria variáveis com regras de escopo diferentes do que a maioria dos programadores espera, além de possuir um modo estrito para coibir práticas legadas.<br />
+C++ é o que tem mais legado de coisas que não deram certo, e sua última sintaxe pode ter regras mais seguras, mas certamente é bastante estranha. Tipagem implícita requer a palavra <code class='cpp'>auto</code>. Para aumentar a performance de nosso código, temos o recurso <code class='cpp'>constexpr</code>.<br />
+Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas.</p>
+
+</section>
+
+
+
+<section class='tiposprimitivos'>
+
+<h2 id='tiposprimitivos'>Tipos Primitivos Numéricos</h2>
+
+<div class='comparison'>
+
+<div>
+<p>C++</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>char</td><td>?</td></tr>
+		<tr><td>short</td><td>16 bits ou mais</td></tr>
+		<tr><td>int</td><td>16 bits ou mais</td></tr>
+		<tr><td>long</td><td>32 bits ou mais</td></tr>
+		<tr><td>long long</td><td>64 bits ou mais</td></tr>
+		<tr><td>int8_t</td><td>8 bits</td></tr>
+		<tr><td>int16_t</td><td>16 bits</td></tr>
+		<tr><td>int32_t</td><td>32 bits</td></tr>
+		<tr><td>int64_t</td><td>64 bits</td></tr>
+		<tr><td>int_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>int_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>int_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>int_least64_t</td><td>64 bits ou mais</td></tr>
+		<tr><td>int_fast8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>int_fast16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>int_fast32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>int_fast64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>char</td><td>?</td></tr>
+		<tr><td>unsigned short</td><td>16 bits ou mais</td></tr>
+		<tr><td>unsigned int</td><td>16 bits ou mais</td></tr>
+		<tr><td>unsigned long</td><td>32 bits ou mais</td></tr>
+		<tr><td>unsigned long long</td><td>64 bits ou mais</td></tr>
+		<tr><td>uint8_t</td><td>8 bits</td></tr>
+		<tr><td>uint16_t</td><td>16 bits</td></tr>
+		<tr><td>uint32_t</td><td>32 bits</td></tr>
+		<tr><td>uint64_t</td><td>64 bits</td></tr>
+		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
+		<tr><td>uint_fast8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_fast16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_fast32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_fast64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>intptr_t</td><td>Depende do hardware</td></tr>
+		<tr><td>uintptr_t</td><td>Depende do hardware</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>?</td></tr>
+		<tr><td>double</td><td>?</td></tr>
+		<tr><td>long double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>Objective-C</p>
+
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>NSNumber</td><td>cluster de tipos</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>char</td><td>?</td></tr>
+		<tr><td>short</td><td>?</td></tr>
+		<tr><td>int</td><td>?</td></tr>
+		<tr><td>long</td><td>?</td></tr>
+		<tr><td>long long</td><td>?</td></tr>
+		<tr><td>int8_t</td><td>8 bits</td></tr>
+		<tr><td>int16_t</td><td>16 bits</td></tr>
+		<tr><td>int32_t</td><td>32 bits</td></tr>
+		<tr><td>int64_t</td><td>64 bits</td></tr>
+		<tr><td>int_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>int_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>int_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>int_least64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>unsigned char</td><td>?</td></tr>
+		<tr><td>unsigned short</td><td>?</td></tr>
+		<tr><td>unsigned int</td><td>?</td></tr>
+		<tr><td>unsigned long</td><td>?</td></tr>
+		<tr><td>unsigned long long</td><td>?</td></tr>
+		<tr><td>uint8_t</td><td>8 bits</td></tr>
+		<tr><td>uint16_t</td><td>16 bits</td></tr>
+		<tr><td>uint32_t</td><td>32 bits</td></tr>
+		<tr><td>uint64_t</td><td>64 bits</td></tr>
+		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>NSInteger</td><td>32 ou 64 bits</td></tr>
+		<tr><td>NSUInteger</td><td>32 ou 64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>?</td></tr>
+		<tr><td>double</td><td>?</td></tr>
+		<tr><td>long double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>Swift compatibilidade</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>CChar</td><td>8 bits</td></tr>
+		<tr><td>CShort</td><td>16 bits</td></tr>
+		<tr><td>CInt</td><td>16 bits</td></tr>
+		<tr><td>CLong</td><td>32 bits</td></tr>
+		<tr><td>CLongLong</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>CUnsignedChar</td><td>8 bits</td></tr>
+		<tr><td>CUnsignedShort</td><td>16 bits</td></tr>
+		<tr><td>CUnsignedInt</td><td>16 bits</td></tr>
+		<tr><td>CUnsignedLong</td><td>32 bits</td></tr>
+		<tr><td>CUnsignedLongLong</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>CFloat</td><td>32 bits</td></tr>
+		<tr><td>CDouble</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>Swift</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Int8</td><td>8 bits</td></tr>
+		<tr><td>Int16</td><td>16 bits</td></tr>
+		<tr><td>Int32</td><td>32 bits</td></tr>
+		<tr><td>Int64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>UInt8</td><td>8 bits</td></tr>
+		<tr><td>UInt16</td><td>16 bits</td></tr>
+		<tr><td>UInt32</td><td>32 bits</td></tr>
+		<tr><td>UInt64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Int</td><td>Depende do Hardware</td></tr>
+		<tr><td>UInt</td><td>Depende do Hardware</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Float</td><td>32 bits</td></tr>
+		<tr><td>Double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>Rust</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>i8</td><td>8 bits</td></tr>
+		<tr><td>i16</td><td>16 bits</td></tr>
+		<tr><td>i32</td><td>32 bits</td></tr>
+		<tr><td>i64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>u8</td><td>8 bits</td></tr>
+		<tr><td>u16</td><td>16 bits</td></tr>
+		<tr><td>u32</td><td>32 bits</td></tr>
+		<tr><td>u64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>isize</td><td>Depende do hardware</td></tr>
+		<tr><td>usize</td><td>Depende do hardware</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>f32</td><td>32 bits</td></tr>
+		<tr><td>f64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>C#</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>sbyte</td><td>8 bits</td></tr>
+		<tr><td>short</td><td>16 bits</td></tr>
+		<tr><td>int</td><td>32 bits</td></tr>
+		<tr><td>long</td><td>64 bits</td></tr>
+		<tr><td>decimal</td><td>128 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>8 bits</td></tr>
+		<tr><td>ushort</td><td>16 bits</td></tr>
+		<tr><td>uint</td><td>32 bits</td></tr>
+		<tr><td>ulong</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
+		<tr><td>decimal</td><td>128 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>Java</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>8 bits</td></tr>
+		<tr><td>short</td><td>16 bits</td></tr>
+		<tr><td>int</td><td>32 bits</td></tr>
+		<tr><td>long</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div>
+<p>JavaScript</p>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Number</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+</div>
+
+<ol>
+	<li>Rust</li>
+	<li>Swift</li>
+	<li>C#</li>
+	<li>Java</li>
+	<li>C++</li>
+	<li>Objective-C</li>
+	<li>JavaScript</li>
+</ol>
+
+<p>Rust nomeia claramente os tipos numéricos que usa, além de usar nomes curtos.<br />
+Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='swift'>Int</code> e <code class='swift'>Double</code>. Possui também tipos para compatibilidade com as <abbr>API</abbr>s em C.<br />
+C# mantém os nomes herdados do C (embora seja possível criar <em>type aliases</em> por arquivo). Notem a inconsistência com <code class='cs'>sbyte</code> e <code class='cs'>byte</code> devido a esta decisão. C# possui um tipo de 128 bits. Como roda numa máquina virtual, não possui tipos com tamanhos de memória como Rust e Swift. Não sei ao certo como é feito com <em>Native</em> .NET.<br />
+Java não possui tipos sem sinal.<br />
+C++ possui uma leve melhoria em relação À C, mas ainda é bem extenso.<br />
+Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short <= int <= long <= long long</code>. Mesma coisa vale para <code class='objectivec'>float <= double <= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os Tipos incluídos pelo framework d Apple.<br />
+JavaScript só possui um tipo numérico.</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposprimitivos'>Conversão Entre Tipos Primitivos Numéricos</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposprimitivos'>Literais Numéricas</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposprimitivos'>Template</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+</body>
+</html>
