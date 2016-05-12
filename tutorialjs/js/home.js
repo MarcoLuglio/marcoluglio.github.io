@@ -90,6 +90,29 @@ define(
 		}
 
 
+		function highlightWrapper(selector, generator, timeout) {
+
+			try {
+
+				const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
+
+				let iterator = generator(blocosDeCodigo);
+				function callback() {
+					if (!iterator.next().done) {
+						setTimeout(callback, timeout);
+					}
+				}
+				setTimeout(callback, timeout);
+
+			} catch (erro) {
+				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+			}
+
+		}
+
+
+		const timeout = 0;
+
 		domReadyPromise()
 
 			.then(() => {
@@ -112,64 +135,15 @@ define(
 			})
 
 			.then(() => {
-				try {
-
-					const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
-
-					let highlightIterator = highlightGenerator(blocosDeCodigo);
-					function highlightCallback() {
-						if (!highlightIterator.next().done) {
-							setTimeout(highlightCallback, 100);
-						}
-					}
-					setTimeout(highlightCallback, 100);
-
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
+				highlightWrapper('code.generic', highlightGenerator, timeout);
 			})
 
 			.then(() => {
-				try {
-
-					const blocosDeJavaScript = new NodeListIterator(document.querySelectorAll('code.javascript'));
-
-					let highlightIterator = highlightJavaScriptGenerator(blocosDeJavaScript);
-					function highlightCallback() {
-						if (!highlightIterator.next().done) {
-							setTimeout(highlightCallback, 100);
-						}
-					}
-					setTimeout(highlightCallback, 100);
-
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
+				highlightWrapper('code.html', highlightHtmlGenerator, timeout);
 			})
 
 			.then(() => {
-				try {
-
-					const blocosDeHtml = new NodeListIterator(document.querySelectorAll('code.html'));
-
-					let highlightIterator = highlightHtmlGenerator(blocosDeHtml);
-					function highlightCallback() {
-						if (!highlightIterator.next().done) {
-							setTimeout(highlightCallback, 100);
-						}
-					}
-					setTimeout(highlightCallback, 100);
-
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
-			})
-
-			.then((sucesso) => {
-				console.log('terminou');
-			},
-			(erro) => {
-				console.log(erro);
+				highlightWrapper('code.javascript', highlightJavaScriptGenerator, timeout);
 			});
 
 	}
