@@ -244,7 +244,199 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #0099FF;
 }
 
-/* javascript */
+/* C++ */
+
+.bubaloop.cpp .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.cpp strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.cpp .type {
+	color: #8AD100;
+}
+
+.bubaloop.cpp .comment,
+.bubaloop.cpp .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.cpp strong .comment,
+.bubaloop.highlight.cpp strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.cpp .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.cpp strong .operator {
+	color: #505B66;
+}
+
+/* Objective-C */
+
+.bubaloop.objectivec .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.objectivec strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.objectivec .type {
+	color: #8AD100;
+}
+
+.bubaloop.objectivec .comment,
+.bubaloop.objectivec .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.objectivec strong .comment,
+.bubaloop.highlight.objectivec strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.objectivec .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.objectivec strong .operator {
+	color: #505B66;
+}
+
+/* Swift */
+
+.bubaloop.swift .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.swift strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.swift .type {
+	color: #8AD100;
+}
+
+.bubaloop.swift .comment,
+.bubaloop.swift .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.swift strong .comment,
+.bubaloop.highlight.swift strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.swift .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.swift strong .operator {
+	color: #505B66;
+}
+
+/* Rust */
+
+.bubaloop.rust .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.rust strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.rust .type {
+	color: #8AD100;
+}
+
+.bubaloop.rust .comment,
+.bubaloop.rust .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.rust strong .comment,
+.bubaloop.highlight.rust strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.rust .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.rust strong .operator {
+	color: #505B66;
+}
+
+/* C# */
+
+.bubaloop.cs .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.cs strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.cs .type {
+	color: #8AD100;
+}
+
+.bubaloop.cs .comment,
+.bubaloop.cs .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.cs strong .comment,
+.bubaloop.highlight.cs strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.cs .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.cs strong .operator {
+	color: #505B66;
+}
+
+/* Java */
+
+.bubaloop.java .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.java strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.java .type {
+	color: #8AD100;
+}
+
+.bubaloop.java .comment,
+.bubaloop.java .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.java strong .comment,
+.bubaloop.highlight.java strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.java .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.java strong .operator {
+	color: #505B66;
+}
+
+/* JavaScript */
 
 .bubaloop.highlight.javascript strong {
 	color: #101010;
@@ -380,17 +572,16 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* highlighter */
 
-.bubaloop.generic .keyword,
-.bubaloop.generic .type,
+.bubaloop .keyword,
+.bubaloop .type,
 .bubaloop.generic .symbol,
 .bubaloop.generic .operator,
-.bubaloop.generic .comment,
+.bubaloop .comment,
 .bubaloop.generic .directive,
 .bubaloop.generic .number,
-.bubaloop.generic .boolean,
+.bubaloop .boolean,
 .bubaloop.generic .string,
 
-.bubaloop.javascript .keyword,
 .bubaloop.javascript .variableName,
 .bubaloop.javascript .functionName,
 .bubaloop.javascript .argumentsDelimiter,
@@ -409,31 +600,27 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.javascript .symbol,
 .bubaloop.javascript .exceptionStub,
 .bubaloop.javascript .number,
-.bubaloop.javascript .boolean,
 .bubaloop.javascript .operator,
-.bubaloop.javascript .comment,
 
 .bubaloop.html .doctype,
 .bubaloop.html .tag,
 .bubaloop.html .attribute,
 .bubaloop.html .attributeValue,
-.bubaloop.html .text,
-.bubaloop.html .comment {
+.bubaloop.html .text {
 
 	transition: opacity 500ms, color 300ms;
 }
 
-.bubaloop.highlight.generic .keyword,
-.bubaloop.highlight.generic .type,
+.bubaloop.highlight .keyword,
+.bubaloop.highlight .type,
 .bubaloop.highlight.generic .symbol,
 .bubaloop.highlight.generic .operator,
-.bubaloop.highlight.generic .comment,
+.bubaloop.highlight .comment,
 .bubaloop.highlight.generic .directive,
 .bubaloop.highlight.generic .number,
-.bubaloop.highlight.generic .boolean,
+.bubaloop.highlight .boolean,
 .bubaloop.highlight.generic .string,
 
-.bubaloop.highlight.javascript .keyword,
 .bubaloop.highlight.javascript .variableName,
 .bubaloop.highlight.javascript .functionName,
 .bubaloop.highlight.javascript .argumentsDelimiter,
@@ -450,13 +637,11 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight.javascript .string,
 .bubaloop.highlight.javascript .regex,
 .bubaloop.highlight.javascript .symbol,
-.bubaloop.highlight.javascript strong .comment,
+.bubaloop.highlight.javascript strong .comment, /* pq precisa disso? */
 .bubaloop.highlight.javascript .number,
-.bubaloop.highlight.javascript .boolean,
 .bubaloop.highlight.javascript .null,
 .bubaloop.highlight.javascript .undefined,
 .bubaloop.highlight.javascript .operator,
-.bubaloop.highlight.javascript .comment,
 
 .bubaloop.highlight.html .doctype,
 .bubaloop.highlight.html .tag,

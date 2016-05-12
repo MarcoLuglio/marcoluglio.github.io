@@ -8,10 +8,11 @@
 	<title>Cheat Sheet</title>
 	<meta charset='utf-8' />
 	<link rel='stylesheet' href='css/main.css' />
-	<!--<script src='js/utils.js'></script>
-	<script src='js/index.js'></script>
-	<script src='js/highlighter.js'></script>
-	<script src='js/home.js'></script>-->
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='js/extendedhighlighter.js'></script>
+	<script src='js/home.js'></script>
 </head>
 <body>
 
@@ -247,7 +248,7 @@ const x = 5; // constante
 </ol>
 
 <p>Quem diria que um tópico tão simples seria tão diverso entre as linguagens?</p>
-<p>Rust e Swift são quase idênticos, mudando apenas uma coisa. Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='swift'>const</code>?<br />
+<p>Rust e Swift são quase idênticos, mudando apenas uma coisa. Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='cpp'>const</code>?<br />
 JavaScript é a única das linguagens comparadas que possibilita mudar os tipos das variáveis dinamicamente. Sua sintaxe de desestruturação não permite declarar e atribuir um valor ao mesmo tempo. As variáveis já devem ser declaradas antes da atribuição. JavaScript possui um estilo legado de declaracão, que cria variáveis com regras de escopo diferentes do que a maioria dos programadores espera, além de possuir um modo estrito para coibir práticas legadas.<br />
 C++ é o que tem mais legado de coisas que não deram certo, e sua última sintaxe pode ter regras mais seguras, mas certamente é bastante estranha. Tipagem implícita requer a palavra <code class='cpp'>auto</code>. Para aumentar a performance de nosso código, temos o recurso <code class='cpp'>constexpr</code>.<br />
 Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas.</p>
@@ -756,8 +757,8 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='swift'>Int</code> e <code class='swift'>Double</code>. Possui também tipos para compatibilidade com as <abbr>API</abbr>s em C.<br />
 C# mantém os nomes herdados do C (embora seja possível criar <em>type aliases</em> por arquivo). Notem a inconsistência com <code class='cs'>sbyte</code> e <code class='cs'>byte</code> devido a esta decisão. C# possui um tipo de 128 bits. Como roda numa máquina virtual, não possui tipos com tamanhos de memória como Rust e Swift. Não sei ao certo como é feito com <em>Native</em> .NET.<br />
 Java não possui tipos sem sinal.<br />
-C++ possui uma leve melhoria em relação À C, mas ainda é bem extenso.<br />
-Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short <= int <= long <= long long</code>. Mesma coisa vale para <code class='objectivec'>float <= double <= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os Tipos incluídos pelo framework d Apple.<br />
+C++ possui uma leve melhoria em relação à C, mas ainda é bem extenso.<br />
+Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short <= int <= long <= long long</code>. Mesma coisa vale para <code class='objectivec'>float <= double <= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os tipos incluídos pelo framework da Apple.<br />
 JavaScript só possui um tipo numérico.</p>
 
 </section>
