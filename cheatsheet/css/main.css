@@ -115,8 +115,12 @@ div code {
 	display: flex;
 }
 
-.comparison .codeBlock {
-	/**/
+.comparison .codeblock {
+	margin-right: 10px;
+}
+
+.comparison .codeblock:last-child {
+	margin-right: 0;
 }
 
 /* TODO */
