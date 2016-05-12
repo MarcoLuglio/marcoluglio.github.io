@@ -948,7 +948,7 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 
 /**
- * Token for basic punctuation. Far for the complete set :(
+ * Token for JavaScript punctuation
  */
 define('JSPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
 
