@@ -730,7 +730,7 @@ define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCha
 
 
 /**
- * Token for basic punctuation. Far for the complete set :(
+ * Token for C++ punctuation
  */
 define('CppPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
 
@@ -1027,6 +1027,71 @@ define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 
 /**
+ * Token for Objective-C punctuation
+ */
+define('ObjCPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const ObjCPunctuationToken = class ObjCPunctuationToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				'?',
+				':',
+				';',
+
+				'&amp;&amp;',
+				'||',
+				'&amp;', // bitwise and
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				'+',
+				'++',
+				'-',
+				'--',
+				'*',
+				'/',
+				'%',
+				'==',
+				'!',
+				'!=',
+				'&gt;',
+				'&gt;=',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%='
+
+			]);
+
+		}
+
+	};
+
+	return ObjCPunctuationToken;
+
+});
+
+
+
+/**
  * Tokenizes Objective-C source code
  */
 define(
@@ -1038,6 +1103,7 @@ define(
 
 		'ObjCKeywordToken',
 		'ObjCTypesToken',
+		'ObjCPunctuationToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -1052,6 +1118,7 @@ define(
 
 		ObjCKeywordToken,
 		ObjCTypesToken,
+		ObjCPunctuationToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -1079,7 +1146,7 @@ define(
 				// language
 				new ObjCKeywordToken(),
 				new ObjCTypesToken(),
-				// new CppPunctuationToken(),
+				new ObjCPunctuationToken(),
 
 				// comments
 				new CLineCommentToken(),
@@ -1159,6 +1226,8 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 		constructor() {
 			super('keyword', [
 
+				'as',
+				'is',
 				'let',
 				'var',
 
@@ -1220,6 +1289,89 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 
 
 /**
+ * Token for Swift punctuation
+ */
+define('SwiftPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const SwiftPunctuationToken = class SwiftPunctuationToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				'?',
+				'??',
+				':',
+				// ';', // TODO embora não recomendado eu acho que tem
+
+				'&amp;&amp;',
+				'&amp;&amp;=',
+				'||',
+				'||=',
+				'&amp;', // bitwise and
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				'+',
+				'&amp;+', // + overflow
+				'-',
+				'&amp;-', // - overflow
+				'*',
+				'&amp;*', // * ignore overflow
+				'/',
+				'&amp;/', // / ignore overflow
+				'%',
+				'&amp;%', // % ignore overflow
+				'==',
+				'===',
+				'!',
+				'!=',
+				'!==',
+				'&gt;',
+				'&gt;=',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%=',
+
+				'&amp;=', // bitwise and
+				'|=', // bitwise or
+				'^=', // bitwise xor
+				'~=', // pattern matching
+				'&gt;&gt;=', // bitwise left shift
+				'&lt;&lt;=', // bitwise right shift
+
+				'..<',
+				'...'
+
+			]);
+
+		}
+
+	};
+
+	return SwiftPunctuationToken;
+
+});
+
+
+
+/**
  * Tokenizes Swift source code
  */
 define(
@@ -1231,6 +1383,7 @@ define(
 
 		'SwiftKeywordToken',
 		'SwiftTypesToken',
+		'SwiftPunctuationToken',
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
@@ -1245,6 +1398,7 @@ define(
 
 		SwiftKeywordToken,
 		SwiftTypesToken,
+		SwiftPunctuationToken,
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
@@ -1272,7 +1426,7 @@ define(
 				// language
 				new SwiftKeywordToken(),
 				new SwiftTypesToken(),
-				// new CppPunctuationToken(),
+				new SwiftPunctuationToken(),
 
 				// comments
 				new CLineCommentToken()//,
@@ -1352,9 +1506,34 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 		constructor() {
 			super('keyword', [
 
+				'as',
+				'break',
+				'const',
+				'continue',
+				'else',
+				'enum',
+				'extern',
 				'fn',
+				'for',
+				'if',
+				'impl',
+				// 'in', // resolver bug primeiro
 				'let',
+				'loop',
+				'match',
+				'mod',
 				'mut',
+				'pub',
+				'ref',
+				'return',
+				'self',
+				'static',
+				'struct',
+				'trait',
+				'type',
+				'unsafe',
+				'use',
+				'while',
 
 				// literals
 				'true',
@@ -1383,6 +1562,8 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 		constructor() {
 			super('type', [
+				'bool',
+				'char',
 				'f32',
 				'f64',
 				'i8',
@@ -1390,6 +1571,7 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'i32',
 				'i64',
 				'isize',
+				'str',
 				'u8',
 				'u16',
 				'u32',
@@ -1410,6 +1592,85 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 
 /**
+ * Token for Rust punctuation
+ */
+define('RustPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const RustPunctuationToken = class RustPunctuationToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				//'?',
+				':',
+				'::',
+				';',
+
+				'&amp;&amp;',
+				'||',
+				'&amp;', // bitwise and
+				'&amp;mut',
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				'+',
+				'-',
+				'*',
+				'/',
+				'%',
+				'==',
+				'!',
+				'!=',
+				'&gt;',
+				'&gt;=',
+				'=&gt;',
+				'-&gt;',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%=',
+
+				'&amp;=', // bitwise and
+				'|=', // bitwise or
+				'^=', // bitwise xor
+				// '~=', // bitwise not não existe
+				'&gt;&gt;=', // bitwise left shift
+				'&lt;&lt;=', // bitwise right shift
+
+				'_',
+				'@',
+				'..',
+				'...'
+
+			]);
+
+		}
+
+	};
+
+	return RustPunctuationToken;
+
+});
+
+
+
+/**
  * Tokenizes Rust source code
  */
 define(
@@ -1421,6 +1682,7 @@ define(
 
 		'RustKeywordToken',
 		'RustTypesToken',
+		'RustPunctuationToken',
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
@@ -1435,6 +1697,7 @@ define(
 
 		RustKeywordToken,
 		RustTypesToken,
+		RustPunctuationToken,
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
@@ -1462,7 +1725,7 @@ define(
 				// language
 				new RustKeywordToken(),
 				new RustTypesToken(),
-				// new CppPunctuationToken(),
+				new RustPunctuationToken(),
 
 				// comments
 				new CLineCommentToken()//,
@@ -1542,19 +1805,96 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 		constructor() {
 			super('keyword', [
 
+				'abstract',
+				'add',
+				'alias',
+				'as',
+				'async',
+				'await',
+				'base',
+				'break',
+				'case',
+				'catch',
+				'checked',
 				'class',
 				'const',
+				'continue',
+				'default',
+				'delegate',
+				//'do', // TODO consertar bug primeiro
 				'dynamic',
+				'else',
+				'enum',
+				'event',
+				'explicit',
+				'extern',
+				'finally',
+				'fixed',
+				'for',
+				'foreach',
+				'get',
+				'goto',
+				'if',
+				'implicit',
+				//'in', // TODO consertar bug primeiro
+				'interface',
+				'internal',
+				'is',
+				'lock',
+				'namespace',
+				'new',
+				'object',
+				'operator',
+				'out',
+				'override',
+				'params',
+				'partial',
 				'private',
 				'protected',
 				'public',
+				'readonly',
+				'ref',
+				'remove',
+				'return',
+				'sealed',
+				'set',
+				'sizeof',
+				'stackalloc',
 				'static',
+				'struct',
+				'switch',
+				'this',
+				'throw',
+				'try',
+				'typeof',
+				'unchecked',
+				'unsafe',
+				'using', // TODO ver se isso aqui não é melhor separar num token diferente
+				'value',
 				'var',
+				'virtual',
 				'void',
+				'volatile',
+				'while',
+				'yield',
+
+				// linq TODO talvez mudar pra um token separado
+				'ascending',
+				'by',
+				'descending',
+				'from',
+				'into',
+				'group',
+				'join',
+				'let',
+				'orderby',
+				'select',
+				'where',
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'null'
 
 			]);
 
@@ -1606,6 +1946,79 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 
 
 /**
+ * Token for C# punctuation
+ */
+define('CSPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const CSPunctuationToken = class CSPunctuationToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				'?',
+				'??',
+				':',
+				'::',
+				';',
+
+				'&amp;&amp;',
+				'||',
+				'&amp;', // bitwise and
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				'+',
+				'-',
+				'*',
+				'/',
+				'%',
+				'==',
+				'!',
+				'!=',
+				'&gt;',
+				'&gt;=',
+				'=&gt;',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%=',
+
+				'&amp;=', // bitwise and
+				'|=', // bitwise or
+				'^=', // bitwise xor
+				// '~=', // bitwise not não existe
+				'&gt;&gt;=', // bitwise left shift
+				'&lt;&lt;=' // bitwise right shift
+
+			]);
+
+		}
+
+	};
+
+	return CSPunctuationToken;
+
+});
+
+
+
+/**
  * Tokenizes C# source code
  */
 define(
@@ -1617,6 +2030,7 @@ define(
 
 		'CSKeywordToken',
 		'CSTypesToken',
+		'CSPunctuationToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -1631,6 +2045,7 @@ define(
 
 		CSKeywordToken,
 		CSTypesToken,
+		CSPunctuationToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -1658,7 +2073,7 @@ define(
 				// language
 				new CSKeywordToken(),
 				new CSTypesToken(),
-				// new CppPunctuationToken(),
+				new CSPunctuationToken(),
 
 				// comments
 				new CLineCommentToken(),
@@ -1738,13 +2153,50 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 		constructor() {
 			super('keyword', [
 
+				'abstract',
+				'assert',
+				'break',
+				'case',
+				'catch',
 				'class',
+				'continue',
+				'default',
+				//'do', // TODO consertar bug antes de habilitar
+				'else',
+				'enum',
+				'extends',
 				'final',
+				'finally',
+				'for',
+				'if',
+				'implements',
+				'import',
+				'instanceof',
+				'interface',
+				'native',
+				'new',
+				'package',
 				'private',
 				'protected',
 				'public',
+				'return',
 				'static',
+				'strictfp',
+				'super',
+				'switch',
+				'synchronized',
+				'this',
+				'throw',
+				'throws',
+				'transient',
+				'try',
 				'void',
+				'volatile',
+				'while',
+
+				// reserved
+				'const',
+				'goto',
 
 				// literals
 				'true',
@@ -1773,7 +2225,9 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 		constructor() {
 			super('type', [
+				'boolean',
 				'byte',
+				'char',
 				'double',
 				'float',
 				'int',
@@ -1795,6 +2249,79 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 
 /**
+ * Token for Java punctuation
+ */
+define('JavaPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const JavaPunctuationToken = class JavaPunctuationToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				'?',
+				':',
+				';',
+
+				'&amp;&amp;',
+				'||',
+				'&amp;', // bitwise and
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&gt;&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				'+',
+				'-',
+				'*',
+				'/',
+				'%',
+				'==',
+				'!',
+				'!=',
+				'&gt;',
+				'&gt;=',
+				'-&gt;',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%=',
+
+				'&amp;=', // bitwise and
+				'|=', // bitwise or
+				'^=', // bitwise xor
+				// '~=', // bitwise not não existe
+				'&gt;&gt;=', // bitwise left shift
+				'&gt;&gt;&gt;=', // bitwise left shift
+				'&lt;&lt;=' // bitwise right shift
+
+			]);
+
+		}
+
+	};
+
+	return JavaPunctuationToken;
+
+});
+
+
+
+/**
  * Tokenizes Java source code
  */
 define(
@@ -1806,6 +2333,7 @@ define(
 
 		'JavaKeywordToken',
 		'JavaTypesToken',
+		'JavaPunctuationToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -1820,6 +2348,7 @@ define(
 
 		JavaKeywordToken,
 		JavaTypesToken,
+		JavaPunctuationToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -1847,7 +2376,7 @@ define(
 				// language
 				new JavaKeywordToken(),
 				new JavaTypesToken(),
-				// new CppPunctuationToken(),
+				new JavaPunctuationToken(),
 
 				// comments
 				new CLineCommentToken(),
