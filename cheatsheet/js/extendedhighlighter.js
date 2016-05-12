@@ -587,7 +587,6 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'namespace',
 				'new',
 				'noexcept',
-				'nullptr',
 				'operator',
 				'override',
 				'private',
@@ -648,7 +647,9 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'nullptr',
+				'NULL'
 
 			]);
 
@@ -951,7 +952,12 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'YES',
+				'NO',
+				'nil',
+				'Nil',
+				'NULL'
 
 			]);
 
@@ -1233,7 +1239,8 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'nil'
 
 			]);
 
@@ -1538,6 +1545,7 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				// literals
 				'true',
 				'false'
+				// não tem null, usar ptr::null
 
 			]);
 
@@ -2200,7 +2208,8 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'null'
 
 			]);
 
@@ -2307,7 +2316,9 @@ define('JavaPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleChar
 				// '~=', // bitwise not não existe
 				'&gt;&gt;=', // bitwise left shift
 				'&gt;&gt;&gt;=', // bitwise left shift
-				'&lt;&lt;=' // bitwise right shift
+				'&lt;&lt;=', // bitwise right shift
+
+				'...'
 
 			]);
 
