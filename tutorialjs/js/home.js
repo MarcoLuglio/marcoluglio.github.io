@@ -26,76 +26,150 @@ define(
 
 	) => {
 
+
+		function* highlightGenerator(blocosDeCodigo) {
+			for (let blocoDeCodigo of blocosDeCodigo) {
+				blocoDeCodigo.className += ' bubaloop';
+				const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
+				yield;
+			}
+		}
+
+
+		function* highlightJavaScriptGenerator(blocosDeCodigo) {
+
+			const javaScriptLexer = new JavaScriptLexer();
+			const highlighter = new Highlighter();
+
+			for (let blocoDeCodigo of blocosDeCodigo) {
+
+				const source = blocoDeCodigo.innerHTML;
+
+				blocoDeCodigo.className += ' bubaloop';
+
+				javaScriptLexer.parseAsync(source)
+					.then((tokens) => {
+						return highlighter.highlightAsync(source, tokens);
+					})
+					.then((highlightedSource) => {
+						blocoDeCodigo.innerHTML = highlightedSource;
+						const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
+					});
+
+				yield;
+
+			}
+
+		}
+
+
+		function* highlightHtmlGenerator(blocosDeCodigo) {
+
+			const htmlLexer = new HtmlLexer();
+			const highlighter = new Highlighter();
+
+			for (let blocoDeHtml of blocosDeCodigo) {
+
+				const source = blocoDeHtml.innerHTML;
+
+				blocoDeHtml.className += ' bubaloop';
+
+				htmlLexer.parseAsync(source)
+					.then((tokens) => {
+						return highlighter.highlightAsync(source, tokens);
+					})
+					.then((highlightedSource) => {
+						blocoDeHtml.innerHTML = highlightedSource;
+						const highlightEnhancer = new HighlightEnhancer(blocoDeHtml);
+					});
+
+				yield;
+
+			}
+
+		}
+
+
 		domReadyPromise()
+
 			.then(() => {
-
 				try {
-
-					// TODO ver oq posso deixar async no indice
-					// ver se o corpo laço pode rodar async com setTimeout
-					// ou se consigo fazer um laço async já que são vários blocos...
-
-					const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
-					const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
-					const blocosDeJavaScript = new NodeListIterator(document.querySelectorAll('code.javascript'));
-					const blocosDeHtml = new NodeListIterator(document.querySelectorAll('code.html'));
-
 					const index = new Index('indice', 3, false);
+				} catch (erro) {
+					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+				}
+			})
 
-					const highlighter = new Highlighter()
-					// const highlighterWorker = new Worker('highlighterWorker.js'); // TODO testar num server
-
+			.then(() => {
+				try {
+					const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
 					for (let divCodigo of divsDeCodigo) {
 						divCodigo.className += ' bubaloop';
 					}
+				} catch (erro) {
+					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+				}
+			})
 
-					for (let blocoDeCodigo of blocosDeCodigo) {
-						blocoDeCodigo.className += ' bubaloop';
-						const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
+			.then(() => {
+				try {
+
+					const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
+
+					let highlightIterator = highlightGenerator(blocosDeCodigo);
+					function highlightCallback() {
+						if (!highlightIterator.next().done) {
+							setTimeout(highlightCallback, 100);
+						}
 					}
-
-					const javaScriptLexer = new JavaScriptLexer();
-
-					for (let blocoDeCodigo of blocosDeJavaScript) {
-
-						const source = blocoDeCodigo.innerHTML;
-
-						blocoDeCodigo.className += ' bubaloop';
-
-						javaScriptLexer.parseAsync(source)
-							.then((tokens) => {
-								return highlighter.highlightAsync(source, tokens);
-							})
-							.then((highlightedSource) => {
-								blocoDeCodigo.innerHTML = highlightedSource;
-								const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-							});
-
-					}
-
-					const htmlLexer = new HtmlLexer();
-
-					for (let blocoDeHtml of blocosDeHtml) {
-
-						const source = blocoDeHtml.innerHTML;
-
-						blocoDeHtml.className += ' bubaloop';
-
-						htmlLexer.parseAsync(source)
-							.then((tokens) => {
-								return highlighter.highlightAsync(source, tokens);
-							})
-							.then((highlightedSource) => {
-								blocoDeHtml.innerHTML = highlightedSource;
-								const highlightEnhancer = new HighlightEnhancer(blocoDeHtml);
-							});
-
-					}
+					setTimeout(highlightCallback, 100);
 
 				} catch (erro) {
 					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 				}
+			})
 
+			.then(() => {
+				try {
+
+					const blocosDeJavaScript = new NodeListIterator(document.querySelectorAll('code.javascript'));
+
+					let highlightIterator = highlightJavaScriptGenerator(blocosDeJavaScript);
+					function highlightCallback() {
+						if (!highlightIterator.next().done) {
+							setTimeout(highlightCallback, 100);
+						}
+					}
+					setTimeout(highlightCallback, 100);
+
+				} catch (erro) {
+					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+				}
+			})
+
+			.then(() => {
+				try {
+
+					const blocosDeHtml = new NodeListIterator(document.querySelectorAll('code.html'));
+
+					let highlightIterator = highlightHtmlGenerator(blocosDeHtml);
+					function highlightCallback() {
+						if (!highlightIterator.next().done) {
+							setTimeout(highlightCallback, 100);
+						}
+					}
+					setTimeout(highlightCallback, 100);
+
+				} catch (erro) {
+					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+				}
+			})
+
+			.then((sucesso) => {
+				console.log('terminou');
+			},
+			(erro) => {
+				console.log(erro);
 			});
 
 	}
