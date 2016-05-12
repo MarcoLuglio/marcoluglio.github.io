@@ -43,6 +43,8 @@ define(
 
 			for (let blocoDeCodigo of blocosDeCodigo) {
 
+				yield;
+
 				const source = blocoDeCodigo.innerHTML;
 
 				blocoDeCodigo.className += ' bubaloop';
@@ -56,8 +58,6 @@ define(
 						const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 					});
 
-				yield;
-
 			}
 
 		}
@@ -69,6 +69,8 @@ define(
 			const highlighter = new Highlighter();
 
 			for (let blocoDeHtml of blocosDeCodigo) {
+
+				yield;
 
 				const source = blocoDeHtml.innerHTML;
 
@@ -82,8 +84,6 @@ define(
 						blocoDeHtml.innerHTML = highlightedSource;
 						const highlightEnhancer = new HighlightEnhancer(blocoDeHtml);
 					});
-
-				yield;
 
 			}
 
