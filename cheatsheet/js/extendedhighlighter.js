@@ -1232,8 +1232,8 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 		constructor() {
 			super('keyword', [
 
-				'as',
-				'is',
+				//'as', // TODO consertar bug primeiro
+				//'is', // TODO consertar bug primeiro
 				'let',
 				'var',
 
@@ -1544,7 +1544,9 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 
 				// literals
 				'true',
-				'false'
+				'false',
+				'None', // Option<T>
+				'Some' // Option<T>
 				// não tem null, usar ptr::null
 
 			]);

@@ -266,31 +266,95 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// tipo optional é preferível
+// ao ponteiro nullable
+
+std::optional<int> k; // C++17
+boost::optional<int> l; // boost
+
+// PONTEIROS
+// =========
+
+int* m = nullptr; // C++11
+
+// tipo nullptr_t só pode ser nullptr
+// não pode receber nenhum outro valor
+std::nullptr_t n = nullptr; // C++11
+
+// versões antigas usam o tipo NULL
+// que é 0 por baixo dos panos
+int* o = NULL; // old</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// nil object
+// Nil class
+// NSNull singleton to represent null
+
+// PONTEIROS
+// =========
+
+int* o = NULL;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// optionals devem ter o tipo especificado
+// em sua declaração
+var k:Int? = nil
+var l:AClass? = nil
+let m = l?.propriedade // m recebe nil
+let n = l!.propriedade // lança erro se l for nil
+
+// nil coalescing operator
+let o = k ?? 10 // o será do tipo Int
+
+// ok mas não é idiomático
+let p = k != nil ? k : 10 // p será do tipo Int?
+
+// PS: nullable é chamado de optional
+// e null é chamado de nil em Swift</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
+>// não existem tipos nullable
+// mas existe um tipo std::Option&lt;T&gt;
+// que pode conter None ou Some()
+
+// tipo explícito
+let mut k:Option&lt;i32&gt; = None;
+let mut l:Option&lt;AStruct&gt; = None;
+
+// tipo implícito Option&lt;i32&gt;
+let mut m = None::&lt;i32&gt;;
+let mut n = Some(10);
+
+// erro, não pode passar um valor diretamente
+// tem que usar Some(valor)
+let mut o:Option&lt;i32&gt; = 10;
+
+// não possui operador específico para Option
+let p = match n { // p será do tipo i32
+	Some(some) => some,
+	None => 10,
+};
+
+// ok mas panic se for None
+let q = n.unwrap(); // q será do tipo i32
+
+// PONTEIROS
+// =========
+
+// TODO
+let p:*const i32 = ptr::null();
 </code
 >
 </div>
@@ -298,24 +362,49 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>// nullable não pode ser usado com var
+// um tipo deve ser especificado
+int? k = null;
+AClass? l = null;
+int? m = l?.propriedade; // C# 6
+int? m = (l != null) ? l.propriedade : null;
+
+// null coalescing operator
+var n = k ?? 10; // n será do tipo int
+
+// ok mas não é idiomático
+var o = (k != null) ? k : 10; // o será do tipo int?</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>// tipos primitivos não podem ser nullable
+int a = null; // erro
+
+// qualquer tipo de referência é nullable
+Integer k = null;
+AClass l = null;
+Integer m = (l != null) ? l.propriedade : null;
+
+// não possui operador específico para null
+int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>// qualquer tipo é sempre nullable
+let k = null;
+let l = (k &amp;&amp; k.propriedade) ? k.propriedade : null;
+
+// null coalescing operator
+let m = k || 10;
+
+// ok mas não é idiomático
+let n = (k || k === 0) ? k : 10;</code
 >
 </div>
 
