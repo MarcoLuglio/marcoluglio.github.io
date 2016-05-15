@@ -357,6 +357,58 @@ define('EndOfLineToken', ['SourceSimpleCharacterToken'], (SourceSimpleCharacterT
 
 
 
+define('CDirectivePatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CDirectivePatternIterator = class CDirectivePatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			this._matchFunction = this._matchHash;
+			Object.seal(this);
+		}
+
+		_matchHash(matchCharacter) {
+			if (matchCharacter === '#') {
+				this._matchFunction = this._matchSameLine;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchSameLine(matchCharacter) {
+			this._isComplete = true;
+			// any except line break
+			if (this._matchLineBreak(matchCharacter)) {
+				return this._matchEnd(matchCharacter);
+			}
+			return true;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return CDirectivePatternIterator;
+
+});
+
+
+
 define('CLineCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
 	const CLineCommentPatternIterator = class CLineCommentPatternIterator extends SourcePatternIterator {
@@ -413,26 +465,6 @@ define('CLineCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternI
 	};
 
 	return CLineCommentPatternIterator;
-
-
-	// TODO ?? chamava complete, mas tem que fazer verificações extras
-	// pra saber, como ter certeza que já passou do // inicial
-	// colocar esse 'check point' como informação no pattern?
-	// talvez não pq em casos como comentário de bloco não vai ajudar muito
-	// ou meu pattern pode ser menos simplório, ter partes begin /*, content e end */
-	// mas por exemplo com expressões regulares /pattern/flags ?
-	// tinha que ser mais flexível que começo, meio e fim
-
-	// tinha que ter strategies para cada segmento
-	// cada segmento além da array de characteres tem uma flag completo
-	// se vier um caractere que não pertence ao segmento, mas ele já estiver completo
-	// tentar passar para o próximo segmento ^_^
-
-	// ver interface e depois se preocupar com implementação externa
-
-	// por outro lado, quase toda a lógica do token vai ficar no pattern
-	// não seria melhor deixar o pattern só com dados e os métodos todos no token?
-	// não, pois token ficaria muito complicado
 
 });
 
@@ -492,6 +524,23 @@ define('CBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePattern
 	};
 
 	return CBlockCommentPatternIterator;
+
+});
+
+
+
+/**
+ * Token for # directives
+ */
+define('CDirectiveToken', ['SourcePatternIteratorToken', 'CDirectivePatternIterator'], (SourcePatternIteratorToken, CDirectivePatternIterator) => {
+
+	const CDirectiveToken = class CDirectiveToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('directive', new CDirectivePatternIterator());
+		}
+	};
+
+	return CDirectiveToken;
 
 });
 
@@ -817,6 +866,7 @@ define(
 	[
 		'Lexer',
 
+		'CDirectiveToken',
 		'CppKeywordToken',
 		'CppTypesToken',
 		'CppPunctuationToken',
@@ -832,6 +882,7 @@ define(
 
 		Lexer,
 
+		CDirectiveToken,
 		CppKeywordToken,
 		CppTypesToken,
 		CppPunctuationToken,
@@ -860,6 +911,7 @@ define(
 				this._tokenPool.length,
 
 				// language
+				new CDirectiveToken(),
 				new CppKeywordToken(),
 				new CppTypesToken(),
 				new CppPunctuationToken(),
@@ -1107,6 +1159,7 @@ define(
 	[
 		'Lexer',
 
+		'CDirectiveToken',
 		'ObjCKeywordToken',
 		'ObjCTypesToken',
 		'ObjCPunctuationToken',
@@ -1122,6 +1175,7 @@ define(
 
 		Lexer,
 
+		CDirectiveToken,
 		ObjCKeywordToken,
 		ObjCTypesToken,
 		ObjCPunctuationToken,
@@ -1150,6 +1204,7 @@ define(
 				this._tokenPool.length,
 
 				// language
+				new CDirectiveToken(),
 				new ObjCKeywordToken(),
 				new ObjCTypesToken(),
 				new ObjCPunctuationToken(),
@@ -1232,8 +1287,8 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 		constructor() {
 			super('keyword', [
 
-				//'as', // TODO consertar bug primeiro
-				//'is', // TODO consertar bug primeiro
+				'as',
+				'is',
 				'let',
 				'var',
 
@@ -1524,7 +1579,7 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'for',
 				'if',
 				'impl',
-				// 'in', // resolver bug primeiro
+				'in',
 				'let',
 				'loop',
 				'match',
@@ -1831,7 +1886,7 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'continue',
 				'default',
 				'delegate',
-				//'do', // TODO consertar bug primeiro
+				'do',
 				'dynamic',
 				'else',
 				'enum',
@@ -1846,7 +1901,7 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'goto',
 				'if',
 				'implicit',
-				//'in', // TODO consertar bug primeiro
+				'in',
 				'interface',
 				'internal',
 				'is',
@@ -2171,7 +2226,7 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'class',
 				'continue',
 				'default',
-				//'do', // TODO consertar bug antes de habilitar
+				'do',
 				'else',
 				'enum',
 				'extends',

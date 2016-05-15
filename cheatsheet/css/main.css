@@ -250,6 +250,10 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* C++ */
 
+.bubaloop.cpp .directive {
+	color: #0040B4;
+}
+
 .bubaloop.cpp .keyword {
 	color: #0040B4;
 }
@@ -281,6 +285,10 @@ div.codeblock.bubaloop p + code.javascript {
 }
 
 /* Objective-C */
+
+.bubaloop.objectivec .directive {
+	color: #0040B4;
+}
 
 .bubaloop.objectivec .keyword {
 	color: #0040B4;
