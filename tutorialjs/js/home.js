@@ -27,124 +27,150 @@ define(
 	) => {
 
 
-		function* highlightGenerator(blocosDeCodigo) {
-			for (let blocoDeCodigo of blocosDeCodigo) {
-				blocoDeCodigo.className += ' bubaloop';
-				const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-				yield;
+	/**
+	 * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
+	 * Generator e Promise quando utilizadas como aqui.
+	 * Usei closures para simular a funcionalidade e contornar tais bugs
+	 */
+	function highlightThemeClosure(blocosDeCodigo) {
+
+		let i = 0;
+		let blocoDeCodigo;
+		let iterador = blocosDeCodigo[Symbol.iterator]();
+		let iteradorTemp;
+
+		return function() {
+
+			iteradorTemp = iterador.next();
+			if (iteradorTemp.done) {
+				return;
 			}
-		}
+			blocoDeCodigo = iteradorTemp.value;
 
+			blocoDeCodigo.className += ' bubaloop';
+			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 
-		function* highlightJavaScriptGenerator(blocosDeCodigo) {
-
-			const javaScriptLexer = new JavaScriptLexer();
-			const highlighter = new Highlighter();
-
-			for (let blocoDeCodigo of blocosDeCodigo) {
-
-				yield;
-
-				const source = blocoDeCodigo.innerHTML;
-
-				blocoDeCodigo.className += ' bubaloop';
-
-				javaScriptLexer.parseAsync(source)
-					.then((tokens) => {
-						return highlighter.highlightAsync(source, tokens);
-					})
-					.then((highlightedSource) => {
-						blocoDeCodigo.innerHTML = highlightedSource;
-						const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-					});
-
-			}
+			i++;
+			return blocoDeCodigo;
 
 		}
 
+	}
 
-		function* highlightHtmlGenerator(blocosDeCodigo) {
 
-			const htmlLexer = new HtmlLexer();
-			const highlighter = new Highlighter();
+	/**
+	 * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
+	 * Generator e Promise quando utilizadas como aqui.
+	 * Usei closures para simular a funcionalidade e contornar tais bugs
+	 */
+	function highlightClosure(blocosDeCodigo, Lexer) {
 
-			for (let blocoDeHtml of blocosDeCodigo) {
+		const lexer = new Lexer();
+		const highlighter = new Highlighter();
+		let blocoDeCodigo;
+		let iterador = blocosDeCodigo[Symbol.iterator]();
+		let iteradorTemp;
 
-				yield;
+		return function() {
 
-				const source = blocoDeHtml.innerHTML;
-
-				blocoDeHtml.className += ' bubaloop';
-
-				htmlLexer.parseAsync(source)
-					.then((tokens) => {
-						return highlighter.highlightAsync(source, tokens);
-					})
-					.then((highlightedSource) => {
-						blocoDeHtml.innerHTML = highlightedSource;
-						const highlightEnhancer = new HighlightEnhancer(blocoDeHtml);
-					});
-
+			iteradorTemp = iterador.next();
+			if (iteradorTemp.done) {
+				return;
 			}
+			blocoDeCodigo = iteradorTemp.value;
+
+			const source = blocoDeCodigo.innerHTML;
+
+			blocoDeCodigo.className += ' bubaloop';
+
+			lexer.parseAsync(source)
+				.then((tokens) => {
+					return highlighter.highlightAsync(source, tokens);
+				})
+				.then((highlightedSource) => {
+					blocoDeCodigo.innerHTML = highlightedSource;
+					const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
+				});
+
+			return blocoDeCodigo;
 
 		}
 
+	}
 
-		function highlightWrapper(selector, generator, timeout) {
 
+	function highlightWrapper(selector, Lexer, timeout) {
+
+		try {
+
+			if (timeout === null || timeout === undefined) {
+				timeout = 0;
+			}
+
+			const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
+
+			const iterator = highlightClosure(blocosDeCodigo, Lexer);
+			function callback() {
+				if (iterator()) {
+					setTimeout(callback, timeout);
+				}
+			}
+			setTimeout(callback, timeout);
+
+		} catch (erro) {
+			console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+		}
+
+	}
+
+
+
+	domReadyPromise()
+
+		.then(() => {
 			try {
+				const index = new Index('indice', 3, false);
+			} catch (erro) {
+				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+			}
+		})
 
-				const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
+		.then(() => {
+			try {
+				const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
+				for (let divCodigo of divsDeCodigo) {
+					divCodigo.className += ' bubaloop';
+				}
+			} catch (erro) {
+				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+			}
+		})
 
-				let iterator = generator(blocosDeCodigo);
+		.then(() => {
+			try {
+				const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
+
+				const iterator = highlightThemeClosure(blocosDeCodigo);
 				function callback() {
-					if (!iterator.next().done) {
-						setTimeout(callback, timeout);
+					if (iterator()) {
+						setTimeout(callback, 0);
 					}
 				}
-				setTimeout(callback, timeout);
+				setTimeout(callback, 0);
 
 			} catch (erro) {
 				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 			}
+		})
 
-		}
+		.then(() => {
+			highlightWrapper('code.html', HtmlLexer);
+		})
+		.then(() => {
+			highlightWrapper('code.javascript', JavaScriptLexer);
+		});
 
 
-		const timeout = 0;
-
-		domReadyPromise()
-
-			.then(() => {
-				try {
-					const index = new Index('indice', 3, false);
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
-			})
-
-			.then(() => {
-				try {
-					const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
-					for (let divCodigo of divsDeCodigo) {
-						divCodigo.className += ' bubaloop';
-					}
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
-			})
-
-			.then(() => {
-				highlightWrapper('code.generic', highlightGenerator, timeout);
-			})
-
-			.then(() => {
-				highlightWrapper('code.html', highlightHtmlGenerator, timeout);
-			})
-
-			.then(() => {
-				highlightWrapper('code.javascript', highlightJavaScriptGenerator, timeout);
-			});
 
 	}
 
