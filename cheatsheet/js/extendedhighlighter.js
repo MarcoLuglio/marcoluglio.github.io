@@ -161,7 +161,7 @@ define('SourcePatternIteratorToken', ['Token'], (Token) => {
 
 		next(matchCharacter, index) {
 
-			if (!this._characterPattern.next(matchCharacter)) {
+			if (!this._characterPattern.next(matchCharacter, index)) {
 				this._hasNext = false;
 				if (this._characterPattern.isComplete) {
 					this._complete();
@@ -409,6 +409,111 @@ define('CDirectivePatternIterator', ['SourcePatternIterator'], (SourcePatternIte
 
 
 
+define('CStringPatternIterator', () => {
+
+	const CStringPatternIterator = class CStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (this._isEscaped) {
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| this._matchLineBreak(matchCharacter)
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return CStringPatternIterator;
+
+});
+
+
+
 define('CLineCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
 	const CLineCommentPatternIterator = class CLineCommentPatternIterator extends SourcePatternIterator {
@@ -530,7 +635,7 @@ define('CBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePattern
 
 
 /**
- * Token for # directives
+ * Token for C directives
  */
 define('CDirectiveToken', ['SourcePatternIteratorToken', 'CDirectivePatternIterator'], (SourcePatternIteratorToken, CDirectivePatternIterator) => {
 
@@ -547,7 +652,24 @@ define('CDirectiveToken', ['SourcePatternIteratorToken', 'CDirectivePatternItera
 
 
 /**
- * Token for line comments
+ * Token for C strings
+ */
+define('CStringLiteralToken', ['SourcePatternIteratorToken', 'CStringPatternIterator'], (SourcePatternIteratorToken, CStringPatternIterator) => {
+
+	const CStringLiteralToken = class CStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new CStringPatternIterator());
+		}
+	};
+
+	return CStringLiteralToken;
+
+});
+
+
+
+/**
+ * Token for C line comments
  */
 define('CLineCommentToken', ['SourcePatternIteratorToken', 'CLineCommentPatternIterator'], (SourcePatternIteratorToken, CLineCommentPatternIterator) => {
 
@@ -564,7 +686,7 @@ define('CLineCommentToken', ['SourcePatternIteratorToken', 'CLineCommentPatternI
 
 
 /**
- * Token for block comments
+ * Token for C block comments
  */
 define('CBlockCommentToken', ['SourcePatternIteratorToken', 'CBlockCommentPatternIterator'], (SourcePatternIteratorToken, CBlockCommentPatternIterator) => {
 
@@ -856,6 +978,166 @@ define('CppPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleChara
 
 
 
+define('CppStringPatternIterator', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const CppStringPatternIterator = class CppStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_separator: {value: '', writable: true},
+				_separatorSequence: {value: null, writable: true},
+				_matchFunction: {value: context._matchR, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+			return this._matchFunction(matchCharacter, index);
+		}
+
+		/*
+		R"custom(minhastring)custom";
+
+		*/
+
+		_matchR(matchCharacter) {
+
+			if (matchCharacter === 'R') {
+				this._matchFunction = this._matchStartQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchStartSeparatorSequenceOrBrace;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartSeparatorSequenceOrBrace(matchCharacter) {
+
+			if (matchCharacter === '(') {
+				if (this._separator) {
+					this._separatorSequence = new SourceSimpleCharacterSequenceToken('endSeparator', [this._separator]);
+				}
+				this._matchFunction = this._matchContentOrEndBrace;
+				return true;
+			}
+
+			this._separator += matchCharacter;
+			return true;
+
+		}
+
+		_matchContentOrEndBrace(matchCharacter) {
+
+			if (matchCharacter === ')') {
+
+				if (this._separator) {
+					this._matchFunction = this._matchEndSeparatorSequence;
+				} else {
+					this._matchFunction = this._matchEndQuote;
+				}
+			}
+
+			return true;
+
+		}
+
+		_matchEndSeparatorSequence(matchCharacter, index) {
+
+			this._separatorSequence.next(matchCharacter, index); // TODO verificar se recebe index
+
+			if (this._separatorSequence.isComplete) {
+				this._matchFunction = this._matchEndQuote;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._separatorSequence.hasNext()) {
+				return true;
+			}
+
+			// FIXME verificar se pode resetar separatorSequence e matchFunction volta pra _matchContentOrEndBrace
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return CppStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for raw strings
+ */
+define('CppStringLiteralToken', ['SourcePatternIteratorToken', 'CppStringPatternIterator'], (SourcePatternIteratorToken, CppStringPatternIterator) => {
+
+	const CppStringLiteralToken = class CppStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('rstring', new CppStringPatternIterator());
+		}
+	};
+
+	return CppStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes C++ source code
  */
@@ -870,6 +1152,8 @@ define(
 		'CppKeywordToken',
 		'CppTypesToken',
 		'CppPunctuationToken',
+		'CStringLiteralToken',
+		'CppStringLiteralToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -886,6 +1170,8 @@ define(
 		CppKeywordToken,
 		CppTypesToken,
 		CppPunctuationToken,
+		CStringLiteralToken,
+		CppStringLiteralToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -930,14 +1216,15 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new CStringLiteralToken(),
+				new CppStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {
@@ -1149,6 +1436,140 @@ define('ObjCPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleChar
 
 
 
+define('ObjCStringPatternIterator', () => {
+
+	const ObjCStringPatternIterator = class ObjCStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchAt, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchAt(matchCharacter) {
+
+			if (matchCharacter === '@') {
+				this._matchFunction = this._matchStartQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (this._isEscaped) {
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| this._matchLineBreak(matchCharacter)
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return ObjCStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for strings
+ */
+define('ObjCStringLiteralToken', ['SourcePatternIteratorToken', 'ObjCStringPatternIterator'], (SourcePatternIteratorToken, ObjCStringPatternIterator) => {
+
+	const ObjCStringLiteralToken = class ObjCStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('objcstring', new ObjCStringPatternIterator());
+		}
+	};
+
+	return ObjCStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes Objective-C source code
  */
@@ -1163,6 +1584,8 @@ define(
 		'ObjCKeywordToken',
 		'ObjCTypesToken',
 		'ObjCPunctuationToken',
+		'CStringLiteralToken',
+		'ObjCStringLiteralToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -1179,6 +1602,8 @@ define(
 		ObjCKeywordToken,
 		ObjCTypesToken,
 		ObjCPunctuationToken,
+		CStringLiteralToken,
+		ObjCStringLiteralToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -1223,14 +1648,15 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new CStringLiteralToken(),
+				new ObjCStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {
@@ -1433,6 +1859,130 @@ define('SwiftPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCha
 
 
 
+define('SwiftStringPatternIterator', () => {
+
+	const SwiftStringPatternIterator = class SwiftStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			let isLineBreak = this._matchLineBreak(matchCharacter);
+
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em swift
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| isLineBreak
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return SwiftStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Swift strings
+ */
+define('SwiftStringLiteralToken', ['SourcePatternIteratorToken', 'SwiftStringPatternIterator'], (SourcePatternIteratorToken, SwiftStringPatternIterator) => {
+
+	const SwiftStringLiteralToken = class SwiftStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new SwiftStringPatternIterator());
+		}
+	};
+
+	return SwiftStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes Swift source code
  */
@@ -1446,6 +1996,7 @@ define(
 		'SwiftKeywordToken',
 		'SwiftTypesToken',
 		'SwiftPunctuationToken',
+		'SwiftStringLiteralToken',
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
@@ -1461,6 +2012,7 @@ define(
 		SwiftKeywordToken,
 		SwiftTypesToken,
 		SwiftPunctuationToken,
+		SwiftStringLiteralToken,
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
@@ -1504,14 +2056,14 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new SwiftStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {
@@ -1735,6 +2287,109 @@ define('RustPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleChar
 
 
 
+define('RustStringPatternIterator', () => {
+
+	const RustStringPatternIterator = class RustStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (this._isEscaped) {
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return RustStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Rust strings
+ */
+define('RustStringLiteralToken', ['SourcePatternIteratorToken', 'RustStringPatternIterator'], (SourcePatternIteratorToken, RustStringPatternIterator) => {
+
+	const RustStringLiteralToken = class RustStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new RustStringPatternIterator());
+		}
+	};
+
+	return RustStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes Rust source code
  */
@@ -1748,6 +2403,7 @@ define(
 		'RustKeywordToken',
 		'RustTypesToken',
 		'RustPunctuationToken',
+		'RustStringLiteralToken',
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
@@ -1763,6 +2419,7 @@ define(
 		RustKeywordToken,
 		RustTypesToken,
 		RustPunctuationToken,
+		RustStringLiteralToken,
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
@@ -1806,14 +2463,14 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new RustStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {

@@ -266,6 +266,16 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #8AD100;
 }
 
+.bubaloop.cpp .string,
+.bubaloop.cpp .rstring {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.cpp strong .string,
+.bubaloop.highlight.cpp strong .rstring {
+	color: #ffffff;
+}
+
 .bubaloop.cpp .comment,
 .bubaloop.cpp .comment a {
 	color: #D10077;
@@ -302,6 +312,16 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #8AD100;
 }
 
+.bubaloop.objectivec .string,
+.bubaloop.objectivec .objcstring {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.objectivec strong .string,
+.bubaloop.highlight.objectivec strong .objcstring {
+	color: #ffffff;
+}
+
 .bubaloop.objectivec .comment,
 .bubaloop.objectivec .comment a {
 	color: #D10077;
@@ -334,6 +354,14 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #8AD100;
 }
 
+.bubaloop.swift .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.swift strong .string {
+	color: #ffffff;
+}
+
 .bubaloop.swift .comment,
 .bubaloop.swift .comment a {
 	color: #D10077;
@@ -364,6 +392,14 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.rust .type {
 	color: #8AD100;
+}
+
+.bubaloop.rust .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.rust strong .string {
+	color: #ffffff;
 }
 
 .bubaloop.rust .comment,
@@ -592,7 +628,7 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.generic .directive,
 .bubaloop.generic .number,
 .bubaloop .boolean,
-.bubaloop.generic .string,
+.bubaloop .string,
 
 .bubaloop.javascript .variableName,
 .bubaloop.javascript .functionName,
@@ -607,7 +643,6 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.javascript .arrayDelimiter,
 .bubaloop.javascript .arraySeparator,
 .bubaloop.javascript .statementSeparator,
-.bubaloop.javascript .string,
 .bubaloop.javascript .regex,
 .bubaloop.javascript .symbol,
 .bubaloop.javascript .exceptionStub,
@@ -631,7 +666,7 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight.generic .directive,
 .bubaloop.highlight.generic .number,
 .bubaloop.highlight .boolean,
-.bubaloop.highlight.generic .string,
+.bubaloop.highlight .string,
 
 .bubaloop.highlight.javascript .variableName,
 .bubaloop.highlight.javascript .functionName,
@@ -646,7 +681,6 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight.javascript .arrayDelimiter,
 .bubaloop.highlight.javascript .arraySeparator,
 .bubaloop.highlight.javascript .statementSeparator,
-.bubaloop.highlight.javascript .string,
 .bubaloop.highlight.javascript .regex,
 .bubaloop.highlight.javascript .symbol,
 .bubaloop.highlight.javascript strong .comment, /* pq precisa disso? */
