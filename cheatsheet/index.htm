@@ -20,6 +20,8 @@
 
 <h1>Cheat Sheet</h1>
 
+<p><strong>WORK IN PROGRESS ;)</strong></p>
+
 <section>
 
 <h2>Índice</h2>
@@ -259,7 +261,194 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 
 <section>
 
-<h2 id='tiposprimitivos'>Null e Nullable</h2>
+<h2 id='modulos'>Módulos</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='stackheap'>Stack e Heap</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// TODO
+// tipos na stack por padrão
+
+// tipos com new na heap
+
+// enums?
+// closures?
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// TODO
+// structs na stack?
+// e classes?
+// enums?
+// closures? tem closures?
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// TODO
+// primtive on stack
+// structs ?? implementation dependent??
+// classes and closures on the heap
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO
+// &amp;'static str statically allocated lives inside the program binary code
+// stack by default
+// heap
+// String
+// Box&lt;T&gt;
+// Vec&lt;T&gt;
+// growable on heap
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// tipos primitivos na stack
+int i = 10;
+
+// structs às vezes na stack
+AStruct a;
+Point p;
+
+// tipos de referência na heap
+string a = "Na heap"; // TODO verificar string heap
+object o = new object();
+// enums tb?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// tipos primitivos na stack
+int i = 10;
+
+// tipos de referência na heap
+String s = "Na heap"; // TODO verificar string heap
+Object o = new Object();
+// enums tb?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// Não existe uma definição
+// na especificação
+// A máquina virtual pode ou não
+// alocar tipos primitivos
+// e tipos de referência
+// tanto na stack quanto na heap
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='nullnullable'>Null e Nullable</h2>
 
 <div class='comparison'>
 
@@ -355,6 +544,7 @@ let q = n.unwrap(); // q será do tipo i32
 
 // TODO
 let p:*const i32 = ptr::null();
+let p:*mut i32 = ptr::null();
 </code
 >
 </div>
@@ -396,7 +586,9 @@ int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// qualquer tipo é sempre nullable
+>'use strict';
+
+// qualquer tipo é sempre nullable
 let k = null;
 let l = (k &amp;&amp; k.propriedade) ? k.propriedade : null;
 
@@ -930,7 +1122,7 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='tiposprimitivos'>Conversão Entre Tipos Primitivos Numéricos</h2>
+<h2 id='conversaotiposnumericos'>Conversão Entre Tipos Numéricos</h2>
 
 <div class='comparison'>
 
@@ -1004,7 +1196,7 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='tiposprimitivos'>Literais Numéricas</h2>
+<h2 id='literaisnumericas'>Literais Numéricas</h2>
 
 <div class='comparison'>
 
@@ -1078,7 +1270,154 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='tiposprimitivos'>Template</h2>
+<h2 id='strings'>Strings</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>auto cString = "mãe d'água";
+auto cStringEscape = "A primeira faz \"tchan\"";
+auto rawString = R"(A segunda faz "tchun")";
+auto html = R"(&lt;em class="especial"&gt;ênfase&lt;/em&gt;)";
+
+auto meuSeparador = R"meuSeparador(aa)meuSeparador";
+auto meuSeparador = R"meuSeparador( )" )meuSeparador"; // FIXME highlighter raw string
+
+auto calvinHarris = "how deep\nis your love"; // 2 linhas
+
+auto pareceMasNaoE = "começa e \
+termina na mesma linha?"; // 1 linha apenas
+
+// várias linhas
+auto josePauloPaes = "Meu amor é simples, Dora,\n\
+Como a água e o pão.\n\
+\n\
+Como o céu refletido\n\
+Nas pupilas de um cão.";
+
+// várias linhas
+auto leminski = R"(Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada.)";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>let simples = "A primeira faz \"tchan\" e só";
+
+let calvinHarris = "how deep\nis your love"; // 2 linhas
+
+// várias linhas
+let josePauloPaes = "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
+"\n" +
+"Como o céu refletido\n" +
+"Nas pupilas de um cão.";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
+
+let simples = 'A primeira faz "tchan"';
+let dupla = "A segunda faz 'tchun'";
+let duplaTemplate = `A primeira faz "tchan". A segunda faz 'tchun'`;
+
+const iara = "mãe d'água";
+const modoDificil = 'O\'Reilly';
+let html = '<em class="especial">ênfase</em>';
+
+let calvinHarris = 'how deep\nis your love'; // 2 linhas
+
+let pareceMasNaoE = 'começa e \
+termina na mesma linha?'; // 1 linha apenas
+
+// várias linhas
+let josePauloPaes = 'Meu amor é simples, Dora,\n\
+Como a água e o pão.\n\
+\n\
+Como o céu refletido\n\
+Nas pupilas de um cão.';
+
+// várias linhas
+let leminskiTemplate = `Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada.`;
+
+let emoji = '😍';
+let es5 = '\uD83D\uDE0D'; // code units / surrogates
+let es6 = '\u{1F60D}'; // code point
+
+// string é imutável, então seus métodos retornam novas instâncias
+let beeGees = calvinHarris.replace('love', 'looove');
+
+'Gritando'.toUpperCase(); // retorna 'GRITANDO'</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='templateid'>Template</h2>
 
 <div class='comparison'>
 
