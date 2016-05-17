@@ -223,7 +223,7 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 			if (!this._matchKeywords(matchCharacter)) {
 				this._hasNext = false;
 				if (this._matchedKeyword) {
-					this._complete();
+					this._complete(); // FIXME se houver palavras mais lingas e o match continuar com essas palavras, tinha que invalidar o complete
 				}
 				return;
 			}
@@ -904,9 +904,9 @@ define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCha
 /**
  * Token for C++ punctuation
  */
-define('CppPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('CppPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const CppPunctuationToken = class CppPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
@@ -1374,9 +1374,9 @@ define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 /**
  * Token for Objective-C punctuation
  */
-define('ObjCPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('ObjCPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const ObjCPunctuationToken = class ObjCPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const ObjCPunctuationToken = class ObjCPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
@@ -1779,9 +1779,9 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 /**
  * Token for Swift punctuation
  */
-define('SwiftPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('SwiftPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const SwiftPunctuationToken = class SwiftPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const SwiftPunctuationToken = class SwiftPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
@@ -2211,9 +2211,9 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 /**
  * Token for Rust punctuation
  */
-define('RustPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('RustPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const RustPunctuationToken = class RustPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const RustPunctuationToken = class RustPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
@@ -2558,7 +2558,7 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'goto',
 				'if',
 				'implicit',
-				//'in', // FIXME está interferindo no tipo int, pq?
+				'in', // FIXME está interferindo no tipo int, pq?
 				'interface',
 				'internal',
 				'is',
@@ -2670,9 +2670,9 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 /**
  * Token for C# punctuation
  */
-define('CSPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('CSPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const CSPunctuationToken = class CSPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const CSPunctuationToken = class CSPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
@@ -3339,9 +3339,9 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 /**
  * Token for Java punctuation
  */
-define('JavaPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+define('JavaPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
-	const JavaPunctuationToken = class JavaPunctuationToken extends JSSimpleCharacterSequenceToken {
+	const JavaPunctuationToken = class JavaPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
 
