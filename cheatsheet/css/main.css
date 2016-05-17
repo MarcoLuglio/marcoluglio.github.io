@@ -186,9 +186,9 @@ div.codeblock.bubaloop p + code.javascript {
 	padding-top: 0;
 }
 
-/* generic */
+/* general */
 
-.bubaloop.highlight.generic strong {
+.bubaloop.highlight strong {
 	color: #101010;
 	background-color: hsl(195, 100%, 50%);
 	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
@@ -196,28 +196,30 @@ div.codeblock.bubaloop p + code.javascript {
 	z-index: 2;
 }
 
-.bubaloop.highlight.generic strong.small {
+.bubaloop.highlight strong.small {
 	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
 }
 
-.bubaloop.highlight.generic strong.comment {
+.bubaloop.highlight strong.comment {
 	background-color: #D10077;
 	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
 	z-index: 1;
 }
 
-.bubaloop.highlight.generic strong .type {
+.bubaloop.highlight strong .type {
 	color: #8a008a;
 }
 
-.bubaloop.highlight.generic strong .operator {
+.bubaloop.highlight strong .operator {
 	color: #505B66;
 }
 
-.bubaloop.highlight.generic strong .comment,
-.bubaloop.highlight.generic strong .comment a {
+.bubaloop.highlight strong .comment,
+.bubaloop.highlight strong .comment a {
 	color: #ffffff;
 }
+
+/* generic */
 
 .bubaloop.generic .keyword {
 	color: #0040B4;
