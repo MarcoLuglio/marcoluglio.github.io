@@ -274,50 +274,141 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 </div>
 
 <div class='codeblock'>
-<p>Objective-C</p>
+<p>Objective-C - MLGDentroDoModulo.h</p>
 <code class='objectivec'
+>// não possui namespaces
+// a utilização de prefixos com 3 letras
+// ou mais nas classes é a alternativa
+// recomendada
+
+#import &lt;Foundation/Foundation.h&gt;
+
+@interface MLGDentroDoModulo : NSObject
+	//
+@end</code
 >
-</code
+
+<p>Objective-C - MLGDentroDoModulo.m</p>
+<code class='objectivec'
+>#import "MLGDentroDoModulo.h"
+
+@implementation MLGDentroDoModulo
+	//
+@end</code
+>
+
+<p>Objective-C - main.m</p>
+<code class='objectivec'
+>#import &lt;Foundation/Foundation.h&gt;
+#import "MLGDentroDoModulo.h"
+
+int main(int argc, const char * argv[]) {
+	//
+	return 0;
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// a criação de namespaces é implícita
+// para cada módulo
+
+// um módulo é um agrupamento macro, bem
+// diferente do que se utiliza nas
+// outras linguagens
+
+// ele abrange um arget inteiro de
+// compilação</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
+><strong>mod</strong>
+</code
 >
+<p>Rust</p>
+<code class='rust'
+><strong>use</strong>
 </code
 >
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+<p>C# - DentroDoModulo.cs</p>
 <code class='cs'
+><strong>namespace marcoluglio {</strong>
+	public class DentroDoModulo { /**/ }
+<strong>}</strong></code
 >
-</code
+<p>C# - main.cs</p>
+<code class='cs'
+><strong>using marcoluglio;</strong>
+
+class MainClass {
+	public static void Main(string[] args) {
+		DentroDoModulo meuObjeto;
+		meuObjeto = new DentroDoModulo();
+	}
+}</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+<p>Java - marcoluglio/DentroDoModulo.java</p>
 <code class='java'
+><strong>package marcoluglio;</strong>
+
+public class DentroDoModulo { /**/ }</code
 >
+<p>Java - main.java</p>
+<code class='java'
+><strong>import marcoluglio.DentroDoModulo;</strong>
+
+public class OlaMundo {
+	public static void main(String[] args) {
+		DentroDoModulo meuObjeto;
+		meuObjeto = new DentroDoModulo();
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript compatibilidade</p>
+<code class='javascript'
+>'use strict';
+
+<strong>define('dentroDoModulo', () => {</strong>
+	const DentroDoModulo = class DentroDoModulo() { /**/ }
+	<strong>return DentroDoModulo;</strong>
+<strong>});</strong>
+
+<strong>define(['dentroDoModulo'], (DentroDoModulo) => {</strong>
+	let meuObjeto = new DentroDoModulo();
+<strong>});</strong>
 </code
 >
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
+<p>JavaScript - DentroDoModulo.js</p>
 <code class='javascript'
+>'use strict';
+
+<strong>export default class DentroDoModulo { /**/ }</strong></code
 >
-</code
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>'use strict';
+
+<strong>import DentroDoModulo from 'DentroDoModulo';</strong>
+
+let meuObjeto = new DentroDoModulo();</code
 >
 </div>
 
@@ -1270,6 +1361,80 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
+<h2 id='chars'>Chars</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='strings'>Strings</h2>
 
 <div class='comparison'>
@@ -1305,7 +1470,10 @@ que uma bela cagada.
 Cagam ricos, cagam pobres,
 cagam reis e cagam fadas.
 Não há merda que se compare
-à bosta da pessoa amada.)";</code
+à bosta da pessoa amada.)";
+
+// concatenação
+// TODO</code
 >
 </div>
 
@@ -1324,27 +1492,54 @@ Não há merda que se compare
 
 let calvinHarris = "how deep\nis your love"; // 2 linhas
 
-// várias linhas
-let josePauloPaes = "Meu amor é simples, Dora,\n" +
-"Como a água e o pão.\n" +
+// concatenação - única maneira de usar várias linhas
+let josePauloPaes = "Meu amor é simples, Dora," +
+"\nComo a água e o pão." +
 "\n" +
-"Como o céu refletido\n" +
-"Nas pupilas de um cão.";</code
+"\nComo o céu refletido" +
+"\nNas pupilas de um cão.";</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// tipo &amp;str
+
+let simples = "A primeira faz \"tchan\" e só";
+
+let calvinHarris = "how deep\nis your love"; // 2 linhas
+
+// várias linhas
+let josePauloPaes = "Meu amor é simples, Dora,
+Como a água e o pão.
+
+Como o céu refletido
+Nas pupilas de um cão.";
+
+// concatenação
+let leminski = concat!("Merda é veneno.",
+	"No entanto, não há nada",
+	"que seja mais bonito",
+	"que uma bela cagada.",
+	"Cagam ricos, cagam pobres,",
+	"cagam reis e cagam fadas.",
+	"Não há merda que se compare",
+	"à bosta da pessoa amada."
+);
+
+// tipo String
+
+let simples = "A primeira faz \"tchan\" e só".to_string();</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
+>var simples = "A primeira faz \"tchan\"";
+var dupla = @"A segunda faz ""tchun""";
+var interpolated = $"A segunda faz ""tchun"""; // TODO testar no windows
 </code
 >
 </div>
@@ -1352,8 +1547,32 @@ let josePauloPaes = "Meu amor é simples, Dora,\n" +
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>String simples = "A primeira faz \"tchan\" e só";
+
+String calvinHarris = "how deep\nis your love"; // 2 linhas
+
+// concatenação - única maneira de usar várias linhas
+String josePauloPaes = "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
+"\n" +
+"Como o céu refletido\n" +
+"Nas pupilas de um cão.";
+
+// concatenação
+StringBuilder leminskiBuilder = new StringBuilder();
+leminskiBuilder.append("Merda é veneno.");
+leminskiBuilder.append("\nNo entanto, não há nada");
+leminskiBuilder.append("\nque seja mais bonito");
+leminskiBuilder.append("\nque uma bela cagada.");
+leminskiBuilder.append("\nCagam ricos, cagam pobres,");
+leminskiBuilder.append("\ncagam reis e cagam fadas.");
+leminskiBuilder.append("\nNão há merda que se compare");
+leminskiBuilder.append("\nà bosta da pessoa amada.");
+
+String leminski = leminskiBuilder.toString();
+
+// StringBuilder não é thread safe
+// Existe também a classe StringBuffer, que é</code
 >
 </div>
 
