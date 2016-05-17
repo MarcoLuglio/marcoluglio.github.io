@@ -1289,6 +1289,10 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 		constructor() {
 			super('keyword', [
 
+				'@interface',
+				'@implementation',
+				'@end',
+				'@synthesize',
 				'break',
 				'const',
 				'for',
