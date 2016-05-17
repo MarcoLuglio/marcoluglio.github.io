@@ -2558,14 +2558,13 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'goto',
 				'if',
 				'implicit',
-				'in',
+				//'in', // FIXME está interferindo no tipo int, pq?
 				'interface',
 				'internal',
 				'is',
 				'lock',
 				'namespace',
 				'new',
-				'object',
 				'operator',
 				'out',
 				'override',
@@ -2647,6 +2646,7 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 				'float',
 				'int',
 				'long',
+				'object',
 				'sbyte',
 				'short',
 				'string',
@@ -2740,6 +2740,362 @@ define('CSPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharac
 
 
 
+define('CSStringPatternIterator', () => {
+
+	const CSStringPatternIterator = class CSStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			let isLineBreak = this._matchLineBreak(matchCharacter);
+
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em swift
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| isLineBreak
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return CSStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for C# strings
+ */
+define('CSStringLiteralToken', ['SourcePatternIteratorToken', 'CSStringPatternIterator'], (SourcePatternIteratorToken, CSStringPatternIterator) => {
+
+	const CSStringLiteralToken = class CSStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new CSStringPatternIterator());
+		}
+	};
+
+	return CSStringLiteralToken;
+
+});
+
+
+
+define('CSVerbatimStringPatternIterator', () => {
+
+	const CSVerbatimStringPatternIterator = class CSVerbatimStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchAt, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchAt(matchCharacter) {
+
+			if (matchCharacter === '@') {
+				this._matchFunction = this._matchStartQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+
+				if (this._isEscaped) {
+					this._isEscaped = false;
+				} else {
+					this._isEscaped = true;
+				}
+
+				return true;
+
+			}
+
+			// se aspas não foi seguido de outras aspas
+			// termina a string imediatamente
+			if (this._isEscaped) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return CSVerbatimStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for C# verbatim (@) strings
+ */
+define('CSVerbatimStringLiteralToken', ['SourcePatternIteratorToken', 'CSVerbatimStringPatternIterator'], (SourcePatternIteratorToken, CSVerbatimStringPatternIterator) => {
+
+	const CSVerbatimStringLiteralToken = class CSVerbatimStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('vstring', new CSVerbatimStringPatternIterator());
+		}
+	};
+
+	return CSVerbatimStringLiteralToken;
+
+});
+
+
+
+define('CSInterpolatedStringPatternIterator', () => {
+
+	const CSInterpolatedStringPatternIterator = class CSInterpolatedStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchCurrency, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchCurrency(matchCharacter) {
+
+			if (matchCharacter === '$') {
+				this._matchFunction = this._matchStartQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+
+				if (this._isEscaped) {
+					this._isEscaped = false;
+				} else {
+					this._isEscaped = true;
+				}
+
+				return true;
+
+			}
+
+			// se aspas não foi seguido de outras aspas
+			// termina a string imediatamente
+			if (this._isEscaped) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return CSInterpolatedStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for C# interpolated ($) strings
+ */
+define('CSInterpolatedStringLiteralToken', ['SourcePatternIteratorToken', 'CSInterpolatedStringPatternIterator'], (SourcePatternIteratorToken, CSInterpolatedStringPatternIterator) => {
+
+	const CSInterpolatedStringLiteralToken = class CSInterpolatedStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('istring', new CSInterpolatedStringPatternIterator());
+		}
+	};
+
+	return CSInterpolatedStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes C# source code
  */
@@ -2753,6 +3109,9 @@ define(
 		'CSKeywordToken',
 		'CSTypesToken',
 		'CSPunctuationToken',
+		'CSStringLiteralToken',
+		'CSVerbatimStringLiteralToken',
+		'CSInterpolatedStringLiteralToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -2768,6 +3127,9 @@ define(
 		CSKeywordToken,
 		CSTypesToken,
 		CSPunctuationToken,
+		CSStringLiteralToken,
+		CSVerbatimStringLiteralToken,
+		CSInterpolatedStringLiteralToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -2811,14 +3173,16 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new CSStringLiteralToken(),
+				new CSVerbatimStringLiteralToken(),
+				new CSInterpolatedStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {
@@ -2955,6 +3319,7 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'float',
 				'int',
 				'long',
+				'Object',
 				'short',
 				'String'
 			]);
@@ -3046,6 +3411,130 @@ define('JavaPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleChar
 
 
 
+define('JavaStringPatternIterator', () => {
+
+	const JavaStringPatternIterator = class JavaStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			let isLineBreak = this._matchLineBreak(matchCharacter);
+
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em swift
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| isLineBreak
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return JavaStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Java strings
+ */
+define('JavaStringLiteralToken', ['SourcePatternIteratorToken', 'JavaStringPatternIterator'], (SourcePatternIteratorToken, JavaStringPatternIterator) => {
+
+	const JavaStringLiteralToken = class JavaStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new JavaStringPatternIterator());
+		}
+	};
+
+	return JavaStringLiteralToken;
+
+});
+
+
+
 /**
  * Tokenizes Java source code
  */
@@ -3059,6 +3548,7 @@ define(
 		'JavaKeywordToken',
 		'JavaTypesToken',
 		'JavaPunctuationToken',
+		'JavaStringLiteralToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -3074,6 +3564,7 @@ define(
 		JavaKeywordToken,
 		JavaTypesToken,
 		JavaPunctuationToken,
+		JavaStringLiteralToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -3117,14 +3608,14 @@ define(
 		}
 
 		_pushLiteralTokens() {
-			/*this._tokenPool.splice(
+			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				new JSDecimalLiteralToken(),
+				/*new JSDecimalLiteralToken(),
 				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),
-				new JSStringLiteralToken()
-			);*/
+				new JSRegexLiteralToken(),*/
+				new JavaStringLiteralToken()
+			);
 		}
 
 		_pushInvisibleTokens() {

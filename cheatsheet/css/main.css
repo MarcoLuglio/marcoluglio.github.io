@@ -434,6 +434,18 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #8AD100;
 }
 
+.bubaloop.cs .string,
+.bubaloop.cs .vstring, /* verbatim (@) strings */
+.bubaloop.cs .istring { /* interpolated ($) strings */
+	color: #0099FF;
+}
+
+.bubaloop.highlight.cs strong .string,
+.bubaloop.highlight.cs strong .vstring,
+.bubaloop.highlight.cs strong .istring {
+	color: #ffffff;
+}
+
 .bubaloop.cs .comment,
 .bubaloop.cs .comment a {
 	color: #D10077;
@@ -464,6 +476,14 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.java .type {
 	color: #8AD100;
+}
+
+.bubaloop.java .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.java strong .string {
+	color: #ffffff;
 }
 
 .bubaloop.java .comment,
@@ -623,9 +643,9 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop .keyword,
 .bubaloop .type,
 .bubaloop.generic .symbol,
-.bubaloop.generic .operator,
+.bubaloop .operator,
 .bubaloop .comment,
-.bubaloop.generic .directive,
+.bubaloop .directive,
 .bubaloop.generic .number,
 .bubaloop .boolean,
 .bubaloop .string,
@@ -647,7 +667,6 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.javascript .symbol,
 .bubaloop.javascript .exceptionStub,
 .bubaloop.javascript .number,
-.bubaloop.javascript .operator,
 
 .bubaloop.html .doctype,
 .bubaloop.html .tag,
@@ -661,9 +680,9 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight .keyword,
 .bubaloop.highlight .type,
 .bubaloop.highlight.generic .symbol,
-.bubaloop.highlight.generic .operator,
+.bubaloop.highlight .operator,
 .bubaloop.highlight .comment,
-.bubaloop.highlight.generic .directive,
+.bubaloop.highlight .directive,
 .bubaloop.highlight.generic .number,
 .bubaloop.highlight .boolean,
 .bubaloop.highlight .string,
@@ -687,7 +706,6 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight.javascript .number,
 .bubaloop.highlight.javascript .null,
 .bubaloop.highlight.javascript .undefined,
-.bubaloop.highlight.javascript .operator,
 
 .bubaloop.highlight.html .doctype,
 .bubaloop.highlight.html .tag,
