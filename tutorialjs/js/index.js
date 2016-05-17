@@ -19,6 +19,10 @@ define('Index', ['RangeIterator', 'NodeListIterator'], (RangeIterator, NodeListI
 
 			const container = document.getElementById(containerId);
 
+			if (!container) {
+				return;
+			}
+
 			let firstLevel = 2;
 			if (showFirstLevel) {
 				firstLevel = 1;
