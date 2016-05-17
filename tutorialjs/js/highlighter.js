@@ -858,6 +858,7 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 			Object.defineProperties(this, {
 				type: {value: type},
+				_previousMatchedKeyword: {value: null, writable: true},
 				_matchedKeyword: {value: null, writable: true},
 				_keywordsPool: {value: []},
 				_keyword: {value: null, writable: true},
@@ -906,6 +907,11 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 		_matchKeywords(matchCharacter) {
 
+			if (this._keywordsPool.length > 1) {
+				this._previousMatchedKeyword = this._matchedKeyword;
+				this._matchedKeyword = null;
+			}
+
 			for (let i = this._keywordsPool.length - 1; i > -1; i--) {
 
 				this._keyword = this._keywordsPool[i];
@@ -926,6 +932,8 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 			if (this._keywordsPool.length > 0) {
 				return true;
+			} else if (this._previousMatchedKeyword) {
+				this._matchedKeyword = this._previousMatchedKeyword;
 			}
 
 			return false;
@@ -1225,7 +1233,6 @@ define('JSKeywordToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterS
 				'const',
 				'continue',
 				'debugger',
-				'default',
 				'delete',
 				'do',
 				'else',
@@ -1258,8 +1265,10 @@ define('JSKeywordToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterS
 				'yield*',
 
 				// modules
-				//'import',
-				//'export',
+				'default',
+				'from',
+				'import',
+				'export',
 
 				// arrow function
 				'=&gt;',
@@ -1300,7 +1309,7 @@ define('JSKeywordToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterS
 				'volatile',
 
 				// insteresting words
-				'constructor', // não realça por conflito com const. function e function* tb conflitam
+				'constructor',
 				'configurable',
 				'enumerable',
 				'value',
