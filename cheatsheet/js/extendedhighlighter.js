@@ -199,6 +199,7 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 			Object.defineProperties(this, {
 				type: {value: type},
+				_previousMatchedKeyword: {value: null, writable: true},
 				_matchedKeyword: {value: null, writable: true},
 				_keywordsPool: {value: []},
 				_keyword: {value: null, writable: true},
@@ -223,7 +224,7 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 			if (!this._matchKeywords(matchCharacter)) {
 				this._hasNext = false;
 				if (this._matchedKeyword) {
-					this._complete(); // FIXME se houver palavras mais lingas e o match continuar com essas palavras, tinha que invalidar o complete
+					this._complete();
 				}
 				return;
 			}
@@ -247,6 +248,11 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 		_matchKeywords(matchCharacter) {
 
+			if (this._keywordsPool.length > 1) {
+				this._previousMatchedKeyword = this._matchedKeyword;
+				this._matchedKeyword = null;
+			}
+
 			for (let i = this._keywordsPool.length - 1; i > -1; i--) {
 
 				this._keyword = this._keywordsPool[i];
@@ -267,6 +273,8 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 			if (this._keywordsPool.length > 0) {
 				return true;
+			} else if (this._previousMatchedKeyword) {
+				this._matchedKeyword = this._previousMatchedKeyword;
 			}
 
 			return false;
