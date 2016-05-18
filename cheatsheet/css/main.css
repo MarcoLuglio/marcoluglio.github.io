@@ -119,6 +119,10 @@ div code {
 	margin-right: 10px;
 }
 
+.comparison.large .codeblock {
+	margin-right: 70px;
+}
+
 .comparison .codeblock:last-child {
 	margin-right: 0;
 }
@@ -771,6 +775,8 @@ code:hover .highlightControls {
 	margin-bottom: 21px;
 	min-width: 170px;
 	border-collapse: collapse;
+	white-space: nowrap;
+	width: 240px;
 }
 
 .tiposprimitivos th {
@@ -786,4 +792,8 @@ code:hover .highlightControls {
 .tiposprimitivos th,
 .tiposprimitivos td {
 	border: 1px solid #EEEEEE;
+}
+
+.tiposprimitivos .codeblock p {
+	width: 240px;
 }
