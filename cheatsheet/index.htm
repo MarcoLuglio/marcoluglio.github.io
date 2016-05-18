@@ -263,13 +263,68 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 
 <h2 id='modulos'>Módulos</h2>
 
-<div class='comparison'>
+<div class='comparison large'>
 
 <div class='codeblock'>
-<p>C++</p>
+<p>C++ Microsoft - DentroDoModulo.hpp</p>
 <code class='cpp'
+><strong>#pragma once</strong>
+
+<strong>namespace marcoluglio {</strong>
+	class DentroDoModulo {};
+<strong>}</strong></code
 >
-</code
+
+<p>C++ - DentroDoModulo.cpp</p>
+<code class='cpp'
+><strong>#include "DentroDoModulo.hpp"</strong>
+
+<strong>namespace marcoluglio {</strong>
+	//
+<strong>}</strong></code
+>
+
+<p>C++ - main.cpp</p>
+<code class='cpp'
+><strong>#include "DentroDoModulo.hpp"</strong>
+
+int main(int argc, const char * argv[]) {
+	<strong>using marcoluglio::DentroDoModulo;</strong>
+	DentroDoModulo meuObjeto = DentroDoModulo();
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++ - DentroDoModulo.hpp</p>
+<code class='cpp'
+><strong>#ifndef MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED</strong>
+<strong>#define MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED</strong>
+
+<strong>namespace marcoluglio {</strong>
+	class DentroDoModulo {};
+<strong>}</strong>
+
+<strong>#endif /* MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED */</strong></code
+>
+
+<p>C++ - DentroDoModulo.cpp</p>
+<code class='cpp'
+><strong>#include "DentroDoModulo.hpp"</strong>
+
+<strong>namespace marcoluglio {</strong>
+	//
+<strong>}</strong></code
+>
+
+<p>C++ - main.cpp</p>
+<code class='cpp'
+><strong>#include "DentroDoModulo.hpp"</strong>
+
+int main(int argc, const char * argv[]) {
+	<strong>using marcoluglio::DentroDoModulo;</strong>
+	DentroDoModulo meuObjeto = DentroDoModulo();
+}</code
 >
 </div>
 
@@ -283,14 +338,14 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 
 #import &lt;Foundation/Foundation.h&gt;
 
-@interface MLGDentroDoModulo : NSObject
+<strong>@interface MLGDentroDoModulo : NSObject</strong>
 	//
 @end</code
 >
 
 <p>Objective-C - MLGDentroDoModulo.m</p>
 <code class='objectivec'
->#import "MLGDentroDoModulo.h"
+><strong>#import "MLGDentroDoModulo.h"</strong>
 
 @implementation MLGDentroDoModulo
 	//
@@ -300,17 +355,18 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 <p>Objective-C - main.m</p>
 <code class='objectivec'
 >#import &lt;Foundation/Foundation.h&gt;
-#import "MLGDentroDoModulo.h"
+<strong>#import "MLGDentroDoModulo.h"</strong>
 
 int main(int argc, const char * argv[]) {
-	//
+	MLGDentroDoModulo* meuObjeto;
+	meuObjeto = [[MLGDentroDoModulo alloc] init];
 	return 0;
 }</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+<p>Swift - DentroDoModulo.swift</p>
 <code class='swift'
 >// a criação de namespaces é implícita
 // para cada módulo
@@ -319,8 +375,19 @@ int main(int argc, const char * argv[]) {
 // diferente do que se utiliza nas
 // outras linguagens
 
-// ele abrange um arget inteiro de
-// compilação</code
+// ele abrange um target inteiro de
+// compilação como um framework,
+// uma biblioteca ou um executável
+
+<strong>import UIKit</strong>
+
+class DentroDoModulo: UIViewController {
+}</code
+>
+
+<p>Swift - main.swift</p>
+<code class='swift'
+>let meuObjeto = DentroDoModulo()</code
 >
 </div>
 
@@ -415,7 +482,12 @@ let meuObjeto = new DentroDoModulo();</code
 </div>
 
 <ol>
-	<li>a</li>
+	<li>C# / Java</li>
+	<li>JavaScript</li>
+	<li>Rust</li>
+	<li>C++</li>
+	<li>Swift</li>
+	<li>Objective-C</li>
 </ol>
 
 <p>A</p>
@@ -485,17 +557,24 @@ let meuObjeto = new DentroDoModulo();</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// tipos primitivos na stack
+>// tipos valor na stack
+
+// tipos primitivos na stack
 int i = 10;
+
+// enums na stack
 
 // structs às vezes na stack
 AStruct a;
 Point p;
 
+// nullables na stack
+
 // tipos de referência na heap
+
+// class, interface, array e delegate
 string a = "Na heap"; // TODO verificar string heap
-object o = new object();
-// enums tb?</code
+object o = new object();</code
 >
 </div>
 
@@ -528,7 +607,10 @@ Object o = new Object();
 </div>
 
 <ol>
-	<li>a</li>
+	<li>C++ / Rust</li>
+	<li>Objective-C / Swift / C#</li>
+	<li>Java</li>
+	<li>JavaScript</li>
 </ol>
 
 <p>A</p>
@@ -705,11 +787,15 @@ let n = (k || k === 0) ? k : 10;</code
 
 <section class='tiposprimitivos'>
 
-<h2 id='tiposprimitivos'>Tipos Primitivos Numéricos</h2>
+<h2 id='tiposnumericos'>Tipos Primitivos Numéricos</h2>
+
+
+
+<h3>Integer</h3>
 
 <div class='comparison'>
 
-<div>
+<div class='codeblock'>
 <p>C++</p>
 
 <table>
@@ -721,99 +807,11 @@ let n = (k || k === 0) ? k : 10;</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>char</td><td>?</td></tr>
+		<tr><td>char</td><td>8 bits?</td></tr>
 		<tr><td>short</td><td>16 bits ou mais</td></tr>
 		<tr><td>int</td><td>16 bits ou mais</td></tr>
 		<tr><td>long</td><td>32 bits ou mais</td></tr>
 		<tr><td>long long</td><td>64 bits ou mais</td></tr>
-		<tr><td>int8_t</td><td>8 bits</td></tr>
-		<tr><td>int16_t</td><td>16 bits</td></tr>
-		<tr><td>int32_t</td><td>32 bits</td></tr>
-		<tr><td>int64_t</td><td>64 bits</td></tr>
-		<tr><td>int_least8_t</td><td>8 bits ou mais</td></tr>
-		<tr><td>int_least16_t</td><td>16 bits ou mais</td></tr>
-		<tr><td>int_least32_t</td><td>32 bits ou mais</td></tr>
-		<tr><td>int_least64_t</td><td>64 bits ou mais</td></tr>
-		<tr><td>int_fast8_t</td><td>8 bits ou mais</td></tr>
-		<tr><td>int_fast16_t</td><td>16 bits ou mais</td></tr>
-		<tr><td>int_fast32_t</td><td>32 bits ou mais</td></tr>
-		<tr><td>int_fast64_t</td><td>64 bits ou mais</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>char</td><td>?</td></tr>
-		<tr><td>unsigned short</td><td>16 bits ou mais</td></tr>
-		<tr><td>unsigned int</td><td>16 bits ou mais</td></tr>
-		<tr><td>unsigned long</td><td>32 bits ou mais</td></tr>
-		<tr><td>unsigned long long</td><td>64 bits ou mais</td></tr>
-		<tr><td>uint8_t</td><td>8 bits</td></tr>
-		<tr><td>uint16_t</td><td>16 bits</td></tr>
-		<tr><td>uint32_t</td><td>32 bits</td></tr>
-		<tr><td>uint64_t</td><td>64 bits</td></tr>
-		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
-		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
-		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
-		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
-		<tr><td>uint_fast8_t</td><td>8 bits ou mais</td></tr>
-		<tr><td>uint_fast16_t</td><td>16 bits ou mais</td></tr>
-		<tr><td>uint_fast32_t</td><td>32 bits ou mais</td></tr>
-		<tr><td>uint_fast64_t</td><td>64 bits ou mais</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Pointer Sized Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>intptr_t</td><td>Depende do hardware</td></tr>
-		<tr><td>uintptr_t</td><td>Depende do hardware</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>float</td><td>?</td></tr>
-		<tr><td>double</td><td>?</td></tr>
-		<tr><td>long double</td><td>?</td></tr>
-	</tbody>
-</table>
-
-</div>
-
-<div>
-<p>Objective-C</p>
-
-<table>
-	<caption>Numeric</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>NSNumber</td><td>cluster de tipos</td></tr>
 	</tbody>
 </table>
 
@@ -826,15 +824,22 @@ let n = (k || k === 0) ? k : 10;</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>char</td><td>?</td></tr>
-		<tr><td>short</td><td>?</td></tr>
-		<tr><td>int</td><td>?</td></tr>
-		<tr><td>long</td><td>?</td></tr>
-		<tr><td>long long</td><td>?</td></tr>
 		<tr><td>int8_t</td><td>8 bits</td></tr>
 		<tr><td>int16_t</td><td>16 bits</td></tr>
 		<tr><td>int32_t</td><td>32 bits</td></tr>
 		<tr><td>int64_t</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
 		<tr><td>int_least8_t</td><td>8 bits ou mais</td></tr>
 		<tr><td>int_least16_t</td><td>16 bits ou mais</td></tr>
 		<tr><td>int_least32_t</td><td>32 bits ou mais</td></tr>
@@ -843,7 +848,7 @@ let n = (k || k === 0) ? k : 10;</code
 </table>
 
 <table>
-	<caption>Unsigned Integer</caption>
+	<caption>Signed Integer</caption>
 	<thead>
 		<tr><th>tipo</th><th>tamanho</th></tr>
 	</thead>
@@ -851,55 +856,71 @@ let n = (k || k === 0) ? k : 10;</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>unsigned char</td><td>?</td></tr>
-		<tr><td>unsigned short</td><td>?</td></tr>
-		<tr><td>unsigned int</td><td>?</td></tr>
-		<tr><td>unsigned long</td><td>?</td></tr>
-		<tr><td>unsigned long long</td><td>?</td></tr>
-		<tr><td>uint8_t</td><td>8 bits</td></tr>
-		<tr><td>uint16_t</td><td>16 bits</td></tr>
-		<tr><td>uint32_t</td><td>32 bits</td></tr>
-		<tr><td>uint64_t</td><td>64 bits</td></tr>
-		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
-		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
-		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
-		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Pointer Sized Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>NSInteger</td><td>32 ou 64 bits</td></tr>
-		<tr><td>NSUInteger</td><td>32 ou 64 bits</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>float</td><td>?</td></tr>
-		<tr><td>double</td><td>?</td></tr>
-		<tr><td>long double</td><td>?</td></tr>
+		<tr><td>int_fast8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>int_fast16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>int_fast32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>int_fast64_t</td><td>64 bits ou mais</td></tr>
 	</tbody>
 </table>
 
 </div>
 
-<div>
-<p>Swift compatibilidade</p>
+<div class='codeblock'>
+<p>Objective-C</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>char</td><td>8 bits?</td></tr>
+		<tr><td>short</td><td>16 bits?</td></tr>
+		<tr><td>int</td><td>16 bits?</td></tr>
+		<tr><td>long</td><td>32 bits?</td></tr>
+		<tr><td>long long</td><td>64 bits?</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>int8_t</td><td>8 bits</td></tr>
+		<tr><td>int16_t</td><td>16 bits</td></tr>
+		<tr><td>int32_t</td><td>32 bits</td></tr>
+		<tr><td>int64_t</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>int_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>int_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>int_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>int_least64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift (Obj-C)</p>
 
 <table>
 	<caption>Signed Integer</caption>
@@ -918,40 +939,9 @@ let n = (k || k === 0) ? k : 10;</code
 	</tbody>
 </table>
 
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>CUnsignedChar</td><td>8 bits</td></tr>
-		<tr><td>CUnsignedShort</td><td>16 bits</td></tr>
-		<tr><td>CUnsignedInt</td><td>16 bits</td></tr>
-		<tr><td>CUnsignedLong</td><td>32 bits</td></tr>
-		<tr><td>CUnsignedLongLong</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point (IEEE-754)</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>CFloat</td><td>32 bits</td></tr>
-		<tr><td>CDouble</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
 </div>
 
-<div>
+<div class='codeblock'>
 <p>Swift</p>
 
 <table>
@@ -970,53 +960,9 @@ let n = (k || k === 0) ? k : 10;</code
 	</tbody>
 </table>
 
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>UInt8</td><td>8 bits</td></tr>
-		<tr><td>UInt16</td><td>16 bits</td></tr>
-		<tr><td>UInt32</td><td>32 bits</td></tr>
-		<tr><td>UInt64</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Pointer Sized Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>Int</td><td>Depende do Hardware</td></tr>
-		<tr><td>UInt</td><td>Depende do Hardware</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point (IEEE-754)</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>Float</td><td>32 bits</td></tr>
-		<tr><td>Double</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
 </div>
 
-<div>
+<div class='codeblock'>
 <p>Rust</p>
 
 <table>
@@ -1035,53 +981,9 @@ let n = (k || k === 0) ? k : 10;</code
 	</tbody>
 </table>
 
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>u8</td><td>8 bits</td></tr>
-		<tr><td>u16</td><td>16 bits</td></tr>
-		<tr><td>u32</td><td>32 bits</td></tr>
-		<tr><td>u64</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Pointer Sized Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>isize</td><td>Depende do hardware</td></tr>
-		<tr><td>usize</td><td>Depende do hardware</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point (IEEE-754)</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>f32</td><td>32 bits</td></tr>
-		<tr><td>f64</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
 </div>
 
-<div>
+<div class='codeblock'>
 <p>C#</p>
 
 <table>
@@ -1101,40 +1003,9 @@ let n = (k || k === 0) ? k : 10;</code
 	</tbody>
 </table>
 
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>byte</td><td>8 bits</td></tr>
-		<tr><td>ushort</td><td>16 bits</td></tr>
-		<tr><td>uint</td><td>32 bits</td></tr>
-		<tr><td>ulong</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>float</td><td>32 bits</td></tr>
-		<tr><td>double</td><td>64 bits</td></tr>
-		<tr><td>decimal</td><td>128 bits</td></tr>
-	</tbody>
-</table>
-
 </div>
 
-<div>
+<div class='codeblock'>
 <p>Java</p>
 
 <table>
@@ -1153,6 +1024,508 @@ let n = (k || k === 0) ? k : 10;</code
 	</tbody>
 </table>
 
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+
+
+<h3>Unsigned Integer</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>char</td><td>8 bits?</td></tr>
+		<tr><td>unsigned short</td><td>16 bits ou mais</td></tr>
+		<tr><td>unsigned int</td><td>16 bits ou mais</td></tr>
+		<tr><td>unsigned long</td><td>32 bits ou mais</td></tr>
+		<tr><td>unsigned long long</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>uint8_t</td><td>8 bits</td></tr>
+		<tr><td>uint16_t</td><td>16 bits</td></tr>
+		<tr><td>uint32_t</td><td>32 bits</td></tr>
+		<tr><td>uint64_t</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>uint_fast8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_fast16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_fast32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_fast64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>unsigned char</td><td>8 bits?</td></tr>
+		<tr><td>unsigned short</td><td>16 bits?</td></tr>
+		<tr><td>unsigned int</td><td>16 bits?</td></tr>
+		<tr><td>unsigned long</td><td>32 bits?</td></tr>
+		<tr><td>unsigned long long</td><td>64 bits?</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>uint8_t</td><td>8 bits</td></tr>
+		<tr><td>uint16_t</td><td>16 bits</td></tr>
+		<tr><td>uint32_t</td><td>32 bits</td></tr>
+		<tr><td>uint64_t</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>uint_least8_t</td><td>8 bits ou mais</td></tr>
+		<tr><td>uint_least16_t</td><td>16 bits ou mais</td></tr>
+		<tr><td>uint_least32_t</td><td>32 bits ou mais</td></tr>
+		<tr><td>uint_least64_t</td><td>64 bits ou mais</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift (Obj-C)</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>CUnsignedChar</td><td>8 bits</td></tr>
+		<tr><td>CUnsignedShort</td><td>16 bits</td></tr>
+		<tr><td>CUnsignedInt</td><td>16 bits</td></tr>
+		<tr><td>CUnsignedLong</td><td>32 bits</td></tr>
+		<tr><td>CUnsignedLongLong</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>UInt8</td><td>8 bits</td></tr>
+		<tr><td>UInt16</td><td>16 bits</td></tr>
+		<tr><td>UInt32</td><td>32 bits</td></tr>
+		<tr><td>UInt64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>u8</td><td>8 bits</td></tr>
+		<tr><td>u16</td><td>16 bits</td></tr>
+		<tr><td>u32</td><td>32 bits</td></tr>
+		<tr><td>u64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>8 bits</td></tr>
+		<tr><td>ushort</td><td>16 bits</td></tr>
+		<tr><td>uint</td><td>32 bits</td></tr>
+		<tr><td>ulong</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+
+
+<h3>Pointer Sized Integer</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>intptr_t</td><td>Depende do hardware</td></tr>
+		<tr><td>uintptr_t</td><td>Depende do hardware</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>NSInteger</td><td>32 ou 64 bits</td></tr>
+		<tr><td>NSUInteger</td><td>32 ou 64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift (Obj-C)</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Int</td><td>Depende do Hardware</td></tr>
+		<tr><td>UInt</td><td>Depende do Hardware</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>isize</td><td>Depende do hardware</td></tr>
+		<tr><td>usize</td><td>Depende do hardware</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+
+
+<h3>Floating Point</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>?</td></tr>
+		<tr><td>double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>long double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>?</td></tr>
+		<tr><td>double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>long double</td><td>?</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift (Obj-C)</p>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>CFloat</td><td>32 bits</td></tr>
+		<tr><td>CDouble</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Float</td><td>32 bits</td></tr>
+		<tr><td>Double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>f32</td><td>32 bits</td></tr>
+		<tr><td>f64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>decimal</td><td>128 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+
 <table>
 	<caption>Floating Point (IEEE 754)</caption>
 	<thead>
@@ -1169,7 +1542,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 </div>
 
-<div>
+<div class='codeblock'>
 <p>JavaScript</p>
 
 <table>
@@ -1189,6 +1562,62 @@ let n = (k || k === 0) ? k : 10;</code
 
 </div>
 
+
+
+<h3>Etc</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>NSNumber</td><td>cluster de tipos</td></tr>
+	</tbody>
+</table>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+
+
 <ol>
 	<li>Rust</li>
 	<li>Swift</li>
@@ -1200,12 +1629,155 @@ let n = (k || k === 0) ? k : 10;</code
 </ol>
 
 <p>Rust nomeia claramente os tipos numéricos que usa, além de usar nomes curtos.<br />
-Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='swift'>Int</code> e <code class='swift'>Double</code>. Possui também tipos para compatibilidade com as <abbr>API</abbr>s em C.<br />
+Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='swift'>Int</code> e <code class='swift'>Double</code>. Possui também tipos para compatibilidade com as <abbr>API</abbr>s em C e Objective-C.<br />
 C# mantém os nomes herdados do C (embora seja possível criar <em>type aliases</em> por arquivo). Notem a inconsistência com <code class='cs'>sbyte</code> e <code class='cs'>byte</code> devido a esta decisão. C# possui um tipo de 128 bits. Como roda numa máquina virtual, não possui tipos com tamanhos de memória como Rust e Swift. Não sei ao certo como é feito com <em>Native</em> .NET.<br />
 Java não possui tipos sem sinal.<br />
 C++ possui uma leve melhoria em relação à C, mas ainda é bem extenso.<br />
 Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short <= int <= long <= long long</code>. Mesma coisa vale para <code class='objectivec'>float <= double <= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os tipos incluídos pelo framework da Apple.<br />
 JavaScript só possui um tipo numérico.</p>
+<p>Notem que existe uma divergência entre C++ e Objective-C e as demais linguagens em relação à nomeclatura. Para as duas linguagens, <code class='cpp'>int</code> e <code class='cpp'>long</code> possuem tamanhos diferentes das demais. Por isso, ponto para as linguagens que indicam explicitamente o tamanho dos tipos no próprio nome.</p>
+
+</section>
+
+
+
+<section class='tiposprimitivos'>
+
+<h2 id='boxtiposnumericos'>Boxing de Tipos Primitivos Numéricos</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+?
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+?
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+?
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+?
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>struct</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>sbyte</td><td>SByte</td></tr>
+		<tr><td>short</td><td>Int16</td></tr>
+		<tr><td>int</td><td>Int32</td></tr>
+		<tr><td>long</td><td>Int64</td></tr>
+		<tr><td>decimal</td><td>Decimal</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>Byte</td></tr>
+		<tr><td>ushort</td><td>UInt16</td></tr>
+		<tr><td>uint</td><td>UInt32</td></tr>
+		<tr><td>ulong</td><td>UInt64</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>Single</td></tr>
+		<tr><td>double</td><td>Double</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>decimal</td><td>Decimal</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>Byte</td></tr>
+		<tr><td>short</td><td>Short</td></tr>
+		<tr><td>int</td><td>Integer</td></tr>
+		<tr><td>long</td><td>Long</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>Float</td></tr>
+		<tr><td>double</td><td>Double</td></tr>
+	</tbody>
+</table>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
 
 </section>
 
@@ -1213,7 +1785,7 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='conversaotiposnumericos'>Conversão Entre Tipos Numéricos</h2>
+<h2 id='conversoesnumericas'>Conversão Entre Tipos Numéricos</h2>
 
 <div class='comparison'>
 
@@ -1252,8 +1824,41 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>// as divisões, multiplicações, etc resultam no quê?
+
+// conversão implícita se o número couber no outro
+// byte -> int, uint ou float por exemplo
+// sbyte -> int ou float
+
+// conversão explícita
+// entre integrals
+// entre floats
+// de floats para integrals
+
+// tipo numerico não converte pra char
+
+/*
+The explicit numeric conversion may cause loss of precision or result in throwing exceptions.
+
+When you convert a decimal value to an integral type, this value is rounded towards zero to the nearest integral value. If the resulting integral value is outside the range of the destination type, an OverflowException is thrown.
+
+When you convert from a double or float value to an integral type, the value is truncated. If the resulting integral value is outside the range of the destination value, the result depends on the overflow checking context. In a checked context, an OverflowException is thrown, while in an unchecked context, the result is an unspecified value of the destination type.
+
+When you convert double to float, the double value is rounded to the nearest float value. If the double value is too small or too large to fit into the destination type, the result will be zero or infinity.
+
+When you convert float or double to decimal, the source value is converted to decimal representation and rounded to the nearest number after the 28th decimal place if required. Depending on the value of the source value, one of the following results may occur:
+
+If the source value is too small to be represented as a decimal, the result becomes zero.
+
+If the source value is NaN (not a number), infinity, or too large to be represented as a decimal, an OverflowException is thrown.
+
+When you convert decimal to float or double, the decimal value is rounded to the nearest double or float value.
+
+For a conversion from an integral type to another integral type, the processing depends on the overflow checking context (§7.6.12) in which the conversion takes place:
+In a checked context, the conversion succeeds if the value of the source operand is within the range of the destination type, but throws a System.OverflowException if the value of the source operand is outside the range of the destination type.
+In an unchecked context, the conversion always succeeds, and proceeds as follows.
+If the source type is larger than the destination type, then the source value is truncated by discarding its “extra” most significant bits. The result is then treated as a value of the destination type.
+*/</code
 >
 </div>
 
@@ -1268,8 +1873,8 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>// Só usa um único tipo numérico double
+// não há o que converter</code
 >
 </div>
 
@@ -1326,24 +1931,81 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>// int
+var i1 = 1;
+var i2 = -1;
+
+// long
+var l1 = 1l;
+var l2 = 1L;
+var l3 = -2147483649;
+var l4 = -2147483649L;
+
+// float
+var f1 = 1f;
+var f2 = 1F;
+
+// double
+var d1 = 1d;
+var d2 = 1D;
+var d3 = 1.0;
+var d4 = .7;
+
+var u1 = 2147483648; // uint
+var l5 = 2147483648L; // long</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>// int
+Object i1 = 1;
+Object i2 = -1;
+
+// long
+Object l1 = 1l;
+Object l2 = 1L;
+Object l3 = 2_147_483_648L;
+Object l5 = -2_147_483_649L;
+
+// float
+Object f1 = 1f;
+Object f2 = 1F;
+
+// double
+Object d1 = 1d;
+Object d2 = 1D;
+Object f3 = 1.0;
+Object f4 = .7;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>'use strict';
+
+// double
+let d1 = 1;
+let d2 = -1;
+let d3 = 2147483648;
+let d4 = -2147483649;
+let d5 = 1.0;
+let d6 = .7;
+
+// notação binária
+let binario = 0b01;
+let bipolarOtimista = 0B11010;
+let bipolarNegativo = -0b11010;
+
+// notação octal
+let octal = 0o01234567;
+let entreMeusDedos = 0O12345670;
+
+// notação hexadecimal
+let hexadecimal = 0x0123456789ABCDEF;
+let cor = 0Xff0000;</code
 >
 </div>
 
@@ -1361,7 +2023,7 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='chars'>Chars</h2>
+<h2 id='tiposchar'>Chars</h2>
 
 <div class='comparison'>
 
@@ -1416,7 +2078,7 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
+>// Não possui
 </code
 >
 </div>
@@ -1435,7 +2097,7 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='strings'>Strings</h2>
+<h2 id='tiposstring'>Strings</h2>
 
 <div class='comparison'>
 
@@ -1488,16 +2150,16 @@ Não há merda que se compare
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->let simples = "A primeira faz \"tchan\" e só";
+>let simples = "A primeira faz \"tchan\" e só"
 
-let calvinHarris = "how deep\nis your love"; // 2 linhas
+let calvinHarris = "how deep\nis your love" // 2 linhas
 
 // concatenação - única maneira de usar várias linhas
 let josePauloPaes = "Meu amor é simples, Dora," +
 "\nComo a água e o pão." +
 "\n" +
 "\nComo o céu refletido" +
-"\nNas pupilas de um cão.";</code
+"\nNas pupilas de um cão."</code
 >
 </div>
 
@@ -1619,6 +2281,80 @@ let es6 = '\u{1F60D}'; // code point
 let beeGees = calvinHarris.replace('love', 'looove');
 
 'Gritando'.toUpperCase(); // retorna 'GRITANDO'</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposboolean'>Tipos Primitivos Boolean</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
 >
 </div>
 
