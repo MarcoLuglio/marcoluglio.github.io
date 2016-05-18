@@ -1601,12 +1601,36 @@ let n = (k || k === 0) ? k : 10;</code
 
 <div class='codeblock'>
 <p>C#</p>
--
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>BigInteger</td><td>?</td></tr>
+		<tr><td>Complex</td><td>?</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
--
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>BigInteger</td><td>?</td></tr>
+		<tr><td>BigDecimal</td><td>?</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
@@ -1824,7 +1848,35 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// as divisões, multiplicações, etc resultam no quê?
+>unchecked {
+
+int i32_1 = 2;
+int i32_2 = 4;
+int i32_min = Int32.MinValue;
+int i32_max = Int32.MaxValue;
+
+long i64 = i32_max; // implicit conversion 2147483647 (long)
+short i16 = (short)i32_max; // explicit conversion -1 (short)
+
+var adicao1 = i32_max + 1; // -2147483648 (int)
+var adicao2 = i64 + i32_1; // 2147483649 (long)
+var adicao3 = i64 + i32_max; // 4294967294 (long)
+
+var subtracao1 = i32_min - 1; // 2147483647 (int)
+var subtracao2 = i16 - i32_1; // -3 (int)
+var subtracao3 = i16 - i32_max; // -2147483648 (int)
+
+var multiplicacao1 = i32_1 * i32_2; // 8 (int)
+var multiplicacao2 = i32_max * i32_1; // -2 (int)
+var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
+
+var divisao1 = i32_2 / i32_1; // 2 (int)
+var divisao2 = i32_1 / i32_2; // 0 (int)
+var divisao3 = i16 / i32_1; // 0 (int)
+
+}
+
+
 
 // conversão implícita se o número couber no outro
 // byte -> int, uint ou float por exemplo
@@ -1838,26 +1890,19 @@ JavaScript só possui um tipo numérico.</p>
 // tipo numerico não converte pra char
 
 /*
-The explicit numeric conversion may cause loss of precision or result in throwing exceptions.
 
-When you convert a decimal value to an integral type, this value is rounded towards zero to the nearest integral value. If the resulting integral value is outside the range of the destination type, an OverflowException is thrown.
+When you convert from a double or float value to an integral type,
+the value is truncated. If the resulting integral value is outside
+the range of the destination value, the result depends on the
+overflow checking context.
 
-When you convert from a double or float value to an integral type, the value is truncated. If the resulting integral value is outside the range of the destination value, the result depends on the overflow checking context. In a checked context, an OverflowException is thrown, while in an unchecked context, the result is an unspecified value of the destination type.
+When you convert double to float, the double value is rounded
+to the nearest float value. If the double value is too small
+or too large to fit into the destination type, the result
+will be zero or infinity.
 
-When you convert double to float, the double value is rounded to the nearest float value. If the double value is too small or too large to fit into the destination type, the result will be zero or infinity.
-
-When you convert float or double to decimal, the source value is converted to decimal representation and rounded to the nearest number after the 28th decimal place if required. Depending on the value of the source value, one of the following results may occur:
-
-If the source value is too small to be represented as a decimal, the result becomes zero.
-
-If the source value is NaN (not a number), infinity, or too large to be represented as a decimal, an OverflowException is thrown.
-
-When you convert decimal to float or double, the decimal value is rounded to the nearest double or float value.
-
-For a conversion from an integral type to another integral type, the processing depends on the overflow checking context (§7.6.12) in which the conversion takes place:
-In a checked context, the conversion succeeds if the value of the source operand is within the range of the destination type, but throws a System.OverflowException if the value of the source operand is outside the range of the destination type.
-In an unchecked context, the conversion always succeeds, and proceeds as follows.
-If the source type is larger than the destination type, then the source value is truncated by discarding its “extra” most significant bits. The result is then treated as a value of the destination type.
+When you convert decimal to float or double, the decimal value is rounded
+to the nearest double or float value.
 */</code
 >
 </div>
@@ -1866,6 +1911,30 @@ If the source type is larger than the destination type, then the source value is
 <p>Java</p>
 <code class='java'
 >
+
+int i32_1 = 2;
+int i32_2 = 4;
+int i32_min = Integer.MIN_VALUE;
+int i32_max = Integer.MAX_VALUE;
+
+long i64 = i32_max; // implicit conversion 2147483647 (long)
+short i16 = (short)i32_max; // explicit conversion -1 (short)
+
+Object adicao1 = i32_max + 1; // -2147483648 (int)
+Object adicao2 = i64 + i32_1; // 2147483649 (long)
+Object adicao3 = i64 + i32_max; // 4294967294 (long)
+
+Object subtracao1 = i32_min - 1; // 2147483647 (int)
+Object subtracao2 = i16 - i32_1; // -3 (int)
+Object subtracao3 = i16 - i32_max; // -2147483648 (int)
+
+Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
+Object multiplicacao2 = i32_max * i32_1; // -2 (int)
+Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
+
+Object divisao1 = i32_2 / i32_1; // 2 (int)
+Object divisao2 = i32_1 / i32_2; // 0 (int)
+Object divisao3 = i16 / i32_1; // 0 (int)
 </code
 >
 </div>
@@ -1873,7 +1942,7 @@ If the source type is larger than the destination type, then the source value is
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// Só usa um único tipo numérico double
+>// só usa um único tipo numérico double
 // não há o que converter</code
 >
 </div>
@@ -1893,6 +1962,10 @@ If the source type is larger than the destination type, then the source value is
 <section>
 
 <h2 id='literaisnumericas'>Literais Numéricas</h2>
+
+
+
+<h3>Decimais</h3>
 
 <div class='comparison'>
 
@@ -1931,15 +2004,23 @@ If the source type is larger than the destination type, then the source value is
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// int
+>// int, uint, long, ulong
 var i1 = 1;
 var i2 = -1;
 
-// long
+// uint, ulong
+// termina com u
+// TODO
+
+// long, ulong
 var l1 = 1l;
 var l2 = 1L;
 var l3 = -2147483649;
 var l4 = -2147483649L;
+
+// ulong
+// terminal com ul ou lu
+// TODO
 
 // float
 var f1 = 1f;
@@ -1951,8 +2032,13 @@ var d2 = 1D;
 var d3 = 1.0;
 var d4 = .7;
 
+// decimal
+// termina com m
+// TODO
+
 var u1 = 2147483648; // uint
-var l5 = 2147483648L; // long</code
+var l5 = 2147483648L; // long
+// TODO ulong</code
 >
 </div>
 
@@ -1963,11 +2049,19 @@ var l5 = 2147483648L; // long</code
 Object i1 = 1;
 Object i2 = -1;
 
+
+
+
+
 // long
 Object l1 = 1l;
 Object l2 = 1L;
 Object l3 = 2_147_483_648L;
 Object l5 = -2_147_483_649L;
+
+
+
+
 
 // float
 Object f1 = 1f;
@@ -1984,32 +2078,125 @@ Object f4 = .7;</code
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->'use strict';
-
-// double
+>// double
 let d1 = 1;
 let d2 = -1;
 let d3 = 2147483648;
 let d4 = -2147483649;
 let d5 = 1.0;
-let d6 = .7;
-
-// notação binária
-let binario = 0b01;
-let bipolarOtimista = 0B11010;
-let bipolarNegativo = -0b11010;
-
-// notação octal
-let octal = 0o01234567;
-let entreMeusDedos = 0O12345670;
-
-// notação hexadecimal
-let hexadecimal = 0x0123456789ABCDEF;
-let cor = 0Xff0000;</code
+let d6 = .7;</code
 >
 </div>
 
 </div>
+
+
+
+<h3>Outros</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// notação científica
+double c1 = 1e0;
+double c2 = 1e-1;
+double c3 = -.7e2;
+
+// NOTAÇÃO DECIMAL
+// ===============
+// não existe notação octal
+// quaisquer números 0 no começo
+// serão ignorados simplesmente
+int d1 = 01234567;
+int d2 = -01234567;
+
+// notação hexadecimal
+int cor = 0xff0000;
+int x1 = -0X0123456789ABCDEF;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// notação científica
+double c1 = 1e0;
+double c2 = 1e-1;
+double c3 = -.7e2;
+
+// notação binária
+int b1 = 0b0000_0001;
+int b2 = -0B00000010;
+
+// notação octal
+int o1 = 01_234_567;
+int o2 = -01234567;
+
+// notação hexadecimal
+int cor = 0xff_00_00;
+int x1 = -0X0123456789ABCDEF;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// notação científica
+let c1 = 1e0;
+let c2 = 1e-1;
+let c3 = -.7e2;
+
+// notação binária
+let b1 = 0B0000001;
+let b2 = -0b0000010;
+
+// notação octal
+let 01 = 0o01234567;
+let 02 = -0O1234567;
+
+// notação hexadecimal
+let cor = 0xff0000;
+let x1 = -0X0123456789ABCDEF;</code
+>
+</div>
+
+</div>
+
+
 
 <ol>
 	<li>a</li>
