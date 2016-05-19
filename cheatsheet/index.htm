@@ -18,7 +18,7 @@
 
 
 
-<h1>Cheat Sheet</h1>
+<h1>Cheat Sheet <span>para Programadores Mobile</span></h1>
 
 <p><strong>WORK IN PROGRESS ;)</strong></p>
 
@@ -1591,12 +1591,35 @@ let n = (k || k === 0) ? k : 10;</code
 
 <div class='codeblock'>
 <p>Swift</p>
--
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>Float80</td><td>80 bits</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
--
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>num::bigint::BigInt</td><td>?</td></tr>
+		<tr><td>num::bigint::BigUint</td><td>?</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
@@ -1673,22 +1696,33 @@ JavaScript só possui um tipo numérico.</p>
 
 <div class='codeblock'>
 <p>C++</p>
-?
+-
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
-?
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>?</td><td>NSNumber</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
-?
+-
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
-?
+-
 </div>
 
 <div class='codeblock'>
@@ -1809,158 +1843,6 @@ JavaScript só possui um tipo numérico.</p>
 
 <section>
 
-<h2 id='conversoesnumericas'>Conversão Entre Tipos Numéricos</h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->unchecked {
-
-int i32_1 = 2;
-int i32_2 = 4;
-int i32_min = Int32.MinValue;
-int i32_max = Int32.MaxValue;
-
-long i64 = i32_max; // implicit conversion 2147483647 (long)
-short i16 = (short)i32_max; // explicit conversion -1 (short)
-
-var adicao1 = i32_max + 1; // -2147483648 (int)
-var adicao2 = i64 + i32_1; // 2147483649 (long)
-var adicao3 = i64 + i32_max; // 4294967294 (long)
-
-var subtracao1 = i32_min - 1; // 2147483647 (int)
-var subtracao2 = i16 - i32_1; // -3 (int)
-var subtracao3 = i16 - i32_max; // -2147483648 (int)
-
-var multiplicacao1 = i32_1 * i32_2; // 8 (int)
-var multiplicacao2 = i32_max * i32_1; // -2 (int)
-var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
-
-var divisao1 = i32_2 / i32_1; // 2 (int)
-var divisao2 = i32_1 / i32_2; // 0 (int)
-var divisao3 = i16 / i32_1; // 0 (int)
-
-}
-
-
-
-// conversão implícita se o número couber no outro
-// byte -> int, uint ou float por exemplo
-// sbyte -> int ou float
-
-// conversão explícita
-// entre integrals
-// entre floats
-// de floats para integrals
-
-// tipo numerico não converte pra char
-
-/*
-
-When you convert from a double or float value to an integral type,
-the value is truncated. If the resulting integral value is outside
-the range of the destination value, the result depends on the
-overflow checking context.
-
-When you convert double to float, the double value is rounded
-to the nearest float value. If the double value is too small
-or too large to fit into the destination type, the result
-will be zero or infinity.
-
-When you convert decimal to float or double, the decimal value is rounded
-to the nearest double or float value.
-*/</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-
-int i32_1 = 2;
-int i32_2 = 4;
-int i32_min = Integer.MIN_VALUE;
-int i32_max = Integer.MAX_VALUE;
-
-long i64 = i32_max; // implicit conversion 2147483647 (long)
-short i16 = (short)i32_max; // explicit conversion -1 (short)
-
-Object adicao1 = i32_max + 1; // -2147483648 (int)
-Object adicao2 = i64 + i32_1; // 2147483649 (long)
-Object adicao3 = i64 + i32_max; // 4294967294 (long)
-
-Object subtracao1 = i32_min - 1; // 2147483647 (int)
-Object subtracao2 = i16 - i32_1; // -3 (int)
-Object subtracao3 = i16 - i32_max; // -2147483648 (int)
-
-Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
-Object multiplicacao2 = i32_max * i32_1; // -2 (int)
-Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
-
-Object divisao1 = i32_2 / i32_1; // 2 (int)
-Object divisao2 = i32_1 / i32_2; // 0 (int)
-Object divisao3 = i16 / i32_1; // 0 (int)
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->// só usa um único tipo numérico double
-// não há o que converter</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-</section>
-
-
-
-<section>
-
 <h2 id='literaisnumericas'>Literais Numéricas</h2>
 
 
@@ -1988,7 +1870,24 @@ Object divisao3 = i16 / i32_1; // 0 (int)
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>// Int (x64)
+let i1 = 1
+let i2 = -1
+let i3 = 2_147_483_648
+
+// UInt (x64)
+let u1:UInt = 9_223_372_036_854_775_808
+
+// Exception
+// Does not fit inside Int (x64)
+let e1 = 9_223_372_036_854_775_808
+
+// Float
+let f1:Float = 1
+
+// Double
+let d1 = 1.0
+let d2 = 0.7 // não aceita .7
 </code
 >
 </div>
@@ -2115,7 +2014,35 @@ let d6 = .7;</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>// notação científica
+let c1 = 1e0
+let c2 = 1e-1
+let c3 = -0.7_e-2 // pode separar o e
+
+// notação binária
+let b1 = 0b0000_0001
+let b2 = -0b0000_0010
+
+// notação octal
+let O1 = 0o01234567
+let O2 = -0o1234567
+
+// notação hexadecimal
+let cor = 0xff_00_00
+let x1 = -0x0123456789ABCDEF
+
+// notação hexadecimal científica
+let xc1 = 0xff0000p0
+let xc2 = -0x0123456789ABCDEF_p9
+
+// NOTAÇÃO DECIMAL
+// ===============
+// Swift permite que os números
+// sejam precedidos por 0 sem
+// que isso influencie em seu valor
+let i1 = 10
+let p1 = 01
+let p2 = 00.1
 </code
 >
 </div>
@@ -2134,19 +2061,32 @@ let d6 = .7;</code
 >// notação científica
 double c1 = 1e0;
 double c2 = 1e-1;
-double c3 = -.7e2;
+double c3 = -.7e-2;
 
-// NOTAÇÃO DECIMAL
-// ===============
-// não existe notação octal
-// quaisquer números 0 no começo
-// serão ignorados simplesmente
-int d1 = 01234567;
-int d2 = -01234567;
+
+
+
+
+
+
+
 
 // notação hexadecimal
 int cor = 0xff0000;
-int x1 = -0X0123456789ABCDEF;</code
+int x1 = -0X0123456789ABCDEF;
+
+// C# 7 deverá ter <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/215'>literais binárias</a>
+// e <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/216'>separadores de digitos</a>
+
+
+// NOTAÇÃO DECIMAL
+// ===============
+// C# permite que os números
+// sejam precedidos por 0 sem
+// que isso influencie em seu valor
+int i1 = 10;
+int p1 = 01;
+int p1 = 00.1;</code
 >
 </div>
 
@@ -2156,7 +2096,7 @@ int x1 = -0X0123456789ABCDEF;</code
 >// notação científica
 double c1 = 1e0;
 double c2 = 1e-1;
-double c3 = -.7e2;
+double c3 = -.7e-2;
 
 // notação binária
 int b1 = 0b0000_0001;
@@ -2178,19 +2118,271 @@ int x1 = -0X0123456789ABCDEF;</code
 >// notação científica
 let c1 = 1e0;
 let c2 = 1e-1;
-let c3 = -.7e2;
+let c3 = -.7e-2;
 
 // notação binária
-let b1 = 0B0000001;
-let b2 = -0b0000010;
+let b1 = 0B00000001;
+let b2 = -0b00000010;
 
 // notação octal
-let 01 = 0o01234567;
-let 02 = -0O1234567;
+let o1 = 0o01234567;
+let o2 = -0O1234567;
 
 // notação hexadecimal
 let cor = 0xff0000;
-let x1 = -0X0123456789ABCDEF;</code
+let x1 = -0X0123456789ABCDEF;
+
+
+
+
+
+// NOTAÇÃO DECIMAL
+// ===============
+// JavaScript permite que os números
+// sejam precedidos por 0 sem
+// que isso influencie em seu valor
+int i1 = 10;
+int p1 = 01;</code
+>
+</div>
+
+</div>
+
+
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='conversoesnumericas'>Conversão Entre Tipos Numéricos</h2>
+
+
+
+<h3>Operações</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>unchecked {
+
+int i32_1 = 2;
+int i32_2 = 4;
+int i32_min = Int32.MinValue;
+int i32_max = Int32.MaxValue;
+
+long i64 = i32_max; // implicit conversion 2147483647 (long)
+short i16 = (short)i32_max; // explicit conversion -1 (short)
+
+var adicao1 = i32_max + 1; // -2147483648 (int)
+var adicao2 = i64 + i32_1; // 2147483649 (long)
+var adicao3 = i64 + i32_max; // 4294967294 (long)
+
+var subtracao1 = i32_min - 1; // 2147483647 (int)
+var subtracao2 = i16 - i32_1; // -3 (int)
+var subtracao3 = i16 - i32_max; // -2147483648 (int)
+
+var multiplicacao1 = i32_1 * i32_2; // 8 (int)
+var multiplicacao2 = i32_max * i32_1; // -2 (int)
+var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
+
+var divisao1 = i32_2 / i32_1; // 2 (int)
+var divisao2 = i32_1 / i32_2; // 0 (int)
+var divisao3 = i16 / i32_1; // 0 (int)
+
+}
+
+
+
+// conversão implícita se o número couber no outro
+// byte -> int, uint ou float por exemplo
+// sbyte -> int ou float
+
+// conversão explícita
+// entre integrals
+// entre floats
+// de floats para integrals
+
+// tipo numerico não converte pra char
+
+/*
+
+When you convert from a double or float value to an integral type,
+the value is truncated. If the resulting integral value is outside
+the range of the destination value, the result depends on the
+overflow checking context.
+
+When you convert double to float, the double value is rounded
+to the nearest float value. If the double value is too small
+or too large to fit into the destination type, the result
+will be zero or infinity.
+
+When you convert decimal to float or double, the decimal value is rounded
+to the nearest double or float value.
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+
+int i32_1 = 2;
+int i32_2 = 4;
+int i32_min = Integer.MIN_VALUE;
+int i32_max = Integer.MAX_VALUE;
+
+long i64 = i32_max; // implicit conversion 2147483647 (long)
+short i16 = (short)i32_max; // explicit conversion -1 (short)
+
+Object adicao1 = i32_max + 1; // -2147483648 (int)
+Object adicao2 = i64 + i32_1; // 2147483649 (long)
+Object adicao3 = i64 + i32_max; // 4294967294 (long)
+
+Object subtracao1 = i32_min - 1; // 2147483647 (int)
+Object subtracao2 = i16 - i32_1; // -3 (int)
+Object subtracao3 = i16 - i32_max; // -2147483648 (int)
+
+Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
+Object multiplicacao2 = i32_max * i32_1; // -2 (int)
+Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
+
+Object divisao1 = i32_2 / i32_1; // 2 (int)
+Object divisao2 = i32_1 / i32_2; // 0 (int)
+Object divisao3 = i16 / i32_1; // 0 (int)
+
+// char converte tb
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// só usa um único tipo numérico double
+// não há o que converter</code
+>
+</div>
+
+</div>
+
+
+
+<h3>Argumentos</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>/*
+
+{
+
+// conversão explícita de int para byte 1
+this.recebeByte((byte)1);
+
+// conversão explícita 44
+this.recebeByte((byte)300);
+
+}
+
+private void recebeByte(byte numero) {
+	System.out.println("\nRecebe byte");
+	System.out.println(numero);
+}
+*/
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// só usa um único tipo numérico double
+// não há o que converter</code
 >
 </div>
 
@@ -2265,8 +2457,8 @@ let x1 = -0X0123456789ABCDEF;</code
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// Não possui
-</code
+>// só usa strings
+// não possui chars</code
 >
 </div>
 
@@ -2388,7 +2580,7 @@ let simples = "A primeira faz \"tchan\" e só".to_string();</code
 <code class='cs'
 >var simples = "A primeira faz \"tchan\"";
 var dupla = @"A segunda faz ""tchun""";
-var interpolated = $"A segunda faz ""tchun"""; // TODO testar no windows
+var interpolated = $"A segunda faz \"tchun\"";
 </code
 >
 </div>
@@ -2540,7 +2732,7 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
+>// falar de falsy e truthy
 </code
 >
 </div>
