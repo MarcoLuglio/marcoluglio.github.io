@@ -2301,8 +2301,26 @@ Object divisao3 = i16 / i32_1; // 0 (int)
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// só usa um único tipo numérico double
-// não há o que converter</code
+>'use strict';
+
+// só usa um único tipo numérico double
+// não há o que converter
+
+// números não sofrem overflow nem underflow,
+// mas não dão aviso se você tentar passar
+// dos limites
+
+let i = Number.MAX_VALUE;
+let j = Number.MAX_VALUE + 1; // não dá aviso
+if (i === j) {
+	console.log('j foi limitado');
+}
+
+i = -i
+j = -j - 1; // não dá aviso
+if (i === j) {
+	console.log('j foi limitado');
+}</code
 >
 </div>
 
