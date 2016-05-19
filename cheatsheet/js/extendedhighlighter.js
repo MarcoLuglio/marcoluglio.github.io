@@ -1730,12 +1730,14 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'@IBDesignable',
 				'@IBInspectable',
 				'@IBOutlet',
+				'@objc',
 				'@UIApplicationMain',
 
 				'as',
 				'case',
 				'class',
 				'default',
+				'defer',
 				'deinit',
 				'didSet',
 				'enum',
@@ -1862,9 +1864,9 @@ define('SwiftPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceS
 				'*',
 				'&amp;*', // * ignore overflow
 				'/',
-				'&amp;/', // / ignore overflow
+				//'&amp;/', // / ignore overflow não existe mais
 				'%',
-				'&amp;%', // % ignore overflow
+				//'&amp;%', // % ignore overflow não existe mais
 				'==',
 				'===',
 				'!',
@@ -2835,7 +2837,7 @@ define('CSStringPatternIterator', () => {
 
 			let isLineBreak = this._matchLineBreak(matchCharacter);
 
-			if (this._isEscaped && !isLineBreak) { // line break não é escapável em swift
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em c#
 				this._isEscaped = false;
 				return true;
 			}
@@ -3085,22 +3087,26 @@ define('CSInterpolatedStringPatternIterator', () => {
 
 		_matchContentOrEndQuote(matchCharacter) {
 
-			if (matchCharacter === '"') {
+			let isLineBreak = this._matchLineBreak(matchCharacter);
 
-				if (this._isEscaped) {
-					this._isEscaped = false;
-				} else {
-					this._isEscaped = true;
-				}
-
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em c#
+				this._isEscaped = false;
 				return true;
-
 			}
 
-			// se aspas não foi seguido de outras aspas
-			// termina a string imediatamente
-			if (this._isEscaped) {
-				return this._matchEnd(matchCharacter);
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| isLineBreak
+				) {
+
+				this._matchFunction = this._matchEnd;
 			}
 
 			return true;
@@ -3114,6 +3120,22 @@ define('CSInterpolatedStringPatternIterator', () => {
 			this._hasNext = false;
 			this._isComplete = true;
 			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
 		}
 
 	};
