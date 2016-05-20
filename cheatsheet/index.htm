@@ -791,7 +791,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h3>Integer</h3>
+<h3 id='integer'>Integer</h3>
 
 <div class='comparison'>
 
@@ -1035,7 +1035,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h3>Unsigned Integer</h3>
+<h3 id='unsignedinteger'>Unsigned Integer</h3>
 
 <div class='comparison'>
 
@@ -1262,7 +1262,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h3>Pointer Sized Integer</h3>
+<h3 id='pointerinteger'>Pointer Sized Integer</h3>
 
 <div class='comparison'>
 
@@ -1366,7 +1366,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h3>Floating Point</h3>
+<h3 id='floatingpoint'>Floating Point</h3>
 
 <div class='comparison'>
 
@@ -1564,7 +1564,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h3>Etc</h3>
+<h2 id='outrostiposnumericos'>Tipos numéricos não primitivos</h2>
 
 <div class='comparison'>
 
@@ -1852,7 +1852,7 @@ JavaScript só possui um tipo numérico.</p>
 
 
 
-<h3>Decimais Inteiros</h3>
+<h3 id='literaisdecimaisinteiros'>Decimais Inteiros</h3>
 
 <div class='comparison'>
 
@@ -2026,7 +2026,7 @@ Object l5 = 9_223_372_036_854_775_808L;</code
 
 
 
-<h3>Decimais Floating Point</h3>
+<h3 id='literaisdecimaisfloatingpoint'>Decimais Floating Point</h3>
 
 <div class='comparison'>
 
@@ -2121,7 +2121,7 @@ let d6 = .7;                 </code
 
 
 
-<h3>Notações</h3>
+<h3 id='notacoesnumericas'>Notações</h3>
 
 <div class='comparison'>
 
@@ -2268,7 +2268,7 @@ let x1 = -0X0123456789ABCDEF;</code
 
 
 
-<h3>Padding</h3>
+<h3 id='paddingnumerico'>Padding</h3>
 
 <div class='comparison'>
 
@@ -2353,7 +2353,7 @@ let p1 = 01;                 </code
 
 
 
-<h3>Operações</h3>
+<h3 id='operacoesnumericas'>Operações</h3>
 
 <div class='comparison'>
 
@@ -2515,7 +2515,7 @@ if (i === j) {
 
 
 
-<h3>Argumentos</h3>
+<h3 id='conversoesnumericasfuncoes'>Argumentos</h3>
 
 <div class='comparison'>
 
@@ -2940,6 +2940,268 @@ let beeGees = calvinHarris.replace('love', 'looove');
 >// falar de falsy e truthy
 </code
 >
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='excecoes'>Exceções</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='async'>Async</h2>
+
+<!-- Threads, tasks, promises e futures, deferreds, generators, events/delegates -->
+
+<h3 id='threads'>Threads</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>'use strict';
+
+// cria a worker thread de uso exclusivo
+// da main thread
+let webWorker = new Worker('worker.js');
+
+// web workers não compartilham memória
+// apenas trocam mensagens entre si
+// e não podem acessar o DOM
+
+// envia mensagens para a worker thread
+webWorker.postMessage(['algum', 'valor']);
+webWorker.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorker.onmessage = (event) => {
+	console.log(event.data);
+};
+
+// mata a thread imediatamente se quiser
+// webWorker.terminate();</code
+>
+
+<p>JavaScript - worker.js</p>
+<code class='javascript'
+>'use strict';
+
+// callback para recepção de mensagens
+// da main thread (ui thread)
+onmessage = (event) => {
+
+	console.log(event.data[0]);
+	console.log(event.data[1]);
+	let result = event.data.join(' ');
+
+	// envia mensagens para a main thread
+	postMessage(result);
+
+	// termina a thread se quiser
+	// close();
+
+};</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript - sharedThread1.js</p>
+<code class='javascript'
+>'use strict';
+
+<strong>// cria uma worker thread compartilhada</strong>
+let <strong class='small'>webWorkerOp1</strong> = new <strong class='small'>SharedWorker(</strong>'worker.js'<strong class='small'>);</strong>
+
+// envia mensagens para a worker thread compartilhada
+webWorkerOp1<strong>.port</strong>.postMessage(['algum', 'valor']);
+webWorkerOp1<strong>.port</strong>.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorkerOp1<strong>.port</strong>.onmessage = (event) => {
+	console.log(event.data);
+};</code
+>
+
+<p>JavaScript - sharedThread2.js</p>
+<code class='javascript'
+>'use strict';
+
+// cria uma worker thread compartilhada
+let <strong>webWorkerOp2</strong> = new <strong>SharedWorker(</strong>'worker.js'<strong>);</strong>
+
+// envia mensagens para a worker thread compartilhada
+webWorkerOp2<strong>.port</strong>.postMessage(['misturar', 2]);
+webWorkerOp2<strong>.port</strong>.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
+	console.log(event.data);
+};</code
+>
+
+<p>JavaScript - worker.js</p>
+<code class='javascript'
+>'use strict';
+
+<strong>onconnect = (event) => {</strong>
+
+	<strong>let port = event.ports[0];</strong>
+
+	// callback para recepção de mensagens
+	// da main thread (ui thread)
+	<strong>port.</strong>onmessage = (event) => {
+
+		console.log(event.data[0]);
+		console.log(event.data[1]);
+		let result = event.data.join(' ');
+
+		// envia mensagens para a main thread
+		<strong>port.</strong>postMessage(result);
+
+		// termina a thread se quiser
+		// close();
+
+	};
+
+<strong>};</strong></code
+>
+
 </div>
 
 </div>
