@@ -1590,6 +1590,11 @@ let n = (k || k === 0) ? k : 10;</code
 </div>
 
 <div class='codeblock'>
+<p>Swift (Obj-C)</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>Swift</p>
 <table>
 	<caption>Floating Point</caption>
@@ -1847,15 +1852,36 @@ JavaScript só possui um tipo numérico.</p>
 
 
 
-<h3>Decimais</h3>
+<h3>Decimais Inteiros</h3>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// int32_t (x64 LP64)
+auto i1{1};
+auto i2{-1};
+
+// uint32_t  (x64 LP64)
+auto u1{1u};
+auto u2{2'147'483'648U};
+
+
+// int64_t (x64 LP64)
+auto l1{2'147'483'648};
+auto l2{-2'147'483'649};
+auto l3{1l};
+auto l4{1L};
+auto l5{1ll};
+auto l6{1LL};
+
+// uint64_t (x64 LP64)
+auto ul1{9'223'372'036'854'775'808};
+auto ul2{1ul};
+auto ul3{1UL};
+auto ul4{1ull};
+auto ul5{1ULL};</code
 >
 </div>
 
@@ -1874,20 +1900,25 @@ JavaScript só possui um tipo numérico.</p>
 let i1 = 1
 let i2 = -1
 let i3 = 2_147_483_648
+let i4 = -2_147_483_649;
+
+
+
+
+
+
+
+
+
+
+
 
 // UInt (x64)
 let u1:UInt = 9_223_372_036_854_775_808
 
-// Exception
-// Does not fit inside Int (x64)
+// lança exceção
+// does not fit inside Int (x64)
 let e1 = 9_223_372_036_854_775_808
-
-// Float
-let f1:Float = 1
-
-// Double
-let d1 = 1.0
-let d2 = 0.7 // não aceita .7
 </code
 >
 </div>
@@ -1895,49 +1926,70 @@ let d2 = 0.7 // não aceita .7
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// i8
+let i81 = 1_i8;
+let i82 = -1i8;
+
+// u8
+let u81 = 1_u8;
+
+// i16
+let i161 = 1i16;
+let i162 = -1_i16;
+
+// u16
+let u161 = 1u16;
+
+// i32
+let i1 = 1;
+let i2 = -1;
+let i3 = 1_i32;
+
+// avisa overflow -2147483648
+let i4:i32 = 2_147_483_648;
+let i5 = 2_147_483_648_i32;
+let i6 = 2_147_483_648;
+
+// avisa underflow 2147483647
+let i7:i32 = -2_147_483_649;
+let i8 = -2_147_483_649_i32;
+let i9 = -2_147_483_649;
+
+// u32
+let u1 = 2_147_483_648_u32;
+
+// i64
+let i641 = 1_i64;
+let i642 = -1_i64;
+
+// u64
+let u641 = 1_u64;            </code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// int, uint, long, ulong
+>// int
 var i1 = 1;
 var i2 = -1;
 
-// uint, ulong
-// termina com u
-// TODO
+// uint
+var u1 = 1u;
+var u2 = 2147483648U;
+var u3 = 2147483648;
 
-// long, ulong
-var l1 = 1l;
-var l2 = 1L;
-var l3 = -2147483649;
-var l4 = -2147483649L;
+// long
+var l1 = 2147483648L;
+var l2 = -2147483649;
+var l3 = -2147483649L;
+var l4 = 1l;
+var l5 = 1L;
+
 
 // ulong
 // terminal com ul ou lu
-// TODO
-
-// float
-var f1 = 1f;
-var f2 = 1F;
-
-// double
-var d1 = 1d;
-var d2 = 1D;
-var d3 = 1.0;
-var d4 = .7;
-
-// decimal
-// termina com m
-// TODO
-
-var u1 = 2147483648; // uint
-var l5 = 2147483648L; // long
-// TODO ulong</code
+// TODO                      </code
 >
 </div>
 
@@ -1952,17 +2004,95 @@ Object i2 = -1;
 
 
 
+
 // long
-Object l1 = 1l;
-Object l2 = 1L;
-Object l3 = 2_147_483_648L;
-Object l5 = -2_147_483_649L;
+Object l1 = 2_147_483_648l;
+Object l2 = -2_147_483_649L;
+Object l3 = 1l;
+Object l4 = 1L;
+
+// lança exceção
+// integer number too large
+Object l5 = 9_223_372_036_854_775_808L;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
 
 
 
+<h3>Decimais Floating Point</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+                                    </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// Float
+let f1:Float = 1
+
+// Double
+let d1 = 1.0
+let d2 = 0.7 // não aceita .7          </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// f32 (float)
+let f1 = 1f32;
 
 
-// float
+// f64 (double)
+let d1 = 1f64;
+let d2 = 1.0;                </code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// float
+var f1 = 1f;
+var f2 = 1F;
+
+// double
+var db1 = 1d;
+var db2 = 1D;
+var db3 = 1.0;
+var db4 = .7;
+
+// decimal
+var dc = 1m;                 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// float
 Object f1 = 1f;
 Object f2 = 1F;
 
@@ -1970,7 +2100,7 @@ Object f2 = 1F;
 Object d1 = 1d;
 Object d2 = 1D;
 Object f3 = 1.0;
-Object f4 = .7;</code
+Object f4 = .7;              </code
 >
 </div>
 
@@ -1983,7 +2113,7 @@ let d2 = -1;
 let d3 = 2147483648;
 let d4 = -2147483649;
 let d5 = 1.0;
-let d6 = .7;</code
+let d6 = .7;                 </code
 >
 </div>
 
@@ -1991,7 +2121,7 @@ let d6 = .7;</code
 
 
 
-<h3>Outros</h3>
+<h3>Notações</h3>
 
 <div class='comparison'>
 
@@ -1999,7 +2129,7 @@ let d6 = .7;</code
 <p>C++</p>
 <code class='cpp'
 >
-</code
+                                    </code
 >
 </div>
 
@@ -2017,15 +2147,15 @@ let d6 = .7;</code
 >// notação científica
 let c1 = 1e0
 let c2 = 1e-1
-let c3 = -0.7_e-2 // pode separar o e
+let c3 = -0.7_e-2
 
 // notação binária
 let b1 = 0b0000_0001
 let b2 = -0b0000_0010
 
 // notação octal
-let O1 = 0o01234567
-let O2 = -0o1234567
+let o1 = 0o01234567
+let o2 = -0o1234567
 
 // notação hexadecimal
 let cor = 0xff_00_00
@@ -2033,25 +2163,32 @@ let x1 = -0x0123456789ABCDEF
 
 // notação hexadecimal científica
 let xc1 = 0xff0000p0
-let xc2 = -0x0123456789ABCDEF_p9
-
-// NOTAÇÃO DECIMAL
-// ===============
-// Swift permite que os números
-// sejam precedidos por 0 sem
-// que isso influencie em seu valor
-let i1 = 10
-let p1 = 01
-let p2 = 00.1
-</code
+let xc2 = -0x0123456789ABCDEF_p9       </code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// notação científica
+let c1 = 1e_0;
+let c2 = 1e-1;
+let c3 = -0.7_e-2;
+
+// notação binária
+let b1 = 0b_0000_0001;
+let b2 = -0b0000_0010;
+
+// notação octal
+let o1 = 0o_01234567;
+let o2 = -0o1234567;
+
+// notação hexadecimal
+let cor = 0x_ff_00_00;
+let x1 = -0x0123456789ABCDEF;
+
+// TODO misturar notações
+// com sufixos</code
 >
 </div>
 
@@ -2063,9 +2200,9 @@ double c1 = 1e0;
 double c2 = 1e-1;
 double c3 = -.7e-2;
 
-
-
-
+// C# 7 deverá ter
+// <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/215'>literais binárias</a>
+// e <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/216'>separadores de digitos</a>
 
 
 
@@ -2075,18 +2212,8 @@ double c3 = -.7e-2;
 int cor = 0xff0000;
 int x1 = -0X0123456789ABCDEF;
 
-// C# 7 deverá ter <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/215'>literais binárias</a>
-// e <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/216'>separadores de digitos</a>
-
-
-// NOTAÇÃO DECIMAL
-// ===============
-// C# permite que os números
-// sejam precedidos por 0 sem
-// que isso influencie em seu valor
-int i1 = 10;
-int p1 = 01;
-int p1 = 00.1;</code
+// TODO misturar notações
+// com sufixos</code
 >
 </div>
 
@@ -2108,7 +2235,10 @@ int o2 = -01234567;
 
 // notação hexadecimal
 int cor = 0xff_00_00;
-int x1 = -0X0123456789ABCDEF;</code
+int x1 = -0X0123456789ABCDEF;
+
+// TODO misturar notações
+// com sufixos</code
 >
 </div>
 
@@ -2130,19 +2260,76 @@ let o2 = -0O1234567;
 
 // notação hexadecimal
 let cor = 0xff0000;
-let x1 = -0X0123456789ABCDEF;
+let x1 = -0X0123456789ABCDEF;</code
+>
+</div>
+
+</div>
 
 
 
+<h3>Padding</h3>
 
+<div class='comparison'>
 
-// NOTAÇÃO DECIMAL
-// ===============
-// JavaScript permite que os números
-// sejam precedidos por 0 sem
-// que isso influencie em seu valor
-int i1 = 10;
-int p1 = 01;</code
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// números começando com 0
+// são considerados notação
+// octal                            </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>let i1 = 10
+let p1 = 01
+let p2 = 00.1                          </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let i1 = 10;
+let p1 = 01;
+let p2 = 00.1;               </code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>var i1 = 10;
+var p1 = 01;
+var p1 = 00.1;               </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='javascript'
+>// números começando com 0
+// são considerados notação
+// octal                     </code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>let i1 = 10;
+let p1 = 01;                 </code
 >
 </div>
 
