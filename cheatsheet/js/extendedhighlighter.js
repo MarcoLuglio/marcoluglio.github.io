@@ -1796,6 +1796,9 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 
 				'Double',
 				'Float',
+				'Float32',
+				'Float64',
+				'Float80',
 				'Int',
 				'Int8',
 				'Int16',
@@ -2171,6 +2174,7 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'break',
 				'const',
 				'continue',
+				'crate',
 				'else',
 				'enum',
 				'extern',
@@ -2183,10 +2187,12 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'loop',
 				'match',
 				'mod',
+				'move',
 				'mut',
 				'pub',
 				'ref',
 				'return',
+				'Self',
 				'self',
 				'static',
 				'struct',
@@ -2194,6 +2200,7 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'type',
 				'unsafe',
 				'use',
+				'where',
 				'while',
 
 				// literals
@@ -2687,6 +2694,7 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 
 		constructor() {
 			super('type', [
+
 				'byte',
 				'decimal',
 				'double',
@@ -2694,12 +2702,32 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 				'int',
 				'long',
 				'object',
+
 				'sbyte',
 				'short',
 				'string',
 				'ushort',
 				'uint',
-				'ulong'
+				'ulong',
+
+				'Byte',
+				'Decimal',
+				'Double',
+				'Single',
+				'Int32',
+				'Int64',
+				'Object',
+
+				'SByte',
+				'Int16',
+				'String',
+				'UInt16',
+				'UInt32',
+				'UInt64',
+
+				'BigInteger',
+				'Complex'
+
 			]);
 
 			Object.seal(this);
@@ -3379,6 +3407,7 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 		constructor() {
 			super('type', [
+
 				'boolean',
 				'byte',
 				'char',
@@ -3388,7 +3417,20 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'long',
 				'Object',
 				'short',
-				'String'
+				'String',
+
+				'Boolean',
+				'Byte',
+				'Character',
+				'Double',
+				'Float',
+				'Integer',
+				'Long',
+				'Short',
+
+				'BigInteger',
+				'BigDecimal'
+
 			]);
 
 			Object.seal(this);
