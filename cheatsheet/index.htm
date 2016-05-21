@@ -22,6 +22,8 @@
 
 <p><strong>WORK IN PROGRESS ;)</strong></p>
 
+<p>Artigo criado por necessidades práticas no desenvolvimento de aplicativos para dispositivos móveis. Fui parcialmente inspirado no <a rel='external nofollow' href='http://www.25hoursaday.com/CsharpVsJava.html'>artigo icônico de Dare Obasanjo comparando C# e Java</a>.</p>
+
 <section>
 
 <h2>Índice</h2>
@@ -3032,7 +3034,7 @@ let beeGees = calvinHarris.replace('love', 'looove');
 
 <h2 id='async'>Async</h2>
 
-<!-- Threads, tasks, promises e futures, deferreds, generators, events/delegates -->
+<!-- tasks, promises e futures, deferreds, generators, events/delegates -->
 
 <h3 id='threads'>Threads</h3>
 
@@ -3079,11 +3081,169 @@ let beeGees = calvinHarris.replace('love', 'looove');
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+
+<p>Java - Main.java</p>
 <code class='java'
+>package marcoluglio.threadexample;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		// memória compartilhada entre as threads
+		Model dataQueue = new Model();
+		dataQueue.push("pensar");
+		dataQueue.push("numa");
+		dataQueue.push("frase");
+		dataQueue.push("sobre");
+		dataQueue.push("threads");
+
+		// alternativa 1: subclasse de Thread
+		ParallelThread parallelThread;
+		parallelThread = new ParallelThread(dataQueue);
+		parallelThread.start();
+
+		// alternativa 2: interface Runnable
+		Runnable parallelRunnable;
+		parallelRunnable = new ParallelRunnable(dataQueue);
+		Thread parallelRunnableThread;
+		parallelRunnableThread = new Thread(parallelRunnable);
+		parallelRunnableThread.start();
+
+		// alternativa 3: lambda Runnable
+		// ou interface funcional Runnable
+		Runnable lambda = () -> {
+			String element;
+			boolean sair = false;
+			while (!sair) {
+				// dataQueue capturado pelo lambda
+				element = dataQueue.next();
+				if (element == null) {
+					sair = true;
+					continue;
+				}
+				System.out.println(element.toUpperCase());
+			}
+		};
+		Thread lambdaRunnable = new Thread(lambda);
+		lambdaRunnable.start();
+
+		// espera as threads terminarem antes
+		// de prosseguir
+		try {
+			parallelThread.join();
+			parallelRunnable.join();
+			lambdaRunnable.join();
+		} catch (InterruptedException e) {
+			// fazer alguma coisa
+		}
+
+	}
+
+}</code
 >
-</code
+
+<p>Java - Model.java</p>
+<code class='java'
+>package marcoluglio.threadexample;
+
+import java.util.LinkedList;
+
+// Java possui classes nativas com acesso
+// sincronizado, mas não as utilizei para
+// demonstrar o uso de locks manuais
+public class Model {
+
+	public Model() {
+		this.lock = new Object();
+		this.dataQueue = new LinkedList<String>();
+	}
+
+	public void push(String element) {
+		// só a main thread insere, então
+		// não precisa sincronizar
+		this.dataQueue.add(element);
+	}
+
+	public String next() {
+		// sincroniza o acesso das threads
+		synchronized(this.lock) {
+			return this.dataQueue.poll();
+		}
+	}
+
+	private LinkedList<String> dataQueue;
+
+	/** Lock simples explícita para sincronização */
+	private Object lock;
+
+}</code
 >
+
+<p>Java - ParallelThread.java</p>
+<code class='java'
+>package marcoluglio.threadexample;
+
+public class ParallelThread extends Thread {
+
+	public ParallelThread(Model dataQueue) {
+		this.dataQueue = dataQueue;
+	}
+
+	// método "main" da thread
+	public void run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			System.out.println(this.element.toUpperCase());
+		}
+	}
+
+	private Model dataQueue;
+	private String element;
+
+	/** Flag para término da thread */
+	private boolean sair = false;
+
+}</code
+>
+
+<p>Java - ParallelRunnable.java</p>
+<code class='java'
+>package marcoluglio.threadexample;
+
+public class ParallelRunnable implements Runnable {
+
+	public ParallelRunnable(Model dataQueue) {
+		this.dataQueue = dataQueue;
+	}
+
+	// método "main" da thread
+	public void run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			System.out.println(this.element.toUpperCase());
+		}
+	}
+
+	private Model dataQueue;
+	private String element;
+
+	/** Flag para término da thread */
+	private boolean sair = false;
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -3205,6 +3365,80 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 </div>
 
 </div>
+
+
+
+<h3 id='tasks'>Tasks</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>import java.util.concurrent.Future;
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function workAsync() {
+	return new Promise((resolve, reject) => {
+		resolve('some value');
+	});
+}
+
+workAsync()
+	.then((someValue) => {
+		console.log(someValue);
+	});</code
+>
+</div>
+
+</div>
+
+
 
 <ol>
 	<li>a</li>
