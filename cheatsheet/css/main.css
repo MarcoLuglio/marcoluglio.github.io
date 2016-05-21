@@ -104,6 +104,8 @@ div code {
 	padding: 25px;
 	margin-top: 25px;
 	margin-bottom: 25px;
+	font-size: 12px;
+	line-height: 18px;
 	-moz-tab-size: 4;
 	tab-size: 4;
 
@@ -776,7 +778,16 @@ code:hover .highlightControls {
 	min-width: 170px;
 	border-collapse: collapse;
 	white-space: nowrap;
-	width: 240px;
+	width: 180px;
+}
+
+.tiposprimitivos .codeblock:first-child table,
+.tiposprimitivos .codeblock:nth-child(2) table,
+.tiposprimitivos .codeblock:nth-child(3) table,
+.tiposprimitivos .codeblock:first-child p,
+.tiposprimitivos .codeblock:nth-child(2) p,
+.tiposprimitivos .codeblock:nth-child(3) p {
+	width: 225px;
 }
 
 .tiposprimitivos th {
@@ -794,8 +805,9 @@ code:hover .highlightControls {
 .tiposprimitivos td {
 	border: 1px solid #EEEEEE;
 	padding-left: 6px;
+	font-size: 12px;
 }
 
 .tiposprimitivos .codeblock p {
-	width: 240px;
+	width: 180px;
 }
