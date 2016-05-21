@@ -290,7 +290,7 @@ namespace marcoluglio {
 <code class='cpp'
 >#include "DentroDoModulo.hpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 	using marcoluglio::DentroDoModulo;
 	DentroDoModulo meuObjeto = DentroDoModulo();
 }</code
@@ -323,7 +323,7 @@ namespace marcoluglio {
 <code class='cpp'
 >#include "DentroDoModulo.hpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 	using marcoluglio::DentroDoModulo;
 	DentroDoModulo meuObjeto = DentroDoModulo();
 }</code
@@ -359,7 +359,7 @@ int main(int argc, const char * argv[]) {
 >#import &lt;Foundation/Foundation.h&gt;
 #import "MLGDentroDoModulo.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 	MLGDentroDoModulo* meuObjeto;
 	meuObjeto = [[MLGDentroDoModulo alloc] init];
 	return 0;
@@ -1566,7 +1566,7 @@ let n = (k || k === 0) ? k : 10;</code
 
 
 
-<h2 id='outrostiposnumericos'>Tipos numéricos não primitivos</h2>
+<h2 id='outrostiposnumericos'>Tipos Numéricos Não Primitivos</h2>
 
 <div class='comparison'>
 
@@ -2352,7 +2352,7 @@ let p1 = 01;                 </code
 
 <section>
 
-<h2 id='conversoesnumericas'>Conversão Entre Tipos Numéricos</h2>
+<h2 id='conversoesnumericas'>Conversão entre Tipos Numéricos</h2>
 
 
 
@@ -3069,6 +3069,285 @@ var bObjProto = new Boolean({});*/</code
 
 <section>
 
+<h2 id='funcoesvariadicas'>Funções Variádicas</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// funções variádicas em C++
+
+// argumentos do mesmo tipo
+
+#include &lt;iostream&gt;
+
+template&lt;typename... Tipos&gt;
+void imprimirSimples(std::string titulo, Tipos... paginas) {
+
+	const unsigned short int quantidadeDeParametros {sizeof...(paginas)};
+
+	// não pode criar uma array com 0 elementos
+	if (quantidadeDeParametros == 0) {
+		return;
+	}
+
+	// expande os argumentos
+	int paginasArray[quantidadeDeParametros] {paginas...};
+
+	for (auto pagina : paginasArray) {
+		std::cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; std::endl;
+	}
+
+}
+
+imprimirSimples(1, 2, 5);
+
+// argumentos de todos os tipos
+
+#include &lt;iostream&gt;
+#include &lt;boost/range/irange.hpp&gt;
+
+/// imprimirHelper template genérico
+template&lt;typename T&gt;
+void imprimirHelper(T pagina) {
+	// poderia usar a linha abaixo para descobrir o tipo de T
+	// porém, melhor usar o template especializado
+	// if (std::is_same&lt;T, int&gt;::value) { /* ... */ }  // optimizable...
+	std::cout &lt;&lt; "Imprimindo outra coisa" &lt;&lt; std::endl;
+}
+
+/// imprimirHelper template especializado para int
+template&lt;&gt;
+void imprimirHelper&lt;int&gt;(int pagina) {
+	std::cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; std::endl;
+}
+
+/// imprimirHelper template especializado para boost::irange
+template&lt;&gt;
+void imprimirHelper&lt;boost::irange&gt;(boost::irange faixa) {
+	std::cout &lt;&lt; "Imprimindo página " &lt;&lt; std::begin(faixa) &lt;&lt; " até " &lt;&lt; std::end(faixa) &lt;&lt; std::endl;
+}
+
+
+// foward declaration imprimir template?? Não estou certo da função disso :/
+void imprimir(std::string titulo) {}
+
+// implementação imprimir template
+template&lt;typename Tipo, typename... Tipos&gt;
+void imprimir(std::string titulo, Tipo pagina, Tipos... paginas) {
+	// executa o helper especializado e chama recursivamente a si mesmo
+	imprimirHelper(pagina);
+	imprimir(titulo, paginas...);
+}
+
+imprimir&lt;int, boost::irange, std::string&gt;("resumo", 1, boost::irange(2, 5), "capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// macros não seguras estilo C
+
+#include &lt;iostream&gt;
+#include &lt;cstdarg&gt;
+
+void imprimirSimplesMacro(const std::string titulo, ...) {
+
+	// va_list argumentos recebe o que vir depois do parâmetro titulo
+	va_list argumentos;
+	va_start(argumentos, titulo);
+
+	int pagina;
+	while (true) {
+		pagina = va_arg(argumentos, int);
+		if (pagina == -1) {
+			break;
+		}
+		std::cout &lt;&lt; "Imprimindo " &lt;&lt; pagina &lt;&lt; std::endl;
+	}
+
+	va_end(argumentos);
+
+}
+
+// preciso sempre passar -1 no final como terminador
+// se não dá overflow e lê pedaço de memória além do que deveria
+imprimirSimplesMacro("resumo", 1, 2, 5, -1);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// funções variádicas em Swift
+
+// argumentos do mesmo tipo
+
+func imprimirSimples(titulo titulo:String, paginas:Int...) {
+	for pagina in paginas {
+		print("Imprimindo página \(pagina) num total de \(paginas.count)")
+	}
+}
+
+imprimirSimples(titulo: "resumo", paginas: 1, 2, 5)
+
+// argumentos de todos os tipos
+
+func imprimir(titulo titulo:String, paginas:Any...) {
+	for valor in paginas {
+		switch valor {
+		case let pagina as Int:
+			print("Imprimindo página \(pagina)")
+		case let faixa as Range&lt;Int&gt;:
+			print("Imprimindo páginas \(faixa.first!) até \(faixa.last!)")
+		default:
+			print("Imprimindo outra coisa")
+		}
+	}
+}
+
+imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// funções variádicas em C#
+// a propósito, o estilo padrão de { e } em C# é que eles fiquem em linhas separadas
+// mas ia ocupar muito espaço desnecessário nesse exemplo
+
+// argumentos do mesmo tipo
+
+void ImprimirSimples(string titulo, params int[] paginas) {
+	foreach (int pagina in paginas) {
+		System.Console.WriteLine(@"Imprimindo pagina {0} num total de {1}", pagina, paginas.Length);
+	}
+}
+
+ImprimirSimples(@"resumo", 1, 2, 5);
+
+// argumentos de todos os tipos
+
+void Imprimir(string titulo, params object[] paginas) {
+	foreach (object valor in paginas) {
+		if (valor is int) {
+			System.Console.WriteLine(@"Imprimindo página {0}", valor);
+		} else if (valor is IEnumerable&lt;int&gt;) {
+			System.Console.WriteLine(
+				@"Imprimindo páginas {0} até {1}",
+				(valor as IEnumerable&lt;int&gt;).First(),
+				(valor as IEnumerable&lt;int&gt;).Last()
+			);
+		} else {
+			System.Console.WriteLine(@"Imprimindo outra coisa");
+		}
+	}
+}
+
+Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// métodos variádicos em Java
+// algumas coisas foram omitidas propositalmente como main
+
+// argumentos do mesmo tipo
+
+void imprimirSimples(String titulo, int... paginas) {
+	for (int pagina : paginas) {
+		System.out.println(String.format("Imprimindo página %1", pagina));
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5);
+
+// argumentos de todos os tipos
+
+void imprimir(String titulo, Object... paginas) {
+	for (Object valor : paginas) {
+		if (valor instanceof Integer) {
+			System.out.println(String.format("Imprimindo página %d", valor));
+		} else if (valor instanceof Range&lt;Integer&gt;) {
+			System.out.println(String.format(
+				"Imprimindo páginas %d até %d",
+				((Range&lt;Integer&gt;)valor).getMinimum(),
+				((Range&lt;Integer&gt;)valor).getMaximum()
+			));
+		} else {
+			System.out.println("Imprimindo outra coisa");
+		}
+	}
+}
+
+imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
+
+// funções variádicas em JavaScript com operador rest
+
+// argumentos do mesmo tipo
+
+function imprimirSimples(titulo, ...paginas) {
+	for (let pagina of paginas) {
+		console.log(`Imprimindo página ${pagina}`);
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5);
+
+// argumentos de todos os tipos
+
+function imprimir(titulo, ...valores) {
+	for (let valor of valores) {
+		if (Number.isInteger(valor)) {
+			console.log(`Imprimindo página ${valor}`);
+		} else if ((valor.begin || valor.begin === 0)
+			&amp;&amp; valor.end
+			) {
+			console.log(`Imprimindo páginas ${valor.begin} até ${valor.end}`);
+		} else {
+			console.log('Imprimindo outra coisa');
+		}
+	}
+}
+
+imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='async'>Async</h2>
 
 <!-- tasks, promises e futures, deferreds, generators, events/delegates -->
@@ -3089,7 +3368,7 @@ var bObjProto = new Boolean({});*/</code
 
 std::mutex cout_mutex;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	using std::string;
 	using std::cout;
