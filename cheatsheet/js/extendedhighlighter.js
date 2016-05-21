@@ -2695,6 +2695,7 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 		constructor() {
 			super('type', [
 
+				'bool',
 				'byte',
 				'decimal',
 				'double',
@@ -2710,6 +2711,7 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 				'uint',
 				'ulong',
 
+				'Boolean',
 				'Byte',
 				'Decimal',
 				'Double',
