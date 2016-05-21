@@ -2892,8 +2892,11 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>auto oitoOuOitenta = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;</code
 >
 </div>
 
@@ -3026,8 +3029,13 @@ var bObjProto = new Boolean({});*/</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>try {
+	throw new Exception();
+} catch (FormatException) {
+	// TODO rethrow, etc.
+} finally {
+	//
+}</code
 >
 </div>
 
@@ -3070,11 +3078,217 @@ var bObjProto = new Boolean({});*/</code
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
+
+<p>C++ - main.cpp</p>
 <code class='cpp'
+>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include "Model.hpp"
+#include "ParallelWorker.hpp"
+#include "parallelWorkerFunction.hpp"
+
+std::mutex cout_mutex;
+
+int main(int argc, const char * argv[]) {
+
+	using std::cout;
+	using std::endl;
+
+	using std::thread;
+
+	using MarcoLuglio::ThreadExample::Model;
+	using MarcoLuglio::ThreadExample::ParallelWorker;
+	using MarcoLuglio::ThreadExample::parallelWorkerFunction;
+
+	// memória compartilhada entre as threads
+	// FIXME Transformar isso num shared_ptr e passar para os métodos
+	auto dataQueue{Model()};
+	dataQueue.Push("dislexicos");
+	dataQueue.Push("devem");
+	dataQueue.Push("ler");
+	dataQueue.Push("frases");
+	dataQueue.Push("assim");
+
+	// alternativa 1: método
+	auto worker{ParallelWorker(dataQueue)};
+	std::thread parallelThread{worker.Work}; // FIXME
+
+	// alternativa 2: função
+	std::thread functionThread{parallelWorkerFunction, dataQueue};
+
+	// alternativa 3: lambda
+	std::thread lambdaThread{[dataQueue](){
+		auto sair = false;
+		while (!sair) {
+			cout_mutex.lock();
+			cout &lt;&lt; "t3" &lt;&lt; endl;
+			cout_mutex.unlock();
+			sair = true;
+		}
+	}};
+
+	parallelThread.join();
+	functionThread.join();
+	lambdaThread.join();
+
+}</code
 >
-</code
+
+<p>C++ - Model.hpp</p>
+<code class='cpp'
+>#ifndef MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED
+#define MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED
+
+#include &lt;string&gt;
+#include &lt;thread&gt;
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	class Model final {
+	public:
+		Model();
+		~Model();
+		void Push(std::string);
+		std::string Next();
+	private:
+		std::mutex modelLock;
+	};
+
+}
+}
+
+#endif /* MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED */</code
 >
+
+<p>C++ - Model.cpp</p>
+<code class='cpp'
+>#include &lt;string&gt;
+#include &lt;thread&gt;
+#include "Model.hpp"
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	Model::Model() {
+		//
+	};
+
+	void Model::Push(std::string) {
+		std::lock_guard&lt;std::mutex&gt; _{modelLock};
+		// TODO
+	};
+
+	std::string Model::Next() {
+		std::lock_guard&lt;std::mutex&gt; _{modelLock};
+		return "TODO";
+	};
+
+}
+}</code
+>
+
+<p>C++ - ParallelWorker.hpp</p>
+<code class='cpp'
+>#ifndef MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED
+#define MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	class Model;
+
+	class ParallelWorker final {
+
+	public:
+		explicit ParallelWorker(Model model);
+		~ParallelWorker();
+		static void Work();
+
+	};
+
+}
+}
+
+#endif /* MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED */</code
+>
+
+<p>C++ - ParallelWorker.cpp</p>
+<code class='cpp'
+>#include &lt;iostream&gt;
+#include "Model.hpp"
+#include "ParallelWorker.hpp"
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	using std::cout;
+	using std::endl;
+
+	ParallelWorker::ParallelWorker(Model model) {
+		//
+	};
+
+	void ParallelWorker::Work() {
+		auto sair = false;
+		while (!sair) {
+			// cout_mutex.lock();
+			cout &lt;&lt; "t1" &lt;&lt; endl;
+			// cout_mutex.unlock();
+			sair = true;
+		}
+	};
+
+}
+}</code
+>
+
+<p>C++ - parallelWorkerFunction.hpp</p>
+<code class='cpp'
+>#ifndef MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED
+#define MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	class Model;
+
+	void parallelWorkerFunction(Model model);
+
+}
+}
+
+#endif /* MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED */</code
+>
+
+<p>C++ - parallelWorkerFunction.cpp</p>
+<code class='cpp'
+>#include &lt;iostream&gt;
+#include "Model.hpp"
+#include "parallelWorkerFunction.hpp"
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	using std::cout;
+	using std::endl;
+
+	void parallelWorkerFunction(Model dataQueue) {
+
+		auto sair = false;
+		while (!sair) {
+			//cout_mutex.lock();
+			cout &lt;&lt; "t2" &lt;&lt; endl;
+			//cout_mutex.unlock();
+			sair = true;
+		}
+
+	}
+
+}
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -3173,7 +3387,7 @@ namespace MarcoLuglio.ThreadExample {
 	// C# possui classes nativas com acesso
 	// sincronizado, mas não as utilizei para
 	// demonstrar o uso de locks manuais
-	public class Model {
+	public sealed class Model {
 
 		public Model() {
 			this.modelLock = new object();
@@ -3214,7 +3428,7 @@ namespace MarcoLuglio.ThreadExample {
 
 namespace MarcoLuglio.ThreadExample {
 
-	public class ParallelWorker {
+	public sealed class ParallelWorker {
 
 		public ParallelWorker(Model dataQueue) {
 			this.dataQueue = dataQueue;
@@ -3319,7 +3533,7 @@ import java.util.LinkedList;
 // Java possui classes nativas com acesso
 // sincronizado, mas não as utilizei para
 // demonstrar o uso de locks manuais
-public class Model {
+public final class Model {
 
 	public Model() {
 		this.modelLock = new Object();
@@ -3361,7 +3575,7 @@ public class Model {
 
 package marcoluglio.threadexample;
 
-public class ParallelThread extends Thread {
+public final class ParallelThread extends Thread {
 
 	public ParallelThread(Model dataQueue) {
 		this.dataQueue = dataQueue;
@@ -3394,7 +3608,7 @@ public class ParallelThread extends Thread {
 <code class='java'
 >package marcoluglio.threadexample;
 
-public class ParallelRunnable implements Runnable {
+public final class ParallelRunnable implements Runnable {
 
 	public ParallelRunnable(Model dataQueue) {
 		this.dataQueue = dataQueue;
