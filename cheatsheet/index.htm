@@ -3074,18 +3074,21 @@ var bObjProto = new Boolean({});*/</code
 <div class='comparison'>
 
 <div class='codeblock'>
+
 <p>C++</p>
 <code class='cpp'
->// funções variádicas em C++
-
-// argumentos do mesmo tipo
+>// argumentos do mesmo tipo
 
 #include &lt;iostream&gt;
 
-template&lt;typename... Tipos&gt;
-void imprimirSimples(std::string titulo, Tipos... paginas) {
+using std::string;
+using std::cout;
+using std::endl;
 
-	const unsigned short int quantidadeDeParametros {sizeof...(paginas)};
+template&lt;typename... Tipos&gt;
+void imprimirSimples(string titulo, Tipos... paginas) {
+
+	const uint16_t quantidadeDeParametros {sizeof...(paginas)};
 
 	// não pode criar uma array com 0 elementos
 	if (quantidadeDeParametros == 0) {
@@ -3096,52 +3099,59 @@ void imprimirSimples(std::string titulo, Tipos... paginas) {
 	int paginasArray[quantidadeDeParametros] {paginas...};
 
 	for (auto pagina : paginasArray) {
-		std::cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; std::endl;
+		cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
 	}
 
 }
 
-imprimirSimples(1, 2, 5);
+imprimirSimples(1, 2, 5);</code
+>
 
-// argumentos de todos os tipos
+<p>C++</p>
+<code class='cpp'
+>// argumentos de todos os tipos
 
 #include &lt;iostream&gt;
 #include &lt;boost/range/irange.hpp&gt;
+
+using std::string;
+using std::cout;
+using std::endl;
 
 /// imprimirHelper template genérico
 template&lt;typename T&gt;
 void imprimirHelper(T pagina) {
 	// poderia usar a linha abaixo para descobrir o tipo de T
 	// porém, melhor usar o template especializado
-	// if (std::is_same&lt;T, int&gt;::value) { /* ... */ }  // optimizable...
-	std::cout &lt;&lt; "Imprimindo outra coisa" &lt;&lt; std::endl;
+	// if (std::is_same&lt;T, int&gt;::value) { /* ... */ }
+	cout &lt;&lt; "Imprimindo outra coisa" &lt;&lt; endl;
 }
 
 /// imprimirHelper template especializado para int
 template&lt;&gt;
 void imprimirHelper&lt;int&gt;(int pagina) {
-	std::cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; std::endl;
+	cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
 }
 
 /// imprimirHelper template especializado para boost::irange
 template&lt;&gt;
 void imprimirHelper&lt;boost::irange&gt;(boost::irange faixa) {
-	std::cout &lt;&lt; "Imprimindo página " &lt;&lt; std::begin(faixa) &lt;&lt; " até " &lt;&lt; std::end(faixa) &lt;&lt; std::endl;
+	cout &lt;&lt; "Imprimindo página " &lt;&lt; std::begin(faixa) &lt;&lt; " até " &lt;&lt; std::end(faixa) &lt;&lt; endl;
 }
 
 
 // foward declaration imprimir template?? Não estou certo da função disso :/
-void imprimir(std::string titulo) {}
+void imprimir(string titulo) {}
 
 // implementação imprimir template
 template&lt;typename Tipo, typename... Tipos&gt;
-void imprimir(std::string titulo, Tipo pagina, Tipos... paginas) {
+void imprimir(string titulo, Tipo pagina, Tipos... paginas) {
 	// executa o helper especializado e chama recursivamente a si mesmo
 	imprimirHelper(pagina);
 	imprimir(titulo, paginas...);
 }
 
-imprimir&lt;int, boost::irange, std::string&gt;("resumo", 1, boost::irange(2, 5), "capítulo 2");</code
+imprimir&lt;int, boost::irange, string&gt;("resumo", 1, boost::irange(2, 5), "capítulo 2");</code
 >
 </div>
 
@@ -3179,11 +3189,10 @@ imprimirSimplesMacro("resumo", 1, 2, 5, -1);</code
 </div>
 
 <div class='codeblock'>
+
 <p>Swift</p>
 <code class='swift'
->// funções variádicas em Swift
-
-// argumentos do mesmo tipo
+>// argumentos do mesmo tipo
 
 func imprimirSimples(titulo titulo:String, paginas:Int...) {
 	for pagina in paginas {
@@ -3191,9 +3200,12 @@ func imprimirSimples(titulo titulo:String, paginas:Int...) {
 	}
 }
 
-imprimirSimples(titulo: "resumo", paginas: 1, 2, 5)
+imprimirSimples(titulo: "resumo", paginas: 1, 2, 5)</code
+>
 
-// argumentos de todos os tipos
+<p>Swift</p>
+<code class='swift'
+>// argumentos de todos os tipos
 
 func imprimir(titulo titulo:String, paginas:Any...) {
 	for valor in paginas {
@@ -3218,23 +3230,27 @@ Até a versão 1.8 não possui
 </div>
 
 <div class='codeblock'>
+
 <p>C#</p>
 <code class='cs'
->// funções variádicas em C#
-// a propósito, o estilo padrão de { e } em C# é que eles fiquem em linhas separadas
-// mas ia ocupar muito espaço desnecessário nesse exemplo
-
-// argumentos do mesmo tipo
+>// argumentos do mesmo tipo
 
 void ImprimirSimples(string titulo, params int[] paginas) {
 	foreach (int pagina in paginas) {
-		System.Console.WriteLine(@"Imprimindo pagina {0} num total de {1}", pagina, paginas.Length);
+		System.Console.WriteLine(
+			@"Imprimindo pagina {0} num total de {1}",
+			pagina,
+			paginas.Length
+		);
 	}
 }
 
-ImprimirSimples(@"resumo", 1, 2, 5);
+ImprimirSimples(@"resumo", 1, 2, 5);</code
+>
 
-// argumentos de todos os tipos
+<p>C#</p>
+<code class='cs'
+>// argumentos de todos os tipos
 
 void Imprimir(string titulo, params object[] paginas) {
 	foreach (object valor in paginas) {
@@ -3257,12 +3273,10 @@ Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
 </div>
 
 <div class='codeblock'>
+
 <p>Java</p>
 <code class='java'
->// métodos variádicos em Java
-// algumas coisas foram omitidas propositalmente como main
-
-// argumentos do mesmo tipo
+>// argumentos do mesmo tipo
 
 void imprimirSimples(String titulo, int... paginas) {
 	for (int pagina : paginas) {
@@ -3270,9 +3284,12 @@ void imprimirSimples(String titulo, int... paginas) {
 	}
 }
 
-imprimirSimples("resumo", 1, 2, 5);
+imprimirSimples("resumo", 1, 2, 5);</code
+>
 
-// argumentos de todos os tipos
+<p>Java</p>
+<code class='java'
+>// argumentos de todos os tipos
 
 void imprimir(String titulo, Object... paginas) {
 	for (Object valor : paginas) {
@@ -3295,11 +3312,10 @@ imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
 </div>
 
 <div class='codeblock'>
+
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
-
-// funções variádicas em JavaScript com operador rest
 
 // argumentos do mesmo tipo
 
@@ -3309,7 +3325,12 @@ function imprimirSimples(titulo, ...paginas) {
 	}
 }
 
-imprimirSimples("resumo", 1, 2, 5);
+imprimirSimples("resumo", 1, 2, 5);</code
+>
+
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
 
 // argumentos de todos os tipos
 
@@ -3527,7 +3548,7 @@ namespace ThreadExample {
 		void Work();
 
 	private:
-		Model&amp; dataQueue;
+		Model* dataQueue;
 		std::string element;
 
 		/// Flag para término da thread
@@ -4116,11 +4137,86 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
+
+<p>C++ - main.cpp</p>
 <code class='cpp'
+>#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;boost/algorithm/string.hpp&gt;
+
+#include "taskFunction.hpp"
+
+int main(int argc, const char* argv[]) {
+
+	using std::async;
+	using std::string;
+	using std::cout;
+	using std::endl;
+
+	using MarcoLuglio::TaskExample::taskFunction;
+
+	// alternativa 1: método
+	// TODO
+
+	// alternativa 2: função
+	auto functionFuture = async(taskFunction, "função");
+
+	// alternativa 3: lambda
+	auto lambdaFuture = async([](string element) -> string {
+		boost::to_upper(element);
+		return element;
+	}, "lambda");
+
+
+	// espera os Futures calcularem um valor
+	// concreto antes de prosseguir
+	cout &lt;&lt; functionFuture.get() &lt;&lt; endl;
+	cout &lt;&lt; lambdaFuture.get() &lt;&lt; endl;
+
+	return 0;
+
+}</code
 >
-</code
+
+<p>C++ - taskFunction.hpp</p>
+<code class='cpp'
+>#ifndef MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED
+#define MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED
+
+#include &lt;string&gt;
+
+namespace MarcoLuglio {
+namespace TaskExample {
+
+	using std::string;
+
+	string taskFunction(string element);
+
+}
+}
+
+#endif /* MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED */</code
 >
+
+<p>C++ - taskFunction.cpp</p>
+<code class='cpp'
+>#include &lt;boost/algorithm/string.hpp&gt;
+#include "taskFunction.hpp"
+
+namespace MarcoLuglio {
+namespace TaskExample {
+
+	using std::string;
+
+	string taskFunction(string element) {
+		boost::to_upper(element);
+		return element;
+	}
+
+}
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -4158,6 +4254,8 @@ namespace MarcoLuglio.TaskExample {
 	class MainClass {
 
 		public static void Main(string[] args) {
+			// async não pode ser usado no método
+			// main, então chamamos no objeto
 			var mainObject = new MainClass();
 			mainObject.main();
 		}
@@ -4302,6 +4400,7 @@ workAsync('some value')
 
 <ol>
 	<li>C#</li>
+	<li>C++</li>
 	<li>JavaScript</li>
 	<li>Java</li>
 </ol>
