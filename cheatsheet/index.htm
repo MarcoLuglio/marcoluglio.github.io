@@ -3214,10 +3214,7 @@ imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
 
 <div class='codeblock'>
 <p>Rust</p>
-<code class='rust'
->
-</code
->
+Até a versão 1.8 não possui
 </div>
 
 <div class='codeblock'>
@@ -3362,11 +3359,11 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 <code class='cpp'
 >#include &lt;iostream&gt;
 #include &lt;thread&gt;
+#include &lt;boost/algorithm/string.hpp&gt;
+#include "cout_mutex.hpp" // para simplicidade do exemplo
 #include "Model.hpp"
 #include "ParallelWorker.hpp"
 #include "parallelWorkerFunction.hpp"
-
-std::mutex cout_mutex;
 
 int main(int argc, const char* argv[]) {
 
@@ -3374,7 +3371,9 @@ int main(int argc, const char* argv[]) {
 	using std::cout;
 	using std::endl;
 
+	using std::make_unique;
 	using std::thread;
+	using std::ref;
 
 	using MarcoLuglio::ThreadExample::Model;
 	using MarcoLuglio::ThreadExample::ParallelWorker;
@@ -3392,10 +3391,10 @@ int main(int argc, const char* argv[]) {
 
 	// alternativa 1: método
 	auto worker{ParallelWorker(*dataQueue)};
-	thread parallelThread{worker.Work}; // TODO
+	thread parallelThread{&amp;ParallelWorker::Work, worker};
 
 	// alternativa 2: função
-	thread functionThread{parallelWorkerFunction, *dataQueue};
+	thread functionThread{parallelWorkerFunction, ref(*dataQueue)};
 
 	// alternativa 3: lambda
 	thread lambdaThread{[](Model&amp; dataQueue){
@@ -3403,13 +3402,19 @@ int main(int argc, const char* argv[]) {
 		auto sair = false;
 		while (!sair) {
 			element = dataQueue.Next();
+			// deixa a thread terminar naturalmente
+			if (element == "") {
+				sair = true;
+				continue;
+			}
+			boost::to_upper(element);
 			cout_mutex.lock();
 			cout &lt;&lt; element &lt;&lt; endl;
 			cout_mutex.unlock();
-			sair = true;
 		}
-	}, *dataQueue};
+	}, ref(*dataQueue)};
 
+	// espera as threads terminarem antes de prosseguir
 	parallelThread.join();
 	functionThread.join();
 	lambdaThread.join();
@@ -3423,13 +3428,19 @@ int main(int argc, const char* argv[]) {
 #define MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED
 
 #include &lt;string&gt;
+#include &lt;queue&gt;
 #include &lt;thread&gt;
 
 namespace MarcoLuglio {
 namespace ThreadExample {
 
 	using std::string;
+	using std::queue;
+	using std::mutex;
 
+	// C++ possui classes nativas com acesso
+	// sincronizado, mas não as utilizei para
+	// demonstrar o uso de locks manuais
 	class Model final {
 
 	public:
@@ -3439,8 +3450,11 @@ namespace ThreadExample {
 		string Next();
 
 	private:
+
+		queue&lt;string&gt; dataQueue;
+
 		/// Lock simples explícita para sincronização
-		std::mutex modelLock;
+		mutex modelLock;
 
 	};
 
@@ -3453,6 +3467,7 @@ namespace ThreadExample {
 <p>C++ - Model.cpp</p>
 <code class='cpp'
 >#include &lt;string&gt;
+#include &lt;queue&gt;
 #include &lt;thread&gt;
 #include "Model.hpp"
 
@@ -3460,11 +3475,12 @@ namespace MarcoLuglio {
 namespace ThreadExample {
 
 	using std::string;
+	using std::queue;
 	using std::lock_guard;
 	using std::mutex;
 
 	Model::Model() {
-		//
+		dataQueue = queue&lt;string&gt;();
 	};
 
 	Model::~Model() {
@@ -3472,13 +3488,21 @@ namespace ThreadExample {
 	};
 
 	void Model::Push(string) {
-		lock_guard&lt;mutex&gt; _{modelLock};
-		// TODO
+		// só a main thread insere, então
+		// não precisa sincronizar
+		dataQueue.push(element);
 	};
 
 	string Model::Next() {
+		// sincroniza o acesso das threads
 		lock_guard&lt;mutex&gt; _{modelLock};
-		return "TODO";
+		if (!dataQueue.empty()) {
+			string element = dataQueue.front();
+			dataQueue.pop();
+			return element;
+		}
+		// string não pode ser nullptr em c++
+		return "";
 	};
 
 }
@@ -3506,6 +3530,9 @@ namespace ThreadExample {
 		Model&amp; dataQueue;
 		std::string element;
 
+		/// Flag para término da thread
+		bool sair;
+
 	};
 
 }
@@ -3517,6 +3544,8 @@ namespace ThreadExample {
 <p>C++ - ParallelWorker.cpp</p>
 <code class='cpp'
 >#include &lt;iostream&gt;
+#include &lt;boost/algorithm/string.hpp&gt;
+#include "cout_mutex.hpp" // para simplicidade do exemplo
 #include "Model.hpp"
 #include "ParallelWorker.hpp"
 
@@ -3527,7 +3556,8 @@ namespace ThreadExample {
 	using std::endl;
 
 	ParallelWorker::ParallelWorker(Model&amp; model) {
-		// TODO
+		dataQueue = &model;
+		sair = false;
 	};
 
 	ParallelWorker::~ParallelWorker() {
@@ -3535,13 +3565,17 @@ namespace ThreadExample {
 	};
 
 	void ParallelWorker::Work() {
-		auto sair = false;
 		while (!sair) {
 			element = dataQueue->Next();
-			// cout_mutex.lock();
+			// deixa a thread terminar naturalmente
+			if (element == "") {
+				sair = true;
+				continue;
+			}
+			boost::to_upper(element);
+			cout_mutex.lock();
 			cout &lt;&lt; element &lt;&lt; endl;
-			// cout_mutex.unlock();
-			sair = true;
+			cout_mutex.unlock();
 		}
 	};
 
@@ -3559,7 +3593,7 @@ namespace ThreadExample {
 
 	class Model;
 
-	void parallelWorkerFunction(Model&amp; model);
+	void parallelWorkerFunction(Model&amp; dataQueue);
 
 }
 }
@@ -3570,24 +3604,32 @@ namespace ThreadExample {
 <p>C++ - parallelWorkerFunction.cpp</p>
 <code class='cpp'
 >#include &lt;iostream&gt;
+#include &lt;boost/algorithm/string.hpp&gt;
+#include "cout_mutex.hpp" // para simplicidade do exemplo
 #include "Model.hpp"
 #include "parallelWorkerFunction.hpp"
 
 namespace MarcoLuglio {
 namespace ThreadExample {
 
+	using std::string;
 	using std::cout;
 	using std::endl;
 
-	void parallelWorkerFunction(Model&amp; model) {
+	void parallelWorkerFunction(Model&amp; dataQueue) {
 		string element;
 		auto sair = false;
 		while (!sair) {
 			element = dataQueue.Next();
-			//cout_mutex.lock();
+			// deixa a thread terminar naturalmente
+			if (element == "") {
+				sair = true;
+				continue;
+			}
+			boost::to_upper(element);
+			cout_mutex.lock();
 			cout &lt;&lt; element &lt;&lt; endl;
-			//cout_mutex.unlock();
-			sair = true;
+			cout_mutex.unlock();
 		}
 	}
 
@@ -3659,6 +3701,7 @@ namespace MarcoLuglio.ThreadExample {
 				while (!sair) {
 					// dataQueue capturado pelo lambda
 					element = dataQueue.Next();
+					// deixa a thread terminar naturalmente
 					if (element == null) {
 						sair = true;
 						continue;
@@ -3806,6 +3849,7 @@ public class Main {
 			while (!sair) {
 				// dataQueue capturado pelo lambda
 				element = dataQueue.next();
+				// deixa a thread terminar naturalmente
 				if (element == null) {
 					sair = true;
 					continue;
