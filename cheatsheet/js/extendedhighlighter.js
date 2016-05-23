@@ -828,7 +828,11 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'true',
 				'false',
 				'nullptr',
-				'NULL'
+				'NULL',
+
+				// iostream
+				'cout',
+				'endl'
 
 			]);
 
@@ -893,7 +897,9 @@ define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCha
 				'unsigned long',
 				'unsigned long long',
 				'unsigned short',
-				'uintptr_t'
+				'uintptr_t',
+
+				'string'
 
 			]);
 
