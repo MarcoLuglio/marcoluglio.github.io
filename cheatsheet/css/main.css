@@ -113,6 +113,10 @@ div code {
 	counter-reset: linenumber;
 }
 
+.codeblock p {
+	white-space: nowrap;
+}
+
 .comparison {
 	display: flex;
 }
