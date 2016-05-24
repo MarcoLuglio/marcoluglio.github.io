@@ -129,6 +129,14 @@ div code {
 	margin-right: 0;
 }
 
+.pair {
+	display: flex;
+}
+
+.pair > div {
+	margin-right: 10px;
+}
+
 /* TODO */
 
 code .line {

@@ -1295,10 +1295,14 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 		constructor() {
 			super('keyword', [
 
+				'@catch',
 				'@interface',
 				'@implementation',
 				'@end',
+				'@synchronized',
 				'@synthesize',
+				'@throw',
+				'@try',
 
 				'break',
 				'const',
@@ -1770,6 +1774,7 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'switch',
 				'var',
 				'weak',
+				'while',
 
 				// literals
 				'true',

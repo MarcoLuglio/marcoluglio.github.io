@@ -268,23 +268,40 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 <div class='comparison large'>
 
 <div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+
 <p>C++ Microsoft - DentroDoModulo.hpp</p>
 <code class='cpp'
->#pragma once
+>
+#pragma once
 
 namespace marcoluglio {
 	class DentroDoModulo {};
-}</code
+}
+
+                                      </code
 >
+
+		</div>
+
+		<div>
 
 <p>C++ - DentroDoModulo.cpp</p>
 <code class='cpp'
->#include "DentroDoModulo.hpp"
+>
+#include "DentroDoModulo.hpp"
 
 namespace marcoluglio {
 	//
 }</code
 >
+
+		</div>
+
+	</div>
 
 <p>C++ - main.cpp</p>
 <code class='cpp'
@@ -295,9 +312,15 @@ int main(int argc, const char* argv[]) {
 	DentroDoModulo meuObjeto = DentroDoModulo();
 }</code
 >
+
 </div>
 
 <div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+
 <p>C++ - DentroDoModulo.hpp</p>
 <code class='cpp'
 >#ifndef MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
@@ -310,14 +333,23 @@ namespace marcoluglio {
 #endif /* MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED */</code
 >
 
+		</div>
+
+		<div>
+
 <p>C++ - DentroDoModulo.cpp</p>
 <code class='cpp'
->#include "DentroDoModulo.hpp"
+>
+#include "DentroDoModulo.hpp"
 
 namespace marcoluglio {
 	//
 }</code
 >
+
+		</div>
+
+	</div>
 
 <p>C++ - main.cpp</p>
 <code class='cpp'
@@ -328,31 +360,44 @@ int main(int argc, const char* argv[]) {
 	DentroDoModulo meuObjeto = DentroDoModulo();
 }</code
 >
+
 </div>
 
 <div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+
 <p>Objective-C - MLGDentroDoModulo.h</p>
 <code class='objectivec'
->// não possui namespaces
-// a utilização de prefixos com 3 letras
-// ou mais nas classes é a alternativa
-// recomendada
-
+>
 #import &lt;Foundation/Foundation.h&gt;
 
 @interface MLGDentroDoModulo : NSObject
 	//
-@end</code
+@end
+
+</code
 >
+
+		</div>
+
+		<div>
 
 <p>Objective-C - MLGDentroDoModulo.m</p>
 <code class='objectivec'
->#import "MLGDentroDoModulo.h"
+>
+#import "MLGDentroDoModulo.h"
 
 @implementation MLGDentroDoModulo
 	//
-@end</code
+@end                                 </code
 >
+
+		</div>
+
+	</div>
 
 <p>Objective-C - main.m</p>
 <code class='objectivec'
@@ -363,8 +408,15 @@ int main(int argc, const char* argv[]) {
 	MLGDentroDoModulo* meuObjeto;
 	meuObjeto = [[MLGDentroDoModulo alloc] init];
 	return 0;
+
+	// não possui namespaces
+	// a utilização de prefixos com 3 letras
+	// ou mais nas classes é a alternativa
+	// recomendada
+
 }</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -3005,8 +3057,14 @@ var bObjProto = new Boolean({});*/</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>- (void)someMethod {
+	@try {
+		//
+	} @catch (NSException *exception) {
+		//
+		@throw exception;
+	}
+}</code
 >
 </div>
 
@@ -3443,10 +3501,14 @@ int main(int argc, const char* argv[]) {
 }</code
 >
 
-<p>C++ - Model.hpp</p>
+
+	<div class='pair'>
+
+		<div>
+
+		<p>C++ - Model.hpp</p>
 <code class='cpp'
->#ifndef MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED
-#define MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED
+>#pragma once
 
 #include &lt;string&gt;
 #include &lt;queue&gt;
@@ -3480,10 +3542,12 @@ namespace ThreadExample {
 	};
 
 }
-}
-
-#endif /* MARCOLUGLIO_THREADEXAMPLE_MODEL_HPP_INCLUDED */</code
+}</code
 >
+
+		</div>
+
+		<div>
 
 <p>C++ - Model.cpp</p>
 <code class='cpp'
@@ -3530,10 +3594,17 @@ namespace ThreadExample {
 }</code
 >
 
+		</div>
+
+	</div>
+
+	<div class='pair'>
+
+		<div>
+
 <p>C++ - ParallelWorker.hpp</p>
 <code class='cpp'
->#ifndef MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED
-#define MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED
+>#pragma once
 
 namespace MarcoLuglio {
 namespace ThreadExample {
@@ -3557,10 +3628,12 @@ namespace ThreadExample {
 	};
 
 }
-}
-
-#endif /* MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKER_HPP_INCLUDED */</code
+}</code
 >
+
+		</div>
+
+		<div>
 
 <p>C++ - ParallelWorker.cpp</p>
 <code class='cpp'
@@ -3604,10 +3677,17 @@ namespace ThreadExample {
 }</code
 >
 
+		</div>
+
+	</div>
+
+	<div class='pair'>
+
+		<div>
+
 <p>C++ - parallelWorkerFunction.hpp</p>
 <code class='cpp'
->#ifndef MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED
-#define MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED
+>#pragma once
 
 namespace MarcoLuglio {
 namespace ThreadExample {
@@ -3617,10 +3697,12 @@ namespace ThreadExample {
 	void parallelWorkerFunction(Model&amp; dataQueue);
 
 }
-}
-
-#endif /* MARCOLUGLIO_THREADEXAMPLE_PARALLELWORKERFUNCTION_HPP_INCLUDED */</code
+}</code
 >
+
+		</div>
+
+		<div>
 
 <p>C++ - parallelWorkerFunction.cpp</p>
 <code class='cpp'
@@ -3658,10 +3740,23 @@ namespace ThreadExample {
 }</code
 >
 
+		</div>
+
+	</div>
+
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
+<!--
+http://www.cs.umd.edu/class/spring2010/cmsc498i/files/lectures/21_PerfConcurrency.pdf
+
+https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Multithreading/CreatingThreads/CreatingThreads.html
+https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Multithreading/ThreadSafety/ThreadSafety.html
+https://developer.apple.com/library/ios/documentation/General/Conceptual/ConcurrencyProgrammingGuide/ThreadMigration/ThreadMigration.html
+
+https://developer.apple.com/library/ios/documentation/System/Conceptual/ManPages_iPhoneOS/man3/pthread.3.html
+-->
 <code class='objectivec'
 >
 </code
@@ -3669,18 +3764,127 @@ namespace ThreadExample {
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
+
+<p>Swift - Cocoa threads</p>
+<code class='swift'>import Foundation
+
+func join(thread:NSThread) {
+	while !thread.finished { /**/ }
+}
+
+public final class NSParallelWorker {
+
+	@objc public func work() {
+		// deixa a thread terminar naturalmente
+		while !self.sair {
+			print("parallel worker")
+			self.sair = true
+		}
+	}
+
+	private var sair:Bool = false
+
+}
+
+// foundation thread com métodos
+let nsParallelWorker = NSParallelWorker()
+let selector = #selector(NSParallelWorker.work)
+let nsThread:NSThread = NSThread.init(
+	target: nsParallelWorker,
+	selector: selector,
+	object: nil
+	)
+nsThread.start()
+
+// espera as threads terminarem antes de prosseguir
+join(nsThread)</code
 >
-</code
+
+<p>Swift - POSIX threads</p>
+<code class='swift'>//int threadError = pthread_create(
+//	&amp;posixThreadID,
+//	&amp;attr,
+//	&amp;PosixThreadMainRoutine,
+//	NULL
+//	);
+
+let pThread:pthread_t;
+let pThreadAttr:pthread_attr_t;
+pthread_attr_init(UnsafeMutablePointer<pthread_attr_t>(pThreadAttr))
+let threadError = pthread_create(
+	UnsafeMutablePointer<pthread_t>(pThread),
+	UnsafePointer<pthread_attr_t>(pThreadAttr),
+	{(UnsafeMutablePointer<Void>) -> UnsafeMutablePointer<Void> in
+		//code
+	}, nil)
+// let modelLock:pthread_mutex_t =
+// pthread_join(
+//	pThread,
+//	UnsafeMutablePointer<UnsafeMutablePointer<Void>>
+//	);</code
 >
+<!--
+usar semáforos para controlar acesso à coleção
+dispatch tasks para uma única queue
+usar uma queue que não modifica a coleção até processar tudo
+
+
+dispatch_group_t myGroup = dispatch_group_create();
+dispatch_group_async(myGroup, dispatch_get_global_queue(), ^{
+  //stuff to do in the background
+});
+
+//do some stuff
+
+dispatch_group_wait(myGroup, DISPATCH_TIME_FOREVER);
+dispatch_release(myGroup);
+
+NSTask executa um novo processo
+override NSOperation :(
+
+-->
+
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>use std::thread;
+
+fn uppercase(c:char) -> char {
+	c.to_uppercase().next().unwrap()
+}
+
+fn main() {
+
+	// alternativa 1: thread e lambda
+	let mut lambdaElement = "lambda";
+	let lambda_thread = thread::spawn(move || {
+		let uppercase:String = lambdaElement
+			.chars()
+			.map(uppercase)
+			.collect();
+		println!("{:?}", uppercase);
+	});
+
+	// alternativa 2: Builder e lambda
+	let mut builderElement = "builder";
+	let builder_thread = thread::Builder::new()
+		.name("builder thread".to_string())
+		.spawn(move || {
+
+		let uppercase:String = builderElement
+			.chars()
+			.map(uppercase)
+			.collect();
+		println!("{:?}", uppercase);
+	});
+
+	// espera as threads terminarem antes de prosseguir
+	lambda_thread.join();
+	builder_thread.unwrap().join();
+
+}</code
 >
 </div>
 
@@ -4178,10 +4382,13 @@ int main(int argc, const char* argv[]) {
 }</code
 >
 
+	<div class='pair'>
+
+		<div>
+
 <p>C++ - taskFunction.hpp</p>
 <code class='cpp'
->#ifndef MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED
-#define MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED
+>#pragma once
 
 #include &lt;string&gt;
 
@@ -4193,15 +4400,18 @@ namespace TaskExample {
 	string taskFunction(string element);
 
 }
-}
-
-#endif /* MARCOLUGLIO_TASKEXAMPLE_TASKFUNCTION_HPP_INCLUDED */</code
+}</code
 >
+
+		</div>
+
+		<div>
 
 <p>C++ - taskFunction.cpp</p>
 <code class='cpp'
 >#include &lt;boost/algorithm/string.hpp&gt;
 #include "taskFunction.hpp"
+
 
 namespace MarcoLuglio {
 namespace TaskExample {
@@ -4217,22 +4427,97 @@ namespace TaskExample {
 }</code
 >
 
+		</div>
+
+	</div>
+
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+
+<p>Swift - Console</p>
 <code class='swift'
+>import Dispatch
+
+func check(semaforo:dispatch_semaphore_t) -&gt; Int {
+	let waitResult = dispatch_semaphore_wait(
+		semaforo,
+		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
+		)
+	return waitResult
+}
+
+func wait(semaforo:dispatch_semaphore_t) {
+	while check(semaforo) != 0 { /**/ }
+}
+
+var element = "lambda"
+
+let utilityQueue = dispatch_get_global_queue(
+	QOS_CLASS_UTILITY,
+	0
+	)
+let semaforo = dispatch_semaphore_create(0)
+
+dispatch_async(utilityQueue) {
+	element = element.uppercaseString
+	print(element)
+	dispatch_semaphore_signal(semaforo)
+}
+
+// espera os blocos terminarem antes de prosseguir
+wait(semaforo)
+
+/*
+Os tipos pré-definidos de queues são:
+QOS_CLASS_USER_INTERACTIVE - if it should not cause the ui to lag or hang
+QOS_CLASS_USER_INITIATED - if is started by ui interaction such as a click
+QOS_CLASS_UTILITY - if it is a slow operation such as io
+QOS_CLASS_BACKGROUND - background tasks
+*/</code
 >
-</code
+
+<p>Swift - UI</p>
+<code class='swift'>import Dispatch
+
+func check(semaforo:dispatch_semaphore_t) -&gt; Int {
+	let waitResult = dispatch_semaphore_wait(
+		semaforo,
+		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
+		)
+	return waitResult
+}
+
+func wait(semaforo:dispatch_semaphore_t) {
+	while check(semaforo) != 0 { /**/ }
+}
+
+var element = "lambda"
+
+let utilityQueue = dispatch_get_global_queue(
+	QOS_CLASS_UTILITY,
+	0
+	)
+let semaforo = dispatch_semaphore_create(0)
+
+dispatch_async(utilityQueue) {
+	element = element.uppercaseString
+	let mainQueue = dispatch_get_main_queue()
+	dispatch_async(mainQueue) {
+		print(element)
+		dispatch_semaphore_signal(semaforo)
+	}
+}
+
+// espera os blocos terminarem antes de prosseguir
+wait(semaforo)</code
 >
+
 </div>
 
 <div class='codeblock'>
