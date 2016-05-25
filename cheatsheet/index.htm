@@ -48,7 +48,7 @@
 
 // requer uma função main na raiz
 int main(int argc, const char* argv[]) {
-	std::cout << "Olá Mundo";
+	std::cout &lt;&lt; "Olá Mundo";
 	// requer um código de retorno
 	return 0;
 }</code
@@ -695,8 +695,8 @@ Object o = new Object();
 >// tipo optional é preferível
 // ao ponteiro nullable
 
-std::optional<int> k; // C++17
-boost::optional<int> l; // boost
+std::optional&lt;int&gt; k; // C++17
+boost::optional&lt;int&gt; l; // boost
 
 // PONTEIROS
 // =========
@@ -1749,7 +1749,7 @@ Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='s
 C# mantém os nomes herdados do C (embora seja possível criar <em>type aliases</em> por arquivo). Notem a inconsistência com <code class='cs'>sbyte</code> e <code class='cs'>byte</code> devido a esta decisão. C# possui um tipo de 128 bits. Como roda numa máquina virtual, não possui tipos com tamanhos de memória como Rust e Swift. Não sei ao certo como é feito com <em>Native</em> .NET.<br />
 Java não possui tipos sem sinal.<br />
 C++ possui uma leve melhoria em relação à C, mas ainda é bem extenso.<br />
-Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short <= int <= long <= long long</code>. Mesma coisa vale para <code class='objectivec'>float <= double <= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os tipos incluídos pelo framework da Apple.<br />
+Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short &lt;= int &lt;= long &lt;= long long</code>. Mesma coisa vale para <code class='objectivec'>float &lt;= double &lt;= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os tipos incluídos pelo framework da Apple.<br />
 JavaScript só possui um tipo numérico.</p>
 <p>Notem que existe uma divergência entre C++ e Objective-C e as demais linguagens em relação à nomeclatura. Para as duas linguagens, <code class='cpp'>int</code> e <code class='cpp'>long</code> possuem tamanhos diferentes das demais. Por isso, ponto para as linguagens que indicam explicitamente o tamanho dos tipos no próprio nome.</p>
 
@@ -3264,10 +3264,219 @@ try {
 </section>
 
 
-
 <section>
 
-<h2 id='funcoesvariadicas'>Funções Variádicas</h2>
+<h2 id='funcoes'>Funções</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='funcoesinternas'>Funções Internas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='lambdas'>Lambdas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='funcoesvariadicas'>Funções Variádicas</h3>
 
 <div class='comparison'>
 
@@ -3552,6 +3761,78 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 </div>
 
+
+
+<h3 id='generators'>Generators</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
 <ol>
 	<li>a</li>
 </ol>
@@ -3790,7 +4071,7 @@ namespace ThreadExample {
 	using std::endl;
 
 	ParallelWorker::ParallelWorker(Model&amp; model) {
-		dataQueue = &model;
+		dataQueue = &amp;model;
 		sair = false;
 	};
 
@@ -3950,17 +4231,17 @@ join(nsThread)</code
 
 let pThread:pthread_t;
 let pThreadAttr:pthread_attr_t;
-pthread_attr_init(UnsafeMutablePointer<pthread_attr_t>(pThreadAttr))
+pthread_attr_init(UnsafeMutablePointer&lt;pthread_attr_t&gt;(pThreadAttr))
 let threadError = pthread_create(
-	UnsafeMutablePointer<pthread_t>(pThread),
-	UnsafePointer<pthread_attr_t>(pThreadAttr),
-	{(UnsafeMutablePointer<Void>) -> UnsafeMutablePointer<Void> in
+	UnsafeMutablePointer&lt;pthread_t&gt;(pThread),
+	UnsafePointer&lt;pthread_attr_t&gt;(pThreadAttr),
+	{(UnsafeMutablePointer&lt;Void&gt;) -&gt; UnsafeMutablePointer&lt;Void&gt; in
 		//code
 	}, nil)
 // let modelLock:pthread_mutex_t =
 // pthread_join(
 //	pThread,
-//	UnsafeMutablePointer<UnsafeMutablePointer<Void>>
+//	UnsafeMutablePointer&lt;UnsafeMutablePointer&lt;Void&gt;&gt;
 //	);</code
 >
 <!--
