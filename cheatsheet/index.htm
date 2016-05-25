@@ -205,7 +205,19 @@ var x = 5; // variável
 const int x = 5; // constante
 
 // tipo ignorado em tempo de compilação
-dynamic x = 5;</code
+dynamic x = 5;
+
+// nomes válidos
+
+var eu1;
+var _ = "bem sucinto";
+var _123 = "meio confuso";
+
+// podemos ainda usar @ na frente
+// do nome pra evitar colisões
+// com palavras-chave e tipos
+var @if = "muito confuso";
+var @int = "muito confuso";</code
 >
 </div>
 
@@ -4609,7 +4621,10 @@ namespace TaskExample {
 
 <p>Swift - Console</p>
 <code class='swift'
->import Dispatch
+>// libdispatch ou Grande Central Dispatch
+import Dispatch
+
+// funções auxiliares para simplificar sincronização
 
 func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 	let waitResult = dispatch_semaphore_wait(
@@ -4622,6 +4637,8 @@ func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 func wait(semaforo:dispatch_semaphore_t) {
 	while check(semaforo) != 0 { /**/ }
 }
+
+// tasks
 
 var element = "lambda"
 
@@ -4650,7 +4667,10 @@ QOS_CLASS_BACKGROUND - background tasks
 >
 
 <p>Swift - UI</p>
-<code class='swift'>import Dispatch
+<code class='swift'>// libdispatch ou Grande Central Dispatch
+import Dispatch
+
+// funções auxiliares para simplificar sincronização
 
 func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 	let waitResult = dispatch_semaphore_wait(
@@ -4663,6 +4683,8 @@ func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 func wait(semaforo:dispatch_semaphore_t) {
 	while check(semaforo) != 0 { /**/ }
 }
+
+// tasks
 
 var element = "lambda"
 
@@ -4689,10 +4711,7 @@ wait(semaforo)</code
 
 <div class='codeblock'>
 <p>Rust</p>
-<code class='rust'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
