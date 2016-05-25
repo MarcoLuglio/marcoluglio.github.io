@@ -899,7 +899,8 @@ define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCha
 				'unsigned short',
 				'uintptr_t',
 
-				'string'
+				'string',
+				'exception'
 
 			]);
 
@@ -1299,6 +1300,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'@interface',
 				'@implementation',
 				'@end',
+				'@finally',
 				'@synchronized',
 				'@synthesize',
 				'@throw',
@@ -1362,6 +1364,7 @@ define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'long double',
 				'long long',
 				'NSInteger',
+				'NSException',
 				'NSNumber',
 				'NSUInteger',
 				'short',
@@ -1743,13 +1746,17 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'@objc',
 				'@UIApplicationMain',
 
+				'#selector',
+
 				'as',
 				'case',
+				'catch',
 				'class',
 				'default',
 				'defer',
 				'deinit',
 				'didSet',
+				'do',
 				'enum',
 				'final',
 				'for',
@@ -1772,6 +1779,9 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'static',
 				'super',
 				'switch',
+				'throw',
+				'throws',
+				'try',
 				'var',
 				'weak',
 				'while',
@@ -1819,7 +1829,12 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'UInt8',
 				'UInt16',
 				'UInt32',
-				'UInt64'
+				'UInt64',
+				'Character',
+				'NSString',
+				'String',
+				'NSException',
+				'ErrorType'
 
 				// TODO Coloco os compatibilidade com C?
 
@@ -2739,7 +2754,9 @@ define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleChar
 				'UInt64',
 
 				'BigInteger',
-				'Complex'
+				'Complex',
+
+				'Exception'
 
 			]);
 
@@ -3442,7 +3459,9 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'Short',
 
 				'BigInteger',
-				'BigDecimal'
+				'BigDecimal',
+
+				'Exception'
 
 			]);
 
