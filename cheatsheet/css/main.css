@@ -249,7 +249,9 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* generic */
 
-.bubaloop.generic .keyword {
+.bubaloop.generic .keyword,
+.bubaloop.generic .number,
+.bubaloop.generic .boolean {
 	color: #0040B4;
 }
 
@@ -267,11 +269,6 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.generic .directive {
 	color: #D10077; /* TODO test color */
-}
-
-.bubaloop.generic .number,
-.bubaloop.generic .boolean {
-	color: #0040B4;
 }
 
 .bubaloop.generic .string {
@@ -452,7 +449,8 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* C# */
 
-.bubaloop.cs .keyword {
+.bubaloop.cs .keyword,
+.bubaloop.cs .number {
 	color: #0040B4;
 }
 
@@ -672,11 +670,11 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop .keyword,
 .bubaloop .type,
-.bubaloop.generic .symbol,
+.bubaloop .symbol,
 .bubaloop .operator,
 .bubaloop .comment,
 .bubaloop .directive,
-.bubaloop.generic .number,
+.bubaloop .number,
 .bubaloop .boolean,
 .bubaloop .string,
 
@@ -694,9 +692,7 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.javascript .arraySeparator,
 .bubaloop.javascript .statementSeparator,
 .bubaloop.javascript .regex,
-.bubaloop.javascript .symbol,
 .bubaloop.javascript .exceptionStub,
-.bubaloop.javascript .number,
 
 .bubaloop.html .doctype,
 .bubaloop.html .tag,
@@ -709,11 +705,11 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.highlight .keyword,
 .bubaloop.highlight .type,
-.bubaloop.highlight.generic .symbol,
+.bubaloop.highlight .symbol,
 .bubaloop.highlight .operator,
 .bubaloop.highlight .comment,
 .bubaloop.highlight .directive,
-.bubaloop.highlight.generic .number,
+.bubaloop.highlight .number,
 .bubaloop.highlight .boolean,
 .bubaloop.highlight .string,
 
@@ -731,9 +727,7 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight.javascript .arraySeparator,
 .bubaloop.highlight.javascript .statementSeparator,
 .bubaloop.highlight.javascript .regex,
-.bubaloop.highlight.javascript .symbol,
 .bubaloop.highlight.javascript strong .comment, /* pq precisa disso? */
-.bubaloop.highlight.javascript .number,
 .bubaloop.highlight.javascript .null,
 .bubaloop.highlight.javascript .undefined,
 

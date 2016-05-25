@@ -2845,6 +2845,262 @@ define('CSPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimp
 
 
 
+define('CSDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CSDecimalPatternIterator = class CSDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter u, l, ul, lu, f, d, m no final tanto em caixa alta quanto baixa
+		// pode ter _ separando os números
+
+		_matchNumber(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (matchCharacter) {
+				let lowerMatchCharacter = matchCharacter.toLowerCase();
+				if (this._isComplete
+					&& (lowerMatchCharacter == 'u'
+						|| lowerMatchCharacter == 'l'
+						|| lowerMatchCharacter == 'f'
+						|| lowerMatchCharacter == 'd'
+						|| lowerMatchCharacter == 'm'
+						)
+					) {
+
+					return true;
+				}
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	};
+
+	return CSDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('CSDecimalLiteralToken', ['SourcePatternIteratorToken', 'CSDecimalPatternIterator'], (SourcePatternIteratorToken, CSDecimalPatternIterator) => {
+
+	const CSDecimalLiteralToken = class CSDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new CSDecimalPatternIterator());
+		}
+	};
+
+	return CSDecimalLiteralToken;
+
+});
+
+
+
+define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CSNumberPatternIterator = class CSNumberPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isNumberCharacter: {value: /\d/},
+				_matchCheck: {value: null, writable: true}
+			});
+			this._matchFunction = this._matchFirstNumber;
+			Object.seal(this);
+		}
+
+		/*
+		números válidos
+
+		binario só na próxima versão
+		tem que ter 1 número depois do b
+		só 0 e 1
+		0b10101110
+		0B10101
+
+		hexadecimal
+		tem que ter 1 número depois do x
+		só 0 até 9 e A até F
+		0x07
+		0X07
+		*/
+
+		_matchFirstNumber(matchCharacter) {
+
+			if (matchCharacter === '0') {
+				this._matchFunction = this._matchIdentifier;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchIdentifier(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+			// só muda o tipo de verificação para cada formato de número
+			this._matchFunction = this._matchEndNumber;
+
+			// verifica qual tipo de número
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			/*if (lowerMatchCharacter === 'b') {
+				this._matchCheck = this._isBinary;
+				return true;
+			}*/
+
+			if (lowerMatchCharacter === 'x') {
+				this._matchCheck = this._isHexadecimal;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndNumber(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (this._matchCheck(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		/*_isBinary(matchCharacter) {
+
+			if (matchCharacter === '0' || matchCharacter === '1') {
+				return true;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+			if (this._isComplete
+				&& (lowerMatchCharacter == 'u'
+					|| lowerMatchCharacter == 'l'
+					|| lowerMatchCharacter == 'f'
+					|| lowerMatchCharacter == 'd'
+					|| lowerMatchCharacter == 'm'
+					)
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}*/
+
+		_isHexadecimal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'a'
+				|| lowerMatchCharacter === 'b'
+				|| lowerMatchCharacter === 'c'
+				|| lowerMatchCharacter === 'd'
+				|| lowerMatchCharacter === 'e'
+				|| lowerMatchCharacter === 'f'
+				) {
+
+				return true;
+			}
+
+			if (this._isComplete
+				&& (lowerMatchCharacter == 'u'
+					|| lowerMatchCharacter == 'l'
+					|| lowerMatchCharacter == 'f'
+					|| lowerMatchCharacter == 'd'
+					|| lowerMatchCharacter == 'm'
+					)
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return CSNumberPatternIterator;
+
+});
+
+
+
+/**
+ * Token for hexadecimal numbers
+ * Binary numbers are disabled for now
+ */
+define('CSNumericLiteralToken', ['SourcePatternIteratorToken', 'CSNumberPatternIterator'], (SourcePatternIteratorToken, CSNumberPatternIterator) => {
+
+	const CSNumericLiteralToken = class CSNumericLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new CSNumberPatternIterator());
+		}
+	};
+
+	return CSNumericLiteralToken;
+
+});
+
+
+
 define('CSStringPatternIterator', () => {
 
 	const CSStringPatternIterator = class CSStringPatternIterator {
@@ -3219,7 +3475,71 @@ define('CSInterpolatedStringLiteralToken', ['SourcePatternIteratorToken', 'CSInt
 
 });
 
+// var names começam com letras _ ou @
+// @ não pode colidir com nomes iguais sem @
+// @ permite distinguir nomes de palavras-chave
+// por exemplo @yield é um nome válido
 
+define('CSSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CSSymbolIterator = class CSSymbolIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isWordCharacter: {value: /\w/},
+				_isNumberCharacter: {value: /\d/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchValidCharacter;
+
+		}
+
+		_matchValidCharacter(matchCharacter) {
+
+			if (matchCharacter === '_'
+				|| matchCharacter === '@'
+				|| this._isNumberCharacter.test(matchCharacter)
+				|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+				) {
+
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return CSSymbolIterator;
+
+});
+
+/**
+ * Token for C# symbols
+ */
+define('CSSymbolToken', ['SourcePatternIteratorToken', 'CSSymbolIterator'], (SourcePatternIteratorToken, CSSymbolIterator) => {
+
+	const CSSymbolToken = class CSSymbolToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('symbol', new CSSymbolIterator());
+		}
+	};
+
+	return CSSymbolToken;
+
+});
 
 /**
  * Tokenizes C# source code
@@ -3234,9 +3554,15 @@ define(
 		'CSKeywordToken',
 		'CSTypesToken',
 		'CSPunctuationToken',
+
+		'CSDecimalLiteralToken',
+		'CSNumericLiteralToken',
+
 		'CSStringLiteralToken',
 		'CSVerbatimStringLiteralToken',
 		'CSInterpolatedStringLiteralToken',
+
+		'CSSymbolToken',
 
 		'CLineCommentToken',
 		'CBlockCommentToken',
@@ -3252,9 +3578,15 @@ define(
 		CSKeywordToken,
 		CSTypesToken,
 		CSPunctuationToken,
+
+		CSDecimalLiteralToken,
+		CSNumericLiteralToken,
+
 		CSStringLiteralToken,
 		CSVerbatimStringLiteralToken,
 		CSInterpolatedStringLiteralToken,
+
+		CSSymbolToken,
 
 		CLineCommentToken,
 		CBlockCommentToken,
@@ -3293,7 +3625,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			//this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+			this._tokenPool.push(new CSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
 
@@ -3301,9 +3633,9 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				new CSDecimalLiteralToken(),
+				new CSNumericLiteralToken(),
+				//new JSRegexLiteralToken(),
 				new CSStringLiteralToken(),
 				new CSVerbatimStringLiteralToken(),
 				new CSInterpolatedStringLiteralToken()
