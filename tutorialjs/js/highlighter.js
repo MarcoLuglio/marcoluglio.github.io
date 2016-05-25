@@ -1453,6 +1453,32 @@ define('Lexer', ['StringIterator'], (StringIterator) => {
 			this._tokenPool.splice(0);
 		}
 
+		/**
+		 * Gets last meaningful token
+		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+		 */
+		_getLastToken(tokenSequence) {
+
+			let lastToken = null;
+
+			for (let i = tokenSequence.length; i > 0; i--) {
+
+				lastToken = tokenSequence[i - 1];
+
+				if (!lastToken.ignore
+					&& lastToken.type !== 'whitespace'
+					&& lastToken.type !== 'endOfLine'
+					) {
+
+					return lastToken;
+				}
+
+			}
+
+			return null;
+
+		}
+
 	};
 
 	return Lexer;
@@ -1589,32 +1615,6 @@ define(
 			}
 
 			return true;
-
-		}
-
-		/**
-		 * Gets last meaningful token
-		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
-		 */
-		_getLastToken(tokenSequence) {
-
-			let lastToken = null;
-
-			for (let i = tokenSequence.length; i > 0; i--) {
-
-				lastToken = tokenSequence[i - 1];
-
-				if (!lastToken.ignore
-					&& lastToken.type !== 'whitespace'
-					&& lastToken.type !== 'endOfLine'
-					) {
-
-					return lastToken;
-				}
-
-			}
-
-			return null;
 
 		}
 

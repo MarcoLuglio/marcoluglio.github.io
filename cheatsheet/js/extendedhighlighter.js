@@ -2875,19 +2875,9 @@ define('CSDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIter
 				return true;
 			}
 
-			if (matchCharacter) {
-				let lowerMatchCharacter = matchCharacter.toLowerCase();
-				if (this._isComplete
-					&& (lowerMatchCharacter == 'u'
-						|| lowerMatchCharacter == 'l'
-						|| lowerMatchCharacter == 'f'
-						|| lowerMatchCharacter == 'd'
-						|| lowerMatchCharacter == 'm'
-						)
-					) {
 
-					return true;
-				}
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
 			}
 
 			if (this._isComplete) {
@@ -2895,6 +2885,41 @@ define('CSDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIter
 			}
 
 			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'd'
+				|| lowerMatchCharacter == 'm' // TODO confirmar m
+				) {
+
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'u'
+				|| lowerMatchCharacter == 'l'
+				) {
+
+				return true;
+			}
+
 			return false;
 
 		}
@@ -3017,6 +3042,42 @@ define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternItera
 
 		}
 
+		// TODO reaproveitar de uma classe base comum
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'd'
+				|| lowerMatchCharacter == 'm' // TODO confirmar m
+				) {
+
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'u'
+				|| lowerMatchCharacter == 'l'
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
 		/*_isBinary(matchCharacter) {
 
 			if (matchCharacter === '0' || matchCharacter === '1') {
@@ -3059,15 +3120,7 @@ define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternItera
 				return true;
 			}
 
-			if (this._isComplete
-				&& (lowerMatchCharacter == 'u'
-					|| lowerMatchCharacter == 'l'
-					|| lowerMatchCharacter == 'f'
-					|| lowerMatchCharacter == 'd'
-					|| lowerMatchCharacter == 'm'
-					)
-				) {
-
+			if (this._matchSuffix(matchCharacter)) {
 				return true;
 			}
 
@@ -3606,6 +3659,29 @@ define(
 
 		_resetTokens(tokenSequence) {
 
+			// FIXME tipos são esperados depois das palavras-chave new, is, as
+			// e na assinatura das funções
+
+			let mustBeType = false;
+
+			if (tokenSequence) {
+				let lastToken = this._getLastToken(tokenSequence);
+				mustBeType = this._getMustBeType(lastToken);
+			}
+
+			// FIXME alterar o type token pra reconhecer tipos que não estão na lista
+			/*if (mustBeType) {
+
+				this._tokenPool.splice(
+					0,
+					this._tokenPool.length,
+					new CSTypesToken()
+				);
+
+				return;
+
+			}*/
+
 			this._tokenPool.splice(
 
 				0,
@@ -3652,29 +3728,25 @@ define(
 			);
 		}
 
-		/**
-		 * Gets last meaningful token
-		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
-		 */
-		_getLastToken(tokenSequence) {
+		_getMustBeType(lastToken) {
 
-			let lastToken = null;
+			if (lastToken
+				&& lastToken.type === 'keyword'
+				) {
 
-			for (let i = tokenSequence.length; i > 0; i--) {
+				let keyword = lastToken.characterSequence.join('');
 
-				lastToken = tokenSequence[i - 1];
-
-				if (!lastToken.ignore
-					&& lastToken.type !== 'whitespace'
-					&& lastToken.type !== 'endOfLine'
+				if (keyword === 'as'
+					|| keyword === 'is'
+					|| keyword === 'new'
 					) {
 
-					return lastToken;
+					return true;
 				}
 
 			}
 
-			return null;
+			return false;
 
 		}
 
