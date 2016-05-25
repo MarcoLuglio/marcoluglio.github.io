@@ -2233,8 +2233,44 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'true',
 				'false',
 				'None', // Option<T>
-				'Some' // Option<T>
+				'Some', // Option<T>
 				// não tem null, usar ptr::null
+
+				// known macros
+				'macro_rules!',
+
+				// std macros
+				'assert!',
+				'assert_eq!',
+				'cfg!',
+				'column!',
+				'concat!',
+				'concat_idents!',
+				'debug_assert!',
+				'debug_assert_eq!',
+				'env!',
+				'file!',
+				'format!',
+				'format_args!',
+				'include!',
+				'include_bytes!',
+				'include_str!',
+				'line!',
+				'module_path!',
+				'option_env!',
+				'panic!',
+				'print!',
+				'println!',
+				'scoped_thread_local!',
+				'select!',
+				'stringify!',
+				'thread_local!',
+				'try!',
+				'unimplemented!',
+				'unreachable!',
+				'vec!',
+				'write!',
+				'writeln!'
 
 			]);
 
