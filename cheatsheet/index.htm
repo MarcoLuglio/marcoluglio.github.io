@@ -4425,7 +4425,7 @@ namespace MarcoLuglio.ThreadExample {
 
 		public Model() {
 			this.modelLock = new object();
-			this.dataQueue = new Queue<string>();
+			this.dataQueue = new Queue&lt;string&gt;();
 		}
 
 		public void Push(string element) {
