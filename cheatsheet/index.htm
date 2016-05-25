@@ -3047,8 +3047,25 @@ var bObjProto = new Boolean({});*/</code
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>#include &lt;exception&gt;
+
+using std::exception;
+
+try {
+	throw anyType;
+	// ou simplesmente
+	throw;
+} catch(const exception&amp; ex) {
+	//
+} catch(...) {
+	//
+}
+
+// NÃO COPIE!!! DEPRECATED!!!
+
+// havia uma sintaxe para "checked exceptions"
+int myfunction(int param) throw();
+int myfunction(int param) throw(someType);</code
 >
 </div>
 
@@ -3059,26 +3076,54 @@ var bObjProto = new Boolean({});*/</code
 	@try {
 		//
 	} @catch (NSException *exception) {
+		@throw exception; //  rethrows exception?
+	} @finally {
 		//
-		@throw exception;
 	}
-}</code
+}
+
+// ou
+
+someCFunction(); // TODO</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
+>enum MLError : ErrorType {
+	case Bad
+	case Worse
+}
+
+func canThrowErrors() throws -> String {
+	throw MLError.Bad
+}
+
+func cannotThrowErrors() -> String {
+	//
+}
+
+defer {
+	//
+}
+
+// usar do-catch, try?, try! ou indicar throws</code
 >
-</code
->
+<!-- https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html -->
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>match may_panic() {
+	Ok(result) => println!("{}", result),
+	Err(err) => println!("Error: {}", err),
+}
+
+// ou
+
+let result = try!(may_panic());</code
 >
 </div>
 
@@ -3086,9 +3131,18 @@ var bObjProto = new Boolean({});*/</code
 <p>C#</p>
 <code class='cs'
 >try {
-	throw new Exception();
-} catch (FormatException) {
-	// TODO rethrow, etc.
+
+	someObject.mayThrowException();
+
+} catch (Exception ex) {
+
+	// rethrows exception
+	throw;
+
+	// ou throw nova com InnerException
+	// não devemos lançar System.Exception diretamente
+	throw new ArgumentException("Novo erro", ex);
+
 } finally {
 	//
 }</code
@@ -3096,19 +3150,95 @@ var bObjProto = new Boolean({});*/</code
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+
+<p>Java - Main.java</p>
 <code class='java'
+>package marcoluglio.exceptionexample;
+
+public class Main {
+
+	<strong>// Indicamos que não queremos cuidar da checked exception</strong>
+	<strong class='small comment'>// neste ponto do código com "throws" e deixamos o erro</strong>
+	<strong class='small comment'>// se propagar</strong>
+	public static void main(String[] args) <strong class='small'>throws Exception</strong> {
+		PodeOuNao problematico = new PodeOuNao();
+		<strong>problematico.checkedMethod();</strong>
+		problematico.uncheckedMethod();
+	}
+
+}</code
 >
-</code
+
+<p>Java - Main.java</p>
+<code class='java'
+>package marcoluglio.exceptionexample;
+
+public class Main {
+
+	public static void main(String[] args) {
+		PodeOuNao problematico = new PodeOuNao();
+		<strong>// Contemos a propagação da checked exception</strong>
+		<strong class='small comment'>// com try catch</strong>
+		<strong class='small'>try {</strong>
+			<strong>problematico.checkedMethod();</strong>
+		<strong class='small'>} catch(Exception ex) {</strong>
+			//
+		<strong>} finally {</strong>
+			//
+		<strong>}</strong>
+		problematico.uncheckedMethod();
+	}
+
+}</code
+>
+
+<p>Java - PodeOuNao.java</p>
+<code class='java'
+>package marcoluglio.exceptionexample;
+
+public final class PodeOuNao {
+
+	// checked exceptions devem ser cercadas por
+	// try catch ou o método deve indicar explicitamente
+	// que pode lançá-las com "throws"
+	public void checkedMethod() throws Exception {
+		throw new Exception("pego na compilação!");
+	}
+
+	// unchecked expections não precisam de tais
+	// cuidados
+	public void uncheckedMethod() {
+		throw new RuntimeException("pego na execução!");
+	}
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
+>try {
+	throw anyType;
+	// mas geralmente
+	throw new Error('Whoops!');
+} catch (e if e instanceof Error) {
+	//
+} catch (ex) {
+	throw ex; // rethrows
+} finally {
+	//
+}
+
+// TODO pode nested
+
+try {
+	// sem catch
+} finally {
+	//
+}</code
 >
-</code
->
+<!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch -->
 </div>
 
 </div>
@@ -3847,7 +3977,15 @@ override NSOperation :(
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->use std::thread;
+>// queue
+use std::collections::vec_deque::VecDeque;
+
+// threads
+use std::thread;
+
+// channels
+use std::sync::mpsc::{Sender, Receiver};
+use std::sync::mpsc;
 
 fn uppercase(c:char) -> char {
 	c.to_uppercase().next().unwrap()
@@ -3855,14 +3993,44 @@ fn uppercase(c:char) -> char {
 
 fn main() {
 
+	let mut model = VecDeque::new();
+	model.push_back("dislexicos");
+	model.push_back("devem");
+	model.push_back("ler");
+	model.push_back("frases");
+	model.push_back("assim");
+
+	let (senderChannel, receiverChannel)
+		:(Sender&lt;&amp;str&gt;, Receiver&lt;&amp;str&gt;)
+		= mpsc::channel();
+
+	// envia dados pelo canal
+	for element in model {
+		senderChannel.send(element);
+	}
+
+	// fecha o canal
+	drop(senderChannel);
+
 	// alternativa 1: thread e lambda
 	let mut lambdaElement = "lambda";
 	let lambda_thread = thread::spawn(move || {
-		let uppercase:String = lambdaElement
-			.chars()
-			.map(uppercase)
-			.collect();
-		println!("{:?}", uppercase);
+
+		let mut element:&amp;str;
+		let mut elementUppercase:String;
+
+		// roda até o canal ser fechado
+		for element in receiverChannel {
+			let uppercase:String = element
+				.chars()
+				.map(uppercase)
+				.collect();
+			println!("{:?}", uppercase);
+		}
+
+		// poderíamos usar receiverChannel.recv().unwrap()
+		// e receiverChannel.try_recv().unwrap()
+
 	});
 
 	// alternativa 2: Builder e lambda
@@ -3876,6 +4044,7 @@ fn main() {
 			.map(uppercase)
 			.collect();
 		println!("{:?}", uppercase);
+
 	});
 
 	// espera as threads terminarem antes de prosseguir
@@ -4659,6 +4828,14 @@ public class Task implements Callable&lt;String&gt; {
 }</code
 >
 
+</div>
+
+<div class='codeblock'>
+
+<p>Java Android - AsyncTask.java</p>
+<code class='java'
+>// TODO AsyncTask</code
+>
 </div>
 
 <div class='codeblock'>
