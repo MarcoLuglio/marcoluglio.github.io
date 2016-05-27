@@ -3067,9 +3067,9 @@ try {
 	throw anyType;
 	// ou simplesmente
 	throw;
-} catch(const exception&amp; ex) {
+} catch (const exception&amp; ex) {
 	//
-} catch(...) {
+} catch (...) {
 	//
 }
 
@@ -3157,6 +3157,18 @@ let result = try!(may_panic());</code
 
 } finally {
 	//
+}
+
+try {
+	//
+} catch {
+	//
+}
+
+try {
+	//
+} finally {
+	//
 }</code
 >
 </div>
@@ -3193,7 +3205,7 @@ public class Main {
 		<strong class='small comment'>// com try catch</strong>
 		<strong class='small'>try {</strong>
 			<strong>problematico.checkedMethod();</strong>
-		<strong class='small'>} catch(Exception ex) {</strong>
+		<strong class='small'>} catch (Exception ex) {</strong>
 			//
 		<strong>} finally {</strong>
 			//
@@ -3763,7 +3775,194 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 
 
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='async'>Async</h2>
+
+<!-- tasks, promises e futures, deferreds, generators, events/delegates -->
+
+
 <h3 id='generators'>Generators</h3>
+
+<h4>Yield</h4>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+
+<p>C# - AnimadorClosure.cs</p>
+<code class='cs'
+>using System.Collections.Generic;
+
+namespace MarcoLuglio.ClosureGeneratorExample {
+
+	public class AnimadorGenerator {
+
+		// os parâmetros não podem ser ref nem out
+		public IEnumerable&lt;float&gt; Animar(float inicio, float fim, int tempo) {
+
+			var tempoAtual = 1;
+			var delta = (fim - inicio) / tempo;
+			var passo = 0f;
+
+			while (tempoAtual <= tempo) {
+				try {
+					passo = fim - (delta * (tempo - tempoAtual));
+					tempoAtual += 1;
+					yield return passo;
+				} finally {
+					// não posso usar catch com generators
+				}
+			}
+
+			// também posso usar yield break; se quiser interromper
+
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.ClosureGeneratorExample {
+
+	public class MainClass {
+
+		public static void Main(string[] args) {
+
+			var animadorGenerator = new AnimadorGenerator();
+
+			var animadorIterator = animadorGenerator.Animar(0, 100, 9);
+			foreach (var resultado in animadorIterator) {
+				Console.WriteLine(resultado);
+			}
+
+			// ou
+
+			var animadorIterator = animadorGenerator.Animar(0, 100, 9).GetEnumerator();
+			while (animadorIterator.MoveNext()) {
+				var resultado = animadorIterator.Current;
+				Console.WriteLine(resultado);
+			}
+
+		}
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript - animar.js</p>
+<code class='javascript'
+>'use strict';
+
+
+
+
+
+
+function* animar(inicio, fim, tempo) {
+
+	var tempoAtual = 1;
+	var delta = (fim - inicio) / tempo;
+	var passo = 0f;
+
+	while (tempoAtual <= tempo) {
+		try {
+			passo = fim - (delta * (tempo - tempoAtual));
+			tempoAtual += 1;
+			yield passo;
+		} catch (ex) {
+			//
+		}
+	}
+
+}
+
+
+
+
+
+
+</code
+>
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>'use strict';
+
+
+
+
+
+
+
+let animadorIterador = animar(0, 100, 9);
+
+for (let resultado in animadorIterator) {
+	console.log(resultado.value);
+}
+
+// ou
+
+do {
+	let resultado = animadorIterador.next();
+	if (resultado.value || resultado.value === 0) {
+		console.log(resultado.value);
+	}
+} while (!resultado.done)</code
+>
+
+</div>
+
+</div>
+
+
+
+<h4>Closures</h4>
 
 <div class='comparison'>
 
@@ -3800,11 +3999,182 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - AnimadorClosure.cs</p>
+<code class='cs'
+>namespace MarcoLuglio.GeneratorExample {
+
+	// assinatura da closure
+	public delegate float? Next();
+
+	public class AnimadorClosure {
+
+		public static Next Animar(float inicio, float fim, int tempo) {
+
+			// variáveis capturadas na closure
+			var tempoAtual = 1;
+			var delta = (fim - inicio) / tempo;
+			var passo = 0f;
+
+			// closure
+			Next lambda = () => {
+				if (tempoAtual <= tempo) {
+					passo = fim - (delta * (tempo - tempoAtual));
+					tempoAtual += 1;
+					return passo;
+				}
+				return null;
+			};
+
+			return lambda;
+
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.GeneratorExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+
+			var animadorClosure = AnimadorClosure.Animar(0, 100, 9);
+			float? resultado;
+			do {
+				resultado = animadorClosure();
+				Console.WriteLine(resultado);
+			} while (resultado != null);
+
+		}
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript - animarClosure.js</p>
+<code class='javascript'
+>'use strict';
+
+
+
+
+
+
+animar(inicio, fim, tempo) {
+
+	// variáveis capturadas na closure
+	let tempoAtual = 1;
+	let delta = (fim - inicio) / tempo;
+	let passo = 0;
+
+	// closure
+	let lambda = () => {
+		if (tempoAtual <= tempo) {
+			passo = fim - (delta * (tempo - tempoAtual));
+			tempoAtual += 1;
+			return passo;
+		}
+		return;
+	};
+
+	return lambda;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</code
+>
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>let animadorClosure = animar(0, 100, 9);
+let resultado;
+do {
+	resultado = animadorClosure();
+	console.log(resultado);
+} while (resultado || resultado === 0);</code
+>
+
+</div>
+
+</div>
+
+
+
+<h4>Functors</h4>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>C# - Objeto Iterator</p>
 <code class='cs'
 >
 </code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -3825,29 +4195,486 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 </div>
 
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
 
 
+<h4>Classes</h4>
 
-<ol>
-	<li>a</li>
-</ol>
+<div class='comparison'>
 
-<p>A</p>
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
 
-</section>
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>C# - Objeto Iterator</p>
+<code class='cs'
+>public class AnimadorGenerator {
+	public float Animar(float inicio, float fim, int tempo) {
+		return new AnimadorIterator(inicio, fim, tempo);
+	}
+}
+
+public class AnimadorIterator : IEnumerable&lt;float&gt; {
+
+	public AnimadorIterator(float inicio, float fim, int tempo) {
+		this.tempo = tempo;
+		this.delta = (fim - inicio) / tempo;
+		this.Reset();
+	}
+
+	public bool MoveNext() {
+
+		if (this.tempoAtual <= this.tempo) {
+			this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
+			this.tempoAtual += 1;
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public void Reset() {
+		this.tempoAtual = 1;
+		this.passo = 0;
+	}
+
+	void IDisposable.Dispose() { /**/ }
+
+	public float Current {
+		get { return this.passo; }
+	}
+
+	object IEnumerator.Current {
+		get { return Current; }
+	}
+
+	private readonly int tempo;
+	private float tempoAtual;
+	private readonly int fim;
+	private readonly int delta;
+	private float passo;
+
+}
+
+var animadorGenerator = new AnimadorGenerator();
+var animadorIterator = animadorGenerator.Animar(0, 100);
+
+</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
 
 
 
-<section>
+<h3 id='tasks'>Tasks</h3>
 
-<h2 id='async'>Async</h2>
+<div class='comparison'>
 
-<!-- tasks, promises e futures, deferreds, generators, events/delegates -->
+<div class='codeblock'>
+
+<p>C++ - main.cpp</p>
+<code class='cpp'
+>#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;boost/algorithm/string.hpp&gt;
+
+#include "taskFunction.hpp"
+
+int main(int argc, const char* argv[]) {
+
+	using std::async;
+	using std::string;
+	using std::cout;
+	using std::endl;
+
+	using MarcoLuglio::TaskExample::taskFunction;
+
+	// alternativa 1: método
+	// TODO
+
+	// alternativa 2: função
+	auto functionFuture = async(taskFunction, "função");
+
+	// alternativa 3: lambda
+	auto lambdaFuture = async([](string element) -> string {
+		boost::to_upper(element);
+		return element;
+	}, "lambda");
+
+
+	// espera os Futures calcularem um valor
+	// concreto antes de prosseguir
+	cout &lt;&lt; functionFuture.get() &lt;&lt; endl;
+	cout &lt;&lt; lambdaFuture.get() &lt;&lt; endl;
+
+	return 0;
+
+}</code
+>
+
+	<div class='pair'>
+
+		<div>
+
+<p>C++ - taskFunction.hpp</p>
+<code class='cpp'
+>#pragma once
+
+#include &lt;string&gt;
+
+namespace MarcoLuglio {
+namespace TaskExample {
+
+	using std::string;
+
+	string taskFunction(string element);
+
+}
+}</code
+>
+
+		</div>
+
+		<div>
+
+<p>C++ - taskFunction.cpp</p>
+<code class='cpp'
+>#include &lt;boost/algorithm/string.hpp&gt;
+#include "taskFunction.hpp"
+
+
+namespace MarcoLuglio {
+namespace TaskExample {
+
+	using std::string;
+
+	string taskFunction(string element) {
+		boost::to_upper(element);
+		return element;
+	}
+
+}
+}</code
+>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+
+<p>Swift - Console</p>
+<code class='swift'
+>// libdispatch ou Grande Central Dispatch
+import Dispatch
+
+// funções auxiliares para simplificar sincronização
+
+func check(semaforo:dispatch_semaphore_t) -&gt; Int {
+	let waitResult = dispatch_semaphore_wait(
+		semaforo,
+		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
+		)
+	return waitResult
+}
+
+func wait(semaforo:dispatch_semaphore_t) {
+	while check(semaforo) != 0 { /**/ }
+}
+
+// tasks
+
+var element = "lambda"
+
+let utilityQueue = dispatch_get_global_queue(
+	QOS_CLASS_UTILITY,
+	0
+	)
+let semaforo = dispatch_semaphore_create(0)
+
+dispatch_async(utilityQueue) {
+	element = element.uppercaseString
+	print(element)
+	dispatch_semaphore_signal(semaforo)
+}
+
+// espera os blocos terminarem antes de prosseguir
+wait(semaforo)
+
+/*
+Os tipos pré-definidos de queues são:
+QOS_CLASS_USER_INTERACTIVE - if it should not cause the ui to lag or hang
+QOS_CLASS_USER_INITIATED - if is started by ui interaction such as a click
+QOS_CLASS_UTILITY - if it is a slow operation such as io
+QOS_CLASS_BACKGROUND - background tasks
+*/</code
+>
+
+<p>Swift - UI</p>
+<code class='swift'>// libdispatch ou Grande Central Dispatch
+import Dispatch
+
+// funções auxiliares para simplificar sincronização
+
+func check(semaforo:dispatch_semaphore_t) -&gt; Int {
+	let waitResult = dispatch_semaphore_wait(
+		semaforo,
+		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
+		)
+	return waitResult
+}
+
+func wait(semaforo:dispatch_semaphore_t) {
+	while check(semaforo) != 0 { /**/ }
+}
+
+// tasks
+
+var element = "lambda"
+
+let utilityQueue = dispatch_get_global_queue(
+	QOS_CLASS_UTILITY,
+	0
+	)
+let semaforo = dispatch_semaphore_create(0)
+
+dispatch_async(utilityQueue) {
+	element = element.uppercaseString
+	let mainQueue = dispatch_get_main_queue()
+	dispatch_async(mainQueue) {
+		print(element)
+		dispatch_semaphore_signal(semaforo)
+	}
+}
+
+// espera os blocos terminarem antes de prosseguir
+wait(semaforo)</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.TaskExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+			// async não pode ser usado no método
+			// main, então chamamos no objeto
+			var mainObject = new MainClass();
+			mainObject.main();
+		}
+
+		private async void main() {
+			var promise = new Promise(@"some value");
+			var resultado = await promise.GetResultAsync();
+			Console.WriteLine(@"esperou " + resultado);
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - Promise.cs</p>
+<code class='cs'
+>using System.Threading.Tasks;
+
+namespace MarcoLuglio.TaskExample {
+
+	public class Promise {
+
+		public Promise(string element) {
+			this.element = element;
+		}
+
+		public async Task&lt;string&gt; GetResultAsync() {
+			return this.element.ToUpper();
+		}
+
+		string element;
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Java - Main.java</p>
+<code class='java'
+>package marcoluglio.taskexample;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		// gerencia threads
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+
+		// alternativa 1: interface Callable
+		Task callableTask = new Task("async");
+		Future&lt;String&gt; taskFuture = executor.submit(callableTask);
+
+		// alternativa 2: lambda Callable
+		String element = "lambda";
+		Future&lt;String&gt; lambdaFuture = executor.submit(() -> {
+			return element.toUpperCase();
+		});
+
+		// alternativa 3: Threads e Futures manuais sem executor
+		Task manualTask = new Task("manual");
+		FutureTask&lt;String&gt; manualFuture = new FutureTask&lt;String&gt;(manualTask);
+		new Thread(manualFuture).start();
+
+		try {
+
+			// espera os Futures calcularem um valor
+			// concreto antes de prosseguir
+			System.out.println(taskFuture.get());
+			System.out.println(lambdaFuture.get());
+			System.out.println(manualFuture.get());
+
+			// encerra as threads do executor
+			executor.shutdown();
+
+		} catch (InterruptedException e) {
+			// fazer alguma coisa
+		} catch (ExecutionException e) {
+			// fazer alguma coisa
+		}
+
+	}
+
+}</code
+>
+
+<p>Java - Task.java</p>
+<code class='java'
+>package marcoluglio.taskexample;
+
+import java.util.concurrent.Callable;
+
+public class Task implements Callable&lt;String&gt; {
+
+	public Task(String element) {
+		this.element = element;
+	}
+
+	@Override
+	public String call() throws Exception {
+		return this.element.toUpperCase();
+	}
+
+	String element;
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Java Android - AsyncTask.java</p>
+<code class='java'
+>// TODO AsyncTask</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function workAsync(element) {
+	return new Promise((resolve, reject) => {
+		resolve(element.toUpperCase());
+	});
+}
+
+workAsync('some value')
+	.then((result) => {
+		console.log(result);
+	});</code
+>
+</div>
+
+</div>
+
+
 
 <h3 id='threads'>Threads</h3>
 
@@ -4790,368 +5617,6 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 <strong>};</strong></code
 >
 
-</div>
-
-</div>
-
-
-
-<h3 id='tasks'>Tasks</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-
-<p>C++ - main.cpp</p>
-<code class='cpp'
->#include &lt;iostream&gt;
-#include &lt;future&gt;
-#include &lt;boost/algorithm/string.hpp&gt;
-
-#include "taskFunction.hpp"
-
-int main(int argc, const char* argv[]) {
-
-	using std::async;
-	using std::string;
-	using std::cout;
-	using std::endl;
-
-	using MarcoLuglio::TaskExample::taskFunction;
-
-	// alternativa 1: método
-	// TODO
-
-	// alternativa 2: função
-	auto functionFuture = async(taskFunction, "função");
-
-	// alternativa 3: lambda
-	auto lambdaFuture = async([](string element) -> string {
-		boost::to_upper(element);
-		return element;
-	}, "lambda");
-
-
-	// espera os Futures calcularem um valor
-	// concreto antes de prosseguir
-	cout &lt;&lt; functionFuture.get() &lt;&lt; endl;
-	cout &lt;&lt; lambdaFuture.get() &lt;&lt; endl;
-
-	return 0;
-
-}</code
->
-
-	<div class='pair'>
-
-		<div>
-
-<p>C++ - taskFunction.hpp</p>
-<code class='cpp'
->#pragma once
-
-#include &lt;string&gt;
-
-namespace MarcoLuglio {
-namespace TaskExample {
-
-	using std::string;
-
-	string taskFunction(string element);
-
-}
-}</code
->
-
-		</div>
-
-		<div>
-
-<p>C++ - taskFunction.cpp</p>
-<code class='cpp'
->#include &lt;boost/algorithm/string.hpp&gt;
-#include "taskFunction.hpp"
-
-
-namespace MarcoLuglio {
-namespace TaskExample {
-
-	using std::string;
-
-	string taskFunction(string element) {
-		boost::to_upper(element);
-		return element;
-	}
-
-}
-}</code
->
-
-		</div>
-
-	</div>
-
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
--
-</div>
-
-<div class='codeblock'>
-
-<p>Swift - Console</p>
-<code class='swift'
->// libdispatch ou Grande Central Dispatch
-import Dispatch
-
-// funções auxiliares para simplificar sincronização
-
-func check(semaforo:dispatch_semaphore_t) -&gt; Int {
-	let waitResult = dispatch_semaphore_wait(
-		semaforo,
-		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
-		)
-	return waitResult
-}
-
-func wait(semaforo:dispatch_semaphore_t) {
-	while check(semaforo) != 0 { /**/ }
-}
-
-// tasks
-
-var element = "lambda"
-
-let utilityQueue = dispatch_get_global_queue(
-	QOS_CLASS_UTILITY,
-	0
-	)
-let semaforo = dispatch_semaphore_create(0)
-
-dispatch_async(utilityQueue) {
-	element = element.uppercaseString
-	print(element)
-	dispatch_semaphore_signal(semaforo)
-}
-
-// espera os blocos terminarem antes de prosseguir
-wait(semaforo)
-
-/*
-Os tipos pré-definidos de queues são:
-QOS_CLASS_USER_INTERACTIVE - if it should not cause the ui to lag or hang
-QOS_CLASS_USER_INITIATED - if is started by ui interaction such as a click
-QOS_CLASS_UTILITY - if it is a slow operation such as io
-QOS_CLASS_BACKGROUND - background tasks
-*/</code
->
-
-<p>Swift - UI</p>
-<code class='swift'>// libdispatch ou Grande Central Dispatch
-import Dispatch
-
-// funções auxiliares para simplificar sincronização
-
-func check(semaforo:dispatch_semaphore_t) -&gt; Int {
-	let waitResult = dispatch_semaphore_wait(
-		semaforo,
-		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
-		)
-	return waitResult
-}
-
-func wait(semaforo:dispatch_semaphore_t) {
-	while check(semaforo) != 0 { /**/ }
-}
-
-// tasks
-
-var element = "lambda"
-
-let utilityQueue = dispatch_get_global_queue(
-	QOS_CLASS_UTILITY,
-	0
-	)
-let semaforo = dispatch_semaphore_create(0)
-
-dispatch_async(utilityQueue) {
-	element = element.uppercaseString
-	let mainQueue = dispatch_get_main_queue()
-	dispatch_async(mainQueue) {
-		print(element)
-		dispatch_semaphore_signal(semaforo)
-	}
-}
-
-// espera os blocos terminarem antes de prosseguir
-wait(semaforo)</code
->
-
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
--
-</div>
-
-<div class='codeblock'>
-
-<p>C# - MainClass.cs</p>
-<code class='cs'
->using System;
-
-namespace MarcoLuglio.TaskExample {
-
-	class MainClass {
-
-		public static void Main(string[] args) {
-			// async não pode ser usado no método
-			// main, então chamamos no objeto
-			var mainObject = new MainClass();
-			mainObject.main();
-		}
-
-		private async void main() {
-			var promise = new Promise(@"some value");
-			var resultado = await promise.GetResultAsync();
-			Console.WriteLine(@"esperou " + resultado);
-		}
-
-	}
-
-}</code
->
-
-<p>C# - Promise.cs</p>
-<code class='cs'
->using System.Threading.Tasks;
-
-namespace MarcoLuglio.TaskExample {
-
-	public class Promise {
-
-		public Promise(string element) {
-			this.element = element;
-		}
-
-		public async Task&lt;string&gt; GetResultAsync() {
-			return this.element.ToUpper();
-		}
-
-		string element;
-
-	}
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
-<p>Java - Main.java</p>
-<code class='java'
->package marcoluglio.taskexample;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-
-public class Main {
-
-	public static void main(String[] args) {
-
-		// gerencia threads
-		ExecutorService executor = Executors.newFixedThreadPool(2);
-
-		// alternativa 1: interface Callable
-		Task callableTask = new Task("async");
-		Future&lt;String&gt; taskFuture = executor.submit(callableTask);
-
-		// alternativa 2: lambda Callable
-		String element = "lambda";
-		Future&lt;String&gt; lambdaFuture = executor.submit(() -> {
-			return element.toUpperCase();
-		});
-
-		// alternativa 3: Threads e Futures manuais sem executor
-		Task manualTask = new Task("manual");
-		FutureTask&lt;String&gt; manualFuture = new FutureTask&lt;String&gt;(manualTask);
-		new Thread(manualFuture).start();
-
-		try {
-
-			// espera os Futures calcularem um valor
-			// concreto antes de prosseguir
-			System.out.println(taskFuture.get());
-			System.out.println(lambdaFuture.get());
-			System.out.println(manualFuture.get());
-
-			// encerra as threads do executor
-			executor.shutdown();
-
-		} catch (InterruptedException e) {
-			// fazer alguma coisa
-		} catch (ExecutionException e) {
-			// fazer alguma coisa
-		}
-
-	}
-
-}</code
->
-
-<p>Java - Task.java</p>
-<code class='java'
->package marcoluglio.taskexample;
-
-import java.util.concurrent.Callable;
-
-public class Task implements Callable&lt;String&gt; {
-
-	public Task(String element) {
-		this.element = element;
-	}
-
-	@Override
-	public String call() throws Exception {
-		return this.element.toUpperCase();
-	}
-
-	String element;
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
-<p>Java Android - AsyncTask.java</p>
-<code class='java'
->// TODO AsyncTask</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->function workAsync(element) {
-	return new Promise((resolve, reject) => {
-		resolve(element.toUpperCase());
-	});
-}
-
-workAsync('some value')
-	.then((result) => {
-		console.log(result);
-	});</code
->
 </div>
 
 </div>
