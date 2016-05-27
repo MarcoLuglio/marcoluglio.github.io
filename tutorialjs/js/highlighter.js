@@ -455,6 +455,7 @@ define('JSRegExpPatternIterator', ['JSPatternIterator'], (JSPatternIterator) => 
 			if (matchCharacter === null
 				|| matchCharacter === '/'
 				|| matchCharacter === '*'
+				|| this._matchLineBreak(matchCharacter)
 				) {
 
 				this._hasNext = false;
@@ -472,7 +473,10 @@ define('JSRegExpPatternIterator', ['JSPatternIterator'], (JSPatternIterator) => 
 
 		_matchEndSlash(matchCharacter) {
 
-			if (matchCharacter === null) {
+			if (matchCharacter === null
+				|| this._matchLineBreak(matchCharacter)
+				) {
+
 				this._hasNext = false;
 				return false;
 			}
@@ -509,6 +513,22 @@ define('JSRegExpPatternIterator', ['JSPatternIterator'], (JSPatternIterator) => 
 			}
 
 			return this._matchEnd(matchCharacter);
+
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
 
 		}
 
