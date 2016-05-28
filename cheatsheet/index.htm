@@ -535,32 +535,127 @@ Object o = new Object();
 
 <section>
 
-<h2 id='ponteiros'>Ponteiros</h2>
+<h2 id='ponteiros'>Apontar é feio <span>Já dizia sua mãe</span></h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->int* m = nullptr; // C++11
+>// variável tipo ponteiro
+// ponteiros são nullable e podemos usar
+// o valor especial nullptr, que representa
+// um endereço de memória inválido
+int* newNull{nullptr}; // C++11
 
-// tipo nullptr_t só pode ser nullptr
-// não pode receber nenhum outro valor
-std::nullptr_t n = nullptr; // C++11
+// versões antigas usam o valor NULL, que é 0
+// por baixo dos panos, também representando
+// um endereço de memória inválido
+int* oldNull{NULL}; // old
 
-// versões antigas usam o tipo NULL
-// que é 0 por baixo dos panos
-int* o = NULL; // old</code
+// existe ainda um tipo nullptr_t, que só pode
+// receber nullptr e não aceita nenhum outro valor
+// não imagino muitos usos para ele fora fazer
+// piadinhas com o Elvis ;)
+std::nullptr_t o_onlyNuuull{nullptr}; // C++11
+
+// variáveis comuns tipo int
+int intOriginal{90};
+int segundoIntOriginal{95};
+
+// variável tipo ponteiro de int (int*) aponta
+// para variável comum tipo int
+//  seu valor é um inteiro 32 ou 64 bits, representando
+// o endereço de memória de intOriginal, que podemos
+// obter usando o operador &amp;
+int* ponteiroDeInt{&amp;intOriginal};
+
+// para acessarmos o valor da variável através
+// do ponteiro, usamos o operador *
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 90
+
+// se fizermos ele apontar para outra variável, seu valor muda
+ponteiroDeInt = &amp;segundoIntOriginal;
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 95
+
+// também podemos pegar endereços de memória através de outros
+// ponteiros, pois como disse acima, seus valores são numéricos
+// 32 ou 64 bits
+int* ponteiroDeSegundoInt{ponteiroDeInt};
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeSegundoInt); // 95
+
+// TODO
+// podemos atribuir enderecos aleatórios de memória para ponteiros :()
+
+// podemos marcar o ponteiro como const, mas isso
+// NÃO PREVINE QUE ELE APONTE PARA VARIÁVEIS DIFERENTES!!!
+// TODO verificar se previne a modificação dos objetos apontados
+const int* ponteiroConst{&amp;intOriginal}; // 90
+ponteiroConst = &amp;segundoIntOriginal; // 95
+
+// depois que não precisarmos mais dos ponteiros
+// precisamos APAGÁ-LOS ANTES QUE SAIAM DE ESCOPO,
+// para evitar que fiquem perdidos na memória
+// sem podermos acessá-los (dangling pointers)
+// devemos fazer isso apenas para ponteiros null
+// ou ponteiros de objetos alocados na heap
+// através do operador new
+delete newNull;
+delete oldNull;
+
+// o gerenciamento manual dos ponteiros com delete
+// não é recomendado, e existem classes que os apagam
+// automaticamente e de maneira determinística assim
+// que saem de escopo
+auto ponteiroSmart{std::make_unique&lt;int&gt;(1000)};
+auto ponteiroSmartShared{std::make_shared&lt;int&gt;(1001)};
+
+// TODO old boost smart pointers
+
+// embora isso não seja necessário para ponteiros int*
+// existe uma outra característica dessas classes, que
+// é não permitir o valor nullptr, uma vez que seu tipo
+// é especificado
+auto semNullPointer{std::make_unique&lt;int&gt;(nullptr)}; // erro :)
+
+// embora NULL seja um valor váido para int*, uma vez que
+// NULL na verdade é 0 por baixo dos panos
+auto semNullPointer{std::make_unique&lt;int&gt;(NULL)}; // funciona!
+
+// além disso, não é possível mudar o endereço para o qual
+// esse tipo de ponteiro aponta uma segunda vez
+auto semSegundaChance{std::make_unique<int>(1000)};
+// semSegundaChance = &intOriginal; // erro
+// semSegundaChance = ponteiroDeInt; // erro
+
+// TODO referências
+// referências não são ponteiros oficialmente segundo
+// a especificacão
+
+// não podem ser nullptr nem NULL
+int&amp; ponteiroRefNullPointer{nullptr}; // erro :)
+int&amp; ponteiroRefNULL{NULL}; // erro :)
+
+int&amp; ponteiroRef{intOriginal}; // 90
+ponteiroRef = segundoIntOriginal; // 95
+
+const int&amp; ponteiroConstRef{intOriginal}; // 90
+ponteiroConstRef = segundoIntOriginal; // erro, não é mutável :)
+
+// não pode pegar o endereço de referências
+
+// ponteiros para arrays
+// ponteiros para funções
+// void*
+// ponteiros de ponteiros
+// referências de ponteiros</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->// PONTEIROS
-// =========
-
-int* o = NULL;</code
+>int* o = NULL;</code
 >
 </div>
 
@@ -593,6 +688,8 @@ namespace MarcoLuglio.PonteirosExample {
 		public static void Main(string[] args) {
 
 			// C# requer um contexto unsafe para utilização de ponteiros
+			// Existem vários contexto que podem ser marcados como unsafe,
+			// mas vou mostrar apenas o bloco de código unsafe
 			unsafe {
 
 				// variáveis comuns tipo int
@@ -620,6 +717,10 @@ namespace MarcoLuglio.PonteirosExample {
 				int* ponteiroDeSegundoInt = ponteiroDeInt;
 				Console.WriteLine(@"valor de int {0} ", *ponteiroDeSegundoInt); // 95
 
+				// não é possível iniciar um ponteiro especificando diretamente
+				// um endereço de memória
+				int* enderecoQualquer = 10; // erro TODO verificar qual o erro
+
 				// variável tipo ponteiro de buffer de bytes (bytes*)
 				// aponta para array de bytes pré-alocada na stack
 				// seu valor é igual ao endereço de memória da array de bytes
@@ -635,9 +736,9 @@ namespace MarcoLuglio.PonteirosExample {
 				byte indice0 = ponteiroDeArray[0];
 				byte indice729 = ponteiroDeArray[729];
 				Console.WriteLine(
-					@"valores {} e {}",
-					indice0,
-					indice729
+					@"valores {0} e {1}",
+					indice0, // 0
+					indice729 // 1
 				);
 
 				// Notem que não há nada no ponteiro que indique se tratar de uma array!
@@ -709,6 +810,8 @@ namespace MarcoLuglio.PonteirosExample {
 				// embora possamos criar ponteiros de ponteiros de ponteiros, acho que não
 				// há uma aplicação muito prática pra isso
 				int*** ponteiroDesnecessario;
+
+				// TODO structs e fixed {}
 
 			}
 
@@ -5231,6 +5334,18 @@ int main(int argc, const char* argv[]) {
 	lambdaThread.join();
 
 }</code
+>
+
+<code class='cpp'
+><strong>// TODO verificar isso tudo</strong>
+<strong>// PS: unique_ptr devolve um ponteiro não copiável quando desreferenciado</strong>
+auto dataQueue = make_unique&lt;Model&gt;();
+auto copia = *dataQueue; // erro: não copiável
+<strong>// por isso precisamos passar para as threads, um ponteiro do ponteiro</strong>
+<strong class='comment small'>// ou uma referência do ponteiro</strong>
+auto referenciaDoPonteiro*&amp; = ref(dataQueue);
+<strong>// ou ainda, uma referência copiável do valor apontado</strong>
+auto referencia&amp; = ref(*dataQueue);</code
 >
 
 
