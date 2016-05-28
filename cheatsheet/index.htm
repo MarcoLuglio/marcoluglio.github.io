@@ -3177,7 +3177,7 @@ try {
 
 <p>Java - Main.java</p>
 <code class='java'
->package marcoluglio.exceptionexample;
+>
 
 public class Main {
 
@@ -3195,7 +3195,7 @@ public class Main {
 
 <p>Java - Main.java</p>
 <code class='java'
->package marcoluglio.exceptionexample;
+>
 
 public class Main {
 
@@ -3820,7 +3820,7 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 <div class='codeblock'>
 
-<p>C# - AnimadorClosure.cs</p>
+<p>C# - AnimadorGenerator.cs</p>
 <code class='cs'
 >using System.Collections.Generic;
 
@@ -4007,6 +4007,12 @@ do {
 	// assinatura da closure
 	public delegate float? Next();
 
+
+
+
+
+
+
 	public class AnimadorClosure {
 
 		public static Next Animar(float inicio, float fim, int tempo) {
@@ -4015,6 +4021,7 @@ do {
 			var tempoAtual = 1;
 			var delta = (fim - inicio) / tempo;
 			var passo = 0f;
+
 
 			// closure
 			Next lambda = () => {
@@ -4062,11 +4069,94 @@ namespace MarcoLuglio.GeneratorExample {
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+
+<p>Java - AnimadorClosure.java</p>
 <code class='java'
->
+>package marcoluglio.generatorexample;
+
+// as assinaturas possíveis das closures estão nesse pacote
+import java.util.function.*;
+
+class ClosureState {
+	public int tempoAtual;
+	public float delta;
+	public Float passo;
+}
+
+public class AnimadorClosure {
+
+	public static Supplier&lt;Float&gt; animar(float inicio, float fim, int tempo) {
+
+		// variáveis capturadas na closure
+		final ClosureState closureState = new ClosureState();
+		closureState.tempoAtual = 1;
+		closureState.delta = (fim - inicio) / tempo;
+		closureState.passo = 0;
+
+		// closure
+		Supplier&lt;Float&gt; lambda = () -> {
+			if (closureState.tempoAtual <= tempo) {
+				closureState.passo = fim - (closureState.delta * (tempo - closureState.tempoAtual));
+				closureState.tempoAtual += 1;
+				return closureState.passo;
+			}
+			return null;
+		};
+
+		return lambda;
+
+	}
+
+}
+
+
 </code
 >
+
+<p>Java - Main.java</p>
+<code class='java'
+>
+import java.util.function.*;
+import marcoluglio.generatorexample.AnimadorClosure;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Supplier&lt;Float&gt; animadorClosure = AnimadorClosure.animar(0, 100, 9);
+		Float resultado;
+		do {
+			resultado = animadorClosure.get();
+			System.out.println(resultado);
+		} while (resultado != null);
+
+	}
+
+}</code
+>
+
+<p>Java</p>
+<code class='java'
+>// PS: pra evitar ter que declarar um tipo ClosureState, eu poderia ter feito
+final Object closureState = new Object() {
+	public int tempoAtual;
+	public float delta;
+	public Float passo;
+};
+
+// mas aí para ler as propriedades eu teria que usar reflection toda a vez
+Class ClosureClass = closureState.getClass();
+
+Field TempoAtualField = ClosureClass.getDeclaredField("tempoAtual")
+TempoAtualField.getInteger(closureState);
+
+Field DeltaField = ClosureClass.getDeclaredField("delta")
+DeltaField.getFloat(closureState);
+
+Field PassoField = ClosureClass.getDeclaredField("passo")
+PassoField.getFloat(closureState);</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -4080,12 +4170,19 @@ namespace MarcoLuglio.GeneratorExample {
 
 
 
+
+
+
+
+
+
 animar(inicio, fim, tempo) {
 
 	// variáveis capturadas na closure
 	let tempoAtual = 1;
 	let delta = (fim - inicio) / tempo;
 	let passo = 0;
+
 
 	// closure
 	let lambda = () => {
@@ -4104,20 +4201,20 @@ animar(inicio, fim, tempo) {
 
 
 
-
-
-
-
-
-
-
-
 </code
 >
 
 <p>JavaScript - main.js</p>
 <code class='javascript'
->let animadorClosure = animar(0, 100, 9);
+>
+
+
+
+
+
+
+
+let animadorClosure = animar(0, 100, 9);
 let resultado;
 do {
 	resultado = animadorClosure();
@@ -4235,79 +4332,201 @@ do {
 
 <div class='codeblock'>
 
-<p>C# - Objeto Iterator</p>
+<p>C# - MainClass.cs</p>
 <code class='cs'
->public class AnimadorGenerator {
-	public float Animar(float inicio, float fim, int tempo) {
-		return new AnimadorIterator(inicio, fim, tempo);
-	}
-}
+>using System;
 
-public class AnimadorIterator : IEnumerable&lt;float&gt; {
+namespace MarcoLuglio.GeneratorExample {
 
-	public AnimadorIterator(float inicio, float fim, int tempo) {
-		this.tempo = tempo;
-		this.delta = (fim - inicio) / tempo;
-		this.Reset();
-	}
+	class MainClass {
 
-	public bool MoveNext() {
+		public static void Main(string[] args) {
 
-		if (this.tempoAtual <= this.tempo) {
-			this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
-			this.tempoAtual += 1;
-			return true;
+			var animadorIterator = new AnimadorIterator(0, 100, 9);
+			foreach (var resultado in animadorIterator) {
+				Console.WriteLine(resultado);
+			}
+
 		}
 
-		return false;
+	}
+
+}</code
+>
+
+<p>C# - AnimadorIterator.cs</p>
+<code class='cs'
+>using System.Collections.Generic;
+
+namespace MarcoLuglio.GeneratorExample {
+
+	public class AnimadorIterator : IEnumerable&lt;float&gt;, IEnumerator&lt;float&gt; {
+
+		public AnimadorIterator(float inicio, float fim, int tempo) {
+			this.fim = fim;
+			this.tempo = tempo;
+			this.delta = (fim - inicio) / tempo;
+			this.Reset();
+		}
+
+		#region interface IEnumerable
+
+		public IEnumerator&lt;float&gt; GetEnumerator() { // implementação implícita
+			return this;
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
+			return this;  // implementação explícita --^
+		}
+
+		#endregion
+
+		#region interface IEnumerator
+
+		public bool MoveNext() { // implementação implícita
+
+			if (this.tempoAtual <= this.tempo) {
+				this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
+				this.tempoAtual += 1;
+				return true;
+			}
+
+			return false;
+
+		}
+
+		public float Current { // implementação implícita
+			get { return this.passo; }
+		}
+
+		object System.Collections.IEnumerator.Current { // implementação explícita
+			get { return this.passo; }
+		}
+
+		public void Reset() { // implementação implícita
+			this.tempoAtual = 1;
+			this.passo = 0;
+		}
+
+		public void Dispose() { /**/ } // implementação implícita
+
+		#endregion
+
+		private readonly int tempo;
+		private int tempoAtual;
+		private readonly float fim;
+		private readonly float delta;
+		private float passo;
 
 	}
 
-	public void Reset() {
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Java - Main.java</p>
+<code class='java'
+>
+
+import marcoluglio.generatorexample.AnimadorIterator;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		AnimadorIterator animadorIterador = new AnimadorIterator(0, 100, 9);
+		for (float resultado : animadorIterador) {
+			System.out.println(resultado);
+		}
+
+	}
+
+}
+
+
+</code
+>
+
+<p>Java - AnimadorIterator.java</p>
+<code class='java'
+>package marcoluglio.generatorexample;
+
+import java.util.Iterator;
+
+public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Float&gt; {
+
+	public AnimadorIterator(float inicio, float fim, int tempo) {
+		this.fim = fim;
+		this.tempo = tempo;
+		this.delta = (fim - inicio) / tempo;
+		this.reset();
+	}
+
+	// Interface Iterable&lt;T&gt;
+
+	@Override // "implementação explícita"
+	public Iterator&lt;Float&gt; iterator() {
+		return this;
+	}
+
+
+
+
+
+
+	// Interface Iterator&lt;T&gt;
+
+	@Override // "implementação explícita"
+	public boolean hasNext() {
+		if (this.tempoAtual <= this.tempo) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override // "implementação explícita"
+	public Float next() {
+		this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
+		this.tempoAtual += 1;
+		return this.passo;
+	}
+
+
+
+
+
+
+	private void reset() {
 		this.tempoAtual = 1;
 		this.passo = 0;
 	}
 
-	void IDisposable.Dispose() { /**/ }
 
-	public float Current {
-		get { return this.passo; }
-	}
 
-	object IEnumerator.Current {
-		get { return Current; }
-	}
 
-	private readonly int tempo;
-	private float tempoAtual;
-	private readonly int fim;
-	private readonly int delta;
+
+	private final int tempo;
+	private int tempoAtual;
+	private final float fim;
+	private final float delta;
 	private float passo;
 
-}
-
-var animadorGenerator = new AnimadorGenerator();
-var animadorIterator = animadorGenerator.Animar(0, 100);
-
-</code
+}</code
 >
 
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-</code
->
-</div>
 
-<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
 </code
 >
+
 </div>
 
 </div>
@@ -4570,7 +4789,7 @@ namespace MarcoLuglio.TaskExample {
 
 <p>Java - Main.java</p>
 <code class='java'
->package marcoluglio.taskexample;
+>
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -5330,7 +5549,7 @@ namespace MarcoLuglio.ThreadExample {
 >
 
 
-package marcoluglio.threadexample;
+
 
 public class Main {
 
