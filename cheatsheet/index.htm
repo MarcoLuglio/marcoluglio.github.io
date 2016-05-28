@@ -275,283 +275,133 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 
 <section>
 
-<h2 id='modulos'>Módulos</h2>
+<h2 id='nullnullable'>Null e Nullable</h2>
 
-<div class='comparison large'>
+<div class='comparison'>
 
 <div class='codeblock'>
-
-	<div class='pair'>
-
-		<div>
-
-<p>C++ Microsoft - DentroDoModulo.hpp</p>
+<p>C++</p>
 <code class='cpp'
+>std::optional&lt;int&gt; k; // C++17
+boost::optional&lt;int&gt; l; // boost</code
 >
-#pragma once
-
-namespace marcoluglio {
-	class DentroDoModulo {};
-}</code
->
-
-		</div>
-
-		<div>
-
-<p>C++ - DentroDoModulo.cpp</p>
-<code class='cpp'
->
-#include "DentroDoModulo.hpp"
-
-namespace marcoluglio {
-	//
-}</code
->
-
-		</div>
-
-	</div>
-
-<p>C++ - main.cpp</p>
-<code class='cpp'
->#include "DentroDoModulo.hpp"
-
-int main(int argc, const char* argv[]) {
-	using marcoluglio::DentroDoModulo;
-	DentroDoModulo meuObjeto = DentroDoModulo();
-}</code
->
-
 </div>
 
 <div class='codeblock'>
-
-	<div class='pair'>
-
-		<div>
-
-<p>C++ - DentroDoModulo.hpp</p>
-<code class='cpp'
->#ifndef MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
-#define MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
-
-namespace marcoluglio {
-	class DentroDoModulo {};
-}
-
-#endif /* MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED */</code
+<p>Objective-C</p>
+<code class='objectivec'
+>// nil object
+// Nil class
+// NSNull singleton to represent null</code
 >
-
-		</div>
-
-		<div>
-
-<p>C++ - DentroDoModulo.cpp</p>
-<code class='cpp'
->
-#include "DentroDoModulo.hpp"
-
-namespace marcoluglio {
-	//
-}</code
->
-
-		</div>
-
-	</div>
-
-<p>C++ - main.cpp</p>
-<code class='cpp'
->#include "DentroDoModulo.hpp"
-
-int main(int argc, const char* argv[]) {
-	using marcoluglio::DentroDoModulo;
-	DentroDoModulo meuObjeto = DentroDoModulo();
-}</code
->
-
 </div>
 
 <div class='codeblock'>
-
-	<div class='pair'>
-
-		<div>
-
-<p>Objective-C - MLGDentroDoModulo.h</p>
-<code class='objectivec'
->
-#import &lt;Foundation/Foundation.h&gt;
-
-@interface MLGDentroDoModulo : NSObject
-	//
-@end
-
-</code
->
-
-		</div>
-
-		<div>
-
-<p>Objective-C - MLGDentroDoModulo.m</p>
-<code class='objectivec'
->
-#import "MLGDentroDoModulo.h"
-
-@implementation MLGDentroDoModulo
-	//
-@end</code
->
-
-		</div>
-
-	</div>
-
-<p>Objective-C - main.m</p>
-<code class='objectivec'
->#import &lt;Foundation/Foundation.h&gt;
-#import "MLGDentroDoModulo.h"
-
-int main(int argc, const char* argv[]) {
-	MLGDentroDoModulo* meuObjeto;
-	meuObjeto = [[MLGDentroDoModulo alloc] init];
-	return 0;
-
-	// não possui namespaces
-	// a utilização de prefixos com 3 letras
-	// ou mais nas classes é a alternativa
-	// recomendada
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-<p>Swift - DentroDoModulo.swift</p>
+<p>Swift</p>
 <code class='swift'
->// a criação de namespaces é implícita
-// para cada módulo
+>// optionals devem ter o tipo especificado
+// em sua declaração
+var k:Int? = nil
+var l:AClass? = nil
+let m = l?.propriedade // m recebe nil
+let n = l!.propriedade // lança erro se l for nil
 
-// um módulo é um agrupamento macro, bem
-// diferente do que se utiliza nas
-// outras linguagens
+// nil coalescing operator
+let o = k ?? 10 // o será do tipo Int
 
-// ele abrange um target inteiro de
-// compilação como um framework,
-// uma biblioteca ou um executável
+// ok mas não é idiomático
+let p = k != nil ? k : 10 // p será do tipo Int?
 
-import UIKit
-
-class DentroDoModulo: UIViewController {
-}</code
->
-
-<p>Swift - main.swift</p>
-<code class='swift'
->let meuObjeto = DentroDoModulo()</code
+// PS: nullable é chamado de optional
+// e null é chamado de nil em Swift</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->mod
-</code
->
-<p>Rust</p>
-<code class='rust'
->use
-</code
+>// não existem tipos nullable
+// mas existe um tipo std::Option&lt;T&gt;
+// que pode conter None ou Some()
+
+// tipo explícito
+let mut k:Option&lt;i32&gt; = None;
+let mut l:Option&lt;AStruct&gt; = None;
+
+// tipo implícito Option&lt;i32&gt;
+let mut m = None::&lt;i32&gt;;
+let mut n = Some(10);
+
+// erro, não pode passar um valor diretamente
+// tem que usar Some(valor)
+let mut o:Option&lt;i32&gt; = 10;
+
+// não possui operador específico para Option
+let p = match n { // p será do tipo i32
+	Some(some) => some,
+	None => 10,
+};
+
+// ok mas panic se for None
+let q = n.unwrap(); // q será do tipo i32</code
 >
 </div>
 
 <div class='codeblock'>
-<p>C# - DentroDoModulo.cs</p>
+<p>C#</p>
 <code class='cs'
->namespace marcoluglio {
-	public class DentroDoModulo { /**/ }
-}</code
->
-<p>C# - main.cs</p>
-<code class='cs'
->using marcoluglio;
+>// nullable não pode ser usado com var
+// um tipo deve ser especificado
+int? k = null;
+AClass? l = null;
+int? m = l?.propriedade; // C# 6
+int? m = (l != null) ? l.propriedade : null;
 
-class MainClass {
-	public static void Main(string[] args) {
-		DentroDoModulo meuObjeto;
-		meuObjeto = new DentroDoModulo();
-	}
-}</code
+// null coalescing operator
+var n = k ?? 10; // n será do tipo int
+
+// ok mas não é idiomático
+var o = (k != null) ? k : 10; // o será do tipo int?</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Java - marcoluglio/DentroDoModulo.java</p>
+<p>Java</p>
 <code class='java'
->package marcoluglio;
+>// tipos primitivos não podem ser nullable
+int a = null; // erro
 
-public class DentroDoModulo { /**/ }</code
->
-<p>Java - main.java</p>
-<code class='java'
->import marcoluglio.DentroDoModulo;
+// qualquer tipo de referência é nullable
+Integer k = null;
+AClass l = null;
+Integer m = (l != null) ? l.propriedade : null;
 
-public class OlaMundo {
-	public static void main(String[] args) {
-		DentroDoModulo meuObjeto;
-		meuObjeto = new DentroDoModulo();
-	}
-}</code
+// não possui operador específico para null
+int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 >
 </div>
 
 <div class='codeblock'>
-<p>JavaScript compatibilidade</p>
+<p>JavaScript</p>
 <code class='javascript'
 >'use strict';
 
-define('dentroDoModulo', () => {
-	const DentroDoModulo = class DentroDoModulo() { /**/ }
-	return DentroDoModulo;
-});
+// qualquer tipo é sempre nullable
+let k = null;
+let l = (k &amp;&amp; k.propriedade) ? k.propriedade : null;
 
-define(['dentroDoModulo'], (DentroDoModulo) => {
-	let meuObjeto = new DentroDoModulo();
-});
-</code
->
-</div>
+// null coalescing operator
+let m = k || 10;
 
-<div class='codeblock'>
-<p>JavaScript - DentroDoModulo.js</p>
-<code class='javascript'
->'use strict';
-
-export default class DentroDoModulo { /**/ }</code
->
-
-<p>JavaScript - main.js</p>
-<code class='javascript'
->'use strict';
-
-import DentroDoModulo from 'DentroDoModulo';
-
-let meuObjeto = new DentroDoModulo();</code
+// ok mas não é idiomático
+let n = (k || k === 0) ? k : 10;</code
 >
 </div>
 
 </div>
 
 <ol>
-	<li>C# / Java</li>
-	<li>JavaScript</li>
-	<li>Rust</li>
-	<li>C++</li>
-	<li>Swift</li>
-	<li>Objective-C</li>
+	<li>a</li>
 </ol>
 
 <p>A</p>
@@ -685,23 +535,14 @@ Object o = new Object();
 
 <section>
 
-<h2 id='nullnullable'>Null e Nullable</h2>
+<h2 id='ponteiros'>Ponteiros</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->// tipo optional é preferível
-// ao ponteiro nullable
-
-std::optional&lt;int&gt; k; // C++17
-boost::optional&lt;int&gt; l; // boost
-
-// PONTEIROS
-// =========
-
-int* m = nullptr; // C++11
+>int* m = nullptr; // C++11
 
 // tipo nullptr_t só pode ser nullptr
 // não pode receber nenhum outro valor
@@ -716,11 +557,7 @@ int* o = NULL; // old</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->// nil object
-// Nil class
-// NSNull singleton to represent null
-
-// PONTEIROS
+>// PONTEIROS
 // =========
 
 int* o = NULL;</code
@@ -730,58 +567,221 @@ int* o = NULL;</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->// optionals devem ter o tipo especificado
-// em sua declaração
-var k:Int? = nil
-var l:AClass? = nil
-let m = l?.propriedade // m recebe nil
-let n = l!.propriedade // lança erro se l for nil
-
-// nil coalescing operator
-let o = k ?? 10 // o será do tipo Int
-
-// ok mas não é idiomático
-let p = k != nil ? k : 10 // p será do tipo Int?
-
-// PS: nullable é chamado de optional
-// e null é chamado de nil em Swift</code
+>
+</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->// não existem tipos nullable
-// mas existe um tipo std::Option&lt;T&gt;
-// que pode conter None ou Some()
-
-// tipo explícito
-let mut k:Option&lt;i32&gt; = None;
-let mut l:Option&lt;AStruct&gt; = None;
-
-// tipo implícito Option&lt;i32&gt;
-let mut m = None::&lt;i32&gt;;
-let mut n = Some(10);
-
-// erro, não pode passar um valor diretamente
-// tem que usar Some(valor)
-let mut o:Option&lt;i32&gt; = 10;
-
-// não possui operador específico para Option
-let p = match n { // p será do tipo i32
-	Some(some) => some,
-	None => 10,
-};
-
-// ok mas panic se for None
-let q = n.unwrap(); // q será do tipo i32
-
-// PONTEIROS
-// =========
-
-// TODO
+>// TODO
 let p:*const i32 = ptr::null();
-let p:*mut i32 = ptr::null();
+let p:*mut i32 = ptr::null();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.PonteirosExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+
+			// C# requer um contexto unsafe para utilização de ponteiros
+			unsafe {
+
+				// variáveis comuns tipo int
+				int intOriginal = 90;
+				int segundoIntOriginal = 95;
+
+				// variável tipo ponteiro de int (int*)
+				// aponta para variável comum tipo int
+				// seu valor é um inteiro 64 bits (long), representando
+				// o endereço de memória de intOriginal, que podemos obter
+				// usando o operador &amp;
+				int* ponteiroDeInt = &amp;intOriginal;
+
+				// para acessarmos o valor da variável comum
+				// através do ponteiro, usamos o operador *
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 90
+
+				// se fizermos ele apontar para outra variável, seu valor muda
+				ponteiroDeInt = &amp;segundoIntOriginal;
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 95
+
+				// também podemos pegar endereços de memória através de outros
+				// ponteiros, pois como disse acima, seus valores são números
+				// tipo long
+				int* ponteiroDeSegundoInt = ponteiroDeInt;
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeSegundoInt); // 95
+
+				// variável tipo ponteiro de buffer de bytes (bytes*)
+				// aponta para array de bytes pré-alocada na stack
+				// seu valor é igual ao endereço de memória da array de bytes
+				byte* ponteiroDeArray = stackalloc byte[1024];
+
+				// atribuímos o valor 5 para o índice 0 da array na stack
+				// e o valor 11 para o índice 729
+				// para acessarmos os índices, usamos o operador []
+				ponteiroDeArray[0] = 5;
+				ponteiroDeArray[729] = 11;
+
+				// para acessarmos os valores nos índices, usamos o operador []
+				byte indice0 = ponteiroDeArray[0];
+				byte indice729 = ponteiroDeArray[729];
+				Console.WriteLine(
+					@"valores {} e {}",
+					indice0,
+					indice729
+				);
+
+				// Notem que não há nada no ponteiro que indique se tratar de uma array!
+				// Então como o compilador consegue diferenciar entre um ponteiro
+				// para um byte comum e para uma array de bytes?
+				// Ele não consegue! E dependendo do que você for fazer, nem vai lançar
+				// uma exceção, apenas usar um valor incorreto.
+				// Portanto cuidado ao utilizar ponteiros.
+				// Por exemplo, seria válido (embora não recomendado) fazer isso:
+
+				// byte byteOriginal = 37;
+				// ponteiroDeArray = &amp;byteOriginal;
+
+				// variável tipo ponteiro desconhecido
+				// aponta para qualquer tipo de variável
+				// quando null, seu valor é igual a 0, representando um endereço
+				// de memória inválido
+				// neste estado, *ponteiroGenerico lança NullReferenceException
+				void* ponteiroGenerico = null;
+
+				// esse tipo de ponteiro não é recomendado pois perde
+				// a informação sobre o tipo para o qual ele aponta
+				// essa característica é usada para fazer casts forçados
+				// neste estado, seu valor é igual ao endereço de memória de intOriginal
+				ponteiroGenerico = &amp;intOriginal;
+
+				// para acessarmos o valor apontado por esse tipo de ponteiro
+				// é necessário fazer um cast para o tipo que se deseja
+				Console.WriteLine(@"valor de void {0} ", (*(int*)ponteiroGenerico)); // 90
+
+				// agora seu valor é igual ao endereço de memória da array de bytes
+				ponteiroGenerico = ponteiroDeArray;
+
+				// podemos acessar os valores da array apontada pelo ponteiro
+				// fazendo o cast apropriado
+				// a mesma recomendação sobre o operador [] vale aqui, o compilador
+				// não consegue identificar se o valor é uma array ou um byte simples
+				// e vai acreditar no que você pedir
+				Console.WriteLine(@"valor de void*[0] {0} ", ((byte*)ponteiroGenerico)[0]); // 5
+
+				// variável tipo ponteiro de ponteiro de int (int**)
+				// aponta para variável do tipo ponteiro de int
+				// seu valor é igual ao endereço de memória de ponteiroGenerico
+				// esse tipo de ponteiro é utilizado quando não desejamos copiar o
+				// ponteiro original ao passá-lo para outras funções
+				// uma vez que, como o ponteiro é um valor long, é passado por cópia
+				// para as funções!
+				int** ponteiroDePonteiro = (int**)&amp;ponteiroGenerico;
+
+				// para acessarmos o valor no final da cadeia, usamos o operador * duas vezes
+				Console.WriteLine(@"valor de ponteiro {0} ", **ponteiroDePonteiro);
+
+				// se usarmos apenas uma vez, obteremos o ponteiro intermediário
+				Console.WriteLine(
+					@"endereço apontado pelo ponteiro intermediário {0} ",
+					*ponteiroDePonteiro
+				);
+
+				// novamente, o compilador não pode ajudar muito caso você cometa um erro
+				// por exemplo, se esquecermos do operador &amp; estaremos pegando o endereço
+				// do valor final, ao invés do endereco do ponteiro intermediário, porém,
+				// estamos dizendo ao compilador que é o endereço de um ponteiro legítimo
+				ponteiroDePonteiro = (int**)ponteiroGenerico;
+
+				// e só será lançado um erro se tentarmos acessar o valor final na cadeia
+				// pois estaremos tentando usar um valor inteiro como se fosse um ponteiro
+				Console.WriteLine(@"lança NullReferenceException {0} ", **ponteiroDePonteiro);
+
+				// embora possamos criar ponteiros de ponteiros de ponteiros, acho que não
+				// há uma aplicação muito prática pra isso
+				int*** ponteiroDesnecessario;
+
+			}
+
+			// os ponteiros são desalocados após o término do contexto unsafe
+			// não é necessário deletar os ponteiros manualmente
+
+		}
+
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposboolean'>Tipos Primitivos Boolean</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>auto oitoOuOitenta = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
 </code
 >
 </div>
@@ -789,51 +789,52 @@ let p:*mut i32 = ptr::null();
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// nullable não pode ser usado com var
-// um tipo deve ser especificado
-int? k = null;
-AClass? l = null;
-int? m = l?.propriedade; // C# 6
-int? m = (l != null) ? l.propriedade : null;
+>var oitoOuOitenta = true;
+oitoOuOitenta = false;
 
-// null coalescing operator
-var n = k ?? 10; // n será do tipo int
-
-// ok mas não é idiomático
-var o = (k != null) ? k : 10; // o será do tipo int?</code
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+// TODO Boolean.Parse</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->// tipos primitivos não podem ser nullable
-int a = null; // erro
+>boolean oitoOuOitenta = true;
+oitoOuOitenta = false;
 
-// qualquer tipo de referência é nullable
-Integer k = null;
-AClass l = null;
-Integer m = (l != null) ? l.propriedade : null;
-
-// não possui operador específico para null
-int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+// TODO Boolean.parseBoolean</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->'use strict';
+>let oitoOuOitenta = true;
+oitoOuOitenta = false;
 
-// qualquer tipo é sempre nullable
-let k = null;
-let l = (k &amp;&amp; k.propriedade) ? k.propriedade : null;
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
 
-// null coalescing operator
-let m = k || 10;
+// TODO falar de falsy e truthy e !!
 
-// ok mas não é idiomático
-let n = (k || k === 0) ? k : 10;</code
+/*
+// falsy
+var bZero = new Boolean(0);
+var bNull = new Boolean(null);
+var bEmptyString = new Boolean('');
+var bfalse = new Boolean(false);
+// undefined e NaN
+
+// truthy
+var btrueString = new Boolean('true');
+var bfalseString = new Boolean('false');
+var bSuLin = new Boolean('Su Lin');
+var bArrayProto = new Boolean([]);
+var bObjProto = new Boolean({});*/</code
 >
 </div>
 
@@ -2947,101 +2948,283 @@ let beeGees = calvinHarris.replace('love', 'looove');
 
 <section>
 
-<h2 id='tiposboolean'>Tipos Primitivos Boolean</h2>
+<h2 id='modulos'>Módulos</h2>
 
-<div class='comparison'>
+<div class='comparison large'>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->auto oitoOuOitenta = true;
-oitoOuOitenta = false;
 
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;</code
+	<div class='pair'>
+
+		<div>
+
+<p>C++ Microsoft - DentroDoModulo.hpp</p>
+<code class='cpp'
 >
+#pragma once
+
+namespace marcoluglio {
+	class DentroDoModulo {};
+}</code
+>
+
+		</div>
+
+		<div>
+
+<p>C++ - DentroDoModulo.cpp</p>
+<code class='cpp'
+>
+#include "DentroDoModulo.hpp"
+
+namespace marcoluglio {
+	//
+}</code
+>
+
+		</div>
+
+	</div>
+
+<p>C++ - main.cpp</p>
+<code class='cpp'
+>#include "DentroDoModulo.hpp"
+
+int main(int argc, const char* argv[]) {
+	using marcoluglio::DentroDoModulo;
+	DentroDoModulo meuObjeto = DentroDoModulo();
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
-<p>Objective-C</p>
+
+	<div class='pair'>
+
+		<div>
+
+<p>C++ - DentroDoModulo.hpp</p>
+<code class='cpp'
+>#ifndef MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
+#define MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
+
+namespace marcoluglio {
+	class DentroDoModulo {};
+}
+
+#endif /* MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED */</code
+>
+
+		</div>
+
+		<div>
+
+<p>C++ - DentroDoModulo.cpp</p>
+<code class='cpp'
+>
+#include "DentroDoModulo.hpp"
+
+namespace marcoluglio {
+	//
+}</code
+>
+
+		</div>
+
+	</div>
+
+<p>C++ - main.cpp</p>
+<code class='cpp'
+>#include "DentroDoModulo.hpp"
+
+int main(int argc, const char* argv[]) {
+	using marcoluglio::DentroDoModulo;
+	DentroDoModulo meuObjeto = DentroDoModulo();
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+
+<p>Objective-C - MLGDentroDoModulo.h</p>
 <code class='objectivec'
 >
+#import &lt;Foundation/Foundation.h&gt;
+
+@interface MLGDentroDoModulo : NSObject
+	//
+@end
+
 </code
 >
+
+		</div>
+
+		<div>
+
+<p>Objective-C - MLGDentroDoModulo.m</p>
+<code class='objectivec'
+>
+#import "MLGDentroDoModulo.h"
+
+@implementation MLGDentroDoModulo
+	//
+@end</code
+>
+
+		</div>
+
+	</div>
+
+<p>Objective-C - main.m</p>
+<code class='objectivec'
+>#import &lt;Foundation/Foundation.h&gt;
+#import "MLGDentroDoModulo.h"
+
+int main(int argc, const char* argv[]) {
+	MLGDentroDoModulo* meuObjeto;
+	meuObjeto = [[MLGDentroDoModulo alloc] init];
+	return 0;
+
+	// não possui namespaces
+	// a utilização de prefixos com 3 letras
+	// ou mais nas classes é a alternativa
+	// recomendada
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+<p>Swift - DentroDoModulo.swift</p>
 <code class='swift'
+>// a criação de namespaces é implícita
+// para cada módulo
+
+// um módulo é um agrupamento macro, bem
+// diferente do que se utiliza nas
+// outras linguagens
+
+// ele abrange um target inteiro de
+// compilação como um framework,
+// uma biblioteca ou um executável
+
+import UIKit
+
+class DentroDoModulo: UIViewController {
+}</code
 >
-</code
+
+<p>Swift - main.swift</p>
+<code class='swift'
+>let meuObjeto = DentroDoModulo()</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
+>mod
+</code
 >
+<p>Rust</p>
+<code class='rust'
+>use
 </code
 >
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+<p>C# - DentroDoModulo.cs</p>
 <code class='cs'
->var oitoOuOitenta = true;
-oitoOuOitenta = false;
+>namespace marcoluglio {
+	public class DentroDoModulo { /**/ }
+}</code
+>
+<p>C# - main.cs</p>
+<code class='cs'
+>using marcoluglio;
 
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;
-// TODO Boolean.Parse</code
+class MainClass {
+	public static void Main(string[] args) {
+		DentroDoModulo meuObjeto;
+		meuObjeto = new DentroDoModulo();
+	}
+}</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+<p>Java - marcoluglio/DentroDoModulo.java</p>
 <code class='java'
->boolean oitoOuOitenta = true;
-oitoOuOitenta = false;
+>package marcoluglio;
 
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;
-// TODO Boolean.parseBoolean</code
+public class DentroDoModulo { /**/ }</code
+>
+<p>Java - main.java</p>
+<code class='java'
+>import marcoluglio.DentroDoModulo;
+
+public class OlaMundo {
+	public static void main(String[] args) {
+		DentroDoModulo meuObjeto;
+		meuObjeto = new DentroDoModulo();
+	}
+}</code
 >
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
+<p>JavaScript compatibilidade</p>
 <code class='javascript'
->let oitoOuOitenta = true;
-oitoOuOitenta = false;
+>'use strict';
 
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;
+define('dentroDoModulo', () => {
+	const DentroDoModulo = class DentroDoModulo() { /**/ }
+	return DentroDoModulo;
+});
 
-// TODO falar de falsy e truthy e !!
+define(['dentroDoModulo'], (DentroDoModulo) => {
+	let meuObjeto = new DentroDoModulo();
+});
+</code
+>
+</div>
 
-/*
-// falsy
-var bZero = new Boolean(0);
-var bNull = new Boolean(null);
-var bEmptyString = new Boolean('');
-var bfalse = new Boolean(false);
-// undefined e NaN
+<div class='codeblock'>
+<p>JavaScript - DentroDoModulo.js</p>
+<code class='javascript'
+>'use strict';
 
-// truthy
-var btrueString = new Boolean('true');
-var bfalseString = new Boolean('false');
-var bSuLin = new Boolean('Su Lin');
-var bArrayProto = new Boolean([]);
-var bObjProto = new Boolean({});*/</code
+export default class DentroDoModulo { /**/ }</code
+>
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>'use strict';
+
+import DentroDoModulo from 'DentroDoModulo';
+
+let meuObjeto = new DentroDoModulo();</code
 >
 </div>
 
 </div>
 
 <ol>
-	<li>a</li>
+	<li>C# / Java</li>
+	<li>JavaScript</li>
+	<li>Rust</li>
+	<li>C++</li>
+	<li>Swift</li>
+	<li>Objective-C</li>
 </ol>
 
 <p>A</p>
