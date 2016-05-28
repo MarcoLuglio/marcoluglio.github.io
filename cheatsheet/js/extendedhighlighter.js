@@ -830,9 +830,15 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'nullptr',
 				'NULL',
 
-				// iostream
+				// std
 				'cout',
-				'endl'
+				'endl',
+				'make_unique',
+				'make_shared',
+				'ref',
+				'async'
+				// 'begin',
+				// 'end'
 
 			]);
 
@@ -899,8 +905,14 @@ define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCha
 				'unsigned short',
 				'uintptr_t',
 
+				'exception',
+				'lock_guard',
+				'mutex',
+				'nullptr_t',
+				'optional',
+				'queue',
 				'string',
-				'exception'
+				'thread'
 
 			]);
 
@@ -2294,7 +2306,9 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 	const RustTypesToken = class RustTypesToken extends SourceSimpleCharacterSequenceToken {
 
 		constructor() {
+
 			super('type', [
+
 				'bool',
 				'char',
 				'f32',
@@ -2309,7 +2323,12 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'u16',
 				'u32',
 				'u64',
-				'usize'
+				'usize',
+
+				'Option',
+				'String',
+				'thread'
+
 			]);
 
 			Object.seal(this);
