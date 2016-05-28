@@ -3071,9 +3071,11 @@ try {
 	//
 } catch (...) {
 	//
-}
+}</code
+>
 
-// NÃO COPIE!!! DEPRECATED!!!
+<code class='cpp'
+><strong>// NÃO COPIE!!! DEPRECATED!!!</strong>
 
 // havia uma sintaxe para "checked exceptions"
 int myfunction(int param) throw();
@@ -4054,6 +4056,7 @@ namespace MarcoLuglio.GeneratorExample {
 
 			var animadorClosure = AnimadorClosure.Animar(0, 100, 9);
 			float? resultado;
+
 			do {
 				resultado = animadorClosure();
 				Console.WriteLine(resultado);
@@ -4125,6 +4128,7 @@ public class Main {
 
 		Supplier&lt;Float&gt; animadorClosure = AnimadorClosure.animar(0, 100, 9);
 		Float resultado;
+
 		do {
 			resultado = animadorClosure.get();
 			System.out.println(resultado);
@@ -4135,16 +4139,15 @@ public class Main {
 }</code
 >
 
-<p>Java</p>
 <code class='java'
->// PS: pra evitar ter que declarar um tipo ClosureState, eu poderia ter feito
+><strong>// PS: pra evitar ter que declarar uma classe ClosureState, eu poderia ter feito</strong>
 final Object closureState = new Object() {
 	public int tempoAtual;
 	public float delta;
 	public Float passo;
 };
 
-// mas aí para ler as propriedades eu teria que usar reflection toda a vez
+<strong>// mas aí para ler as propriedades eu teria que usar reflection toda a vez</strong>
 Class ClosureClass = closureState.getClass();
 
 Field TempoAtualField = ClosureClass.getDeclaredField("tempoAtual")
@@ -4216,6 +4219,7 @@ animar(inicio, fim, tempo) {
 
 let animadorClosure = animar(0, 100, 9);
 let resultado;
+
 do {
 	resultado = animadorClosure();
 	console.log(resultado);
@@ -4332,28 +4336,6 @@ do {
 
 <div class='codeblock'>
 
-<p>C# - MainClass.cs</p>
-<code class='cs'
->using System;
-
-namespace MarcoLuglio.GeneratorExample {
-
-	class MainClass {
-
-		public static void Main(string[] args) {
-
-			var animadorIterator = new AnimadorIterator(0, 100, 9);
-			foreach (var resultado in animadorIterator) {
-				Console.WriteLine(resultado);
-			}
-
-		}
-
-	}
-
-}</code
->
-
 <p>C# - AnimadorIterator.cs</p>
 <code class='cs'
 >using System.Collections.Generic;
@@ -4423,32 +4405,32 @@ namespace MarcoLuglio.GeneratorExample {
 }</code
 >
 
-</div>
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
 
-<div class='codeblock'>
+namespace MarcoLuglio.GeneratorExample {
 
-<p>Java - Main.java</p>
-<code class='java'
->
+	class MainClass {
 
-import marcoluglio.generatorexample.AnimadorIterator;
+		public static void Main(string[] args) {
 
-public class Main {
+			var animadorIterator = new AnimadorIterator(0, 100, 9);
 
-	public static void main(String[] args) {
+			foreach (var resultado in animadorIterator) {
+				Console.WriteLine(resultado);
+			}
 
-		AnimadorIterator animadorIterador = new AnimadorIterator(0, 100, 9);
-		for (float resultado : animadorIterador) {
-			System.out.println(resultado);
 		}
 
 	}
 
-}
-
-
-</code
+}</code
 >
+
+</div>
+
+<div class='codeblock'>
 
 <p>Java - AnimadorIterator.java</p>
 <code class='java'
@@ -4465,19 +4447,19 @@ public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Floa
 		this.reset();
 	}
 
-	// Interface Iterable&lt;T&gt;
+	// region Interface Iterable&lt;T&gt;
 
 	@Override // "implementação explícita"
 	public Iterator&lt;Float&gt; iterator() {
 		return this;
 	}
 
+	// endregion
 
 
 
 
-
-	// Interface Iterator&lt;T&gt;
+	// region Interface Iterator&lt;T&gt;
 
 	@Override // "implementação explícita"
 	public boolean hasNext() {
@@ -4494,7 +4476,7 @@ public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Floa
 		return this.passo;
 	}
 
-
+	// endregion
 
 
 
@@ -4517,14 +4499,114 @@ public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Floa
 }</code
 >
 
+<p>Java - Main.java</p>
+<code class='java'
+>
+
+import marcoluglio.generatorexample.AnimadorIterator;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		AnimadorIterator animadorIterador = new AnimadorIterator(0, 100, 9);
+
+		for (float resultado : animadorIterador) {
+			System.out.println(resultado);
+		}
+
+	}
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
 
-<p>JavaScript</p>
+<p>JavaScript - Iterator.js</p>
+<code class='javascript'
+>class AnimadorIterator {
+
+	constructor(inicio, fim, tempo) {
+		Object.defineProperties(this, {
+			_fim: {value: fim},
+			_tempo: {value: tempo},
+			_tempoAtual: {value: tempo, writable: true},
+			_delta: {value: (fim - inicio / tempo)},
+			_passo: {value: 0, writable: true}
+		});
+		Object.seal(this);
+		this.reset();
+	}
+
+	reset() {
+		this._tempoAtual = 1;
+		this._passo = 0;
+	}
+
+	// iterador for of
+	*[Symbol.iterator]() {
+		if (this._tempoAtual <= this.tempo) {
+			this._passo = this._fim - (this._delta * (this._tempo - this._tempoAtual));
+			this._tempoAtual += 1;
+			yield this._passo;
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code
+>
+
+<p>JavaScript - main.js</p>
 <code class='javascript'
 >
-</code
+
+
+
+
+
+
+
+let animadorIterator = new AnimadorIterator(0, 100, 9);
+
+for (let resultado of animadorIterator) {
+	console.log(resultado);
+}</code
 >
 
 </div>
