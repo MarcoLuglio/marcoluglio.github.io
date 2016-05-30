@@ -976,6 +976,60 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 
 /**
+ * Token for JavaScript types
+ */
+define('JSTypesToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
+
+	const JSTypesToken = class JSTypesToken extends JSSimpleCharacterSequenceToken {
+
+		constructor() {
+			super('type', [
+
+				'Array',
+				'Boolean',
+				'Date',
+				'Error',
+				'Function',
+				'JSON',
+				'Map',
+				'Math',
+				'Number',
+				'Object',
+				'Promise',
+				'Proxy',
+				'RangeError',
+				'ReferenceError',
+				'Reflect',
+				'RegExp',
+				'Set',
+				'String',
+				'Symbol',
+				'SyntaxError',
+				'TypeError',
+				'URIError',
+				'WeakMap',
+				'WeakSet',
+				'XMLHttpRequest',
+
+				// objetos conhecidos
+				'document',
+				'window'
+
+			]);
+
+			Object.seal(this);
+
+		}
+
+	};
+
+	return JSTypesToken;
+
+});
+
+
+
+/**
  * Token for JavaScript punctuation
  */
 define('JSPunctuationToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterSequenceToken) => {
@@ -1329,9 +1383,37 @@ define('JSKeywordToken', ['JSSimpleCharacterSequenceToken'], (JSSimpleCharacterS
 				'volatile',
 
 				// insteresting words
+				// talvez criar uma categoria diferente para eles
+				'activeTarget',
+				'addEventListener',
+				'apply',
+				'arguments',
+				'attachEvent',
+				'attributes',
+				'bind',
+				'call',
+				'clearInterval',
+				'clearTimeout',
 				'constructor',
 				'configurable',
+				'detachEvent',
 				'enumerable',
+				'forEach',
+				'getElementById',
+				'getElementsByTagName',
+				'handleEvent',
+				'hasOwnProperty',
+				'innerHTML',
+				'prototype',
+				'querySelector',
+				'querySelectorAll',
+				'removeEventListener',
+				'requestAnimationFrame',
+				'setInterval',
+				'setTimeout',
+				'style',
+				'target',
+				'then',
 				'value',
 				'writable'
 
@@ -1518,6 +1600,7 @@ define(
 		'Lexer',
 
 		'JSKeywordToken',
+		'JSTypesToken',
 		'JSSymbolToken',
 		'JSPunctuationToken',
 
@@ -1538,6 +1621,7 @@ define(
 		Lexer,
 
 		JSKeywordToken,
+		JSTypesToken,
 		JSSymbolToken,
 		JSPunctuationToken,
 
@@ -1581,6 +1665,7 @@ define(
 
 				// language
 				new JSKeywordToken(),
+				new JSTypesToken(),
 				new JSPunctuationToken(),
 
 				// comments

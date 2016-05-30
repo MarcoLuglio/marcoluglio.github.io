@@ -263,6 +263,14 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #0040B4;
 }
 
+.bubaloop.highlight.javascript strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.javascript .type {
+	color: #8AD100;
+}
+
 .bubaloop.javascript .string {
 	color: #0099FF;
 }
@@ -373,7 +381,7 @@ div.codeblock.bubaloop p + code.javascript {
 /* highlighter */
 
 .bubaloop.generic .keyword,
-.bubaloop.generic .type,
+.bubaloop .type,
 .bubaloop.generic .symbol,
 .bubaloop.generic .operator,
 .bubaloop.generic .comment,
@@ -416,7 +424,7 @@ div.codeblock.bubaloop p + code.javascript {
 }
 
 .bubaloop.highlight.generic .keyword,
-.bubaloop.highlight.generic .type,
+.bubaloop.highlight .type,
 .bubaloop.highlight.generic .symbol,
 .bubaloop.highlight.generic .operator,
 .bubaloop.highlight.generic .comment,
