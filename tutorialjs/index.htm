@@ -1959,7 +1959,7 @@ jQuery.noConflict();
 >
 </div>
 
-<h4 id='forclosure'>Resolvendo var eliminando corrigindo closures</h4>
+<h4 id='forclosure'>Resolvendo var e corrigindo closures</h4>
 
 <p>Quando passamos objetos para as funções que queremos executar funções, estes objetos são passados por referência. Se passarmos tipos simples como <code class='javascript'>Boolean</code> e <code class='javascript'>Number</code>, eles serão <strong>passados por valor.</strong> Isto é, teremos uma <strong>cópia do valor passado.</strong></p>
 
@@ -4394,10 +4394,14 @@ setTimeout(() => {
 >'use strict';
 
 let colecao = {
+
+	// propriedades
 	itensPorPagina: 0,
 	marcador: 0,
 	pagina: null,
 	valor: obterArrayMagicamente(),
+
+	// métodos
 	paginar: function(itensPorPagina) {
 		if (this.marcador &lt; this.valor.length) {
 			this.pagina =  this.valor.slice(
@@ -4408,6 +4412,7 @@ let colecao = {
 		}
 		return this.pagina;
 	}
+
 };
 
 function clickHandler() {
@@ -4430,11 +4435,14 @@ botaoProximo.addEventListener('click', clickHandler);</code
 
 function getPaginador(colecao, itensPorPagina) {
 
+	// variáveis capturadas pela closure
 	const total = colecao.length;
 	let marcador = 0;
 	let pagina = null;
 
+	// função da closure
 	return function paginar() {
+
 		if (marcador &lt; total) {
 			pagina =  colecao.slice(
 				marcador,
@@ -4442,8 +4450,11 @@ function getPaginador(colecao, itensPorPagina) {
 			);
 			marcador += itensPorPagina;
 		}
+
 		return pagina;
+
 	}
+
 }
 
 const colecao = obterArrayMagicamente();
@@ -4475,12 +4486,15 @@ function* paginar(colecao, itensPorPagina) {
 	let marcador = 0;
 
 	while(marcador &lt; total) {
+
 		// "yield" pausa a execução da função
 		// e permite resumi-la depois neste mesmo ponto
 		// "yield" também pode retornar um valor, assim
 		// como "return", mas sem terminar a função
 		yield colecao.slice(marcador, marcador + itensPorPagina);
+
 		marcador += itensPorPagina;
+
 	}
 
 }
@@ -4490,9 +4504,11 @@ let paginador = paginar(colecao, 10);
 let pagina = null;
 
 function clickHandler() {
+
 	// o método "next" executa a função de onde parou
 	// até encontrar uma instrução "yield"
 	pagina = paginador.next();
+
 	// além do valor retornado por "yield", "next" também indica
 	// se a função terminou definitivamente com um "return"
 	// e nesse caso done teria o valor true
@@ -4502,6 +4518,7 @@ function clickHandler() {
 		// pagina.value contém os resultados
 		// mostrar a página
 	}
+
 }
 
 botaoProximo.addEventListener('click', clickHandler);</code
@@ -4601,7 +4618,55 @@ botaoProximo.addEventListener('click', clickProximoHandler);</code
 >
 </div>
 
-<p>TODO falar sobre *[Symbol.iterator]() {}</p>
+<p>Se quisermos implementar nosso próprio iterador, que funcione com a sintaxe <code class='javascript'>for of</code>, nossa classe deve implementar um método especial chamado <code class='javascript'>[Symbol.iterator]</code>. Como esse método precisa ser um <em>generator</em>, usamos uma sintaxe especial para indicar isso, precedendo o nome do método com um <code class='javascript'>*</code>.</p>
+
+<div class='codeblock'>
+<p>Paginador usando Symbol.iterator</p>
+<code class='javascript'
+>'use strict';
+
+class Paginador {
+
+	constructor(colecao, itensPorPagina) {
+
+		Object.defineProperties({
+			_colecao: {value: colecao},
+			_total: {value: colecao.length},
+			_itensPorPagina: {value: itensPorPagina, writable: true},
+			_marcador: {value: 0, writable: true}
+		});
+
+		Object.seal(this);
+
+		this.reset();
+
+	}
+
+	// iterador for of
+	*[Symbol.iterator]() {
+		if(this._marcador &lt; this._total) {
+			yield colecao.slice(
+				this._marcador,
+				this._marcador + this._itensPorPagina
+			);
+			this._marcador += this._itensPorPagina;
+		}
+	}
+
+	reset() {
+		this._marcador = 0;
+	}
+
+}
+
+let colecao = obterArrayMagicamente();
+let paginador = new Paginador(colecao, 10);
+
+for (let paginas of paginador) {
+	console.log(paginas);
+}</code
+>
+</div>
 
 <p>Como nada disso me parece novo ou incrivelmente útil, vou logo passar para a outra funcionalidade que comentei lá em cima. A de que <em>generators</em> podem ser usados como mais uma alternativa de modelo de execução assíncrono, muito parecida com o <code class='generic'><span class='keyword'>async</span></code> e <code class='generic'><span class='keyword'>await</span></code> do C#. Essa ideia parece ser forte o suficiente a ponto de ter motivado uma <a href='https://github.com/tc39/ecmascript-asyncawait' rel='external nofollow'>nova proposta</a> ao comitê técnico (TC39, que padroniza a especificação a qual o JavaScript se baseia), bem como a criação da biblioteca <a href='https://github.com/tj/co' rel='external nofollow'>co</a>.Uma vez que temos uma interface padronizada para identificar, pausar e resumir funções, podemos escrever uma função de ordem superior que controle a execução dos <em>generators</em>.</p>
 
@@ -4620,6 +4685,130 @@ controle(function*() {
 </div>
 
 <p>Tal função de controle não é tão simples de ser escrita, uma vez que uma implementação simplicista pode não prover toda a fluidez de execução que o modelo assíncrono disponibiliza, causar pilhas de execução muito grandes, etc. já que é necessário conhecimento moderado de como funciona o modelo de execução do JavaScript, o vulgo event loop. Se este é um modelo tão mais prático em JavaScript que do que outras alternativas eu não sei dizer. Certamente preciso escrever vários testes antes de decidir. Apenas gostaria que as pessoas escolhessem um modelo assíncrono e ficassem com ele, ao invés de ficarem adicionando mais e mais alternativas, deixando tudo labirintoso.</p>
+
+<h3>Web Workers (Threads)</h3>
+
+<p>TODO</p>
+
+<div class='codeblock'>
+
+<p>JavaScript - main.js</p>
+<code class='javascript'
+>'use strict';
+
+// cria a worker thread de uso exclusivo
+// da main thread
+let webWorker = new Worker('worker.js');
+
+// web workers não compartilham memória
+// apenas trocam mensagens entre si
+// e não podem acessar o DOM
+
+// envia mensagens para a worker thread
+webWorker.postMessage(['algum', 'valor']);
+webWorker.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorker.onmessage = (event) => {
+	console.log(event.data);
+};
+
+// mata a thread imediatamente se quiser
+// webWorker.terminate();</code
+>
+
+<p>JavaScript - worker.js</p>
+<code class='javascript'
+>'use strict';
+
+// callback para recepção de mensagens
+// da main thread (ui thread)
+onmessage = (event) => {
+
+	console.log(event.data[0]);
+	console.log(event.data[1]);
+	let result = event.data.join(' ');
+
+	// envia mensagens para a main thread
+	postMessage(result);
+
+	// termina a thread se quiser
+	// close();
+
+};</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript - sharedThread1.js</p>
+<code class='javascript'
+>'use strict';
+
+<strong>// cria uma worker thread compartilhada</strong>
+let <strong class='small'>webWorkerOp1</strong> = new <strong class='small'>SharedWorker(</strong>'worker.js'<strong class='small'>);</strong>
+
+// envia mensagens para a worker thread compartilhada
+webWorkerOp1<strong>.port</strong>.postMessage(['algum', 'valor']);
+webWorkerOp1<strong>.port</strong>.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorkerOp1<strong>.port</strong>.onmessage = (event) => {
+	console.log(event.data);
+};</code
+>
+
+<p>JavaScript - sharedThread2.js</p>
+<code class='javascript'
+>'use strict';
+
+// cria uma worker thread compartilhada
+let <strong>webWorkerOp2</strong> = new <strong>SharedWorker(</strong>'worker.js'<strong>);</strong>
+
+// envia mensagens para a worker thread compartilhada
+webWorkerOp2<strong>.port</strong>.postMessage(['misturar', 2]);
+webWorkerOp2<strong>.port</strong>.postMessage([10, 20]);
+
+// callback para recepção de mensagens
+// da worker thread
+webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
+	console.log(event.data);
+};</code
+>
+
+<p>JavaScript - worker.js</p>
+<code class='javascript'
+>'use strict';
+
+<strong>onconnect = (event) => {</strong>
+
+	<strong>let port = event.ports[0];</strong>
+
+	// callback para recepção de mensagens
+	// da main thread (ui thread)
+	<strong>port.</strong>onmessage = (event) => {
+
+		console.log(event.data[0]);
+		console.log(event.data[1]);
+		let result = event.data.join(' ');
+
+		// envia mensagens para a main thread
+		<strong>port.</strong>postMessage(result);
+
+		// termina a thread se quiser
+		// close();
+
+	};
+
+<strong>};</strong></code
+>
+
+</div>
+
+</div>
 
 </section>
 
