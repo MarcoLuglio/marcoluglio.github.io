@@ -248,6 +248,8 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 		_matchKeywords(matchCharacter) {
 
+			// FIXME ver o caso de &lt;&amp;str que ignora o match &lt; pq tem o &lt;&lt;
+
 			if (this._keywordsPool.length > 1) {
 				this._previousMatchedKeyword = this._matchedKeyword;
 				this._matchedKeyword = null;
@@ -1801,7 +1803,16 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				// literals
 				'true',
 				'false',
-				'nil'
+				'nil',
+
+				// build configurations
+				'#if',
+				'#else',
+				'#elseif',
+				'#endif',
+				'arch',
+				'os',
+				'swift'
 
 			]);
 
