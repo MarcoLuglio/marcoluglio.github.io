@@ -489,6 +489,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
+.bubaloop.cs .directive {
+	color: #7F8EA3;
+}
+
 .bubaloop.cs .operator {
 	color: #7F8EA3;
 }
@@ -517,6 +521,10 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.highlight.java strong .string {
 	color: #ffffff;
+}
+
+.bubaloop.java .annotation {
+	color: #7F8EA3;
 }
 
 .bubaloop.java .comment,
@@ -562,6 +570,14 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.javascript .number,
 .bubaloop.javascript .boolean {
 	color: #0040B4;
+}
+
+.bubaloop.highlight.javascript strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.javascript .type {
+	color: #8AD100;
 }
 
 .bubaloop.javascript .string {
