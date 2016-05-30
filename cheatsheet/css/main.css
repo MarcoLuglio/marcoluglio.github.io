@@ -282,10 +282,6 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* C++ */
 
-.bubaloop.cpp .directive {
-	color: #0040B4;
-}
-
 .bubaloop.cpp .keyword,
 .bubaloop.cpp .number {
 	color: #0040B4;
@@ -319,6 +315,7 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
+.bubaloop.cpp .directive,
 .bubaloop.cpp .operator {
 	color: #7F8EA3;
 }
@@ -328,10 +325,6 @@ div.codeblock.bubaloop p + code.javascript {
 }
 
 /* Objective-C */
-
-.bubaloop.objectivec .directive {
-	color: #0040B4;
-}
 
 .bubaloop.objectivec .keyword,
 .bubaloop.objectivec .number {
@@ -366,6 +359,7 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
+.bubaloop.objectivec .directive,
 .bubaloop.objectivec .operator {
 	color: #7F8EA3;
 }
@@ -407,6 +401,7 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
+.bubaloop.swift .directive,
 .bubaloop.swift .operator {
 	color: #7F8EA3;
 }
@@ -448,6 +443,7 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
+.bubaloop.rust .attribute,
 .bubaloop.rust .operator {
 	color: #7F8EA3;
 }
@@ -493,10 +489,7 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
-.bubaloop.cs .directive {
-	color: #7F8EA3;
-}
-
+.bubaloop.cs .directive,
 .bubaloop.cs .operator {
 	color: #7F8EA3;
 }

@@ -1806,10 +1806,6 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'nil',
 
 				// build configurations
-				'#if',
-				'#else',
-				'#elseif',
-				'#endif',
 				'arch',
 				'os',
 				'swift'
@@ -2083,6 +2079,33 @@ define('SwiftStringLiteralToken', ['SourcePatternIteratorToken', 'SwiftStringPat
 
 
 /**
+ * Token for Swift directives
+ */
+define('SwiftDirectiveToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const SwiftDirectiveToken = class SwiftDirectiveToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+			super('directive', [
+				'#if',
+				'#else',
+				'#elseif',
+				'#endif'
+			]);
+
+			Object.seal(this);
+
+		}
+
+	};
+
+	return SwiftDirectiveToken;
+
+});
+
+
+
+/**
  * Tokenizes Swift source code
  */
 define(
@@ -2099,6 +2122,7 @@ define(
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
+		'SwiftDirectiveToken',
 
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
@@ -2115,6 +2139,7 @@ define(
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
+		SwiftDirectiveToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -2142,8 +2167,9 @@ define(
 				new SwiftPunctuationToken(),
 
 				// comments
-				new CLineCommentToken()//,
-				//new CBlockCommentToken()
+				new CLineCommentToken(),
+				//new CBlockCommentToken(),
+				new SwiftDirectiveToken()
 
 			);
 
@@ -2676,6 +2702,90 @@ define('RustStringLiteralToken', ['SourcePatternIteratorToken', 'RustStringPatte
 
 
 
+define('RustAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustAttributePatternIterator = class RustAttributePatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			this._matchFunction = this._matchHash;
+			Object.seal(this);
+		}
+
+		_matchHash(matchCharacter) {
+			if (matchCharacter === '#') {
+				this._matchFunction = this._matchStartBracket;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchStartBracket(matchCharacter) {
+			if (matchCharacter === '[') {
+				this._matchFunction = this._matchContentOrEndBracket;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchContentOrEndBracket(matchCharacter) {
+
+			if (matchCharacter === ']') {
+				this._matchFunction = this._matchEnd;
+			}
+
+			if (this._matchLineBreak(matchCharacter)) {
+				this._hasNext = false;
+				return false;
+			}
+
+			return true;
+
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return RustAttributePatternIterator;
+
+});
+
+
+
+/**
+ * Token for Rust attributes
+ */
+define('RustAttributeToken', ['SourcePatternIteratorToken', 'RustAttributePatternIterator'], (SourcePatternIteratorToken, RustAttributePatternIterator) => {
+
+	const RustAttributeToken = class RustAttributeToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('attribute', new RustAttributePatternIterator());
+		}
+	};
+
+	return RustAttributeToken;
+
+});
+
+
+
 define('RustSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
 	const RustSymbolIterator = class RustSymbolIterator  extends SourcePatternIterator {
@@ -2753,6 +2863,7 @@ define(
 		'RustPunctuationToken',
 		'RustDecimalLiteralToken',
 		'RustStringLiteralToken',
+		'RustAttributeToken',
 
 		'RustSymbolToken',
 
@@ -2772,6 +2883,7 @@ define(
 		RustPunctuationToken,
 		RustDecimalLiteralToken,
 		RustStringLiteralToken,
+		RustAttributeToken,
 
 		RustSymbolToken,
 
@@ -2802,6 +2914,7 @@ define(
 				new RustKeywordToken(),
 				new RustTypesToken(),
 				new RustPunctuationToken(),
+				new RustAttributeToken(),
 
 				// comments
 				new CLineCommentToken()//,
