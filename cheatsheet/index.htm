@@ -256,23 +256,40 @@ const x = 5; // constante
 <code class='cpp'
 >int eu1;
 auto _ = "bem sucinto";
-auto _123 = "meio confuso";</code
+auto _123 = "meio confuso";
+auto _if = "meio confuso";</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>int eu1;
+int _ = "bem sucinto";
+int _123 = "meio confuso";
+int _if = "meio confuso";</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// TODO
+
+// ignorar a variável
+let _ = 1
+
+let π = 3.14159
+let 你好 = "你好世界"
+let 🐶🐮 = "dogcow"
+// cannot contain
+// whitespace characters
+// mathematical symbols
+// arrows
+// private-use (or invalid)
+// Unicode code points
+// line- and box-drawing
+// cannot begin with a number</code
 >
 </div>
 
@@ -281,7 +298,8 @@ auto _123 = "meio confuso";</code
 <code class='rust'
 >let eu1:i32;
 let _ = "bem sucinto";
-let _123 = "meio confuso";</code
+let _123 = "meio confuso";
+let _if = "meio confuso";</code
 >
 </div>
 
@@ -291,12 +309,17 @@ let _123 = "meio confuso";</code
 >int eu1;
 var _ = "bem sucinto";
 var _123 = "meio confuso";
+var _if = "meio confuso";
 
 // podemos ainda usar @ na frente
 // do nome pra evitar colisões
 // com palavras-chave e tipos
 var @if = "muito confuso";
-var @int = "muito confuso";</code
+var @int = "muito confuso";
+
+// TODO
+// a diferença de @ ao invés de _
+// é que...</code
 >
 </div>
 
@@ -304,25 +327,47 @@ var @int = "muito confuso";</code
 <p>Java</p>
 <code class='java'
 >int eu1;
-int $ = "bem sucinto";
 int _ = "bem sucinto"; // deprecated
+int _123 = "meio confuso";
+int _if = "meio confuso";
+
+int $ = "bem sucinto";
 int $123 = "meio confuso";
-int _123 = "meio confuso";</code
+int $if = "meio confuso";
+
+// TODO posso usar $$ ou misturar $?</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>let eu1;
+let _ = "bem sucinto";
+let _123 = "meio confuso";
+let _if = "meio confuso";
+
+// TODO misturar _
+
+let $ = "bem sucinto";
+let $123 = "meio confuso";
+let $if = "meio confuso";
+
+// TODO posso usar $$ ou misturar $?
+
+// muitos frameworks utilizam $
+// como nome de seus objetos
+// principais
+// jQuery deve ser o mais
+// famoso</code
 >
 </div>
 
 </div>
 
 <ol>
-	<li>Rust / Swift</li>
+	<li>Swift</li>
+	<li>Rust</li>
 	<li>C#</li>
 	<li>JavaScript</li>
 	<li>C++</li>
@@ -5132,7 +5177,7 @@ func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 	let waitResult = dispatch_semaphore_wait(
 		semaforo,
 		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
-		)
+	)
 	return waitResult
 }
 
@@ -5147,7 +5192,7 @@ var element = "lambda"
 let utilityQueue = dispatch_get_global_queue(
 	QOS_CLASS_UTILITY,
 	0
-	)
+)
 let semaforo = dispatch_semaphore_create(0)
 
 dispatch_async(utilityQueue) {
@@ -5178,7 +5223,7 @@ func check(semaforo:dispatch_semaphore_t) -&gt; Int {
 	let waitResult = dispatch_semaphore_wait(
 		semaforo,
 		dispatch_time(DISPATCH_TIME_NOW, 1_000_000_000)
-		)
+	)
 	return waitResult
 }
 
@@ -5193,7 +5238,7 @@ var element = "lambda"
 let utilityQueue = dispatch_get_global_queue(
 	QOS_CLASS_UTILITY,
 	0
-	)
+)
 let semaforo = dispatch_semaphore_create(0)
 
 dispatch_async(utilityQueue) {
