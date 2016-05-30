@@ -2422,6 +2422,146 @@ define('RustPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 
 
 
+define('RustDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustDecimalPatternIterator = class RustDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/},
+				_canUseSeparator: {value: false, writable: true},
+				_sufficType:  {value: '', writable: true},
+				_suffixBuffer: {value: '', writable: true}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter i8, i16, i32, i64, u8, u16, u32, u64, f32, f64 no final
+		// pode ter _ separando os números
+
+		_matchNumber(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._canUseSeparator = true;
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._canUseSeparator && matchCharacter === '_') {
+				return true;
+			}
+
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				// this._canUseSeparator = false; // TODO verificar isso
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (matchCharacter === 'i'
+				|| matchCharacter === 'u'
+				|| matchCharacter === 'f'
+				) {
+
+				this._sufficType += matchCharacter;
+				this._canUseSeparator = false;
+				this._matchFunction = this._matchSuffix1;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix1(matchCharacter) {
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			// i, u, f
+			if (matchCharacter == '3'
+				|| matchCharacter == '6'
+				) {
+
+				this._suffixBuffer += matchCharacter;
+				this._matchFunction = this._matchSuffix2;
+				return true;
+			}
+
+			// i, u
+			if (this._sufficType == 'i' || this._sufficType == 'u') {
+
+				if (matchCharacter == '8') {
+					this._matchFunction = this._matchEnd;
+					return true;
+				} else if (matchCharacter == '1') {
+					this._suffixBuffer += matchCharacter;
+					this._matchFunction = this._matchSuffix2;
+					return true;
+				}
+
+				return false;
+
+			}
+
+			return false;
+
+		}
+
+		_matchSuffix2(matchCharacter) {
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			if ((this._suffixBuffer == '1' && matchCharacter == '6')
+				|| (this._suffixBuffer == '3' && matchCharacter == '2')
+				|| (this._suffixBuffer == '6' && matchCharacter == '4')
+				) {
+
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return RustDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('RustDecimalLiteralToken', ['SourcePatternIteratorToken', 'RustDecimalPatternIterator'], (SourcePatternIteratorToken, RustDecimalPatternIterator) => {
+
+	const RustDecimalLiteralToken = class RustDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new RustDecimalPatternIterator());
+		}
+	};
+
+	return RustDecimalLiteralToken;
+
+});
+
+
+
 define('RustStringPatternIterator', () => {
 
 	const RustStringPatternIterator = class RustStringPatternIterator {
@@ -2525,6 +2665,68 @@ define('RustStringLiteralToken', ['SourcePatternIteratorToken', 'RustStringPatte
 
 
 
+define('RustSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustSymbolIterator = class RustSymbolIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isWordCharacter: {value: /\w/},
+				_isNumberCharacter: {value: /\d/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchValidCharacter;
+
+		}
+
+		_matchValidCharacter(matchCharacter) {
+
+			if (matchCharacter === '_'
+				|| this._isNumberCharacter.test(matchCharacter)
+				|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+				) {
+
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return RustSymbolIterator;
+
+});
+
+/**
+ * Token for Rust symbols
+ */
+define('RustSymbolToken', ['SourcePatternIteratorToken', 'RustSymbolIterator'], (SourcePatternIteratorToken, RustSymbolIterator) => {
+
+	const RustSymbolToken = class RustSymbolToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('symbol', new RustSymbolIterator());
+		}
+	};
+
+	return RustSymbolToken;
+
+});
+
+
+
 /**
  * Tokenizes Rust source code
  */
@@ -2538,7 +2740,10 @@ define(
 		'RustKeywordToken',
 		'RustTypesToken',
 		'RustPunctuationToken',
+		'RustDecimalLiteralToken',
 		'RustStringLiteralToken',
+
+		'RustSymbolToken',
 
 		'CLineCommentToken',
 		//'NestedBlockCommentToken',
@@ -2554,7 +2759,10 @@ define(
 		RustKeywordToken,
 		RustTypesToken,
 		RustPunctuationToken,
+		RustDecimalLiteralToken,
 		RustStringLiteralToken,
+
+		RustSymbolToken,
 
 		CLineCommentToken,
 		//NestedBlockCommentToken,
@@ -2593,7 +2801,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			//this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+			this._tokenPool.push(new RustSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
 
@@ -2601,8 +2809,8 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
+				new RustDecimalLiteralToken(),
+				/*new JSNumericLiteralToken(),
 				new JSRegexLiteralToken(),*/
 				new RustStringLiteralToken()
 			);
