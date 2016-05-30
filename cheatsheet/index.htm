@@ -155,7 +155,8 @@ int x = 5; // estilo c
 const int z{5}; // constante
 constexpr int x{5}; // expressão constante
 
-int* x; // ponteiro</code
+int&amp; referenciaDeInt; // referência
+int* ponteiroDeInt{&amp;x}; // ponteiro</code
 >
 </div>
 
@@ -207,17 +208,9 @@ const int x = 5; // constante
 // tipo ignorado em tempo de compilação
 dynamic x = 5;
 
-// nomes válidos
-
-var eu1;
-var _ = "bem sucinto";
-var _123 = "meio confuso";
-
-// podemos ainda usar @ na frente
-// do nome pra evitar colisões
-// com palavras-chave e tipos
-var @if = "muito confuso";
-var @int = "muito confuso";</code
+unsafe {
+	int* ponteiroDeInt = &x; // ponteiro
+}</code
 >
 </div>
 
@@ -243,12 +236,86 @@ var x = 5; // estilo antigo
 
 // lança exceção em modo estrito
 // mas é aceito em modo normal
-x = 5;
+useSemDeclarar = 5;
 
 let x = 5; // variável
 const x = 5; // constante
 
 [x, y] = [1, 2]; // desestruturação</code
+>
+</div>
+
+</div>
+
+<h3 id='nomesvalidos'>Nomes Válidos</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>int eu1;
+auto _ = "bem sucinto";
+auto _123 = "meio confuso";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let eu1:i32;
+let _ = "bem sucinto";
+let _123 = "meio confuso";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>int eu1;
+var _ = "bem sucinto";
+var _123 = "meio confuso";
+
+// podemos ainda usar @ na frente
+// do nome pra evitar colisões
+// com palavras-chave e tipos
+var @if = "muito confuso";
+var @int = "muito confuso";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>int eu1;
+int $ = "bem sucinto";
+int _ = "bem sucinto"; // deprecated
+int $123 = "meio confuso";
+int _123 = "meio confuso";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
 >
 </div>
 
@@ -585,7 +652,7 @@ int* ponteiroDeSegundoInt{ponteiroDeInt};
 cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeSegundoInt); // 95
 
 // TODO
-// podemos atribuir enderecos aleatórios de memória para ponteiros :()
+// podemos atribuir enderecos aleatórios de memória para ponteiros :(
 
 // podemos marcar o ponteiro como const, mas isso
 // NÃO PREVINE QUE ELE APONTE PARA VARIÁVEIS DIFERENTES!!!
@@ -662,8 +729,42 @@ ponteiroConstRef = segundoIntOriginal; // erro, não é mutável :)
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>var nilPointer:UnsafeMutablePointer&lt;int&gt; = nil
+
+// variáveis comuns tipo int
+let intOriginal = 90
+let segundoIntOriginal = 95
+
+// int* ponteiroDeInt = &amp;intOriginal;
+var ponteiroDeInt:UnsafeMutablePointer&lt;Int&gt; = &amp;intOriginal
+
+print(ponteiroDeInt) // 90
+
+ponteiroDeInt = &amp;segundoIntOriginal
+print(ponteiroDeInt) // 95
+
+let ponteiroDeSegundoInt = ponteiroDeInt
+print(ponteiroDeSegundoInt) // 95
+
+// const int* ponteiroDeInt = &amp;intOriginal;
+var ponteiroConst:UnsafePointer&lt;Int&gt; = &amp;intOriginal
+ponteiroConst = &amp;segundoIntOriginal
+
+// mais ou menos const int&amp; ponteiroConstRef; ??
+let ponteiroConstRef:UnsafePointer&lt;Int&gt; = &amp;intOriginal
+
+// TODO
+// podemos atribuir endereços aleatórios de memória para ponteiros ??
+
+// ponteiro de array
+
+// ponteiros para funções?
+
+// void* ponteiroGenerico;
+var ponteiroGenerico:UnsafePointer&lt;Void&gt;
+
+// int** ponteiroDePonteiro;
+let ponteiroDePonteiro = AutoreleasingUnsafeMutablePointer&lt;Int?&gt; // tem que ser nullable?</code
 >
 </div>
 
@@ -691,6 +792,8 @@ namespace MarcoLuglio.PonteirosExample {
 			// Existem vários contexto que podem ser marcados como unsafe,
 			// mas vou mostrar apenas o bloco de código unsafe
 			unsafe {
+
+				// TODO não pode null pointer
 
 				// variáveis comuns tipo int
 				int intOriginal = 90;
@@ -861,9 +964,12 @@ namespace MarcoLuglio.PonteirosExample {
 oitoOuOitenta = false;
 
 // converte para true
-oitoOuOitenta = !oitoOuOitenta;</code
+oitoOuOitenta = !oitoOuOitenta;
+
+// TODO #include &lt;boost/spirit/include/qi_bool.hpp&gt;</code
 >
 </div>
+<!-- http://www.boost.org/doc/libs/1_44_0/libs/spirit/doc/html/spirit/qi/reference/numeric/boolean.html -->
 
 <div class='codeblock'>
 <p>Objective-C</p>
@@ -876,8 +982,18 @@ oitoOuOitenta = !oitoOuOitenta;</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>var oitoOuOitenta = true
+oitoOuOitenta = false
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta
+
+// Skips initial space characters,
+// or optional -/+ sign followed by zeroes.
+// Returns YES on encountering one of
+// "Y", "y", "T", "t", or a digit 1-9.
+// It ignores any trailing characters.
+var boolValue:Bool { get }</code
 >
 </div>
 
@@ -4230,7 +4346,7 @@ function* animar(inicio, fim, tempo) {
 
 let animadorIterador = animar(0, 100, 9);
 
-for (let resultado in animadorIterator) {
+for (let resultado of animadorIterator) {
 	console.log(resultado.value);
 }
 
@@ -6227,6 +6343,187 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 	<li>C++</li>
 	<li>JavaScript</li>
 	<li>Java</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='diretivas'>Diretivas</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>/*
+os() OSX, iOS, watchOS, tvOS, Linux
+arch() x86_64, arm, arm64, i386
+swift() >= followed by a version number
+*/
+
+#if os(iOS) &amp;&amp; !swift(>= 2)
+	// statements
+#elseif os(OSX)
+	// statements
+#else
+	// statements
+#endif</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO rust tem vários atributos
+
+// compilação condicional com #cfg é um deles
+
+// copiado de <a rel='external nofollow' href='http://rustbyexample.com/attribute/cfg.html'>rust by example</a> e <a rel='external nofollow' href='http://doc.rust-lang.org/reference.html#conditional-compilation'>docs oficiais</a>
+
+#[cfg(...)]
+#[cfg(target_os = "macos")]
+#[cfg(any(foo, bar))]
+#[cfg(all(unix, target_pointer_width = "32"))]
+#[cfg(not(foo))]
+
+#[cfg(target_os = "linux")]
+fn are_you_on_linux() {
+	println!("You are running linux!")
+}
+
+// function only gets compiled if target OS is *not* linux
+#[cfg(not(target_os = "linux"))]
+fn are_you_on_linux() {
+	println!("You are *not* running linux!")
+}
+
+fn main() {
+	are_you_on_linux();
+
+	println!("Are you sure?");
+	if cfg!(target_os = "linux") {
+		println!("Yes. It's definitely linux!");
+	} else {
+		println!("Yes. It's definitely *not* linux!");
+	}
+}
+
+/*
+debug_assertions - Enabled by default when compiling
+without optimizations. This can be used to enable extra
+debugging code in development but not in production.
+For example, it controls the behavior of the
+standard library's debug_assert! macro.
+
+target_arch = "..." - "x86", "x86_64", "mips",
+"powerpc", "powerpc64", "arm", or "aarch64".
+
+target_endian = "..." - "little", "big".
+target_env = ".." - musl, msvc, gnu or blank
+target_family = "..." - "unix" or "windows".
+
+target_os = "..." - "windows", "macos", "ios", "linux",
+"android", "freebsd", "dragonfly", "bitrig" , "openbsd"
+or "netbsd".
+
+target_pointer_width = "..." - "32" or "64"
+target_vendor = "..." - apple, pc, "unknown".
+
+test - Enabled when compiling the test harness
+(using the --test flag).
+
+unix - See target_family.
+windows - See target_family.
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// não podem ter whitespace antes!
+
+#if DEBUG
+	//
+#elif TRACE
+	//
+#else
+	//
+#endif
+
+// TODO ver oq o visual studio fornece
+
+#define TESTE
+
+#if TESTE
+
+#warning TESTE is defined
+// ou
+#error TESTE is defined
+
+#endif
+
+#undef TESTE
+
+// desabilitar avisos do compilador
+#pragma warning disable 414, 3021
+[CLSCompliant(false)]
+public class C {
+	static void Main() {}
+}
+#pragma warning restore 414, 3021
+
+// garantir checksums de arquivos
+#pragma checksum "filename.cs" "{3673e4ca-6098-4ec1-890f-8fceb2a794a2}" "{012345678AB}"
+//                                         guid --^           checksum bytes --^
+
+// #line é mais usado por source generators
+
+// força step over pelo debugger
+#line hidden
+
+#line 837 "Meio inútil"
+#line default</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict'; // modo estrito</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
 </ol>
 
 <p>A</p>
