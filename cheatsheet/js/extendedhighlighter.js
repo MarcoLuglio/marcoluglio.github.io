@@ -1333,6 +1333,8 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'false',
 				'YES',
 				'NO',
+				'@YES',
+				'@NO',
 				'nil',
 				'Nil',
 				'NULL'

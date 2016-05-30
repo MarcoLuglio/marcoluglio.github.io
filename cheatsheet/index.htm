@@ -647,6 +647,80 @@ Object o = new Object();
 
 <section>
 
+<h2 id='memoria'>Gerenciamento de memória</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++ - RAII</p>
+<code class='cpp'
+>// smart pointers
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C - Reference Counting</p>
+<code class='objectivec'
+>// ARC
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift - Reference Counting</p>
+<code class='swift'
+>// ARC
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust - Ownership e Lifelines</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C# - Mark and Sweep GC</p>
+<code class='cs'
+>// weak references
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java - Mark and Sweep GC</p>
+<code class='java'
+>// weak e ghost references
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript - Mark and Sweep GC</p>
+<code class='javascript'
+>// weak maps
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='ponteiros'>Apontar é feio <span>Já dizia sua mãe</span></h2>
 
 <div class='comparison'>
@@ -767,7 +841,16 @@ ponteiroConstRef = segundoIntOriginal; // erro, não é mutável :)
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->int* o = NULL;</code
+>// variável tipo ponteiro
+// ponteiros são nilable e podemos usar
+// o valor nil, que representa
+// um endereço de memória inválido
+int* nilPointer = nil; // Objective-C
+
+// é possível usar do C o valor NULL, que é 0
+// por baixo dos panos, também representando
+// um endereço de memória inválido
+int* cNullPointer = NULL; // C</code
 >
 </div>
 
@@ -987,10 +1070,17 @@ namespace MarcoLuglio.PonteirosExample {
 </div>
 
 <ol>
-	<li>a</li>
+	<li>Swift</li>
+	<li>C++ / C#</li>
+	<li>Objective-C</li>
+	<li>TODO classificar rust quando tiver um exemplo mais completo</li>
 </ol>
 
-<p>A</p>
+<p>Não sei ao certo como avaliar esse tópico. Certamente não é a mesma coisa que gerenciamento de memória avaliado logo acima.
+<br />Todas as linguagens permitem <code class='cpp'>void*</code> de alguma maneira
+<br />Swift possui nomes mais claros em relação ao que cada ponteiro significa, embora a relação com suas versões em C não sejam fáceis de adivinhar. Não é necessário utilizar operadores diferentes para interagir com ponteiros.
+<br />C# tenta evitar ao máximo o uso de ponteiros para tarefas corriqueiras. Mas faz muito pouco em relação à C++ para impedir problemas com a utilização de ponteiros quando são necessários, e acaba sendo equivalente em segurança, embora de maneira diferente. As duas linguagens possuem recursos para impedir ponteiros <code class='cs'>null</code>, e para apagar os ponteiros quando saírem de escopo. C# delimita claramente um bloco isolado para trabalhar com ponteiros, mas não permite marcá-los como <code class='cs'>const</code>. C++ ainda tem o operador <code class='delete'>delete</code>, mas você não precisa usá-lo.
+<br />Objective-C usa ponteiros estilo C. Requer muitas vezes que os objetos sejam alocados e depois inicializados num passo diferente. Como muitas coisas nessa linguagem, mistura sintaxes das duas linguagens. Por exemplo, <em>ivars</em> e <em>properties</em>.</p>
 
 </section>
 
@@ -2217,8 +2307,25 @@ auto ul5{1ULL};</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// TODO
+
+NSNumber* myBOOL = @YES;
+NSNumber* myBool = [[NSNumber alloc] initWithBOOL:YES];
+
+NSNumber* myInt = @42;
+NSNumber* myInt = [[NSNumber alloc] initWithInt:42];
+
+NSNumber* unsignedNumber = @42u;
+NSNumber* unsignedNumber = [[NSNumber alloc] initWithUnsignedInt:42u];
+
+NSNumber* myLong = @42L;
+NSNumber* myLong = [[NSNumber alloc] initWithLong:42l];
+
+NSNumber* myFloat = @3.14f;
+NSNumber* simpleFloat = [NSNumber numberWithFloat:3.14f];
+
+NSNumber *betterDouble = @3.1415926535;
+NSNumber *betterDouble = [NSNumber numberWithDouble:3.1415926535];</code
 >
 </div>
 
@@ -2952,8 +3059,8 @@ private void recebeByte(byte numero) {
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>NSNumber* someChar = @'T';
+NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 >
 </div>
 
@@ -3056,8 +3163,9 @@ Não há merda que se compare
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>NSString* simples = @"";
+NSMutableString* mutavel = @"";
+char* cString = "";</code
 >
 </div>
 
