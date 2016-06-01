@@ -524,574 +524,6 @@ let n = (k || k === 0) ? k : 10;</code
 
 <section>
 
-<h2 id='stackheap'>Stack e Heap</h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->// TODO
-// tipos na stack por padrão
-
-// tipos com new na heap
-
-// enums?
-// closures?
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->// TODO
-// structs na stack?
-// e classes?
-// enums?
-// closures? tem closures?
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->// TODO
-// primtive on stack
-// structs ?? implementation dependent??
-// classes and closures on the heap
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// TODO
-// &amp;'static str statically allocated lives inside the program binary code
-// stack by default
-// heap
-// String
-// Box&lt;T&gt;
-// Vec&lt;T&gt;
-// growable on heap
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->// tipos valor na stack
-
-// tipos primitivos na stack
-int i = 10;
-
-// enums na stack
-
-// structs às vezes na stack
-AStruct a;
-Point p;
-
-unsafe {
-	byte* ponteiroDeArray = stackalloc byte[1024];
-}
-
-// nullables na stack
-
-// tipos de referência na heap
-
-// class, interface, array e delegate
-string a = "Na heap"; // TODO verificar string heap
-object o = new object();</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// tipos primitivos na stack
-int i = 10;
-
-// tipos de referência na heap
-String s = "Na heap"; // TODO verificar string heap
-Object o = new Object();
-// enums tb?</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->// Não existe uma definição
-// na especificação
-// A máquina virtual pode ou não
-// alocar tipos primitivos
-// e tipos de referência
-// tanto na stack quanto na heap
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>C++ / Rust</li>
-	<li>Objective-C / Swift / C#</li>
-	<li>Java</li>
-	<li>JavaScript</li>
-</ol>
-
-<p>A</p>
-
-</section>
-
-
-
-<section>
-
-<h2 id='memoria'>Gerenciamento de memória</h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++ - RAII</p>
-<code class='cpp'
->// smart pointers
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C - Reference Counting</p>
-<code class='objectivec'
->// ARC
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift - Reference Counting</p>
-<code class='swift'
->// ARC
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust - Ownership e Lifelines</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C# - Mark and Sweep GC</p>
-<code class='cs'
->// weak references
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java - Mark and Sweep GC</p>
-<code class='java'
->// weak e ghost references
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript - Mark and Sweep GC</p>
-<code class='javascript'
->// weak maps
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-</section>
-
-
-
-<section>
-
-<h2 id='ponteiros'>Apontar é feio <span>Já dizia sua mãe</span></h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->// variável tipo ponteiro
-// ponteiros são nullable e podemos usar
-// o valor especial nullptr, que representa
-// um endereço de memória inválido
-int* newNull{nullptr}; // C++11
-
-// versões antigas usam o valor NULL, que é 0
-// por baixo dos panos, também representando
-// um endereço de memória inválido
-int* oldNull{NULL}; // old
-
-// existe ainda um tipo nullptr_t, que só pode
-// receber nullptr e não aceita nenhum outro valor
-// não imagino muitos usos para ele fora fazer
-// piadinhas com o Elvis ;)
-std::nullptr_t o_onlyNuuull{nullptr}; // C++11
-
-// variáveis comuns tipo int
-int intOriginal{90};
-int segundoIntOriginal{95};
-
-// variável tipo ponteiro de int (int*) aponta
-// para variável comum tipo int
-//  seu valor é um inteiro 32 ou 64 bits, representando
-// o endereço de memória de intOriginal, que podemos
-// obter usando o operador &amp;
-int* ponteiroDeInt{&amp;intOriginal};
-
-// para acessarmos o valor da variável através
-// do ponteiro, usamos o operador *
-cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 90
-
-// se fizermos ele apontar para outra variável, seu valor muda
-ponteiroDeInt = &amp;segundoIntOriginal;
-cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 95
-
-// também podemos pegar endereços de memória através de outros
-// ponteiros, pois como disse acima, seus valores são numéricos
-// 32 ou 64 bits
-int* ponteiroDeSegundoInt{ponteiroDeInt};
-cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeSegundoInt); // 95
-
-// TODO
-// podemos atribuir enderecos aleatórios de memória para ponteiros :(
-
-// podemos marcar o ponteiro como const, mas isso
-// NÃO PREVINE QUE ELE APONTE PARA VARIÁVEIS DIFERENTES!!!
-// TODO verificar se previne a modificação dos objetos apontados
-const int* ponteiroConst{&amp;intOriginal}; // 90
-ponteiroConst = &amp;segundoIntOriginal; // 95
-
-// depois que não precisarmos mais dos ponteiros
-// precisamos APAGÁ-LOS ANTES QUE SAIAM DE ESCOPO,
-// para evitar que fiquem perdidos na memória
-// sem podermos acessá-los (dangling pointers)
-// devemos fazer isso apenas para ponteiros null
-// ou ponteiros de objetos alocados na heap
-// através do operador new
-delete newNull;
-delete oldNull;
-
-// o gerenciamento manual dos ponteiros com delete
-// não é recomendado, e existem classes que os apagam
-// automaticamente e de maneira determinística assim
-// que saem de escopo
-auto ponteiroSmart{std::make_unique&lt;int&gt;(1000)};
-auto ponteiroSmartShared{std::make_shared&lt;int&gt;(1001)};
-
-// TODO old boost smart pointers
-
-// embora isso não seja necessário para ponteiros int*
-// existe uma outra característica dessas classes, que
-// é não permitir o valor nullptr, uma vez que seu tipo
-// é especificado
-auto semNullPointer{std::make_unique&lt;int&gt;(nullptr)}; // erro :)
-
-// embora NULL seja um valor váido para int*, uma vez que
-// NULL na verdade é 0 por baixo dos panos
-auto semNullPointer{std::make_unique&lt;int&gt;(NULL)}; // funciona!
-
-// além disso, não é possível mudar o endereço para o qual
-// esse tipo de ponteiro aponta uma segunda vez
-auto semSegundaChance{std::make_unique<int>(1000)};
-// semSegundaChance = &intOriginal; // erro
-// semSegundaChance = ponteiroDeInt; // erro
-
-// TODO referências
-// referências não são ponteiros oficialmente segundo
-// a especificacão
-
-// não podem ser nullptr nem NULL
-int&amp; ponteiroRefNullPointer{nullptr}; // erro :)
-int&amp; ponteiroRefNULL{NULL}; // erro :)
-
-int&amp; ponteiroRef{intOriginal}; // 90
-ponteiroRef = segundoIntOriginal; // 95
-
-const int&amp; ponteiroConstRef{intOriginal}; // 90
-ponteiroConstRef = segundoIntOriginal; // erro, não é mutável :)
-
-// não pode pegar o endereço de referências
-
-// ponteiros para arrays
-// ponteiros para funções
-// void*
-// ponteiros de ponteiros
-// referências de ponteiros</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->// variável tipo ponteiro
-// ponteiros são nilable e podemos usar
-// o valor nil, que representa
-// um endereço de memória inválido
-int* nilPointer = nil; // Objective-C
-
-// é possível usar do C o valor NULL, que é 0
-// por baixo dos panos, também representando
-// um endereço de memória inválido
-int* cNullPointer = NULL; // C</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->var nilPointer:UnsafeMutablePointer&lt;int&gt; = nil
-
-// variáveis comuns tipo int
-let intOriginal = 90
-let segundoIntOriginal = 95
-
-// int* ponteiroDeInt = &amp;intOriginal;
-var ponteiroDeInt:UnsafeMutablePointer&lt;Int&gt; = &amp;intOriginal
-
-print(ponteiroDeInt) // 90
-
-ponteiroDeInt = &amp;segundoIntOriginal
-print(ponteiroDeInt) // 95
-
-let ponteiroDeSegundoInt = ponteiroDeInt
-print(ponteiroDeSegundoInt) // 95
-
-// const int* ponteiroDeInt = &amp;intOriginal;
-var ponteiroConst:UnsafePointer&lt;Int&gt; = &amp;intOriginal
-ponteiroConst = &amp;segundoIntOriginal
-
-// mais ou menos const int&amp; ponteiroConstRef; ??
-let ponteiroConstRef:UnsafePointer&lt;Int&gt; = &amp;intOriginal
-
-// TODO
-// podemos atribuir endereços aleatórios de memória para ponteiros ??
-
-// ponteiro de array
-
-// ponteiros para funções?
-
-// void* ponteiroGenerico;
-var ponteiroGenerico:UnsafePointer&lt;Void&gt;
-
-// int** ponteiroDePonteiro;
-let ponteiroDePonteiro = AutoreleasingUnsafeMutablePointer&lt;Int?&gt; // tem que ser nullable?</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// TODO
-let p:*const i32 = ptr::null();
-let p:*mut i32 = ptr::null();</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->using System;
-
-namespace MarcoLuglio.PonteirosExample {
-
-	class MainClass {
-
-		public static void Main(string[] args) {
-
-			// C# requer um contexto unsafe para utilização de ponteiros
-			// Existem vários contexto que podem ser marcados como unsafe,
-			// mas vou mostrar apenas o bloco de código unsafe
-			unsafe {
-
-				// TODO não pode null pointer
-
-				// variáveis comuns tipo int
-				int intOriginal = 90;
-				int segundoIntOriginal = 95;
-
-				// variável tipo ponteiro de int (int*)
-				// aponta para variável comum tipo int
-				// seu valor é um inteiro 64 bits (long), representando
-				// o endereço de memória de intOriginal, que podemos obter
-				// usando o operador &amp;
-				int* ponteiroDeInt = &amp;intOriginal;
-
-				// para acessarmos o valor da variável comum
-				// através do ponteiro, usamos o operador *
-				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 90
-
-				// se fizermos ele apontar para outra variável, seu valor muda
-				ponteiroDeInt = &amp;segundoIntOriginal;
-				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 95
-
-				// também podemos pegar endereços de memória através de outros
-				// ponteiros, pois como disse acima, seus valores são números
-				// tipo long
-				int* ponteiroDeSegundoInt = ponteiroDeInt;
-				Console.WriteLine(@"valor de int {0} ", *ponteiroDeSegundoInt); // 95
-
-				// não é possível iniciar um ponteiro especificando diretamente
-				// um endereço de memória
-				int* enderecoQualquer = 10; // erro TODO verificar qual o erro
-
-				// variável tipo ponteiro de buffer de bytes (bytes*)
-				// aponta para array de bytes pré-alocada na stack
-				// seu valor é igual ao endereço de memória da array de bytes
-				byte* ponteiroDeArray = stackalloc byte[1024];
-
-				// atribuímos o valor 5 para o índice 0 da array na stack
-				// e o valor 11 para o índice 729
-				// para acessarmos os índices, usamos o operador []
-				ponteiroDeArray[0] = 5;
-				ponteiroDeArray[729] = 11;
-
-				// para acessarmos os valores nos índices, usamos o operador []
-				byte indice0 = ponteiroDeArray[0];
-				byte indice729 = ponteiroDeArray[729];
-				Console.WriteLine(
-					@"valores {0} e {1}",
-					indice0, // 0
-					indice729 // 1
-				);
-
-				// Notem que não há nada no ponteiro que indique se tratar de uma array!
-				// Então como o compilador consegue diferenciar entre um ponteiro
-				// para um byte comum e para uma array de bytes?
-				// Ele não consegue! E dependendo do que você for fazer, nem vai lançar
-				// uma exceção, apenas usar um valor incorreto.
-				// Portanto cuidado ao utilizar ponteiros.
-				// Por exemplo, seria válido (embora não recomendado) fazer isso:
-
-				// byte byteOriginal = 37;
-				// ponteiroDeArray = &amp;byteOriginal;
-
-				// variável tipo ponteiro desconhecido
-				// aponta para qualquer tipo de variável
-				// quando null, seu valor é igual a 0, representando um endereço
-				// de memória inválido
-				// neste estado, *ponteiroGenerico lança NullReferenceException
-				void* ponteiroGenerico = null;
-
-				// esse tipo de ponteiro não é recomendado pois perde
-				// a informação sobre o tipo para o qual ele aponta
-				// essa característica é usada para fazer casts forçados
-				// neste estado, seu valor é igual ao endereço de memória de intOriginal
-				ponteiroGenerico = &amp;intOriginal;
-
-				// para acessarmos o valor apontado por esse tipo de ponteiro
-				// é necessário fazer um cast para o tipo que se deseja
-				Console.WriteLine(@"valor de void {0} ", (*(int*)ponteiroGenerico)); // 90
-
-				// agora seu valor é igual ao endereço de memória da array de bytes
-				ponteiroGenerico = ponteiroDeArray;
-
-				// podemos acessar os valores da array apontada pelo ponteiro
-				// fazendo o cast apropriado
-				// a mesma recomendação sobre o operador [] vale aqui, o compilador
-				// não consegue identificar se o valor é uma array ou um byte simples
-				// e vai acreditar no que você pedir
-				Console.WriteLine(@"valor de void*[0] {0} ", ((byte*)ponteiroGenerico)[0]); // 5
-
-				// variável tipo ponteiro de ponteiro de int (int**)
-				// aponta para variável do tipo ponteiro de int
-				// seu valor é igual ao endereço de memória de ponteiroGenerico
-				// esse tipo de ponteiro é utilizado quando não desejamos copiar o
-				// ponteiro original ao passá-lo para outras funções
-				// uma vez que, como o ponteiro é um valor long, é passado por cópia
-				// para as funções!
-				int** ponteiroDePonteiro = (int**)&amp;ponteiroGenerico;
-
-				// para acessarmos o valor no final da cadeia, usamos o operador * duas vezes
-				Console.WriteLine(@"valor de ponteiro {0} ", **ponteiroDePonteiro);
-
-				// se usarmos apenas uma vez, obteremos o ponteiro intermediário
-				Console.WriteLine(
-					@"endereço apontado pelo ponteiro intermediário {0} ",
-					*ponteiroDePonteiro
-				);
-
-				// novamente, o compilador não pode ajudar muito caso você cometa um erro
-				// por exemplo, se esquecermos do operador &amp; estaremos pegando o endereço
-				// do valor final, ao invés do endereco do ponteiro intermediário, porém,
-				// estamos dizendo ao compilador que é o endereço de um ponteiro legítimo
-				ponteiroDePonteiro = (int**)ponteiroGenerico;
-
-				// e só será lançado um erro se tentarmos acessar o valor final na cadeia
-				// pois estaremos tentando usar um valor inteiro como se fosse um ponteiro
-				Console.WriteLine(@"lança NullReferenceException {0} ", **ponteiroDePonteiro);
-
-				// embora possamos criar ponteiros de ponteiros de ponteiros, acho que não
-				// há uma aplicação muito prática pra isso
-				int*** ponteiroDesnecessario;
-
-				// TODO structs e fixed {}
-
-			}
-
-			// os ponteiros são desalocados após o término do contexto unsafe
-			// não é necessário deletar os ponteiros manualmente
-
-		}
-
-	}
-
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
--
-</div>
-
-</div>
-
-<ol>
-	<li>Swift</li>
-	<li>C++ / C#</li>
-	<li>Objective-C</li>
-	<li>TODO classificar rust quando tiver um exemplo mais completo</li>
-</ol>
-
-<p>Não sei ao certo como avaliar esse tópico. Certamente não é a mesma coisa que gerenciamento de memória avaliado logo acima.
-<br />Todas as linguagens permitem <code class='cpp'>void*</code> de alguma maneira
-<br />Swift possui nomes mais claros em relação ao que cada ponteiro significa, embora a relação com suas versões em C não sejam fáceis de adivinhar. Não é necessário utilizar operadores diferentes para interagir com ponteiros.
-<br />C# tenta evitar ao máximo o uso de ponteiros para tarefas corriqueiras. Mas faz muito pouco em relação à C++ para impedir problemas com a utilização de ponteiros quando são necessários, e acaba sendo equivalente em segurança, embora de maneira diferente. As duas linguagens possuem recursos para impedir ponteiros <code class='cs'>null</code>, e para apagar os ponteiros quando saírem de escopo. C# delimita claramente um bloco isolado para trabalhar com ponteiros, mas não permite marcá-los como <code class='cs'>const</code>. C++ ainda tem o operador <code class='delete'>delete</code>, mas você não precisa usá-lo.
-<br />Objective-C usa ponteiros estilo C. Requer muitas vezes que os objetos sejam alocados e depois inicializados num passo diferente. Como muitas coisas nessa linguagem, mistura sintaxes das duas linguagens. Por exemplo, <em>ivars</em> e <em>properties</em>.</p>
-
-</section>
-
-
-
-<section>
-
 <h2 id='tiposboolean'>Tipos Primitivos Boolean</h2>
 
 <div class='comparison'>
@@ -1099,7 +531,8 @@ namespace MarcoLuglio.PonteirosExample {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->auto oitoOuOitenta = true;
+>// tipo bool
+auto oitoOuOitenta = true;
 oitoOuOitenta = false;
 
 // converte para true
@@ -1113,11 +546,13 @@ oitoOuOitenta = !oitoOuOitenta;
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->NSNumber* oitoOuOitenta = @YES;
+>// tipo NSNumber wrapping BOOL
+NSNumber* oitoOuOitenta = @YES;
 
+// tipo BOOL
 BOOL oitoOuOitenta = YES;
 
-// C?
+// tipo C bool
 bool oitoOuOitenta = true;</code
 >
 </div>
@@ -1125,7 +560,8 @@ bool oitoOuOitenta = true;</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->var oitoOuOitenta = true
+>// tipo Bool
+var oitoOuOitenta = true
 oitoOuOitenta = false
 
 // converte para true
@@ -1143,7 +579,8 @@ var boolValue:Bool { get }</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->let oitoOuOintenta = true;
+>// tipo bool
+let oitoOuOintenta = true;
 oitoOuOintenta = false;
 
 // converte para true
@@ -1160,7 +597,8 @@ let parsed = i32::from_str(toParse).unwrap();</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->var oitoOuOitenta = true;
+>// tipo bool
+var oitoOuOitenta = true;
 oitoOuOitenta = false;
 
 // converte para true
@@ -1172,7 +610,8 @@ oitoOuOitenta = !oitoOuOitenta;
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->boolean oitoOuOitenta = true;
+>// tipo boolean
+boolean oitoOuOitenta = true;
 oitoOuOitenta = false;
 
 // converte para true
@@ -1184,7 +623,8 @@ oitoOuOitenta = !oitoOuOitenta;
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->let oitoOuOitenta = true;
+>// tipo Boolean
+let oitoOuOitenta = true;
 oitoOuOitenta = false;
 
 // converte para true
@@ -2330,25 +1770,23 @@ auto ul5{1ULL};</code
 NSNumber* myBool = @YES;
 NSNumber* myBool = [[NSNumber alloc] initWithBOOL:YES];
 
-NSInteger myInt = 42; // NSLog(@"%zd", myInt);
-NSNumber* myIntN = @42; // NSLog(@"%@", myIntN);
-NSNumber* myIntN2 = [[NSNumber alloc] initWithInt:42];
+// int
+NSInteger i1 = 42; // NSLog(@"%zd", i1);
+NSNumber* i2 = @42; // NSLog(@"%@", i2);
+NSNumber* i3 = [[NSNumber alloc] initWithInt:42];
 
-NSUInteger myUInt = 42u; // NSLog(@"%tu", myUInt);
-NSNumber* myUIntN = @42u; // NSLog(@"%@", myUIntN);
-NSNumber* myUIntN2 = [[NSNumber alloc] initWithUnsignedInt:42u];
+// uint
+NSUInteger u1 = 42u; // NSLog(@"%tu", u1);
+NSNumber* u2 = @42u; // NSLog(@"%@", u2);
+NSNumber* u3 = [[NSNumber alloc] initWithUnsignedInt:42u];
 
-NSNumber* myLong = @42L;
-NSNumber* myLong = [[NSNumber alloc] initWithLong:42L];
+// long
+NSNumber* l1 = @42L;
+NSNumber* l1 = [[NSNumber alloc] initWithLong:42L];
 
-NSNumber* myLongLong = @42LL;
-NSNumber* myLongLong = [[NSNumber alloc] initWithLong:42LL];
-
-NSNumber* myFloat = @3.1415926535f;
-NSNumber* simpleFloat = [NSNumber numberWithFloat:3.1415926535f];
-
-NSNumber *betterDouble = @3.1415926535;
-NSNumber *betterDouble = [NSNumber numberWithDouble:3.1415926535];</code
+// long long
+NSNumber* ll1 = @42LL;
+NSNumber* ll1 = [[NSNumber alloc] initWithLong:42LL];</code
 >
 </div>
 
@@ -2505,8 +1943,13 @@ Object l5 = 9_223_372_036_854_775_808L;</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// NSNumber wrapping float
+NSNumber* f1 = @1f;
+NSNumber* f1m = [NSNumber numberWithFloat:1f];
+
+// NSNumber wrapping double
+NSNumber *d1 = @1.0;
+NSNumber *d1m = [NSNumber numberWithDouble:1.0];          </code
 >
 </div>
 
@@ -2602,7 +2045,7 @@ let d6 = .7;                 </code
 <p>Objective-C</p>
 <code class='objectivec'
 >
-</code
+                                                          </code
 >
 </div>
 
@@ -2750,7 +2193,7 @@ let x1 = -0X0123456789ABCDEF;</code
 <p>Objective-C</p>
 <code class='objectivec'
 >
-</code
+                                                          </code
 >
 </div>
 
@@ -2906,26 +2349,27 @@ let i32_max:i32 = std::i32::MAX;
 let i641:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
 let i161:i16 = i32_max as i16; // explicit conversion -1 (i16)
 
-// usa o tipo maior
+// explicit conversion
 let adicao1 = i32_max + 1; // -2147483648 (i32)
 let adicao2 = i641 + (i32_1 as i64); // 2147483649 (i64)
 let adicao3 = i641 + (i32_max as i64); // 4294967294 (i64)
 
-// usa o tipo maior
+// explicit conversion
 let subtracao1 = i32_min - 1; // 2147483647 (i32)
 let subtracao2 = (i161 as i32) - i32_1; // -3 (i32)
 let subtracao3 = (i161 as i32) - i32_max; // -2147483648 (i32)
 
-// usa o tipo maior
+// explicit conversion
 let multiplicacao1 = i32_1 * i32_2; // 8 (i32)
 let multiplicacao2 = i32_max * i32_1; // -2 (i32)
 let multiplicacao3 = (i32_1 as i64) * i641; // 4294967294 (i64)
 
-// usa o tipo maior
+// explicit conversion
 let divisao1 = i32_2 / i32_1; // 2 (i32)
 let divisao2 = i32_1 / i32_2; // 0 (i32)
 let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
 
+// NOTA
 // literais numéricas sem sufixo possuem o tipo _
 // e não realizam operações matemáticas
 
@@ -3421,6 +2865,1358 @@ let beeGees = calvinHarris.replace('love', 'looove');
 </div>
 
 </div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='stackheap'>Stack e Heap</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// TODO
+// tipos na stack por padrão
+
+// tipos com new na heap
+
+// enums?
+// closures?
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// TODO
+// structs na stack?
+// e classes?
+// enums?
+// closures? tem closures?
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// TODO
+// primtive on stack
+// structs ?? implementation dependent??
+// classes and closures on the heap
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO
+// &amp;'static str statically allocated lives inside the program binary code
+// stack by default
+// heap
+// String
+// Box&lt;T&gt;
+// Vec&lt;T&gt;
+// growable on heap
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// tipos valor na stack
+
+// tipos primitivos na stack
+int i = 10;
+
+// enums na stack
+
+// structs às vezes na stack
+AStruct a;
+Point p;
+
+unsafe {
+	byte* ponteiroDeArray = stackalloc byte[1024];
+}
+
+// nullables na stack
+
+// tipos de referência na heap
+
+// class, interface, array e delegate
+string a = "Na heap"; // TODO verificar string heap
+object o = new object();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// tipos primitivos na stack
+int i = 10;
+
+// tipos de referência na heap
+String s = "Na heap"; // TODO verificar string heap
+Object o = new Object();
+// enums tb?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// Não existe uma definição
+// na especificação
+// A máquina virtual pode ou não
+// alocar tipos primitivos
+// e tipos de referência
+// tanto na stack quanto na heap
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>C++ / Rust</li>
+	<li>Objective-C / Swift / C#</li>
+	<li>Java</li>
+	<li>JavaScript</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='memoria'>Gerenciamento de memória</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++ - RAII</p>
+<code class='cpp'
+>// smart pointers
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C - Reference Counting</p>
+<code class='objectivec'
+>// ARC
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift - Reference Counting</p>
+<code class='swift'
+>// ARC
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust - Ownership e Lifelines</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C# - Mark and Sweep GC</p>
+<code class='cs'
+>// weak references
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java - Mark and Sweep GC</p>
+<code class='java'
+>// weak e ghost references
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript - Mark and Sweep GC</p>
+<code class='javascript'
+>// weak maps
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='ponteiros'>Apontar é feio <span>Já dizia sua mãe</span></h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// variável tipo ponteiro
+// ponteiros são nullable e podemos usar
+// o valor especial nullptr, que representa
+// um endereço de memória inválido
+int* newNull{nullptr}; // C++11
+
+// versões antigas usam o valor NULL, que é 0
+// por baixo dos panos, também representando
+// um endereço de memória inválido
+int* oldNull{NULL}; // old
+
+// existe ainda um tipo nullptr_t, que só pode
+// receber nullptr e não aceita nenhum outro valor
+// não imagino muitos usos para ele fora fazer
+// piadinhas com o Elvis ;)
+std::nullptr_t o_onlyNuuull{nullptr}; // C++11
+
+// variáveis comuns tipo int
+int intOriginal{90};
+int segundoIntOriginal{95};
+
+// variável tipo ponteiro de int (int*) aponta
+// para variável comum tipo int
+//  seu valor é um inteiro 32 ou 64 bits, representando
+// o endereço de memória de intOriginal, que podemos
+// obter usando o operador &amp;
+int* ponteiroDeInt{&amp;intOriginal};
+
+// para acessarmos o valor da variável através
+// do ponteiro, usamos o operador *
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 90
+
+// se fizermos ele apontar para outra variável, seu valor muda
+ponteiroDeInt = &amp;segundoIntOriginal;
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeInt &lt;&lt; endl; // 95
+
+// também podemos pegar endereços de memória através de outros
+// ponteiros, pois como disse acima, seus valores são numéricos
+// 32 ou 64 bits
+int* ponteiroDeSegundoInt{ponteiroDeInt};
+cout &lt;&lt; "valor de int " &lt;&lt; *ponteiroDeSegundoInt); // 95
+
+// TODO
+// podemos atribuir enderecos aleatórios de memória para ponteiros :(
+
+// podemos marcar o ponteiro como const, mas isso
+// NÃO PREVINE QUE ELE APONTE PARA VARIÁVEIS DIFERENTES!!!
+// TODO verificar se previne a modificação dos objetos apontados
+const int* ponteiroConst{&amp;intOriginal}; // 90
+ponteiroConst = &amp;segundoIntOriginal; // 95
+
+// depois que não precisarmos mais dos ponteiros
+// precisamos APAGÁ-LOS ANTES QUE SAIAM DE ESCOPO,
+// para evitar que fiquem perdidos na memória
+// sem podermos acessá-los (dangling pointers)
+// devemos fazer isso apenas para ponteiros null
+// ou ponteiros de objetos alocados na heap
+// através do operador new
+delete newNull;
+delete oldNull;
+
+// o gerenciamento manual dos ponteiros com delete
+// não é recomendado, e existem classes que os apagam
+// automaticamente e de maneira determinística assim
+// que saem de escopo
+auto ponteiroSmart{std::make_unique&lt;int&gt;(1000)};
+auto ponteiroSmartShared{std::make_shared&lt;int&gt;(1001)};
+
+// TODO old boost smart pointers
+
+// embora isso não seja necessário para ponteiros int*
+// existe uma outra característica dessas classes, que
+// é não permitir o valor nullptr, uma vez que seu tipo
+// é especificado
+auto semNullPointer{std::make_unique&lt;int&gt;(nullptr)}; // erro :)
+
+// embora NULL seja um valor váido para int*, uma vez que
+// NULL na verdade é 0 por baixo dos panos
+auto semNullPointer{std::make_unique&lt;int&gt;(NULL)}; // funciona!
+
+// além disso, não é possível mudar o endereço para o qual
+// esse tipo de ponteiro aponta uma segunda vez
+auto semSegundaChance{std::make_unique<int>(1000)};
+// semSegundaChance = &intOriginal; // erro
+// semSegundaChance = ponteiroDeInt; // erro
+
+// TODO referências
+// referências não são ponteiros oficialmente segundo
+// a especificacão
+
+// não podem ser nullptr nem NULL
+int&amp; ponteiroRefNullPointer{nullptr}; // erro :)
+int&amp; ponteiroRefNULL{NULL}; // erro :)
+
+int&amp; ponteiroRef{intOriginal}; // 90
+ponteiroRef = segundoIntOriginal; // 95
+
+const int&amp; ponteiroConstRef{intOriginal}; // 90
+ponteiroConstRef = segundoIntOriginal; // erro, não é mutável :)
+
+// não pode pegar o endereço de referências
+
+// ponteiros para arrays
+// ponteiros para funções
+// void*
+// ponteiros de ponteiros
+// referências de ponteiros</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// variável tipo ponteiro
+// ponteiros são nilable e podemos usar
+// o valor nil, que representa
+// um endereço de memória inválido
+int* nilPointer = nil; // Objective-C
+
+// é possível usar do C o valor NULL, que é 0
+// por baixo dos panos, também representando
+// um endereço de memória inválido
+int* cNullPointer = NULL; // C</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>var nilPointer:UnsafeMutablePointer&lt;int&gt; = nil
+
+// variáveis comuns tipo int
+let intOriginal = 90
+let segundoIntOriginal = 95
+
+// int* ponteiroDeInt = &amp;intOriginal;
+var ponteiroDeInt:UnsafeMutablePointer&lt;Int&gt; = &amp;intOriginal
+
+print(ponteiroDeInt) // 90
+
+ponteiroDeInt = &amp;segundoIntOriginal
+print(ponteiroDeInt) // 95
+
+let ponteiroDeSegundoInt = ponteiroDeInt
+print(ponteiroDeSegundoInt) // 95
+
+// const int* ponteiroDeInt = &amp;intOriginal;
+var ponteiroConst:UnsafePointer&lt;Int&gt; = &amp;intOriginal
+ponteiroConst = &amp;segundoIntOriginal
+
+// mais ou menos const int&amp; ponteiroConstRef; ??
+let ponteiroConstRef:UnsafePointer&lt;Int&gt; = &amp;intOriginal
+
+// TODO
+// podemos atribuir endereços aleatórios de memória para ponteiros ??
+
+// ponteiro de array
+
+// ponteiros para funções?
+
+// void* ponteiroGenerico;
+var ponteiroGenerico:UnsafePointer&lt;Void&gt;
+
+// int** ponteiroDePonteiro;
+let ponteiroDePonteiro = AutoreleasingUnsafeMutablePointer&lt;Int?&gt; // tem que ser nullable?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO
+let p:*const i32 = ptr::null();
+let p:*mut i32 = ptr::null();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.PonteirosExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+
+			// C# requer um contexto unsafe para utilização de ponteiros
+			// Existem vários contexto que podem ser marcados como unsafe,
+			// mas vou mostrar apenas o bloco de código unsafe
+			unsafe {
+
+				// TODO não pode null pointer
+
+				// variáveis comuns tipo int
+				int intOriginal = 90;
+				int segundoIntOriginal = 95;
+
+				// variável tipo ponteiro de int (int*)
+				// aponta para variável comum tipo int
+				// seu valor é um inteiro 64 bits (long), representando
+				// o endereço de memória de intOriginal, que podemos obter
+				// usando o operador &amp;
+				int* ponteiroDeInt = &amp;intOriginal;
+
+				// para acessarmos o valor da variável comum
+				// através do ponteiro, usamos o operador *
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 90
+
+				// se fizermos ele apontar para outra variável, seu valor muda
+				ponteiroDeInt = &amp;segundoIntOriginal;
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeInt); // 95
+
+				// também podemos pegar endereços de memória através de outros
+				// ponteiros, pois como disse acima, seus valores são números
+				// tipo long
+				int* ponteiroDeSegundoInt = ponteiroDeInt;
+				Console.WriteLine(@"valor de int {0} ", *ponteiroDeSegundoInt); // 95
+
+				// não é possível iniciar um ponteiro especificando diretamente
+				// um endereço de memória
+				int* enderecoQualquer = 10; // erro TODO verificar qual o erro
+
+				// variável tipo ponteiro de buffer de bytes (bytes*)
+				// aponta para array de bytes pré-alocada na stack
+				// seu valor é igual ao endereço de memória da array de bytes
+				byte* ponteiroDeArray = stackalloc byte[1024];
+
+				// atribuímos o valor 5 para o índice 0 da array na stack
+				// e o valor 11 para o índice 729
+				// para acessarmos os índices, usamos o operador []
+				ponteiroDeArray[0] = 5;
+				ponteiroDeArray[729] = 11;
+
+				// para acessarmos os valores nos índices, usamos o operador []
+				byte indice0 = ponteiroDeArray[0];
+				byte indice729 = ponteiroDeArray[729];
+				Console.WriteLine(
+					@"valores {0} e {1}",
+					indice0, // 0
+					indice729 // 1
+				);
+
+				// Notem que não há nada no ponteiro que indique se tratar de uma array!
+				// Então como o compilador consegue diferenciar entre um ponteiro
+				// para um byte comum e para uma array de bytes?
+				// Ele não consegue! E dependendo do que você for fazer, nem vai lançar
+				// uma exceção, apenas usar um valor incorreto.
+				// Portanto cuidado ao utilizar ponteiros.
+				// Por exemplo, seria válido (embora não recomendado) fazer isso:
+
+				// byte byteOriginal = 37;
+				// ponteiroDeArray = &amp;byteOriginal;
+
+				// variável tipo ponteiro desconhecido
+				// aponta para qualquer tipo de variável
+				// quando null, seu valor é igual a 0, representando um endereço
+				// de memória inválido
+				// neste estado, *ponteiroGenerico lança NullReferenceException
+				void* ponteiroGenerico = null;
+
+				// esse tipo de ponteiro não é recomendado pois perde
+				// a informação sobre o tipo para o qual ele aponta
+				// essa característica é usada para fazer casts forçados
+				// neste estado, seu valor é igual ao endereço de memória de intOriginal
+				ponteiroGenerico = &amp;intOriginal;
+
+				// para acessarmos o valor apontado por esse tipo de ponteiro
+				// é necessário fazer um cast para o tipo que se deseja
+				Console.WriteLine(@"valor de void {0} ", (*(int*)ponteiroGenerico)); // 90
+
+				// agora seu valor é igual ao endereço de memória da array de bytes
+				ponteiroGenerico = ponteiroDeArray;
+
+				// podemos acessar os valores da array apontada pelo ponteiro
+				// fazendo o cast apropriado
+				// a mesma recomendação sobre o operador [] vale aqui, o compilador
+				// não consegue identificar se o valor é uma array ou um byte simples
+				// e vai acreditar no que você pedir
+				Console.WriteLine(@"valor de void*[0] {0} ", ((byte*)ponteiroGenerico)[0]); // 5
+
+				// variável tipo ponteiro de ponteiro de int (int**)
+				// aponta para variável do tipo ponteiro de int
+				// seu valor é igual ao endereço de memória de ponteiroGenerico
+				// esse tipo de ponteiro é utilizado quando não desejamos copiar o
+				// ponteiro original ao passá-lo para outras funções
+				// uma vez que, como o ponteiro é um valor long, é passado por cópia
+				// para as funções!
+				int** ponteiroDePonteiro = (int**)&amp;ponteiroGenerico;
+
+				// para acessarmos o valor no final da cadeia, usamos o operador * duas vezes
+				Console.WriteLine(@"valor de ponteiro {0} ", **ponteiroDePonteiro);
+
+				// se usarmos apenas uma vez, obteremos o ponteiro intermediário
+				Console.WriteLine(
+					@"endereço apontado pelo ponteiro intermediário {0} ",
+					*ponteiroDePonteiro
+				);
+
+				// novamente, o compilador não pode ajudar muito caso você cometa um erro
+				// por exemplo, se esquecermos do operador &amp; estaremos pegando o endereço
+				// do valor final, ao invés do endereco do ponteiro intermediário, porém,
+				// estamos dizendo ao compilador que é o endereço de um ponteiro legítimo
+				ponteiroDePonteiro = (int**)ponteiroGenerico;
+
+				// e só será lançado um erro se tentarmos acessar o valor final na cadeia
+				// pois estaremos tentando usar um valor inteiro como se fosse um ponteiro
+				Console.WriteLine(@"lança NullReferenceException {0} ", **ponteiroDePonteiro);
+
+				// embora possamos criar ponteiros de ponteiros de ponteiros, acho que não
+				// há uma aplicação muito prática pra isso
+				int*** ponteiroDesnecessario;
+
+				// TODO structs e fixed {}
+
+			}
+
+			// os ponteiros são desalocados após o término do contexto unsafe
+			// não é necessário deletar os ponteiros manualmente
+
+		}
+
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+<ol>
+	<li>Swift</li>
+	<li>C++ / C#</li>
+	<li>Objective-C</li>
+	<li>TODO classificar rust quando tiver um exemplo mais completo</li>
+</ol>
+
+<p>Não sei ao certo como avaliar esse tópico. Certamente não é a mesma coisa que gerenciamento de memória avaliado logo acima.
+<br />Todas as linguagens permitem <code class='cpp'>void*</code> de alguma maneira
+<br />Swift possui nomes mais claros em relação ao que cada ponteiro significa, embora a relação com suas versões em C não sejam fáceis de adivinhar. Não é necessário utilizar operadores diferentes para interagir com ponteiros.
+<br />C# tenta evitar ao máximo o uso de ponteiros para tarefas corriqueiras. Mas faz muito pouco em relação à C++ para impedir problemas com a utilização de ponteiros quando são necessários, e acaba sendo equivalente em segurança, embora de maneira diferente. As duas linguagens possuem recursos para impedir ponteiros <code class='cs'>null</code>, e para apagar os ponteiros quando saírem de escopo. C# delimita claramente um bloco isolado para trabalhar com ponteiros, mas não permite marcá-los como <code class='cs'>const</code>. C++ ainda tem o operador <code class='delete'>delete</code>, mas você não precisa usá-lo.
+<br />Objective-C usa ponteiros estilo C. Requer muitas vezes que os objetos sejam alocados e depois inicializados num passo diferente. Como muitas coisas nessa linguagem, mistura sintaxes das duas linguagens. Por exemplo, <em>ivars</em> e <em>properties</em>.</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='typealias'>Type Aliasing</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// simple type
+
+// function type
+using StrategyFunctionPointer = void(*)();
+typedef void(*StrategyFunctionPointer)(); // old
+
+// só metodos ou funções tb?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// simple type
+typealias AudioSample = UInt16
+
+// function type
+typealias StrategyFunctionPointer = () -> ()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// simple type
+type Name = String;
+
+// function type
+// TODO testar
+// type StrategyFunctionPointer = Fn(i32) -> i32;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// simple type
+using R = N1.N2;
+
+// function type
+delegate void StrategyFunctionDelegate();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='funcoes'>Funções</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// declaração de função
+func normal() { /**/ } // mesmo que -> Void ou -> ()
+func normalVoid() -> Void { /**/ }
+func normalEmptyTuple() -> () { /**/ }
+
+// expressão de função
+let expressao = normal;
+
+func retorno() -> String {
+	return "retorno"
+}
+
+func retornoMisturado(numero:Int) -> Any {
+	if numero > 0 {
+		return "texto";
+	}
+	return 25;
+}
+
+func superior(funcao:() -> Void) {
+	funcao()
+}
+
+func superior(funcao:() -> String) {
+	funcao()
+}
+
+superior(normal)
+superior(normalVoid)
+superior(normalEmptyTuple)
+superior(retorno)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>//  declaração de função
+function comum() { /**/ }
+function normal(texto) { /**/ }
+
+
+// expressão de função
+const surpresa = function() { /**/ };
+const outraSurpresa = normal;
+
+// expressão de função anônima auto executável
+// note os () em volta dela
+(function() {
+	//
+})();
+
+function retorno() {
+	return "retorno";
+}
+
+function retornoMisturado(numero) {
+	if (numero > 0) {
+		return 'texto';
+	}
+	return 25;
+}
+
+function superior(funcao) {
+	funcao();
+}
+
+// chamadas perfeitamente válidas
+comum(); // arguments será []
+comum('lala'); // arguments será ['lala']
+comum('lala', 'lolo'); // arguments será ['lala', 'lolo']
+normal('lolo'); // texto será 'lolo' e  arguments será ['lolo']
+
+// chamada válida
+normal(); // o parâmetro texto terá o valor undefined e arguments será []
+
+normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' e arguments será ['dadaísmo']</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='lambdas'>Lambdas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>func superior(funcao:() -> Void) {
+	funcao()
+}
+
+// declaração simplificada
+superior({() in print("lambda")})
+
+
+
+
+func superior(funcao:(_:Int) -> Int) {
+	print(funcao(1))
+}
+
+// declaração simplificada
+superior({x in x + 1})
+
+// declaração completa
+superior({(x:Int) -> Int in
+	return x + 1
+})
+
+// superior({x, y in x + y})</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public class Main {
+
+	public static void main(String[] args) {
+
+		// não são funções de verdade, são classes
+		// que podem ser declaradas como se fossem
+		// funções lambda, mas ainda é preciso chamar
+		// o método da classe para executá-las
+		// no caso do exemplo, o método se chama run
+
+		// declaração simplificada
+		Main.superior(() -> System.out.println("lambda"));
+
+		// declaração simplificada
+		Main.superior2(x -> x + 1);
+
+		// declaração completa
+		Main.superior2((int x) -> {
+			return x + 1;
+		});
+
+		// Main.superior3(x, y -> x + y);
+
+	}
+
+	@FunctionalInterface
+	public interface Lambda {
+		void run();
+	}
+
+	public static void superior(Lambda funcao) {
+		funcao.run();
+	}
+
+	@FunctionalInterface
+	public interface Lambda2 {
+		int run(int x);
+	}
+
+	public static void superior2(Lambda2 funcao) {
+		System.out.println(funcao.run(1));
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function superior(funcao) {
+	funcao();
+}
+
+// declaração simplificada
+superior(() => console.log('lambda'));
+
+// declaração antiga
+superior(function() { /**/ });
+
+function superior2(funcao) {
+	console.log(funcao(1));
+}
+
+// declaração simplificada
+superior(x => x + 1);
+
+// declaração completa
+superior((x) => {
+	return x + 1;
+});
+
+// superior(x, y => x + y)</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='funcoesinternas'>Funções Internas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>func externa() {
+
+	func interna() { /**/ }
+
+	interna()
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public class Main {
+
+	public static void main(String[] args) {
+
+		// não são funções de verdade
+		// ver lambdas acima para explicação
+
+		Funcional interna = () -> System.out.println("interna");
+
+		interna.run();
+
+		Funcional2 interna2 = (Int x) -> {
+			return x + 1;
+		};
+
+		Int y = interna2.run(1);
+
+	}
+
+	@FunctionalInterface
+	public interface Funcional {
+		void run();
+	}
+
+	@FunctionalInterface
+	public interface Funcional2 {
+		Int run(Int x);
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function externa() {
+
+	function interna() { /**/ }
+
+	interna();
+
+}</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='funcoesvariadicas'>Funções Variádicas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+
+<p>C++</p>
+<code class='cpp'
+>// argumentos do mesmo tipo
+
+#include &lt;iostream&gt;
+
+using std::string;
+using std::cout;
+using std::endl;
+
+template&lt;typename... Tipos&gt;
+void imprimirSimples(string titulo, Tipos... paginas) {
+
+	const uint16_t quantidadeDeParametros {sizeof...(paginas)};
+
+	// não pode criar uma array com 0 elementos
+	if (quantidadeDeParametros == 0) {
+		return;
+	}
+
+	// expande os argumentos
+	int paginasArray[quantidadeDeParametros] {paginas...};
+
+	for (auto pagina : paginasArray) {
+		cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
+	}
+
+}
+
+imprimirSimples(1, 2, 5);</code
+>
+
+<p>C++</p>
+<code class='cpp'
+>// argumentos de todos os tipos
+
+#include &lt;iostream&gt;
+#include &lt;boost/range/irange.hpp&gt;
+
+using std::string;
+using std::cout;
+using std::endl;
+
+/// imprimirHelper template genérico
+template&lt;typename T&gt;
+void imprimirHelper(T pagina) {
+	// poderia usar a linha abaixo para descobrir o tipo de T
+	// porém, melhor usar o template especializado
+	// if (std::is_same&lt;T, int&gt;::value) { /* ... */ }
+	cout &lt;&lt; "Imprimindo outra coisa" &lt;&lt; endl;
+}
+
+/// imprimirHelper template especializado para int
+template&lt;&gt;
+void imprimirHelper&lt;int&gt;(int pagina) {
+	cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
+}
+
+/// imprimirHelper template especializado para boost::irange
+template&lt;&gt;
+void imprimirHelper&lt;boost::irange&gt;(boost::irange faixa) {
+	cout &lt;&lt; "Imprimindo página " &lt;&lt; std::begin(faixa) &lt;&lt; " até " &lt;&lt; std::end(faixa) &lt;&lt; endl;
+}
+
+
+// foward declaration imprimir template?? Não estou certo da função disso :/
+void imprimir(string titulo) {}
+
+// implementação imprimir template
+template&lt;typename Tipo, typename... Tipos&gt;
+void imprimir(string titulo, Tipo pagina, Tipos... paginas) {
+	// executa o helper especializado e chama recursivamente a si mesmo
+	imprimirHelper(pagina);
+	imprimir(titulo, paginas...);
+}
+
+imprimir&lt;int, boost::irange, string&gt;("resumo", 1, boost::irange(2, 5), "capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// macros não seguras estilo C
+
+#include &lt;iostream&gt;
+#include &lt;cstdarg&gt;
+
+void imprimirSimplesMacro(const std::string titulo, ...) {
+
+	// va_list argumentos recebe o que vir depois do parâmetro titulo
+	va_list argumentos;
+	va_start(argumentos, titulo);
+
+	int pagina;
+	while (true) {
+		pagina = va_arg(argumentos, int);
+		if (pagina == -1) {
+			break;
+		}
+		std::cout &lt;&lt; "Imprimindo " &lt;&lt; pagina &lt;&lt; std::endl;
+	}
+
+	va_end(argumentos);
+
+}
+
+// preciso sempre passar -1 no final como terminador
+// se não dá overflow e lê pedaço de memória além do que deveria
+imprimirSimplesMacro("resumo", 1, 2, 5, -1);</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>Swift</p>
+<code class='swift'
+>// argumentos do mesmo tipo
+
+func imprimirSimples(titulo titulo:String, paginas:Int...) {
+	for pagina in paginas {
+		print("Imprimindo página \(pagina) num total de \(paginas.count)")
+	}
+}
+
+imprimirSimples(titulo: "resumo", paginas: 1, 2, 5)</code
+>
+
+<p>Swift</p>
+<code class='swift'
+>// argumentos de todos os tipos
+
+func imprimir(titulo titulo:String, paginas:Any...) {
+	for valor in paginas {
+		switch valor {
+		case let pagina as Int:
+			print("Imprimindo página \(pagina)")
+		case let faixa as Range&lt;Int&gt;:
+			print("Imprimindo páginas \(faixa.first!) até \(faixa.last!)")
+		default:
+			print("Imprimindo outra coisa")
+		}
+	}
+}
+
+imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+Até a versão 1.8 não possui
+</div>
+
+<div class='codeblock'>
+
+<p>C#</p>
+<code class='cs'
+>// argumentos do mesmo tipo
+
+void ImprimirSimples(string titulo, params int[] paginas) {
+	foreach (int pagina in paginas) {
+		System.Console.WriteLine(
+			@"Imprimindo pagina {0} num total de {1}",
+			pagina,
+			paginas.Length
+		);
+	}
+}
+
+ImprimirSimples(@"resumo", 1, 2, 5);</code
+>
+
+<p>C#</p>
+<code class='cs'
+>// argumentos de todos os tipos
+
+void Imprimir(string titulo, params object[] paginas) {
+	foreach (object valor in paginas) {
+		if (valor is int) {
+			System.Console.WriteLine(@"Imprimindo página {0}", valor);
+		} else if (valor is IEnumerable&lt;int&gt;) {
+			System.Console.WriteLine(
+				@"Imprimindo páginas {0} até {1}",
+				(valor as IEnumerable&lt;int&gt;).First(),
+				(valor as IEnumerable&lt;int&gt;).Last()
+			);
+		} else {
+			System.Console.WriteLine(@"Imprimindo outra coisa");
+		}
+	}
+}
+
+Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>Java</p>
+<code class='java'
+>// argumentos do mesmo tipo
+
+void imprimirSimples(String titulo, int... paginas) {
+	for (int pagina : paginas) {
+		System.out.println(String.format("Imprimindo página %1", pagina));
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5);</code
+>
+
+<p>Java</p>
+<code class='java'
+>// argumentos de todos os tipos
+
+void imprimir(String titulo, Object... paginas) {
+	for (Object valor : paginas) {
+		if (valor instanceof Integer) {
+			System.out.println(String.format("Imprimindo página %d", valor));
+		} else if (valor instanceof Range&lt;Integer&gt;) {
+			System.out.println(String.format(
+				"Imprimindo páginas %d até %d",
+				((Range&lt;Integer&gt;)valor).getMinimum(),
+				((Range&lt;Integer&gt;)valor).getMaximum()
+			));
+		} else {
+			System.out.println("Imprimindo outra coisa");
+		}
+	}
+}
+
+imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
+
+// argumentos do mesmo tipo
+
+function imprimirSimples(titulo, ...paginas) {
+	for (let pagina of paginas) {
+		console.log(`Imprimindo página ${pagina}`);
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5);</code
+>
+
+<p>JavaScript</p>
+<code class='javascript'
+>'use strict';
+
+// argumentos de todos os tipos
+
+function imprimir(titulo, ...valores) {
+	for (let valor of valores) {
+		if (Number.isInteger(valor)) {
+			console.log(`Imprimindo página ${valor}`);
+		} else if ((valor.begin || valor.begin === 0)
+			&amp;&amp; valor.end
+			) {
+			console.log(`Imprimindo páginas ${valor.begin} até ${valor.end}`);
+		} else {
+			console.log('Imprimindo outra coisa');
+		}
+	}
+}
+
+imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
+>
+</div>
+
+</div>
+
+
 
 <ol>
 	<li>a</li>
@@ -3937,600 +4733,6 @@ try {
 </div>
 
 </div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-</section>
-
-
-<section>
-
-<h2 id='typealias'>Type Aliasing</h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->// simple type
-
-// function type
-using StrategyFunctionPointer = void(*)();
-typedef void(*StrategyFunctionPointer)(); // old
-
-// só metodos ou funções tb?</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->// simple type
-typealias AudioSample = UInt16
-
-// function type
-typealias StrategyFunctionPointer = () -> ()</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// simple type
-type Name = String;
-
-// function type
-// TODO testar
-// type StrategyFunctionPointer = Fn(i32) -> i32;</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->// simple type
-using R = N1.N2;
-
-// function type
-delegate void StrategyFunctionDelegate();</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-</section>
-
-
-
-<section>
-
-<h2 id='funcoes'>Funções</h2>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='funcoesinternas'>Funções Internas</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='lambdas'>Lambdas</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='funcoesvariadicas'>Funções Variádicas</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-
-<p>C++</p>
-<code class='cpp'
->// argumentos do mesmo tipo
-
-#include &lt;iostream&gt;
-
-using std::string;
-using std::cout;
-using std::endl;
-
-template&lt;typename... Tipos&gt;
-void imprimirSimples(string titulo, Tipos... paginas) {
-
-	const uint16_t quantidadeDeParametros {sizeof...(paginas)};
-
-	// não pode criar uma array com 0 elementos
-	if (quantidadeDeParametros == 0) {
-		return;
-	}
-
-	// expande os argumentos
-	int paginasArray[quantidadeDeParametros] {paginas...};
-
-	for (auto pagina : paginasArray) {
-		cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
-	}
-
-}
-
-imprimirSimples(1, 2, 5);</code
->
-
-<p>C++</p>
-<code class='cpp'
->// argumentos de todos os tipos
-
-#include &lt;iostream&gt;
-#include &lt;boost/range/irange.hpp&gt;
-
-using std::string;
-using std::cout;
-using std::endl;
-
-/// imprimirHelper template genérico
-template&lt;typename T&gt;
-void imprimirHelper(T pagina) {
-	// poderia usar a linha abaixo para descobrir o tipo de T
-	// porém, melhor usar o template especializado
-	// if (std::is_same&lt;T, int&gt;::value) { /* ... */ }
-	cout &lt;&lt; "Imprimindo outra coisa" &lt;&lt; endl;
-}
-
-/// imprimirHelper template especializado para int
-template&lt;&gt;
-void imprimirHelper&lt;int&gt;(int pagina) {
-	cout &lt;&lt; "Imprimindo página " &lt;&lt; pagina &lt;&lt; endl;
-}
-
-/// imprimirHelper template especializado para boost::irange
-template&lt;&gt;
-void imprimirHelper&lt;boost::irange&gt;(boost::irange faixa) {
-	cout &lt;&lt; "Imprimindo página " &lt;&lt; std::begin(faixa) &lt;&lt; " até " &lt;&lt; std::end(faixa) &lt;&lt; endl;
-}
-
-
-// foward declaration imprimir template?? Não estou certo da função disso :/
-void imprimir(string titulo) {}
-
-// implementação imprimir template
-template&lt;typename Tipo, typename... Tipos&gt;
-void imprimir(string titulo, Tipo pagina, Tipos... paginas) {
-	// executa o helper especializado e chama recursivamente a si mesmo
-	imprimirHelper(pagina);
-	imprimir(titulo, paginas...);
-}
-
-imprimir&lt;int, boost::irange, string&gt;("resumo", 1, boost::irange(2, 5), "capítulo 2");</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->// macros não seguras estilo C
-
-#include &lt;iostream&gt;
-#include &lt;cstdarg&gt;
-
-void imprimirSimplesMacro(const std::string titulo, ...) {
-
-	// va_list argumentos recebe o que vir depois do parâmetro titulo
-	va_list argumentos;
-	va_start(argumentos, titulo);
-
-	int pagina;
-	while (true) {
-		pagina = va_arg(argumentos, int);
-		if (pagina == -1) {
-			break;
-		}
-		std::cout &lt;&lt; "Imprimindo " &lt;&lt; pagina &lt;&lt; std::endl;
-	}
-
-	va_end(argumentos);
-
-}
-
-// preciso sempre passar -1 no final como terminador
-// se não dá overflow e lê pedaço de memória além do que deveria
-imprimirSimplesMacro("resumo", 1, 2, 5, -1);</code
->
-</div>
-
-<div class='codeblock'>
-
-<p>Swift</p>
-<code class='swift'
->// argumentos do mesmo tipo
-
-func imprimirSimples(titulo titulo:String, paginas:Int...) {
-	for pagina in paginas {
-		print("Imprimindo página \(pagina) num total de \(paginas.count)")
-	}
-}
-
-imprimirSimples(titulo: "resumo", paginas: 1, 2, 5)</code
->
-
-<p>Swift</p>
-<code class='swift'
->// argumentos de todos os tipos
-
-func imprimir(titulo titulo:String, paginas:Any...) {
-	for valor in paginas {
-		switch valor {
-		case let pagina as Int:
-			print("Imprimindo página \(pagina)")
-		case let faixa as Range&lt;Int&gt;:
-			print("Imprimindo páginas \(faixa.first!) até \(faixa.last!)")
-		default:
-			print("Imprimindo outra coisa")
-		}
-	}
-}
-
-imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-Até a versão 1.8 não possui
-</div>
-
-<div class='codeblock'>
-
-<p>C#</p>
-<code class='cs'
->// argumentos do mesmo tipo
-
-void ImprimirSimples(string titulo, params int[] paginas) {
-	foreach (int pagina in paginas) {
-		System.Console.WriteLine(
-			@"Imprimindo pagina {0} num total de {1}",
-			pagina,
-			paginas.Length
-		);
-	}
-}
-
-ImprimirSimples(@"resumo", 1, 2, 5);</code
->
-
-<p>C#</p>
-<code class='cs'
->// argumentos de todos os tipos
-
-void Imprimir(string titulo, params object[] paginas) {
-	foreach (object valor in paginas) {
-		if (valor is int) {
-			System.Console.WriteLine(@"Imprimindo página {0}", valor);
-		} else if (valor is IEnumerable&lt;int&gt;) {
-			System.Console.WriteLine(
-				@"Imprimindo páginas {0} até {1}",
-				(valor as IEnumerable&lt;int&gt;).First(),
-				(valor as IEnumerable&lt;int&gt;).Last()
-			);
-		} else {
-			System.Console.WriteLine(@"Imprimindo outra coisa");
-		}
-	}
-}
-
-Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
->
-</div>
-
-<div class='codeblock'>
-
-<p>Java</p>
-<code class='java'
->// argumentos do mesmo tipo
-
-void imprimirSimples(String titulo, int... paginas) {
-	for (int pagina : paginas) {
-		System.out.println(String.format("Imprimindo página %1", pagina));
-	}
-}
-
-imprimirSimples("resumo", 1, 2, 5);</code
->
-
-<p>Java</p>
-<code class='java'
->// argumentos de todos os tipos
-
-void imprimir(String titulo, Object... paginas) {
-	for (Object valor : paginas) {
-		if (valor instanceof Integer) {
-			System.out.println(String.format("Imprimindo página %d", valor));
-		} else if (valor instanceof Range&lt;Integer&gt;) {
-			System.out.println(String.format(
-				"Imprimindo páginas %d até %d",
-				((Range&lt;Integer&gt;)valor).getMinimum(),
-				((Range&lt;Integer&gt;)valor).getMaximum()
-			));
-		} else {
-			System.out.println("Imprimindo outra coisa");
-		}
-	}
-}
-
-imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
->
-</div>
-
-<div class='codeblock'>
-
-<p>JavaScript</p>
-<code class='javascript'
->'use strict';
-
-// argumentos do mesmo tipo
-
-function imprimirSimples(titulo, ...paginas) {
-	for (let pagina of paginas) {
-		console.log(`Imprimindo página ${pagina}`);
-	}
-}
-
-imprimirSimples("resumo", 1, 2, 5);</code
->
-
-<p>JavaScript</p>
-<code class='javascript'
->'use strict';
-
-// argumentos de todos os tipos
-
-function imprimir(titulo, ...valores) {
-	for (let valor of valores) {
-		if (Number.isInteger(valor)) {
-			console.log(`Imprimindo página ${valor}`);
-		} else if ((valor.begin || valor.begin === 0)
-			&amp;&amp; valor.end
-			) {
-			console.log(`Imprimindo páginas ${valor.begin} até ${valor.end}`);
-		} else {
-			console.log('Imprimindo outra coisa');
-		}
-	}
-}
-
-imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
->
-</div>
-
-</div>
-
-
 
 <ol>
 	<li>a</li>
