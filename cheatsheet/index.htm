@@ -2841,16 +2841,95 @@ let p1 = 01;                 </code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// Conversão explícita é sempre requerida para
+// operações com variáveis
+
+let i32_1:Int32 = 2
+let i32_2:Int32 = 4
+let i32_min:Int32 = Int32.min
+let i32_max:Int32 = Int32.max
+
+let i64:Int64 = Int64(i32_max) // explicit conversion 2147483647 (Int64)
+let i16:Int16 = Int16(truncatingBitPattern: i32_max) // explicit conversion -1 (Int16)
+
+// explicit conversion and overflow operator &amp;+
+var adicao1 = i32_max &amp;+ 1 // -2147483648 (Int32)
+var adicao2 = i64 + Int64(i32_1) // 2147483649 (Int64)
+var adicao3 = i64 + Int64(i32_max) // 4294967294 (Int64)
+
+// explicit conversion and overflow operator &amp;-
+var subtracao1 = i32_min &amp;- 1 // 2147483647 (Int32)
+var subtracao2 = Int32(i16) &amp;- i32_1 // -3 (Int32)
+var subtracao3 = Int32(i16) &amp;- i32_max // -2147483648 (Int32)
+
+// explicit conversion and overflow operator &amp;*
+var multiplicacao1 = i32_1 * i32_2 // 8 (Int32)
+var multiplicacao2 = i32_max &amp;* i32_1 // -2 (Int32)
+var multiplicacao3 = Int64(i32_1) * i64 // 4294967294 (Int64)
+
+// explicit conversion
+var divisao1 = i32_2 / i32_1 // 2 (Int32)
+var divisao2 = i32_1 / i32_2 // 0 (Int32)
+var divisao3 = Int32(i16) / i32_1 // 0 (Int32)
+
+// NOTA
+// Literais numéricas não possuem tipo específico,
+// apenas variáveis possuem. Portanto realizar
+// operações com variáveis requer conversões
+// explícitas, enquanto que operações com literais
+// não requer
+
+let intVar = 1
+var doubleVar = 0.1
+
+// requer conversão explícita
+let somaVar = Double(intVar) + doubleVar
+doubleVar += Double(intVar)
+
+// não requer
+let somaLiteral = 1 + 0.1
+doubleVar += 1</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// Requer compilação com flag -O
+// Compilações sem otimização panic no overflow
+
+let i32_1:i32 = 2;
+let i32_2:i32 = 4;
+let i32_min:i32 = std::i32::MIN;
+let i32_max:i32 = std::i32::MAX;
+
+let i641:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
+let i161:i16 = i32_max as i16; // explicit conversion -1 (i16)
+
+// usa o tipo maior
+let adicao1 = i32_max + 1; // -2147483648 (i32)
+let adicao2 = i641 + (i32_1 as i64); // 2147483649 (i64)
+let adicao3 = i641 + (i32_max as i64); // 4294967294 (i64)
+
+// usa o tipo maior
+let subtracao1 = i32_min - 1; // 2147483647 (i32)
+let subtracao2 = (i161 as i32) - i32_1; // -3 (i32)
+let subtracao3 = (i161 as i32) - i32_max; // -2147483648 (i32)
+
+// usa o tipo maior
+let multiplicacao1 = i32_1 * i32_2; // 8 (i32)
+let multiplicacao2 = i32_max * i32_1; // -2 (i32)
+let multiplicacao3 = (i32_1 as i64) * i641; // 4294967294 (i64)
+
+// usa o tipo maior
+let divisao1 = i32_2 / i32_1; // 2 (i32)
+let divisao2 = i32_1 / i32_2; // 0 (i32)
+let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
+
+// literais numéricas sem sufixo possuem o tipo _
+// e não realizam operações matemáticas
+
+// TODO converte para char e boolean</code
 >
 </div>
 
@@ -2859,33 +2938,33 @@ let p1 = 01;                 </code
 <code class='cs'
 >unchecked {
 
-int i32_1 = 2;
-int i32_2 = 4;
-int i32_min = Int32.MinValue;
-int i32_max = Int32.MaxValue;
+	int i32_1 = 2;
+	int i32_2 = 4;
+	int i32_min = Int32.MinValue;
+	int i32_max = Int32.MaxValue;
 
-long i64 = i32_max; // implicit conversion 2147483647 (long)
-short i16 = (short)i32_max; // explicit conversion -1 (short)
+	long i64 = i32_max; // implicit conversion 2147483647 (long)
+	short i16 = (short)i32_max; // explicit conversion -1 (short)
 
-// usa o tipo maior
-var adicao1 = i32_max + 1; // -2147483648 (int)
-var adicao2 = i64 + i32_1; // 2147483649 (long)
-var adicao3 = i64 + i32_max; // 4294967294 (long)
+	// usa o tipo maior
+	var adicao1 = i32_max + 1; // -2147483648 (int)
+	var adicao2 = i64 + i32_1; // 2147483649 (long)
+	var adicao3 = i64 + i32_max; // 4294967294 (long)
 
-// usa o tipo maior
-var subtracao1 = i32_min - 1; // 2147483647 (int)
-var subtracao2 = i16 - i32_1; // -3 (int)
-var subtracao3 = i16 - i32_max; // -2147483648 (int)
+	// usa o tipo maior
+	var subtracao1 = i32_min - 1; // 2147483647 (int)
+	var subtracao2 = i16 - i32_1; // -3 (int)
+	var subtracao3 = i16 - i32_max; // -2147483648 (int)
 
-// usa o tipo maior
-var multiplicacao1 = i32_1 * i32_2; // 8 (int)
-var multiplicacao2 = i32_max * i32_1; // -2 (int)
-var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
+	// usa o tipo maior
+	var multiplicacao1 = i32_1 * i32_2; // 8 (int)
+	var multiplicacao2 = i32_max * i32_1; // -2 (int)
+	var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
 
-// usa o tipo maior
-var divisao1 = i32_2 / i32_1; // 2 (int)
-var divisao2 = i32_1 / i32_2; // 0 (int)
-var divisao3 = i16 / i32_1; // 0 (int)
+	// usa o tipo maior
+	var divisao1 = i32_2 / i32_1; // 2 (int)
+	var divisao2 = i32_1 / i32_2; // 0 (int)
+	var divisao3 = i16 / i32_1; // 0 (int)
 
 }
 
@@ -2953,8 +3032,7 @@ Object divisao1 = i32_2 / i32_1; // 2 (int)
 Object divisao2 = i32_1 / i32_2; // 0 (int)
 Object divisao3 = i16 / i32_1; // 0 (int)
 
-// char converte tb
-</code
+// TODO char converte tb</code
 >
 </div>
 
@@ -3867,6 +3945,92 @@ try {
 <p>A</p>
 
 </section>
+
+
+<section>
+
+<h2 id='typealias'>Type Aliasing</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// simple type
+
+// function type
+using StrategyFunctionPointer = void(*)();
+typedef void(*StrategyFunctionPointer)(); // old
+
+// só metodos ou funções tb?</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// simple type
+typealias AudioSample = UInt16
+
+// function type
+typealias StrategyFunctionPointer = () -> ()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// simple type
+type Name = String;
+
+// function type
+// TODO testar
+// type StrategyFunctionPointer = Fn(i32) -> i32;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// simple type
+using R = N1.N2;
+
+// function type
+delegate void StrategyFunctionDelegate();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
 
 
 <section>
