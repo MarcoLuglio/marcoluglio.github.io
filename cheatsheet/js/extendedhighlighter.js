@@ -1363,6 +1363,8 @@ define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 		constructor() {
 			super('type', [
 
+				'bool',
+				'BOOL', // TODO verificar bool e BOOL
 				'char',
 				'double',
 				'float',
@@ -1836,6 +1838,7 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 		constructor() {
 			super('type', [
 
+				'Character',
 				'Double',
 				'Float',
 				'Float32',
@@ -1851,7 +1854,8 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'UInt16',
 				'UInt32',
 				'UInt64',
-				'Character',
+
+				'Void',
 				'NSString',
 				'String',
 				'NSException',
