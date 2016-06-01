@@ -594,6 +594,10 @@ int i = 10;
 AStruct a;
 Point p;
 
+unsafe {
+	byte* ponteiroDeArray = stackalloc byte[1024];
+}
+
 // nullables na stack
 
 // tipos de referência na heap
@@ -1109,8 +1113,12 @@ oitoOuOitenta = !oitoOuOitenta;
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>NSNumber* oitoOuOitenta = @YES;
+
+BOOL oitoOuOitenta = YES;
+
+// C?
+bool oitoOuOitenta = true;</code
 >
 </div>
 
@@ -1135,8 +1143,17 @@ var boolValue:Bool { get }</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>let oitoOuOintenta = true;
+oitoOuOintenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+
+// parse
+use std::str::FromStr;
+
+let toParse = "5";
+let parsed = i32::from_str(toParse).unwrap();</code
 >
 </div>
 
@@ -1296,11 +1313,11 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>char</td><td>8 bits?</td></tr>
-		<tr><td>short</td><td>16 bits?</td></tr>
-		<tr><td>int</td><td>16 bits?</td></tr>
-		<tr><td>long</td><td>32 bits?</td></tr>
-		<tr><td>long long</td><td>64 bits?</td></tr>
+		<tr><td>char</td><td>8 bits</td></tr>
+		<tr><td>short</td><td>16 bits</td></tr>
+		<tr><td>int</td><td>32 bits</td></tr>
+		<tr><td>long</td><td>32 ou 64 bits</td></tr>
+		<tr><td>long long</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1540,11 +1557,11 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>unsigned char</td><td>8 bits?</td></tr>
-		<tr><td>unsigned short</td><td>16 bits?</td></tr>
-		<tr><td>unsigned int</td><td>16 bits?</td></tr>
-		<tr><td>unsigned long</td><td>32 bits?</td></tr>
-		<tr><td>unsigned long long</td><td>64 bits?</td></tr>
+		<tr><td>unsigned char</td><td>8 bits</td></tr>
+		<tr><td>unsigned short</td><td>16 bits</td></tr>
+		<tr><td>unsigned int</td><td>32 bits</td></tr>
+		<tr><td>unsigned long</td><td>32 ou 64 bits</td></tr>
+		<tr><td>unsigned long long</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1801,8 +1818,8 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>float</td><td>?</td></tr>
-		<tr><td>double</td><td>?</td></tr>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1815,7 +1832,7 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>long double</td><td>?</td></tr>
+		<tr><td>long double</td><td>128 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1833,8 +1850,8 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>float</td><td>?</td></tr>
-		<tr><td>double</td><td>?</td></tr>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1847,7 +1864,7 @@ var bObjProto = new Boolean({});*/</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>long double</td><td>?</td></tr>
+		<tr><td>long double</td><td>128 bits</td></tr>
 	</tbody>
 </table>
 
@@ -2004,6 +2021,7 @@ var bObjProto = new Boolean({});*/</code
 	</tfoot>
 	<tbody>
 		<tr><td>NSNumber</td><td>cluster de tipos</td></tr>
+		<tr><td>CGFloat</td><td>32 ou 64 bits</td></tr>
 	</tbody>
 </table>
 </div>
@@ -2309,20 +2327,25 @@ auto ul5{1ULL};</code
 <code class='objectivec'
 >// TODO
 
-NSNumber* myBOOL = @YES;
+NSNumber* myBool = @YES;
 NSNumber* myBool = [[NSNumber alloc] initWithBOOL:YES];
 
-NSNumber* myInt = @42;
-NSNumber* myInt = [[NSNumber alloc] initWithInt:42];
+NSInteger myInt = 42; // NSLog(@"%zd", myInt);
+NSNumber* myIntN = @42; // NSLog(@"%@", myIntN);
+NSNumber* myIntN2 = [[NSNumber alloc] initWithInt:42];
 
-NSNumber* unsignedNumber = @42u;
-NSNumber* unsignedNumber = [[NSNumber alloc] initWithUnsignedInt:42u];
+NSUInteger myUInt = 42u; // NSLog(@"%tu", myUInt);
+NSNumber* myUIntN = @42u; // NSLog(@"%@", myUIntN);
+NSNumber* myUIntN2 = [[NSNumber alloc] initWithUnsignedInt:42u];
 
 NSNumber* myLong = @42L;
-NSNumber* myLong = [[NSNumber alloc] initWithLong:42l];
+NSNumber* myLong = [[NSNumber alloc] initWithLong:42L];
 
-NSNumber* myFloat = @3.14f;
-NSNumber* simpleFloat = [NSNumber numberWithFloat:3.14f];
+NSNumber* myLongLong = @42LL;
+NSNumber* myLongLong = [[NSNumber alloc] initWithLong:42LL];
+
+NSNumber* myFloat = @3.1415926535f;
+NSNumber* simpleFloat = [NSNumber numberWithFloat:3.1415926535f];
 
 NSNumber *betterDouble = @3.1415926535;
 NSNumber *betterDouble = [NSNumber numberWithDouble:3.1415926535];</code
@@ -2399,7 +2422,11 @@ let i641 = 1_i64;
 let i642 = -1_i64;
 
 // u64
-let u641 = 1_u64;            </code
+let u641 = 1_u64;
+
+// pointer size
+let isize1 = 1_isize;
+let usize1 = 1_usize;        </code
 >
 </div>
 
@@ -2488,6 +2515,7 @@ Object l5 = 9_223_372_036_854_775_808L;</code
 <code class='swift'
 >// Float
 let f1:Float = 1
+
 
 // Double
 let d1 = 1.0
@@ -2839,18 +2867,22 @@ int i32_max = Int32.MaxValue;
 long i64 = i32_max; // implicit conversion 2147483647 (long)
 short i16 = (short)i32_max; // explicit conversion -1 (short)
 
+// usa o tipo maior
 var adicao1 = i32_max + 1; // -2147483648 (int)
 var adicao2 = i64 + i32_1; // 2147483649 (long)
 var adicao3 = i64 + i32_max; // 4294967294 (long)
 
+// usa o tipo maior
 var subtracao1 = i32_min - 1; // 2147483647 (int)
 var subtracao2 = i16 - i32_1; // -3 (int)
 var subtracao3 = i16 - i32_max; // -2147483648 (int)
 
+// usa o tipo maior
 var multiplicacao1 = i32_1 * i32_2; // 8 (int)
 var multiplicacao2 = i32_max * i32_1; // -2 (int)
 var multiplicacao3 = i32_1 * i64; // 4294967294 (long)
 
+// usa o tipo maior
 var divisao1 = i32_2 / i32_1; // 2 (int)
 var divisao2 = i32_1 / i32_2; // 0 (int)
 var divisao3 = i16 / i32_1; // 0 (int)
@@ -2901,18 +2933,22 @@ int i32_max = Integer.MAX_VALUE;
 long i64 = i32_max; // implicit conversion 2147483647 (long)
 short i16 = (short)i32_max; // explicit conversion -1 (short)
 
+// usa o tipo maior
 Object adicao1 = i32_max + 1; // -2147483648 (int)
 Object adicao2 = i64 + i32_1; // 2147483649 (long)
 Object adicao3 = i64 + i32_max; // 4294967294 (long)
 
+// usa o tipo maior
 Object subtracao1 = i32_min - 1; // 2147483647 (int)
 Object subtracao2 = i16 - i32_1; // -3 (int)
 Object subtracao3 = i16 - i32_max; // -2147483648 (int)
 
+// usa o tipo maior
 Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
 Object multiplicacao2 = i32_max * i32_1; // -2 (int)
 Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
 
+// usa o tipo maior
 Object divisao1 = i32_2 / i32_1; // 2 (int)
 Object divisao2 = i32_1 / i32_2; // 0 (int)
 Object divisao3 = i16 / i32_1; // 0 (int)
@@ -2931,7 +2967,7 @@ Object divisao3 = i16 / i32_1; // 0 (int)
 // não há o que converter
 
 // números não sofrem overflow nem underflow,
-// mas não dão aviso se você tentar passar
+// e não dão aviso se você tentar passar
 // dos limites
 
 let i = Number.MAX_VALUE;
