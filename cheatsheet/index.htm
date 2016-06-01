@@ -209,7 +209,7 @@ const int x = 5; // constante
 dynamic x = 5;
 
 unsafe {
-	int* ponteiroDeInt = &x; // ponteiro
+	int* ponteiroDeInt = &amp;x; // ponteiro
 }</code
 >
 </div>
@@ -450,8 +450,8 @@ let mut o:Option&lt;i32&gt; = 10;
 
 // não possui operador específico para Option
 let p = match n { // p será do tipo i32
-	Some(some) => some,
-	None => 10,
+	Some(some) =&gt; some,
+	None =&gt; 10,
 };
 
 // ok mas panic se for None
@@ -2415,8 +2415,8 @@ let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
 
 
 // conversão implícita se o número couber no outro
-// byte -> int, uint ou float por exemplo
-// sbyte -> int ou float
+// byte -&gt; int, uint ou float por exemplo
+// sbyte -&gt; int ou float
 
 // conversão explícita
 // entre integrals
@@ -2878,6 +2878,80 @@ let beeGees = calvinHarris.replace('love', 'looove');
 
 <section>
 
+<h2 id='array'>Array</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='stackheap'>Stack e Heap</h2>
 
 <div class='comparison'>
@@ -3168,8 +3242,8 @@ auto semNullPointer{std::make_unique&lt;int&gt;(NULL)}; // funciona!
 
 // além disso, não é possível mudar o endereço para o qual
 // esse tipo de ponteiro aponta uma segunda vez
-auto semSegundaChance{std::make_unique<int>(1000)};
-// semSegundaChance = &intOriginal; // erro
+auto semSegundaChance{std::make_unique&lt;int&gt;(1000)};
+// semSegundaChance = &amp;intOriginal; // erro
 // semSegundaChance = ponteiroDeInt; // erro
 
 // TODO referências
@@ -3478,7 +3552,7 @@ typedef void(*StrategyFunctionPointer)(); // old
 typealias AudioSample = UInt16
 
 // function type
-typealias StrategyFunctionPointer = () -> ()</code
+typealias StrategyFunctionPointer = () -&gt; ()</code
 >
 </div>
 
@@ -3490,7 +3564,7 @@ type Name = String;
 
 // function type
 // TODO testar
-// type StrategyFunctionPointer = Fn(i32) -> i32;</code
+// type StrategyFunctionPointer = Fn(i32) -&gt; i32;</code
 >
 </div>
 
@@ -3556,29 +3630,29 @@ delegate void StrategyFunctionDelegate();</code
 <p>Swift</p>
 <code class='swift'
 >// declaração de função
-func normal() { /**/ } // mesmo que -> Void ou -> ()
-func normalVoid() -> Void { /**/ }
-func normalEmptyTuple() -> () { /**/ }
+func normal() { /**/ } // mesmo que -&gt; Void ou -&gt; ()
+func normalVoid() -&gt; Void { /**/ }
+func normalEmptyTuple() -&gt; () { /**/ }
 
 // expressão de função
 let expressao = normal;
 
-func retorno() -> String {
+func retorno() -&gt; String {
 	return "retorno"
 }
 
-func retornoMisturado(numero:Int) -> Any {
-	if numero > 0 {
+func retornoMisturado(numero:Int) -&gt; Any {
+	if numero &gt; 0 {
 		return "texto";
 	}
 	return 25;
 }
 
-func superior(funcao:() -> Void) {
+func superior(funcao:() -&gt; Void) {
 	funcao()
 }
 
-func superior(funcao:() -> String) {
+func superior(funcao:() -&gt; String) {
 	funcao()
 }
 
@@ -3636,7 +3710,7 @@ function retorno() {
 }
 
 function retornoMisturado(numero) {
-	if (numero > 0) {
+	if (numero &gt; 0) {
 		return 'texto';
 	}
 	return 25;
@@ -3656,268 +3730,6 @@ normal('lolo'); // texto será 'lolo' e  arguments será ['lolo']
 normal(); // o parâmetro texto terá o valor undefined e arguments será []
 
 normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' e arguments será ['dadaísmo']</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='lambdas'>Lambdas</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->func superior(funcao:() -> Void) {
-	funcao()
-}
-
-// declaração simplificada
-superior({() in print("lambda")})
-
-
-
-
-func superior(funcao:(_:Int) -> Int) {
-	print(funcao(1))
-}
-
-// declaração simplificada
-superior({x in x + 1})
-
-// declaração completa
-superior({(x:Int) -> Int in
-	return x + 1
-})
-
-// superior({x, y in x + y})</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->public class Main {
-
-	public static void main(String[] args) {
-
-		// não são funções de verdade, são classes
-		// que podem ser declaradas como se fossem
-		// funções lambda, mas ainda é preciso chamar
-		// o método da classe para executá-las
-		// no caso do exemplo, o método se chama run
-
-		// declaração simplificada
-		Main.superior(() -> System.out.println("lambda"));
-
-		// declaração simplificada
-		Main.superior(x -> x + 1);
-
-		// declaração completa
-		Main.superior((int x) -> {
-			return x + 1;
-		});
-
-		// Main.superior(x, y -> x + y);
-
-	}
-
-	@FunctionalInterface
-	public interface Lambda {
-		void run();
-	}
-
-	public static void superior(Lambda funcao) {
-		funcao.run();
-	}
-
-	@FunctionalInterface
-	public interface Lambda2 {
-		int run(int x);
-	}
-
-	public static void superior(Lambda2 funcao) {
-		System.out.println(funcao.run(1));
-	}
-
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->function superior(funcao) {
-	funcao();
-}
-
-// declaração simplificada
-superior(() => console.log('lambda'));
-
-// declaração antiga
-superior(function() { /**/ });
-
-function superior2(funcao) {
-	console.log(funcao(1));
-}
-
-// declaração simplificada
-superior(x => x + 1);
-
-// declaração completa
-superior((x) => {
-	return x + 1;
-});
-
-// superior(x, y => x + y)</code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='funcoesinternas'>Funções Internas</h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->func externa() {
-
-	func interna() { /**/ }
-
-	interna()
-
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->public class Main {
-
-	public static void main(String[] args) {
-
-		// não são funções de verdade
-		// ver lambdas acima para explicação
-
-		Funcional interna = () -> System.out.println("interna");
-
-		interna.run();
-
-		Funcional2 interna2 = (int x) -> {
-			return x + 1;
-		};
-
-		int y = interna2.run(1);
-
-	}
-
-	@FunctionalInterface
-	public interface Funcional {
-		void run();
-	}
-
-	@FunctionalInterface
-	public interface Funcional2 {
-		int run(int x);
-	}
-
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->function externa() {
-
-	function interna() { /**/ }
-
-	interna();
-
-}</code
 >
 </div>
 
@@ -4218,6 +4030,324 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 
 
+<h3 id='lambdas'>Lambdas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>func superior(funcao:() -&gt; Void) {
+	funcao()
+}
+
+// declaração simplificada
+superior({() in print("lambda")})
+
+
+
+
+func superior(funcao:(_:Int) -&gt; Int) {
+	print(funcao(1))
+}
+
+// declaração simplificada
+superior({x in x + 1})
+
+// declaração completa
+superior({(x:Int) -&gt; Int in
+	return x + 1
+})
+
+// superior({x, y in x + y})</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public class Main {
+
+	public static void main(String[] args) {
+
+		// não são funções de verdade, são classes
+		// que podem ser declaradas como se fossem
+		// funções lambda, mas ainda é preciso chamar
+		// o método da classe para executá-las
+		// no caso do exemplo, o método se chama call
+
+		// declaração simplificada
+		Main.superior(() -&gt; System.out.println("lambda"));
+
+		// declaração simplificada
+		Main.superior(x -&gt; x + 1);
+
+		// declaração completa
+		Main.superior((int x) -&gt; {
+			return x + 1;
+		});
+
+		// Main.superior(x, y -&gt; x + y);
+
+	}
+
+	@FunctionalInterface
+	public interface Lambda {
+		void call();
+	}
+
+	public static void superior(Lambda funcao) {
+		funcao.call();
+	}
+
+	@FunctionalInterface
+	public interface Lambda2 {
+		int call(int x);
+	}
+
+	public static void superior(Lambda2 funcao) {
+		System.out.println(funcao.call(1));
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function superior(funcao) {
+	funcao();
+}
+
+// declaração simplificada
+superior(() =&gt; console.log('lambda'));
+
+// declaração antiga
+superior(function() { /**/ });
+
+function superior2(funcao) {
+	console.log(funcao(1));
+}
+
+// declaração simplificada
+superior(x =&gt; x + 1);
+
+// declaração completa
+superior((x) =&gt; {
+	return x + 1;
+});
+
+// superior(x, y =&gt; x + y)</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='funcoesinternas'>Funções Internas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>func externa() {
+
+	func interna() { /**/ }
+
+	interna()
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public class Main {
+
+	public static void main(String[] args) {
+
+		// não são funções de verdade
+		// ver lambdas acima para explicação
+
+		Funcional interna = () -&gt; System.out.println("interna");
+
+		interna.call();
+
+		Funcional2 interna2 = (int x) -&gt; {
+			return x + 1;
+		};
+
+		int y = interna2.call(1);
+
+	}
+
+	@FunctionalInterface
+	public interface Funcional {
+		void call();
+	}
+
+	@FunctionalInterface
+	public interface Funcional2 {
+		int call(int x);
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>function externa() {
+
+	function interna() { /**/ }
+
+	interna();
+
+}</code
+>
+</div>
+
+</div>
+
+
+
+<h3 id='closures'>Closures</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
 <ol>
 	<li>a</li>
 </ol>
@@ -4468,12 +4598,12 @@ public class OlaMundo {
 <code class='javascript'
 >'use strict';
 
-define('dentroDoModulo', () => {
+define('dentroDoModulo', () =&gt; {
 	const DentroDoModulo = class DentroDoModulo() { /**/ }
 	return DentroDoModulo;
 });
 
-define(['dentroDoModulo'], (DentroDoModulo) => {
+define(['dentroDoModulo'], (DentroDoModulo) =&gt; {
 	let meuObjeto = new DentroDoModulo();
 });
 </code
@@ -4575,11 +4705,11 @@ someCFunction(); // TODO</code
 	case Worse
 }
 
-func canThrowErrors() throws -> String {
+func canThrowErrors() throws -&gt; String {
 	throw MLError.Bad
 }
 
-func cannotThrowErrors() -> String {
+func cannotThrowErrors() -&gt; String {
 	//
 }
 
@@ -4596,8 +4726,8 @@ defer {
 <p>Rust</p>
 <code class='rust'
 >match may_panic() {
-	Ok(result) => println!("{}", result),
-	Err(err) => println!("Error: {}", err),
+	Ok(result) =&gt; println!("{}", result),
+	Err(err) =&gt; println!("Error: {}", err),
 }
 
 // ou
@@ -4794,7 +4924,7 @@ namespace MarcoLuglio.ClosureGeneratorExample {
 			var delta = (fim - inicio) / tempo;
 			var passo = 0f;
 
-			while (tempoAtual <= tempo) {
+			while (tempoAtual &lt;= tempo) {
 				try {
 					passo = fim - (delta * (tempo - tempoAtual));
 					tempoAtual += 1;
@@ -4869,7 +4999,7 @@ function* animar(inicio, fim, tempo) {
 	var delta = (fim - inicio) / tempo;
 	var passo = 0f;
 
-	while (tempoAtual <= tempo) {
+	while (tempoAtual &lt;= tempo) {
 		try {
 			passo = fim - (delta * (tempo - tempoAtual));
 			tempoAtual += 1;
@@ -4983,8 +5113,8 @@ do {
 
 
 			// closure
-			Next lambda = () => {
-				if (tempoAtual <= tempo) {
+			Next lambda = () =&gt; {
+				if (tempoAtual &lt;= tempo) {
 					passo = fim - (delta * (tempo - tempoAtual));
 					tempoAtual += 1;
 					return passo;
@@ -5054,8 +5184,8 @@ public class AnimadorClosure {
 		closureState.passo = 0;
 
 		// closure
-		Supplier&lt;Float&gt; lambda = () -> {
-			if (closureState.tempoAtual <= tempo) {
+		Supplier&lt;Float&gt; lambda = () -&gt; {
+			if (closureState.tempoAtual &lt;= tempo) {
 				closureState.passo = fim - (closureState.delta * (tempo - closureState.tempoAtual));
 				closureState.tempoAtual += 1;
 				return closureState.passo;
@@ -5145,8 +5275,8 @@ animar(inicio, fim, tempo) {
 
 
 	// closure
-	let lambda = () => {
-		if (tempoAtual <= tempo) {
+	let lambda = () =&gt; {
+		if (tempoAtual &lt;= tempo) {
 			passo = fim - (delta * (tempo - tempoAtual));
 			tempoAtual += 1;
 			return passo;
@@ -5324,7 +5454,7 @@ namespace MarcoLuglio.GeneratorExample {
 
 		public bool MoveNext() { // implementação implícita
 
-			if (this.tempoAtual <= this.tempo) {
+			if (this.tempoAtual &lt;= this.tempo) {
 				this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
 				this.tempoAtual += 1;
 				return true;
@@ -5420,7 +5550,7 @@ public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Floa
 
 	@Override // "implementação explícita"
 	public boolean hasNext() {
-		if (this.tempoAtual <= this.tempo) {
+		if (this.tempoAtual &lt;= this.tempo) {
 			return true;
 		}
 		return false;
@@ -5504,7 +5634,7 @@ public class Main {
 
 	// iterador for of
 	*[Symbol.iterator]() {
-		if (this._tempoAtual <= this.tempo) {
+		if (this._tempoAtual &lt;= this.tempo) {
 			this._passo = this._fim - (this._delta * (this._tempo - this._tempoAtual));
 			this._tempoAtual += 1;
 			yield this._passo;
@@ -5602,7 +5732,7 @@ int main(int argc, const char* argv[]) {
 	auto functionFuture = async(taskFunction, "função");
 
 	// alternativa 3: lambda
-	auto lambdaFuture = async([](string element) -> string {
+	auto lambdaFuture = async([](string element) -&gt; string {
 		boost::to_upper(element);
 		return element;
 	}, "lambda");
@@ -5851,7 +5981,7 @@ public class Main {
 
 		// alternativa 2: lambda Callable
 		String element = "lambda";
-		Future&lt;String&gt; lambdaFuture = executor.submit(() -> {
+		Future&lt;String&gt; lambdaFuture = executor.submit(() -&gt; {
 			return element.toUpperCase();
 		});
 
@@ -5918,13 +6048,13 @@ public class Task implements Callable&lt;String&gt; {
 <p>JavaScript</p>
 <code class='javascript'
 >function workAsync(element) {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) =&gt; {
 		resolve(element.toUpperCase());
 	});
 }
 
 workAsync('some value')
-	.then((result) => {
+	.then((result) =&gt; {
 		console.log(result);
 	});</code
 >
@@ -6178,7 +6308,7 @@ namespace ThreadExample {
 
 	void ParallelWorker::Work() {
 		while (!sair) {
-			element = dataQueue->Next();
+			element = dataQueue-&gt;Next();
 			// deixa a thread terminar naturalmente
 			if (element == "") {
 				sair = true;
@@ -6377,7 +6507,7 @@ use std::thread;
 use std::sync::mpsc::{Sender, Receiver};
 use std::sync::mpsc;
 
-fn uppercase(c:char) -> char {
+fn uppercase(c:char) -&gt; char {
 	c.to_uppercase().next().unwrap()
 }
 
@@ -6477,7 +6607,7 @@ namespace MarcoLuglio.ThreadExample {
 
 
 			// alternativa 2: lambda
-			var lambdaThread = new Thread(() => {
+			var lambdaThread = new Thread(() =&gt; {
 				string element;
 				var sair = false;
 				while (!sair) {
@@ -6625,7 +6755,7 @@ public class Main {
 
 		// alternativa 3: lambda Runnable
 		// ou interface funcional Runnable
-		Runnable lambda = () -> {
+		Runnable lambda = () -&gt; {
 			String element;
 			boolean sair = false;
 			while (!sair) {
@@ -6791,7 +6921,7 @@ webWorker.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
-webWorker.onmessage = (event) => {
+webWorker.onmessage = (event) =&gt; {
 	console.log(event.data);
 };
 
@@ -6805,7 +6935,7 @@ webWorker.onmessage = (event) => {
 
 // callback para recepção de mensagens
 // da main thread (ui thread)
-onmessage = (event) => {
+onmessage = (event) =&gt; {
 
 	console.log(event.data[0]);
 	console.log(event.data[1]);
@@ -6837,7 +6967,7 @@ webWorkerOp1<strong>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
-webWorkerOp1<strong>.port</strong>.onmessage = (event) => {
+webWorkerOp1<strong>.port</strong>.onmessage = (event) =&gt; {
 	console.log(event.data);
 };</code
 >
@@ -6855,7 +6985,7 @@ webWorkerOp2<strong>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
-webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
+webWorkerOp2<strong>.port</strong>.onmessage = (event) =&gt; {
 	console.log(event.data);
 };</code
 >
@@ -6864,13 +6994,13 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 <code class='javascript'
 >'use strict';
 
-<strong>onconnect = (event) => {</strong>
+<strong>onconnect = (event) =&gt; {</strong>
 
 	<strong>let port = event.ports[0];</strong>
 
 	// callback para recepção de mensagens
 	// da main thread (ui thread)
-	<strong>port.</strong>onmessage = (event) => {
+	<strong>port.</strong>onmessage = (event) =&gt; {
 
 		console.log(event.data[0]);
 		console.log(event.data[1]);
@@ -6934,10 +7064,10 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 >/*
 os() OSX, iOS, watchOS, tvOS, Linux
 arch() x86_64, arm, arm64, i386
-swift() >= followed by a version number
+swift() &gt;= followed by a version number
 */
 
-#if os(iOS) &amp;&amp; !swift(>= 2)
+#if os(iOS) &amp;&amp; !swift(&gt;= 2)
 	// statements
 #elseif os(OSX)
 	// statements
