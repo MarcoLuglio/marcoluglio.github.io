@@ -3751,14 +3751,14 @@ superior({(x:Int) -> Int in
 		Main.superior(() -> System.out.println("lambda"));
 
 		// declaração simplificada
-		Main.superior2(x -> x + 1);
+		Main.superior(x -> x + 1);
 
 		// declaração completa
-		Main.superior2((int x) -> {
+		Main.superior((int x) -> {
 			return x + 1;
 		});
 
-		// Main.superior3(x, y -> x + y);
+		// Main.superior(x, y -> x + y);
 
 	}
 
@@ -3776,7 +3776,7 @@ superior({(x:Int) -> Int in
 		int run(int x);
 	}
 
-	public static void superior2(Lambda2 funcao) {
+	public static void superior(Lambda2 funcao) {
 		System.out.println(funcao.run(1));
 	}
 
@@ -3886,11 +3886,11 @@ superior((x) => {
 
 		interna.run();
 
-		Funcional2 interna2 = (Int x) -> {
+		Funcional2 interna2 = (int x) -> {
 			return x + 1;
 		};
 
-		Int y = interna2.run(1);
+		int y = interna2.run(1);
 
 	}
 
@@ -3901,7 +3901,7 @@ superior((x) => {
 
 	@FunctionalInterface
 	public interface Funcional2 {
-		Int run(Int x);
+		int run(int x);
 	}
 
 }</code
