@@ -3528,6 +3528,8 @@ namespace MarcoLuglio.PonteirosExample {
 <p>C++</p>
 <code class='cpp'
 >// simple type
+using size_t = unsigned int;
+typedef unsigned char BYTE;
 
 // function type
 using StrategyFunctionPointer = void(*)();
@@ -3540,8 +3542,12 @@ typedef void(*StrategyFunctionPointer)(); // old
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// simple type
+typedef unsigned char BYTE;
+
+
+// function type
+typedef void(*StrategyFunctionPointer)();</code
 >
 </div>
 
@@ -3550,6 +3556,7 @@ typedef void(*StrategyFunctionPointer)(); // old
 <code class='swift'
 >// simple type
 typealias AudioSample = UInt16
+
 
 // function type
 typealias StrategyFunctionPointer = () -&gt; ()</code
@@ -3562,6 +3569,7 @@ typealias StrategyFunctionPointer = () -&gt; ()</code
 >// simple type
 type Name = String;
 
+
 // function type
 // TODO testar
 // type StrategyFunctionPointer = Fn(i32) -&gt; i32;</code
@@ -3573,6 +3581,7 @@ type Name = String;
 <code class='cs'
 >// simple type
 using R = N1.N2;
+
 
 // function type
 delegate void StrategyFunctionDelegate();</code
@@ -3641,6 +3650,13 @@ func retorno() -&gt; String {
 	return "retorno"
 }
 
+
+
+
+
+
+
+
 func retornoMisturado(numero:Int) -&gt; Any {
 	if numero &gt; 0 {
 		return "texto";
@@ -3666,25 +3682,54 @@ superior(retorno)</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// declaração de função
+fn normal() { /**/ }
+fn normalUnit() -> () { /**/ }
+
+
+// expressão de função
+let expressao = normal;
+
+fn retorno() -&gt; &amp;'static str {
+	"retorno" // sem ; no final
+}
+
+fn retorno() -&gt; &amp;'static str {
+	return "retorno";
+}
+
+
+use std::any::Any;
+
+fn retornoMisturado() -> Any {
+	// TODO
+}
+
+
+
+
+fn superior&lt;F&gt;(funcao:F) where F:Fn() {
+	funcao();
+}
+
+fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
+	funcao();
+}
+
+superior(normal);
+superior(normalUnit);
+superior(retorno);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
-<code class='cs'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -4337,6 +4382,8 @@ superior((x) =&gt; {
 </code
 >
 </div>
+
+<!-- TODO testar captura de variáveis -->
 
 <div class='codeblock'>
 <p>JavaScript</p>

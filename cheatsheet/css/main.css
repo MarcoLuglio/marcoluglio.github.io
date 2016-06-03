@@ -452,6 +452,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.rust .lifetime {
+	color: #8D00FF;
+}
+
 /* C# */
 
 .bubaloop.cs .keyword,

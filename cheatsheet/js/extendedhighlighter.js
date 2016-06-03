@@ -1249,8 +1249,7 @@ define(
 				this._tokenPool.length,
 				0,
 				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				new JSNumericLiteralToken(),*/
 				new CStringLiteralToken(),
 				new CppStringLiteralToken()
 			);
@@ -1325,6 +1324,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'for',
 				'if',
 				'return',
+				'typedef',
 				'void',
 				'while',
 
@@ -1696,8 +1696,7 @@ define(
 				this._tokenPool.length,
 				0,
 				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				new JSNumericLiteralToken(),*/
 				new CStringLiteralToken(),
 				new ObjCStringLiteralToken()
 			);
@@ -1800,6 +1799,7 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'throw',
 				'throws',
 				'try',
+				'typealias',
 				'var',
 				'weak',
 				'while',
@@ -2191,8 +2191,7 @@ define(
 				this._tokenPool.length,
 				0,
 				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				new JSNumericLiteralToken(),*/
 				new SwiftStringLiteralToken()
 			);
 		}
@@ -2854,6 +2853,69 @@ define('RustSymbolToken', ['SourcePatternIteratorToken', 'RustSymbolIterator'], 
 
 
 
+define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustLifetimePatternIterator = class RustLifetimePatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isWordCharacter: {value: /\w/},
+				_length: {value: 0, writable: true}
+			});
+			this._matchFunction = this._matchStartQuote;
+			Object.seal(this);
+		}
+
+		_matchStartQuote(matchCharacter) {
+			if (matchCharacter === "'") {
+				this._matchFunction = this._matchContentOrEnd;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchContentOrEnd(matchCharacter) {
+
+			if (!this._isWordCharacter.test(matchCharacter)
+				&& this._length > 0
+				) {
+
+				this._isComplete = true;
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._length += 1;
+			return true;
+
+		}
+
+	};
+
+	return RustLifetimePatternIterator;
+
+});
+
+
+
+/**
+ * Token for lifetimes
+ */
+define('RustLifetimeToken', ['SourcePatternIteratorToken', 'RustLifetimePatternIterator'], (SourcePatternIteratorToken, RustLifetimePatternIterator) => {
+
+	const RustLifetimeToken = class RustLifetimeToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('lifetime', new RustLifetimePatternIterator());
+		}
+	};
+
+	return RustLifetimeToken;
+
+});
+
+
+
 /**
  * Tokenizes Rust source code
  */
@@ -2870,6 +2932,7 @@ define(
 		'RustDecimalLiteralToken',
 		'RustStringLiteralToken',
 		'RustAttributeToken',
+		'RustLifetimeToken',
 
 		'RustSymbolToken',
 
@@ -2890,6 +2953,7 @@ define(
 		RustDecimalLiteralToken,
 		RustStringLiteralToken,
 		RustAttributeToken,
+		RustLifetimeToken,
 
 		RustSymbolToken,
 
@@ -2921,6 +2985,7 @@ define(
 				new RustTypesToken(),
 				new RustPunctuationToken(),
 				new RustAttributeToken(),
+				new RustLifetimeToken(),
 
 				// comments
 				new CLineCommentToken()//,
@@ -2940,8 +3005,7 @@ define(
 				this._tokenPool.length,
 				0,
 				new RustDecimalLiteralToken(),
-				/*new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				//new JSNumericLiteralToken(),
 				new RustStringLiteralToken()
 			);
 		}
@@ -4108,7 +4172,6 @@ define(
 				0,
 				new CSDecimalLiteralToken(),
 				new CSNumericLiteralToken(),
-				//new JSRegexLiteralToken(),
 				new CSStringLiteralToken(),
 				new CSVerbatimStringLiteralToken(),
 				new CSInterpolatedStringLiteralToken()
@@ -4654,8 +4717,7 @@ define(
 				this._tokenPool.length,
 				0,
 				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),
-				new JSRegexLiteralToken(),*/
+				new JSNumericLiteralToken(),*/
 				new JavaStringLiteralToken()
 			);
 		}
