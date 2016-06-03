@@ -3108,7 +3108,7 @@ Object o = new Object();
 </div>
 
 <div class='codeblock'>
-<p>Rust - Ownership e Lifelines</p>
+<p>Rust - Ownership e Lifetimes</p>
 <code class='rust'
 >
 </code
@@ -3333,7 +3333,26 @@ let ponteiroDePonteiro = AutoreleasingUnsafeMutablePointer&lt;Int?&gt; // tem qu
 <code class='rust'
 >// TODO
 let p:*const i32 = ptr::null();
-let p:*mut i32 = ptr::null();</code
+let p:*mut i32 = ptr::null();
+
+let x = 5;
+let raw = &amp;x as *const i32;
+
+let mut y = 10;
+let raw_mut = &amp;mut y as *mut i32;
+
+let points_at = unsafe { *raw };
+
+unsafe {
+	let points_at = *raw;
+}
+
+use std::mem;
+
+unsafe {
+	let a = [0u8, 0u8, 0u8, 0u8];
+	let b = mem::transmute::<[u8; 4], u32>(a);
+}</code
 >
 </div>
 
@@ -3529,11 +3548,21 @@ namespace MarcoLuglio.PonteirosExample {
 <code class='cpp'
 >// simple type
 using size_t = unsigned int;
-typedef unsigned char BYTE;
+typedef unsigned char BYTE; // old
 
 // function type
 using StrategyFunctionPointer = void(*)();
-typedef void(*StrategyFunctionPointer)(); // old
+
+// ou
+using StrategyFunction_t = void();
+StrategyFunction_t* strategyFunctionPointer = f;
+
+// ou
+#include &lt;type_traits&gt;
+using StrategyFunctionPointer = std::add_pointer&lt;void()&gt;::type;
+
+// ou (old)
+typedef void(*StrategyFunctionPointer)();
 
 // só metodos ou funções tb?</code
 >
@@ -3622,15 +3651,82 @@ delegate void StrategyFunctionDelegate();</code
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// declaração de função
+void normal() { /**/ }
+
+
+
+// expressão de função
+auto expressao = normal;
+
+std::string retorno() {
+	return "retorno";
+}
+
+void superior(void(*funcao)()) {
+	funcao();
+}
+
+void superior(std::string(*funcao)()) {
+	funcao();
+}
+
+// ou
+
+using Function_t = void();
+
+void superior(Function_t* funcao) {
+	funcao();
+}
+
+using Function2_t = std::string();
+
+void superior(Function2_t* funcao) {
+	funcao();
+}
+
+// ou
+
+using FunctionPointer = void(*)();
+
+void superior(FunctionPointer funcao) {
+	funcao();
+}
+
+using FunctionPointer2 = std::string(*)();
+
+void superior(FunctionPointer2 funcao) {
+	funcao();
+}
+
+// ou
+
+#include &lt;type_traits&gt;
+
+using FunctionPointer = std::add_pointer&lt;void()&gt;::type;
+
+void superior(FunctionPointer funcao) {
+	funcao();
+}
+
+using FunctionPointer2 = std::add_pointer&lt;std::string()&gt;::type;
+
+void superior(FunctionPointer2 funcao) {
+	funcao();
+}
+
+superior(&amp;normal);
+superior(&amp;retorno);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
+>// declaração de função
+void normal() { /**/ }
+
+// TODO
 </code
 >
 </div>
@@ -3672,6 +3768,9 @@ func superior(funcao:() -&gt; String) {
 	funcao()
 }
 
+// TODO fazer superior com type aliasing
+// TODO explicar nomes de parâmetros
+
 superior(normal)
 superior(normalVoid)
 superior(normalEmptyTuple)
@@ -3683,7 +3782,7 @@ superior(retorno)</code
 <p>Rust</p>
 <code class='rust'
 >// declaração de função
-fn normal() { /**/ }
+fn normal() { /**/ } // mesmo que -&gt; ()
 fn normalUnit() -> () { /**/ }
 
 
@@ -3715,6 +3814,8 @@ fn superior&lt;F&gt;(funcao:F) where F:Fn() {
 fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
 	funcao();
 }
+
+// TODO fazer superior com type aliasing
 
 superior(normal);
 superior(normalUnit);
@@ -3788,7 +3889,7 @@ normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' 
 
 
 
-<h3 id='funcoesvariadicas'>Funções Variádicas</h3>
+<h3 id='funcoesvariadicas'>Funções e Métodos Variádicos</h3>
 
 <div class='comparison'>
 
@@ -4135,8 +4236,51 @@ superior({(x:Int) -&gt; Int in
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>public class Main {
+
+	public static void Main(string[] args) {
+
+		// declaração simplificada
+		Main.superior(() => System.Console.WriteLine("lambda"));
+
+
+
+
+
+
+
+
+		// declaração simplificada
+		Main.superior(x => x + 1);
+
+		// declaração completa
+		Main.superior((int x) => {
+			return x + 1;
+		});
+
+		// Main.superior(x, y -> x + y);
+
+	}
+
+	public delegate void LambdaDelegate();
+
+
+
+
+	public static void superior(LambdaDelegate funcao) {
+		funcao();
+	}
+
+	public delegate int Lambda2Delegate(int x);
+
+
+
+
+	public static void superior(Lambda2Delegate funcao) {
+		System.Console.WriteLine(funcao(1));
+	}
+
+}</code
 >
 </div>
 
@@ -4155,6 +4299,7 @@ superior({(x:Int) -&gt; Int in
 
 		// declaração simplificada
 		Main.superior(() -&gt; System.out.println("lambda"));
+
 
 		// declaração simplificada
 		Main.superior(x -&gt; x + 1);
@@ -4236,15 +4381,23 @@ superior((x) =&gt; {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>void externa() {
+
+
+
+	auto internaLambda = [](){ /**/ };
+
+
+	internaLambda();
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
+>// blocks em métodos
 </code
 >
 </div>
@@ -4256,7 +4409,10 @@ superior((x) =&gt; {
 
 	func interna() { /**/ }
 
+	// let internaLambda = {() in /**/ }
+
 	interna()
+	internaLambda();
 
 }</code
 >
@@ -4265,16 +4421,49 @@ superior((x) =&gt; {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>fn externa() {
+
+	fn interna() { /**/ }
+
+	// let internaLambda = || { /**/ };
+
+	interna();
+	internaLambda();
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>public class Main {
+
+	public static void Main(string[] args) {
+
+
+
+
+		InternaDelegate interna = () => {
+			System.Console.WriteLine(@"interna");
+		};
+
+		interna();
+
+		Interna2Delegate interna2 = x => x + 1;
+
+		var y = interna2(1);
+
+	}
+
+	delegate void InternaDelegate();
+
+
+
+
+	delegate int Interna2Delegate(int x);
+
+}</code
 >
 </div>
 
@@ -4288,13 +4477,13 @@ superior((x) =&gt; {
 		// não são funções de verdade
 		// ver lambdas acima para explicação
 
-		Funcional interna = () -&gt; System.out.println("interna");
+		Funcional interna = () -&gt; {
+			System.out.println("interna");
+		};
 
 		interna.call();
 
-		Funcional2 interna2 = (int x) -&gt; {
-			return x + 1;
-		};
+		Funcional2 interna2 = x -&gt; x + 1;
 
 		int y = interna2.call(1);
 
@@ -4321,7 +4510,10 @@ superior((x) =&gt; {
 
 	function interna() { /**/ }
 
+	let internaLambda = () => { /**/ };
+
 	interna();
+	internaLambda();
 
 }</code
 >
@@ -4388,8 +4580,16 @@ superior((x) =&gt; {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>'use strict';
+
+function facade() {
+	// fazer coisas complicadas aqui
+	return function() {
+		//
+	};
+}
+
+let acesso = facade();</code
 >
 </div>
 
