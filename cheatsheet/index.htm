@@ -2893,8 +2893,22 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->NSArray* prePopulada = @[@"p", @"r", @"e"];
+>int arrayCPreAlocada[10];
+
+// uma dimensão
+NSArray* prePopulada = @[@"p", @"r", @"e"];
 NSArray* prePopuladaAntiga = [NSArray arrayWithObjects:@"o", @"l", @"d", nil];
+
+int linhas = 2;
+int colunas = 4;
+
+// multidimensional
+int arrayCMdPreAlocada[linhas][colunas];
+int arrayCMdPrePopulada[linhas][colunas] = {
+	{0, 1, 2, 3},
+	{4, 5, 6, 7}
+};
+int  arrayCMdPrePopulada2[linhas][colunas] = {0, 1, 2, 3, 4, 5, 6, 7};
 
 for (NSString* valor in prePopulada) {
 	//
@@ -3064,7 +3078,7 @@ int tamanho =  = mdPrePopulada.length;
 // TODO comparar arrays
 
 // pode mas não faça
-// (então pq diabos tem em primeiro lugar??)
+// acho que tem pra quem vem do C
 float podeMasNaoFaca[];
 float[][] podeMasNaoFaca = {{}};
 float[] podeMasNaoFaca[] = {{}};
