@@ -2893,8 +2893,12 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>NSArray* prePopulada = @[@"p", @"r", @"e"];
+NSArray* prePopuladaAntiga = [NSArray arrayWithObjects:@"o", @"l", @"d", nil];
+
+for (NSString* valor in prePopulada) {
+	//
+}</code
 >
 </div>
 
@@ -2947,7 +2951,8 @@ let tamanho =  = mdPrePopulada.count
 // também temos a propriedade .empty
 // e os métodos insert e removeAtIndex
 
-// TODO testar coisas não cobertas na documentação</code
+// TODO testar coisas não cobertas na documentação
+// comparar arrays</code
 >
 </div>
 
@@ -3005,7 +3010,8 @@ foreach (var valor in prePopulada) {
 
 var tamanho = mdPrePopulada.Length
 
-// TODO exemplos com var</code
+// TODO exemplos com var
+// comparar arrays</code
 >
 </div>
 
@@ -3054,6 +3060,8 @@ for (String valor : prePopulada) {
 
 
 int tamanho =  = mdPrePopulada.length;
+
+// TODO comparar arrays
 
 // pode mas não faça
 // (então pq diabos tem em primeiro lugar??)
@@ -3108,7 +3116,80 @@ for (let valor of prePopulada) {
 
 
 
-let tamanho =  = mdPrePopulada.length;</code
+let tamanho =  = mdPrePopulada.length;
+// TODO comparar arrays</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='tiposlista'>Listas</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>NSMutableArray* lista;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>List&lt;object&gt; lista;
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>let lista = [];</code
 >
 </div>
 
@@ -3746,8 +3827,8 @@ typedef void(*StrategyFunctionPointer)();
 <p>Objective-C</p>
 <code class='objectivec'
 >// simple type
+@compatibility_alias UICollectionViewController PSTCollectionViewController;
 typedef unsigned char BYTE;
-
 
 // function type
 typedef void(*StrategyFunctionPointer)();</code
