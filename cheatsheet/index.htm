@@ -2878,7 +2878,7 @@ let beeGees = calvinHarris.replace('love', 'looove');
 
 <section>
 
-<h2 id='array'>Array</h2>
+<h2 id='tiposarray'>Arrays</h2>
 
 <div class='comparison'>
 
@@ -2901,8 +2901,53 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>var vazia = [Int]()
+var vazia2:[Int] = []
+var vazia3:Array&lt;Int&gt; = Array&lt;Int&gt;()
+
+// uma dimensão
+var preAlocada = [Int](count: 10, repeatedValue: 0)
+preAlocada = [Int](count: 17, repeatedValue: 0)
+var prePopulada = ["p", "r", "e"]
+var prePopuladaT:[String] = ["p", "o", "p"]
+
+let linhas = 2
+let colunas = 4
+
+// multi dimensional
+
+var mdPrePopulada:[[Int]] = [
+	[0, 1, 2, 3],
+	[4, 5, 6, 7]
+]
+
+
+
+
+
+
+
+
+
+preAlocada[5] = 16000;
+preAlocada[6...8] = [4, 20, 8];
+let indice0 = prePopulada[0];
+let two = mdPrePopulada[0, 2];
+
+for valor in prePopulada {
+	//
+}
+
+for (indice, valor) in prePopulada.enumerate() {
+	// indice e valor
+}
+
+let tamanho =  = mdPrePopulada.count
+
+// também temos a propriedade .empty
+// e os métodos insert e removeAtIndex
+
+// TODO testar coisas não cobertas na documentação</code
 >
 </div>
 
@@ -2918,7 +2963,49 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <p>C#</p>
 <code class='cs'
 >
-</code
+
+
+
+// uma dimensão
+int[] preAlocada = new int[10];
+preAlocada = new int[17];
+String[] prePopulada = {"p", "r", "e"};
+
+
+int linhas = 2;
+int colunas = 4;
+
+// multi dimensional
+byte[,] mdPreAlocada = new byte[linhas, colunas];
+byte[,] mdPrePopulada = {
+	{0, 1, 2, 3},
+	{4, 5, 6, 7}
+};
+
+byte[][] arrayDeArraysPreAlocada = new byte[4][];
+arrayDeArraysPreAlocada[0] = new byte[4];
+// ...
+byte[][] arrayDeArraysPrePopulada = {
+	new byte[] {0, 1, 2, 3},
+	new byte[] {4, 5, 6, 7}
+};
+
+preAlocada[5] = 16000;
+
+String indice0 = prePopulada[0];
+byte two = mdPrePopulada[0, 2];
+
+foreach (var valor in prePopulada) {
+	//
+}
+
+
+
+
+
+var tamanho = mdPrePopulada.Length
+
+// TODO exemplos com var</code
 >
 </div>
 
@@ -2926,15 +3013,102 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <p>Java</p>
 <code class='java'
 >
-</code
+
+
+
+// uma dimensão
+int[] preAlocada = new int[10];
+preAlocada = new int[17];
+String[] prePopulada = {"p", "r", "e"};
+
+
+int linhas = 2;
+int colunas = 4;
+
+// multi dimensional
+byte[][] mdPreAlocada = new byte[linhas][colunas];
+byte[][] mdPrePopulada = {
+	{0, 1, 2, 3},
+	{4, 5, 6, 7}
+};
+
+
+
+
+
+
+
+
+
+preAlocada[5] = 16000;
+
+String indice0 = prePopulada[0];
+byte two = mdPrePopulada[0][2];
+
+for (String valor : prePopulada) {
+	//
+}
+
+
+
+
+
+int tamanho =  = mdPrePopulada.length;
+
+// pode mas não faça
+// (então pq diabos tem em primeiro lugar??)
+float podeMasNaoFaca[];
+float[][] podeMasNaoFaca = {{}};
+float[] podeMasNaoFaca[] = {{}};
+float podeMasNaoFaca[][] = {{}};</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>let vazia = [];
+
+
+
+// uma dimensão
+let preAlocada = new Array(10);
+preAlocada = new Array(17);
+let prePopulada = ["p", "r", "e"];
+
+
+let linha = 0;
+let coluna = 2;
+
+// multi dimensional
+
+let mdPrePopulada = [
+	[0, 1, 2, 3],
+	[4, 5, 6, 7]
+];
+
+
+
+
+
+
+
+
+
+preAlocada[5] = 16000;
+
+let indice0 = prePopulada[0];
+let two = mdPrePopulada[linha][coluna];
+
+for (let valor of prePopulada) {
+	//
+}
+
+
+
+
+
+let tamanho =  = mdPrePopulada.length;</code
 >
 </div>
 
@@ -7909,7 +8083,7 @@ public class C {
 <!--
 switch fallthrough
 rust loop {}
-swift lazy e defer
+swift lazy
 c# explicit e implicit keywords
 named breaks
 goto?
@@ -7920,6 +8094,27 @@ guard e match
 conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
 observer ou eventos customizados
 default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure, linq, traits, extension methods, if (a = 1) if let while let, macros, floata == floatb ou Math.abs(floata - floatb) < 0.001
+
+Laços for
+Sobrecarga de função
+Pointers, references, pointer to references, pointer to pointer, cast pointers to references
+Classes, herança e controle de visibilidade
+Eventos e setTimeout
+Observar objetos KVO, notification center, etc.
+Enums
+
+Requisições http
+
+
+Certificação
+Overload pode ter visibilidade diferente?
+Operator mess?
+Cast um tipo para string chama tostring?
+
+Functional interface exemplo com métodos possíveis default overwrite object etc.
+
+Type erasure
+Inicializar arrays
 -->
 
 </body>

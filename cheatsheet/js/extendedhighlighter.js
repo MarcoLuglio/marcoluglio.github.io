@@ -1838,6 +1838,8 @@ define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 		constructor() {
 			super('type', [
 
+				'Any',
+				'Array',
 				'Character',
 				'Double',
 				'Float',
@@ -2367,6 +2369,7 @@ define('RustTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'u64',
 				'usize',
 
+				'Any',
 				'Option',
 				'String',
 				'thread'
