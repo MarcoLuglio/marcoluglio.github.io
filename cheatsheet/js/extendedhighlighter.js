@@ -4350,6 +4350,8 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'BigInteger',
 				'BigDecimal',
 
+				'Class',
+				'Field',
 				'Exception'
 
 			]);
