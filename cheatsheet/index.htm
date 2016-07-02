@@ -5417,7 +5417,7 @@ let result = try!(may_panic());</code
 	// rethrows exception
 	throw;
 
-	// ou throw nova com InnerException
+	// ou throw nova exceção com InnerException
 	// não devemos lançar System.Exception diretamente
 	throw new ArgumentException("Novo erro", ex);
 
@@ -5443,9 +5443,7 @@ try {
 
 <p>Java - Main.java</p>
 <code class='java'
->
-
-public class Main {
+>public class Main {
 
 	<strong>// Indicamos que não queremos cuidar da checked exception</strong>
 	<strong class='small comment'>// neste ponto do código com "throws" e deixamos o erro</strong>
@@ -5461,9 +5459,7 @@ public class Main {
 
 <p>Java - Main.java</p>
 <code class='java'
->
-
-public class Main {
+>public class Main {
 
 	public static void main(String[] args) {
 		PodeOuNao problematico = new PodeOuNao();
@@ -5482,6 +5478,25 @@ public class Main {
 }</code
 >
 
+<p>Java - Main.java</p>
+<code class='java'
+>public class Main {
+
+	public static void main(String[] args) {
+		PodeOuNao problematico = new PodeOuNao();
+		try {
+			problematico.uncheckedMethod();
+		} catch (Exception ex) {
+			// throw nova exceção com cause
+			throw new RuntimeException(ex);
+		} finally {
+			//
+		}
+	}
+
+}</code
+>
+
 <p>Java - PodeOuNao.java</p>
 <code class='java'
 >package marcoluglio.exceptionexample;
@@ -5495,7 +5510,7 @@ public final class PodeOuNao {
 		throw new Exception("pego na compilação!");
 	}
 
-	// unchecked expections não precisam de tais
+	// unchecked exceptions não precisam de tais
 	// cuidados
 	public void uncheckedMethod() {
 		throw new RuntimeException("pego na execução!");

@@ -4352,7 +4352,8 @@ define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 
 				'Class',
 				'Field',
-				'Exception'
+				'Exception',
+				'RuntimeException'
 
 			]);
 
