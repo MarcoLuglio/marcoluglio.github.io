@@ -4801,16 +4801,64 @@ superior((x) =&gt; {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>#include &lt;iostream&gt;
+
+int main(int argc, const char * argv[]) {
+
+	using std::make_shared;
+	using std::cout;
+	using std::endl;
+
+	auto facade = [](){
+		// acessível somente pela função interna
+		auto i = make_shared&lt;int&gt;();
+		auto interna = [i](){
+			(*i)++;
+			return *i;
+		};
+		// expõe a função interna
+		return interna;
+	};
+
+	auto closure = facade();
+	cout &lt;&lt; closure() &lt;&lt; endl; // 1
+	cout &lt;&lt; closure() &lt;&lt; endl; // 2
+
+	return 0;
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>#import &lt;Foundation/Foundation.h&gt;
+
+int main(int argc, const char * argv[]) {
+
+	// typedef ajuda na legibilidade
+	typedef int (^interna_t)(void);
+	typedef interna_t (^facade_t)(void);
+
+	facade_t facade = ^{
+		// acessível somente pela função interna
+		__block int i = 0;
+		interna_t interna = ^{
+			i++;
+			return i;
+		};
+		// expõe a função interna
+		return interna;
+	};
+
+	interna_t closure = facade();
+	NSLog(@"%d", closure()); // 1
+	NSLog(@"%d", closure()); // 2
+
+	return 0;
+
+}</code
 >
 </div>
 
@@ -4818,6 +4866,12 @@ superior((x) =&gt; {
 <p>Swift</p>
 <code class='swift'
 >
+
+
+
+
+
+
 
 func facade() -> () -> Int {
 	// acessível somente pela função interna
@@ -4919,7 +4973,13 @@ public class MainClosure {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->'use strict';
+>
+
+
+
+
+
+'use strict';
 
 function facade() {
 	// acessível somente pela função interna
