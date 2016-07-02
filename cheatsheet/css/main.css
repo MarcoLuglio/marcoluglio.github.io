@@ -124,6 +124,16 @@ div code {
 	counter-reset: linenumber;
 }
 
+div .multipart {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+div .multipart + code {
+	margin-top: 0;
+	padding-top: 35px;
+}
+
 .codeblock p {
 	white-space: nowrap;
 }

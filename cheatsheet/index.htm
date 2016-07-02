@@ -4853,8 +4853,8 @@ int main(int argc, const char * argv[]) {
 	};
 
 	interna_t closure = facade();
-	NSLog(@"%d", closure()); // 1
-	NSLog(@"%d", closure()); // 2
+	NSLog(@"%i", closure()); // 1
+	NSLog(@"%i", closure()); // 2
 
 	return 0;
 
@@ -4935,7 +4935,8 @@ public class MainClassClosure {
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
+
+<code class='java multipart'
 >class ClosureState {
 	public int i;
 }
@@ -4966,6 +4967,22 @@ public class MainClosure {
 
 }</code
 >
+
+<code class='java'
+><strong>// PS: pra evitar ter que declarar uma classe ClosureState</strong>
+<strong class='small comment'>// eu poderia ter feito</strong>
+final Object closureState = new Object() {
+	public int i;
+};
+
+<strong>// mas aí para ler as propriedades eu teria que usar</strong>
+<strong class='small comment'>// reflection toda a vez</strong>
+Class ClosureClass = closureState.getClass();
+
+Field IField = ClosureClass.getDeclaredField("i")
+IField.getInteger(closureState);</code
+>
+
 </div>
 
 <!-- TODO testar captura de variáveis -->
@@ -5305,7 +5322,7 @@ let meuObjeto = new DentroDoModulo();</code
 
 <div class='codeblock'>
 <p>C++</p>
-<code class='cpp'
+<code class='cpp multipart'
 >#include &lt;exception&gt;
 
 using std::exception;
@@ -5856,7 +5873,7 @@ public class AnimadorClosure {
 >
 
 <p>Java - Main.java</p>
-<code class='java'
+<code class='java multipart'
 >
 import java.util.function.*;
 import marcoluglio.generatorexample.AnimadorClosure;
