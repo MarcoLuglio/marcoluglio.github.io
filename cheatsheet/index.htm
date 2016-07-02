@@ -2885,7 +2885,9 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
+>// TODO
+std::Array arrayCpp;
+int arrayCPreAlocada[10];
 </code
 >
 </div>
@@ -2902,7 +2904,7 @@ NSArray* prePopuladaAntiga = [NSArray arrayWithObjects:@"o", @"l", @"d", nil];
 int linhas = 2;
 int colunas = 4;
 
-// multidimensional
+// multi dimensional
 int arrayCMdPreAlocada[linhas][colunas];
 int arrayCMdPrePopulada[linhas][colunas] = {
 	{0, 1, 2, 3},
@@ -4816,7 +4818,21 @@ superior((x) =&gt; {
 <p>Swift</p>
 <code class='swift'
 >
-</code
+
+func facade() -> () -> Int {
+	// acessível somente pela função interna
+	var i = 0
+	func interna() -> Int {
+		i = i + 1
+		return i
+	}
+	// expõe a função interna
+	return interna
+}
+
+let closure = facade();
+print(closure()); // 1
+print(closure()); // 2</code
 >
 </div>
 
@@ -4832,15 +4848,69 @@ superior((x) =&gt; {
 <p>C#</p>
 <code class='cs'
 >
-</code
+
+
+
+public class MainClassClosure {
+
+	delegate int InternaDelegate();
+
+
+
+
+	static InternaDelegate Facade() {
+		// acessível somente pela função interna
+		int i = 0;
+		InternaDelegate interna = () => {
+			i++;
+			return i;
+		};
+		// expõe a função interna
+		return interna;
+	}
+
+	public static void Main(string[] args) {
+		var closure = Facade();
+		System.Console.WriteLine(closure()); // 1
+		System.Console.WriteLine(closure()); // 2
+	}
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>class ClosureState {
+	public int i;
+}
+
+public class MainClosure {
+
+	@FunctionalInterface
+	public interface Interna {
+		int call();
+	}
+
+	static Interna facade() {
+		// acessível somente pela "função" interna
+		final ClosureState closureState = new ClosureState();
+		Interna interna = () -> {
+			closureState.i++;
+			return closureState.i;
+		};
+		// expõe a "função" interna
+		return interna;
+	}
+
+	public static void main(String[] args) {
+		Interna closure = facade();
+		System.out.println(closure.call()); // 1
+		System.out.println(closure.call()); // 2
+	}
+
+}</code
 >
 </div>
 
@@ -4852,13 +4922,19 @@ superior((x) =&gt; {
 >'use strict';
 
 function facade() {
-	// fazer coisas complicadas aqui
-	return function() {
-		//
+	// acessível somente pela função interna
+	let i = 0;
+	let interna = function() {
+		i++;
+		return i;
 	};
+	// expõe a função interna
+	return interna;
 }
 
-let acesso = facade();</code
+let closure = facade();
+console.log(closure()); // 1
+console.log(closure()); // 2</code
 >
 </div>
 
