@@ -4511,14 +4511,14 @@ superior({(x:Int) -&gt; Int in
 
 	public static void Main(string[] args) {
 
+
+
+
+
+
+
 		// declaração simplificada
 		Main.superior(() => System.Console.WriteLine("lambda"));
-
-
-
-
-
-
 
 
 		// declaração simplificada
@@ -8125,7 +8125,7 @@ public class C {
 
 <section>
 
-<h2 id='indexing'>Indexing <span>Coleções ??</span></h2>
+<h2 id='indexing'>Indexing <span>Coleções de Objetos como Arrays</span></h2>
 
 <div class='comparison'>
 
@@ -8146,11 +8146,96 @@ public class C {
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+
+<p>Swift - SubscriptCollection.swift</p>
 <code class='swift'
+>// Swift não tem valores padrão para tipos, nem tem uma classe base comum
+// Então usamos um protocolo que o tipo genérico deve seguir
+public final class SubscriptCollection&lt;T:StringLiteralConvertible&gt; {
+
+	init() {
+		self.array = [T](count:10, repeatedValue:"")
+	}
+
+	// pode ser indexada por inteiros
+	subscript(index:Int) -&gt; T {
+		get {
+			return self.array[index]
+		}
+		set(newValue) {
+			self.array[index] = newValue
+		}
+	}
+
+	// ou por outros tipos
+	subscript(key:String) -&gt; T {
+		get {
+			var string:String
+			var stringStart:String
+			var stringIndex:String.Index
+			for item in self.array {
+				string = String(item)
+				if string.isEmpty || string == "nil" {
+					continue
+				}
+				stringIndex = string.startIndex.advancedBy(key.characters.count)
+				stringStart = string.substringToIndex(stringIndex)
+				if stringStart == key {
+					return item
+				}
+			}
+			// retorna uma string vazia se não encontrar um item pela chave
+			// já que o tipo deve poder ser convertido para string
+			return ""
+		}
+	}
+
+	// e ainda por mais de um índice
+	subscript(key:String, index:Int) -&gt; T {
+		get {
+			var string:String
+			var stringStart:String
+			var stringIndex:String.Index
+			var currentIndex = 0
+			for item in self.array {
+				string = String(item)
+				if string.isEmpty || string == "nil" {
+					continue
+				}
+				stringIndex = string.startIndex.advancedBy(key.characters.count)
+				stringStart = string.substringToIndex(stringIndex)
+				if stringStart == key {
+					if currentIndex == index {
+						return item
+					} else {
+						currentIndex = currentIndex + 1
+					}
+				}
+			}
+			return ""
+		}
+	}
+
+	var array:Array&lt;T&gt;
+
+}</code
 >
-</code
+
+<p>Swift - main.swift</p>
+<code class='swift'
+>var subscriptCollection = SubscriptCollection&lt;String&gt;()
+subscriptCollection[0] = "sundays are slow";
+subscriptCollection[1] = "mondays are mediocre";
+subscriptCollection[2] = "tuesday and wednesday too";
+subscriptCollection[3] = "monday again";
+
+// "tuesday and wednesday too"
+print(subscriptCollection["tuesday"]);
+
+// "monday again"
+print(subscriptCollection["monday", 1]);</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -8162,25 +8247,82 @@ public class C {
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - IndexedCollection.cs</p>
 <code class='cs'
+>namespace MarcoLuglio.IndexerExample {
+
+	public sealed class IndexedCollection&lt;T&gt; {
+
+		public IndexedCollection() {
+			this.array = new T[10];
+		}
+
+		// pode ser indexada por inteiros
+		public T this[int index] {
+			get {
+				return this.array [index];
+			}
+			set {
+				this.array [index] = value;
+			}
+		}
+
+		// ou por outros tipos
+		public T this[string key] {
+			get {
+				foreach(var item in this.array) {
+					if (item.ToString().StartsWith(key)) {
+						return item;
+					}
+				}
+				// retorna valor padrão para o tipo
+				// se não encontrar um item pela chave
+				return default(T);
+			}
+		}
+
+		private T[] array;
+
+	}
+
+}</code
 >
-</code
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.IndexerExample {
+
+	public class MainClass {
+		public static void Main(string[] args) {
+
+			var indexedCollection = new IndexedCollection&lt;string&gt;();
+			indexedCollection[0] = @"sunday";
+			indexedCollection[1] = @"monday I'm in love";
+			indexedCollection[2] = @"tuesday and wednesday too";
+
+			// "tuesday and wednesday too"
+			Console.WriteLine(indexedCollection[@"tuesday"]);
+
+		}
+	}
+
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
+>// es6 proxies com trap "get"
 </code
 >
 </div>

@@ -1816,6 +1816,7 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'self',
 				'set',
 				'static',
+				'subscript',
 				'super',
 				'switch',
 				'throw',
