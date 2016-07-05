@@ -8130,11 +8130,80 @@ public class C {
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
+
+	<div class='pair'>
+
+		<div>
+			<p>C++ - OpOvCollection.hpp</p>
+			<code class='cpp'
+			>#pragma once
+
+#include &lt;string&gt;
+
+namespace MarcoLuglio {
+namespace IndexerExample {
+
+	class OpOvCollection final {
+
+	public:
+		OpOvCollection();
+		std::string operator[](const int index);
+
+	private:
+		int array[];
+
+	};
+
+}
+}</code
+			>
+		</div>
+
+		<div>
+			<p>C++ - OpOvCollection.cpp</p>
+			<code class='cpp'
+			>#include "OpOvCollection.hpp"
+
+namespace MarcoLuglio {
+namespace IndexerExample {
+
+	OpOvCollection::OpOvCollection() {
+		// TODO iniciar a array
+	}
+
+	std::string OpOvCollection::operator[](const int index) {
+		return "";
+	}
+
+}
+}</code
+			>
+		</div>
+
+	</div>
+
+	<p>C++ - main.cpp</p>
+	<code class='cpp'
+	>#include &lt;iostream&gt;
+#include "OpOvCollection.hpp"
+
+int main(int argc, const char * argv[]) {
+
+	using std::cout;
+	using std::endl;
+
+	using MarcoLuglio::IndexerExample::OpOvCollection;
+
+	auto opOvCollection = OpOvCollection();
+	opOvCollection[0] = "sunday";
+	opOvCollection[1] = "monday I'm in love";
+	opOvCollection[2] = "tuesday and wednesday too";
+
+	cout &lt;&lt; opOvCollection[2] &lt;&lt; endl;
+
+}</code
+	>
+
 </div>
 
 <div class='codeblock'>
