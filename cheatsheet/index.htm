@@ -8143,16 +8143,69 @@ public class C {
 namespace MarcoLuglio {
 namespace IndexerExample {
 
+	using std::size_t;
+	using std::string;
+	using std::to_string;
+
+	/// type alias para simplificar a sintaxe
+	/// do retorno da função getArray
+	using arrayReference = int[10];
+
+
 	class OpOvCollection final {
 
 	public:
+
+		/// Classe auxiliar que permite alteração
+		/// dos valores da coleção
+		class Proxy final {
+
+		public:
+
+			Proxy(OpOvCollection&amp; collection, const size_t index)
+				: collection{collection}, index{index} {}
+
+			/// Overload do operador = para alteração
+			/// dos valores da coleção
+			int&amp; operator= (int newValue) {
+				collection.array[index] = newValue;
+				return collection.array[index]; // FIXME
+			}
+
+			/// C++ não possui uma classe base comum
+			/// então as conversões para string devem ser
+			/// implementadas sempre
+			operator string() const {
+				return to_string(collection.array[index]);
+			}
+
+		private:
+
+			/// Referência da coleção original, para alteracão
+			/// dos valores nos índices
+			OpOvCollection &amp;collection;
+
+			size_t index;
+
+		};
+
 		OpOvCollection();
-		std::string operator[](const int index);
+
+		/// Overload do operador [] para obtenção
+		/// dos valores da coleção
+		/// Esse overload só possibilita retornar valores,
+		/// portanto é necessário que ele retorne um objeto
+		/// proxy ao invés do valor real, pois o proxy
+		/// possibilita a alteração do valor na coleção
+		/// original
+		OpOvCollection::Proxy operator[](const size_t index);
 
 	private:
-		int array[];
 
-	};
+		/// Coleção original
+		int array[10];
+
+	}
 
 }
 }</code
@@ -8167,12 +8220,21 @@ namespace IndexerExample {
 namespace MarcoLuglio {
 namespace IndexerExample {
 
+	using CollectionProxy = OpOvCollection::Proxy;
+	using std::size_t;
+
+	/// type alias para simplificar a sintaxe
+	/// do retorno da função getArray
+	using arrayReference = int[10];
+
+
 	OpOvCollection::OpOvCollection() {
-		// TODO iniciar a array
+		// inicia a array com valores 0
+		std::fill(this->array, this->array + 9, 0);
 	}
 
-	std::string OpOvCollection::operator[](const int index) {
-		return "";
+	CollectionProxy OpOvCollection::operator[](const size_t index) {
+		return CollectionProxy(*this, index);
 	}
 
 }
@@ -8185,21 +8247,29 @@ namespace IndexerExample {
 	<p>C++ - main.cpp</p>
 	<code class='cpp'
 	>#include &lt;iostream&gt;
+#include &lt;string&gt;
 #include "OpOvCollection.hpp"
 
 int main(int argc, const char * argv[]) {
 
 	using std::cout;
 	using std::endl;
+	using std::string;
 
 	using MarcoLuglio::IndexerExample::OpOvCollection;
 
-	auto opOvCollection = OpOvCollection();
-	opOvCollection[0] = "sunday";
-	opOvCollection[1] = "monday I'm in love";
-	opOvCollection[2] = "tuesday and wednesday too";
 
-	cout &lt;&lt; opOvCollection[2] &lt;&lt; endl;
+	auto opOvCollection = OpOvCollection();
+	opOvCollection[0] = 7;
+	opOvCollection[1] = 45;
+	opOvCollection[2] = 83;
+
+	string value = (string)opOvCollection[2];
+
+	// 83
+	cout &lt;&lt; value &lt;&lt; endl;
+
+	return 0;
 
 }</code
 	>
