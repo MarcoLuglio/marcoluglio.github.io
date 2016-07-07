@@ -1353,7 +1353,9 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'@NO',
 				'nil',
 				'Nil',
-				'NULL'
+				'NULL',
+
+				'__block'
 
 			]);
 

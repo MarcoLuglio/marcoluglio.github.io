@@ -4447,6 +4447,14 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 
 
 
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
 <h3 id='lambdas'>Lambdas</h3>
 
 <div class='comparison'>
@@ -4794,6 +4802,21 @@ superior((x) =&gt; {
 
 
 
+<ol>
+	<li>Swift / Rust / JavaScript</li>
+	<li>C++</li>
+	<li>C#</li>
+	<li>Java</li>
+	<li>Objective-C</li>
+</ol>
+
+<p>Swift, Rust e JavaScript permitem a criacão natural de funções dentro de funções.
+<br />C++ requer o uso de um lambda, mas seu tipo pode ser deduzido pelo compilador.
+<br />C# também usa um lambda, mas seu tipo deve ser declarado por meio de um <code class="cs">delegate</code>.
+<br />Java não possui funções internas de verdade. São classes com uma sintaxe um pouco mais reduzida.
+<br />Objective-C?</p>
+
+
 <h3 id='closures'>Closures</h3>
 
 <div class='comparison'>
@@ -5001,7 +5024,7 @@ IField.getInteger(closureState);</code
 function facade() {
 	// acessível somente pela função interna
 	let i = 0;
-	let interna = function() {
+	let interna = () =&gt; {
 		i++;
 		return i;
 	};
@@ -5018,10 +5041,20 @@ console.log(closure()); // 2</code
 </div>
 
 <ol>
-	<li>a</li>
+	<li>Swift / JavaScript</li>
+	<li>Rust?</li>
+	<li>C#</li>
+	<li>C++</li>
+	<li>Java</li>
+	<li>Objective-C</li>
 </ol>
 
-<p>A</p>
+<p>Swift e JavaScript são os mais sucintos. É verdade que é necessário saber da existência de <em>closures</em> para não criar uma sem querer, como muitos programadores JavaScript devem ter descoberto da pior maneira. Porém as novas regras de escopo, similares às das demais linguagens minimizam esse problema.
+<br />Rust?
+<br />Em comparação com as linguagens anteriores, C# requer apenas a declaração de um <code class="cs">delegate</code> a mais.
+<br />C++ por sua vez, requer cuidados no gerenciamento de memória das variáveis acessadas pela closure com <code class="cpp">make_shared</code>.
+<br />Java complica um pouco o padrão, requerendo que as variáveis sejam membros de um objeto marcado como <code class="java">final</code>.
+<br />Objective-C possui uma sintaxe bastante difícil para identificar as closures, e o uso de <em>aliases</em> torna as assinaturas um pouco mais legíveis. Também é necessário identificar de maneira especial as variáveis que serão usadas na closure com <code class="objectivec">__block</code>.</p>
 
 </section>
 
@@ -5308,7 +5341,12 @@ let meuObjeto = new DentroDoModulo();</code
 	<li>Objective-C</li>
 </ol>
 
-<p>A</p>
+<p>C# e Java possuem maior granularidade. A única diferença entre os dois é que o módulo em Java deve ser replicado na estrutura de pastas dos arquivos que contém as classes, ao passo que em C# não. Se você já teve que cavar dentro de mil pastas por classes Java sabe que isso acaba mais atrapalhando do que ajudando. Porém, deve haver certamente quem diga que a liberdade que C# proporciona nesse quesito pode ser mal utilizada e gerar confusão.
+<br />JavaScript até a versão ES6, não possuía nenhuma sintaxe especial para definir módulos. Mesmo após a oficialização da especificação, nenhum navegador a implementou até o momento. O que vemos no exemplo é um padrão denominado <abbr title="Asynchronous Module Definition">AMD</abbr> que é bastante flexível, porém um pouco redundante e propenso a erros.
+<br />Rust?
+<br />C++ possui passos manuais na definição de módulos. A sintaxe para aninhar <em>namespaces</em> só será melhorada na próxima especificação (c++1z). Oficialmente a forma de garantir que um módulo não seja importado mais de uma vez, e por consequência sobrescrito, é usar os <em>include guards</em> <code class="cpp">#ifndef</code>, <code class="cpp">#define</code> e <code class="cpp">#endif</code>. A diretiva mais amigável <code class="cpp">#pragma once</code> não é oficial, embora a maioria dos compiladores reconheça devido à sua popularidade.
+<br />Swift tem uma definição tão abrangente de módulos que quase não se pode dizer que ele tenha uma.
+<br />Objective-C herda de C?</p>
 
 </section>
 
@@ -6386,6 +6424,14 @@ for (let resultado of animadorIterator) {
 
 
 
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
 <h3 id='tasks'>Tasks</h3>
 
 <div class='comparison'>
@@ -6745,6 +6791,14 @@ workAsync('some value')
 </div>
 
 </div>
+
+
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
 
 
 
@@ -8469,10 +8523,14 @@ namespace MarcoLuglio.IndexerExample {
 </div>
 
 <ol>
-	<li>a</li>
+	<li>C# / Swift</li>
+	<li>JavaScript</li>
+	<li>C++</li>
 </ol>
 
-<p>A</p>
+<p>C# possibilita a criação de indexers de maneira relativamente simples. Swift requer passos extras devido ao fato de que não existe uma maneira rápida de obter o valor padrão de um tipo genérico, mas isso é compensado pelo fato de que é simples utilizar mais de um índice com o operador <code class="swift">[]</code>.
+<br />JavaScript não diferencia os operadores <code class="javascript">.</code> e <code class="javascript">[]</code>, mas se os utilizarmos ingenuamente, deixaremos o código lento, criando propriedades nos objetos em tempo de execução. Por isso o uso de um <code class="javascript">Proxy</code> se faz necessário.
+<br />C++ Também requer um proxy, mas por outros motivos. O operador <code class="cpp">[]</code> em C++ só retorna valores, então devemos retornar um proxy que possui uma referência para a posição desejada na coleção original, e por meio dele alterar o valor nessa posição. Para que isso seja possível, o proxy também deve ter alguns overloads de operadores, tornando tudo mais verborrágico e complicado do que nas outras linguagens.</p>
 
 </section>
 
