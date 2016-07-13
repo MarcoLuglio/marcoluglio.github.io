@@ -1386,6 +1386,7 @@ define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'char',
 				'double',
 				'float',
+				'id',
 				'int',
 				'int8_t',
 				'int16_t',

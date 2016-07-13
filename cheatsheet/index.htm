@@ -3801,7 +3801,7 @@ namespace MarcoLuglio.PonteirosExample {
 <p>Não sei ao certo como avaliar esse tópico. Certamente não é a mesma coisa que gerenciamento de memória avaliado logo acima.
 <br />Todas as linguagens permitem <code class='cpp'>void*</code> de alguma maneira
 <br />Swift possui nomes mais claros em relação ao que cada ponteiro significa, embora a relação com suas versões em C não sejam fáceis de adivinhar. Não é necessário utilizar operadores diferentes para interagir com ponteiros.
-<br />C# tenta evitar ao máximo o uso de ponteiros para tarefas corriqueiras. Mas faz muito pouco em relação à C++ para impedir problemas com a utilização de ponteiros quando são necessários, e acaba sendo equivalente em segurança, embora de maneira diferente. As duas linguagens possuem recursos para impedir ponteiros <code class='cs'>null</code>, e para apagar os ponteiros quando saírem de escopo. C# delimita claramente um bloco isolado para trabalhar com ponteiros, mas não permite marcá-los como <code class='cs'>const</code>. C++ ainda tem o operador <code class='delete'>delete</code>, mas você não precisa usá-lo.
+<br />C# tenta evitar ao máximo o uso de ponteiros para tarefas corriqueiras. Mas faz muito pouco em relação à C++ para impedir problemas com a utilização de ponteiros quando são necessários, e acaba sendo equivalente em segurança, embora de maneira diferente. As duas linguagens possuem recursos para impedir ponteiros <code class='cs'>null</code>, e para apagar os ponteiros quando saírem de escopo. C# delimita claramente um bloco isolado para trabalhar com ponteiros, mas não permite marcá-los como <code class='cs'>const</code>. C++ ainda tem o operador <code class='cpp'>delete</code>, mas você não precisa usá-lo.
 <br />Objective-C usa ponteiros estilo C. Requer muitas vezes que os objetos sejam alocados e depois inicializados num passo diferente. Como muitas coisas nessa linguagem, mistura sintaxes das duas linguagens. Por exemplo, <em>ivars</em> e <em>properties</em>.</p>
 
 </section>
@@ -4812,7 +4812,7 @@ superior((x) =&gt; {
 
 <p>Swift, Rust e JavaScript permitem a criacão natural de funções dentro de funções.
 <br />C++ requer o uso de um lambda, mas seu tipo pode ser deduzido pelo compilador.
-<br />C# também usa um lambda, mas seu tipo deve ser declarado por meio de um <code class="cs">delegate</code>.
+<br />C# também usa um lambda, mas seu tipo deve ser declarado por meio de um <code class='cs'>delegate</code>.
 <br />Java não possui funções internas de verdade. São classes com uma sintaxe um pouco mais reduzida.
 <br />Objective-C?</p>
 
@@ -5051,10 +5051,10 @@ console.log(closure()); // 2</code
 
 <p>Swift e JavaScript são os mais sucintos. É verdade que é necessário saber da existência de <em>closures</em> para não criar uma sem querer, como muitos programadores JavaScript devem ter descoberto da pior maneira. Porém as novas regras de escopo, similares às das demais linguagens minimizam esse problema.
 <br />Rust?
-<br />Em comparação com as linguagens anteriores, C# requer apenas a declaração de um <code class="cs">delegate</code> a mais.
-<br />C++ por sua vez, requer cuidados no gerenciamento de memória das variáveis acessadas pela closure com <code class="cpp">make_shared</code>.
-<br />Java complica um pouco o padrão, requerendo que as variáveis sejam membros de um objeto marcado como <code class="java">final</code>.
-<br />Objective-C possui uma sintaxe bastante difícil para identificar as closures, e o uso de <em>aliases</em> torna as assinaturas um pouco mais legíveis. Também é necessário identificar de maneira especial as variáveis que serão usadas na closure com <code class="objectivec">__block</code>.</p>
+<br />Em comparação com as linguagens anteriores, C# requer apenas a declaração de um <code class='cs'>delegate</code> a mais.
+<br />C++ por sua vez, requer cuidados no gerenciamento de memória das variáveis acessadas pela closure com <code class='cpp'>make_shared</code>.
+<br />Java complica um pouco o padrão, requerendo que as variáveis sejam membros de um objeto marcado como <code class='java'>final</code>.
+<br />Objective-C possui uma sintaxe bastante difícil para identificar as closures, e o uso de <em>aliases</em> torna as assinaturas um pouco mais legíveis. Também é necessário identificar de maneira especial as variáveis que serão usadas na closure com <code class='objectivec'>__block</code>.</p>
 
 </section>
 
@@ -5342,9 +5342,9 @@ let meuObjeto = new DentroDoModulo();</code
 </ol>
 
 <p>C# e Java possuem maior granularidade. A única diferença entre os dois é que o módulo em Java deve ser replicado na estrutura de pastas dos arquivos que contém as classes, ao passo que em C# não. Se você já teve que cavar dentro de mil pastas por classes Java sabe que isso acaba mais atrapalhando do que ajudando. Porém, deve haver certamente quem diga que a liberdade que C# proporciona nesse quesito pode ser mal utilizada e gerar confusão.
-<br />JavaScript até a versão ES6, não possuía nenhuma sintaxe especial para definir módulos. Mesmo após a oficialização da especificação, nenhum navegador a implementou até o momento. O que vemos no exemplo é um padrão denominado <abbr title="Asynchronous Module Definition">AMD</abbr> que é bastante flexível, porém um pouco redundante e propenso a erros.
+<br />JavaScript até a versão ES6, não possuía nenhuma sintaxe especial para definir módulos. Mesmo após a oficialização da especificação, nenhum navegador a implementou até o momento. O que vemos no exemplo é um padrão denominado <abbr title='Asynchronous Module Definition'>AMD</abbr> que é bastante flexível, porém um pouco redundante e propenso a erros.
 <br />Rust?
-<br />C++ possui passos manuais na definição de módulos. A sintaxe para aninhar <em>namespaces</em> só será melhorada na próxima especificação (c++1z). Oficialmente a forma de garantir que um módulo não seja importado mais de uma vez, e por consequência sobrescrito, é usar os <em>include guards</em> <code class="cpp">#ifndef</code>, <code class="cpp">#define</code> e <code class="cpp">#endif</code>. A diretiva mais amigável <code class="cpp">#pragma once</code> não é oficial, embora a maioria dos compiladores reconheça devido à sua popularidade.
+<br />C++ possui passos manuais na definição de módulos. A sintaxe para aninhar <em>namespaces</em> só será melhorada na próxima especificação (c++1z). Oficialmente a forma de garantir que um módulo não seja importado mais de uma vez, e por consequência sobrescrito, é usar os <em>include guards</em> <code class='cpp'>#ifndef</code>, <code class='cpp'>#define</code> e <code class='cpp'>#endif</code>. A diretiva mais amigável <code class='cpp'>#pragma once</code> não é oficial, embora a maioria dos compiladores reconheça devido à sua popularidade.
 <br />Swift tem uma definição tão abrangente de módulos que quase não se pode dizer que ele tenha uma.
 <br />Objective-C herda de C?</p>
 
@@ -8054,7 +8054,7 @@ public class C {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>// TODO esperar Swift 3
 </code
 >
 </div>
@@ -8086,7 +8086,7 @@ public class C {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
+>// tipagem dinâmica
 </code
 >
 </div>
@@ -8136,7 +8136,8 @@ public class C {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
+>// TODO ver
+// <a href='https://doc.rust-lang.org/std/ops/'>https://doc.rust-lang.org/std/ops/</a>
 </code
 >
 </div>
@@ -8151,18 +8152,12 @@ public class C {
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
->
-</code
->
+-
 </div>
 
 </div>
@@ -8333,8 +8328,13 @@ int main(int argc, const char * argv[]) {
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// pode ser indexada por inteiros
+- (id)objectAtIndexedSubscript:(int)index;
+- (void)setObject:(id)obj atIndexedSubscript:(int)index;
+
+// ou por outros tipos
+- (id)objectForKeyedSubscript:(NSString)key;
+- (void)setObject:(id)obj forKeyedSubscript:(NSString)key;</code
 >
 </div>
 
@@ -8434,7 +8434,9 @@ print(subscriptCollection["monday", 1]);</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
+>// TODO ver
+// <a href='https://doc.rust-lang.org/std/ops/trait.Index.html'>https://doc.rust-lang.org/std/ops/trait.Index.html</a>
+// <a href='https://doc.rust-lang.org/std/ops/trait.IndexMut.html'>https://doc.rust-lang.org/std/ops/trait.IndexMut.html</a>
 </code
 >
 </div>
@@ -8528,9 +8530,9 @@ namespace MarcoLuglio.IndexerExample {
 	<li>C++</li>
 </ol>
 
-<p>C# possibilita a criação de indexers de maneira relativamente simples. Swift requer passos extras devido ao fato de que não existe uma maneira rápida de obter o valor padrão de um tipo genérico, mas isso é compensado pelo fato de que é simples utilizar mais de um índice com o operador <code class="swift">[]</code>.
-<br />JavaScript não diferencia os operadores <code class="javascript">.</code> e <code class="javascript">[]</code>, mas se os utilizarmos ingenuamente, deixaremos o código lento, criando propriedades nos objetos em tempo de execução. Por isso o uso de um <code class="javascript">Proxy</code> se faz necessário.
-<br />C++ Também requer um proxy, mas por outros motivos. O operador <code class="cpp">[]</code> em C++ só retorna valores, então devemos retornar um proxy que possui uma referência para a posição desejada na coleção original, e por meio dele alterar o valor nessa posição. Para que isso seja possível, o proxy também deve ter alguns overloads de operadores, tornando tudo mais verborrágico e complicado do que nas outras linguagens.</p>
+<p>C# possibilita a criação de indexers de maneira relativamente simples. Swift requer passos extras devido ao fato de que não existe uma maneira rápida de obter o valor padrão de um tipo genérico, mas isso é compensado pelo fato de que é simples utilizar mais de um índice com o operador <code class='swift'>[]</code>.
+<br />JavaScript não diferencia os operadores <code class='javascript'>.</code> e <code class='javascript'>[]</code>, mas se os utilizarmos ingenuamente, deixaremos o código lento, criando propriedades nos objetos em tempo de execução. Por isso o uso de um <code class='javascript'>Proxy</code> se faz necessário.
+<br />C++ Também requer um proxy, mas por outros motivos. O operador <code class='cpp'>[]</code> em C++ só retorna valores, então devemos retornar um proxy que possui uma referência para a posição desejada na coleção original, e por meio dele alterar o valor nessa posição. Para que isso seja possível, o proxy também deve ter alguns overloads de operadores, tornando tudo mais verborrágico e complicado do que nas outras linguagens.</p>
 
 </section>
 
@@ -8610,6 +8612,7 @@ namespace MarcoLuglio.IndexerExample {
 
 
 
+<!--
 <section>
 
 <h2 id='templateid'>Template</h2>
@@ -8681,6 +8684,7 @@ namespace MarcoLuglio.IndexerExample {
 <p>A</p>
 
 </section>
+-->
 
 <!--
 switch fallthrough
