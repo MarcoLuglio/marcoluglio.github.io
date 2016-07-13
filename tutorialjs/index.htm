@@ -4688,7 +4688,7 @@ controle(function*() {
 
 <h3>Web Workers (Threads)</h3>
 
-<p>TODO</p>
+<p>Threads em JavaScript funcionam de maneira diferente das funcionalidades equivalentes em outras linguagens. Elas não compartilham memória. A maneira de se comunicarem é através de troca de mensagens, que possui limitações sobre o tipo de objeto que pode ser enviado. De fato, threads de outras linguagens se parecem mais com o que conseguimos simular com <code class='javascript'>setTimeout</code> e <code class='javascript'>setInterval</code> do que com objetos <code class='javascript'>Worker</code>. Worker threads não conseguem de maneira nenhuma acessar a interface gráfica.</p>
 
 <div class='codeblock'>
 
