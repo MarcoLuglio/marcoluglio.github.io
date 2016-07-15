@@ -4054,7 +4054,7 @@ superior(retorno)</code
 <code class='rust'
 >// declaração de função
 fn normal() { /**/ } // mesmo que -&gt; ()
-fn normalUnit() -> () { /**/ }
+fn normalUnit() -&gt; () { /**/ }
 
 
 // expressão de função
@@ -4071,7 +4071,7 @@ fn retorno() -&gt; &amp;'static str {
 
 use std::any::Any;
 
-fn retornoMisturado() -> Any {
+fn retornoMisturado() -&gt; Any {
 	// TODO
 }
 
@@ -4526,18 +4526,18 @@ superior({(x:Int) -&gt; Int in
 
 
 		// declaração simplificada
-		Main.superior(() => System.Console.WriteLine("lambda"));
+		Main.superior(() =&gt; System.Console.WriteLine("lambda"));
 
 
 		// declaração simplificada
-		Main.superior(x => x + 1);
+		Main.superior(x =&gt; x + 1);
 
 		// declaração completa
-		Main.superior((int x) => {
+		Main.superior((int x) =&gt; {
 			return x + 1;
 		});
 
-		// Main.superior(x, y -> x + y);
+		// Main.superior(x, y -&gt; x + y);
 
 	}
 
@@ -4666,8 +4666,14 @@ superior((x) =&gt; {
 
 	auto internaLambda = [](){ /**/ };
 
+	// ou
+
+	struct internaFunctor { // testar isso
+		void operator()() { /**/ }
+	};
 
 	internaLambda();
+	internaFunctor();
 
 }</code
 >
@@ -4723,15 +4729,25 @@ superior((x) =&gt; {
 
 
 
-		InternaDelegate interna = () => {
+		InternaDelegate interna = () =&gt; {
 			System.Console.WriteLine(@"interna");
 		};
 
 		interna();
 
-		Interna2Delegate interna2 = x => x + 1;
+		Interna2Delegate interna2 = x =&gt; x + 1;
 
 		var y = interna2(1);
+
+		// ou
+
+		Action interna = new Action(() =&gt; {
+			System.Console.WriteLine(@"interna");
+		})); // testar isso
+
+		Func&lt;int&gt; interna2 = new Func&lt;int&gt;(x =&gt; x + 1);
+
+		// C# 7 deverá permitir funções locais também
 
 	}
 
@@ -4789,7 +4805,7 @@ superior((x) =&gt; {
 
 	function interna() { /**/ }
 
-	let internaLambda = () => { /**/ };
+	let internaLambda = () =&gt; { /**/ };
 
 	interna();
 	internaLambda();
@@ -4896,10 +4912,10 @@ int main(int argc, const char * argv[]) {
 
 
 
-func facade() -> () -> Int {
+func facade() -&gt; () -&gt; Int {
 	// acessível somente pela função interna
 	var i = 0
-	func interna() -> Int {
+	func interna() -&gt; Int {
 		i = i + 1
 		return i
 	}
@@ -4938,7 +4954,7 @@ public class MainClassClosure {
 	static InternaDelegate Facade() {
 		// acessível somente pela função interna
 		int i = 0;
-		InternaDelegate interna = () => {
+		InternaDelegate interna = () =&gt; {
 			i++;
 			return i;
 		};
@@ -4974,7 +4990,7 @@ public class MainClosure {
 	static Interna facade() {
 		// acessível somente pela "função" interna
 		final ClosureState closureState = new ClosureState();
-		Interna interna = () -> {
+		Interna interna = () -&gt; {
 			closureState.i++;
 			return closureState.i;
 		};
@@ -8279,7 +8295,7 @@ namespace IndexerExample {
 
 	OpOvCollection::OpOvCollection() {
 		// inicia a array com valores 0
-		std::fill(this->array, this->array + 9, 0);
+		std::fill(this-&gt;array, this-&gt;array + 9, 0);
 	}
 
 	CollectionProxy OpOvCollection::operator[](const size_t index) {
