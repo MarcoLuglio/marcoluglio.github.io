@@ -8517,8 +8517,61 @@ namespace MarcoLuglio.IndexerExample {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// es6 proxies com trap "get"
-</code
+>'use strict';
+
+const indexingProxy = {
+
+	get(alvo, propriedade, receiver) {
+
+		// pode ser indexada por inteiros
+		if (/^\d+$/.test(propriedade)) {
+			return Reflect.get(alvo._array, propriedade, receiver);
+		}
+
+		// ou por outros tipos
+		for (let valor of alvo._array) {
+			if (valor.startsWith(propriedade)) {
+				return valor;
+			}
+		}
+
+		// retorna null
+		// se não encontrar um item pela chave
+		return null;
+
+	},
+
+	set(alvo, propriedade, valor, receiver) {
+
+		// pode ser indexada por inteiros
+		if (/^\d+$/.test(propriedade)) {
+			alvo._array[propriedade] = valor;
+			return true;
+		}
+
+		// ou por outros tipos
+		alvo._array.push(valor);
+		return true;
+
+	}
+
+};
+
+class Collection {
+	constructor() {
+		Object.defineProperty(this, '_array', {value: []});
+	}
+}
+
+const collection = new Collection();
+const indexedCollection = new Proxy(collection, indexingProxy);
+
+indexedCollection[0] = "sunday";
+indexedCollection[1] = "monday I'm in love";
+indexedCollection[2] = "tuesday and wednesday too";
+
+// "tuesday and wednesday too"
+console.log(indexedCollection["tuesday"]);</code
 >
 </div>
 
