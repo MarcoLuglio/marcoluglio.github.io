@@ -8609,15 +8609,210 @@ console.log(indexedCollection["tuesday"]);</code
 
 <section>
 
-<h2 id='templateid'>Interface Binária C</h2>
+<h2 id='templateid'>Interface Binária C <span>Foreign Function Interface</span></h2>
+
+
+
+<h3>Exportar para C</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+			<p>C++ - TabelaNutricional.hpp</p>
+			<code class='cpp'
+			>#pragma once
+
+#ifdef __cplusplus
+namespace MarcoLuglio {
+namespace FFIExample {
+extern "C" {
+#endif
+
+		struct TabelaNutricional {
+			float valorEnergetico;
+			float carboidratos;
+			float proteinas;
+			float gordurasTotais;
+			float gordurasSaturadas;
+			float gordurasTrans;
+			float fibraAlimentar;
+			float sodio;
+		};
+
+#ifdef __cplusplus
+}
+}
+}
+#endif</code
+			>
+		</div>
+
+		<div>
+			<p>C++ - TabelaNutricional.cpp</p>
+			<code class='cpp'
+			>#include "TabelaNutricional.hpp"
+
+namespace MarcoLuglio {
+namespace FFIExample {
+
+	// TODO ver se esse arquivo
+	// é realmente necessário
+
+}
+}</code
+			>
+		</div>
+
+	</div>
+
+	<div class='pair'>
+
+		<div>
+			<p>C++ - TabelaNutricionalBiblioteca.hpp</p>
+			<code class='cpp'
+			>#pragma once
+
+#ifdef _MSC_VER // Visual Studio specific macro
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT __attribute__((visibility("default")))
+#endif
+
+#include "TabelaNutricional.hpp"
+
+#ifdef __cplusplus
+namespace MarcoLuglio {
+namespace FFIExample {
+extern "C" {
+#endif
+
+		DLLEXPORT struct TabelaNutricional calcular(float porcao);
+
+#ifdef __cplusplus
+}
+}
+}
+#endif</code
+			>
+		</div>
+
+		<div>
+			<p>C++ - TabelaNutricionalBibliteca.cpp</p>
+			<code class='cpp'
+			>#include "TabelaNutricional.hpp"
+#include "TabelaNutricionalBibliteca.hpp"
+
+namespace MarcoLuglio {
+namespace FFIExample {
+
+	TabelaNutricional calcular(const float porcao) {
+
+		TabelaNutricional tabela{};
+		// ...
+		return tabela;
+
+	}
+
+}
+}</code
+			>
+		</div>
+
+	</div>
+
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>-</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>-</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust - TabelaNutricional.rs</p>
+<code class='rust'
+>#[repr(C)]
+pub struct TabelaNutricional {
+	valorEnergetico: f32,
+	carboidratos: f32,
+	proteinas: f32,
+	gordurasTotais: f32,
+	gordurasSaturadas: f32,
+	gordurasTrans: f32,
+	fibraAlimentar: f32,
+	sodio: f32
+}
+
+#[no_mangle]
+pub extern fn calcular(porcao:f32) -&lt; TabelaNutricional {
+	let mut tabela = TabelaNutricional{
+		valorEnergetico: 1_f32,
+		carboidratos: 1_f32,
+		proteinas: 1_f32,
+		gordurasTotais: 1_f32,
+		gordurasSaturadas: 1_f32,
+		gordurasTrans: 1_f32,
+		fibraAlimentar: 1_f32,
+		sodio: 2_f32
+	};
+	// TODO usar porcao
+	return tabela;
+}
+
+// compilar com
+// rustc --crate-type dylib TabelaNutricional.rs
+// vai gerar libTabelaNutricional.dylib</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>-</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>-</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>-</code
+>
+</div>
+
+</div>
+
+
+
+<h3>Importar do C</h3>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// usar LoadLibrary/GetProcAddress/FreeLibrary no Windows
+// ou dlopen/dlsym/dlclose no Mac e Linux
+// ou linkar as bibliotecas em tempo de compilação
+// ou adicionar as referências nas IDEs respectivas</code
 >
 </div>
 
@@ -8640,42 +8835,108 @@ console.log(indexedCollection["tuesday"]);</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>#[link(name = "TabelaNutricionalBiblioteca")]
+extern "C" {
+	fn calcular(porcao:f32) -> i32;
+}
+
+fn main() {
+	unsafe {
+		calcular(20);
+	}
+}</code
 >
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+<p>C# - TabelaNutricionalBibliotecaNative.cs</p>
 <code class='cs'
->
-</code
+>// Adicionar a referência ao arquivo na IDE e:
+
+using System.Runtime.InteropServices;
+
+namespace MarcoLuglio.FFIExample {
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct TabelaNutricional {
+		public float valorEnergetico;
+		public float carboidratos;
+		public float proteinas;
+		public float gordurasTotais;
+		public float gordurasSaturadas;
+		public float gordurasTrans;
+		public float fibraAlimentar;
+		public float sodio;
+	};
+
+	public static class SalarioBibliotecaNative {
+
+		[DllImport(
+			"TabelaNutricionalBiblioteca.dll",
+			CallingConvention = CallingConvention.Cdecl,
+			EntryPoint = @"calcular"
+		)]
+		public static extern TabelaNutricional calcular(float porcao);
+
+	}
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+
+<p>Java - TabelaNutricional.java</p>
 <code class='java'
+>package marcoLuglio.ffiExample;
+
+public final class TabelaNutricional {
+	public float valorEnergetico;
+	public float carboidratos;
+	public float proteinas;
+	public float gordurasTotais;
+	public float gordurasSaturadas;
+	public float gordurasTrans;
+	public float fibraAlimentar;
+	public float sodio;
+}</code
 >
-</code
+
+<p>Java - TabelaNutricionalBibliotecaNative.java</p>
+<code class='java'
+>package marcoLuglio.ffiExample;
+
+public final class TabelaNutricionalBibliotecaNative {
+
+	static {System.loadLibrary("TabelaNutricionalBiblioteca");}
+
+	private native TabelaNutricional calcular(float porcao);
+
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>// No navegador não existe, mas veja
+// <a href='https://webassembly.github.io/'>Web Assembly</a>
+// Já usando node.js veja o <a href='https://github.com/node-ffi/node-ffi'>plug-in FFI</a></code
 >
 </div>
 
 </div>
+
+
 
 <ol>
 	<li>a</li>
 </ol>
 
 <p>A</p>
+
+
 
 </section>
 

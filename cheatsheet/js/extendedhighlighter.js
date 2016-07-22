@@ -523,6 +523,72 @@ define('CStringPatternIterator', () => {
 });
 
 
+define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CSAttributePatternIterator = class CSAttributePatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			this._matchFunction = this._matchStartBracket;
+			Object.seal(this);
+		}
+
+		_matchStartBracket(matchCharacter) {
+			if (matchCharacter === '[') {
+				this._matchFunction = this._matchAttributeNameOrStartBrace;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchAttributeNameOrStartBrace(matchCharacter) {
+			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
+				this._matchFunction = this._matchContentOrEndBrace;
+			}
+			return true;
+		}
+
+		_matchContentOrEndBrace(matchCharacter) {
+			if (matchCharacter === ')') { // TODO tem que ter um argumento antes do ) ??
+				this._matchFunction = this._matchEndBracket;
+			}
+			return true;
+		}
+
+		_matchEndBracket(matchCharacter) {
+			if (matchCharacter === ']') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+	};
+
+	return CSAttributePatternIterator;
+
+});
+
+
+
+/**
+ * Token for Rust attributes
+ */
+define('CSAttributeToken', ['SourcePatternIteratorToken', 'CSAttributePatternIterator'], (SourcePatternIteratorToken, CSAttributePatternIterator) => {
+
+	const CSAttributeToken = class CSAttributeToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('attribute', new CSAttributePatternIterator());
+		}
+	};
+
+	return CSAttributeToken;
+
+});
+
+
 
 define('CLineCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
@@ -4100,6 +4166,7 @@ define(
 		'CSStringLiteralToken',
 		'CSVerbatimStringLiteralToken',
 		'CSInterpolatedStringLiteralToken',
+		'CSAttributeToken',
 
 		'CSSymbolToken',
 
@@ -4125,6 +4192,7 @@ define(
 		CSStringLiteralToken,
 		CSVerbatimStringLiteralToken,
 		CSInterpolatedStringLiteralToken,
+		CSAttributeToken,
 
 		CSSymbolToken,
 
@@ -4203,7 +4271,8 @@ define(
 				new CSNumericLiteralToken(),
 				new CSStringLiteralToken(),
 				new CSVerbatimStringLiteralToken(),
-				new CSInterpolatedStringLiteralToken()
+				new CSInterpolatedStringLiteralToken(),
+				new CSAttributeToken()
 			);
 		}
 

@@ -504,7 +504,8 @@ div.codeblock.bubaloop p + code.javascript {
 }
 
 .bubaloop.cs .directive,
-.bubaloop.cs .operator {
+.bubaloop.cs .operator,
+.bubaloop.cs .attribute {
 	color: #7F8EA3;
 }
 
