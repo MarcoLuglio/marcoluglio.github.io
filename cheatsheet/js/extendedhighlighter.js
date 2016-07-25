@@ -543,17 +543,38 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 		}
 
 		_matchAttributeNameOrStartBrace(matchCharacter) {
+
+			// TODO talvez testar com regex se é uma letra ou identificador válido
+			// não sei quais as regras para nomear atributos
+			if (matchCharacter === ')'
+				|| matchCharacter === ']'
+				) {
+
+				this._hasNext = false;
+				return false;
+			}
+
 			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
 				this._matchFunction = this._matchContentOrEndBrace;
 			}
+
 			return true;
+
 		}
 
 		_matchContentOrEndBrace(matchCharacter) {
+
+			if (matchCharacter === ']') {
+				this._hasNext = false;
+				return false;
+			}
+
 			if (matchCharacter === ')') { // TODO tem que ter um argumento antes do ) ??
 				this._matchFunction = this._matchEndBracket;
 			}
+
 			return true;
+
 		}
 
 		_matchEndBracket(matchCharacter) {
@@ -1401,11 +1422,17 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'@defs',
 				'@encode',
 
+				'alloc',
 				'break',
 				'const',
+				'dealloc',
 				'for',
 				'if',
+				'init',
 				'return',
+				'self',
+				'struct',
+				'super',
 				'typedef',
 				'void',
 				'while',
@@ -1860,12 +1887,14 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'case',
 				'catch',
 				'class',
+				'convenience',
 				'default',
 				'defer',
 				'deinit',
 				'didSet',
 				'do',
 				'enum',
+				'extension',
 				'final',
 				'for',
 				'func',
@@ -1877,14 +1906,17 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'is',
 				'lazy',
 				'let',
+				'mutating',
 				'override',
 				'private',
+				'protocol',
 				'public',
 				'required',
 				'return',
 				'self',
 				'set',
 				'static',
+				'struct',
 				'subscript',
 				'super',
 				'switch',
