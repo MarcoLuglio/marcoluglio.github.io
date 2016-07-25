@@ -731,6 +731,104 @@ define('CBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePattern
 
 
 
+define('NestedBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const NestedBlockCommentPatternIterator = class NestedBlockCommentPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_nestingLevel: {value: 0, writable: true}
+			});
+
+			this._matchFunction = this._matchBeginSlash;
+			Object.seal(this);
+
+		}
+
+		_matchBeginSlash(matchCharacter) {
+
+			if (matchCharacter === '/') {
+				this._matchFunction = this._matchBeginStar;
+				return true;
+			}
+
+			if (this._nestingLevel > 0) {
+				this._matchFunction = this._matchContent;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchBeginStar(matchCharacter) {
+
+			if (matchCharacter === '*') {
+				this._matchFunction = this._matchContent;
+				this._nestingLevel++;
+				return true;
+			}
+
+			console.log(matchCharacter + ' não match *. level: ' + this._nestingLevel);
+			if (this._nestingLevel > 0) {
+				this._matchFunction = this._matchContent;
+				return true;
+			}
+
+			console.log(matchCharacter + ' não match *. level: ' + this._nestingLevel);
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContent(matchCharacter) {
+
+			if (matchCharacter === '/') {
+				this._matchFunction = this._matchBeginStar;
+			}
+
+			if (matchCharacter === '*') {
+				this._matchFunction = this._matchEndSlash;
+			}
+
+			return true;
+
+		}
+
+		_matchEndSlash(matchCharacter) {
+
+			if (matchCharacter === '/') {
+				this._nestingLevel--;
+				console.log('end slash level: ' + this._nestingLevel);
+				if (this._nestingLevel === 0) {
+					this._matchFunction = this._matchEnd;
+				} else {
+					this._matchFunction = this._matchContent;
+				}
+			} else if (matchCharacter === '*') {
+				// não fazer nada
+				// ou em outras palavras
+				// this._matchFunction = this._matchEndSlash;
+			} else {
+				this._matchFunction = this._matchContent;
+			}
+
+			return true;
+
+		}
+
+	};
+
+	return NestedBlockCommentPatternIterator;
+
+});
+
+
+
 /**
  * Token for C directives
  */
@@ -794,6 +892,23 @@ define('CBlockCommentToken', ['SourcePatternIteratorToken', 'CBlockCommentPatter
 	};
 
 	return CBlockCommentToken;
+
+});
+
+
+
+/**
+ * Token for Swift and Rust nested block comments
+ */
+define('NestedBlockCommentToken', ['SourcePatternIteratorToken', 'NestedBlockCommentPatternIterator'], (SourcePatternIteratorToken, NestedBlockCommentPatternIterator) => {
+
+	const NestedBlockCommentToken = class NestedBlockCommentToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('comment blockComment', new NestedBlockCommentPatternIterator());
+		}
+	};
+
+	return NestedBlockCommentToken;
 
 });
 
@@ -1392,6 +1507,16 @@ define(
 define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
 	const ObjCKeywordToken = class ObjCKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+		/*
+		TODO
+		swift attributes
+		@noescape
+		@autoclosure
+		@available
+		@warn_unused_result
+		@swift3_migration
+		*/
 
 		constructor() {
 			super('keyword', [
@@ -2266,7 +2391,7 @@ define(
 		'SwiftStringLiteralToken',
 
 		'CLineCommentToken',
-		//'NestedBlockCommentToken',
+		'NestedBlockCommentToken',
 		'SwiftDirectiveToken',
 
 		'HtmlEmphasisToken',
@@ -2283,7 +2408,7 @@ define(
 		SwiftStringLiteralToken,
 
 		CLineCommentToken,
-		//NestedBlockCommentToken,
+		NestedBlockCommentToken,
 		SwiftDirectiveToken,
 
 		HtmlEmphasisToken,
@@ -2313,7 +2438,7 @@ define(
 
 				// comments
 				new CLineCommentToken(),
-				//new CBlockCommentToken(),
+				new NestedBlockCommentToken(),
 				new SwiftDirectiveToken()
 
 			);
@@ -3077,7 +3202,7 @@ define(
 		'RustSymbolToken',
 
 		'CLineCommentToken',
-		//'NestedBlockCommentToken',
+		'NestedBlockCommentToken',
 
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
@@ -3098,7 +3223,7 @@ define(
 		RustSymbolToken,
 
 		CLineCommentToken,
-		//NestedBlockCommentToken,
+		NestedBlockCommentToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -3128,8 +3253,8 @@ define(
 				new RustLifetimeToken(),
 
 				// comments
-				new CLineCommentToken()//,
-				//new CBlockCommentToken()
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
 
 			);
 
