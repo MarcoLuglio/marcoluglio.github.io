@@ -140,6 +140,294 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 
 <section>
 
+<h2 id='comentarios'>Comentários <span>e documentação inline</span></h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// linha
+
+/*
+bloco
+*/
+
+void function someFunction(/* bloco */ int arg) {
+
+}
+
+/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
+/// &lt;param&gt;The argument os the function&lt;/param&gt;
+/// &lt;returns&gt;The result of the function call&lt;/returns&gt;
+/// &lt;example&gt;
+/// &lt;code&gt;
+/// auto result{someFunction(2)};
+/// &lt;/code&gt;
+/// &lt;/example&gt;
+int function someFunction(int arg) {
+	return 0;
+}
+
+/**
+&lt;summary&gt;Visual Studio XML Documentation alt 2&lt;/summary&gt;
+&lt;param&gt;The argument os the function&lt;/param&gt;
+&lt;returns&gt;The result of the function call&lt;/returns&gt;
+&lt;example&gt;
+&lt;code&gt;
+auto result{someFunction(2)};
+&lt;/code&gt;
+&lt;/example&gt;
+*/
+int function someFunction(int arg) {
+	return 0;
+}
+
+/// XCode Doxygen / Header Doc alt 1
+/// \param The argument of the function
+/// \returns The result of the function call
+/// \code
+/// auto result{someFunction(2)};
+int function someFunction(int arg) {
+	return 0;
+}
+
+//! XCode Doxygen / Header Doc alt 2
+//! @param The argument of the function
+//! @return The result of the function call
+//! @code
+//! auto result{someFunction(2)};
+int function someFunction(int arg) {
+	return 0;
+}
+
+/**
+XCode Doxygen / Header Doc alt 3
+\param The argument of the function
+\return The result of the function call
+\code
+auto result{someFunction(2)};
+*/
+int function someFunction(int arg) {
+	return 0;
+}
+
+/*!
+XCode Doxygen / Header Doc alt 4
+@param The argument of the function
+@returns The result of the function call
+@code
+auto result{someFunction(2)};
+*/
+int function someFunction(int arg) {
+	return 0;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// linha
+
+/*
+bloco
+*/
+
+#pragma mark - XCode section with dash
+#pragma mark XCode section</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// linha
+
+/*
+bloco
+*/
+
+/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/
+
+// MARK: - XCode section with dash
+// MARK: XCode section
+
+/**
+XCode markdown
+- Parameter arg1: The argument of the function
+- Returns: The result of the function call
+	let result = someFunction(2)
+*/
+func someFunction(arg1:Int) -&gt; Int {
+	return 0
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// linha
+
+/*
+bloco
+*/
+
+/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/
+
+/// Rustdoc para o item que segue
+/// # Examples
+/// let result = someFunction(2);
+fn someFunction(arg1:i32) -&gt; i32 {
+	//
+}
+
+mod foo {
+	//! Rustdoc para o contêiner externo
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// linha
+
+/*
+bloco
+*/
+
+#region foldable
+#endregion
+
+#region example
+
+public class SomeClass {
+
+	/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
+	/// &lt;param name="arg1"&gt;The argument of the function&lt;/param&gt;
+	/// &lt;returns&gt;The result of the function call&lt;/returns&gt;
+	/// &lt;example&gt;
+	/// &lt;code&gt;
+	/// var someObject = SomeClass();
+	/// var result = someObject.SomeMethod(2);
+	/// &lt;/code&gt;
+	/// &lt;/example&gt;
+	public int SomeMethod(int arg1) {
+		//
+	}
+
+	/**
+	&lt;summary&gt;Visual Studio XML Documentation alt 2&lt;/summary&gt;
+	&lt;param name="arg1"&gt;The argument of the function&lt;/param&gt;
+	&lt;returns&gt;The result of the function call&lt;/returns&gt;
+	&lt;example&gt;
+	&lt;code&gt;
+	var someObject = SomeClass();
+	var result = someObject.SomeMethod(2);
+	&lt;/code&gt;
+	&lt;/example&gt;
+	*/
+	public int SomeOtherMethod(int arg1) {
+		//
+	}
+
+}
+
+#endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// linha
+
+/*
+bloco
+*/
+
+// region idea intellij foldable
+// endregion
+
+// region example
+
+public class SomeClass {
+
+	/**
+	JavaDoc
+	{@code
+	SomeClass someObject = new SomeClass();
+	int result = someObject.someMethod();
+	}
+	@param arg1 The argument of the function
+	@return The result of the function call
+	*/
+	public int someMethod(int arg1) {
+		return 0;
+	}
+
+}
+
+// endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// linha
+
+/*
+bloco
+*/
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>Objective-C / Swift / C#</li>
+	<li>C++</li>
+	<li>Rust</li>
+	<li>Java</li>
+	<li>JavaScript</li>
+</ol>
+
+<p>Objective-C, Swift e C# possuem ferramentas padrão nas respectivas <abbr title='Integrated Development Environment'>IDE</abbr>s.<br />
+C++ não possui uma ferramenta oficial. Varia de acordo com a <abbr title='Integrated Development Environment'>IDE</abbr> ou ferramenta externa e permite a mistura de muitos estilos e palavras alternativas.<br />
+Rust possui documentação inline padronizada, mas as possibilidades são bastante simples.<br />
+Java usa JavaDoc, que só permite documentação usando <code class='java'>/** */</code>. Aliado com o fato de que Java não suporta comentários de bloco aninhados, um trecho de código devidamente documentado é impossível de se comentar com <code class='java'>/* */</code>.<br />
+JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso do JavaScript é mais grave pois as sintaxes variam bastante entre si, inclusive quanto ao seu posicionamento no código.</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='declaracaodevariaveis'>Declaração de Variáveis</h2>
 
 <div class='comparison'>
@@ -7985,7 +8273,7 @@ public class C {
 auto valores{std::make_tuple(3.8, 'A', "Lisa Simpson")};
 auto valoresCpp17{1, -1};
 
-std::get<0>(valores);</code
+std::get&lt;0&gt;(valores);</code
 >
 </div>
 
@@ -8015,7 +8303,7 @@ some_tuple.0;</code
 <p>C#</p>
 <code class='cs'
 >var population = new Tuple<string, int, int>("New York", 7891957, 7781984);
-population.Item1</code
+population.Item1;</code
 >
 </div>
 
@@ -8032,10 +8320,13 @@ population.Item1</code
 </div>
 
 <ol>
-	<li>a</li>
+	<li>Rust / Swift</li>
+	<li>C++ / C#</li>
 </ol>
 
-<p>A</p>
+<p>Rust e Swift lidam com <em>tuples</em> de modo bastante integrado à linguagem.<br />
+C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída sobre o paradigma de orientaçµão à objetos.
+</p>
 
 </section>
 
