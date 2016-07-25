@@ -3258,7 +3258,7 @@ let tamanho =  = mdPrePopulada.length;
 <code class='swift'
 >// TODO
 // primtive on stack
-// structs ?? implementation dependent??
+// structs e enums value types - stack
 // classes and closures on the heap
 </code
 >
@@ -7973,7 +7973,7 @@ public class C {
 
 <section>
 
-<h2 id='objetos'>Objetos</h2>
+<h2 id='tuples'>Tuples</h2>
 
 <div class='comparison'>
 
@@ -8005,6 +8005,735 @@ public class C {
 <p>Rust</p>
 <code class='rust'
 >
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='objetos'>Objetos</h2>
+
+
+
+<h3 id='structs'>Structs</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// funciona com herança e interfaces?
+struct S {
+	// idem classe, mas
+	// padrão é public?
+};
+
+S s1;
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>struct S {
+	//
+};
+
+struct S s1;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>struct S : P, Q {
+
+	// para structs, o padrão dos métodos
+	// é ser const
+	func constMethod() {
+		//
+	}
+
+	mutating func structMethod() {
+		//
+	}
+
+}
+
+let s1 = S()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>struct S {
+	//
+}
+
+impl S {
+	fn structMethod(&amp;self) {
+		//
+	}
+}
+
+let s1 = S {x:0, y:0};
+s1.structMethod();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// funciona com herança e interfaces?
+public struct S {
+	public void method() {
+		//
+	}
+}
+
+var s1 = new S();
+var s2 = S(); // assim tem que inicializar os campos manualmente</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+</div>
+
+
+
+<h3>Classes</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>class C {
+
+	static func myStaticMethod() {
+		//
+	}
+
+	static var myStaticProp:S
+
+	init() {
+		//
+	}
+
+	deinit {
+		//
+	}
+
+	private func myMethod() {
+		self.prop
+	}
+
+	var getter:S {
+		return ...
+	}
+
+	var getterSetter:S {
+
+		get {
+			return self._getterSetter
+		}
+
+		set(newValue) { // ou newValue implícito set {
+			self._getterSetter = newValue
+		}
+
+	}
+
+	lazy var prop:S
+
+	private _getterSetter:S
+
+	// setter pode ser menos visível que o getter
+	public private(set) var numberOfEdits = 0
+
+	// internal
+	private(set) var numberOfEdits = 0
+
+}
+
+final class D : C, P, Q {
+
+	override init() {
+		super.init()
+	}
+
+	init?() {
+		return nil
+	}
+
+	convenience init() {
+		//
+	}
+
+	// o override pode ser mais visível!
+	override internal func myMethod() {
+		super.myMethod()
+	}
+
+}
+
+final class R {
+
+	required init() {
+		//
+	}
+
+}
+
+let o1 = C()
+let o2 = D()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+
+
+<h3>Traits</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// Herança múltipla tem
+// funcionalidade similar
+// às traits</code
+>
+</div>
+
+<div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+			<p>Objective-C - Classe.h</p>
+			<code class='objectivec'
+			>@interface Classe : NSObject
+
+@property (readonly) NSMutableArray* friends;
+@property (copy) NSString* name;
+
+-(void) sayHello;
+-(void) sayGoodbye;
+
+@end</code
+			>
+		</div>
+
+		<div>
+			<p>Objective-C - Classe.m</p>
+			<code class='objectivec'
+			>@implementation Person
+
+@synthesize name = _name;
+@synthesize friends = _friends;
+
+-(id) init {
+
+	self = [super init];
+
+	if (self) {
+		_friends = [[NSMutableArray alloc] init];
+	}
+
+	return self;
+
+}
+
+-(void) sayHello {
+	NSLog(@"Hello, says %@.", _name);
+}
+
+-(void) sayGoodbye {
+	NSLog(@"Goodbye, says %@.", _name);
+}
+@end</code
+			>
+		</div>
+
+	</div>
+
+	<div class='pair'>
+
+		<div>
+			<p>Objective-C - Traits.h</p>
+			<code class='objectivec'
+			>@interface Person (Traits)
+-(void) addFriend:(Person *)aFriend;
+-(void) removeFriend:(Person *)aFriend;
+-(void) sayHelloToFriends;
+@end</code
+			>
+		</div>
+
+		<div>
+			<p>Objective-C - Traits.m</p>
+			<code class='objectivec'
+			>#import "Person+Relations.h"
+
+@implementation Person (Traits)
+
+-(void) addFriend:(Person*)aFriend {
+	[[self friends] addObject:aFriend];
+}
+
+-(void) removeFriend:(Person*)aFriend {
+	[[self friends] removeObject:aFriend];
+}
+
+-(void) sayHelloToFriends {
+	for (Person* friend in [self friends]) {
+		NSLog(@"Hello there, %@!", [friend name]);
+	}
+}
+
+@end</code
+			>
+		</div>
+
+	</div>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>extension C {
+	// posso adicionar initializers
+	// métodos
+	// e propriedades
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>trait HasArea {
+	fn area(&amp;self) -&lt; f64;
+	fn is_invalid(&amp;self) -&lt; bool { !self.is_valid() } // default method
+}
+
+impl HasArea for Circle {
+	fn area(&amp;self) -&lt; f64 {
+		std::f64::consts::PI * (self.radius * self.radius)
+	}
+	// is_invalid "herdado"
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>public static class MyExtensions {
+	public static int WordCount(this String str) {
+		//
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='cpp'
+>// Interface default methods
+// tem funcionalidade
+// similar às traits</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+
+
+<h3>Interfaces</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// public internal private
+
+// interfaces
+
+protocol P {
+	// pode conter variáveis e métodos
+}
+
+protocol Q {
+	//
+}
+
+// structs
+
+struct S : P, Q {
+
+	// para structs, o padrão dos métodos
+	// é ser const
+	func constMethod() {
+		//
+	}
+
+	mutating func structMethod() {
+		//
+	}
+
+}
+
+final class D : C, P, Q {
+
+	override init() {
+		super.init()
+	}
+
+	init?() {
+		return nil
+	}
+
+	convenience init() {
+		//
+	}
+
+	// o override pode ser mais visível!
+	override internal func myMethod() {
+		super.myMethod()
+	}
+
+}
+
+let o2 = D()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+
+
+<h3>Herança</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>class C {
+
+	static func myStaticMethod() {
+		//
+	}
+
+	static var myStaticProp:S
+
+	init() {
+		//
+	}
+
+	deinit {
+		//
+	}
+
+	private func myMethod() {
+		self.prop
+	}
+
+	var getter:S {
+		return ...
+	}
+
+	var getterSetter:S {
+
+		get {
+			return self._getterSetter
+		}
+
+		set(newValue) { // ou newValue implícito set {
+			self._getterSetter = newValue
+		}
+
+	}
+
+	lazy var prop:S
+
+	private _getterSetter:S
+
+	// setter pode ser menos visível que o getter
+	public private(set) var numberOfEdits = 0
+
+	// internal
+	private(set) var numberOfEdits = 0
+
+}
+
+final class R {
+
+	required init() {
+		//
+	}
+
+}
+
+let o1 = C()
+let o2 = D()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>trait Foo {
+	fn foo(&amp;self);
+}
+
+trait FooBar : Foo {
+	fn foobar(&amp;self);
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2>Resolução de tipos</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// dynamic dispatch
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// static e dynamic dispatch
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// ver "trait objects" na doc oficial
 </code
 >
 </div>
@@ -8837,7 +9566,7 @@ pub extern fn calcular(porcao:f32) -&lt; TabelaNutricional {
 <code class='rust'
 >#[link(name = "TabelaNutricionalBiblioteca")]
 extern "C" {
-	fn calcular(porcao:f32) -> i32;
+	fn calcular(porcao:f32) -&lt; i32;
 }
 
 fn main() {
@@ -8913,6 +9642,11 @@ public final class TabelaNutricionalBibliotecaNative {
 	private native TabelaNutricional calcular(float porcao);
 
 }</code
+>
+
+<p>C - ?.c</p>
+<code class='c'
+>// TODO</code
 >
 
 </div>
