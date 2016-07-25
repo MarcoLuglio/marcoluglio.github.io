@@ -7980,23 +7980,25 @@ public class C {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>#include &lt;tuple&gt;
+
+auto valores{std::make_tuple(3.8, 'A', "Lisa Simpson")};
+auto valoresCpp17{1, -1};
+
+std::get<0>(valores);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>let someTuple: (Double, Double, Double) = (3.14159, 2.71828, 1.1)
+someTuple.0
 </code
 >
 </div>
@@ -8004,33 +8006,27 @@ public class C {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>let some_tuple = (1u8, 2u16, 2f32);
+some_tuple.0;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>var population = new Tuple<string, int, int>("New York", 7891957, 7781984);
+population.Item1</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
->
-</code
->
+-
 </div>
 
 </div>
@@ -8255,10 +8251,7 @@ let o2 = D()</code
 
 <div class='codeblock'>
 <p>Rust</p>
-<code class='rust'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -8411,14 +8404,10 @@ let o2 = D()</code
 <p>Rust</p>
 <code class='rust'
 >trait HasArea {
-	fn area(&amp;self) -&lt; f64;
-	fn is_invalid(&amp;self) -&lt; bool { !self.is_valid() } // default method
+	fn is_invalid(&amp;self) -&gt; bool { !self.is_valid() }
 }
 
 impl HasArea for Circle {
-	fn area(&amp;self) -&lt; f64 {
-		std::f64::consts::PI * (self.radius * self.radius)
-	}
 	// is_invalid "herdado"
 }</code
 >
@@ -8438,9 +8427,11 @@ impl HasArea for Circle {
 <div class='codeblock'>
 <p>Java</p>
 <code class='cpp'
->// Interface default methods
-// tem funcionalidade
-// similar às traits</code
+>public interface Desenhavel {
+	default void desenhar() {
+		//
+	}
+}</code
 >
 </div>
 
@@ -8534,7 +8525,17 @@ let o2 = D()</code
 
 <div class='codeblock'>
 <p>Rust</p>
--
+<code class='rust'
+>trait HasArea {
+	fn area(&amp;self) -&gt; f64;
+}
+
+impl HasArea for Circle {
+	fn area(&amp;self) -&gt; f64 {
+		std::f64::consts::PI * (self.radius * self.radius)
+	}
+}</code
+>
 </div>
 
 <div class='codeblock'>
@@ -9485,7 +9486,7 @@ pub struct TabelaNutricional {
 }
 
 #[no_mangle]
-pub extern fn calcular(porcao:f32) -&lt; TabelaNutricional {
+pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 	let mut tabela = TabelaNutricional{
 		valorEnergetico: 1_f32,
 		carboidratos: 1_f32,
@@ -9566,7 +9567,7 @@ pub extern fn calcular(porcao:f32) -&lt; TabelaNutricional {
 <code class='rust'
 >#[link(name = "TabelaNutricionalBiblioteca")]
 extern "C" {
-	fn calcular(porcao:f32) -&lt; i32;
+	fn calcular(porcao:f32) -&gt; i32;
 }
 
 fn main() {
