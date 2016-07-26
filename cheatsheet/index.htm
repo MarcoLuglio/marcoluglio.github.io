@@ -5753,7 +5753,7 @@ int myfunction(int param) throw(someType);</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->- (void)someMethod {
+>- (void) someMethod {
 	@try {
 		//
 	} @catch (NSException *exception) {
@@ -8406,25 +8406,34 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->// funciona com herança e interfaces?
-struct S {
-	// idem classe, mas
-	// padrão é public?
-};
-
-S s1;
-</code
+>// structs e classes são idênticas
+// em C++ exceto por uma única diferença
+// por padrão os campos das structs são
+// publicos, e os das classes são privados</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->struct S {
-	//
+>// Objective-C usa structs do C
+// que são um simples agrupamento
+// de variáveis sem nenhuma outra
+//funcionalidade extra
+struct ResultadoCaixa {
+	public var total:Int
+	public var valorPago:Int
+	public var troco:Int
 };
 
-struct S s1;</code
+// sempre que utilizarmos o nome
+// do tipo definido com uma struct
+// precisamos incluir a palavra struct
+// antes do nome do tipo
+struct ResultadoCaixa compra1;
+compra1.total = 997;
+compra1.valorPago = 1000;
+compra1.troco = 33;</code
 >
 </div>
 
@@ -8679,24 +8688,143 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 
 
 
-<h3>Classes</h3>
+<h3 id='classes'>Classes</h3>
 
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
+
+	<div class='pair'>
+
+		<div>
+			<p>C++ - ResultadoCaixa.hpp</p>
+			<code class='cpp'
+>#pragma once
+
+public class ResultadoCaixa final {
+
+public:
+
+	explicit ResultadoCaixa(int total, int valorPago);
+	~ResultadoCaixa();
+	void descontarFidelidade();
+
+private:
+
+	// por padrão, métodos podem modificar a classe
+	// mas podem ser marcados com a palavra const
+	// para proibir este intuito
+	int calcularFidelidade() const;
+
+	int total;
+	int valorPago;
+	int troco;
+
+}</code
+			>
+		</div>
+
+		<div>
+			<p>C++ - ResultadoCaixa.cpp</p>
+			<code class='cpp'
+>#include "ResultadoCaixa.hpp"
+
+ResultadoCaixa::ResultadoCaixa(int total, int valorPago) {
+	this-&gt;total = total;
+	this-&gt;valorPago = valorPago;
+	this-&gt;troco = valorPago - total;
+}
+
+ResultadoCaixa::~ResultadoCaixa() {
+	//
+}
+
+ResultadoCaixa::descontarFidelidade() {
+	total = calcularFidelidade();
+}
+
+int ResultadoCaixa::calcularFidelidade() {
+	return total - 1;
+}</code
+			>
+		</div>
+
+	</div>
+
+	<p>C++ - main.cpp</p>
+	<code class='cpp'
+>#include "ResultadoCaixa.hpp"
+
+int main(int argc, const char * argv[]) {
+
+	// aloca na stack
+	auto compra1 = ResultadoCaixa(997, 1000);
+
+	// aloca na heap
+	auto compra2 = new ResultadoCaixa(997, 1000);
+
+	return 0;
+
+}</code
+	>
+
 </div>
 
 <div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
+
+	<div class='pair'>
+
+		<div>
+			<p>Objective-C - ResultadoCaixa.h</p>
+			<code class='objectivec'
+>#import &lt;Foundation/Foundation.h&gt;
+
+@interface ResultadoCaixa : NSObject {
+	@private
+	int _troco;
+}
+
+@property (assign, nonatomic) int total;
+@property (assign, nonatomic) int valorPago;
+
+@end</code
+			>
+		</div>
+
+		<div>
+			<p>Objective-C - ResultadoCaixa.m</p>
+			<code class='objectivec'
+>#import "ResultadoCaixa.h"
+
+@implementation ResultadoCaixa
+
+	- (id) initWithTotal:(int)novoTotal eValorPago:(int)novoValorPago {
+		[self init];
+		self.total = novoTotal;
+		self.valorPago = novoValorPago;
+		self-&gt;_troco = self.valorPago - self.total;
+		return self;
+	}
+
+@end</code
+			>
+		</div>
+
+	</div>
+
+	<p>Objective-C - main.m</p>
+	<code class='objectivec'
+>#import "ResultadoCaixa.h"
+
+int main(int argc, const char * argv[]) {
+
+	ResultadoCaixa* compra1 = [[ResultadoCaixa alloc] initWithTotal:997 eValorPago:1000];
+
+	return 0;
+
+}</code
+	>
+
 </div>
 
 <div class='codeblock'>
@@ -8835,62 +8963,12 @@ let o2 = D()</code
 	<div class='pair'>
 
 		<div>
-			<p>Objective-C - Classe.h</p>
-			<code class='objectivec'
-			>@interface Classe : NSObject
-
-@property (readonly) NSMutableArray* friends;
-@property (copy) NSString* name;
-
--(void) sayHello;
--(void) sayGoodbye;
-
-@end</code
-			>
-		</div>
-
-		<div>
-			<p>Objective-C - Classe.m</p>
-			<code class='objectivec'
-			>@implementation Person
-
-@synthesize name = _name;
-@synthesize friends = _friends;
-
--(id) init {
-
-	self = [super init];
-
-	if (self) {
-		_friends = [[NSMutableArray alloc] init];
-	}
-
-	return self;
-
-}
-
--(void) sayHello {
-	NSLog(@"Hello, says %@.", _name);
-}
-
--(void) sayGoodbye {
-	NSLog(@"Goodbye, says %@.", _name);
-}
-@end</code
-			>
-		</div>
-
-	</div>
-
-	<div class='pair'>
-
-		<div>
 			<p>Objective-C - Traits.h</p>
 			<code class='objectivec'
 			>@interface Person (Traits)
--(void) addFriend:(Person *)aFriend;
--(void) removeFriend:(Person *)aFriend;
--(void) sayHelloToFriends;
+- (void) addFriend:(Person *)aFriend;
+- (void) removeFriend:(Person *)aFriend;
+- (void) sayHelloToFriends;
 @end</code
 			>
 		</div>
@@ -8902,15 +8980,15 @@ let o2 = D()</code
 
 @implementation Person (Traits)
 
--(void) addFriend:(Person*)aFriend {
+- (void) addFriend:(Person*)aFriend {
 	[[self friends] addObject:aFriend];
 }
 
--(void) removeFriend:(Person*)aFriend {
+- (void) removeFriend:(Person*)aFriend {
 	[[self friends] removeObject:aFriend];
 }
 
--(void) sayHelloToFriends {
+- (void) sayHelloToFriends {
 	for (Person* friend in [self friends]) {
 		NSLog(@"Hello there, %@!", [friend name]);
 	}
@@ -9607,16 +9685,62 @@ int main(int argc, const char * argv[]) {
 </div>
 
 <div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->// pode ser indexada por inteiros
--(id) objectAtIndexedSubscript:(int)index;
--(void) setObject:(id)obj atIndexedSubscript:(int)index;
+
+	<div class='pair'>
+
+		<div>
+			<p>Objective-C - IndexedCollection.h</p>
+			<code class='objectivec'
+>@interface {
+}
+
+// pode ser indexada por inteiros
+- (id) objectAtIndexedSubscript:(int)index;
+- (void) setObject:(id)obj atIndexedSubscript:(int)index;
 
 // ou por outros tipos
--(id) objectForKeyedSubscript:(NSString)key;
--(void) setObject:(id)obj forKeyedSubscript:(NSString)key;</code
->
+- (id) objectForKeyedSubscript:(NSString)key;
+- (void) setObject:(id)obj forKeyedSubscript:(NSString)key;
+
+@end</code
+			>
+		</div>
+
+		<div>
+			<p>Objective-C - IndexedCollection.m</p>
+			<code class='objectivec'
+>#import "IndexedCollection.h"
+
+@implementation
+
+// TODO
+
+@end</code
+			>
+		</div>
+
+	</div>
+
+	<p>Objective-C - IndexedCollection.h</p>
+	<code class='objectivec'
+>#import "IndexedCollection.h"
+
+int main(int argc, const char * argv[]) {
+
+	IndexedCollection* indexedCollection = [IndexedCollection new];
+
+	indexedCollection[0] = "sunday";
+	indexedCollection[1] = "monday I'm in love";
+	indexedCollection[2] = "tuesday and wednesday too";
+
+	// "tuesday and wednesday too"
+	NSLog(indexedCollection["tuesday"]);
+
+	return 0;
+
+}</code
+	>
+
 </div>
 
 <div class='codeblock'>

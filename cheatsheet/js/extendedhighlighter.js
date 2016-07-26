@@ -1553,6 +1553,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'IBOutlet',
 
 				'alloc',
+				'assign',
 				'break',
 				'const',
 				'copy',
@@ -1566,6 +1567,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'readonly',
 				'return',
 				'self',
+				'strong',
 				'struct',
 				'super',
 				'typedef',
