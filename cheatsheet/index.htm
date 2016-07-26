@@ -8784,6 +8784,10 @@ int main(int argc, const char * argv[]) {
 	int _troco;
 }
 
+- (void) descontarFidelidade;
+
+- (int) calcularFidelidade;
+
 @property (assign, nonatomic) int total;
 @property (assign, nonatomic) int valorPago;
 
@@ -8806,6 +8810,14 @@ int main(int argc, const char * argv[]) {
 		return self;
 	}
 
+	- (void) descontarFidelidade {
+		self.total = [self calcularFidelidade];
+	}
+
+	- (int) calcularFidelidade {
+		return self.total - 1;
+	}
+
 @end</code
 			>
 		</div>
@@ -8819,6 +8831,7 @@ int main(int argc, const char * argv[]) {
 int main(int argc, const char * argv[]) {
 
 	ResultadoCaixa* compra1 = [[ResultadoCaixa alloc] initWithTotal:997 eValorPago:1000];
+	[compra1 descontarFidelidade];
 
 	return 0;
 
