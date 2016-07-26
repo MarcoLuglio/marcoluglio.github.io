@@ -153,8 +153,8 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 bloco
 */
 
-void function someFunction(/* bloco */ int arg) {
-
+void someFunction(/* bloco */ int arg) {
+	//
 }
 
 /// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
@@ -165,7 +165,7 @@ void function someFunction(/* bloco */ int arg) {
 /// auto result{someFunction(2)};
 /// &lt;/code&gt;
 /// &lt;/example&gt;
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }
 
@@ -179,7 +179,7 @@ auto result{someFunction(2)};
 &lt;/code&gt;
 &lt;/example&gt;
 */
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }
 
@@ -188,7 +188,7 @@ int function someFunction(int arg) {
 /// \returns The result of the function call
 /// \code
 /// auto result{someFunction(2)};
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }
 
@@ -197,7 +197,7 @@ int function someFunction(int arg) {
 //! @return The result of the function call
 //! @code
 //! auto result{someFunction(2)};
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }
 
@@ -208,7 +208,7 @@ XCode Doxygen / Header Doc alt 3
 \code
 auto result{someFunction(2)};
 */
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }
 
@@ -219,7 +219,7 @@ XCode Doxygen / Header Doc alt 4
 @code
 auto result{someFunction(2)};
 */
-int function someFunction(int arg) {
+int someFunction(int arg) {
 	return 0;
 }</code
 >
@@ -233,6 +233,10 @@ int function someFunction(int arg) {
 /*
 bloco
 */
+
+void someFunction(/* bloco */ int arg) {
+	return 0;
+}
 
 #pragma mark - XCode section with dash
 #pragma mark XCode section</code
@@ -259,6 +263,10 @@ bloco aninhado
 bloco
 
 */
+
+func someFunction(/* bloco */ arg1:Int) -&gt; Int {
+	return 0
+}
 
 // MARK: - XCode section with dash
 // MARK: XCode section
@@ -296,11 +304,15 @@ bloco
 
 */
 
+fn someFunction(/* bloco */ arg1:i32) -&gt; i32 {
+	0
+}
+
 /// Rustdoc para o item que segue
 /// # Examples
 /// let result = someFunction(2);
 fn someFunction(arg1:i32) -&gt; i32 {
-	//
+	0
 }
 
 mod foo {
@@ -325,6 +337,10 @@ bloco
 
 public class SomeClass {
 
+	public int Example(/* bloco */ int arg1) {
+		return 0;
+	}
+
 	/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
 	/// &lt;param name="arg1"&gt;The argument of the function&lt;/param&gt;
 	/// &lt;returns&gt;The result of the function call&lt;/returns&gt;
@@ -335,7 +351,7 @@ public class SomeClass {
 	/// &lt;/code&gt;
 	/// &lt;/example&gt;
 	public int SomeMethod(int arg1) {
-		//
+		return 0;
 	}
 
 	/**
@@ -350,7 +366,7 @@ public class SomeClass {
 	&lt;/example&gt;
 	*/
 	public int SomeOtherMethod(int arg1) {
-		//
+		return 0;
 	}
 
 }
@@ -374,6 +390,10 @@ bloco
 // region example
 
 public class SomeClass {
+
+	public int example(/* bloco */ int arg1) {
+		return 0;
+	}
 
 	/**
 	JavaDoc
@@ -402,7 +422,48 @@ public class SomeClass {
 /*
 bloco
 */
-</code
+
+function someFunction(/* bloco */ arg1) {
+	return 0;
+}
+
+/**
+JSDoc
+@param {number} arg1 The argument of the function
+@returns {number} The result of the function call
+@example
+let result = someFunction(2);
+*/
+function someFunction(arg1) {
+	return 0;
+}
+
+/**
+para indicar overloads, usamos uma mistura de tipos
+e argumentos opcionais que fica com uma péssima
+legibilidade
+@param {(number|string)} arg1 número ou string
+@param {number} [arg2] opcional
+@returns {(number|string)} número ou string
+
+para cobrir a falta de suporte da linguagem para
+certas funcionalidades, podemos usar também
+@private, @override, @enum etc.
+*/
+
+
+function someFunction(arg1) {
+	/// &lt;signature&gt;
+	/// &lt;summary&gt;Visual Studio XML Documentation&lt;/summary&gt;
+	/// &lt;param name="arg1" type="Number"&gt;The argument of the function&lt;/param&gt;
+	/// &lt;returns type="Number"&gt;The result of the function call&lt;/returns&gt;
+	/// &lt;/signature&gt;
+
+	return 0;
+}
+
+// &lt;signature&gt; é opcional, e permite separar claramente
+// os overloads da função, pois podemos ter mais de uma signature</code
 >
 </div>
 
@@ -411,8 +472,7 @@ bloco
 <ol>
 	<li>Objective-C / Swift / C#</li>
 	<li>C++</li>
-	<li>Rust</li>
-	<li>Java</li>
+	<li>Rust / Java</li>
 	<li>JavaScript</li>
 </ol>
 
@@ -420,7 +480,7 @@ bloco
 C++ não possui uma ferramenta oficial. Varia de acordo com a <abbr title='Integrated Development Environment'>IDE</abbr> ou ferramenta externa e permite a mistura de muitos estilos e palavras alternativas.<br />
 Rust possui documentação inline padronizada, mas as possibilidades são bastante simples.<br />
 Java usa JavaDoc, que só permite documentação usando <code class='java'>/** */</code>. Aliado com o fato de que Java não suporta comentários de bloco aninhados, um trecho de código devidamente documentado é impossível de se comentar com <code class='java'>/* */</code>.<br />
-JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso do JavaScript é mais grave pois as sintaxes variam bastante entre si, inclusive quanto ao seu posicionamento no código.</p>
+JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso do JavaScript é mais grave pois as sintaxes variam bastante entre si, inclusive quanto ao seu posicionamento no código. A ferramenta mais amplamente difundida JSDoc possui sintaxe confusa quanto à <em>overloads</em>.</p>
 
 </section>
 
@@ -3910,7 +3970,7 @@ use std::mem;
 
 unsafe {
 	let a = [0u8, 0u8, 0u8, 0u8];
-	let b = mem::transmute::<[u8; 4], u32>(a);
+	let b = mem::transmute::&lt;[u8; 4], u32&gt;(a);
 }</code
 >
 </div>
@@ -8302,7 +8362,7 @@ some_tuple.0;</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->var population = new Tuple<string, int, int>("New York", 7891957, 7781984);
+>var population = new Tuple&lt;string, int, int&gt;("New York", 7891957, 7781984);
 population.Item1;</code
 >
 </div>
