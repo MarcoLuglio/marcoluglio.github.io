@@ -8432,15 +8432,15 @@ struct S s1;</code
 <p>Swift</p>
 <code class='swift'
 >// Devemos inicializar todos os campos
-// da struct antes de poder usá-la com
-// o inicializador gerado automaticamente
-public struct CaixaResultado {
+// da struct com o inicializador gerado
+// automaticamente antes de poder usá-la
+public struct ResultadoCaixa {
 	public var total:Int
 	public var valorPago:Int
 	public var troco:Int
 }
 
-let compra1 = CaixaResultado(
+let compra1 = ResultadoCaixa(
 	total: 997,
 	valorPago:1000,
 	troco:33
@@ -8468,7 +8468,7 @@ let compra1 = CaixaResultado(
 // mas podem ser marcados com a palavra mutating
 // para indicar este intuito
 
-public struct CaixaResultadoFidelidade {
+public struct ResultadoCaixaFidelidade {
 
 	public mutating func descontarFidelidade() {
 		self.total = self.calcularFidelidade()
@@ -8499,7 +8499,7 @@ public protocol Parcelavel {
 	func parcelar():[Int]
 }
 
-public struct CaixaResultadoCartao : Parcelavel {
+public struct ResultadoCaixaCartao : Parcelavel {
 	public func parcelar():[Int] {
 		//
 	}
@@ -8510,18 +8510,79 @@ public struct CaixaResultadoCartao : Parcelavel {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->struct S {
-	//
+>// Devemos inicializar todos os campos
+// da struct com a sintaxe de chaves
+// antes de poder usá-la
+pub struct ResultadoCaixa {
+	pub total:i32,
+	pub valorPago:i32,
+	pub troco:i32,
 }
 
-impl S {
-	fn structMethod(&amp;self) {
+let mut compra2 = ResultadoCaixa{
+	total: 997,
+	valorPago: 1000,
+	troco: 33
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// structs podem ter métodos
+// métodos podem ou não modificar a struct
+// dependendo de como recebem o argumento
+// self. Se &amp;self ou &amp;mut self
+
+impl ResultadoCaixa {
+
+	pub fn descontarFidelidade(&amp;mut self) {
+		self.total = self.calcularFidelidade();
+		self.troco = self.valorPago - self.total;
+	}
+
+	fn calcularFidelidade(&amp;self) -&gt; i32 {
+		self.total - 1
+	}
+
+}
+
+
+
+
+
+// structs não herdam de um objeto comum
+
+
+// Nem suportam herança
+
+
+// No entanto, podem implementar traits
+
+
+
+trait Parcelavel {
+	fn parcelar(&amp;self) -&gt; [i32; 3];
+}
+
+impl Parcelavel for ResultadoCaixa {
+	fn parcelar(&amp;self) -&gt; [i32; 3] {
 		//
 	}
-}
-
-let s1 = S {x:0, y:0};
-s1.structMethod();</code
+}</code
 >
 </div>
 
@@ -8560,8 +8621,12 @@ public struct ResultadoCaixaC {
 
 var compra2 = new ResultadoCaixaC(967, 1000);
 
+
+
+
 // structs podem ter métodos
-public struct ResultadoCaixa {
+
+public struct ResultadoCaixaFidelidade {
 
 	public void descontarFidelidade() {
 		this.total = this.calcularFidelidade();
@@ -8578,15 +8643,11 @@ public struct ResultadoCaixa {
 
 }
 
-
-
-
-
 // structs herdam de Object
 Console.WriteLine (resultado is Object); // true
 
 // Mas NÃO suportam heranças subsequentes
-public struct ResultadoCaixaFidelidade : ResultadoCaixa {} // erro
+public struct ResultadoCaixaFidelidade2 : ResultadoCaixa {} // erro
 
 // No entanto, podem implementar interfaces
 // Embora o resultado seja bastante confuso

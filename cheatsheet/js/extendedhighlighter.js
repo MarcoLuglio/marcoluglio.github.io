@@ -2677,7 +2677,6 @@ define('RustPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 				'&amp;&amp;',
 				'||',
 				'&amp;', // bitwise and
-				'&amp;mut',
 				'|', // bitwise or
 				'^', // bitwise xor
 				'~', // bitwise not
