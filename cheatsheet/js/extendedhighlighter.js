@@ -565,7 +565,11 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				return true;
 			}
 
-			if (!this._isWordCharacter.test(matchCharacter) && !this._isSpaceCharacter.test(matchCharacter)) {
+			if (matchCharacter !== '.'
+				&& !this._isWordCharacter.test(matchCharacter)
+				&& !this._isSpaceCharacter.test(matchCharacter)
+				) {
+
 				this._hasNext = false;
 				return false;
 			}
@@ -583,9 +587,18 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 			if (matchCharacter === ')') { // TODO tem que ter um argumento antes do ) ??
 				this._matchFunction = this._matchEndBracket;
+				return true;
 			}
 
-			if (!this._isWordCharacter.test(matchCharacter) && !this._isSpaceCharacter.test(matchCharacter)) {
+			if (matchCharacter !== '='
+				&& matchCharacter !== '.'
+				&& matchCharacter !== ','
+				&& matchCharacter !== '"'
+				&& matchCharacter !== '@'
+				&& !this._isWordCharacter.test(matchCharacter)
+				&& !this._isSpaceCharacter.test(matchCharacter)
+				) {
+
 				this._hasNext = false;
 				return false;
 			}
