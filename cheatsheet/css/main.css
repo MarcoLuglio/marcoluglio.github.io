@@ -158,7 +158,7 @@ div .multipart + code {
 	display: flex;
 }
 
-.pair > div {
+.pair > div:first-child {
 	margin-right: 10px;
 }
 
