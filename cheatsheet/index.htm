@@ -5191,7 +5191,7 @@ superior((x) =&gt; {
 <code class='cpp'
 >#include &lt;iostream&gt;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	using std::make_shared;
 	using std::cout;
@@ -5223,7 +5223,7 @@ int main(int argc, const char * argv[]) {
 <code class='objectivec'
 >#import &lt;Foundation/Foundation.h&gt;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	// typedef ajuda na legibilidade
 	typedef int (^interna_t)(void);
@@ -8421,9 +8421,9 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 // de variáveis sem nenhuma outra
 //funcionalidade extra
 struct ResultadoCaixa {
-	public var total:Int
-	public var valorPago:Int
-	public var troco:Int
+	public var total:int
+	public var valorPago:int
+	public var troco:int
 };
 
 // sempre que utilizarmos o nome
@@ -8705,7 +8705,7 @@ public class ResultadoCaixa final {
 
 public:
 
-	explicit ResultadoCaixa(int total, int valorPago);
+	explicit ResultadoCaixa(const int total, const int valorPago);
 	~ResultadoCaixa();
 	void descontarFidelidade();
 
@@ -8729,7 +8729,7 @@ private:
 			<code class='cpp'
 >#include "ResultadoCaixa.hpp"
 
-ResultadoCaixa::ResultadoCaixa(int total, int valorPago) {
+ResultadoCaixa::ResultadoCaixa(const int total, const int valorPago) {
 	this-&gt;total = total;
 	this-&gt;valorPago = valorPago;
 	this-&gt;troco = valorPago - total;
@@ -8740,7 +8740,8 @@ ResultadoCaixa::~ResultadoCaixa() {
 }
 
 ResultadoCaixa::descontarFidelidade() {
-	total = calcularFidelidade();
+	this->total = calcularFidelidade();
+	this->troco = valorPago - total;
 }
 
 int ResultadoCaixa::calcularFidelidade() {
@@ -8755,13 +8756,15 @@ int ResultadoCaixa::calcularFidelidade() {
 	<code class='cpp'
 >#include "ResultadoCaixa.hpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	// aloca na stack
 	auto compra1 = ResultadoCaixa(997, 1000);
+	compra1.descontarFidelidade();
 
 	// aloca na heap
 	auto compra2 = new ResultadoCaixa(997, 1000);
+	compra2.descontarFidelidade();
 
 	return 0;
 
@@ -8780,6 +8783,7 @@ int main(int argc, const char * argv[]) {
 >#import &lt;Foundation/Foundation.h&gt;
 
 @interface ResultadoCaixa : NSObject {
+	// instance variables ou ivars
 	@private
 	int _troco;
 }
@@ -8788,6 +8792,7 @@ int main(int argc, const char * argv[]) {
 
 - (int) calcularFidelidade;
 
+// propriedades
 @property (assign, nonatomic) int total;
 @property (assign, nonatomic) int valorPago;
 
@@ -8804,14 +8809,17 @@ int main(int argc, const char * argv[]) {
 
 	- (id) initWithTotal:(int)novoTotal eValorPago:(int)novoValorPago {
 		[self init];
+		// propriedades são acessadas com .
 		self.total = novoTotal;
 		self.valorPago = novoValorPago;
+		// ivars são acessadas com -&gt;
 		self-&gt;_troco = self.valorPago - self.total;
 		return self;
 	}
 
 	- (void) descontarFidelidade {
 		self.total = [self calcularFidelidade];
+		self-&gt;_troco = self.valorPago - self.total;
 	}
 
 	- (int) calcularFidelidade {
@@ -8828,7 +8836,7 @@ int main(int argc, const char * argv[]) {
 	<code class='objectivec'
 >#import "ResultadoCaixa.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	ResultadoCaixa* compra1 = [[ResultadoCaixa alloc] initWithTotal:997 eValorPago:1000];
 	[compra1 descontarFidelidade];
@@ -8843,7 +8851,37 @@ int main(int argc, const char * argv[]) {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->class C {
+>public final class ResultadoCaixa {
+
+	init(total:Int, valorPago:Int) {
+		self.total = total
+		self.valorPago = valorPago
+		self.troco = valorPago - total
+	}
+
+	public func descontarFidelidade() {
+		self.total = self.calcularFidelidade()
+		self.troco = self.valorPago - self.total
+	}
+
+	private func calcularFidelidade() -&gt; Int {
+		return self.total - 1
+	}
+
+	private var total = 0
+	private var valorPago = 0
+	private var troco = 0
+
+}
+
+let compra1 = ResultadoCaixa()
+compra1.descontarFidelidade()
+
+
+
+
+
+class C {
 
 	static func myStaticMethod() {
 		//
@@ -8851,43 +8889,11 @@ int main(int argc, const char * argv[]) {
 
 	static var myStaticProp:S
 
-	init() {
-		//
-	}
-
 	deinit {
 		//
 	}
 
-	private func myMethod() {
-		self.prop
-	}
-
-	var getter:S {
-		return ...
-	}
-
-	var getterSetter:S {
-
-		get {
-			return self._getterSetter
-		}
-
-		set(newValue) { // ou newValue implícito set {
-			self._getterSetter = newValue
-		}
-
-	}
-
 	lazy var prop:S
-
-	private _getterSetter:S
-
-	// setter pode ser menos visível que o getter
-	public private(set) var numberOfEdits = 0
-
-	// internal
-	private(set) var numberOfEdits = 0
 
 }
 
@@ -8918,10 +8924,7 @@ final class R {
 		//
 	}
 
-}
-
-let o1 = C()
-let o2 = D()</code
+}</code
 >
 </div>
 
@@ -8931,26 +8934,321 @@ let o2 = D()</code
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - ResultadoCaixa.cs</p>
 <code class='cs'
+>public sealed class ResultadoCaixa {
+
+	public ResultadoCaixa(int total, int valorPago) {
+		this.total = total;
+		this.valorPago = valorPago;
+		this.troco = this.valorPago - this.troco;
+	}
+
+	public void descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
+	}
+
+	private int calcularFidelidade() {
+		return this.total - 1;
+	}
+
+	private int total = 0;
+
+	// propriedades readonly só podem ser modificadas
+	// dentro do construtor
+	private readonly int valorPago;
+
+	private int troco = 0;
+
+}</code
 >
-</code
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>public class MainClass {
+	public static void Main(string[] args) {
+
+		// argumentos por posição
+		var compra1 = new ResultadoCaixa(997, 1000);
+		compra1.descontarFidelidade();
+
+		// argumentos nomeados
+		var compra2 = new ResultadoCaixa(total:997, valorPago:1000);
+		compra2.descontarFidelidade();
+
+	}
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+
+<p>Java - ResultadoCaixa.java</p>
 <code class='java'
+>public final class ResultadoCaixa {
+
+	public ResultadoCaixa(int total, int valorPago) {
+		this.total = total;
+		this.valorPago = valorPago;
+		this.troco = this.valorPago - this.troco;
+	}
+
+	public void descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
+	}
+
+	private int calcularFidelidade() {
+		return this.total - 1;
+	}
+
+	private int total = 0;
+
+	// variáveis final não podem ser alteradas
+	// após seu valor ter sido especificado
+	private final int valorPago;
+
+	private int troco = 0;
+
+}</code
 >
-</code
+
+<p>Java - Main.java</p>
+<code class='java'
+>public class Main {
+	public static void main(string[] args) {
+
+		ResultadoCaixa compra1 = new ResultadoCaixa(997, 1000);
+		compra1.descontarFidelidade();
+
+	}
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
+>const ResultadoCaixa = class ResultadoCaixa {
+
+	constructor(total, valorPago) {
+
+		Object.defineProperties(this, {
+			total: {value: total, writable: true},
+			valorPago: {value: valorPago, writable: true},
+			troco: {value: valorPago - total, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+	}
+
+	calcularFidelidade() {
+		return this.total - 1;
+	}
+
+};
+
+const compra1 = new ResultadoCaixa();
+compra1.descontarFidelidade();</code
 >
-</code
+</div>
+
+</div>
+
+
+
+<h4 id='gettersSetters'>Getters e Setters</h4>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+
+	<div class='pair'>
+
+		<div>
+			<p>Objective-C - A.h</p>
+			<code class='objectivec'
+>#import &lt;Foundation/Foundation.h&gt;
+
+@interface A : NSObject
+
+@property (assign, nonatomic) NSString* prop;
+@property (assign, nonatomic) NSString* prop2;
+
+@end</code
+			>
+		</div>
+
+		<div>
+			<p>Objective-C - A.m</p>
+			<code class='objectivec'
+>#import "A.h"
+
+@implementation A
+
+@end</code
+			>
+		</div>
+
+	</div>
+
+	<p>Objective-C - main.m</p>
+	<code class='objectivec'
+>#import "A.h"
+
+int main(int argc, const char* argv[]) {
+
+	A* a = [[A alloc] init];
+	a.prop = @"";
+
+	return 0;
+
+}</code
+	>
+
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>public class A {
+
+	init() {
+		//
+	}
+
+	var getter:S {
+		return ...
+	}
+
+	var getterSetter:S {
+
+		get {
+			return self._getterSetter
+		}
+
+		set(newValue) { // ou newValue implícito set {
+			self._getterSetter = newValue
+		}
+
+	}
+
+	private _getterSetter:S
+
+	// setter pode ser menos visível que o getter
+	public private(set) var numberOfEdits = 0
+
+	// internal
+	private(set) var numberOfEdits = 0
+
+}
+
+var a = A()
+a.prop = ""</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+
+<p>C# - ResultadoCaixa.cs</p>
+<code class='cs'
+>public sealed class A {
+
+	public A() {
+		//
+	}
+
+	public string Prop {
+		get;
+		set;
+	}
+
+	public string Prop2 {
+
+		get {
+			return "";
+		}
+
+		set {
+			this.prop2 = value;
+		}
+
+	}
+
+	private string prop2;
+
+}</code
+>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>public class MainClass {
+	public static void Main(string[] args) {
+
+		// argumentos por posição
+		var a = new A();
+		a.prop = @"";
+		a.prop2 = @"";
+
+	}
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>const A = class A {
+
+	constructor() {
+
+		Object.defineProperty(
+			this,
+			'_prop',
+			{value: null, writable: true}
+		);
+
+		Object.seal(this);
+
+	}
+
+	get prop() {
+		return this._prop;
+	}
+
+	set prop(newValue) {
+		this._prop = newValue;
+	}
+
+};
+
+const a = new A();
+a.prop = '';</code
 >
 </div>
 
@@ -9671,7 +9969,7 @@ namespace IndexerExample {
 #include &lt;string&gt;
 #include "OpOvCollection.hpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	using std::cout;
 	using std::endl;
@@ -9738,7 +10036,7 @@ int main(int argc, const char * argv[]) {
 	<code class='objectivec'
 >#import "IndexedCollection.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
 
 	IndexedCollection* indexedCollection = [IndexedCollection new];
 
