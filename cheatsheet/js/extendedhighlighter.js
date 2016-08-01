@@ -803,13 +803,11 @@ define('NestedBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePa
 				return true;
 			}
 
-			console.log(matchCharacter + ' não match *. level: ' + this._nestingLevel);
 			if (this._nestingLevel > 0) {
 				this._matchFunction = this._matchContent;
 				return true;
 			}
 
-			console.log(matchCharacter + ' não match *. level: ' + this._nestingLevel);
 			this._hasNext = false;
 			return false;
 
@@ -833,7 +831,6 @@ define('NestedBlockCommentPatternIterator', ['SourcePatternIterator'], (SourcePa
 
 			if (matchCharacter === '/') {
 				this._nestingLevel--;
-				console.log('end slash level: ' + this._nestingLevel);
 				if (this._nestingLevel === 0) {
 					this._matchFunction = this._matchEnd;
 				} else {
@@ -1091,67 +1088,155 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 /**
  * Token for C++ types
  */
-define('CppTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+define('CppTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
 
-	const CppTypesToken = class CppTypesToken extends SourceSimpleCharacterSequenceToken {
+	const CppTypesToken = class CppTypesToken extends Token {
 
 		constructor() {
-			super('type', [
 
-				'bool',
-				'char',
-				'double',
-				'float',
-				'int',
-				'int8_t',
-				'int16_t',
-				'int32_t',
-				'int64_t',
-				'int_fast8_t',
-				'int_fast16_t',
-				'int_fast32_t',
-				'int_fast64_t',
-				'int_least8_t',
-				'int_least16_t',
-				'int_least32_t',
-				'int_least64_t',
-				'intptr_t',
-				'long',
-				'long double',
-				'long long',
-				'short',
+			super();
 
-				'unsigned int',
-				'uint8_t',
-				'uint16_t',
-				'uint32_t',
-				'uint64_t',
-				'uint_fast8_t',
-				'uint_fast16_t',
-				'uint_fast32_t',
-				'uint_fast64_t',
-				'uint_least8_t',
-				'uint_least16_t',
-				'uint_least32_t',
-				'uint_least64_t',
-				'unsigned long',
-				'unsigned long long',
-				'unsigned short',
-				'uintptr_t',
+			const context = this;
 
-				'exception',
-				'lock_guard',
-				'mutex',
-				'nullptr_t',
-				'optional',
-				'queue',
-				'string',
-				'thread'
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_ampersandSequence: {value: new SourceSimpleCharacterSequenceToken('type', ['&amp;'])},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-			]);
+					'bool',
+					'char',
+					'double',
+					'float',
+					'int',
+					'int8_t',
+					'int16_t',
+					'int32_t',
+					'int64_t',
+					'int_fast8_t',
+					'int_fast16_t',
+					'int_fast32_t',
+					'int_fast64_t',
+					'int_least8_t',
+					'int_least16_t',
+					'int_least32_t',
+					'int_least64_t',
+					'intptr_t',
+					'long',
+					'long double',
+					'long long',
+					'short',
+
+					'unsigned int',
+					'uint8_t',
+					'uint16_t',
+					'uint32_t',
+					'uint64_t',
+					'uint_fast8_t',
+					'uint_fast16_t',
+					'uint_fast32_t',
+					'uint_fast64_t',
+					'uint_least8_t',
+					'uint_least16_t',
+					'uint_least32_t',
+					'uint_least64_t',
+					'unsigned long',
+					'unsigned long long',
+					'unsigned short',
+					'uintptr_t',
+
+					'exception',
+					'lock_guard',
+					'mutex',
+					'nullptr_t',
+					'optional',
+					'queue',
+					'string',
+					'thread'
+
+				])}
+			});
 
 			Object.seal(this);
 
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._matchFunction = this._matchTypeOperator;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchTypeOperator(matchCharacter, index) {
+
+			if (matchCharacter === '*') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			} else if (matchCharacter === '&') { // FIXME separar isso num token novo
+				this._matchFunction = this._matchAmpersandSequence;
+				return this._matchFunction(matchCharacter, index);
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		_matchAmpersandSequence(matchCharacter, index) {
+
+			this._ampersandSequence.next(matchCharacter, index);
+
+			if (this._ampersandSequence.isComplete) {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			if (this._ampersandSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
 		}
 
 	};
@@ -1635,60 +1720,126 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 /**
  * Token for Objective-C types
  */
-define('ObjCTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+define('ObjCTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
 
-	const ObjCTypesToken = class ObjCTypesToken extends SourceSimpleCharacterSequenceToken {
+	const ObjCTypesToken = class ObjCTypesToken extends Token {
 
 		constructor() {
-			super('type', [
 
-				'bool',
-				'BOOL', // TODO verificar bool e BOOL
-				'char',
-				'double',
-				'float',
-				'id',
-				'int',
-				'int8_t',
-				'int16_t',
-				'int32_t',
-				'int64_t',
-				'int_least8_t',
-				'int_least16_t',
-				'int_least32_t',
-				'int_least64_t',
-				'intptr_t',
-				'long',
-				'long double',
-				'long long',
-				'NSArray',
-				'NSMutableArray',
-				'NSInteger',
-				'NSException',
-				'NSNumber',
-				'NSObject',
-				'NSString',
-				'NSUInteger',
-				'short',
+			super();
 
-				'unsigned int',
-				'uint8_t',
-				'uint16_t',
-				'uint32_t',
-				'uint64_t',
-				'uint_least8_t',
-				'uint_least16_t',
-				'uint_least32_t',
-				'uint_least64_t',
-				'unsigned long',
-				'unsigned long long',
-				'unsigned short',
-				'uintptr_t'
+			const context = this;
 
-			]);
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+
+					'bool',
+					'BOOL', // TODO verificar bool e BOOL
+					'char',
+					'double',
+					'float',
+					'id',
+					'int',
+					'int8_t',
+					'int16_t',
+					'int32_t',
+					'int64_t',
+					'int_least8_t',
+					'int_least16_t',
+					'int_least32_t',
+					'int_least64_t',
+					'intptr_t',
+					'long',
+					'long double',
+					'long long',
+					'NSArray',
+					'NSMutableArray',
+					'NSInteger',
+					'NSException',
+					'NSNumber',
+					'NSObject',
+					'NSString',
+					'NSUInteger',
+					'short',
+
+					'unsigned int',
+					'uint8_t',
+					'uint16_t',
+					'uint32_t',
+					'uint64_t',
+					'uint_least8_t',
+					'uint_least16_t',
+					'uint_least32_t',
+					'uint_least64_t',
+					'unsigned long',
+					'unsigned long long',
+					'unsigned short',
+					'uintptr_t'
+
+				])}
+			});
 
 			Object.seal(this);
 
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._matchFunction = this._matchTypeOperator;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchTypeOperator(matchCharacter, index) {
+
+			if (matchCharacter === '*') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
 		}
 
 	};
@@ -2124,45 +2275,111 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 /**
  * Token for Swift types
  */
-define('SwiftTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+define('SwiftTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
 
-	const SwiftTypesToken = class SwiftTypesToken extends SourceSimpleCharacterSequenceToken {
+	const SwiftTypesToken = class SwiftTypesToken extends Token {
 
 		constructor() {
-			super('type', [
 
-				'Any',
-				'Array',
-				'Character',
-				'Double',
-				'Float',
-				'Float32',
-				'Float64',
-				'Float80',
-				'Int',
-				'Int8',
-				'Int16',
-				'Int32',
-				'Int64',
-				'UInt',
-				'UInt8',
-				'UInt16',
-				'UInt32',
-				'UInt64',
+			super();
 
-				'Void',
-				'NSObject',
-				'NSString',
-				'String',
-				'NSException',
-				'ErrorType'
+			const context = this;
 
-				// TODO Coloco os compatibilidade com C?
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-			]);
+					'Any',
+					'Array',
+					'Character',
+					'Double',
+					'Float',
+					'Float32',
+					'Float64',
+					'Float80',
+					'Int',
+					'Int8',
+					'Int16',
+					'Int32',
+					'Int64',
+					'UInt',
+					'UInt8',
+					'UInt16',
+					'UInt32',
+					'UInt64',
+
+					'Void',
+					'NSObject',
+					'NSString',
+					'String',
+					'NSException',
+					'ErrorType'
+
+					// TODO Coloco os compatibilidade com C?
+
+				])}
+			});
 
 			Object.seal(this);
 
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._matchFunction = this._matchTypeOperator;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchTypeOperator(matchCharacter, index) {
+
+			if (matchCharacter === '?') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
 		}
 
 	};
@@ -3467,54 +3684,141 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 /**
  * Token for C# types
  */
-define('CSTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+define('CSTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
 
-	const CSTypesToken = class CSTypesToken extends SourceSimpleCharacterSequenceToken {
+	const CSTypesToken = class CSTypesToken extends Token {
 
 		constructor() {
-			super('type', [
 
-				'bool',
-				'byte',
-				'decimal',
-				'double',
-				'float',
-				'int',
-				'long',
-				'object',
+			super();
 
-				'sbyte',
-				'short',
-				'string',
-				'ushort',
-				'uint',
-				'ulong',
+			const context = this;
 
-				'Boolean',
-				'Byte',
-				'Decimal',
-				'Double',
-				'Single',
-				'Int32',
-				'Int64',
-				'Object',
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-				'SByte',
-				'Int16',
-				'String',
-				'UInt16',
-				'UInt32',
-				'UInt64',
+					'bool',
+					'byte',
+					'decimal',
+					'double',
+					'float',
+					'int',
+					'long',
+					'object',
 
-				'BigInteger',
-				'Complex',
+					'sbyte',
+					'short',
+					'string',
+					'ushort',
+					'uint',
+					'ulong',
 
-				'Exception'
+					'Boolean',
+					'Byte',
+					'Decimal',
+					'Double',
+					'Single',
+					'Int32',
+					'Int64',
+					'Object',
 
-			]);
+					'SByte',
+					'Int16',
+					'String',
+					'UInt16',
+					'UInt32',
+					'UInt64',
+
+					'BigInteger',
+					'Complex',
+
+					'Exception'
+
+				])}
+			});
 
 			Object.seal(this);
 
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._isComplete = true;
+				this._matchFunction = this._matchTypeOperator;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchTypeOperator(matchCharacter, index) {
+
+			if (matchCharacter === '*' || matchCharacter === '?') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			} else if (matchCharacter === '[') {
+				this._isComplete = false;
+				this._matchFunction = this._matchCommaOrEndBracket;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		_matchCommaOrEndBracket(matchCharacter, index) {
+
+			if (matchCharacter === ']') {
+				this._matchFunction = this._matchTypeOperator;
+				return true;
+			}
+
+			if (matchCharacter === ',') {
+				//
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);// FIXME separar num outro token, pra reconhecer int e int[] mas não int[
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
 		}
 
 	};
@@ -4594,45 +4898,124 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 /**
  * Token for Java types
  */
-define('JavaTypesToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+define('JavaTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
 
-	const JavaTypesToken = class JavaTypesToken extends SourceSimpleCharacterSequenceToken {
+	const JavaTypesToken = class JavaTypesToken extends Token {
 
 		constructor() {
-			super('type', [
 
-				'boolean',
-				'byte',
-				'char',
-				'double',
-				'float',
-				'int',
-				'long',
-				'Object',
-				'short',
-				'String',
+			super();
 
-				'Boolean',
-				'Byte',
-				'Character',
-				'Double',
-				'Float',
-				'Integer',
-				'Long',
-				'Short',
+			const context = this;
 
-				'BigInteger',
-				'BigDecimal',
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-				'Class',
-				'Field',
-				'Exception',
-				'RuntimeException'
+					'boolean',
+					'byte',
+					'char',
+					'double',
+					'float',
+					'int',
+					'long',
+					'Object',
+					'short',
+					'String',
 
-			]);
+					'Boolean',
+					'Byte',
+					'Character',
+					'Double',
+					'Float',
+					'Integer',
+					'Long',
+					'Short',
+
+					'BigInteger',
+					'BigDecimal',
+
+					'Class',
+					'Field',
+					'Exception',
+					'RuntimeException'
+
+				])}
+			});
 
 			Object.seal(this);
 
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._isComplete = true;
+				this._matchFunction = this._matchStartBracket;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartBracket(matchCharacter, index) {
+
+			if (matchCharacter === '[') {
+				this._isComplete = false;
+				this._matchFunction = this._matchEndBracket;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		_matchEndBracket(matchCharacter, index) {
+
+			if (matchCharacter === ']') {
+				this._matchFunction = this._matchStartBracket;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index); // FIXME separar num outro token, pra reconhecer int e int[] mas não int[
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
 		}
 
 	};
