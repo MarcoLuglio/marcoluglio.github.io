@@ -529,6 +529,12 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 		constructor() {
 			super();
+
+			Object.defineProperties(this, {
+				_isWordCharacter: {value: /\w/},
+				_isSpaceCharacter: {value: /\s/}
+			});
+
 			this._matchFunction = this._matchStartBracket;
 			Object.seal(this);
 		}
@@ -556,6 +562,12 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
 				this._matchFunction = this._matchContentOrEndBrace;
+				return true;
+			}
+
+			if (!this._isWordCharacter.test(matchCharacter) && !this._isSpaceCharacter.test(matchCharacter)) {
+				this._hasNext = false;
+				return false;
 			}
 
 			return true;
@@ -571,6 +583,11 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 			if (matchCharacter === ')') { // TODO tem que ter um argumento antes do ) ??
 				this._matchFunction = this._matchEndBracket;
+			}
+
+			if (!this._isWordCharacter.test(matchCharacter) && !this._isSpaceCharacter.test(matchCharacter)) {
+				this._hasNext = false;
+				return false;
 			}
 
 			return true;
