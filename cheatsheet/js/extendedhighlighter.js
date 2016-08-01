@@ -1032,7 +1032,7 @@ define('CppKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleC
 				'union',
 				'using',
 				'virtual',
-				'void',
+				// 'void', // vou realçar como tipo
 				'volatile',
 				'while',
 
@@ -1152,7 +1152,8 @@ define('CppTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token,
 					'optional',
 					'queue',
 					'string',
-					'thread'
+					'thread',
+					'void'
 
 				])}
 			});
@@ -1204,7 +1205,7 @@ define('CppTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token,
 			if (matchCharacter === '*') {
 				this._matchFunction = this._matchEnd;
 				return true;
-			} else if (matchCharacter === '&') { // FIXME separar isso num token novo
+			} else if (matchCharacter === '&') { // FIXME pode repetir e misturar * e & quantas vezes quiser
 				this._matchFunction = this._matchAmpersandSequence;
 				return this._matchFunction(matchCharacter, index);
 			}
@@ -1686,7 +1687,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'struct',
 				'super',
 				'typedef',
-				'void',
+				// 'void', // vou realçar como tipo
 				'weak',
 				'while',
 
@@ -1776,7 +1777,8 @@ define('ObjCTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 					'unsigned long',
 					'unsigned long long',
 					'unsigned short',
-					'uintptr_t'
+					'uintptr_t',
+					'void'
 
 				])}
 			});
@@ -1826,7 +1828,6 @@ define('ObjCTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 		_matchTypeOperator(matchCharacter, index) {
 
 			if (matchCharacter === '*') {
-				this._matchFunction = this._matchEnd;
 				return true;
 			}
 
@@ -3644,7 +3645,7 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'value',
 				'var',
 				'virtual',
-				'void',
+				// 'void', // vou realçar como tipo
 				'volatile',
 				'while',
 				'yield',
@@ -3714,6 +3715,7 @@ define('CSTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, 
 					'ushort',
 					'uint',
 					'ulong',
+					'void',
 
 					'Boolean',
 					'Byte',
@@ -3768,7 +3770,6 @@ define('CSTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, 
 			this._typesSequence.next(matchCharacter, index);
 
 			if (this._typesSequence.isComplete) {
-				this._isComplete = true;
 				this._matchFunction = this._matchTypeOperator;
 				return this._matchFunction(matchCharacter);
 			}
@@ -3784,11 +3785,12 @@ define('CSTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, 
 
 		_matchTypeOperator(matchCharacter, index) {
 
-			if (matchCharacter === '*' || matchCharacter === '?') {
+			if (matchCharacter === '?') {
 				this._matchFunction = this._matchEnd;
 				return true;
+			} else if (matchCharacter === '*') {
+				return true;
 			} else if (matchCharacter === '[') {
-				this._isComplete = false;
 				this._matchFunction = this._matchCommaOrEndBracket;
 				return true;
 			}
@@ -4868,7 +4870,7 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'throws',
 				'transient',
 				'try',
-				'void',
+				// 'void', // vou realçar como tipo
 				'volatile',
 				'while',
 
@@ -4939,7 +4941,8 @@ define('JavaTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 					'Class',
 					'Field',
 					'Exception',
-					'RuntimeException'
+					'RuntimeException',
+					'void'
 
 				])}
 			});
@@ -4973,7 +4976,6 @@ define('JavaTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 			this._typesSequence.next(matchCharacter, index);
 
 			if (this._typesSequence.isComplete) {
-				this._isComplete = true;
 				this._matchFunction = this._matchStartBracket;
 				return this._matchFunction(matchCharacter);
 			}
@@ -4990,7 +4992,6 @@ define('JavaTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 		_matchStartBracket(matchCharacter, index) {
 
 			if (matchCharacter === '[') {
-				this._isComplete = false;
 				this._matchFunction = this._matchEndBracket;
 				return true;
 			}
