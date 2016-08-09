@@ -747,6 +747,15 @@ div.codeblock.bubaloop p + code.javascript {
 .bubaloop.highlight .boolean,
 .bubaloop.highlight .string,
 
+.bubaloop.highlight.cpp .rstring,
+.bubaloop.highlight.objectivec .objcstring,
+.bubaloop.highlight.rust .lifetime,
+.bubaloop.highlight.rust .attribute,
+.bubaloop.highlight.cs .vstring,
+.bubaloop.highlight.cs .istring,
+.bubaloop.highlight.cs .attribute,
+.bubaloop.highlight.java .annotation,
+
 .bubaloop.highlight.javascript .variableName,
 .bubaloop.highlight.javascript .functionName,
 .bubaloop.highlight.javascript .argumentsDelimiter,
