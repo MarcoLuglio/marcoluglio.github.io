@@ -8730,8 +8730,8 @@ ResultadoCaixa::~ResultadoCaixa() {
 }
 
 ResultadoCaixa::descontarFidelidade() {
-	this->total = calcularFidelidade();
-	this->troco = valorPago - total;
+	this-&gt;total = calcularFidelidade();
+	this-&gt;troco = valorPago - total;
 }
 
 int ResultadoCaixa::calcularFidelidade() const {
@@ -9770,11 +9770,318 @@ trait FooBar : Foo {
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
+
+	<p>C++ - main.cpp</p>
+	<code class='cpp'
+	>#include &lt;iostream&gt;
+#include "MusicNote.hpp"
+
+int main(int argc, const char* argv[]) {
+
+	using std::cout;
+	using std::endl;
+
+	using MarcoLuglio::OpOvExample::MusicNote;
+	using MarcoLuglio::OpOvExample::Step;
+	using MarcoLuglio::OpOvExample::Semitone;
+
+	auto cSharp = MusicNote(Step::C, Semitone::None);
+	cSharp = cSharp + Semitone::Sharp;
+	cout &lt;&lt; cSharp &lt;&lt; endl;
+
+	auto note1 = MusicNote(Step::C);
+	cout &lt;&lt; note1++ &lt;&lt; endl;; // Do
+
+	auto note2 = MusicNote(Step::C);
+	cout &lt;&lt; ++note2 &lt;&lt; endl;; // Do♯
+
+	return 0;
+
+}</code
+	>
+
+	<div class='pair'>
+		<div>
+			<p>C++ - MusicNote.hpp</p>
+			<code class='cpp'
+			>#pragma once
+
+#include &lt;cstdint&gt;
+#include &lt;string&gt;
+#include "Enumerators.hpp"
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	class MusicNote final {
+
+	public:
+
+		MusicNote(Step step, Semitone semitone = Semitone::None);
+
+		// Não é possível declarar operator&lt;&lt; como
+		// um membro da classe. Mas podemos declará-lo
+		// como uma friend function, que consegue acessar
+		// as propriedades privadas da classe como se
+		// fosse um membro
+		friend std::ostream&amp; operator&lt;&lt;(
+			std::ostream&amp; os,
+			const MusicNote&amp; obj
+		);
+
+		MusicNote operator+(const Semitone semitone) const;
+
+		/// prefix increment
+		MusicNote&amp; operator++();
+
+		/// postfix increment
+		MusicNote operator++(int);
+
+		Step getStep();
+
+		Semitone getSemitone();
+
+	private:
+		Step step;
+		Semitone semitone;
+
+	};
+
+}
+}</code
+			>
+		</div>
+		<div>
+			<p>C++ - MusicNote.cpp</p>
+			<code class='cpp'
+			>#include "MusicNote.hpp"
+
+namespace MarcoLuglio {
+namespace ThreadExample {
+
+	using std::string;
+
+	MusicNote::MusicNote(Step step, Semitone semitone)
+		: step{step}, semitone{semitone} {
+		//
+	}
+
+	MusicNote MusicNote::operator+(const Semitone semitone) const {
+
+		if (semitone == Semitone::None) {
+			return *this;
+		}
+
+		Step newStep = this-&gt;step;
+		Semitone newSemitone = semitone;
+
+		if (newSemitone == Semitone::Sharp
+			&amp;&amp; (newStep == Step::Mi || newStep == Step::E)
+			) {
+
+			newStep = Step::Fa;
+			newSemitone = Semitone::None;
+
+		} else if (newSemitone == Semitone::Flat
+			&amp;&amp; (newStep == Step::Fa || newStep == Step::F)
+			) {
+
+			newStep = Step::Mi;
+			newSemitone = Semitone::None;
+
+		}
+
+		// Rest of add logic here
+
+		return MusicNote(newStep, newSemitone);
+
+	}
+
+
+	MusicNote&amp; MusicNote::operator++() {
+		MusicNote&amp; ref = *this;
+		auto tmp = ref + Semitone::Sharp;
+		this-&gt;step = tmp.getStep();
+		this-&gt;semitone = tmp.getSemitone();
+		return ref;
+	}
+
+	MusicNote MusicNote::operator++(int) {
+		MusicNote tmp{*this}; // copy
+		this-&gt;operator++(); // pre-increment
+		return tmp; // return old value
+	}
+
+	Step MusicNote::getStep() {
+		return this-&gt;step;
+	}
+
+	Semitone MusicNote::getSemitone() {
+		return this-&gt;semitone;
+	}
+
+	std::ostream&amp; operator&lt;&lt;(
+		std::ostream&amp; os,
+		const MusicNote&amp; note
+		) {
+
+		os &lt;&lt; note.step &lt;&lt; note.semitone;
+		return os;
+	}
+
+}
+}</code
+			>
+		</div>
+	</div>
+
+	<div class='pair'>
+		<div>
+			<p>C++ - Enumerators.hpp</p>
+			<code class='cpp'
+			>#pragma once
+
+namespace MarcoLuglio {
+namespace OpOvExample {
+
+	enum Step : uint8_t {
+
+		// solfèje
+		Do = 1,
+		Re = 3,
+		Mi = 5,
+		Fa = 6,
+		Sol = 8,
+		La = 10,
+		Si = 12,
+
+		// abc
+		C = 1,
+		D = 3,
+		E = 5,
+		F = 6,
+		G = 8,
+		A = 10,
+		B = 12
+
+	};
+
+	enum Semitone : int8_t {
+
+		None = 127,
+		Natural = 0,
+		DoubleFlat = -2,
+		Flat = -1,
+		Sharp = 1,
+		DoubleSharp = 2
+
+	};
+
+	std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Step&amp; step);
+
+	std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Semitone&amp; semitone);
+
+}
+}</code
+			>
+		</div>
+		<div>
+			<p>C++ - Enumerators.cpp</p>
+			<code class='cpp'
+			>#include "Enumerators.hpp"
+
+namespace MarcoLuglio {
+namespace OpOvExample {
+
+	std::ostream&amp; operator&lt;&lt;(
+		std::ostream&amp; os,
+		const Step&amp; step
+		) {
+
+		switch (step) {
+
+			case Step::Do:
+				os &lt;&lt; "Do";
+				break;
+
+			case Step::Re:
+				os &lt;&lt; "Re";
+				break;
+
+			case Step::Mi:
+				os &lt;&lt; "Mi";
+				break;
+
+			case Step::Fa:
+				os &lt;&lt; "Fa";
+				break;
+
+			case Step::Sol:
+				os &lt;&lt; "Sol";
+				break;
+
+			case Step::La:
+				os &lt;&lt; "La";
+				break;
+
+			case Step::Si:
+				os &lt;&lt; "Si";
+				break;
+
+			default:
+				break;
+
+		}
+
+		return os;
+
+	}
+
+	std::ostream&amp; operator&lt;&lt;(
+		std::ostream&amp; os,
+		const Semitone&amp; semitone
+		) {
+
+		switch (semitone) {
+
+			case Semitone::None:
+				break;
+
+			case Semitone::Natural:
+				os &lt;&lt; "♮";
+				break;
+
+			case Semitone::DoubleFlat:
+				os &lt;&lt; "𝄫";
+				break;
+
+			case Semitone::Flat:
+				os &lt;&lt; "♭";
+				break;
+
+			case Semitone::Sharp:
+				os &lt;&lt; "♯";
+				break;
+
+			case Semitone::DoubleSharp:
+				os &lt;&lt; "𝄪";
+				break;
+
+			default:
+				break;
+
+		}
+
+		return os;
+
+	}
+
+}
+}</code
+			>
+		</div>
+	</div>
+
 </div>
 
 <div class='codeblock'>
@@ -9909,28 +10216,6 @@ using System.ComponentModel; // Description attribute
 
 namespace MarcoLuglio.OpOvExample {
 
-	public enum Semitone : sbyte {
-
-		[Description("")]
-		None = 0,
-
-		[Description("♮")]
-		Natural = 0,
-
-		[Description("\uD834\uDD2B")]
-		DoubleFlat = -2,
-
-		[Description("♭")]
-		Flat = -1,
-
-		[Description("♯")]
-		Sharp = 1,
-
-		[Description("\uD834\uDD2A")]
-		DoubleSharp = 2
-
-	}
-
 	public enum Step : byte {
 
 		// solfèje
@@ -9950,6 +10235,28 @@ namespace MarcoLuglio.OpOvExample {
 		G = 8,
 		A = 10,
 		B = 12
+
+	}
+
+	public enum Semitone : sbyte {
+
+		[Description("")]
+		None = 0,
+
+		[Description("♮")]
+		Natural = 0,
+
+		[Description("\uD834\uDD2B")]
+		DoubleFlat = -2,
+
+		[Description("♭")]
+		Flat = -1,
+
+		[Description("♯")]
+		Sharp = 1,
+
+		[Description("\uD834\uDD2A")]
+		DoubleSharp = 2
 
 	}
 
