@@ -6444,28 +6444,18 @@ do {
 
 <div class='codeblock'>
 
-<p>C# - Objeto Iterator</p>
-<code class='cs'
->
-</code
->
-
+<p>C#</p>
+-
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='java'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
->
-</code
->
+-
 </div>
 
 </div>
@@ -8701,7 +8691,7 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 			<code class='cpp'
 >#pragma once
 
-public class ResultadoCaixa final {
+class ResultadoCaixa final {
 
 public:
 
@@ -8720,7 +8710,7 @@ private:
 	int valorPago;
 	int troco;
 
-}</code
+};</code
 			>
 		</div>
 
@@ -8744,7 +8734,7 @@ ResultadoCaixa::descontarFidelidade() {
 	this->troco = valorPago - total;
 }
 
-int ResultadoCaixa::calcularFidelidade() {
+int ResultadoCaixa::calcularFidelidade() const {
 	return total - 1;
 }</code
 			>
@@ -9813,11 +9803,169 @@ trait FooBar : Foo {
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - MainClass.cs</p>
 <code class='cs'
+>using System;
+
+namespace MarcoLuglio.OpOvExample {
+	public class MainClass {
+		public static void Main(string[] args) {
+
+			// Sim, de onde você achava que tinha vindo??
+			var cSharp = new MusicNote(Step.C, Semitone.None);
+			cSharp = cSharp + Semitone.Sharp;
+			Console.WriteLine(cSharp); // Do♯
+
+			var note1 = new MusicNote(Step.C);
+			Console.WriteLine(note1++); // Do
+
+			var note2 = new MusicNote(Step.C);
+			Console.WriteLine(++note2); // Do♯
+
+		}
+	}
+}</code
 >
-</code
+
+<p>C# - MusicNote.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.OpOvExample {
+
+	<strong>public final class MusicNote {</strong>
+
+		<strong>public static MusicNote operator +(MusicNote note, Semitone semitone) {</strong>
+
+			if (semitone == Semitone.None) {
+				return note;
+			}
+
+			Step newStep = note.step;
+			Semitone newSemitone = semitone;
+
+			if (newSemitone == Semitone.Sharp
+				&amp;&amp; (newStep == Step.Mi || newStep == Step.E)
+				) {
+
+				newStep = Step.Fa;
+				newSemitone = Semitone.None;
+
+			} else if (newSemitone == Semitone.Flat
+				&amp;&amp; (newStep == Step.Fa || newStep == Step.F)
+				) {
+
+				newStep = Step.Mi;
+				newSemitone = Semitone.None;
+
+			}
+
+			// Rest of add logic here
+
+			<strong>return new MusicNote(newStep, newSemitone);</strong>
+
+		<strong>}</strong>
+
+		<strong class='small'>public static MusicNote operator ++(MusicNote note) {</strong>
+			<strong class='comment small'>// Retorne sempre um novo objeto dentro desse override</strong>
+			<strong class='comment small'>// Para que que o prefixo e o sufixo ++ funcionem corretamente</strong>
+			<strong class='comment small'>// Nesse caso o override do + irá se encarregar disso</strong>
+			<strong class='small'>return note + Semitone.Sharp;</strong>
+		<strong>}</strong>
+
+		public MusicNote(Step step, Semitone semitone = Semitone.None) {
+			this.Step = step;
+			this.Semitone = semitone;
+		}
+
+		public override string ToString() {
+			return string.Format("{0}{1}", Step, Semitone.ToDescriptionString());
+		}
+
+		public Step Step {
+			get;
+			private set;
+		}
+
+		public Semitone Semitone {
+			get;
+			set;
+		}
+
+		private Step step = Step.Do;
+
+		private Semitone semitone = Semitone.None;
+
+	<strong>}</strong>
+
+}</code
 >
+
+<p>C# - Enumerators.cs</p>
+<code class='cs'
+>using System;
+using System.ComponentModel; // Description attribute
+
+namespace MarcoLuglio.OpOvExample {
+
+	public enum Semitone : sbyte {
+
+		[Description("")]
+		None = 0,
+
+		[Description("♮")]
+		Natural = 0,
+
+		[Description("\uD834\uDD2B")]
+		DoubleFlat = -2,
+
+		[Description("♭")]
+		Flat = -1,
+
+		[Description("♯")]
+		Sharp = 1,
+
+		[Description("\uD834\uDD2A")]
+		DoubleSharp = 2
+
+	}
+
+	public enum Step : byte {
+
+		// solfèje
+		Do = 1,
+		Re = 3,
+		Mi = 5,
+		Fa = 6,
+		Sol = 8,
+		La = 10,
+		Si = 12,
+
+		// abc
+		C = 1,
+		D = 3,
+		E = 5,
+		F = 6,
+		G = 8,
+		A = 10,
+		B = 12
+
+	}
+
+	public static class SemitoneExtensions {
+		public static string ToDescriptionString(this Semitone semitone) {
+			DescriptionAttribute[] attributes = (DescriptionAttribute[])semitone
+				.GetType()
+				.GetField(semitone.ToString())
+				.GetCustomAttributes(typeof(DescriptionAttribute), false);
+			return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+		}
+	}
+
+}<strong style='display: none'></strong></code
+>
+
 </div>
 
 <div class='codeblock'>
