@@ -578,6 +578,16 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 		}
 
+		_matchEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndBrace;
+			}
+
+			return true;
+
+		}
+
 		_matchContentOrEndBrace(matchCharacter) {
 
 			if (matchCharacter === ']') {
@@ -590,6 +600,14 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				return true;
 			}
 
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchEndQuote;
+				return true;
+			}
+
+			// FIXME Melhorar isso
+			// se tiver strings dentro do atributo, tenho que seguir as regras delas
+			// ou então no lexer, só permito atributos depois de operadores
 			if (matchCharacter !== '='
 				&& matchCharacter !== '.'
 				&& matchCharacter !== ','
