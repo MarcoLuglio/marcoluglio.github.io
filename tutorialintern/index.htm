@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='en'
+	xml:lang='en'
+	>
 <head>
-	<meta charset="UTF-8">
-	<title>Intern 101</title>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="css/main.css" />
-	<!--<script src='js/arrayIterator.js'></script>-->
-	<script src='js/node.js'></script>
-	<script src='js/index.js'></script>
-	<!--<script src='js/token.js'></script>
-	<script src='js/tokenSequence.js'></script>
-	<script src='js/parser.js'></script>
-	<script src='js/javaScriptParser.js'></script>-->
-	<script src='js/highlightEnhancer.js'></script>
-	<script src='js/documentReady.js'></script>
-	<script src='js/init.js'></script>
+	<title>Intern 101 - JavaScript Testing</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='../tutorialjs/css/main.css' />
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='../tutorialjs/js/home.js'></script>
 </head>
 <body>
 
 
 
 <h1>Intern - The Missing Tutorial</h1>
-<p>Work in Progress</p>
+
+<p><strong>WORK IN PROGRESS ;)</strong></p>
+
 
 
 <section>
+
 <h2>Index</h2>
 <nav id="indice">
 </nav>
+
 </section>
 
 
@@ -74,24 +75,24 @@
 	<li><strong>Copy the sample</strong> configuration file that comes with intern to the root of your folder. The sample configuration file can be found in <code>C:\path\to\yoursite\node_modules\intern\tests\example.intern.js</code></li>
 	<li>
 <strong>Add the functional and unit suites</strong> you need to run in the respective properties inside the file. They'll look something like this:
-<div>
+<div class='codeblock'>
 <p>config.js excerpt</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='objectDefinition'><span class='objectDelimiter'><span class='objectDelimiter'>{</span></span>
+>define({
 
-	<span class='comment lineComment'>// unit tests to run in each browser</span>
-	<span class='propertyName'>suites</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
-		<span class='string'>'path/relative/to/configfile/tests/unit/inputValidation'</span>
-		<span class='arraySeparator'>,</span><span class='string'>'path/relative/to/configfile/tests/unit/sessionManager'</span>
-	<span class='arrayDelimiter'>]</span></span></span><span class='objectSeparator'>,</span>
+	// unit tests to run in each browser
+	suites: [
+		'path/relative/to/configfile/tests/unit/inputValidation'
+		,'path/relative/to/configfile/tests/unit/sessionManager'
+	],
 
-	<span class='comment lineComment'>// Functional test suite(s) to run in each browser once unit tests are completed</span>
-	<span class='propertyName'>functionalSuites</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
-		<span class='string'>'path/relative/to/configfile/functional/suites/changeProfile'</span>
-		<span class='arraySeparator'>,</span><span class='string'>'path/relative/to/configfile/functional/suites/postStatus'</span>
-	<span class='arrayDelimiter'>]</span></span></span>
+	// Functional test suite(s) to run in each browser once unit tests are completed
+	functionalSuites: [
+		'path/relative/to/configfile/functional/suites/changeProfile'
+		, 'path/relative/to/configfile/functional/suites/postStatus'
+	]
 
-<span class='objectDelimiter'>}</span></span></span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></code
+});</code
 >
 </div>
 	</li>
@@ -116,195 +117,197 @@
 <h2>Test Suites</h2>
 <p>The test suites that we reference in the config file are defined in <a href="http://requirejs.org/docs/whyamd.html#amd"><abbr title="Asynchronous Module Definition">AMD</abbr></a> style. That is a way to <strong>avoid</strong> creating things in the <strong>global namespace.</strong></p>
 
-<div>
+<div class='codeblock'>
 <p><abbr title="Asynchronous Module Definition">AMD</abbr> overview</p>
 <code class='javascript'
-><span class='comment lineComment'>// <abbr title="Asynchronous Module Definition">AMD</abbr> module</span>
-<span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class="arrayDelimiter">[</span>
-	<span class='comment lineComment'>// import paths</span>
-<span class="arrayDelimiter">]</span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class="argumentsDelimiter">(</span><span class='comment blockComment'>/* import names */</span></span><span class="argumentsDelimiter">)</span> {
-	<span class='comment lineComment'>// actual code</span>
-	<span class='keyword'>return</span> <span class='objectDefinition'><span class='objectDelimiter'>{</span><span class='objectDelimiter'>}</span></span><span class='statementSeparator'>;</span> <span class="comment lineComment">// usually return something from the <abbr title="Asynchronous Module Definition">AMD</abbr> module</span>
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+>// AMD module
+define([
+	// import paths
+], function(/* import names */) {
+	// actual code
+	return {}; // usually return something from the AMD module
+});</code
+>
 </div>
 
 <p>The actual test suite imports at least two objects and optionally an assertion library. The assertion library is for convenience, since you can perform assertions and fail tests without it. More on that later.</p>
 
-<div>
+<div class='codeblock'>
 <p>testSuite.js</p>
 <code class='javascript'
-><span class='comment lineComment'>// if you don't understand everything in this code snippet, don't worry, it's all explained in the next example</span>
-<span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>// if you don't understand everything in this code snippet, don't worry, it's all explained in the next example
+define([
 
-	<span class='comment lineComment'>// base</span>
-	<span class='string'>'intern!object'</span><span class='arraySeparator'>,</span>
-	<span class='string'>'intern/chai!assert'</span><span class='arraySeparator'>,</span>
+	// base
+	'intern!object',
+	'intern/chai!assert',
 
-	<span class='comment lineComment'>// helpers</span>
-	<span class='string'>'require'</span>
+	// helpers
+	'require'
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'>
+], function(
 
-	<span class='comment lineComment'>// base</span>
-	<span class='variableName'>registerSuite</span><span class='argumentsSeparator'>,</span> <span class='variableName'>assert</span><span class='argumentsSeparator'>,</span>
+	// base
+	registerSuite, assert,
 
-	<span class='comment lineComment'>// helpers</span>
-	<span class='variableName'>require</span>
+	// helpers
+	require
 
-	</span><span class='argumentsDelimiter'>)</span> {
+	) {
 
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+	'use strict';
 
-	<span class='functionName'>registerSuite</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='objectDefinition'><span class='objectDelimiter'>{</span>
-		<span class='propertyName'>name</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='string'>'sample test'</span></span><span class='objectSeparator'>,</span>
-		<span class='propertyName'>login</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-			<span class='keyword'>return</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span>
-				<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='string'>'http://localhost'</span></span><span class='argumentsDelimiter'>)</span></span><span class='argumentsDelimiter'>)</span>
-				<span class='comment lineComment'>// do something</span>
-				<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-					<span class='functionName'>assert</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// assert something</span>
-				}</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-		}</span>
-	<span class='objectDelimiter'>}</span></span></span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+	registerSuite({
+		name: 'sample test',
+		login: function() {
+			return this.remote
+				.get(require.toUrl('http://localhost'))
+				// do something
+				.then(function() {
+					assert(); // assert something
+				});
+		}
+	});
 
-}</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 <p>This is a lot of boilerplate to get started. Let's see what each line does.</p>
 
-<div>
+<div class='codeblock'>
 <p>testSuite.js</p>
 <code class='javascript'
-><span class='comment lineComment'>// yep, that's the explanation right here like promised ;)</span>
-<span class='comment lineComment'>// <abbr title="Asynchronous Module Definition">AMD</abbr> only makes "define" available from the global namespace, everything else needs to be imported</span>
-<span class='comment lineComment'>// "define" imports stuff to the scope of its callback function</span>
-<span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>// yep, that's the explanation right here like promised ;)
+// AMD only makes "define" available from the global namespace, everything else needs to be imported
+// "define" imports stuff to the scope of its callback function
+define([
 
-	<span class='comment lineComment'>// import what you need inside here</span>
-	<span class='comment lineComment'>// better keep this list organized and separate each group by a name and a space</span>
-	<span class='comment lineComment'>// really helps when debugging a long list of imports like 15+ or so</span>
+	// import what you need inside here
+	// better keep this list organized and separate each group by a name and a space
+	// really helps when debugging a long list of imports like 15+ or so
 
-	<span class='comment lineComment'>// base</span>
-	<span class='string'>'intern!object'</span><span class='arraySeparator'>,</span> <span class='comment lineComment'>// test suite registry, all test suites need to import this</span>
-	<span class='string'>'intern/chai!assert'</span><span class='arraySeparator'>,</span> <span class='comment lineComment'>// assertion library</span>
+	// base
+	'intern!object', // test suite registry, all test suites need to import this
+	'intern/chai!assert', // assertion library
 
-	<span class='comment lineComment'>// helpers</span>
-	<span class='string'>'require'</span>
+	// helpers
+	'require'
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span>
+], function(
 
-	<span class='comment lineComment'>// and give names to the imported stuff here</span>
-	<span class='comment lineComment'>// they must follow the same order of what's listed above</span>
+	// and give names to the imported stuff here
+	// they must follow the same order of what's listed above
 
-	<span class='comment lineComment'>// base</span>
-	<span class='variableName'>registerSuite</span><span class='argumentsSeparator'>,</span> <span class='variableName'>assert</span><span class='argumentsSeparator'>,</span>
+	// base
+	registerSuite, assert,
 
-	<span class='comment lineComment'>// helpers</span>
-	<span class='variableName'>require</span>
+	// helpers
+	require
 
-	<span class='argumentsDelimiter'>)</span> {
+	) {
 
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// <abbr title="Asynchronous Module Definition">AMD</abbr> plays nice with strict mode</span>
+	'use strict'; // AMD plays nice with strict mode
 
-	<span class='comment lineComment'>// create a test suite by calling registerSuite function and passing in an object</span>
-	<span class='functionName'>registerSuite</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='objectDefinition'><span class='objectDelimiter'>{</span>
+	// create a test suite by calling registerSuite function and passing in an object
+	registerSuite({
 
-		<span class='propertyName'>name</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='string'>'sample test'</span></span><span class='objectSeparator'>,</span> <span class='comment lineComment'>// the name property of the passed object gives the test suite a name for the logs</span>
+		name: 'sample test', // the name property of the passed object gives the test suite a name for the logs
 
-		<span class='propertyName'>login</span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> { <span class='comment lineComment'>// and each method inside the object is a test</span>
-			<span class='comment lineComment'>// inside a test function, "this.remote" is mapped to an instance of <a href="http://theintern.github.io/leadfoot/Command.html">leadfoot/Command</a>, more on that later</span>
-			<span class='keyword'>return</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span>
-				<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='string'>'http://localhost'</span></span><span class='argumentsDelimiter'>)</span></span><span class='argumentsDelimiter'>)</span>
-				<span class='comment lineComment'>// do something</span>
-				<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-					<span class='functionName'>assert</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// assert something</span>
-				}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-		}</span>
+		login: function() { // and each method inside the object is a test
+			// inside a test function, "this.remote" is mapped to an instance of leadfoot/Command, more on that later
+			return this.remote
+				.get(require.toUrl('http://localhost'))
+				// do something
+				.then(function() {
+					assert(); // assert something
+				});
+		}
 
-	<span class='objectDelimiter'>}</span></span></span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+	});
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 <p>As the test list grows bigger, it is not manageable to define each and every test in the same file, so what I recommend is to <strong>separate each test in a different file</strong> with <abbr title="Asynchronous Module Definition">AMD</abbr> like this.</p>
 
-<div>
+<div class='codeblock'>
 <p>manageableTestSuite.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>define([
 
-	<span class='comment lineComment'>// base</span>
-	<span class='string'>'intern!object'</span><span class='arraySeparator'>,</span>
+	// base
+	'intern!object',
 
-	<strong><span class='comment lineComment'>// tests - check next code block for how these files are structured</span>
-	<span class='string'>'path/relative/to/this/file/sanityTest'</span><span class='arraySeparator'>,</span>
-	<span class='string'>'path/relative/to/this/file/realityTest'</span></strong>
+	<strong class='comment small'>// tests - check next code block for how these files are structured</strong>
+	<strong class='small'>'path/relative/to/this/file/sanityTest',</strong>
+	<strong class='small'>'path/relative/to/this/file/realityTest'</strong>
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'>
+], function(
 
-	<span class='comment lineComment'>// base</span>
-	<span class='variableName'>registerSuite</span><span class='argumentsSeparator'>,</span>
+	// base
+	registerSuite,
 
-	<strong><span class='comment lineComment'>// tests</span>
-	<span class='variableName'>sanityTest</span><span class='argumentsSeparator'>,</span> <span class='variableName'>realityTest</span></strong>
+	<strong class='comment small'>// tests</strong>
+	<strong class='small'>sanityTest, realityTest</strong>
 
-	</span><span class='argumentsDelimiter'>)</span> {
+	) {
 
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+	'use strict';
 
-	<span class='functionName'>registerSuite</span><span class='argumentsDelimiter'>(</span><span class='functionArguments'><span class='objectDefinition'><span class='objectDelimiter'>{</span>
-		<span class='propertyName'>name</span><span class='propertySeparator'>:</span> <span class='string'>'load chrome extension'</span><span class='objectSeparator'>,</span>
-		<strong><span class='comment lineComment'>// function references instead of function definitions (lambdas)</span></strong>
-		<span class='propertyName'><span class='string'>'sanity test'</span></span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='functionReference'><strong><span class='propertyValue variableName'>sanityTest</span></strong></span></span><span class='objectSeparator'>,</span>
-		<span class='propertyName'><span class='string'>'reality test'</span></span><span class='propertySeparator'>:</span> <span class='propertyValue'><span class='functionReference'><strong><span class='propertyValue variableName'>realityTest</span></strong></span></span>
-	<span class='objectDelimiter'>}</span></span></span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+	registerSuite({
+		name: 'load chrome extension',
+		<strong class='comment small'>// function references instead of function definitions (lambdas)</strong>
+		<strong class='small'>'sanity test': sanityTest,</strong>
+		<strong class='small'>'reality test': realityTest</strong>
+	});
 
-}</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
-And each test would be something like:
+<p>And each test would be something like:</p>
 
-<div>
+<div class='codeblock'>
 <p>manageableTest.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>define([
 
-	<span class='comment lineComment'>// base</span>
-	<span class='string'>'intern/chai!assert'</span><span class='arraySeparator'>,</span>
-	<span class='string'>'require'</span><span class='arraySeparator'>,</span>
+	// base
+	'intern/chai!assert',
+	'require',
 
-	<span class='comment lineComment'>// resources</span>
-	<span class='string'>'path/relative/to/this/file/resources'</span>
+	// resources
+	'path/relative/to/this/file/resources'
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span>
+], function(
 
-	<span class='comment lineComment'>// base</span>
-	<span class='variableName'>assert</span><span class='argumentsSeparator'>,</span> <span class='variableName'>require</span><span class='argumentsSeparator'>,</span>
+	// base
+	assert, require,
 
-	<span class='comment lineComment'>// resources</span>
-	<span class='variableName'>resources</span>
+	// resources
+	resources
 
-	<span class='argumentsDelimiter'>)</span> {
+	) {
 
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+	'use strict';
 
-	<strong><span class='comment lineComment'>// return the test function from the module</span>
-	<span class='keyword'>return</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-		<span class='comment lineComment'>// we can still refer to this.remote, like in the previous example</span>
-		<span class='keyword'>return</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span></strong>
-			<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='string'>'http://localhost'</span><span class='argumentsDelimiter'>)</span><span class='argumentsDelimiter'>)</span>
-			<span class='comment lineComment'>// do something</span>
-			<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-				<span class='functionName'>assert</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// assert something</span>
-			}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+	<strong class='comment small'>// return the test function from the module</strong>
+	<strong class='small'>return function() {</strong>
+
+		<strong class='comment small'>// we can still refer to this.remote, like in the previous example</strong>
+		<strong class='small'>return this.remote</strong>
+			.get(require.toUrl('http://localhost'))
+			// do something
+			.then(function() {
+				assert(); // assert something
+			});
+
 	<strong>}</strong>
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 </section>
@@ -318,169 +321,169 @@ And each test would be something like:
 <p>Promises exist in several languages such as C++, C# and Java in one form or another. Sometimes they require an auxiliary class called <code>Future</code>, sometimes they are called <code>Task</code>s, sometimes they are called <code>Deferred</code>s. They are objects that will contain a value in the future, and we may register a callback function to run when the promise receives this value. In JavaScript, by immediately returning a <code>promise</code> from a method that will take long to return a value, and registering a callback to execute later on, we avoid blocking the current thread while idle.</p>
 <p>The process of setting a value to the <code>promise</code> is called <strong>resolving</strong> the <code>promise</code>. If the <code>promise</code> cannot receive a value anymore, it is <strong>rejected with a reason.</strong> Resolving or rejecting a <code>promise</code> is called <strong>fulfilling</strong> the <code>promise</code>. In the example below, we can see the basics of working with promises in JavaScript.</p>
 
-<div>
+<div class='codeblock'>
 <p>Promises overview</p>
 <code class='javascript'
-><span class='comment lineComment'>// call an async function (a method that returns a promise)</span>
-<span class='keyword'>var</span> <span class="variableName">promise</span> <span class='operator assignmentOperator'>=</span> <span class='functionName'>asyncFunction</span>()<span class='statementSeparator'>;</span>
+>// call an async function (a method that returns a promise)
+var promise = asyncFunction();
 
-<span class='comment lineComment'>// call the promise "then" method</span>
-<span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='comment lineComment'>// pass a callback as argument</span>
-	<span class='comment lineComment'>// do something with the value here</span>
-})<span class='statementSeparator'>;</span>
+// call the promise "then" method
+promise.then(function(value) { // pass a callback as argument
+	// do something with the value here
+});
 
-<span class='keyword'>return</span> promise;
-</code>
+return promise;</code
+>
 </div>
 
 <p>Saving the promise inside a variable is not always required, and in certain cases we can omit it.</p>
 
-<div>
-<p>Promises inline short syntax</p>
+<div class='codeblock'>
+<p>Promises: inline short syntax</p>
 <code class='javascript'
-><span class='comment lineComment'>// call an async function and the "then" method from the returned value</span>
-<span class='keyword'>return</span> <span class='functionName'>asyncFunction</span>().<span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) {
-	<span class='comment lineComment'>// do something with the value here</span>
-})<span class='statementSeparator'>;</span>
-</code>
+>// call an async function and the "then" method from the returned value
+return asyncFunction().then(function(value) {
+	// do something with the value here
+});</code
+>
 </div>
 
 <p>There's a more readable syntax for this however. In this simple example it won't do much for us, but it will become more important later on, we we see another topic called promises chaining.</p>
 
 <p>TODO see how other languages behave about breaking calls in multiple lines.</p>
 
-<div>
-<p>Promises more readable short syntax</p>
+<div class='codeblock'>
+<p>Promises: more readable short syntax</p>
 <code class='javascript'
-><span class='comment lineComment'>// call an async function</span>
-<span class='keyword'>return</span> <span class='functionName'>asyncFunction</span>() <span class='comment lineComment'>// do not end this line with ";"</span>
+>// call an async function
+return asyncFunction() // do not end this line with ";"
 
-<span class='comment lineComment'>// break the "then" method call in another line</span>
-.<span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='comment lineComment'>// begin this line with "."</span>
-	<span class='comment lineComment'>// do something with the value here</span>
-})<span class='statementSeparator'>;</span>
-</code>
+// break the "then" method call in another line
+.then(function(value) { // begin this line with "."
+	// do something with the value here
+});</code
+>
 </div>
 
 <p>Like mentioned above, promises are not always resolved. Sometimes something goes wrong and they are rejected. We can perform an action in case they are rejected by passing in a second callback, like this.</p>
 
-<div>
-<p>Promises callbacks</p>
+<div class='codeblock'>
+<p>Promise callbacks</p>
 <code class='javascript'
-><span class='comment lineComment'>// call an async function</span>
-<span class='functionName'>asyncFunction</span>()
+>// call an async function
+asyncFunction()
 
-<span class='comment lineComment'>// register the callbacks</span>
-.<span class="objectMethod">then</span>(
-	<span class='keyword'>function</span>(value) { <span class='exceptionStub'>...</span> }, <span class='comment lineComment'>// pass the success callback</span>
-	<span class='keyword'>function</span>(reason) { <span class='exceptionStub'>...</span> } <span class='comment lineComment'>// and the error callback</span>
-)<span class='statementSeparator'>;</span>
-</code>
+// register the callbacks
+.then(
+	function(value) { ... }, // pass the success callback
+	function(reason) { ... } // and the error callback
+);</code
+>
 </div>
 
 <p>Ok, we're ready to see a more complete example.</p>
 
-<div>
+<div class='codeblock'>
 <p>Basic example of working with promises</p>
 <code class='javascript'
-><span class='comment lineComment'>// dojo/request makes http requests</span>
-<span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='string'>'dojo/request'</span><span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>request</span><span class='argumentsDelimiter'>)</span> {
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+>// dojo/request makes http requests
+define(['dojo/request'], function(request) {
+	'use strict';
 
-	<span class='comment lineComment'>// calling this method may take long to complete</span>
-	<span class='comment lineComment'>// but it immediately returns a promise</span>
-	<span class='comment lineComment'>// and fulfills it only after receiving a response</span>
-	<span class='keyword'>return</span> request(<span class='string'>'http://webservice.com/lerelere'</span>)
+	// calling this method may take long to complete
+	// but it immediately returns a promise
+	// and fulfills it only after receiving a response
+	return request('http://webservice.com/lerelere')
 
-	<span class='comment lineComment'>// we can get the response value by calling the then function</span>
-	<span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(
-		<span class='keyword'>function</span>(result) { <span class='keyword exceptionStub'>...</span> }, <span class='comment lineComment'>// promise was resolved \o/ run this callback</span>
-		<span class='keyword'>function</span>(reason) { <span class='keyword exceptionStub'>...</span> } <span class='comment lineComment'>// promise was rejected ;( run this callback instead</span>
-	)<span class='statementSeparator'>;</span>
+	// we can get the response value by calling the then function
+	.then(
+		function(result) { ... }, // promise was resolved \o/ run this callback
+		function(reason) { ... } // promise was rejected ;( run this callback instead
+	);
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 <p>And now is a good time to show another concept of working with promises in JavaScript. A <code class.javascript>promise.then</code> call always returns another <code class="javascript">promise</code>. This allows us to chain multiple <code class="javascript">then</code> calls, that will wait for the previous <code class="javascript">promise</code> to be resolved. This way we can order the execution of async code.</p>
 
-<div>
+<div class='codeblock'>
 <p>Promise chaining</p>
 <code class='javascript'
-><span class='comment lineComment'>// returns the last promise of the chain</span>
-<span class='keyword'>return</span> <span class='functionName'>asyncFunction</span>()
+>// returns the last promise of the chain
+return asyncFunction()
 
-<strong><span class='comment lineComment'>// first promise callback</span>
-<span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='keyword exceptionStub'>...</span> })</strong>
+<strong class='comment small'>// first promise callback</strong>
+<strong class='small'>.then(function(value) { ... })</strong>
 
-<strong><span class='comment lineComment'>// second promise callback</span>
-<span class='comment lineComment'>// it will only run when the previous promise is resolved</span>
-<span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='keyword exceptionStub'>...</span> })</strong><span class='statementSeparator'>;</span>
-</code>
+<strong class='comment small'>// second promise callback</strong>
+<strong class='comment small'>// it will only run when the previous promise is resolved</strong>
+<strong class='small'>.then(function(value) { ... });</strong></code
+>
 </div>
 
 <p>Another more clearer but less compact way of writing the above code would be to explicitly store each promise in a variable.</p>
 
-<div>
+<div class='codeblock'>
 <p>Promise chaining</p>
 <code class='javascript'
-><span class='keyword'>var</span> <span class='variableName'>promise1</span> = <span class='keyword null'>null</span><span class='statementSeparator'>;</span>
-<span class='keyword'>var</span> <span class='variableName'>promise2</span> = <span class='keyword null'>null</span><span class='statementSeparator'>;</span>
-<span class='keyword'>var</span> <span class='variableName'>promise3</span> = <span class='keyword null'>null</span><span class='statementSeparator'>;</span>
+>var promise1 = null;
+var promise2 = null;
+var promise3 = null;
 
-<span class='variableName'>promise1</span> = <span class='functionName'>asyncFunction</span>()<span class='statementSeparator'>;</span>
-<span class='variableName'>promise2</span> = <strong><span class='variableName'>promise1</span><span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='keyword exceptionStub'>...</span> })</strong><span class='statementSeparator'>;</span> <strong><span class='comment lineComment'>// first promise callback</span></strong>
-<span class='variableName'>promise3</span> = <strong><span class='variableName'>promise2</span><span class='operator memberAccessOperator'>.</span><span class="objectMethod">then</span>(<span class='keyword'>function</span>(value) { <span class='keyword exceptionStub'>...</span> })</strong><span class='statementSeparator'>;</span> <strong><span class='comment lineComment'>// second promise callback, it will only run when the previous promise is resolved</span></strong>
+promise1 = asyncFunction();
+promise2 = <strong>promise1.then(function(value) { ... });</strong> <strong>// first promise callback</strong>
+promise3 = <strong>promise2.then(function(value) { ... });</strong> <strong>// second promise callback, it will only run when the previous promise is resolved</strong>
 
-<span class='comment lineComment'>// returns the last promise of the chain</span>
-<span class='keyword'>return</span> <span class='variableName'>promise3</span><span class='statementSeparator'>;</span>
-</code>
+// returns the last promise of the chain
+return promise3;</code
+>
 </div>
 
 <p>So far we have not mixed sync and async code on purpose. I'm going to show a very simple scenario, since our focus is to learn how to use intern.</p>
 
-<div>
+<div class='codeblock'>
 <p>Async demonstration</p>
 <code class='javascript'
-><span class='comment lineComment'>// </span>
-// async the console.log
-</code>
+>//
+// async the console.log</code
+>
 </div>
 
-<div>
+<div class='codeblock'>
 <p>manageableTest.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='string'>'dojo/Deferred'</span><span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>Deferred</span><span class='argumentsDelimiter'>)</span> {
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+>define(['dojo/Deferred'], function(Deferred) {
+	'use strict';
 
-	<span class='keyword'>function</span> lengthyOperation() {
+	function lengthyOperation() {
 
-		<span class='comment lineComment'>// create a promise</span>
-		<span class='keyword'>var</span> promise = new Deferred()<span class='statementSeparator'>;</span>
+		// create a promise
+		var promise = new Deferred();
 
-		<span class='comment lineComment'>// do lengthy operation here</span>
-		<span class='keyword'>var</span> response = ajax(<span class='string'>'http://webservice.com/lerelere'</span>);
-		response.addEventListener(<span class='string'>'workDone'</span>, <span class='keyword'>function</span>(result) {
-			promise.resolve(result)<span class='statementSeparator'>;</span>
-		})<span class='statementSeparator'>;</span>
-		response.addEventListener(<span class='string'>'error'</span>, <span class='keyword'>function</span>(error) {
-			promise.reject(error)<span class='statementSeparator'>;</span>
-		})<span class='statementSeparator'>;</span>
+		// do lengthy operation here
+		var response = ajax('http://webservice.com/lerelere');
+		response.addEventListener('workDone', function(result) {
+			promise.resolve(result);
+		});
+		response.addEventListener('error', function(error) {
+			promise.reject(error);
+		});
 
-		<span class='comment lineComment'>// return the unfulfilled promise immediately</span>
-		<span class='keyword'>return</span> promise<span class='statementSeparator'>;</span>
+		// return the unfulfilled promise immediately
+		return promise;
 
 	}
 
 	lengthyOperation()
 
 	.then(
-		<span class='keyword'>function</span>(result) {  }, <span class='comment lineComment'>// promise was resolved \o/, run this</span>
-		<span class='keyword'>function</span>(reason) {  } <span class='comment lineComment'>// promise was rejected, run this instead</span>
-	)<span class='statementSeparator'>;</span>
+		function(result) {  }, // promise was resolved \o/, run this
+		function(reason) {  } // promise was rejected, run this instead
+	);
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 <p>An async method returns a thenable, that is, an object with a <code class="javascript">then</code> method that you can pass in a callback function. Native JavaScript <code class="javascript">Promise</code>s and <code class="javascript">dojo/Deferred</code>s are examples of thenables. Inside the callback that we pass to the <code class="javascript">then</code> method, we can retrieve the value of the promise once it is resolved.</p>
@@ -508,81 +511,81 @@ And each test would be something like:
 
 <p>Let's see a couple of code excerpts that exemplify theses cases.</p>
 
-<div>
+<div class='codeblock'>
 <p>built in promise with command</p>
 <code class='javascript'
-><strong><span class='keyword'>return</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span> <span class='comment lineComment'>// implicit promise inside command (this<span class='operator memberAccessOperator'>.</span>remote)</span></strong>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='string'>'http://localhost'</span><span class='argumentsDelimiter'>)</span><span class='argumentsDelimiter'>)</span>
-	<span class='comment lineComment'>// do something</span>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-		<span class='functionName'>assert</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// assert something</span>
-	}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+><strong>return this.remote</strong> <strong>// implicit promise inside command (this.remote)</strong>
+	.get(require.toUrl('http://localhost'))
+	// do something
+	.then(function() {
+		assert(); // assert something
+	});</code
+>
 </div>
 
 <p>talk about command chaining and failure callback before showing explicit promises examples</p>
 
-<div>
+<div class='codeblock'>
 <p>explicit promise</p>
 <code class='javascript'
-><strong><span class='keyword'>var</span> <span class='variableName'>promise</span> = <span class='keyword'>new</span> <span class='functionName'>Deferred</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// explicit promise</span></strong>
+><strong>var promise = new Deferred();</strong> <strong>// explicit promise</strong>
 
-<span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='string'>'http://localhost'</span><span class='argumentsDelimiter'>)</span><span class='argumentsDelimiter'>)</span>
-	<span class='comment lineComment'>// do something</span>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-		<span class='functionName'>assert</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// assert something</span>
-	}<span class='argumentsDelimiter'>)</span>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span>
-		<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>resolve</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> }<span class='argumentsSeparator'>,</span> <strong><span class='comment lineComment'>// success callback</span></strong>
-		<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>reject</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> } <strong><span class='comment lineComment'>// failure callback</span></strong>
-	<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+this.remote
+	.get(require.toUrl('http://localhost'))
+	// do something
+	.then(function() {
+		assert(); // assert something
+	})
+	.then(
+		function() { <strong>promise.resolve();</strong> }, <strong>// success callback</strong>
+		function(error) { <strong>promise.reject(error);</strong> } <strong>// failure callback</strong>
+	);
 
-<strong><span class='keyword'>return</span> <span class='variableName'>promise</span><span class='statementSeparator'>;</span></strong>
-</code>
+<strong>return promise;</strong></code
+>
 </div>
 
-<div>
+<div class='codeblock'>
 <p>implicit promise with parallel commands</p>
 <code class='javascript'
-><span class='keyword'>var</span> <span class='variableName'>pageCommand</span> <span class='operator assignmentOperator'>=</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='string'>'http://localhost'</span><span class='argumentsDelimiter'>)</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+>var pageCommand = this.remote.get(require.toUrl('http://localhost'));
 
-<span class='comment lineComment'>// calling any method of command will return a new command instance</span>
-<span class='comment lineComment'>// so multiple method calls will return multiple command instances</span>
-<span class='keyword'>var</span> <span class='variableName'>command1</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>pageCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>findById</span><span class='argumentsDelimiter'>(</span><span class='string'>'someId'</span><span class='argumentsDelimiter'>)</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>getAttribute</span><span class='argumentsDelimiter'>(</span><span class='string'>'for'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-<span class='keyword'>var</span> <span class='variableName'>command2</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>pageCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>findById</span><span class='argumentsDelimiter'>(</span><span class='string'>'someOtherId'</span><span class='argumentsDelimiter'>)</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>getAttribute</span><span class='argumentsDelimiter'>(</span><span class='string'>'for'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+// calling any method of command will return a new command instance
+// so multiple method calls will return multiple command instances
+var command1 = pageCommand.findById('someId').getAttribute('for');
+var command2 = pageCommand.findById('someOtherId').getAttribute('for');
 
-<strong><span class='comment lineComment'>// "all" helper will wait for all passed promises to be fulfilled before calling its own "then" callbacks</span>
-<span class='comment lineComment'>// because commands have implicit promises, we pass them directly to the "all" helper</span>
-<span class='comment lineComment'>// all([...]).then callback will receive an array with the results of each promise</span>
-<span class='comment lineComment'>// following this structure [forAttribute1, forAttribute2]</span>
-<span class='keyword'>return</span> <span class='functionName'>all</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='variableName'>command1</span><span class='arraySeparator'>,</span> <span class='variableName'>command2</span><span class='arrayDelimiter'>]</span></span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// implicit promise inside "all"</span></strong>
-</code>
+<strong class='comment small'>// "all" helper will wait for all passed promises to be fulfilled before calling its own "then" callbacks</strong>
+<strong class='comment small'>// because commands have implicit promises, we pass them directly to the "all" helper</strong>
+<strong class='comment small'>// all([...]).then callback will receive an array with the results of each promise</strong>
+<strong class='comment small'>// following this structure [forAttribute1, forAttribute2]</strong>
+<strong class='small'>return all([command1, command2]);</strong> <strong class='comment small'>// implicit promise inside "all"</strong></code
+>
 </div>
 
-<div>
+<div class='codeblock'>
 <p>explicit promise with parallel commands</p>
 <code class='javascript'
-><strong><span class='keyword'>var</span> <span class='variableName'>promise</span> <span class='operator assignmentOperator'>=</span> <span class='keyword'>new</span> <span class='functionName'>Deferred</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// explicit promise</span></strong>
-<span class='keyword'>var</span> <span class='variableName'>pageCommand</span> <span class='operator assignmentOperator'>=</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>get</span><span class='argumentsDelimiter'>(</span><span class='functionName'>require</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>toUrl</span><span class='argumentsDelimiter'>(</span><span class='string'>'http://localhost'</span><span class='argumentsDelimiter'>)</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+><strong>var promise = new Deferred();</strong> <strong>// explicit promise</strong>
+var pageCommand = this.remote.get(require.toUrl('http://localhost'));
 
-<span class='comment lineComment'>// calling any method of command will return a new command instance</span>
-<span class='comment lineComment'>// so multiple method calls will return multiple command instances</span>
-<span class='keyword'>var</span> <span class='variableName'>command1</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>pageCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>findById</span><span class='argumentsDelimiter'>(</span><span class='string'>'someId'</span><span class='argumentsDelimiter'>)</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>getAttribute</span><span class='argumentsDelimiter'>(</span><span class='string'>'for'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-<span class='keyword'>var</span> <span class='variableName'>command2</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>pageCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>findById</span><span class='argumentsDelimiter'>(</span><span class='string'>'someOtherId'</span><span class='argumentsDelimiter'>)</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>getAttribute</span><span class='argumentsDelimiter'>(</span><span class='string'>'for'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+// calling any method of command will return a new command instance
+// so multiple method calls will return multiple command instances
+var command1 = pageCommand.findById('someId').getAttribute('for');
+var command2 = pageCommand.findById('someOtherId').getAttribute('for');
 
-<span class='comment lineComment'>// "all" helper will wait for all passed promises to be fulfilled before calling its own "then" callbacks</span>
-<span class='comment lineComment'>// because commands have implicit promises, we pass them directly to the "all" helper</span>
-<span class='functionName'>all</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='variableName'>command1</span><span class='arraySeparator'>,</span> <span class='variableName'>command2</span><span class='arrayDelimiter'>]</span></span><span class='argumentsDelimiter'>)</span>
-	<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span>
-		<span class='comment lineComment'>// forAttributes is an array with the results of each promise</span>
-		<span class='comment lineComment'>// following this structure [forAttribute1, forAttribute2]</span>
-		<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>forAttributes</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>resolve</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> }<span class='argumentsSeparator'>,</span> <strong><span class='comment lineComment'>// success callback</span></strong>
-		<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>reject</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> } <strong><span class='comment lineComment'>// failure callback</span></strong>
-	<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+// "all" helper will wait for all passed promises to be fulfilled before calling its own "then" callbacks
+// because commands have implicit promises, we pass them directly to the "all" helper
+all([command1, command2])
+	.then(
+		// forAttributes is an array with the results of each promise
+		// following this structure [forAttribute1, forAttribute2]
+		function(forAttributes) { <strong class='small'>promise.resolve();</strong> }, <strong class='comment small'>// success callback</strong>
+		function(error) { <strong class='small'>promise.reject(error);</strong> } <strong class='comment small'>// failure callback</strong>
+	);
 
-<strong><span class='keyword'>return</span> <span class='variableName'>promise</span><span class='statementSeparator'>;</span></strong>
-</code>
+<strong>return promise;</strong></code
+>
 </div>
 
 
@@ -602,93 +605,93 @@ assert
 <h2>Extending Native Command</h2>
 <p>We need to extend the <code><a href='http://theintern.github.io/leadfoot/Command.html'>leadfoot/Command</a></code> according to the docs, and then create an instance passing a <code><a href='http://theintern.github.io/leadfoot/Session.html'>leadfoot/Session</a></code> instance.</p>
 
-<div>
+<div class='codeblock'>
 <p>StxCommand.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>define([
 
-	<span class='comment lineComment'>// path to the native <a href="http://theintern.github.io/leadfoot/Command.html">leadfoot/Command</a></span>
-	<span class='comment lineComment'>// it's a node module (common js format), and this format is not directly compatible with AMD</span>
-	<span class='comment lineComment'>// so we use <a href='http://dojotoolkit.org/reference-guide/1.10/dojo/node.html'>dojo/node! plug-in</a> to load it</span>
-	<span class='string'>'intern/dojo/node!leadfoot/Command'</span><span class='arraySeparator'>,</span>
+	// path to the native leadfoot/Command
+	// it's a node module (common js format), and this format is not directly compatible with AMD
+	// so we use dojo/node! plug-in to load it
+	'intern/dojo/node!leadfoot/Command',
 
-	<span class='comment lineComment'>// method we want to add to the command</span>
-	<span class='string'>'./newMethod'</span>
+	// method we want to add to the command
+	'./newMethod'
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>Command</span><span class='argumentsSeparator'>,</span> <span class='variableName'>newMethod</span><span class='argumentsDelimiter'>)</span> {
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+], function(Command, newMethod) {
+	'use strict';
 
-	<span class='comment lineComment'>// <a href='http://theintern.github.io/leadfoot/Command.html'>inheritance as recommended</a> according to the docs</span>
-	<span class='keyword'>function</span> <span class='functionName'>StxCommand</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-		<span class='variableName'>Command</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>apply</span><span class='argumentsDelimiter'>(</span><span class='keyword this'>this</span><span class='argumentsSeparator'>,</span> <span class='variableName'>arguments</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+	// inheritance as recommended according to the docs
+	function StxCommand() {
+		Command.apply(this, arguments);
 	}
-	<span class='functionName'>StxCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>prototype</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>Object</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>create</span><span class='argumentsDelimiter'>(</span><span class='variableName'>Command</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>prototype</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-	<span class='functionName'>StxCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>prototype</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>constructor</span> <span class='operator assignmentOperator'>=</span> <span class='functionName'>StxCommand</span><span class='statementSeparator'>;</span>
+	StxCommand.prototype = Object.create(Command.prototype);
+	StxCommand.prototype.constructor = StxCommand;
 
-	<span class='comment lineComment'>// adding new method</span>
-	<span class='functionName'>StxCommand</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>prototype</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>newMethod</span> <span class='operator assignmentOperator'>=</span> <span class='variableName'>newMethod</span><span class='statementSeparator'>;</span>
+	// adding new method
+	StxCommand.prototype.newMethod = newMethod;
 
-	<span class='comment lineComment'>// return extended command from the module</span>
-	<span class='keyword'>return</span> <span class='functionName'>StxCommand</span><span class='statementSeparator'>;</span>
+	// return extended command from the module
+	return StxCommand;
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
-<div>
+<div class='codeblock'>
 <p>newMethod.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+>define([], function() {
+	'use strict';
 
-	<strong><span class='comment lineComment'>// boilerplate for new methods</span></strong>
-	<strong><span class='keyword'>return</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>someParameter</span><span class='argumentsDelimiter'>)</span> { <span class='comment lineComment'>// method signature</span>
-		<span class='keyword'>return</span> <span class='keyword'>new</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>constructor</span><span class='argumentsDelimiter'>(</span><span class='keyword this'>this</span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-			<span class='keyword'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>parent</span></strong>
-				<span class='comment lineComment'>// actual method code</span>
-				<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-					<span class='variableName'>console</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>log</span><span class='argumentsDelimiter'>(</span><span class='variableName'>someParameter</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-				}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-		<strong>}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-	}<span class='statementSeparator'>;</span></strong>
+	<strong>// boilerplate for new methods</strong>
+	<strong class='small'>return function(someParameter) {</strong> <strong>// method signature</strong>
+		<strong class='small'>return new this.constructor(this, function() {</strong>
+			<strong class='small'>this.parent</strong>
+				// actual method code
+				.then(function() {
+					console.log(someParameter);
+				});
+		<strong>});</strong>
+	<strong>};</strong>
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
-<div>
+<div class='codeblock'>
 <p>extendedCommandTest.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span>
+>define([
 
-	<span class='comment lineComment'>// base</span>
-	<span class='string'>'intern/chai!assert'</span><span class='arraySeparator'>,</span>
-	<span class='string'>'require'</span><span class='arraySeparator'>,</span>
-	<strong><span class='string'>'path/relative/to/this/file/StxCommand'</span><span class='arraySeparator'>,</span></strong>
+	// base
+	'intern/chai!assert',
+	'require',
+	<strong>'path/relative/to/this/file/StxCommand',</strong>
 
-	<span class='comment lineComment'>// resources</span>
-	<span class='string'>'path/relative/to/this/file/resources'</span>
+	// resources
+	'path/relative/to/this/file/resources'
 
-<span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span>
+], function(
 
-	<span class='comment lineComment'>// base</span>
-	<span class='variableName'>assert</span><span class='argumentsSeparator'>,</span> <span class='variableName'>require</span><span class='argumentsSeparator'>,</span> <strong><span class='variableName'>StxCommand</span></strong><span class='argumentsSeparator'>,</span>
+	// base
+	assert, require, <strong>StxCommand,</strong>
 
-	<span class='comment lineComment'>// resources</span>
-	<span class='variableName'>resources</span>
+	// resources
+	resources
 
-	<span class='argumentsDelimiter'>)</span> {
+	) {
 
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+	'use strict';
 
-	<span class='comment lineComment'>// return the test function</span>
-	<span class='keyword'>return</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-		<strong><span class='keyword'>var</span> <span class='variableName'>stxRemote</span> <span class='operator assignmentOperator'>=</span> <span class='keyword'>new</span> <span class='functionName'>StxCommand</span><span class='argumentsDelimiter'>(</span><span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>remote</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>session</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-		<span class='keyword'>return</span> <span class='variableName'>stxRemote</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>newMethod</span><span class='argumentsDelimiter'>(</span><span class='string'>'done!'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span> <span class='comment lineComment'>// because StxCommand inherits from <a href="http://theintern.github.io/leadfoot/Command.html">leadfoot/Command</a>, it also contains an implicit promise</span></strong>
+	// return the test function
+	return function() {
+		<strong class='small'>var stxRemote = new StxCommand(this.remote.session);</strong>
+		<strong class='small'>return stxRemote.newMethod('done!');</strong> <strong class='comment small'>// because StxCommand inherits from leadfoot/Command, it also contains an implicit promise</strong>
 	}
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 </section>
@@ -701,72 +704,72 @@ assert
 
 <p>For each method that we add to the command, we can follow a few good practices that will ensure that the tests execution remains fast and debuggable. We can implement a simple timer and an error management block that will prevent the tests from hanging for too long.</p>
 
-<div>
+<div class='codeblock'>
 <p>newMethod.js</p>
 <code class='javascript'
-><span class='functionName'>define</span><span class='argumentsDelimiter'>(</span><span class='arrayDefinition'><span class='arrayDelimiter'>[</span><span class='arrayDelimiter'>]</span></span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-	<span class='string'>'use strict'</span><span class='statementSeparator'>;</span>
+>define([], function() {
+	'use strict';
 
-	<span class='keyword'>return</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>someParameter</span><span class='argumentsDelimiter'>)</span> {
-		<span class='keyword'>return</span> <span class='keyword'>new</span> <span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>constructor</span><span class='argumentsDelimiter'>(</span><span class='keyword this'>this</span><span class='argumentsSeparator'>,</span> <span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
+	return function(someParameter) {
+		return new this.constructor(this, function() {
 
-			<strong><span class='comment lineComment'>// explicit promise used to give us more freedom to <a href="http://theintern.github.io/leadfoot/Command.html">leadfoot/Command</a> usage</span>
-			<span class='comment lineComment'>// this is what we'll return from the test function and it's what</span>
-			<span class='comment lineComment'>// will act as a semaphore for the test suite</span>
-			<span class='comment lineComment'>// when the promise fulfills, the test is marked as completed</span>
-			<span class='comment lineComment'>// if the promise is resolved, the test is considered successful</span>
-			<span class='comment lineComment'>// otherwise, if the promise is rejected, the test will fail</span>
-			<span class='keyword'>var</span> <span class='variableName'>promise</span> <span class='operator assignmentOperator'>=</span> <span class='keyword'>new</span> <span class='variableName'>Deferred</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong>
+			<strong class='comment small'>// explicit promise used to give us more freedom to leadfoot/Command usage</strong>
+			<strong class='comment small'>// this is what we'll return from the test function and it's what</strong>
+			<strong class='comment small'>// will act as a semaphore for the test suite</strong>
+			<strong class='comment small'>// when the promise fulfills, the test is marked as completed</strong>
+			<strong class='comment small'>// if the promise is resolved, the test is considered successful</strong>
+			<strong class='comment small'>// otherwise, if the promise is rejected, the test will fail</strong>
+			<strong class='small'>var promise = new Deferred();</strong>
 
-			<strong><span class='comment lineComment'>// the test suite doesn't knows about errors thrown from the code</span>
-			<span class='comment lineComment'>// if that happens, the test will simply hang until the timeout is reached</span>
-			<span class='comment lineComment'>// the only way to communicate errors to the test suite is to reject the returned promise</span>
-			<span class='comment lineComment'>// when we use the <a href="http://theintern.github.io/leadfoot/Command.html">leadfoot/Command</a> built-in promise, this is done for us automatically</span>
-			<span class='comment lineComment'>// when we don't, we must do it manually in the catch block below</span>
-			<span class='keyword'>try</span> {</strong>
+			<strong class='comment small'>// the test suite doesn't knows about errors thrown from the code</strong>
+			<strong class='comment small'>// if that happens, the test will simply hang until the timeout is reached</strong>
+			<strong class='comment small'>// the only way to communicate errors to the test suite is to reject the returned promise</strong>
+			<strong class='comment small'>// when we use the leadfoot/Command built-in promise, this is done for us automatically</strong>
+			<strong class='comment small'>// when we don't, we must do it manually in the catch block below</strong>
+			<strong class='small'>try {</strong>
 
-				<span class='keyword this'>this</span><span class='operator memberAccessOperator'>.</span><span class='objectProperty'>parent</span>
+				this.parent
 
-					<span class='comment lineComment'>// command timeout to fail, otherwise we may need to wait for the entire test timeout, which may take a long time</span>
-					<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>getTimeout</span><span class='argumentsDelimiter'>(</span><span class='string'>'implicit'</span><span class='argumentsDelimiter'>)</span> <span class='comment lineComment'>// checks if a timeout has been set but the native api</span>
-					<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>timeout</span><span class='argumentsDelimiter'>)</span> { <span class='comment lineComment'>// if not we specify our own</span>
-						<span class='keyword'>if</span> <span class='argumentsDelimiter'>(</span><span class='operator notOperator'>!</span><span class='variableName'>timeout</span><span class='argumentsDelimiter'>)</span> {
-							<span class='variableName'>timeout</span> <span class='operator assignmentOperator'>=</span> <span class='number'>5000</span><span class='statementSeparator'>;</span>
+					// command timeout to fail, otherwise we may need to wait for the entire test timeout, which may take a long time
+					.getTimeout('implicit') // checks if a timeout has been set but the native api
+					.then(function(timeout) { // if not we specify our own
+						if (!timeout) {
+							timeout = 5000;
 						}
-						<strong><span class='functionName'>setTimeout</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> { <span class='comment lineComment'>//  use the timeout for our entire method</span>
-							<span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>reject</span><span class='argumentsDelimiter'>(</span><span class='string'>'new method timed out'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-						}<span class='argumentsSeparator'>,</span> <span class='variableName'>timeout</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong>
-					}<span class='argumentsDelimiter'>)</span>
+						<strong class='small'>setTimeout(function() {</strong> <strong class='comment small'>//  use the timeout for our entire method</strong>
+							<strong class='small'>promise.reject('new method timed out');</strong>
+						<strong class='small'>}, timeout);</strong>
+					})
 
-					<span class='comment lineComment'>// actual method logic</span>
-					<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span><span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> {
-						<span class='variableName'>console</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>log</span><span class='argumentsDelimiter'>(</span><span class='string'>'new method'</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-					}<span class='argumentsDelimiter'>)</span>
+					// actual method logic
+					.then(function() {
+						console.log('new method');
+					})
 
-					<span class='comment lineComment'>// we usually only pass the first parameter to the then function</span>
-					<span class='comment lineComment'>// which is the success callback, but it accepts a second callback, which is the failure callback<span class='operator memberAccessOperator'>.</span></span>
-					<span class='comment lineComment'>// If any error is thrown in the command chain before this "then", the error callback <span class='keyword'>function</span> is executed</span>
-					<span class='operator memberAccessOperator'>.</span><span class='objectMethod'>then</span><span class='argumentsDelimiter'>(</span>
-						<strong><span class='comment lineComment'>// solves the explicit promise to tell the test suite that we're done and it may proceed to the next test</span></strong>
-						<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>resolve</span><span class='argumentsDelimiter'>(</span><span class='boolean'>true</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> }<span class='argumentsSeparator'>,</span>
-						<strong><span class='comment lineComment'>// or rejects the explicit promise in case of failure inside the command chain</span></strong>
-						<span class='keyword'>function</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span> { <strong><span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>reject</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span></strong> }
-					<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
+					// we usually only pass the first parameter to the then function
+					// which is the success callback, but it accepts a second callback, which is the failure callback.
+					// If any error is thrown in the command chain before this "then", the error callback function is executed
+					.then(
+						<strong class='comment small'>// solves the explicit promise to tell the test suite that we're done and it may proceed to the next test</strong>
+						function() { <strong class='small'>promise.resolve(true);</strong> },
+						<strong class='comment small'>// or rejects the explicit promise in case of failure inside the command chain</strong>
+						function(error) { <strong class='small'>promise.reject(error);</strong> }
+					);
 
-			<strong>} <span class='keyword'>catch</span> <span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span> {
-				<span class='comment lineComment'>// like mentioned above, in case of errors, we reject the explicit promise to communicate to the test suite that</span>
-				<span class='comment lineComment'>// the test has failed</span>
-				<span class='variableName'>promise</span><span class='operator memberAccessOperator'>.</span><span class='objectMethod'>reject</span><span class='argumentsDelimiter'>(</span><span class='variableName'>error</span><span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-			}
+			<strong class='small'>} catch (error) {</strong>
+				<strong class='comment small'>// like mentioned above, in case of errors, we reject the explicit promise to communicate to the test suite that</strong>
+				<strong class='comment small'>// the test has failed</strong>
+				<strong class='small'>promise.reject(error);</strong>
+			<strong class='small'>}</strong>
 
-			<span class='comment lineComment'>// always return the explicit promise, regardless of what happens</span>
-			<span class='keyword'>return</span> <span class='variableName'>promise</span><span class='statementSeparator'>;</span></strong>
+			<strong class='comment small'>// always return the explicit promise, regardless of what happens</strong>
+			<strong class='small'>return promise;</strong>
 
-		}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-	}<span class='statementSeparator'>;</span>
+		});
+	};
 
-}<span class='argumentsDelimiter'>)</span><span class='statementSeparator'>;</span>
-</code>
+});</code
+>
 </div>
 
 </section>

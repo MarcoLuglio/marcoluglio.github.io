@@ -1,738 +1,28 @@
 <!DOCTYPE html>
 <html
-	xmlns="http://www.w3.org/1999/xhtml"
-	lang="pt-BR"
-	xml:lang="pt-br"
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='pt-BR'
+	xml:lang='pt-br'
 	>
 <head>
-	<title>JavaScript Orientado à Objeto</title>
-	<meta charset="utf-8" />
-	<style type="text/css">
-	@font-face {
-		font-family: 'Code';
-		src: url('fontes/code_light.eot');
-		src: url('fontes/code_light.eot?#iefix') format('embedded-opentype'),
-			 url('fontes/code_light.woff') format('woff'),
-			 url('fontes/code_light.ttf') format('truetype');
-		font-weight: normal;
-		font-style: normal;
-	}
-
-	@font-face {
-		font-family: 'Code';
-		src: url('fontes/code_bold.eot');
-		src: url('fontes/code_bold.eot?#iefix') format('embedded-opentype'),
-			 url('fontes/code_bold.woff') format('woff'),
-			 url('fontes/code_bold.ttf') format('truetype');
-		font-weight: bold;
-		font-style: normal;
-	}
-
-	html * {
-		margin: 0;
-		padding: 0;
-	}
-
-	body {
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 14px;
-		line-height: 22px;
-		padding: 20px;
-	}
-
-	h1 {
-		margin-bottom: 20px;
-	}
-
-	h2 {
-		font-family: Code, Arial, Helvetica, sans-serif;
-		font-size: 45px;
-		line-height: 50px;
-		margin-top: 85px;
-		margin-bottom: 45px;
-	}
-
-	h2 span {
-		font-size: 25px;
-		display: block;
-	}
-
-	p {
-		margin-bottom: 20px;
-	}
-
-	ul,
-	ol {
-		margin-left: 15px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-
-	blockquote {
-		font-size: 13px;
-		margin: 20px;
-	}
-
-	code {
-		font-family: Consolas, Menlo, "Courier New", Courier;
-		white-space: pre;
-		color: #666666; /* em homenagem à Mari */
-		background-color: #EEEEEE;
-	}
-
-	code strong,
-	code strong * {
-		color: #FF0000 !important;
-	}
-
-	div code {
-		display: block;
-		padding: 25px;
-		margin-top: 25px;
-		margin-bottom: 25px;
-	}
-
-	.javascript .palavraReservada {
-		color: #004499;
-	}
-
-	.javascript .string {
-		color: #0099FF;
-	}
-
-	.javascript .comentario,
-	.html .comentario {
-		color: #FF6600;
-	}
-
-	.html .tag {
-		color: #004499;
-	}
-	</style>
-	<script>
-		(function() {
-			"use strict";
-
-
-
-			function documentReady(funcao) {
-
-				if (document.readyState === "interactive"
-					|| document.readyState === "complete"
-					|| document.readyState === "loaded"
-					) {
-
-					funcao(null);
-
-				// se não, se registra para executar no evento
-				} else {
-
-					// registro do evento para navegadores legais
-					if (document.addEventListener) {
-						document.addEventListener('DOMContentLoaded', funcao);
-
-					// registro de evento para IE8-
-					} else if (window.attachEvent) {
-						window.attachEvent('onload', funcao);
-					}
-
-				}
-
-
-			}
-
-
-
-			var indice = {
-
-
-				init: function() {
-					Object.seal(this);
-				},
-
-
-				gerar: function(idConteiner, niveis, mostrarPrimeiroNivel) {
-
-					var conteiner = document.getElementById(idConteiner);
-					var seletorTitulos = '';
-					var titulos = null;
-					var i = 0;
-					var j = 0;
-					var lista = document.createElement('ul');
-					var listaBuffer = '';
-
-					var pilhaNiveis = [];
-					var nivelAtual = 0;
-					var nivelAnterior = 0;
-					var subnivelAtual = 0;
-					var subnivelAnterior = 0;
-					var indiceString = '';
-
-					i = 2;
-					if (mostrarPrimeiroNivel) {
-						i = 1;
-					}
-
-					for (i; i <= niveis; i++) {
-						seletorTitulos += ', h' + i;
-					}
-					seletorTitulos = seletorTitulos.substr(2);
-
-					titulos = document.querySelectorAll(seletorTitulos);
-
-					for (i = 0; i < titulos.length; i++) {
-
-						nivelAnterior = nivelAtual;
-						nivelAtual = this.getNivel(titulos.item(i));
-
-						pilhaNiveis[nivelAtual] = pilhaNiveis[nivelAtual] || 0;
-
-						if (nivelAtual <= nivelAnterior) {
-							listaBuffer += '</li>';
-						}
-
-						//anterior h2, atual h1 por exemplo
-						if (nivelAtual < nivelAnterior) {
-							listaBuffer += '</ul>';
-							pilhaNiveis[nivelAnterior] = 0;
-						}
-
-						//anterior h1, atual h2 por exemplo
-						if (nivelAtual > nivelAnterior) {
-							listaBuffer += '<ul>';
-						}
-
-						pilhaNiveis[nivelAtual]++;
-
-						indiceString = 'indice';
-						j = 2;
-						if (mostrarPrimeiroNivel) {
-							j = 1;
-						}
-						for (j; j < pilhaNiveis.length; j++) {
-							// + nivelAtual + '-' + pilhaNiveis[nivelAtual];
-							indiceString += '-' + j + pilhaNiveis[j];
-						}
-						titulos.item(i).id = indiceString;
-						listaBuffer += '<li><a href="#' + indiceString + '">' + titulos.item(i).innerHTML + '</a>';
-
-					}
-
-					listaBuffer += '</li></ul>';
-
-					lista.innerHTML = listaBuffer;
-
-					conteiner.appendChild(lista);
-
-				},
-
-
-				getNivel: function(titulo) {
-					var nivelString = titulo.tagName.substr(1);
-					var nivel = parseInt(nivelString, 10);
-					return nivel;
-				}
-
-
-			};
-
-
-
-			var realcador = Object.create(Object.prototype, {
-
-
-				init: {
-					value: function() {
-						Object.seal(this);
-					},
-					writable: false
-				},
-
-
-				realcar: {
-					value: function(input) {
-						//
-					},
-					writable: false
-				},
-
-
-				splice: {
-					value: function(indice, quantoRemover, oQueInserir) {
-						var input = this.output.toString();
-						this.output = input.substring(0, indice);
-						this.output += oQueInserir;
-						this.output += input.substring(indice + quantoRemover);
-					},
-					writable: false
-				},
-
-
-				verificarIndices: {
-					value: function(indiceA, indiceB) {
-						var indicesDisponiveis = this.procurarIndicesDisponiveis(indiceA, indiceB);
-						if (indicesDisponiveis[0] > -1 || indicesDisponiveis[1] > -1) {
-							return true;
-						}
-						return false;
-					},
-					writable: false
-				},
-
-
-				/**
-				 * Salva as faixas de indices que não devem mais ser realçadas
-				 *
-				 * @param indiceA
-				 * @param indiceB
-				 * @param offset Deslocamento a ser aplicado aos indices posteriores à inserção deste indice
-				 */
-				bloquearIndices: {
-
-					value: function(indiceA, indiceB, inicioRealce, fimRealce) {
-						var indicesDisponiveis = this.procurarIndicesDisponiveis(indiceA, indiceB);
-						this.indiceRealces[0].splice(indicesDisponiveis[0], 0, indiceA, indiceB);
-						this.indiceRealces[1].splice(indicesDisponiveis[0], 0, inicioRealce, fimRealce);
-					},
-
-					writable: false
-
-				},
-
-
-				procurarIndicesDisponiveis: {
-
-					value: function(indiceA, indiceB) {
-
-						var indices = [-1, -1];
-						var i = 0;
-						var indice = 0;
-						var ultimoIndice = 0;
-						var penultimoIndice = 0;
-
-						//se é o primeiro bloqueio
-						if (this.indiceRealces[0].length === 0) {
-							return [0, 0];
-						}
-
-						//se estou bloqueando indices maiores do que os já bloqueados
-						if (indiceA > this.indiceRealces[0][this.indiceRealces[0].length - 1]) {
-							return [this.indiceRealces[0].length, this.indiceRealces[0].length];
-						}
-
-						for (i = 0; i < this.indiceRealces[0].length; i = i + 2) {
-							indice = this.indiceRealces[0][i + 1];
-							if (indice < indiceA) {
-								ultimoIndice = indice;
-								penultimoIndice = this.indiceRealces[0][i];
-							} else {
-								if (this.indiceRealces[0][i] > indiceB) {
-									indices[0] = i;
-									indices[1] = i + 1;
-								}
-								break;
-							}
-							//colocar 4,5
-							//colocar 3,4
-							//2,3  6,7
-						}
-
-						return indices;
-
-					},
-
-					writable: false
-
-				},
-
-
-				efetuarRealces: {
-
-					/**
-					 * Substitui os realces indexados
-					 */
-					value: function() {
-						var i = 0;
-						//a substituição é feita de trás para frente para que não seja necessário recalcular os índices em cada substituição
-						for (i = this.indiceRealces[0].length - 1; i > 0; i = i - 2) {
-							this.splice(this.indiceRealces[0][i] + 1, 0, this.indiceRealces[1][i]);
-							this.splice(this.indiceRealces[0][i - 1], 0, this.indiceRealces[1][i - 1]);
-						}
-					},
-
-					writable: false
-
-				},
-
-
-				output: {
-					value: '',
-					writable: true
-				},
-
-
-				indiceRealces: {
-					value: [[], []],
-					writable: true
-				},
-
-
-				indiceA: {
-					value: 0,
-					writable: true
-				},
-
-
-				indiceB: {
-					value: 0,
-					writable: true
-				}
-
-
-			});
-
-
-
-			var realcadorJavaScript = Object.create(realcador, {
-
-
-				realcar: {
-
-					value: function(input) {
-
-						this.indiceRealces = [[], []];
-						this.output = input;
-
-						this.indexarRealceComentarios(0);//TODO realçar blocos de comentários
-						this.indexarRealceStrings(0);
-
-						var palavrasChave = 'var |function|new|this|for |do |while |continue|if |else |switch|case|break|try |catch |return|true|false|null|undefined|delete|typeof|import |export '.split('|');
-						for (var i = 0; i < palavrasChave.length; i++) {
-							this.indexarRealcePalavrasChave(0, palavrasChave[i]);
-						}
-
-						this.efetuarRealces();
-
-						return this.output;
-
-					},
-
-					writable: false
-
-				},
-
-
-				indexarRealceStrings: {
-
-					value: function(indice) {
-
-						this.indiceA = -1;
-						this.indiceB = -1;
-
-						this.indiceA = this.output.indexOf("'", indice);
-						this.indiceB = this.output.indexOf('"', indice);
-
-						if (this.indiceA === -1
-							&& this.indiceB === -1
-							) {
-
-							return;
-						}
-
-						if (this.indiceB === -1
-							|| (this.indiceA !== -1 && this.indiceA < this.indiceB)
-							) {
-
-							this.indiceB = this.output.indexOf("'", this.indiceA + 1);
-
-						} else if (this.indiceA === -1
-							|| this.indiceB < this.indiceA
-							) {
-
-							this.indiceA = this.indiceB;
-							this.indiceB = this.output.indexOf('"', this.indiceA + 1);
-						}
-
-						if (!this.verificarIndices(this.indiceA, this.indiceB)) {
-							return
-						}
-
-						this.bloquearIndices(this.indiceA, this.indiceB, '<span class="string">', '</span>');
-
-						this.indexarRealceStrings(this.indiceB + 1);
-
-					},
-
-					writable: false
-
-				},
-
-
-				indexarRealceComentarios: {
-
-					value: function(indice) {
-
-						this.indiceA = -1;
-						this.indiceB = -1;
-
-						this.indiceA = this.output.indexOf('//', indice);
-
-						if (this.indiceA === -1) {
-							return;
-						}
-
-						this.indiceB = this.output.indexOf('\n', this.indiceA + '//'.length);
-
-						if (this.indiceB === -1) {
-							this.indiceB = this.output.length - 1;
-						}
-
-						if (!this.verificarIndices(this.indiceA, this.indiceB)) {
-							return
-						}
-
-						this.bloquearIndices(this.indiceA, this.indiceB, '<span class="comentario">', '</span>');
-
-						this.indexarRealceComentarios(this.indiceB + 1);
-
-					},
-
-					writable: false
-
-
-				},
-
-
-				indexarRealcePalavrasChave: {
-
-					value: function(indice, palavra) {
-
-						this.indiceA = -1;
-						this.indiceB = -1;
-
-						this.indiceA = this.output.indexOf(palavra, indice);
-
-						if (this.indiceA === -1) {
-							return;
-						}
-
-						this.indiceB = this.indiceA + palavra.length - 1
-
-						if (!this.verificarIndices(this.indiceA, this.indiceB)) {
-							return
-						}
-
-						this.bloquearIndices(this.indiceA, this.indiceB, '<span class="palavraReservada">', '</span>');
-
-						this.indexarRealcePalavrasChave(this.indiceB + 1, palavra);
-
-					},
-
-					writable: false
-
-				}
-
-
-			});
-
-
-
-			var realcadorHtml = Object.create(realcador, {
-
-
-				realcar: {
-
-					value: function(input) {
-
-						this.indiceRealces = [[], []];
-						this.output = input;
-
-						this.indexarRealceComentarios(0);
-						this.indexarRealceTags(0);
-						this.efetuarRealces();
-						//this.indexarRealceAtributos();
-
-						return this.output
-
-					},
-
-					writable: false
-
-				},
-
-
-				indexarRealceComentarios: {
-
-					value: function(indice) {
-
-						this.indiceA = -1;
-						this.indiceB = -1;
-
-						this.indiceA = this.output.indexOf('&lt;!--', indice);
-
-						if (this.indiceA === -1) {
-							return;
-						}
-
-						this.indiceB = this.output.indexOf('--&gt;', this.indiceA + '&lt;!--'.length);
-
-						if (this.indiceB === -1) {
-							this.indiceB = this.output.length - 1;
-						} else {
-							this.indiceB += '--&gt'.length;
-						}
-
-						if (!this.verificarIndices(this.indiceA, this.indiceB)) {
-							return
-						}
-
-						this.bloquearIndices(this.indiceA, this.indiceB, '<span class="comentario">', '</span>');
-
-						this.indexarRealceComentarios(this.indiceB + 1);
-
-					},
-
-					writable: false
-
-
-				},
-
-
-				indexarRealceTags: {
-
-					value: function(indice) {
-
-						this.indiceA = -1;
-						this.indiceB = -1;
-
-						this.indiceA = this.output.indexOf('&lt;', indice);
-
-						if (this.indiceA === -1) {
-							return;
-						}
-
-						//TODO verificar se não são comentários
-
-						this.indiceB = this.output.indexOf('&gt;', this.indiceA + '&lt;'.length);
-
-						if (this.indiceB === -1) {
-							this.indiceB = this.output.length - 1;
-						} else {
-							this.indiceB += '&gt'.length;
-						}
-
-						if (!this.verificarIndices(this.indiceA, this.indiceB)) {
-							return
-						}
-
-						this.indexarRealceAtributos(this.indiceA, this.indiceB);
-
-						this.bloquearIndices(this.indiceA, this.indiceB, '<span class="tag">', '</span>');
-
-						this.indexarRealceTags(this.indiceB + 1);
-
-					},
-
-					writable: false
-
-
-				},
-
-
-				indexarRealceAtributos: {
-
-					value: function() {
-
-						//TODO
-						//aumentar o this.indiceB e o this.offsetRealce
-
-					},
-
-					writable: false
-
-				}
-
-
-			});
-
-
-
-			var realcadorC = Object.create(realcador);
-
-
-
-			var realceSintaxe = {
-
-
-				init: function() {
-					Object.seal(this);
-				},
-
-
-				realcar: function() {
-
-					var blocosDeCodigo = document.querySelectorAll('code');
-					var i = 0;
-
-					for (i = 0; i < blocosDeCodigo.length; i++) {
-						if (blocosDeCodigo.item(i).className === 'javascript') {//TODO melhorar essa verificação
-							blocosDeCodigo.item(i).innerHTML = this.processadores[1][0].realcar(blocosDeCodigo.item(i).innerHTML);
-						} else if (blocosDeCodigo.item(i).className === 'html') {
-							blocosDeCodigo.item(i).innerHTML = this.processadores[1][1].realcar(blocosDeCodigo.item(i).innerHTML);
-						} else if (blocosDeCodigo.item(i).className === 'c') {
-							//blocosDeCodigo.item(i).innerHTML = this.processadores[1][1].realcar(blocosDeCodigo.item(i).innerHTML);
-						} else {
-							//console.log(blocosDeCodigo.item(i).className);
-						}
-
-					}
-
-				},
-
-
-				processadores: [
-					[
-						'javascript',
-						'html',
-						'c'
-					], [
-						realcadorJavaScript,
-						realcadorHtml,
-						realcadorC
-					]
-				]
-
-
-			};
-
-
-
-			documentReady(function(evento) {
-				try {
-					indice.init();
-					indice.gerar('indice', 3, false);
-					realceSintaxe.init();
-					realceSintaxe.realcar();
-				} catch (erro) {
-					console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-				}
-			});
-
-
-
-		})();
-	</script>
+	<title>Ember App Kit antes que vc afunde</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='../tutorialjs/css/main.css' />
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='../tutorialjs/js/home.js'></script>
 </head>
 <body>
 
-<h1>Ember App Kit antes que vc afunde</h1>
-<!--<p>Bem-vindo ao tutorial de JavaScript orientado à objeto, politicamente incorreto.</p>-->
 
+
+<h1>Ember App Kit antes que vc afunde</h1>
 
 <section>
 
 <h2>Índice</h2>
-<nav id="indice">
+<nav id='indice'>
 </nav>
 
 </section>
@@ -747,15 +37,18 @@
 
 <p>Se você está muito <strong>ansioso</strong> pra fazer qualquer coisa com Ember e mal pode esperar pra escrever uma linha de código, <strong>melhor não começar pelo App Kit</strong>, e sim pelo Starter Kit, que não precisa de nenhuma configuração ou ferramentas extras para funcionar. Pode ir lá, eu espero ;)<p/>
 
-<p>Wow, isso foi rápido. Bom, agora que você brincou um pouco com o Starter Kit e resolver usar o App Kit, baixe o arquivo em <a href="http://iamstef.net/ember-app-kit">http://iamstef.net/ember-app-kit</a> e descompacte-o. Dentro do diretório do kit você vai ter que rodar alguns comandos <code>brew</code> ou <code>apt-get</code> + <code>npm</code>, <code>bower</code> e <code>grunt</code> conforme a documentação indica.<p/>
+<p>Wow, isso foi rápido. Bom, agora que você brincou um pouco com o Starter Kit e resolver usar o App Kit, baixe o arquivo em <a href='http://iamstef.net/ember-app-kit'>http://iamstef.net/ember-app-kit</a> e descompacte-o. Dentro do diretório do kit você vai ter que rodar alguns comandos <code>brew</code> ou <code>apt-get</code> + <code>npm</code>, <code>bower</code> e <code>grunt</code> conforme a documentação indica.<p/>
 
-```
-ALERTA DE PROXY EM UNIX LIKE OS
+<div class='codeblock'>
+<code
+>ALERTA DE PROXY EM UNIX LIKE OS
 Caso você esteja usando um proxy para acessar a internet, note que
 alguns estes comandos dependem de uma configuração individual,
 indepentende da configuração do bash. Devemos configurar um proxy
 para o <em>npm</em> e <em>git</em>, do qual o <em>npm</em>em depende.
-```
+</code
+>
+</div>
 
 <p>Só depois disso vamos conseguir acessar nosso app pelo navegador, através do comando <code>sudo grunt server</code>. Apenas descompactar o app kit não é suficiente. Mais sobre isso posteriormente.</p>
 
@@ -783,6 +76,8 @@ para o <em>npm</em> e <em>git</em>, do qual o <em>npm</em>em depende.
 
 </section>
 
+
+
 <section>
 
 <h2>A Aplicação</h2>
@@ -791,7 +86,7 @@ para o <em>npm</em> e <em>git</em>, do qual o <em>npm</em>em depende.
 
 <p>No <strong>Ember App Kit</strong> ela ñ é praticamente usada, pois o kit usa uma funcionalidade do ECMAScript 6 (ES6) chamada <strong>modules</strong> (note que é diferente de <em>models</em>). Essa funcionalidade permite declararmos cada objeto num arquivo separado, e num diretório específico dependendo do tipo.</p>
 
-<p>O App Kit também utiliza grunt para validar, traduzir e combinar estes modulos (<em>transpilar</em> para ES5 na verdade). Isso é feito quando rodamos no terminal o comando <code>sudo grunt server</code>, dentro pasta de nosso kit, e é refeito automaticamente enquanto o grunt estiver rodando, toda a vez que criamos ou modificamos um arquivo dentro do diretório do app. Após rodarmos este comando, poderemos acessar nosso app pelo endereço <a href="http://0.0.0.0:8000">http://0.0.0.0:8000</a> ou o que for indicado no terminal.</p>
+<p>O App Kit também utiliza grunt para validar, traduzir e combinar estes modulos (<em>transpilar</em> para ES5 na verdade). Isso é feito quando rodamos no terminal o comando <code>sudo grunt server</code>, dentro pasta de nosso kit, e é refeito automaticamente enquanto o grunt estiver rodando, toda a vez que criamos ou modificamos um arquivo dentro do diretório do app. Após rodarmos este comando, poderemos acessar nosso app pelo endereço <a href='http://0.0.0.0:8000'>http://0.0.0.0:8000</a> ou o que for indicado no terminal.</p>
 
 <p>Este é o motivo de não podermos acessar diretamente nosso app assim que descompactamos o kit. Dependemos do grunt realizar vários processos para gerar algo efetivamente executável no navegador.</p>
 
@@ -813,15 +108,16 @@ para o <em>npm</em> e <em>git</em>, do qual o <em>npm</em>em depende.
 
 <p>No <strong>Ember normal</strong>, declararíamos um modelo e rota como abaixo. O código pode ou não ser incluso todo num mesmo arquivo.</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>main.js</p>
+<code class='javascript'
 >App.UsuarioAutenticado = DS.Model.extend({
 	//propriedades aqui
 });
 
 App.IndexRoute = Ember.Route.extend({
 	setupController: function(controller) {
-		controller.set('title', "My App");
+		controller.set('title', 'My App');
 	},
 	model: function() {
 		return this.store.find('usuarioAutenticado');
@@ -833,8 +129,9 @@ App.IndexRoute = Ember.Route.extend({
 
 <p>No arquivo <strong>/models/usuario-autenticado.js</strong>:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>/models/usuario-autenticado.js</p>
+<code class='javascript'
 >export default DS.Model.extend({
 	//propriedades aqui
 });</code>
@@ -842,8 +139,9 @@ App.IndexRoute = Ember.Route.extend({
 
 <p>Ou então:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>/models/usuario-autenticado.js</p>
+<code class='javascript'
 >var usuarioAutenticado = DS.Model.extend({
 	//propriedades aqui
 });
@@ -853,13 +151,14 @@ export default usuarioAutenticado;</code>
 
 <p>E no arquivo <strong>/routes/index.js</strong></p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>/routes/index.js</p>
+<code class='javascript'
 >import UsuarioAutenticado from 'appkit/models/usuario-autenticado';
 
 export default Ember.Route.extend({
 	setupController: function(controller) {
-		controller.set('title', "My App");
+		controller.set('title', 'My App');
 	},
 	model: function() {
 		return this.store.find('usuarioAutenticado');
@@ -869,13 +168,14 @@ export default Ember.Route.extend({
 
 <p>Ou novamente a sintaxe alternativa:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>/routes/index.js</p>
+<code class='javascript'
 >import UsuarioAutenticado from 'appkit/models/usuario-autenticado';
 
 var indexRoute = Ember.Route.extend({
 	setupController: function(controller) {
-		controller.set('title', "My App");
+		controller.set('title', 'My App');
 	},
 	model: function() {
 		return this.store.find('usuarioAutenticado');
@@ -889,12 +189,13 @@ export default indexRoute;</code>
 
 <h3>Nota sobre validação</h3>
 
-<p>O App Kit usa <a href="http://www.jshint.com">JSHint</a> para validar seu código, e <strong>mostra as mensagens de erro de validacão na janela do terminal</strong> que você mandou rodar o grunt. Como dito anteriormente, precisamos importar explicitamente cada objeto que quisermos usar dentro de nosso arquivo. Se precisarmos utilizar um objeto que foi <strong>definido no espaço global</strong> (incluído numa tag <code>script</code> do index por exemplo), precisamos indicar isso ao JSHint, por meio de um comentário no topo de nosso módulo.</p>
+<p>O App Kit usa <a href='http://www.jshint.com'>JSHint</a> para validar seu código, e <strong>mostra as mensagens de erro de validacão na janela do terminal</strong> que você mandou rodar o grunt. Como dito anteriormente, precisamos importar explicitamente cada objeto que quisermos usar dentro de nosso arquivo. Se precisarmos utilizar um objeto que foi <strong>definido no espaço global</strong> (incluído numa tag <code>script</code> do index por exemplo), precisamos indicar isso ao JSHint, por meio de um comentário no topo de nosso módulo.</p>
 
 <p>Por exemplo:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>validação jshint</p>
+<code class='javascript'
 >/* global localStorage:false */
 /* global ic.ajax:false */
 /* global console:false */
@@ -908,10 +209,11 @@ export default Ember.Route.extend({
 
 <p>Se utilizarmos frequentemente algum objeto, fica chato ter que declarar toda a vez em cada arquivo. Pra esses casos podemos editar um <strong>arquivo oculto</strong> do JSHint. O <em>.jshintrc</em>, que se encontra no diretório raiz de nossa aplicação.</p>
 
-<p>Este arquivo é um <abbr title="JavaScript Object Notation">JSON</abbr>, no qual podemos incluir o seguinte trecho:</p>
+<p>Este arquivo é um <abbr title='JavaScript Object Notation'>JSON</abbr>, no qual podemos incluir o seguinte trecho:</p>
 
-<div>
-<code class="json"
+<div class='codeblock'>
+<p>.jshintrc</p>
+<code class='javascript'
 >{
 	...
 	"globals": {
@@ -937,25 +239,29 @@ export default Ember.Route.extend({
 
 <p>Portanto você deve sempre <strong>extender objetos do tipo</strong> <code>Ember.Object</code>, que são <strong>observáveis</strong>. Estes objetos devem ter suas propriedades acessadas e <strong>alteradas por meio dos métodos</strong> genéricos <code>get</code> e <code>set</code>. Isso se faz necessário para que o mecanismo de observação funcione.</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>acessando propriedades por ember</p>
+<code class='javascript'
 >var meuObjeto = Ember.Object.extend({
 	propriedade: '';
 });
 
-meuObject.set('propriedade', 'observe!');</code>
+meuObject.set('propriedade', 'observe!');</code
+>
 </div>
 
 <p>Aqui temos um problema com Ember. Se <strong>acessarmos diretamente</strong> essas propriedades, não será disparado nenhum erro, porém, isso <strong>quebra o fluxo</strong> que o framework espera e pode causar problemas. Por exemplo:</p>
 
-<div>
-<code class="javascript"
-><strong>//ERRADO!! NÃO COPIE ESSE EXEMPLO</strong>
-var meuObjeto = Ember.Object.extend({
+<div class='codeblock'>
+<p>acessando propriedades por ember</p>
+<code class='javascript'
+>var meuObjeto = Ember.Object.extend({
 	propriedade: '';
 });
 
-meuObject.propriedade = 'maneira errada de especificar valor.';</code>
+<strong>// ACESSO DE PROPRIEDADE ERRADO!!! NÃO COPIE ESSA LINHA!!!</strong>
+meuObject.propriedade = 'maneira errada de especificar valor.';</code
+>
 </div>
 
 <p>Quando um objeto é observável, podemos executar ações quando alguma propriedade dele muda. Isso é fundamental para o conceito de <em>binding</em> que veremos mais adiante.</p>
@@ -966,9 +272,10 @@ meuObject.propriedade = 'maneira errada de especificar valor.';</code>
 
 <p>Um exemplo com propriedades computadas - apenas getter:</p>
 
-<div>
-<code class="javascript"
->//getter
+<div class='codeblock'>
+<p>getter de propriedade computada</p>
+<code class='javascript'
+>// getter
 export default DS.Model.extend({
 
 	...
@@ -981,33 +288,35 @@ export default DS.Model.extend({
 
 	...
 
-});</code>
+});</code
+>
 </div>
 
 <p>Outro exemplo com getter e setter:</p>
 
-<div>
-<code class="javascript"
->//getter e setter
+<div class='codeblock'>
+<p>getter e setter de pripriedade computada</p>
+<code class='javascript'
+>// getter e setter
 export default DS.Model.extend({
 
 	...
 
 	_login: DS.attr('string'),
 
-	//Note que se o método não tiver as propriedades devidamente
-	//declaradas (chave e valor), AO CONTRÁRIO DO FUNCIONAMENTO
-	//nativo do javascript, ember não chamará corretamente
-	//o método, embora não lance exceção
-	//Note também que o setter deve retornar um valor, diferente
-	//de todas as outras linguagens do mundo!
+	// Note que se o método não tiver as propriedades devidamente
+	// declaradas (chave e valor), AO CONTRÁRIO DO FUNCIONAMENTO
+	// nativo do javascript, ember não chamará corretamente
+	// o método, embora não lance exceção
+	// Note também que o setter deve retornar um valor, diferente
+	// de todas as outras linguagens do mundo!
 	login: function(chave, valor) {
-		//setter
-		//IMPORTANTE, deve sempre retornar um valor
+		// setter
+		// IMPORTANTE, deve sempre retornar um valor
 		if (arguments.length > 1) {
 			this.set('_login', valor);
 		}
-		//getter - sempre executa por causa do setter
+		// getter - sempre executa por causa do setter
 		return this.get('_login');
 	}.property('_login')
 
@@ -1030,82 +339,90 @@ export default DS.Model.extend({
 
 <p>Básico de como usar promises:</p>
 
-<div>
-<code class="javascript"
->var valorFuturo = new RSVP.Promise(function(resolve, reject){
-	//fazer alguma coisa assíncrona aqui
+<div class='codeblock'>
+<p>RSVP Promise</p>
+<code class='javascript'
+>var valorFuturo = new RSVP.Promise(function(resolve, reject) {
+	// fazer alguma coisa assíncrona aqui
 });
 
-//continuar seu código normalmente aqui
-return valorFuturo;</code>
+// continuar seu código normalmente aqui
+return valorFuturo;</code
+>
 </div>
 
 <p>Mais detalhadamente:</p>
 
 <div>
-<code class="javascript"
->var valorFuturo = new RSVP.Promise(function(resolve, reject){
+<div class='codeblock'>
+<p>RSVP Promise</p>
+<code class='javascript'
+>var valorFuturo = new RSVP.Promise(function(resolve, reject) {
 
-	//fazer o que precisar aqui pra objer o valor
-	//por exemplo um processo demorado de maneira assíncrona, como uma chamada ajax
+	// fazer o que precisar aqui pra objer o valor
+	// por exemplo um processo demorado de maneira assíncrona, como uma chamada ajax
 	var resposta = jQuery.ajax({...});
 
 	resposta.then(function() {
-		//quando obter o valor, chamar o método resolve
+		// quando obter o valor, chamar o método resolve
 		resolve(resposta.responseText);
 	});
 
-	//ou, caso tenha havido falha ao obter o valor, chamar o método reject,
-	//passando uma string como motivo da falha
+	// ou, caso tenha havido falha ao obter o valor, chamar o método reject,
+	// passando uma string como motivo da falha
 	reject('Problema de proxy, como sempre...');
 
 });
 
-return valorFuturo;</code>
+return valorFuturo;</code
+>
 </div>
 
 <p>Note que tudo isso é executado na thread da UI, e portanto todas as ações demoradas dentro da promise devem ser feitas de maneira assíncrona.</p>
 
 <p>Promessas podem ser encadeadas:</p>
 
-<div>
-<code class="javascript"
->var valorFuturo = new RSVP.Promise(function(resolve, reject){
-	//fazer algo assíncrono e chamar
+<div class='codeblock'>
+<p>Encadeamento de promessas</p>
+<code class='javascript'
+>var valorFuturo = new RSVP.Promise(function(resolve, reject) {
+	// fazer algo assíncrono e chamar
 	resolve(resposta);
 }).then(function(valor) {
-	//resto do meu código em sequência aqui
-	//ou retornar mais uma promessa com código assíncrono
-	//o valor é o que foi passdo no resolve da promessa
+	// resto do meu código em sequência aqui
+	// ou retornar mais uma promessa com código assíncrono
+	// o valor é o que foi passado no resolve da promessa
 ).then(function(valor) {
-	 //mais um pedacinho aqui
+	 // mais um pedacinho aqui
 },
 function(motivo) {
-	//e aqui se der erro, pegar o motivo passado no reject
-});</code>
+	// e aqui se der erro, pegar o motivo passado no reject
+});</code
+>
 </div>
 
 <p>Exemplo real numa rota:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>Rota com RSVP Promise</p>
+<code class='javascript'
 >export default Ember.Route.extend({
 
 	model: function() {
 
-		//salva referência do this para possibilitar acesso a store dentro da promise
+		// salva referência do this para possibilitar acesso a store dentro da promise
 		var self = this;
 
-		//"importa" o objeto promise
+		// "importa" o objeto promise
 		var Promise = Ember.RSVP.Promise;
 
-		//cria uam promessa que irá conter o usuário salvo ou um novo
-		var usuarioAutenticado = new Promise(function(resolve, reject){
+		// cria uma promessa que irá conter o usuário salvo ou um novo
+		var usuarioAutenticado = new Promise(function(resolve, reject) {
 
-			//método assíncrono que tb devolve uma promessa
+			// método assíncrono que tb devolve uma promessa
 			var usuariosAutenticados = self.store.find('usuarioAutenticado');
 
-			//por isso também posso encadear um then nela
+			// por isso também posso encadear um then nela
 			usuariosAutenticados.then(
 				function(usuarios) {
 					if (usuarios.get('length') > 0) {
@@ -1121,7 +438,7 @@ function(motivo) {
 					}
 				},
 				function(motivo) {
-					//tratar erro
+					// tratar erro
 					console.log('erro ao buscar usuário no local storage');
 					resolve(self.store.createRecord(
 						'usuarioAutenticado',
@@ -1135,13 +452,14 @@ function(motivo) {
 
 		});
 
-		//retorna imediatamente a promessa do usuário, seu valor será
-		//especificado futuramente, quando a promessa do método find for cumprida
+		// retorna imediatamente a promessa do usuário, seu valor será
+		// especificado futuramente, quando a promessa do método find for cumprida
 		return usuarioAutenticado;
 
 	},
 
-});</code>
+});</code
+>
 </div>
 
 </section>
@@ -1154,26 +472,26 @@ function(motivo) {
 
 <p>Esta é uma das partes que não existe dentro de programas feitos com <abbr>XAML</abbr>, e é relativa ao ambiente do navegador de internet.</p>
 
-<p>Rotas são representações dos caminhos digitados na barra de endereços do navegador. Elas fornecem um *model* para seu *controller* respectivo, que por sua vez fornece dados para a *view* respectiva que é mostrada para a rota em questão.</p>
+<p>Rotas são representações dos caminhos digitados na barra de endereços do navegador. Elas fornecem um <em>model</em> para seu <em>controller</em> respectivo, que por sua vez fornece dados para a <em>view</em> respectiva que é mostrada para a rota em questão.</p>
 
-<p>Como Ember nunca muda de página, e portanto toda a sua aplicação roda no arquivo *index.htm*, Devemos digitar a **rota desejada após o #** da url (o nome técnico é fragmento da url).</p>
+<p>Como Ember nunca muda de página, e portanto toda a sua aplicação roda no arquivo <code>index.htm</code>, Devemos digitar a <strong>rota desejada após o #</strong> da url (o nome técnico é fragmento da url).</p>
 
 <p>Por exemplo:</p>
 
 <ul>
-* **http://0.0.0.0:8000** é a rota index
-* **http://0.0.0.0:8000/#/index** também é a rota index
-* **http://0.0.0.0:8000/#/noticias** é a rota de notícias
-* **http://0.0.0.0:8000/#/noticias/38** é a rota da notícia com id 38
+	<li><strong>http://0.0.0.0:8000</strong> é a rota index</li>
+	<li><strong>http://0.0.0.0:8000/#/index</strong> também é a rota index</li>
+	<li><strong>http://0.0.0.0:8000/#/noticias</strong> é a rota de notícias</li>
+	<li><strong>http://0.0.0.0:8000/#/noticias/38</strong> é a rota da notícia com id 38</li>
 </ul>
 
-<p>Para **criarmos uma rota** no Ember App Kit, primeiro registramos ela no arquivo */router.js*. Depois criamos um objeto dentro da pasta */routes* que extende `Ember.Route`. A rota *index* é implicita e não precisa ser declarada.</p>
+<p>Para <strong>criarmos uma rota</strong> no Ember App Kit, primeiro registramos ela no arquivo <code>/router.js</code>. Depois criamos um objeto dentro da pasta <code>/routes</code> que extende <code class='javascript'>Ember.Route</code>. A rota <code>index</code> é implicita e não precisa ser declarada.</p>
 
-<p>Dentre os métodos do objeto `Ember.Route`, 4 são bastante utilizados. São eles `beforeModel`, `model`, `afterModel`, e `actions.error`. Este último executa caso haja algum problema na requisição de dados para o modelo ou outras situações.</p>
+<p>Dentre os métodos do objeto <code class='javascript'>Ember.Route</code>, 4 são bastante utilizados. São eles <code class='javascript'>beforeModel</code>, <code class='javascript'>model</code>, <code class='javascript'>afterModel</code>, e <code class='javascript'>actions.error</code>. Este último executa caso haja algum problema na requisição de dados para o modelo ou outras situações.</p>
 
-<p>Dentre outras coisas, utilizamos estes métodos para **controle de acesso de permissões.** Fazemos isso criando uma rota que extende a rota nativa do Ember. Esta rota irá conter verificações de autenticação dentro destes métodos, e servirá de base para todas as demais rotas que criarmos.</p>
+<p>Dentre outras coisas, utilizamos estes métodos para <strong>controle de acesso de permissões.</strong> Fazemos isso criando uma rota que extende a rota nativa do Ember. Esta rota irá conter verificações de autenticação dentro destes métodos, e servirá de base para todas as demais rotas que criarmos.</p>
 
-<p>O método `model` deve retornar um modelo, ou uma promessa para um modelo. Se você retornar uma **promessa, o Ember se vira sozinho** pra utilizar ela depois, quando ela se realizar.</p>
+<p>O método <code class='javascript'>model</code> deve retornar um modelo, ou uma promessa para um modelo. Se você retornar uma <strong>promessa, o Ember se vira sozinho</strong> pra utilizar ela depois, quando ela se realizar.</p>
 
 </section>
 
@@ -1183,13 +501,13 @@ function(motivo) {
 
 <h2>Models</h2>
 
-<p>Usamos preferencialmente `Ember.Object` opcionalmente com `Promise` como modelo de nossos dados. Ou podemos utilizar um pedaço do Ember chamado **Ember Data**, que retorna estes tipos de objetos para nós, além de possuir outras funcionalidades.</p>
+<p>Usamos preferencialmente <code class='javascript'>Ember.Object</code> opcionalmente com <code class='javascript'>Promise</code> como modelo de nossos dados. Ou podemos utilizar um pedaço do Ember chamado <strong>Ember Data</strong>, que retorna estes tipos de objetos para nós, além de possuir outras funcionalidades.</p>
 
-<p>Se optarmos por não utilizar Ember Data, construímos geralmente nossos modelos através de requisições ajax construídas manualmente e os retornamos para o *controller*.</p>
+<p>Se optarmos por não utilizar Ember Data, construímos geralmente nossos modelos através de requisições ajax construídas manualmente e os retornamos para o <em>controller</em>.</p>
 
-<p>Se utilizarmos Ember Data, precisamos aprender sobre mais 2 objetos. `DS.RESTAdapter` e `DS.RESTSerializer`. Mais sobre isso abaixo.</p>
+<p>Se utilizarmos Ember Data, precisamos aprender sobre mais 2 objetos. <code class='javascript'>DS.RESTAdapter</code> e <code class='javascript'>DS.RESTSerializer</code>. Mais sobre isso abaixo.</p>
 
-<p>**Vale lembrar novamente** que em nosso modelo, toda a vez que alterarmos alguma propriedade, devemos fazer através do método genérico `set`, para que nossa view seja atualizada automaticamente através de *databinding*.</p>
+<p><strong>Vale lembrar novamente</strong> que em nosso modelo, toda a vez que alterarmos alguma propriedade, devemos fazer através do método genérico <code class='javascript'>set</code>, para que nossa view seja atualizada automaticamente através de <em>databinding</em>.</p>
 
 <p>As arrays do Ember possuem um comportamento diferente de arrays nativas, pois seus elementos são <em>materializados</em> após a array ser construída. Portanto, se acessarmos os elementos diretamente usando o operador <code>[]</code>, <strong>corremos sério risco</strong> de obtermos um valor <code>null</code> para um índice que <strong>poderia conter um objeto válido.</strong> Para termos certeza que o elemento que desejamos já esteja materializado, devemos utilizar sempre os métodos <code>objectAt</code> e <code>forEach</code> das arrays Ember.</p>
 
@@ -1212,11 +530,12 @@ function(motivo) {
 
 <p>Por exemplo, para fazer uma requisição para <em>/usuario/id/perfil</em>:</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>Adapter</p>
+<code class='javascript'
 >Ember.Inflector.inflector.uncountable('perfil');
-//requisita /perfil ao invés de perfils/.
-//Pra usar perfis tem que usar Ember.Inflector.inflector.irregular('perfil', 'perfis');
+// requisita /perfil ao invés de perfils/.
+// Pra usar perfis tem que usar Ember.Inflector.inflector.irregular('perfil', 'perfis');
 
 export default DS.RESTAdapter.extend({
 
@@ -1246,25 +565,21 @@ export default DS.RESTAdapter.extend({
 
 	},
 
-	/**
-	 * Caminho das requisições no host
-	 */
+	/** Caminho das requisições no host */
 	namespace: 'usuario',
 
-	/**
-	 * Host
-	 */
+	/** Host */
 	host: 'http://localhost/api'
 
-});</code>
+});</code
+>
 </div>
-
 
 
 
 <h3>Serializers</h3>
 
-<p>Serializer é o que o Ember Data usa para <strong>transformar <abbr title="JavaScript Object Notation">JSON</abbr></strong> em <code>Ember.Object</code>.</p>
+<p>Serializer é o que o Ember Data usa para <strong>transformar <abbr title='JavaScript Object Notation'>JSON</abbr></strong> em <code>Ember.Object</code>.</p>
 
 <p>Assim, como no caso dos <em>adapters</em>, podemos ter <em>serializers</em> <strong>específicos para alguns tipos.</strong> No Ember App Kit, basta criar na pasta <em>/serializers</em> um serializer com o mesmo nome do modelo respectivo que está na pasta <em>/models</em>.</p>
 
@@ -1283,12 +598,11 @@ export default DS.RESTAdapter.extend({
 	<li><strong>serializer:</strong> /serializers/post-comment.js</li>
 </ul>
 
-<p>Serializers que respondem a <strong>requisições ajax</strong> são do tipo <code>RESTSerializer</code>. Neles podemos transformar a resposta <abbr title="JavaScript Object Notation">JSON</abbr> para uma estrutura <strong>compatível com a que o Ember Data espera,</strong> sobrescrevendo o método <code>normalizePayload</code>.</p>
+<p>Serializers que respondem a <strong>requisições ajax</strong> são do tipo <code>RESTSerializer</code>. Neles podemos transformar a resposta <abbr title='JavaScript Object Notation'>JSON</abbr> para uma estrutura <strong>compatível com a que o Ember Data espera,</strong> sobrescrevendo o método <code>normalizePayload</code>. Por exemplo:</p>
 
-Por exemplo:
-
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>Serializer</p>
+<code class='javascript'
 >// transforma
 // { "id": 1, "email": "ninguem@nada.com" }
 // no formato ember data
@@ -1311,7 +625,8 @@ export default DS.RESTSerializer.extend({
 
 	}
 
-});</code>
+});</code
+>
 </div>
 
 
@@ -1320,8 +635,9 @@ export default DS.RESTSerializer.extend({
 
 <p>Qualquer operação ou alteração que é feita nos modelos só é efetuada quando chamamos o método <code>save</code> neles. Inclusive a operação <code>delete</code>. Se vc achar muito estranho apagar e salvar o modelo, pode chamar o método <code>destroy</code>, que efetua a operação <code>delete</code> automaticamente.</p>
 
-<div>
-<code class="javascript"
+<div class='codeblock'>
+<p>Store</p>
+<code class='javascript'
 >//isso é feito na memória, sem realizar nenhuma requisição
 novoRegistro = self.store.createRecord(
 	'registro',
@@ -1333,8 +649,9 @@ novoRegistro = self.store.createRecord(
 novoRegistro.set('data', new Date());
 novoRegistro.set('texto', 'escrito agora!');
 
-//só agora realiza efetivamente a requisição
-novoRegistro.save();</code>
+// só agora realiza efetivamente a requisição
+novoRegistro.save();</code
+>
 </div>
 
 
@@ -1362,17 +679,18 @@ novoRegistro.save();</code>
 
 <h2>Views</h2>
 
-<p>São pedaçoes de html com uma sintaxe própria para declarar valores dinâmicos. Esses valores dinâmicos são *databound*, isto é, são atualizados automaticamente quando nosso modelo é modificado. Para tanto colocamos o nome da propriedade de nosso controller ou modelo entre chaves duplas.</p>
+<p>São pedaçoes de html com uma sintaxe própria para declarar valores dinâmicos. Esses valores dinâmicos são <em>databound</em>, isto é, são atualizados automaticamente quando nosso modelo é modificado. Para tanto colocamos o nome da propriedade de nosso controller ou modelo entre chaves duplas.</p>
 
 <p>Por exemplo:</p>
 
-<div>
-<code class="html"
+<div class='codeblock'>
+<p>View</p>
+<code class='html'
 >&lt;p&gt;index.htm - olá mundo&lt;/p&gt;
-&lt;code class="html"
+&lt;code class='html'
 {{email}}
-&lt;button type="button" {{action "mudar"}}&gt;Mudar&lt;/button&gt;
-&lt;div {{bind-attr class="emAndamento"}}&gt;&lt;img src="indicador.gif" /&gt;&lt;/div&gt;</code
+&lt;button type='button' {{action 'mudar'}}&gt;Mudar&lt;/button&gt;
+&lt;div {{bind-attr class='emAndamento'}}&gt;&lt;img src='indicador.gif' /&gt;&lt;/div&gt;</code
 >
 </div>
 
