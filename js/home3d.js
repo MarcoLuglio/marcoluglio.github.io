@@ -124,7 +124,7 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 		sceneManager.add(objectD);
 		sceneManager.add(objectE);
 
-		sceneManager.frame(objectE, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+		sceneManager.frame(objectB, false); // FIXME ver melhor maneira de verificar enquadramento inicial
 		window.location.hash = '_biografia';
 
 	};
