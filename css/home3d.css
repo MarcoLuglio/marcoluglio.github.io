@@ -693,8 +693,7 @@ section > div {
 }
 
 .destaque3 li:nth-child(1),
-.destaque3 li:nth-child(2),
-.destaque3 li:nth-child(3) {
+.destaque3 li:nth-child(2) {
 	font-size: 23px;
 	line-height: 23px;
 }
@@ -705,64 +704,46 @@ section > div {
 }
 
 .destaque3 li:nth-child(2) {
-	left: 400px;
-	top: 222px;
-}
-
-.destaque3 li:nth-child(3) {
 	left: 83px;
 	top: 130px;
 }
 
-.destaque3 li:nth-child(4) {
-	font-size: 19px;
-	line-height: 19px;
-	left: 69px;
-	top: 174px;
-}
-
-.destaque3 li:nth-child(5),
-.destaque3 li:nth-child(6),
-.destaque3 li:nth-child(7) {
+.destaque3 li:nth-child(3),
+.destaque3 li:nth-child(4),
+.destaque3 li:nth-child(5) {
 	font-size: 16px;
 	line-height: 16px;
 }
 
-.destaque3 li:nth-child(5) {
+.destaque3 li:nth-child(3) {
 	left: 608px;
 	top: 150px;
 }
 
-.destaque3 li:nth-child(6) {
+.destaque3 li:nth-child(4) {
 	left: 333px;
 	top: 147px;
 }
 
-.destaque3 li:nth-child(7) {
+.destaque3 li:nth-child(5) {
 	left: 229px;
 	top: 7px;
 }
 
-.destaque3 li:nth-child(8),
-.destaque3 li:nth-child(9),
-.destaque3 li:nth-child(10) {
+.destaque3 li:nth-child(6),
+.destaque3 li:nth-child(7) {
 	font-size: 13px;
 	line-height: 13px;
 }
 
-.destaque3 li:nth-child(8) {
+.destaque3 li:nth-child(6) {
 	left: 591px;
 	top: 208px;
 }
 
-.destaque3 li:nth-child(9) {
+.destaque3 li:nth-child(7) {
 	left: 82px;
 	top: 87px;
-}
-
-.destaque3 li:nth-child(10) {
-	left: 94px;
-	top: 106px;
 }
 
 /* Softwares */

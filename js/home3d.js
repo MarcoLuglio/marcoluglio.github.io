@@ -208,6 +208,7 @@ define(
 				});
 
 				buildScene(sceneManager); // TODO não focar em um inicialmente, mas deixar o círculo rodando suavemente e posicionar a câmera no meio
+				domMenuBio.style.display = 'flex'; // TODO melhorar isso
 
 				// TODO loop manager deveria pausar o loop quando a janela perde foco ou não tem foco
 				loopManager.loop((deltaTime) => {
