@@ -5467,3 +5467,644 @@ define(
 	return JavaLexer;
 
 });
+
+
+
+define('VbLineCommentPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const VbLineCommentPatternIterator = class VbLineCommentPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			this._matchFunction = this._matchSingleQuote;
+			Object.seal(this);
+		}
+
+		_matchSingleQuote(matchCharacter) {
+			if (matchCharacter === "'") {
+				this._matchFunction = this._matchSameLine;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchSameLine(matchCharacter) {
+			this._isComplete = true;
+			// any except line break TODO ver line continuation _
+			if (this._matchLineBreak(matchCharacter)) {
+				return this._matchEnd(matchCharacter);
+			}
+			return true;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return VbLineCommentPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Visual Basic line comments
+ */
+define('VbLineCommentToken', ['SourcePatternIteratorToken', 'VbLineCommentPatternIterator'], (SourcePatternIteratorToken, VbLineCommentPatternIterator) => {
+
+	const VbLineCommentToken = class VbLineCommentToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('comment lineComment', new VbLineCommentPatternIterator());
+		}
+	};
+
+	return VbLineCommentToken;
+
+});
+
+
+
+/**
+ * Token for Visual Basic keywords
+ */
+define('VbKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+			super('keyword', [
+
+				'AddressOf',
+				'As',
+				'ByVal',
+				'ByRef',
+				'Call',
+				'Case',
+				'Compare',
+				'Const',
+				'Declare',
+				'Dim',
+				'Do',
+				'Each',
+				'Else',
+				'ElseIf',
+				'End',
+				'Enum',
+				'Eqv',
+				'Event',
+				'Exit',
+				'Explicit',
+				'For',
+				'Friend',
+				'Function',
+				'Get',
+				'Global',
+				'GoSub',
+				'GoTo',
+				'If',
+				'Imp',
+				'In',
+				'Is',
+				'Let',
+				'Like',
+				'Loop',
+				'Me',
+				'Mod',
+				'New',
+				'Next',
+				'Not',
+				'On Error',
+				'Open',
+				'Option',
+				'Optional',
+				'ParamArray',
+				'Preserve',
+				'Private',
+				'Property',
+				'Public',
+				'ReDim',
+				'Resume',
+				'Return',
+				'Select',
+				'Set',
+				'Static',
+				'Step',
+				'Sub',
+				'Then',
+				'To',
+				'Type',
+				'Until',
+				'Wend',
+				'While',
+				'With',
+
+				'And',
+				'Or',
+				'Xor',
+
+				'Empty',
+				'False',
+				'Nothing',
+				'True'
+
+			]);
+
+			Object.seal(this);
+
+		}
+
+	};
+
+	return VbKeywordToken;
+
+});
+
+
+
+/**
+ * Token for Visual Basic types
+ */
+define('VbTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
+
+	const VbTypesToken = class VbTypesToken extends Token {
+
+		constructor() {
+
+			super();
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+					'Boolean',
+					'Byte',
+					'Currency',
+					'Date',
+					'Double',
+					'Integer',
+					'Long',
+					'Single',
+					'String',
+					'Variant'
+				])}
+			});
+
+			Object.seal(this);
+
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				return this._matchEnd(matchCharacter, index);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
+		}
+
+	};
+
+	return VbTypesToken;
+
+});
+
+
+
+/**
+ * Token for Visual Basic punctuation
+ */
+define('VbPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const VbPunctuationToken = class VbPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+				'*',
+				'+',
+				'-',
+				'/',
+				'\\',
+				'^',
+				',',
+				'.',
+				':',
+				'=',
+				'&gt;',
+				'&lt;',
+				'_'
+			]);
+
+		}
+
+	};
+
+	return VbPunctuationToken;
+
+});
+
+
+
+define('VbStringPatternIterator', () => {
+
+	const VbStringPatternIterator = class VbStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+
+				if (this._isEscaped) {
+					this._isEscaped = false;
+				} else {
+					this._isEscaped = true;
+				}
+
+				return true;
+
+			}
+
+			// se aspas não foi seguido de outras aspas
+			// termina a string imediatamente
+			if (this._isEscaped) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return VbStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Visual Basic strings
+ */
+define('VbStringLiteralToken', ['SourcePatternIteratorToken', 'VbStringPatternIterator'], (SourcePatternIteratorToken, VbStringPatternIterator) => {
+
+	const VbStringLiteralToken = class VbStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new VbStringPatternIterator());
+		}
+	};
+
+	return VbStringLiteralToken;
+
+});
+
+
+
+define('VbDatePatternIterator', () => {
+
+	const VbDatePatternIterator = class VbDatePatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartHash, writable: true},
+				_isDateCharacter: {value: /\d|-|\//},
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartHash(matchCharacter) {
+
+			if (matchCharacter === '#') {
+				this._matchFunction = this._matchContentOrEndHash;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndHash(matchCharacter) {
+
+			if (matchCharacter === '#') { // TODO só se tiver conteúdo pode ir para o end
+				this._matchFunction = this._matchEnd;
+				return true;
+			} else if (matchCharacter === '-' || matchCharacter === '/' || this._isDateCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return VbDatePatternIterator;
+
+});
+
+
+
+/**
+ * Token for Visual Basic dates
+ */
+define('VbDateLiteralToken', ['SourcePatternIteratorToken', 'VbDatePatternIterator'], (SourcePatternIteratorToken, VbDatePatternIterator) => {
+
+	const VbDateLiteralToken = class VbDateLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('date', new VbDatePatternIterator());
+		}
+	};
+
+	return VbDateLiteralToken;
+
+});
+
+
+
+/**
+ * Token for Visual Basic directives
+ */
+define('VbDirectiveToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const VbDirectiveToken = class VbDirectiveToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+			super('directive', [
+				'#Const',
+				'#If',
+				'#Else',
+				'#End If'
+			]);
+
+			Object.seal(this);
+
+		}
+
+	};
+
+	return VbDirectiveToken;
+
+});
+
+
+
+/**
+ * Tokenizes Visual Basic source code
+ */
+define(
+
+	'VbLexer',
+
+	[
+		'Lexer',
+
+		'VbKeywordToken',
+		'VbTypesToken',
+		'VbPunctuationToken',
+		'VbStringLiteralToken',
+		'VbDateLiteralToken',
+
+		'VbLineCommentToken',
+		'VbDirectiveToken',
+
+		'HtmlEmphasisToken',
+		'WhitespaceToken',
+		'EndOfLineToken'
+
+	], (
+
+		Lexer,
+
+		VbKeywordToken,
+		VbTypesToken,
+		VbPunctuationToken,
+		VbStringLiteralToken,
+		VbDateLiteralToken,
+
+		VbLineCommentToken,
+		VbDirectiveToken,
+
+		HtmlEmphasisToken,
+		WhitespaceToken,
+		EndOfLineToken
+
+	) => {
+
+	const VbLexer = class VbLexer extends Lexer {
+
+		constructor() {
+			super();
+			Object.seal(this);
+		}
+
+		_resetTokens(tokenSequence) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				// language
+				new VbKeywordToken(),
+				new VbTypesToken(),
+				new VbPunctuationToken(),
+
+				// comments
+				new VbLineCommentToken(),
+				new VbDirectiveToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+			//this._tokenPool.push(new VbSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+		}
+
+		_pushLiteralTokens() {
+			this._tokenPool.splice(
+				this._tokenPool.length,
+				0,
+				//new VbNumericLiteralToken(),*/
+				new VbDateLiteralToken(),
+				new VbStringLiteralToken()
+			);
+		}
+
+		_pushInvisibleTokens() {
+			this._tokenPool.splice(
+				this._tokenPool.length,
+				0,
+				new HtmlEmphasisToken(),
+				new WhitespaceToken(),
+				new EndOfLineToken()
+			);
+		}
+
+		/**
+		 * Gets last meaningful token
+		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+		 */
+		_getLastToken(tokenSequence) {
+
+			let lastToken = null;
+
+			for (let i = tokenSequence.length; i > 0; i--) {
+
+				lastToken = tokenSequence[i - 1];
+
+				if (!lastToken.ignore
+					&& lastToken.type !== 'whitespace'
+					&& lastToken.type !== 'endOfLine'
+					) {
+
+					return lastToken;
+				}
+
+			}
+
+			return null;
+
+		}
+
+	};
+
+	return VbLexer;
+
+});

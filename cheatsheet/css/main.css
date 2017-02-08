@@ -700,6 +700,73 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #91E500;
 }
 
+/* Visual Basic */
+
+.bubaloop.highlight.visualbasic strong {
+	color: #101010;
+	background-color: hsl(195, 100%, 50%);
+	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
+	position: relative;
+	z-index: 2;
+}
+
+.bubaloop.highlight.visualbasic strong.small {
+	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
+}
+
+.bubaloop.highlight.visualbasic strong.comment {
+	background-color: #D10077;
+	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
+	z-index: 1;
+}
+
+.bubaloop.visualbasic .keyword,
+.bubaloop.visualbasic .functionName,
+.bubaloop.visualbasic .number,
+.bubaloop.visualbasic .boolean {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.visualbasic strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.visualbasic .type {
+	color: #8AD100;
+}
+
+.bubaloop.visualbasic .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.visualbasic strong .string {
+	color: #ffffff;
+}
+
+.bubaloop.visualbasic .date,
+.bubaloop.visualbasic .label {
+	color: #8D00FF;
+}
+
+.bubaloop.visualbasic .comment,
+.bubaloop.visualbasic .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.visualbasic strong .comment,
+.bubaloop.highlight.visualbasic strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.visualbasic .directive,
+.bubaloop.visualbasic .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.visualbasic strong .operator {
+	color: #505B66;
+}
+
 /* highlighter */
 
 .bubaloop .keyword,

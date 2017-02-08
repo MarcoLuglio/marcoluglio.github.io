@@ -119,6 +119,13 @@ fn main() {
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - Olá Mundo - main.bas</p>
+<code class='visualbasic'
+>Debug.Print "Olá Mundo"</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -468,6 +475,13 @@ function someFunction(arg1) {
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>' linha</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -594,6 +608,27 @@ const x = 5; // constante
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Option Explicit
+
+Dim x: x = 5 ' tipo dinâmico
+Dim x As Variant: x = 5 ' tipo dinâmico
+
+Dim x As Integer: x = 5 ' variável
+Const x As Integer = 5 ' constante
+
+' lança exceção com Option Explicit
+' caso contrário é aceito
+useSemDeclarar = 5
+
+' Datas tem uma literal especial, em formato americano...
+' Podemos digitar no formato #yyyy-mm-dd# e a IDE troca automaticamente para nós
+Const dataLimite As Date = #12/30/2017#</code
+>
+</div>
+
 </div>
 
 <h3 id='nomesvalidos'>Nomes Válidos</h3>
@@ -711,6 +746,15 @@ let $if = "meio confuso";
 // famoso</code
 >
 </div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+
 
 </div>
 
@@ -859,6 +903,22 @@ let n = (k || k === 0) ? k : 10;</code
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Option Explicit
+
+' qualquer tipo é sempre nullable
+' mas o Visual Basic usa as palavras Empty e Nothing para tanto
+' a palavra null é reservada para uso com bancos de dados
+
+' Empty é o valor que uma variável não inicializada possui
+Dim x: x = Empty
+
+' Nothing só é usado com objetos TODO confirmar isso</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -995,6 +1055,16 @@ var bfalseString = new Boolean('false');
 var bSuLin = new Boolean('Su Lin');
 var bArrayProto = new Boolean([]);
 var bObjProto = new Boolean({});*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Dim oitoOuOitenta: oitoOuOitenta = True
+oitoOuOitenta = False
+
+oitoOuOitenta = Not oitoOuOitenta</code
 >
 </div>
 
@@ -3213,6 +3283,18 @@ let beeGees = calvinHarris.replace('love', 'looove');
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Option Explicit
+
+Dim simples As String
+
+simples = "A primeira faz ""tchan"""
+</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -3486,6 +3568,47 @@ let tamanho =  = mdPrePopulada.length;
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Dim vazia() As Integer
+Dim preAlocada(9) As Integer
+
+' Aloca espaço na array vazia
+' É possível usar variáveis ao invés de literais fixas
+ReDim Preserve vazia(0 To 9)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+preAlocada(5) = 1600
+
+
+Dim valor As Integer
+
+For Each valor In prePopulada
+	'
+Next</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -3555,6 +3678,14 @@ let tamanho =  = mdPrePopulada.length;
 <p>JavaScript</p>
 <code class='javascript'
 >let lista = [];</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Dim lista As Collection
+Set lista = New Collection</code
 >
 </div>
 
@@ -4499,6 +4630,127 @@ normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' 
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>'Métodos que não retornam valores são chamados subrotinas, ou simplesmente subs
+Public Sub SemRetorno()
+	'...
+End Sub
+
+'Podemos sair precocemente de um sub usando Exit Sub
+Public Sub AbortarCedo()
+
+	Dim algumaFlag As Boolean: algumaFlag = True
+
+	If algumaFlag Then
+		Exit Sub 'Equivalente à "return"
+	End If
+
+	'Fazer o resto se passar pela flag
+
+End Sub
+
+
+'Métodos com retorno são Funções
+Public Function ComRetorno() As Boolean
+
+ 	'Equivalente à "return true".
+	'Note que são necessárias duas linhas
+
+	ComRetorno = True 'Esta atribui o valor de retorno, mas não interfere na execução das linhas seguintes
+	Exit Function 'E esta retorna o valor especificado imediatamente
+
+End Function 'Caso o Exit Function não tenha sido usado, retorna o valor especificado quando chegar aqui
+
+
+'Tanto subs quanto funções podem receber parâmetros
+
+Private Sub ComParametro(i As Byte)
+	Exit Sub
+End Sub
+
+Private Function ComParametroERetorno(i As Integer) As Boolean
+	If i &lt;&gt; 0 Then 'Operador diferente é &lt;&gt;
+		ComParametroERetorno = True
+		Exit Function
+	Else
+		ComParametroERetorno = False
+		Exit Function
+	End If
+End Function
+'Ou
+Private Function ComParametroERetorno(i As Integer) As Boolean
+	ComParametroERetorno = IIf(i &lt;&gt; 0, True, False) 'Inline If (IIf) funciona quase como operador ternário ? :
+	Exit Function
+End Function
+
+
+'Podemos passar vários parâmetros separando por vírgula
+Private Sub ComParametro(i As Long, j As Currency)
+	'...
+End Sub
+
+
+'E podemos quebrar os parâmetros em até 24 linhas utilizando _ (continuação de linha)
+'Note que é necessário um espaço antes de _
+'E não podem haver comentários :(
+Private Sub ComParametro( _
+	i As Single, _
+	j As Double _
+)
+
+	'Single é float, e Double é double mesmo
+
+End Sub
+
+'Podemos forçar a passagem de um parâmetro por valor ou por referência usando ByVal e ByRef
+'Essa palavras não tem efeito quando passamos constantes
+'O padrão é passar tudo por referência, inclusive Ints
+'Arrays e User Defined Types (UDTs) não podem ser passados por valor
+
+Private Sub PorValor(ByVal i As Long)
+	'...
+End Sub
+
+Private Sub PorReferencia(ByRef i As Long)
+	'...
+End Sub
+
+'Para chamar subrotinas e funções, existem casos em que deve ser usados parênteses, e casos em que eles não devem ser usados
+'O uso de parênteses quando não obrigatório faz com que os parâmetros sejam passados por valor ao invés de referência
+'Teoricamente Call deveria permitir usar parênteses sempre, mas não é o caso. Não há necessidade de usar Call
+
+'TODO Testar isso aqui
+
+Dim param As Integer: param = 1
+Dim param2 As Integer: param = 1
+
+ComRetorno
+Call ComRetorno
+retorno = ComRetorno
+retorno = ComRetorno()
+
+ComParametro param 'Passado por referência
+ComParametro(param) 'Passado por valor
+Call ComParametro(param)
+
+ComParametroERetorno param 'Passado por referência
+ComParametroERetorno(param) 'Passado por valor
+Call ComParametroERetorno(param)
+retorno = ComParametroERetorno(param)
+
+ComDoisParametros param, param2 'Passado por referência
+ComDoisParametros(param, param2) 'Passado por valor
+Call ComDoisParametros(param, param2)
+
+ComParametroERetorno param, param2 'Passado por referência
+ComParametroERetorno(param, param2) 'Passado por valor
+Call ComParametroERetorno(param, param2)
+retorno = ComParametroERetorno(param, param2)</code
+>
+</div>
+
 </div>
 
 <ol>
@@ -4790,6 +5042,21 @@ function imprimir(titulo, ...valores) {
 
 imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 >
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>' argumentos do mesmo tipo
+
+Public Sub ImprimirSimples(titulo As String, ParamArray paginas() As Integer)
+	Dim pagina As Integer
+	For Each pagina In paginas
+		Print pagina
+	Next
+End Sub
+
+Imprimir "resumo", 1, 2, 5</code>
 </div>
 
 </div>
@@ -5947,6 +6214,38 @@ try {
 }</code
 >
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch -->
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Private Sub CapturaDeErro()
+
+	' Visual Basic não possui try catch
+	' Usamos labels para tratar erros
+	On Error GoTo Erro
+
+	' Faça alguma coisa e saia da função
+	' antes de chegar nas linhas de tratamento de erro
+	Exit Sub
+
+' Label de erro
+' Labels não podem conter espaços em branco antes dos nomes
+Erro:
+	' Faça alguma coisa e saia da função
+	Exit Sub
+
+	' Ou continue a execução normalmente
+	Resume Next
+
+	' Ou passe para um tratamento específico
+	If Err.Number = 13 Then
+		Resume ErroEspecifico
+
+ErroEspecifico:
+	Exit Sub
+
+End Sub</code>
 </div>
 
 </div>
@@ -8298,6 +8597,21 @@ public class C {
 >
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Option Compare
+Option Explicit
+
+#Const DEBUG = 1
+
+#If DEBUG = 1 Then
+	'Código de debug
+#Else
+	'Código normal
+#End If</code>
+</div>
+
 </div>
 
 <ol>
@@ -8672,6 +8986,33 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>' User Defined Types (UDTs) se parecem com structs
+
+'Definimos o tipo num arquivo .bas separado
+Public Type ResultadoCaixa
+	Total As Integer
+	ValorPago As Integer
+	Troco As Integer
+End Type
+
+Dim compra1 As ResultadoCaixa
+
+compra1.total = 967; ' 9,67
+compra1.valorPago = 1000; ' 10,00
+compra1.troco = 33; ' 00,33
+
+'ou com With
+
+With compra1
+	.total = 967; ' 9,67
+	.valorPago = 1000; ' 10,00
+	.troco = 33; ' 00,33
+End With</code>
 </div>
 
 </div>
@@ -9050,6 +9391,62 @@ final class R {
 const compra1 = new ResultadoCaixa();
 compra1.descontarFidelidade();</code
 >
+</div>
+
+<div class='codeblock'>
+
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - ResultadoCaixa.cls</p>
+<code class='visualbasic'
+>'Evento
+Public Event OnChange(ByVal valorNovo As Byte, ByVal valorAntigo As Byte)
+
+'Variável pública, pode ser acessada diretamente
+Public publicVar As Boolean
+
+'Variáveis privadas acessadas pelas propriedades
+Private prop1 As Boolean
+Private friendProp1 As Boolean
+
+'Getter
+Public Property Get Prop1() As Boolean
+	Prop1 = prop1
+End Property
+
+'Setter de tipos primitivos usa Let
+Public Property Let Prop1(ByVal value As Boolean)
+	prop1 = value
+End Property
+
+'Setter de objetos usa Set
+
+'Friend permite acesso por outros objetos do mesmo projeto / dll
+'Não tem relação nenhuma com a funcionalidade em c++
+Friend Property Get FriendProp1() As Boolean
+	FriendProp1 = friendProp1
+End Property
+
+Public Sub Metodo1()
+	RaiseEvent OnChange(1, 2)
+	'Podemos nos registrar para responder à esse evento usando no nosso form
+	'Private Sub Instance_OnChange(ByVal valorNovo As Byte, ByVal valorAntigo As Byte)
+		'...
+	'End Sub
+End Sub
+
+Public Function Metodo2() As Boolean
+	'...
+End Function
+
+Friend Function MetodoFriend(Optional ByVal argOpcional1 As Boolean = True) As Boolean
+	'...
+End Function</code>
+
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - Main.bas</p>
+<code class='visualbasic'
+>Dim compra1 As ResultadoCaixa
+Set compra1 = new ResutadoCaixa
+' TODO</code>
+
 </div>
 
 </div>
@@ -10784,16 +11181,16 @@ namespace FFIExample {
 extern "C" {
 #endif
 
-		struct TabelaNutricional {
-			float valorEnergetico;
-			float carboidratos;
-			float proteinas;
-			float gordurasTotais;
-			float gordurasSaturadas;
-			float gordurasTrans;
-			float fibraAlimentar;
-			float sodio;
-		};
+	struct TabelaNutricional {
+		float valorEnergetico;
+		float carboidratos;
+		float proteinas;
+		float gordurasTotais;
+		float gordurasSaturadas;
+		float gordurasTrans;
+		float fibraAlimentar;
+		float sodio;
+	};
 
 #ifdef __cplusplus
 }
@@ -10842,7 +11239,7 @@ namespace FFIExample {
 extern "C" {
 #endif
 
-		DLLEXPORT struct TabelaNutricional calcular(float porcao);
+	DLLEXPORT struct TabelaNutricional calcular(float porcao);
 
 #ifdef __cplusplus
 }

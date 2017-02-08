@@ -15,6 +15,7 @@ define(
 		'CsLexer',
 
 		'JavaLexer',
+		'VbLexer',
 		'HtmlLexer',
 		'JavaScriptLexer',
 
@@ -34,6 +35,7 @@ define(
 		CsLexer,
 
 		JavaLexer,
+		VbLexer,
 		HtmlLexer,
 		JavaScriptLexer,
 
@@ -205,6 +207,9 @@ define(
 		})
 		.then(() => {
 			highlightWrapper('code.javascript', JavaScriptLexer);
+		})
+		.then(() => {
+			highlightWrapper('code.visualbasic', VbLexer);
 		});
 
 
