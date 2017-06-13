@@ -586,7 +586,21 @@ let (x, y) = (1, 2) // desestruturação</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>val x = 5 // tipo implícito
+val x:Int = 5 // tipo explícito
+
+var x = 5 // variável
+val x = 5 // constante
+
+// não precisa ser inicializada na declaração
+val x:Int
+x = 5
+
+// constante em tempo de compilação
+// precisa ser inicializada na declaração
+const val x = 5
+
+// ver se tem desestruturação</code
 >
 </div>
 
@@ -893,7 +907,15 @@ let p = k != nil ? k : 10 // p será do tipo Int?
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>// nullables devem ter o tipo especificado
+// em sua declaração
+var k:Int? = null
+var l:AClass? = null
+val m = l?.propriedade // m recebe null
+let n = l!!.propriedade // lança erro se l for null
+
+// null coalescing operator
+val o = k ?: 10 // o será do tipo Int</code
 >
 </div>
 
@@ -1051,7 +1073,14 @@ var boolValue:Bool { get }</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>// tipo Boolean
+var oitoOuOitenta = true
+oitoOuOitenta = false
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta
+
+// TODO parse boolean</code
 >
 </div>
 
@@ -2276,6 +2305,54 @@ JavaScript só possui um tipo numérico.</p>
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// i8
+let i81 = 1_i8;
+let i82 = -1i8;
+
+// u8
+let u81 = 1_u8;
+
+// i16
+let i161 = 1i16;
+let i162 = -1_i16;
+
+// u16
+let u161 = 1u16;
+
+// i32
+let i1 = 1;
+let i2 = -1;
+let i3 = 1_i32;
+
+// avisa overflow -2147483648
+let i4:i32 = 2_147_483_648;
+let i5 = 2_147_483_648_i32;
+let i6 = 2_147_483_648;
+
+// avisa underflow 2147483647
+let i7:i32 = -2_147_483_649;
+let i8 = -2_147_483_649_i32;
+let i9 = -2_147_483_649;
+
+// u32
+let u1 = 2_147_483_648_u32;
+
+// i64
+let i641 = 1_i64;
+let i642 = -1_i64;
+
+// u64
+let u641 = 1_u64;
+
+// pointer size
+let isize1 = 1_isize;
+let usize1 = 1_usize;        </code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// int32_t (x64 LP64)
@@ -2363,50 +2440,34 @@ let e1 = 9_223_372_036_854_775_808
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// i8
-let i81 = 1_i8;
-let i82 = -1i8;
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
-// u8
-let u81 = 1_u8;
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// int
+Object i1 = 1;
+Object i2 = -1;
 
-// i16
-let i161 = 1i16;
-let i162 = -1_i16;
 
-// u16
-let u161 = 1u16;
 
-// i32
-let i1 = 1;
-let i2 = -1;
-let i3 = 1_i32;
 
-// avisa overflow -2147483648
-let i4:i32 = 2_147_483_648;
-let i5 = 2_147_483_648_i32;
-let i6 = 2_147_483_648;
 
-// avisa underflow 2147483647
-let i7:i32 = -2_147_483_649;
-let i8 = -2_147_483_649_i32;
-let i9 = -2_147_483_649;
 
-// u32
-let u1 = 2_147_483_648_u32;
+// long
+Object l1 = 2_147_483_648l;
+Object l2 = -2_147_483_649L;
+Object l3 = 1l;
+Object l4 = 1L;
 
-// i64
-let i641 = 1_i64;
-let i642 = -1_i64;
 
-// u64
-let u641 = 1_u64;
-
-// pointer size
-let isize1 = 1_isize;
-let usize1 = 1_usize;        </code
+// lança exceção
+// integer number too large
+Object l5 = 9_223_372_036_854_775_808L;</code
 >
 </div>
 
@@ -2437,31 +2498,6 @@ var l5 = 1L;
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// int
-Object i1 = 1;
-Object i2 = -1;
-
-
-
-
-
-
-// long
-Object l1 = 2_147_483_648l;
-Object l2 = -2_147_483_649L;
-Object l3 = 1l;
-Object l4 = 1L;
-
-
-// lança exceção
-// integer number too large
-Object l5 = 9_223_372_036_854_775_808L;</code
->
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
@@ -2473,6 +2509,19 @@ Object l5 = 9_223_372_036_854_775_808L;</code
 <h3 id='literaisdecimaisfloatingpoint'>Decimais Floating Point</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// f32 (float)
+let f1 = 1f32;
+
+
+// f64 (double)
+let d1 = 1f64;
+let d2 = 1.0;                </code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -2509,15 +2558,25 @@ let d2 = 0.7 // não aceita .7          </code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// f32 (float)
-let f1 = 1f32;
+<p>Kotlin</p>
+<code class='kotlin'
+>
+                             </code
+>
+</div>
 
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// float
+Object f1 = 1f;
+Object f2 = 1F;
 
-// f64 (double)
-let d1 = 1f64;
-let d2 = 1.0;                </code
+// double
+Object d1 = 1d;
+Object d2 = 1D;
+Object f3 = 1.0;
+Object f4 = .7;              </code
 >
 </div>
 
@@ -2536,21 +2595,6 @@ var db4 = .7;
 
 // decimal
 var dc = 1m;                 </code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// float
-Object f1 = 1f;
-Object f2 = 1F;
-
-// double
-Object d1 = 1d;
-Object d2 = 1D;
-Object f3 = 1.0;
-Object f4 = .7;              </code
 >
 </div>
 
@@ -2574,6 +2618,31 @@ let d6 = .7;                 </code
 <h3 id='notacoesnumericas'>Notações</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// notação científica
+let c1 = 1e_0;
+let c2 = 1e-1;
+let c3 = -0.7_e-2;
+
+// notação binária
+let b1 = 0b_0000_0001;
+let b2 = -0b0000_0010;
+
+// notação octal
+let o1 = 0o_01234567;
+let o2 = -0o1234567;
+
+// notação hexadecimal
+let cor = 0x_ff_00_00;
+let x1 = -0x0123456789ABCDEF;
+
+// TODO misturar notações
+// com sufixos</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -2618,24 +2687,32 @@ let xc2 = -0x0123456789ABCDEF_p9       </code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
 >// notação científica
-let c1 = 1e_0;
-let c2 = 1e-1;
-let c3 = -0.7_e-2;
+double c1 = 1e0;
+double c2 = 1e-1;
+double c3 = -.7e-2;
 
 // notação binária
-let b1 = 0b_0000_0001;
-let b2 = -0b0000_0010;
+int b1 = 0b0000_0001;
+int b2 = -0B00000010;
 
 // notação octal
-let o1 = 0o_01234567;
-let o2 = -0o1234567;
+int o1 = 01_234_567;
+int o2 = -01234567;
 
 // notação hexadecimal
-let cor = 0x_ff_00_00;
-let x1 = -0x0123456789ABCDEF;
+int cor = 0xff_00_00;
+int x1 = -0X0123456789ABCDEF;
 
 // TODO misturar notações
 // com sufixos</code
@@ -2660,31 +2737,6 @@ double c3 = -.7e-2;
 
 // notação hexadecimal
 int cor = 0xff0000;
-int x1 = -0X0123456789ABCDEF;
-
-// TODO misturar notações
-// com sufixos</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// notação científica
-double c1 = 1e0;
-double c2 = 1e-1;
-double c3 = -.7e-2;
-
-// notação binária
-int b1 = 0b0000_0001;
-int b2 = -0B00000010;
-
-// notação octal
-int o1 = 01_234_567;
-int o2 = -01234567;
-
-// notação hexadecimal
-int cor = 0xff_00_00;
 int x1 = -0X0123456789ABCDEF;
 
 // TODO misturar notações
@@ -2723,6 +2775,15 @@ let x1 = -0X0123456789ABCDEF;</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let i1 = 10;
+let p1 = 01;
+let p2 = 00.1;               </code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// números começando com 0
@@ -2749,11 +2810,19 @@ let p2 = 00.1                          </code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->let i1 = 10;
-let p1 = 01;
-let p2 = 00.1;               </code
+<p>Kotlin</p>
+<code class='kotlin'
+>// não suporta
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// números começando com 0
+// são considerados notação
+// octal                     </code
 >
 </div>
 
@@ -2763,15 +2832,6 @@ let p2 = 00.1;               </code
 >var i1 = 10;
 var p1 = 01;
 var p1 = 00.1;               </code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='javascript'
->// números começando com 0
-// são considerados notação
-// octal                     </code
 >
 </div>
 
