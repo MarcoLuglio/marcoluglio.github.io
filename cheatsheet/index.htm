@@ -42,6 +42,16 @@
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust - Olá Mundo - mais.rs</p>
+<code class='rust'
+>// requer uma função main
+fn main() {
+	println!("Olá Mundo");
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++ - Olá Mundo - main.cpp</p>
 <code class='cpp'
 >// requer uma biblioteca para IO
@@ -79,11 +89,21 @@ int main(int argc, const char* argv[]) {
 </div>
 
 <div class='codeblock'>
-<p>Rust - Olá Mundo - mais.rs</p>
-<code class='rust'
->// requer uma função main
-fn main() {
-	println!("Olá Mundo");
+<p>Kotlin - Olá Mundo - main.kt</p>
+<code class='kotlin'
+>fun main(args: Array&lt;String&gt;) {
+	println("Hello, world!")
+}</code
+></div>
+
+<div class='codeblock'>
+<p>Java - Olá Mundo - OlaMundo.java</p>
+<code class='java'
+>public class OlaMundo {
+	// requer um método estático main em uma classe
+	public static void main(String[] args) {
+		System.out.println("Olá Mundo");
+	}
 }</code
 >
 </div>
@@ -95,18 +115,6 @@ fn main() {
 	// requer um método estático main em uma classe
 	public static void Main(string[] args) {
 		System.Console.WriteLine("Olá Mundo");
-	}
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java - Olá Mundo - OlaMundo.java</p>
-<code class='java'
->public class OlaMundo {
-	// requer um método estático main em uma classe
-	public static void main(String[] args) {
-		System.out.println("Olá Mundo");
 	}
 }</code
 >
@@ -151,6 +159,44 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 <h2 id='comentarios'>Comentários <span>e documentação inline</span></h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// linha
+
+/*
+bloco
+*/
+
+/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/
+
+fn someFunction(/* bloco */ arg1:i32) -&gt; i32 {
+	0
+}
+
+/// Rustdoc para o item que segue
+/// # Examples
+/// let result = someFunction(2);
+fn someFunction(arg1:i32) -&gt; i32 {
+	0
+}
+
+mod foo {
+	//! Rustdoc para o contêiner externo
+}</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -292,40 +338,57 @@ func someFunction(arg1:Int) -&gt; Int {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
 >// linha
 
 /*
 bloco
 */
 
-/*
+// region idea intellij foldable
+// endregion
 
+// TODO javadoc</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// linha
+
+/*
 bloco
-
-/*
-bloco aninhado
 */
 
-bloco
+// region idea intellij foldable
+// endregion
 
-*/
+// region example
 
-fn someFunction(/* bloco */ arg1:i32) -&gt; i32 {
-	0
+public class SomeClass {
+
+	public int example(/* bloco */ int arg1) {
+		return 0;
+	}
+
+	/**
+	JavaDoc
+	{@code
+	SomeClass someObject = new SomeClass();
+	int result = someObject.someMethod();
+	}
+	@param arg1 The argument of the function
+	@return The result of the function call
+	*/
+	public int someMethod(int arg1) {
+		return 0;
+	}
+
 }
 
-/// Rustdoc para o item que segue
-/// # Examples
-/// let result = someFunction(2);
-fn someFunction(arg1:i32) -&gt; i32 {
-	0
-}
-
-mod foo {
-	//! Rustdoc para o contêiner externo
-}</code
+// endregion</code
 >
 </div>
 
@@ -380,45 +443,6 @@ public class SomeClass {
 }
 
 #endregion</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// linha
-
-/*
-bloco
-*/
-
-// region idea intellij foldable
-// endregion
-
-// region example
-
-public class SomeClass {
-
-	public int example(/* bloco */ int arg1) {
-		return 0;
-	}
-
-	/**
-	JavaDoc
-	{@code
-	SomeClass someObject = new SomeClass();
-	int result = someObject.someMethod();
-	}
-	@param arg1 The argument of the function
-	@return The result of the function call
-	*/
-	public int someMethod(int arg1) {
-		return 0;
-	}
-
-}
-
-// endregion</code
 >
 </div>
 
@@ -508,6 +532,19 @@ JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let x = 5; // tipo implícito
+let x:i32 = 5; // tipo explícito
+
+let mut x = 5; // variável
+let x = 5; // constante
+
+let (x, y) = (1, 2); // desestruturação</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >auto x{5}; // tipo implícito
@@ -547,15 +584,21 @@ let (x, y) = (1, 2) // desestruturação</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->let x = 5; // tipo implícito
-let x:i32 = 5; // tipo explícito
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
-let mut x = 5; // variável
-let x = 5; // constante
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>int x = 5; // variável
+final int x = 5; // constante
 
-let (x, y) = (1, 2); // desestruturação</code
+// não precisa ser inicializada na declaração
+final int x;
+x = 5;</code
 >
 </div>
 
@@ -574,18 +617,6 @@ dynamic x = 5;
 unsafe {
 	int* ponteiroDeInt = &amp;x; // ponteiro
 }</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->int x = 5; // variável
-final int x = 5; // constante
-
-// não precisa ser inicializada na declaração
-final int x;
-x = 5;</code
 >
 </div>
 
@@ -636,6 +667,16 @@ Const dataLimite As Date = #12/30/2017#</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let eu1:i32;
+let _ = "bem sucinto";
+let _123 = "meio confuso";
+let _if = "meio confuso";</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >int eu1;
@@ -678,12 +719,25 @@ let 🐶🐮 = "dogcow"
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->let eu1:i32;
-let _ = "bem sucinto";
-let _123 = "meio confuso";
-let _if = "meio confuso";</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>int eu1;
+int _ = "bem sucinto"; // deprecated
+int _123 = "meio confuso";
+int _if = "meio confuso";
+
+int $ = "bem sucinto";
+int $123 = "meio confuso";
+int $if = "meio confuso";
+
+// TODO posso usar $$ ou misturar $?</code
 >
 </div>
 
@@ -704,22 +758,6 @@ var @int = "muito confuso";
 // TODO
 // a diferença de @ ao invés de _
 // é que...</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->int eu1;
-int _ = "bem sucinto"; // deprecated
-int _123 = "meio confuso";
-int _if = "meio confuso";
-
-int $ = "bem sucinto";
-int $123 = "meio confuso";
-int $if = "meio confuso";
-
-// TODO posso usar $$ ou misturar $?</code
 >
 </div>
 
@@ -785,6 +823,36 @@ Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo meno
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// não existem tipos nullable
+// mas existe um tipo std::Option&lt;T&gt;
+// que pode conter None ou Some()
+
+// tipo explícito
+let mut k:Option&lt;i32&gt; = None;
+let mut l:Option&lt;AStruct&gt; = None;
+
+// tipo implícito Option&lt;i32&gt;
+let mut m = None::&lt;i32&gt;;
+let mut n = Some(10);
+
+// erro, não pode passar um valor diretamente
+// tem que usar Some(valor)
+let mut o:Option&lt;i32&gt; = 10;
+
+// não possui operador específico para Option
+let p = match n { // p será do tipo i32
+	Some(some) =&gt; some,
+	None =&gt; 10,
+};
+
+// ok mas panic se for None
+let q = n.unwrap(); // q será do tipo i32</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >std::optional&lt;int&gt; k; // C++17
@@ -823,32 +891,25 @@ let p = k != nil ? k : 10 // p será do tipo Int?
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// não existem tipos nullable
-// mas existe um tipo std::Option&lt;T&gt;
-// que pode conter None ou Some()
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
-// tipo explícito
-let mut k:Option&lt;i32&gt; = None;
-let mut l:Option&lt;AStruct&gt; = None;
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// tipos primitivos não podem ser nullable
+int a = null; // erro
 
-// tipo implícito Option&lt;i32&gt;
-let mut m = None::&lt;i32&gt;;
-let mut n = Some(10);
+// qualquer tipo de referência é nullable
+Integer k = null;
+AClass l = null;
+Integer m = (l != null) ? l.propriedade : null;
 
-// erro, não pode passar um valor diretamente
-// tem que usar Some(valor)
-let mut o:Option&lt;i32&gt; = 10;
-
-// não possui operador específico para Option
-let p = match n { // p será do tipo i32
-	Some(some) =&gt; some,
-	None =&gt; 10,
-};
-
-// ok mas panic se for None
-let q = n.unwrap(); // q será do tipo i32</code
+// não possui operador específico para null
+int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 >
 </div>
 
@@ -867,22 +928,6 @@ var n = k ?? 10; // n será do tipo int
 
 // ok mas não é idiomático
 var o = (k != null) ? k : 10; // o será do tipo int?</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// tipos primitivos não podem ser nullable
-int a = null; // erro
-
-// qualquer tipo de referência é nullable
-Integer k = null;
-AClass l = null;
-Integer m = (l != null) ? l.propriedade : null;
-
-// não possui operador específico para null
-int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 >
 </div>
 
@@ -938,6 +983,24 @@ Dim x: x = Empty
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// tipo bool
+let oitoOuOintenta = true;
+oitoOuOintenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+
+// parse
+use std::str::FromStr;
+
+let toParse = "5";
+let parsed = i32::from_str(toParse).unwrap();</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// tipo bool
@@ -986,33 +1049,9 @@ var boolValue:Bool { get }</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// tipo bool
-let oitoOuOintenta = true;
-oitoOuOintenta = false;
-
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;
-
-// parse
-use std::str::FromStr;
-
-let toParse = "5";
-let parsed = i32::from_str(toParse).unwrap();</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->// tipo bool
-var oitoOuOitenta = true;
-oitoOuOitenta = false;
-
-// converte para true
-oitoOuOitenta = !oitoOuOitenta;
-// TODO Boolean.Parse</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
 >
 </div>
 
@@ -1026,6 +1065,19 @@ oitoOuOitenta = false;
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
 // TODO Boolean.parseBoolean</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// tipo bool
+var oitoOuOitenta = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+// TODO Boolean.Parse</code
 >
 </div>
 
@@ -1089,6 +1141,27 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <h3 id='integer'>Integer</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>i8</td><td>8 bits</td></tr>
+		<tr><td>i16</td><td>16 bits</td></tr>
+		<tr><td>i32</td><td>32 bits</td></tr>
+		<tr><td>i64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -1258,7 +1331,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Kotlin</p>
 
 <table>
 	<caption>Signed Integer</caption>
@@ -1269,10 +1342,31 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>i8</td><td>8 bits</td></tr>
-		<tr><td>i16</td><td>16 bits</td></tr>
-		<tr><td>i32</td><td>32 bits</td></tr>
-		<tr><td>i64</td><td>64 bits</td></tr>
+		<tr><td>Byte</td><td>8 bits</td></tr>
+		<tr><td>Short</td><td>16 bits</td></tr>
+		<tr><td>Int</td><td>32 bits</td></tr>
+		<tr><td>Long</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>8 bits</td></tr>
+		<tr><td>short</td><td>16 bits</td></tr>
+		<tr><td>int</td><td>32 bits</td></tr>
+		<tr><td>long</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1301,27 +1395,6 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-
-<table>
-	<caption>Signed Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>byte</td><td>8 bits</td></tr>
-		<tr><td>short</td><td>16 bits</td></tr>
-		<tr><td>int</td><td>32 bits</td></tr>
-		<tr><td>long</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
@@ -1333,6 +1406,27 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <h3 id='unsignedinteger'>Unsigned Integer</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>u8</td><td>8 bits</td></tr>
+		<tr><td>u16</td><td>16 bits</td></tr>
+		<tr><td>u32</td><td>32 bits</td></tr>
+		<tr><td>u64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -1502,24 +1596,13 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Kotlin</p>
+-
+</div>
 
-<table>
-	<caption>Unsigned Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>u8</td><td>8 bits</td></tr>
-		<tr><td>u16</td><td>16 bits</td></tr>
-		<tr><td>u32</td><td>32 bits</td></tr>
-		<tr><td>u64</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
+<div class='codeblock'>
+<p>Java</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -1544,11 +1627,6 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
--
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
@@ -1560,6 +1638,25 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <h3 id='pointerinteger'>Pointer Sized Integer</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Pointer Sized Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>isize</td><td>Depende do hardware</td></tr>
+		<tr><td>usize</td><td>Depende do hardware</td></tr>
+	</tbody>
+</table>
+
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -1624,31 +1721,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-
-<table>
-	<caption>Pointer Sized Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>isize</td><td>Depende do hardware</td></tr>
-		<tr><td>usize</td><td>Depende do hardware</td></tr>
-	</tbody>
-</table>
-
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
+<p>Kotlin</p>
 -
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
 -
 </div>
 
@@ -1664,6 +1747,25 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <h3 id='floatingpoint'>Floating Point</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>f32</td><td>32 bits</td></tr>
+		<tr><td>f64</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -1768,10 +1870,10 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Kotlin</p>
 
 <table>
-	<caption>Floating Point (IEEE-754)</caption>
+	<caption>Floating Point (IEEE 754)</caption>
 	<thead>
 		<tr><th>tipo</th><th>tamanho</th></tr>
 	</thead>
@@ -1779,8 +1881,27 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>f32</td><td>32 bits</td></tr>
-		<tr><td>f64</td><td>64 bits</td></tr>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>32 bits</td></tr>
+		<tr><td>double</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -1819,25 +1940,6 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-
-<table>
-	<caption>Floating Point (IEEE 754)</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>float</td><td>32 bits</td></tr>
-		<tr><td>double</td><td>64 bits</td></tr>
-	</tbody>
-</table>
-
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 
 <table>
@@ -1862,6 +1964,23 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <h2 id='outrostiposnumericos'>Tipos Numéricos Não Primitivos</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<table>
+	<caption>Floating Point</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>num::bigint::BigInt</td><td>?</td></tr>
+		<tr><td>num::bigint::BigUint</td><td>?</td></tr>
+	</tbody>
+</table>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -1907,24 +2026,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<table>
-	<caption>Floating Point</caption>
-	<thead>
-		<tr><th>tipo</th><th>tamanho</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>num::bigint::BigInt</td><td>?</td></tr>
-		<tr><td>num::bigint::BigUint</td><td>?</td></tr>
-	</tbody>
-</table>
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
+<p>Kotlin</p>
 <table>
 	<caption>Numeric</caption>
 	<thead>
@@ -1934,8 +2036,8 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td colspan='2'></td></tr>
 	</tfoot>
 	<tbody>
-		<tr><td>BigInteger</td><td>?</td></tr>
-		<tr><td>Complex</td><td>?</td></tr>
+		<tr><td>java.math.BigInteger</td><td>?</td></tr>
+		<tr><td>java.math.BigDecimal</td><td>?</td></tr>
 	</tbody>
 </table>
 </div>
@@ -1953,6 +2055,23 @@ oitoOuOitenta = Not oitoOuOitenta</code
 	<tbody>
 		<tr><td>BigInteger</td><td>?</td></tr>
 		<tr><td>BigDecimal</td><td>?</td></tr>
+	</tbody>
+</table>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>BigInteger</td><td>?</td></tr>
+		<tr><td>Complex</td><td>?</td></tr>
 	</tbody>
 </table>
 </div>
@@ -1996,6 +2115,11 @@ JavaScript só possui um tipo numérico.</p>
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 -
 </div>
@@ -2022,8 +2146,41 @@ JavaScript só possui um tipo numérico.</p>
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
--
+<p>Kotlin</p>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>byte</td><td>Byte</td></tr>
+		<tr><td>short</td><td>Short</td></tr>
+		<tr><td>int</td><td>Integer</td></tr>
+		<tr><td>long</td><td>Long</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tfoot>
+		<tr><td colspan='2'></td></tr>
+	</tfoot>
+	<tbody>
+		<tr><td>float</td><td>Float</td></tr>
+		<tr><td>double</td><td>Double</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
@@ -2089,40 +2246,6 @@ JavaScript só possui um tipo numérico.</p>
 	</tbody>
 </table>
 
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-
-<table>
-	<caption>Signed Integer</caption>
-	<thead>
-		<tr><th>tipo</th><th>classe</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>byte</td><td>Byte</td></tr>
-		<tr><td>short</td><td>Short</td></tr>
-		<tr><td>int</td><td>Integer</td></tr>
-		<tr><td>long</td><td>Long</td></tr>
-	</tbody>
-</table>
-
-<table>
-	<caption>Floating Point (IEEE 754)</caption>
-	<thead>
-		<tr><th>tipo</th><th>classe</th></tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan='2'></td></tr>
-	</tfoot>
-	<tbody>
-		<tr><td>float</td><td>Float</td></tr>
-		<tr><td>double</td><td>Double</td></tr>
-	</tbody>
-</table>
 </div>
 
 <div class='codeblock'>

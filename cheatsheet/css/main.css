@@ -513,6 +513,53 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+/* Kotlin */
+
+.bubaloop.kotlin .keyword,
+.bubaloop.kotlin .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.kotlin strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.kotlin .type {
+	color: #8AD100;
+}
+
+.bubaloop.kotlin .string,
+.bubaloop.kotlin .rawstring {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.kotlin strong .string,
+.bubaloop.highlight.kotlin strong .rawstring {
+	color: #ffffff;
+}
+
+.bubaloop.kotlin .annotation {
+	color: #7F8EA3;
+}
+
+.bubaloop.kotlin .comment,
+.bubaloop.kotlin .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.kotlin strong .comment,
+.bubaloop.highlight.kotlin strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.kotlin .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.kotlin strong .operator {
+	color: #505B66;
+}
+
 /* Java */
 
 .bubaloop.java .keyword,

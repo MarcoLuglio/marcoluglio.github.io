@@ -2773,6 +2773,755 @@ define(
 
 
 /**
+ * Token for Kotlin keywords
+ */
+define('KotlinKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const KotlinKeywordToken = class KotlinKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+			super('keyword', [
+
+				'abstract',
+				'annotation',
+				'as',
+				'break',
+				'by',
+				'catch',
+				'class',
+				'companion',
+				'const',
+				'continue',
+				'constructor',
+				'crossinline',
+				'data',
+				'do',
+				'dynamic',
+				'else',
+				'enum',
+				'extends',
+				'external',
+				'field',
+				'final',
+				'finally',
+				'for',
+				'fun',
+				'get',
+				'if',
+				'import',
+				'in',
+				'inner',
+				'init',
+				'inline',
+				'interface',
+				'internal',
+				'lateinit',
+				'new',
+				'noinline',
+				'null',
+				'object',
+				'open',
+				'operator',
+				'out',
+				'override',
+				'package',
+				'private',
+				'property',
+				'protected',
+				'public',
+				'reified',
+				'return',
+				'sealed',
+				'set',
+				'super',
+				//'suspend',
+				'tailrec',
+				'this',
+				'throw',
+				'throws',
+				'try',
+				'typealias',
+				'val',
+				'var',
+				'vararg',
+				'when',
+				'where',
+				'while',
+
+				// ranges
+				'downTo',
+				'step',
+				'until',
+
+				'true',
+				'false'
+
+			]);
+
+			Object.seal(this);
+
+		}
+
+	};
+
+	return KotlinKeywordToken;
+
+});
+
+
+
+/**
+ * Token for Kotlin types
+ */
+define('KotlinTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, SourceSimpleCharacterSequenceToken) => {
+
+	const KotlinTypesToken = class KotlinTypesToken extends Token {
+
+		constructor() {
+
+			super();
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				type: {value: 'type'},
+				_matchFunction: {value: context._matchTypesSequence, writable: true},
+				_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+
+					'Any',
+					'Array',
+					'Boolean',
+					'Byte',
+					'Char',
+					'Double',
+					'Float',
+					'Int',
+					'Long',
+					'Nothing',
+					'Short',
+					'String',
+					'Unit'
+
+				])}
+			});
+
+			Object.seal(this);
+
+		}
+
+		/**
+		 * @param {String} matchCharacter
+		 * @param {Number} index Character index relative to the whole string being parsed
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter, index) {
+
+			if (!this._matchFunction(matchCharacter, index)) {
+				return;
+			}
+
+			if (!this._isInitialized) {
+				this._isInitialized = true;
+				this.begin = index;
+			}
+
+			this.characterSequence.push(matchCharacter);
+
+		}
+
+		_matchTypesSequence(matchCharacter, index) {
+
+			this._typesSequence.next(matchCharacter, index);
+
+			if (this._typesSequence.isComplete) {
+				this._matchFunction = this._matchTypeOperator;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._typesSequence.hasNext()) {
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchTypeOperator(matchCharacter, index) {
+
+			if (matchCharacter === '?') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			return this._matchEnd(matchCharacter, index);
+
+		}
+
+		/**
+		 * Indica que o pattern já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter, index) {
+			this._complete();
+			return false;
+		}
+
+	};
+
+	return KotlinTypesToken;
+
+});
+
+
+
+/**
+ * Token for Kotlin punctuation
+ */
+define('KotlinPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
+
+	const KotlinPunctuationToken = class KotlinPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+		constructor() {
+
+			super('operator', [
+
+				'.',
+				'(',
+				')',
+				'{',
+				'}',
+				'[',
+				']',
+				',',
+				'?',
+				':',
+				// ';', // TODO embora não recomendado eu acho que tem
+
+				'&amp;&amp;',
+				//'&amp;&amp;=',
+				'||',
+				/*'||=',
+				'&amp;', // bitwise and
+				'|', // bitwise or
+				'^', // bitwise xor
+				'~', // bitwise not
+				'&gt;&gt;', // bitwise left shift
+				'&lt;&lt;', // bitwise right shift
+				*/
+				'+',
+				'++',
+				'-',
+				'--',
+				'*',
+				'/',
+				'%',
+				'==',
+				'===',
+				'!',
+				'!!',
+				'!=',
+				'!==',
+				'&gt;',
+				'&gt;=',
+				'&lt;',
+				'&lt;=',
+
+				'=',
+				'+=',
+				'-=',
+				'*=',
+				'/=',
+				'%=',
+
+				/*'&amp;=', // bitwise and
+				'|=', // bitwise or
+				'^=', // bitwise xor
+				'~=', // pattern matching
+				'&gt;&gt;=', // bitwise left shift
+				'&lt;&lt;=', // bitwise right shift
+				*/
+
+				'..',
+				'...'
+
+			]);
+
+		}
+
+	};
+
+	return KotlinPunctuationToken;
+
+});
+
+
+
+define('KotlinStringPatternIterator', () => {
+
+	const KotlinStringPatternIterator = class KotlinStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			let isLineBreak = this._matchLineBreak(matchCharacter);
+
+			if (this._isEscaped && !isLineBreak) { // line break não é escapável em c#
+				this._isEscaped = false;
+				return true;
+			}
+
+			if (matchCharacter === '\\') {
+				this._isEscaped = true;
+				return true;
+			}
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"'
+				|| isLineBreak
+				) {
+
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return KotlinStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Kotlin strings
+ */
+define('KotlinStringLiteralToken', ['SourcePatternIteratorToken', 'KotlinStringPatternIterator'], (SourcePatternIteratorToken, KotlinStringPatternIterator) => {
+
+	const KotlinStringLiteralToken = class KotlinStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new KotlinStringPatternIterator());
+		}
+	};
+
+	return KotlinStringLiteralToken;
+
+});
+
+
+
+define('KotlinRawStringPatternIterator', () => {
+
+	const KotlinRawStringPatternIterator = class KotlinRawStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchAt, writable: true},
+				_isEscaped: {value: false, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchAt(matchCharacter) {
+
+			if (matchCharacter === '@') {
+				this._matchFunction = this._matchStartQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote(matchCharacter) {
+
+			if (matchCharacter === '"') {
+
+				if (this._isEscaped) {
+					this._isEscaped = false;
+				} else {
+					this._isEscaped = true;
+				}
+
+				return true;
+
+			}
+
+			// se aspas não foi seguido de outras aspas
+			// termina a string imediatamente
+			if (this._isEscaped) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return KotlinRawStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for raw (unescaped) strings
+ */
+define('KotlinRawStringLiteralToken', ['SourcePatternIteratorToken', 'KotlinRawStringPatternIterator'], (SourcePatternIteratorToken, KotlinRawStringPatternIterator) => {
+
+	const KotlinRawStringLiteralToken = class KotlinRawStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('rawstring', new KotlinRawStringPatternIterator());
+		}
+	};
+
+	return KotlinRawStringLiteralToken;
+
+});
+
+
+
+define('KotlinAnnotationPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const KotlinAnnotationPatternIterator = class KotlinAnnotationPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_allowSpaceCharacter: {value: false, writable: true},
+				_isSpaceCharacter: {value: /\s/}
+			});
+			this._matchFunction = this._matchAt;
+			Object.seal(this);
+		}
+
+		_matchAt(matchCharacter) {
+			if (matchCharacter === '@') {
+				this._matchFunction = this._matchContent;
+				this._isComplete = true; // TODO não é bem assim
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchContent(matchCharacter) {
+
+			if (matchCharacter === '(') {
+				this._isComplete = false;
+				this._allowSpaceCharacter = true;
+				return true;
+			}
+
+			if (matchCharacter === ')') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			if (!this._allowSpaceCharacter
+				&& this._isSpaceCharacter.test(matchCharacter) === false
+				) {
+
+				return true;
+			}
+
+			if (this._matchLineBreak(matchCharacter)
+				&& this._isComplete
+				) {
+
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchLineBreak(matchCharacter) {
+
+			if (matchCharacter === '\n'
+				|| matchCharacter === '\r'
+				|| matchCharacter === '\u2028'
+				|| matchCharacter === '\u2029'
+				|| matchCharacter === null // EOF
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return KotlinAnnotationPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Kotlin annotations
+ */
+define('KotlinAnnotationToken', ['SourcePatternIteratorToken', 'KotlinAnnotationPatternIterator'], (SourcePatternIteratorToken, KotlinAnnotationPatternIterator) => {
+
+	const KotlinAnnotationToken = class KotlinAnnotationToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('annotation', new KotlinAnnotationPatternIterator());
+		}
+	};
+
+	return KotlinAnnotationToken;
+
+});
+
+
+
+/**
+ * Tokenizes Kotlin source code
+ */
+define(
+
+	'KotlinLexer',
+
+	[
+		'Lexer',
+
+		'KotlinKeywordToken',
+		'KotlinTypesToken',
+		'KotlinPunctuationToken',
+		'KotlinStringLiteralToken',
+		'KotlinRawStringLiteralToken',
+
+		'CLineCommentToken',
+		'CBlockCommentToken',
+
+		'HtmlEmphasisToken',
+		'WhitespaceToken',
+		'EndOfLineToken'
+
+	], (
+
+		Lexer,
+
+		KotlinKeywordToken,
+		KotlinTypesToken,
+		KotlinPunctuationToken,
+		KotlinStringLiteralToken,
+		KotlinRawStringLiteralToken,
+
+		CLineCommentToken,
+		CBlockCommentToken,
+
+		HtmlEmphasisToken,
+		WhitespaceToken,
+		EndOfLineToken
+
+	) => {
+
+	const KotlinLexer = class KotlinLexer extends Lexer {
+
+		constructor() {
+			super();
+			Object.seal(this);
+		}
+
+		_resetTokens(tokenSequence) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				// language
+				new KotlinKeywordToken(),
+				new KotlinTypesToken(),
+				new KotlinPunctuationToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new CBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+			//this._tokenPool.push(new KotlinSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+		}
+
+		_pushLiteralTokens() {
+			this._tokenPool.splice(
+				this._tokenPool.length,
+				0,
+				//new VbNumericLiteralToken(),*/
+				new KotlinStringLiteralToken(),
+				new KotlinRawStringLiteralToken()
+			);
+		}
+
+		_pushInvisibleTokens() {
+			this._tokenPool.splice(
+				this._tokenPool.length,
+				0,
+				new HtmlEmphasisToken(),
+				new WhitespaceToken(),
+				new EndOfLineToken()
+			);
+		}
+
+		/**
+		 * Gets last meaningful token
+		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+		 */
+		_getLastToken(tokenSequence) {
+
+			let lastToken = null;
+
+			for (let i = tokenSequence.length; i > 0; i--) {
+
+				lastToken = tokenSequence[i - 1];
+
+				if (!lastToken.ignore
+					&& lastToken.type !== 'whitespace'
+					&& lastToken.type !== 'endOfLine'
+					) {
+
+					return lastToken;
+				}
+
+			}
+
+			return null;
+
+		}
+
+	};
+
+	return KotlinLexer;
+
+});
+
+
+
+/**
  * Token for Rust keywords
  */
 define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {

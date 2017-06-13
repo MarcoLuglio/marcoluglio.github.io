@@ -11,6 +11,7 @@ define(
 		'CppLexer',
 		'ObjectiveCLexer',
 		'SwiftLexer',
+		'KotlinLexer',
 		'RustLexer',
 		'CsLexer',
 
@@ -31,6 +32,7 @@ define(
 		CppLexer,
 		ObjectiveCLexer,
 		SwiftLexer,
+		KotlinLexer,
 		RustLexer,
 		CsLexer,
 
@@ -185,6 +187,9 @@ define(
 		})
 
 		.then(() => {
+			highlightWrapper('code.rust', RustLexer);
+		})
+		.then(() => {
 			highlightWrapper('code.cpp', CppLexer);
 		})
 		.then(() => {
@@ -194,13 +199,13 @@ define(
 			highlightWrapper('code.swift', SwiftLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.rust', RustLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.cs', CsLexer);
+			highlightWrapper('code.kotlin', KotlinLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.java', JavaLexer);
+		})
+		.then(() => {
+			highlightWrapper('code.cs', CsLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.html', HtmlLexer);
