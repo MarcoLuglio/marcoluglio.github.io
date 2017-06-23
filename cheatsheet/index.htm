@@ -2416,7 +2416,7 @@ NSNumber* ll1 = [[NSNumber alloc] initWithLong:42LL];</code
 let i1 = 1
 let i2 = -1
 let i3 = 2_147_483_648
-let i4 = -2_147_483_649;
+let i4 = -2_147_483_649
 
 
 
@@ -2442,7 +2442,17 @@ let e1 = 9_223_372_036_854_775_808
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>// Int
+val i1 = 1
+val 12 = -1
+val i3 = 2_147_483_648
+val i4 = -2_147_483_649
+
+
+
+
+// Long
+val l1 = 1L</code
 >
 </div>
 
@@ -2560,8 +2570,13 @@ let d2 = 0.7 // não aceita .7          </code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-                             </code
+>// Float
+val f1 = 1f
+val f2 = 1F
+
+// Double
+val d1 = 1.0
+val d2 = .7                 </code
 >
 </div>
 
@@ -2575,8 +2590,8 @@ Object f2 = 1F;
 // double
 Object d1 = 1d;
 Object d2 = 1D;
-Object f3 = 1.0;
-Object f4 = .7;              </code
+Object d3 = 1.0;
+Object d4 = .7;              </code
 >
 </div>
 
@@ -2689,8 +2704,22 @@ let xc2 = -0x0123456789ABCDEF_p9       </code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>// notação científica
+val c1 = 1e0
+val c2 = 1e-1
+val c3 = -.7e-2
+
+// notação binária
+val b1 = 0b0000_0001
+val b2 = -0B0000_0010
+
+
+
+
+
+// notação hexadecimal
+val cor = 0xff_00_00
+val x1 = -0X0123456789ABCDEF</code
 >
 </div>
 
@@ -2812,8 +2841,9 @@ let p2 = 00.1                          </code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// não suporta
-</code
+>
+
+val p2 = 00.1                </code
 >
 </div>
 
@@ -2866,6 +2896,48 @@ let p1 = 01;                 </code
 <h3 id='operacoesnumericas'>Operações</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// Requer compilação com flag -O
+// Compilações sem otimização panic no overflow
+
+let i32_1:i32 = 2;
+let i32_2:i32 = 4;
+let i32_min:i32 = std::i32::MIN;
+let i32_max:i32 = std::i32::MAX;
+
+let i641:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
+let i161:i16 = i32_max as i16; // explicit conversion -1 (i16)
+
+// explicit conversion
+let adicao1 = i32_max + 1; // -2147483648 (i32)
+let adicao2 = i641 + (i32_1 as i64); // 2147483649 (i64)
+let adicao3 = i641 + (i32_max as i64); // 4294967294 (i64)
+
+// explicit conversion
+let subtracao1 = i32_min - 1; // 2147483647 (i32)
+let subtracao2 = (i161 as i32) - i32_1; // -3 (i32)
+let subtracao3 = (i161 as i32) - i32_max; // -2147483648 (i32)
+
+// explicit conversion
+let multiplicacao1 = i32_1 * i32_2; // 8 (i32)
+let multiplicacao2 = i32_max * i32_1; // -2 (i32)
+let multiplicacao3 = (i32_1 as i64) * i641; // 4294967294 (i64)
+
+// explicit conversion
+let divisao1 = i32_2 / i32_1; // 2 (i32)
+let divisao2 = i32_1 / i32_2; // 0 (i32)
+let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
+
+// NOTA
+// literais numéricas sem sufixo possuem o tipo _
+// e não realizam operações matemáticas
+
+// TODO converte para char e boolean</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -2938,44 +3010,46 @@ doubleVar += 1</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// Requer compilação com flag -O
-// Compilações sem otimização panic no overflow
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
-let i32_1:i32 = 2;
-let i32_2:i32 = 4;
-let i32_min:i32 = std::i32::MIN;
-let i32_max:i32 = std::i32::MAX;
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
 
-let i641:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
-let i161:i16 = i32_max as i16; // explicit conversion -1 (i16)
+int i32_1 = 2;
+int i32_2 = 4;
+int i32_min = Integer.MIN_VALUE;
+int i32_max = Integer.MAX_VALUE;
 
-// explicit conversion
-let adicao1 = i32_max + 1; // -2147483648 (i32)
-let adicao2 = i641 + (i32_1 as i64); // 2147483649 (i64)
-let adicao3 = i641 + (i32_max as i64); // 4294967294 (i64)
+long i64 = i32_max; // implicit conversion 2147483647 (long)
+short i16 = (short)i32_max; // explicit conversion -1 (short)
 
-// explicit conversion
-let subtracao1 = i32_min - 1; // 2147483647 (i32)
-let subtracao2 = (i161 as i32) - i32_1; // -3 (i32)
-let subtracao3 = (i161 as i32) - i32_max; // -2147483648 (i32)
+// usa o tipo maior
+Object adicao1 = i32_max + 1; // -2147483648 (int)
+Object adicao2 = i64 + i32_1; // 2147483649 (long)
+Object adicao3 = i64 + i32_max; // 4294967294 (long)
 
-// explicit conversion
-let multiplicacao1 = i32_1 * i32_2; // 8 (i32)
-let multiplicacao2 = i32_max * i32_1; // -2 (i32)
-let multiplicacao3 = (i32_1 as i64) * i641; // 4294967294 (i64)
+// usa o tipo maior
+Object subtracao1 = i32_min - 1; // 2147483647 (int)
+Object subtracao2 = i16 - i32_1; // -3 (int)
+Object subtracao3 = i16 - i32_max; // -2147483648 (int)
 
-// explicit conversion
-let divisao1 = i32_2 / i32_1; // 2 (i32)
-let divisao2 = i32_1 / i32_2; // 0 (i32)
-let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
+// usa o tipo maior
+Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
+Object multiplicacao2 = i32_max * i32_1; // -2 (int)
+Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
 
-// NOTA
-// literais numéricas sem sufixo possuem o tipo _
-// e não realizam operações matemáticas
+// usa o tipo maior
+Object divisao1 = i32_2 / i32_1; // 2 (int)
+Object divisao2 = i32_1 / i32_2; // 0 (int)
+Object divisao3 = i16 / i32_1; // 0 (int)
 
-// TODO converte para char e boolean</code
+// TODO char converte tb</code
 >
 </div>
 
@@ -3046,43 +3120,6 @@ to the nearest double or float value.
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-
-int i32_1 = 2;
-int i32_2 = 4;
-int i32_min = Integer.MIN_VALUE;
-int i32_max = Integer.MAX_VALUE;
-
-long i64 = i32_max; // implicit conversion 2147483647 (long)
-short i16 = (short)i32_max; // explicit conversion -1 (short)
-
-// usa o tipo maior
-Object adicao1 = i32_max + 1; // -2147483648 (int)
-Object adicao2 = i64 + i32_1; // 2147483649 (long)
-Object adicao3 = i64 + i32_max; // 4294967294 (long)
-
-// usa o tipo maior
-Object subtracao1 = i32_min - 1; // 2147483647 (int)
-Object subtracao2 = i16 - i32_1; // -3 (int)
-Object subtracao3 = i16 - i32_max; // -2147483648 (int)
-
-// usa o tipo maior
-Object multiplicacao1 = i32_1 * i32_2; // 8 (int)
-Object multiplicacao2 = i32_max * i32_1; // -2 (int)
-Object multiplicacao3 = i32_1 * i64; // 4294967294 (long)
-
-// usa o tipo maior
-Object divisao1 = i32_2 / i32_1; // 2 (int)
-Object divisao2 = i32_1 / i32_2; // 0 (int)
-Object divisao3 = i16 / i32_1; // 0 (int)
-
-// TODO char converte tb</code
->
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
@@ -3117,6 +3154,14 @@ if (i === j) {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -3141,16 +3186,8 @@ if (i === j) {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
@@ -3176,6 +3213,14 @@ private void recebeByte(byte numero) {
 	System.out.println(numero);
 }
 */
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
 </code
 >
 </div>
@@ -3209,6 +3254,14 @@ private void recebeByte(byte numero) {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -3233,16 +3286,8 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
@@ -3251,6 +3296,14 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
 >
 </code
 >
