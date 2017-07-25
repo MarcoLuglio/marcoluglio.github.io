@@ -9879,7 +9879,7 @@ a.prop = '';</code
 
 
 
-<h3>Traits</h3>
+<h3 id='traits'>Traits</h3>
 
 <div class='comparison'>
 
@@ -9994,7 +9994,7 @@ impl HasArea for Circle {
 
 
 
-<h3>Interfaces</h3>
+<h3 id='interfaces'>Interfaces</h3>
 
 <div class='comparison'>
 
@@ -10113,7 +10113,7 @@ impl HasArea for Circle {
 
 
 
-<h3>Herança</h3>
+<h3 id='heranca'>Herança</h3>
 
 <div class='comparison'>
 
@@ -10221,6 +10221,126 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+</div>
+
+
+
+<h3 id='classesAnonimas'>Classes Anônimas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>public final class MainActivity : AppCompatActivity() {
+
+	override fun onCreate(savedInstanceState:Bundle?) {
+
+		super.onCreate(savedInstanceState)
+
+		this.txtValorMes!!.addTextChangedListener(<strong>object : TextWatcher {</strong>
+
+
+			override fun beforeTextChanged(s:CharSequence, start:Int, count:Int, after:Int) { /**/}
+
+
+			override fun onTextChanged(s:CharSequence, start:Int, before:Int, count:Int) {
+				<strong class='comment small'>// this@ acessa o escopo nomeado</strong>
+				<strong class='small'>this@MainActivity.mainProperty</strong>
+			}
+
+
+			override fun afterTextChanged(s:Editable) { /**/ }
+
+		<strong>}</strong>)
+
+	}
+
+	private var mainProperty:Int
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public final class MainActivity extends AppCompatActivity {
+
+	public void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState)
+
+		this.txtValorMes.addTextChangedListener(<strong>new TextWatcher {</strong>
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { /**/ }
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				<strong class='comment small'>// Container.this acessa o escopo externo</strong>
+				<strong class='small'>Container.this.mainProperty;</strong>
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) { /**/ }
+
+		<strong>}</strong>)
+
+	}
+
+	private int mainProperty;
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
 >
 </code
 >

@@ -2900,6 +2900,7 @@ define('KotlinTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Tok
 					'Nothing',
 					'Short',
 					'String',
+					'CharSequence',
 					'Unit'
 
 				])}
@@ -5692,6 +5693,7 @@ define('JavaTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token
 					'Object',
 					'short',
 					'String',
+					'CharSequence',
 
 					'Boolean',
 					'Byte',
