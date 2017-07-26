@@ -3550,6 +3550,14 @@ simples = "A primeira faz ""tchan"""
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// TODO
@@ -3638,63 +3646,26 @@ let tamanho =  = mdPrePopulada.count
 // comparar arrays</code
 >
 </div>
-
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 
 
 
 // uma dimensão
-int[] preAlocada = new int[10];
-preAlocada = new int[17];
-String[] prePopulada = {"p", "r", "e"};
+var preAlocada = IntArray(10)
+preAlocada = IntArray(17)
 
 
-int linhas = 2;
-int colunas = 4;
+
+val linhas = 2
+val colunas = 4
 
 // multi dimensional
-byte[,] mdPreAlocada = new byte[linhas, colunas];
-byte[,] mdPrePopulada = {
-	{0, 1, 2, 3},
-	{4, 5, 6, 7}
-};
+var mdPreAlocada = Array(linhas, { IntArray(colunas) })
 
-byte[][] arrayDeArraysPreAlocada = new byte[4][];
-arrayDeArraysPreAlocada[0] = new byte[4];
-// ...
-byte[][] arrayDeArraysPrePopulada = {
-	new byte[] {0, 1, 2, 3},
-	new byte[] {4, 5, 6, 7}
-};
-
-preAlocada[5] = 16000;
-
-String indice0 = prePopulada[0];
-byte two = mdPrePopulada[0, 2];
-
-foreach (var valor in prePopulada) {
-	//
-}
-
-
-
-
-
-var tamanho = mdPrePopulada.Length
-
-// TODO exemplos com var
-// comparar arrays</code
+// TODO</code
 >
 </div>
 
@@ -3752,6 +3723,57 @@ float podeMasNaoFaca[];
 float[][] podeMasNaoFaca = {{}};
 float[] podeMasNaoFaca[] = {{}};
 float podeMasNaoFaca[][] = {{}};</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+
+
+
+// uma dimensão
+int[] preAlocada = new int[10];
+preAlocada = new int[17];
+String[] prePopulada = {"p", "r", "e"};
+
+
+int linhas = 2;
+int colunas = 4;
+
+// multi dimensional
+byte[,] mdPreAlocada = new byte[linhas, colunas];
+byte[,] mdPrePopulada = {
+	{0, 1, 2, 3},
+	{4, 5, 6, 7}
+};
+
+byte[][] arrayDeArraysPreAlocada = new byte[4][];
+arrayDeArraysPreAlocada[0] = new byte[4];
+// ...
+byte[][] arrayDeArraysPrePopulada = {
+	new byte[] {0, 1, 2, 3},
+	new byte[] {4, 5, 6, 7}
+};
+
+preAlocada[5] = 16000;
+
+String indice0 = prePopulada[0];
+byte two = mdPrePopulada[0, 2];
+
+foreach (var valor in prePopulada) {
+	//
+}
+
+
+
+
+
+var tamanho = mdPrePopulada.Length
+
+// TODO exemplos com var
+// comparar arrays</code
 >
 </div>
 
