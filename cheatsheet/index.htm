@@ -3336,6 +3336,39 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// tipo &amp;str
+
+let simples = "A primeira faz \"tchan\" e só";
+
+let calvinHarris = "how deep\nis your love"; // 2 linhas
+
+// várias linhas
+let josePauloPaes = "Meu amor é simples, Dora,
+Como a água e o pão.
+
+Como o céu refletido
+Nas pupilas de um cão.";
+
+// concatenação
+let leminski = concat!("Merda é veneno.",
+	"No entanto, não há nada",
+	"que seja mais bonito",
+	"que uma bela cagada.",
+	"Cagam ricos, cagam pobres,",
+	"cagam reis e cagam fadas.",
+	"Não há merda que se compare",
+	"à bosta da pessoa amada."
+);
+
+// tipo String
+
+let simples = "A primeira faz \"tchan\" e só".to_string();</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >auto cString = "mãe d'água";
@@ -3389,56 +3422,75 @@ char* cString = "";</code
 
 let calvinHarris = "how deep\nis your love" // 2 linhas
 
-// concatenação - única maneira de usar várias linhas
+// concatenação - única maneira de usar várias linhas antes de swift 4
 let josePauloPaes = "Meu amor é simples, Dora," +
 "\nComo a água e o pão." +
 "\n" +
 "\nComo o céu refletido" +
-"\nNas pupilas de um cão."</code
+"\nNas pupilas de um cão."
+
+// várias linhas (swift 4+)
+let leminskiTemplate = """Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada."""
+
+let leadingWhitespace = """
+	Sem leading (alinhado com a última linha)
+		Com um tab de leading
+	Sem leading (alinhado com a última linha)
+	"""
+
+let multiplier = 3
+let stringInterpolada = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+
+let emoji = "😍";
+let combined = "\u{D83D}\u{DE0D}"
+let clustered = "\u{1F60D}"
+
+// string é imutável, então seus métodos retornam novas instâncias
+let beeGees = calvinHarris.replacingOccurrences(of: "love", with: "looove")
+
+"Gritando".uppercaseString // retorna 'GRITANDO'</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// tipo &amp;str
+<p>Kotlin</p>
+<code class='kotlin'
+>val simples = "A primeira faz \"tchan\" e só";
 
-let simples = "A primeira faz \"tchan\" e só";
-
-let calvinHarris = "how deep\nis your love"; // 2 linhas
-
-// várias linhas
-let josePauloPaes = "Meu amor é simples, Dora,
-Como a água e o pão.
-
-Como o céu refletido
-Nas pupilas de um cão.";
+val calvinHarris = "how deep\nis your love"; // 2 linhas
 
 // concatenação
-let leminski = concat!("Merda é veneno.",
-	"No entanto, não há nada",
-	"que seja mais bonito",
-	"que uma bela cagada.",
-	"Cagam ricos, cagam pobres,",
-	"cagam reis e cagam fadas.",
-	"Não há merda que se compare",
-	"à bosta da pessoa amada."
-);
+val josePauloPaes = "Meu amor é simples, Dora," +
+"\nComo a água e o pão." +
+"\n" +
+"\nComo o céu refletido" +
+"\nNas pupilas de um cão."
 
-// tipo String
+// várias linhas
+val leminskiTemplate = """Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada."""
 
-let simples = "A primeira faz \"tchan\" e só".to_string();</code
->
-</div>
+val leadingWhitespace = """
+	|Sem leading
+	|	Com leading
+	|Sem leading
+	""".trimMargin()
+// caso padrão de trimMargin("|")
 
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->var simples = "A primeira faz \"tchan\"";
-var dupla = @"A segunda faz ""tchun""";
-var interpolated = $"A segunda faz \"tchun\"";
-</code
->
+// TODO</code>
 </div>
 
 <div class='codeblock'>
@@ -3470,6 +3522,16 @@ String leminski = leminskiBuilder.toString();
 
 // StringBuilder não é thread safe
 // Existe também a classe StringBuffer, que é</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>var simples = "A primeira faz \"tchan\"";
+var dupla = @"A segunda faz ""tchun""";
+var interpolated = $"A segunda faz \"tchun\"";
+</code
 >
 </div>
 
@@ -3507,6 +3569,9 @@ Cagam ricos, cagam pobres,
 cagam reis e cagam fadas.
 Não há merda que se compare
 à bosta da pessoa amada.`;
+
+let multiplier = 3
+let stringInterpolada = `${multiplier} times 2.5 is ${multiplier * 2.5}`
 
 let emoji = '😍';
 let es5 = '\uD83D\uDE0D'; // code units / surrogates
@@ -8910,7 +8975,9 @@ std::get&lt;0&gt;(valores);</code
 <code class='swift'
 >let someTuple: (Double, Double, Double) = (3.14159, 2.71828, 1.1)
 someTuple.0
-</code
+// lembrando que uma tuple vazia em swift significa Void
+// () -> ()
+// () -> Void</code
 >
 </div>
 
