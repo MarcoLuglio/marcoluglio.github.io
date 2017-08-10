@@ -943,6 +943,7 @@ int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
 int? k = null;
 AClass? l = null;
 int? m = l?.propriedade; // C# 6
+int? m = x?[indice]; // C# 6
 int? m = (l != null) ? l.propriedade : null;
 
 // null coalescing operator
@@ -9539,9 +9540,8 @@ final class R {
 		this.troco = this.valorPago - this.troco;
 	}
 
-	private int calcularFidelidade() {
-		return this.total - 1;
-	}
+	// c# 7
+	private int calcularFidelidade => this.total - 1;
 
 	private int total = 0;
 
@@ -9609,10 +9609,8 @@ final class R {
 <code class='java'
 >public class Main {
 	public static void main(string[] args) {
-
 		ResultadoCaixa compra1 = new ResultadoCaixa(997, 1000);
 		compra1.descontarFidelidade();
-
 	}
 }</code
 >
@@ -9827,19 +9825,26 @@ a.prop = ""</code
 		set;
 	}
 
+	// c# 7
 	public string Prop2 {
+		get =&gt; "";
+		set =&gt; this.prop2 = value;
+	}
+
+	public string Prop3 {
 
 		get {
 			return "";
 		}
 
 		set {
-			this.prop2 = value;
+			this.prop3 = value;
 		}
 
 	}
 
 	private string prop2;
+	private string prop3;
 
 }</code
 >
