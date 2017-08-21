@@ -193,9 +193,6 @@ define(
 			highlightWrapper('code.cpp', CppLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.objectivec', ObjectiveCLexer);
-		})
-		.then(() => {
 			highlightWrapper('code.swift', SwiftLexer);
 		})
 		.then(() => {
@@ -212,6 +209,9 @@ define(
 		})
 		.then(() => {
 			highlightWrapper('code.javascript', JavaScriptLexer);
+		})
+		.then(() => {
+			highlightWrapper('code.objectivec', ObjectiveCLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.visualbasic', VbLexer);
