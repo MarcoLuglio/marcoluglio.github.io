@@ -880,6 +880,7 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 				type: {value: type},
 				_previousMatchedKeyword: {value: null, writable: true},
 				_matchedKeyword: {value: null, writable: true},
+				//_completeNextTurn: {value: false, writable: true},
 				_keywordsPool: {value: []},
 				_keyword: {value: null, writable: true},
 				_keywordPointer:  {value: 0, writable: true},
@@ -919,7 +920,7 @@ define('JSSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 		reset() {
 			this._matchedKeyword = false;
-			this._completeNextTurn = false;
+			//this._completeNextTurn = false;
 			this._keyword = null;
 			this._keywordPointer = 0;
 			this._resetKeywords();
