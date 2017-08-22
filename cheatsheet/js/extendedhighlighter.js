@@ -2496,6 +2496,189 @@ define('SwiftPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceS
 
 
 
+define('SwiftNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const SwiftNumberPatternIterator = class SwiftNumberPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isNumberCharacter: {value: /\d/},
+				_matchCheck: {value: null, writable: true}
+			});
+			this._matchFunction = this._matchFirstNumber;
+			Object.seal(this);
+		}
+
+		/*
+		números válidos
+
+		binario
+		tem que ter 1 número depois do b
+		só 0 e 1
+		0b10101110
+
+		octal
+		tem que ter 1 número depois do o
+		só 0 até 7
+		0o07
+
+		hexadecimal
+		tem que ter 1 número depois do x
+		só 0 até 9 e A até F
+		0x07
+		0x07p1
+		*/
+
+		_matchFirstNumber(matchCharacter) {
+
+			if (matchCharacter === '0') {
+				this._matchFunction = this._matchIdentifier;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchIdentifier(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+			// só muda o tipo de verificação para cada formato de número
+			this._matchFunction = this._matchEndNumber;
+
+			// verifica qual tipo de número
+
+			if (matchCharacter === 'b') {
+				this._matchCheck = this._isBinary;
+				return true;
+			}
+
+			if (matchCharacter === 'o') {
+				this._matchCheck = this._isOctal;
+				return true;
+			}
+
+			if (matchCharacter === 'x') {
+				this._matchCheck = this._isHexadecimal;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndNumber(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (this._matchCheck(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_isBinary(matchCharacter) {
+
+			if (matchCharacter === '0' || matchCharacter === '1') {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isOctal(matchCharacter) {
+
+			// FIXME transformar matchCharacter em número
+			if (this._isNumberCharacter.test(matchCharacter) && matchCharacter > -1 && matchCharacter < 8) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isHexadecimal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'a'
+				|| lowerMatchCharacter === 'b'
+				|| lowerMatchCharacter === 'c'
+				|| lowerMatchCharacter === 'd'
+				|| lowerMatchCharacter === 'e'
+				|| lowerMatchCharacter === 'f'
+				) {
+
+				return true;
+			}
+
+			// TODO se encontrar um p, ver notação científica hexadecimal
+
+			return false;
+
+		}
+
+	};
+
+	return SwiftNumberPatternIterator;
+
+});
+
+
+
+/**
+ * Token for binary, octal and hexadecimal numbers
+ */
+define('SwiftNumericLiteralToken', ['SourcePatternIteratorToken', 'SwiftNumberPatternIterator'], (SourcePatternIteratorToken, SwiftNumberPatternIterator) => {
+
+	const SwiftNumericLiteralToken = class SwiftNumericLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new SwiftNumberPatternIterator());
+		}
+	};
+
+	return SwiftNumericLiteralToken;
+
+});
+
+
+
 define('SwiftStringPatternIterator', () => {
 
 	const SwiftStringPatternIterator = class SwiftStringPatternIterator {
@@ -2796,6 +2979,7 @@ define(
 		'SwiftKeywordToken',
 		'SwiftTypesToken',
 		'SwiftPunctuationToken',
+		'SwiftNumericLiteralToken',
 		'SwiftStringLiteralToken',
 		'SwiftMultilineStringLiteralToken',
 
@@ -2814,6 +2998,7 @@ define(
 		SwiftKeywordToken,
 		SwiftTypesToken,
 		SwiftPunctuationToken,
+		SwiftNumericLiteralToken,
 		SwiftStringLiteralToken,
 		SwiftMultilineStringLiteralToken,
 
@@ -2864,8 +3049,8 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),*/
+				new SwiftNumericLiteralToken(),
+				//new SwiftDecimalLiteralToken(),
 				new SwiftStringLiteralToken(),
 				new SwiftMultilineStringLiteralToken()
 			);
@@ -4297,6 +4482,187 @@ define('RustDecimalLiteralToken', ['SourcePatternIteratorToken', 'RustDecimalPat
 
 
 
+define('RustNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustNumberPatternIterator = class RustNumberPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isNumberCharacter: {value: /\d/},
+				_matchCheck: {value: null, writable: true}
+			});
+			this._matchFunction = this._matchFirstNumber;
+			Object.seal(this);
+		}
+
+		/*
+		números válidos
+
+		binario
+		tem que ter 1 número depois do b
+		só 0 e 1
+		0b10101110
+
+		octal
+		tem que ter 1 número depois do o
+		só 0 até 7
+		0o07
+
+		hexadecimal
+		tem que ter 1 número depois do x
+		só 0 até 9 e A até F
+		0x07
+		0x07p1
+		*/
+
+		_matchFirstNumber(matchCharacter) {
+
+			if (matchCharacter === '0') {
+				this._matchFunction = this._matchIdentifier;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchIdentifier(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+			// só muda o tipo de verificação para cada formato de número
+			this._matchFunction = this._matchEndNumber;
+
+			// verifica qual tipo de número
+
+			if (matchCharacter === 'b') {
+				this._matchCheck = this._isBinary;
+				return true;
+			}
+
+			if (matchCharacter === 'o') {
+				this._matchCheck = this._isOctal;
+				return true;
+			}
+
+			if (matchCharacter === 'x') {
+				this._matchCheck = this._isHexadecimal;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndNumber(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (this._matchCheck(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_isBinary(matchCharacter) {
+
+			if (matchCharacter === '0' || matchCharacter === '1') {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isOctal(matchCharacter) {
+
+			// FIXME transformar matchCharacter em número
+			if (this._isNumberCharacter.test(matchCharacter) && matchCharacter > -1 && matchCharacter < 8) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isHexadecimal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO melhorar isso
+				return true;
+			}
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'a'
+				|| lowerMatchCharacter === 'b'
+				|| lowerMatchCharacter === 'c'
+				|| lowerMatchCharacter === 'd'
+				|| lowerMatchCharacter === 'e'
+				|| lowerMatchCharacter === 'f'
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return RustNumberPatternIterator;
+
+});
+
+
+
+/**
+ * Token for binary, octal and hexadecimal numbers
+ */
+define('RustNumericLiteralToken', ['SourcePatternIteratorToken', 'RustNumberPatternIterator'], (SourcePatternIteratorToken, RustNumberPatternIterator) => {
+
+	const RustNumericLiteralToken = class RustNumericLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new RustNumberPatternIterator());
+		}
+	};
+
+	return RustNumericLiteralToken;
+
+});
+
+
+
 define('RustStringPatternIterator', () => {
 
 	const RustStringPatternIterator = class RustStringPatternIterator {
@@ -4623,6 +4989,7 @@ define(
 		'RustTypesToken',
 		'RustPunctuationToken',
 		'RustDecimalLiteralToken',
+		'RustNumericLiteralToken',
 		'RustStringLiteralToken',
 		'RustAttributeToken',
 		'RustLifetimeToken',
@@ -4644,6 +5011,7 @@ define(
 		RustTypesToken,
 		RustPunctuationToken,
 		RustDecimalLiteralToken,
+		RustNumericLiteralToken,
 		RustStringLiteralToken,
 		RustAttributeToken,
 		RustLifetimeToken,
@@ -4698,7 +5066,7 @@ define(
 				this._tokenPool.length,
 				0,
 				new RustDecimalLiteralToken(),
-				//new JSNumericLiteralToken(),
+				new RustNumericLiteralToken(),
 				new RustStringLiteralToken()
 			);
 		}
