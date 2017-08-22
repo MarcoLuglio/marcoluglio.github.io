@@ -201,6 +201,7 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 				type: {value: type},
 				_previousMatchedKeyword: {value: null, writable: true},
 				_matchedKeyword: {value: null, writable: true},
+				//_completeNextTurn: {value: false, writable: true},
 				_keywordsPool: {value: []},
 				_keyword: {value: null, writable: true},
 				_keywordPointer:  {value: 0, writable: true},
@@ -240,7 +241,7 @@ define('SourceSimpleCharacterSequenceToken', ['Token'], (Token) => {
 
 		reset() {
 			this._matchedKeyword = false;
-			this._completeNextTurn = false;
+			//this._completeNextTurn = false;
 			this._keyword = null;
 			this._keywordPointer = 0;
 			this._resetKeywords();
@@ -3199,6 +3200,207 @@ define('KotlinPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (Source
 
 
 
+define('KotlinNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const KotlinNumberPatternIterator = class KotlinNumberPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isNumberCharacter: {value: /\d/},
+				_matchCheck: {value: null, writable: true}
+			});
+			this._matchFunction = this._matchFirstNumber;
+			Object.seal(this);
+		}
+
+		/*
+		números válidos
+
+		binário
+		tem que ter 1 número depois do b
+		só 0 e 1
+		0b10101110
+		0B10101
+
+		hexadecimal
+		tem que ter 1 número depois do x
+		só 0 até 9 e A até F
+		0x07
+		0X07
+		*/
+
+		_matchFirstNumber(matchCharacter) {
+
+			if (matchCharacter === '0') {
+				this._matchFunction = this._matchIdentifier;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchIdentifier(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+			// só muda o tipo de verificação para cada formato de número
+			this._matchFunction = this._matchEndNumber;
+
+			// verifica qual tipo de número
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'b') {
+				this._matchCheck = this._isBinary;
+				return true;
+			}
+
+			if (lowerMatchCharacter === 'x') {
+				this._matchCheck = this._isHexadecimal;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndNumber(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (this._matchCheck(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		// TODO reaproveitar de uma classe base comum
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'd'
+				) {
+
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'u'
+				|| lowerMatchCharacter == 'l'
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isBinary(matchCharacter) {
+
+			if (matchCharacter === '0' || matchCharacter === '1') {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
+				return true;
+			}
+
+			// TODO ver se suporta sufixo nos binários
+
+			return false;
+
+		}
+
+		_isHexadecimal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
+				return true;
+			}
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'a'
+				|| lowerMatchCharacter === 'b'
+				|| lowerMatchCharacter === 'c'
+				|| lowerMatchCharacter === 'd'
+				|| lowerMatchCharacter === 'e'
+				|| lowerMatchCharacter === 'f'
+				) {
+
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return KotlinNumberPatternIterator;
+
+});
+
+
+
+/**
+ * Token for hexadecimal numbers
+ * Binary numbers are disabled for now
+ */
+define('KotlinNumericLiteralToken', ['SourcePatternIteratorToken', 'KotlinNumberPatternIterator'], (SourcePatternIteratorToken, KotlinNumberPatternIterator) => {
+
+	const KotlinNumericLiteralToken = class KotlinNumericLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new KotlinNumberPatternIterator());
+		}
+	};
+
+	return KotlinNumericLiteralToken;
+
+});
+
+
+
 define('KotlinStringPatternIterator', () => {
 
 	const KotlinStringPatternIterator = class KotlinStringPatternIterator {
@@ -3569,6 +3771,7 @@ define(
 		'KotlinKeywordToken',
 		'KotlinTypesToken',
 		'KotlinPunctuationToken',
+		'KotlinNumericLiteralToken',
 		'KotlinStringLiteralToken',
 		'KotlinRawStringLiteralToken',
 
@@ -3586,6 +3789,7 @@ define(
 		KotlinKeywordToken,
 		KotlinTypesToken,
 		KotlinPunctuationToken,
+		KotlinNumericLiteralToken,
 		KotlinStringLiteralToken,
 		KotlinRawStringLiteralToken,
 
@@ -3635,6 +3839,7 @@ define(
 				this._tokenPool.length,
 				0,
 				//new VbNumericLiteralToken(),*/
+				new KotlinNumericLiteralToken(),
 				new KotlinStringLiteralToken(),
 				new KotlinRawStringLiteralToken()
 			);
@@ -3930,7 +4135,7 @@ define('RustPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 
 
 
-define('RustDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+define('RustDecimalPatternIterator', ['SourcePatternIterator', 'SourceSimpleCharacterSequenceToken'], (SourcePatternIterator, SourceSimpleCharacterSequenceToken) => {
 
 	const RustDecimalPatternIterator = class RustDecimalPatternIterator extends SourcePatternIterator {
 
@@ -3941,7 +4146,8 @@ define('RustDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				_isNumberCharacter: {value: /\d/},
 				_canUseSeparator: {value: false, writable: true},
 				_sufficType:  {value: '', writable: true},
-				_suffixBuffer: {value: '', writable: true}
+				_suffixBuffer: {value: '', writable: true},
+				_suffixSizeSequence: {value: new SourceSimpleCharacterSequenceToken('', ['size'])}
 			});
 			this._matchFunction = this._matchNumber;
 			Object.seal(this);
@@ -4016,6 +4222,10 @@ define('RustDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 					this._suffixBuffer += matchCharacter;
 					this._matchFunction = this._matchSuffix2;
 					return true;
+				} else if (matchCharacter == 's') {
+					//this._suffixBuffer += matchCharacter;
+					this._matchFunction = this._matchSuffixSize;
+					return this._matchFunction(matchCharacter);
 				}
 
 				return false;
@@ -4038,6 +4248,23 @@ define('RustDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				) {
 
 				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_matchSuffixSize(matchCharacter, index) {
+
+			this._suffixSizeSequence.next(matchCharacter, index);
+
+			if (this._suffixSizeSequence.isComplete) {
+				this._matchFunction = this._matchEnd;
+				return this._matchFunction(matchCharacter);
+			}
+
+			if (this._suffixSizeSequence.hasNext()) {
 				return true;
 			}
 
@@ -4977,7 +5204,7 @@ define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternItera
 		/*
 		números válidos
 
-		binario só na próxima versão
+		binário
 		tem que ter 1 número depois do b
 		só 0 e 1
 		0b10101110
@@ -5017,10 +5244,10 @@ define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternItera
 
 			const lowerMatchCharacter = matchCharacter.toLowerCase();
 
-			/*if (lowerMatchCharacter === 'b') {
+			if (lowerMatchCharacter === 'b') {
 				this._matchCheck = this._isBinary;
 				return true;
-			}*/
+			}
 
 			if (lowerMatchCharacter === 'x') {
 				this._matchCheck = this._isHexadecimal;
@@ -5089,32 +5316,29 @@ define('CSNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternItera
 
 		}
 
-		/*_isBinary(matchCharacter) {
+		_isBinary(matchCharacter) {
 
 			if (matchCharacter === '0' || matchCharacter === '1') {
 				return true;
 			}
 
-			let lowerMatchCharacter = matchCharacter.toLowerCase();
-			if (this._isComplete
-				&& (lowerMatchCharacter == 'u'
-					|| lowerMatchCharacter == 'l'
-					|| lowerMatchCharacter == 'f'
-					|| lowerMatchCharacter == 'd'
-					|| lowerMatchCharacter == 'm'
-					)
-				) {
-
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
 				return true;
 			}
 
+			// TODO ver se suporta sufixo nos binários
+
 			return false;
 
-		}*/
+		}
 
 		_isHexadecimal(matchCharacter) {
 
 			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
 				return true;
 			}
 
@@ -6055,6 +6279,228 @@ define('JavaPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 
 
 
+define('JavaNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const JavaNumberPatternIterator = class JavaNumberPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isNumberCharacter: {value: /\d/},
+				_matchCheck: {value: null, writable: true}
+			});
+			this._matchFunction = this._matchFirstNumber;
+			Object.seal(this);
+		}
+
+		/*
+		números válidos
+
+		binário
+		tem que ter 1 número depois do b
+		só 0 e 1
+		0b10101110
+		0B10101
+
+		octal
+		TODO
+
+		hexadecimal
+		tem que ter 1 número depois do x
+		só 0 até 9 e A até F
+		0x07
+		0X07
+		*/
+
+		_matchFirstNumber(matchCharacter) {
+
+			if (matchCharacter === '0') {
+				this._matchFunction = this._matchIdentifier;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchIdentifier(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+			// só muda o tipo de verificação para cada formato de número
+			this._matchFunction = this._matchEndNumber;
+
+			// verifica qual tipo de número
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'b') {
+				this._matchCheck = this._isBinary;
+				return true;
+			}
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._matchCheck = this._isOctal;
+				return true;
+			}
+
+			if (lowerMatchCharacter === 'x') {
+				this._matchCheck = this._isHexadecimal;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchEndNumber(matchCharacter) {
+
+			if (matchCharacter === null) {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (this._matchCheck(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		// TODO reaproveitar de uma classe base comum
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'd'
+				) {
+
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'l') {
+				return true;
+			}
+
+			return false;
+
+		}
+
+		_isBinary(matchCharacter) {
+
+			if (matchCharacter === '0' || matchCharacter === '1') {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
+				return true;
+			}
+
+			// TODO ver se suporta sufixo nos binários
+
+			return false;
+
+		}
+
+		_isOctal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
+				return true;
+			}
+
+			// TODO ver se suporta sufixo nos octais
+
+			return false;
+
+		}
+
+		_isHexadecimal(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '_') { // TODO ver as regras dos separators
+				return true;
+			}
+
+			const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter === 'a'
+				|| lowerMatchCharacter === 'b'
+				|| lowerMatchCharacter === 'c'
+				|| lowerMatchCharacter === 'd'
+				|| lowerMatchCharacter === 'e'
+				|| lowerMatchCharacter === 'f'
+				) {
+
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return JavaNumberPatternIterator;
+
+});
+
+
+
+/**
+ * Token for hexadecimal numbers
+ * Binary numbers are disabled for now
+ */
+define('JavaNumericLiteralToken', ['SourcePatternIteratorToken', 'JavaNumberPatternIterator'], (SourcePatternIteratorToken, JavaNumberPatternIterator) => {
+
+	const JavaNumericLiteralToken = class JavaNumericLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new JavaNumberPatternIterator());
+		}
+	};
+
+	return JavaNumericLiteralToken;
+
+});
+
+
+
 define('JavaStringPatternIterator', () => {
 
 	const JavaStringPatternIterator = class JavaStringPatternIterator {
@@ -6289,6 +6735,7 @@ define(
 		'JavaKeywordToken',
 		'JavaTypesToken',
 		'JavaPunctuationToken',
+		'JavaNumericLiteralToken',
 		'JavaStringLiteralToken',
 		'JavaAnnotationToken',
 
@@ -6306,6 +6753,7 @@ define(
 		JavaKeywordToken,
 		JavaTypesToken,
 		JavaPunctuationToken,
+		JavaNumericLiteralToken,
 		JavaStringLiteralToken,
 		JavaAnnotationToken,
 
@@ -6347,7 +6795,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			//this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+			//this._tokenPool.push(new JavaSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
 
@@ -6355,8 +6803,8 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),*/
+				//new JavaDecimalLiteralToken(),
+				new JavaNumericLiteralToken(),
 				new JavaStringLiteralToken()
 			);
 		}
