@@ -3717,6 +3717,7 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'self',
 				'static',
 				'struct',
+				'super',
 				'trait',
 				'type',
 				'unsafe',
@@ -3766,6 +3767,27 @@ define('RustKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'vec!',
 				'write!',
 				'writeln!'
+
+				// reservadas para uso futuro
+				/*
+				abstract
+				alignof
+				become
+				box
+				do
+				final
+				macro
+				offsetof
+				override
+				priv
+				proc
+				pure
+				sizeof
+				typeof
+				unsized
+				virtual
+				yield
+				*/
 
 			]);
 
