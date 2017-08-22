@@ -2242,6 +2242,7 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'import',
 				'in',
 				'init',
+				'inout',
 				'is',
 				'lazy',
 				'let',
@@ -2478,7 +2479,9 @@ define('SwiftPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceS
 				'&lt;&lt;=', // bitwise right shift
 
 				'..<',
-				'...'
+				'...',
+
+				'_' // omite nome do parâmetro na chamada, não é bem um operador, mas é pontuação
 
 			]);
 
@@ -6677,7 +6680,9 @@ define('VbPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimp
 				'=',
 				'&gt;',
 				'&lt;',
-				'_'
+				'_',
+				'(',
+				')'
 			]);
 
 		}
