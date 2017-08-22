@@ -1344,6 +1344,118 @@ define('CppPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSim
 
 
 
+define('CppDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CppDecimalPatternIterator = class CppDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter u, l, ll, ul, ull, lu no final tanto em caixa alta quanto baixa
+		// não sei se pode pode ter lu, llu, f, d no final
+		// pode ter ' separando os números
+
+		_matchNumber(matchCharacter, index) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (index > 0 && matchCharacter === "'") { // TODO melhorar isso
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'l' // c++ tem long double ou long integer
+				) {
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'u') {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+		// TODO implementar para garantir a ordem e comprimento das letras nos sufixos , ver rust de exemplo
+		/*_matchSuffix2(matchCharacter) {
+
+			return false;
+
+		}*/
+
+	};
+
+	return CppDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('CppDecimalLiteralToken', ['SourcePatternIteratorToken', 'CppDecimalPatternIterator'], (SourcePatternIteratorToken, CppDecimalPatternIterator) => {
+
+	const CppDecimalLiteralToken = class CppDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new CppDecimalPatternIterator());
+		}
+	};
+
+	return CppDecimalLiteralToken;
+
+});
+
+
+
 define('CppStringPatternIterator', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCharacterSequenceToken) => {
 
 	const CppStringPatternIterator = class CppStringPatternIterator {
@@ -1518,6 +1630,7 @@ define(
 		'CppKeywordToken',
 		'CppTypesToken',
 		'CppPunctuationToken',
+		'CppDecimalLiteralToken',
 		'CStringLiteralToken',
 		'CppStringLiteralToken',
 
@@ -1536,6 +1649,7 @@ define(
 		CppKeywordToken,
 		CppTypesToken,
 		CppPunctuationToken,
+		CppDecimalLiteralToken,
 		CStringLiteralToken,
 		CppStringLiteralToken,
 
@@ -1585,8 +1699,8 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),*/
+				new CppDecimalLiteralToken(),
+				//new CppNumericLiteralToken(),
 				new CStringLiteralToken(),
 				new CppStringLiteralToken()
 			);
@@ -1938,6 +2052,118 @@ define('ObjCPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 
 
 
+define('ObjCDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const ObjCDecimalPatternIterator = class ObjCDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchAtOrNumber;
+			Object.seal(this);
+		}
+
+		// pode ter u, l, ll, f, no final tanto em caixa alta quanto baixa
+		// não sei se pode ter ul ou lu no final
+
+		_matchAtOrNumber(matchCharacter) {
+
+			this._matchFunction = this._matchNumber;
+
+			if (matchCharacter === '@') {
+				return true;
+			}
+
+			return this._matchFunction(matchCharacter);
+
+		}
+
+		_matchNumber(matchCharacter) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			// TODO não sei se pode começçar com . mas provavelmente não
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f') {
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'u'
+				|| lowerMatchCharacter == 'l'
+				) {
+
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return ObjCDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('ObjCDecimalLiteralToken', ['SourcePatternIteratorToken', 'ObjCDecimalPatternIterator'], (SourcePatternIteratorToken, ObjCDecimalPatternIterator) => {
+
+	const ObjCDecimalLiteralToken = class ObjCDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new ObjCDecimalPatternIterator());
+		}
+	};
+
+	return ObjCDecimalLiteralToken;
+
+});
+
+
+
 define('ObjCStringPatternIterator', () => {
 
 	const ObjCStringPatternIterator = class ObjCStringPatternIterator {
@@ -2086,6 +2312,7 @@ define(
 		'ObjCKeywordToken',
 		'ObjCTypesToken',
 		'ObjCPunctuationToken',
+		'ObjCDecimalLiteralToken',
 		'CStringLiteralToken',
 		'ObjCStringLiteralToken',
 
@@ -2104,6 +2331,7 @@ define(
 		ObjCKeywordToken,
 		ObjCTypesToken,
 		ObjCPunctuationToken,
+		ObjCDecimalLiteralToken,
 		CStringLiteralToken,
 		ObjCStringLiteralToken,
 
@@ -2153,8 +2381,8 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				/*new JSDecimalLiteralToken(),
-				new JSNumericLiteralToken(),*/
+				new ObjCDecimalLiteralToken(),
+				//new JSNumericLiteralToken(),
 				new CStringLiteralToken(),
 				new ObjCStringLiteralToken()
 			);
@@ -2491,6 +2719,74 @@ define('SwiftPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceS
 	};
 
 	return SwiftPunctuationToken;
+
+});
+
+
+
+define('SwiftDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const SwiftDecimalPatternIterator = class SwiftDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter _ separando os números
+
+		_matchNumber(matchCharacter, index) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (index > 0 && matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	};
+
+	return SwiftDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('SwiftDecimalLiteralToken', ['SourcePatternIteratorToken', 'SwiftDecimalPatternIterator'], (SourcePatternIteratorToken, SwiftDecimalPatternIterator) => {
+
+	const SwiftDecimalLiteralToken = class SwiftDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new SwiftDecimalPatternIterator());
+		}
+	};
+
+	return SwiftDecimalLiteralToken;
 
 });
 
@@ -2979,6 +3275,7 @@ define(
 		'SwiftKeywordToken',
 		'SwiftTypesToken',
 		'SwiftPunctuationToken',
+		'SwiftDecimalLiteralToken',
 		'SwiftNumericLiteralToken',
 		'SwiftStringLiteralToken',
 		'SwiftMultilineStringLiteralToken',
@@ -2998,6 +3295,7 @@ define(
 		SwiftKeywordToken,
 		SwiftTypesToken,
 		SwiftPunctuationToken,
+		SwiftDecimalLiteralToken,
 		SwiftNumericLiteralToken,
 		SwiftStringLiteralToken,
 		SwiftMultilineStringLiteralToken,
@@ -3050,7 +3348,7 @@ define(
 				this._tokenPool.length,
 				0,
 				new SwiftNumericLiteralToken(),
-				//new SwiftDecimalLiteralToken(),
+				new SwiftDecimalLiteralToken(),
 				new SwiftStringLiteralToken(),
 				new SwiftMultilineStringLiteralToken()
 			);
@@ -3380,6 +3678,107 @@ define('KotlinPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (Source
 	};
 
 	return KotlinPunctuationToken;
+
+});
+
+
+
+define('KotlinDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const KotlinDecimalPatternIterator = class KotlinDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter l, f, d no final tanto em caixa alta quanto baixa
+		// pode ter _ separando os números
+
+		_matchNumber(matchCharacter, index) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f') {
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (matchCharacter == 'L') {
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return KotlinDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('KotlinDecimalLiteralToken', ['SourcePatternIteratorToken', 'KotlinDecimalPatternIterator'], (SourcePatternIteratorToken, KotlinDecimalPatternIterator) => {
+
+	const KotlinDecimalLiteralToken = class KotlinDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new KotlinDecimalPatternIterator());
+		}
+	};
+
+	return KotlinDecimalLiteralToken;
 
 });
 
@@ -3956,6 +4355,7 @@ define(
 		'KotlinKeywordToken',
 		'KotlinTypesToken',
 		'KotlinPunctuationToken',
+		'KotlinDecimalLiteralToken',
 		'KotlinNumericLiteralToken',
 		'KotlinStringLiteralToken',
 		'KotlinRawStringLiteralToken',
@@ -3974,6 +4374,7 @@ define(
 		KotlinKeywordToken,
 		KotlinTypesToken,
 		KotlinPunctuationToken,
+		KotlinDecimalLiteralToken,
 		KotlinNumericLiteralToken,
 		KotlinStringLiteralToken,
 		KotlinRawStringLiteralToken,
@@ -4023,7 +4424,7 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				//new VbNumericLiteralToken(),*/
+				new KotlinDecimalLiteralToken(),
 				new KotlinNumericLiteralToken(),
 				new KotlinStringLiteralToken(),
 				new KotlinRawStringLiteralToken()
@@ -4350,6 +4751,7 @@ define('RustDecimalPatternIterator', ['SourcePatternIterator', 'SourceSimpleChar
 			}
 
 			if (this._canUseSeparator && matchCharacter === '_') {
+				this._isComplete = false;
 				return true;
 			}
 
@@ -5468,7 +5870,7 @@ define('CSDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIter
 		// pode ter u, l, ul, lu, f, d, m no final tanto em caixa alta quanto baixa
 		// pode ter _ separando os números
 
-		_matchNumber(matchCharacter) {
+		_matchNumber(matchCharacter, index) {
 
 			if (this._isNumberCharacter.test(matchCharacter)) {
 				this._isComplete = true;
@@ -5481,6 +5883,10 @@ define('CSDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIter
 				return true;
 			}
 
+			if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
+				this._isComplete = false;
+				return true;
+			}
 
 			if (this._matchSuffix(matchCharacter)) {
 				return true;
@@ -6647,6 +7053,110 @@ define('JavaPunctuationToken', ['SourceSimpleCharacterSequenceToken'], (SourceSi
 
 
 
+define('JavaDecimalPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const JavaDecimalPatternIterator = class JavaDecimalPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_hasMantissa: {value: false, writable: true},
+				_isNumberCharacter: {value: /\d/}
+			});
+			this._matchFunction = this._matchNumber;
+			Object.seal(this);
+		}
+
+		// pode ter l, f, d no final tanto em caixa alta quanto baixa
+		// pode ter _ separando os números
+
+		_matchNumber(matchCharacter, index) {
+
+			if (this._isNumberCharacter.test(matchCharacter)) {
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '.' && !this._hasMantissa) {
+				this._hasMantissa = true;
+				this._isComplete = false;
+				return true;
+			}
+
+			if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
+				this._isComplete = false;
+				return true;
+			}
+
+			if (this._matchSuffix(matchCharacter)) {
+				return true;
+			}
+
+			if (this._isComplete) {
+				return this._matchEnd(matchCharacter);
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchSuffix(matchCharacter) {
+
+			if (!this._isComplete) {
+				return false;
+			}
+
+			if (matchCharacter == null) {
+				return false;
+			}
+
+			let lowerMatchCharacter = matchCharacter.toLowerCase();
+
+			if (lowerMatchCharacter == 'f'
+				|| lowerMatchCharacter == 'd'
+				) {
+
+				return true;
+			}
+
+			if (this._hasMantissa) {
+				return false;
+			}
+
+			if (lowerMatchCharacter == 'l') {
+				return true;
+			}
+
+			return false;
+
+		}
+
+	};
+
+	return JavaDecimalPatternIterator;
+
+});
+
+
+
+/**
+ * Token for decimal numbers
+ */
+define('JavaDecimalLiteralToken', ['SourcePatternIteratorToken', 'JavaDecimalPatternIterator'], (SourcePatternIteratorToken, JavaDecimalPatternIterator) => {
+
+	const JavaDecimalLiteralToken = class JavaDecimalLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('number', new JavaDecimalPatternIterator());
+		}
+	};
+
+	return JavaDecimalLiteralToken;
+
+});
+
+
+
 define('JavaNumberPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
 	const JavaNumberPatternIterator = class JavaNumberPatternIterator extends SourcePatternIterator {
@@ -7103,6 +7613,7 @@ define(
 		'JavaKeywordToken',
 		'JavaTypesToken',
 		'JavaPunctuationToken',
+		'JavaDecimalLiteralToken',
 		'JavaNumericLiteralToken',
 		'JavaStringLiteralToken',
 		'JavaAnnotationToken',
@@ -7121,6 +7632,7 @@ define(
 		JavaKeywordToken,
 		JavaTypesToken,
 		JavaPunctuationToken,
+		JavaDecimalLiteralToken,
 		JavaNumericLiteralToken,
 		JavaStringLiteralToken,
 		JavaAnnotationToken,
@@ -7171,7 +7683,7 @@ define(
 			this._tokenPool.splice(
 				this._tokenPool.length,
 				0,
-				//new JavaDecimalLiteralToken(),
+				new JavaDecimalLiteralToken(),
 				new JavaNumericLiteralToken(),
 				new JavaStringLiteralToken()
 			);
