@@ -2130,7 +2130,7 @@ Swift prefere ser um pouco mais conservador e utilizar nomes como <code class='s
 C# mantém os nomes herdados do C (embora seja possível criar <em>type aliases</em> por arquivo). Notem a inconsistência com <code class='cs'>sbyte</code> e <code class='cs'>byte</code> devido a esta decisão. C# possui um tipo de 128 bits. Como roda numa máquina virtual, não possui tipos com tamanhos de memória como Rust e Swift. Não sei ao certo como é feito com <em>Native</em> .NET.<br />
 Java não possui tipos sem sinal.<br />
 C++ possui uma leve melhoria em relação à C, mas ainda é bem extenso.<br />
-Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short &lt;= int &lt;= long &lt;= long long</code>. Mesma coisa vale para <code class='objectivec'>float &lt;= double &lt;= long double</code>. Então existem tipos de tamanho fixo criados na especificacão C99 e os tipos incluídos pelo framework da Apple.<br />
+Objective-C mistura tipos de C e os próprios, fazendo uma salada só. Os tipos que ele herda de C não possuem tamanho fixo. Existe apenas a garantia de que <code class='objectivec'>short &lt;= int &lt;= long &lt;= long long</code>. Mesma coisa vale para <code class='objectivec'>float &lt;= double &lt;= long double</code>. Então existem tipos de tamanho fixo criados na especificação C99 e os tipos incluídos pelo framework da Apple.<br />
 JavaScript só possui um tipo numérico.</p>
 <p>Notem que existe uma divergência entre C++ e Objective-C e as demais linguagens em relação à nomeclatura. Para as duas linguagens, <code class='cpp'>int</code> e <code class='cpp'>long</code> possuem tamanhos diferentes das demais. Por isso, ponto para as linguagens que indicam explicitamente o tamanho dos tipos no próprio nome.</p>
 
@@ -4323,7 +4323,7 @@ auto semSegundaChance{std::make_unique&lt;int&gt;(1000)};
 
 // TODO referências
 // referências não são ponteiros oficialmente segundo
-// a especificacão
+// a especificação
 
 // não podem ser nullptr nem NULL
 int&amp; ponteiroRefNullPointer{nullptr}; // erro :)
@@ -4724,6 +4724,51 @@ delegate void StrategyFunctionDelegate();</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// declaração de função
+fn normal() { /**/ } // mesmo que -&gt; ()
+fn normalUnit() -&gt; () { /**/ }
+
+
+// expressão de função
+let expressao = normal;
+
+fn retorno() -&gt; &amp;'static str {
+	"retorno" // sem ; no final
+}
+
+fn retorno() -&gt; &amp;'static str {
+	return "retorno";
+}
+
+
+use std::any::Any;
+
+fn retornoMisturado() -&gt; Any {
+	// TODO
+}
+
+
+
+
+fn superior&lt;F&gt;(funcao:F) where F:Fn() {
+	funcao();
+}
+
+fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
+	funcao();
+}
+
+// TODO fazer superior com type aliasing
+
+superior(normal);
+superior(normalUnit);
+superior(retorno);</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// declaração de função
@@ -4854,57 +4899,17 @@ superior(retorno)</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// declaração de função
-fn normal() { /**/ } // mesmo que -&gt; ()
-fn normalUnit() -&gt; () { /**/ }
-
-
-// expressão de função
-let expressao = normal;
-
-fn retorno() -&gt; &amp;'static str {
-	"retorno" // sem ; no final
-}
-
-fn retorno() -&gt; &amp;'static str {
-	return "retorno";
-}
-
-
-use std::any::Any;
-
-fn retornoMisturado() -&gt; Any {
-	// TODO
-}
-
-
-
-
-fn superior&lt;F&gt;(funcao:F) where F:Fn() {
-	funcao();
-}
-
-fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
-	funcao();
-}
-
-// TODO fazer superior com type aliasing
-
-superior(normal);
-superior(normalUnit);
-superior(retorno);</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
+<p>Kotlin</p>
 -
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
 -
 </div>
 
@@ -5028,19 +5033,6 @@ Private Sub ComParametro( _
 
 End Sub
 
-'Podemos forçar a passagem de um parâmetro por valor ou por referência usando ByVal e ByRef
-'Essa palavras não tem efeito quando passamos constantes
-'O padrão é passar tudo por referência, inclusive Ints
-'Arrays e User Defined Types (UDTs) não podem ser passados por valor
-
-Private Sub PorValor(ByVal i As Long)
-	'...
-End Sub
-
-Private Sub PorReferencia(ByRef i As Long)
-	'...
-End Sub
-
 'Para chamar subrotinas e funções, existem casos em que deve ser usados parênteses, e casos em que eles não devem ser usados
 'O uso de parênteses quando não obrigatório faz com que os parâmetros sejam passados por valor ao invés de referência
 'Teoricamente Call deveria permitir usar parênteses sempre, mas não é o caso. Não há necessidade de usar Call
@@ -5082,6 +5074,320 @@ retorno = ComParametroERetorno(param, param2)</code
 </ol>
 
 <p>A</p>
+
+
+<h3 id='argumentosreferencia'>Argumentos por referência</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// ver <a href='#ponteiros'>ponteiros</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// ver <a href='#ponteiros'>ponteiros</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// ver <a href='#ponteiros'>ponteiros</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// tipos primitivos por valor por padrão
+// modificáveis com inout
+// arrays e objetos por referência
+
+func swapTwoInts(_ a:inout Int, _ b:inout Int) {
+	let temp = a
+	a = b
+	b = temp
+}
+
+var a = 2
+var b = 3
+// requer &amp; na frente do nome
+// além do inout da definição
+swapTwoInts(&amp;a, &amp;b)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// tipos primitivos por valor
+// arrays e objetos por referência</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// tipos primitivos por valor
+// arrays e objetos por referência</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// tipos primitivos por valor por padrão
+// modificáveis com ref ou out
+// arrays e objetos por referência
+
+public void SwapTwoInts(ref int a, ref int b) {
+	int temp = a;
+	a = b;
+	b = temp;
+}
+
+public bool OutExample(string a, out int c) {
+	// TODO alguma lógica condicional com a
+	return false;
+}
+
+// argumentos ref precisam ser inicializados
+// antes de serem passados para a função
+var a = 2;
+var b = 3;
+SwapTwoInts(a, b);
+
+// argumentos out NÃO precisam ser inicializados
+// antes de serem passados para a função
+int c;
+if (!OutExample(c)) {
+	return;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// tipos primitivos por valor
+// arrays e objetos por referência</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+><strong class='small comment'>'O padrão é passar tudo por referência,</strong>
+<strong class='small comment'>'inclusive tipos primitivos como Ints</strong>
+'Podemos forçar a passagem de um parâmetro
+'por valor ou por referência usando ByVal e ByRef
+'Essa palavras não tem efeito quando passamos constantes
+
+'Arrays e User Defined Types (UDTs) não podem
+'ser passados por valor
+
+Private Sub PorValor(ByVal i As Long)
+	'...
+End Sub
+
+Private Sub PorReferencia(ByRef i As Long)
+	'...
+End Sub</code
+>
+</div>
+
+</div>
+
+
+
+<h3 id='argumentosopcionais'>Argumentos opcionais</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+	>void point(int x, int y) { /**/ }
+void point(int x, int y = 4) { /**/ }
+void point(int x = 3, int y = 4) { /**/ }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>//func point(x:Int, y:Int) { /**/ } // testar
+func point(x:Int, y:Int = 4) { /**/ }
+// func point(x:Int = 3, y:Int = 4) { /**/ } //testar</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// fun point(x:Int, y:Int) { /**/ } // testar
+fun point(x:Int, y:Int = 4) { /**/ }
+// fun point(x:Int = 3, y:Int = 4) { /**/ } // testar
+
+// named arguments
+fun point(x:Int = 3, y:Int) { /**/ }
+
+// também <a href='#overload'>overload</a> como alternativa</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// não possui
+// usar <a href='#overload'>overload</a> como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// public void Point(int x, int y) { /**/ } // testar
+public void Point(int x, int y = 4) { /**/ }
+// public void Point(int x = 3, int y = 4) { /**/ } // testar
+
+// também <a href='#overload'>overload</a> como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// a assinatura das funções não é verificada ao chamá-las
+// podemos passar mais ou menos argumentos para a função
+// independente de como ela foi definida
+// os argumentos a mais não terão nome
+// e os argumentos a menos terão o valor null
+function point(x, y) {
+	if (y == null) {
+		y = 4;
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Private Sub Point(X As Integer, Optional Y As Integer = 4)
+	'
+End Sub</code
+>
+</div>
+
+</div>
+
+
+
+<h3 id='argumentosnome'>Argumentos nomeados</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// usar builder pattern
+// como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// usar builder pattern
+// como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// todos os argumentos devem ser nomeados</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>fun reformat(
+	str:String,
+	normalizeCase:Boolean = true,
+	upperCaseFirstLetter:Boolean = true,
+	divideByCamelHumps:Boolean = false,
+	wordSeparator: Char = ' ') {
+	/**/
+}
+
+reformat(str)
+reformat(str, true, true, false, '_')
+reformat(
+	str,
+	normalizeCase = true,
+	upperCaseFirstLetter = true,
+	divideByCamelHumps = false,
+	wordSeparator = '_'
+)
+
+reformat(str, wordSeparator = '_')</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// usar builder pattern
+// como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// usar builder pattern
+// como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>'usar builder pattern
+'como alternativa</code
+>
+</div>
+
+</div>
 
 
 
