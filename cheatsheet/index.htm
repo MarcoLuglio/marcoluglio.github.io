@@ -4705,7 +4705,11 @@ Next</code
 		if (i == 1 &amp;&amp; j == 1) {
 			continue 'loop1; // pode usar break tb
 		}
-		// println!("i = \(i), j = \(j)")
+		println!(
+			"i = {0}, j = {1}",
+			i, // 0
+			j // 1
+		)
 	}
 }
 
@@ -4843,7 +4847,7 @@ for (i in 0 until 3) {
 		if (i == 1 &amp;&amp; j == 1) {
 			continue@loop1 // pode usar break@ tb
 		}
-		println("i = " + i + ", j = " + j)
+		println("i = $i, j = $j")
 	}
 }
 
@@ -4964,7 +4968,7 @@ for (i = 0; i &lt; 3; i++) {
 		if (i === 1 &amp;&amp; j === 1) {
 			continue loop1; // pode usar break tb
 		}
-		console.log('i = ' + i + ', j = ' + j);
+		console.log(`i = ${i}, j = ${j}`);
 	}
 }
 

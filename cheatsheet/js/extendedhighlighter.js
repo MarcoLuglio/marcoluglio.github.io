@@ -5480,6 +5480,7 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 		constructor() {
 			super();
 			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
 				_isWordCharacter: {value: /\w/},
 				_length: {value: 0, writable: true}
 			});
@@ -5489,11 +5490,23 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 
 		_matchStartQuote(matchCharacter) {
 			if (matchCharacter === "'") {
-				this._matchFunction = this._matchContentOrEnd;
+				this._matchFunction = this._matchLetter;
 				return true;
 			}
 			this._hasNext = false;
 			return false;
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchContentOrEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
 		}
 
 		_matchContentOrEnd(matchCharacter) {
@@ -5502,7 +5515,6 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 				&& this._length > 0
 				) {
 
-				this._isComplete = true;
 				return this._matchEnd(matchCharacter);
 			}
 
@@ -5536,6 +5548,83 @@ define('RustLifetimeToken', ['SourcePatternIteratorToken', 'RustLifetimePatternI
 
 
 
+define('RustLabelPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const RustLabelPatternIterator = class RustLabelPatternIterator extends SourcePatternIterator {
+
+		constructor() {
+			super();
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/},
+				_length: {value: 0, writable: true}
+			});
+			this._matchFunction = this._matchStartQuote;
+			Object.seal(this);
+		}
+
+		_matchStartQuote(matchCharacter) {
+			if (matchCharacter === "'") {
+				this._matchFunction = this._matchLetter;
+				return true;
+			}
+			this._hasNext = false;
+			return false;
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	};
+
+	return RustLabelPatternIterator;
+
+});
+
+
+
+/**
+ * Token for labels
+ */
+define('RustLabelToken', ['SourcePatternIteratorToken', 'RustLabelPatternIterator'], (SourcePatternIteratorToken, RustLabelPatternIterator) => {
+
+	const RustLabelToken = class RustLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new RustLabelPatternIterator());
+		}
+	};
+
+	return RustLabelToken;
+
+});
+
+
+
 /**
  * Tokenizes Rust source code
  */
@@ -5553,8 +5642,9 @@ define(
 		'RustNumericLiteralToken',
 		'RustStringLiteralToken',
 		'RustAttributeToken',
-		'RustLifetimeToken',
 
+		'RustLifetimeToken',
+		'RustLabelToken',
 		'RustSymbolToken',
 
 		'CLineCommentToken',
@@ -5575,8 +5665,9 @@ define(
 		RustNumericLiteralToken,
 		RustStringLiteralToken,
 		RustAttributeToken,
-		RustLifetimeToken,
 
+		RustLifetimeToken,
+		RustLabelToken,
 		RustSymbolToken,
 
 		CLineCommentToken,
@@ -5618,6 +5709,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
+			this._tokenPool.push(new RustLabelToken());
 			this._tokenPool.push(new RustSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
