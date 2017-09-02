@@ -3267,6 +3267,76 @@ define('SwiftDirectiveToken', ['SourceSimpleCharacterSequenceToken'], (SourceSim
 
 
 
+define('SwiftLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const SwiftLabelIterator = class SwiftLabelIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return SwiftLabelIterator;
+
+});
+
+/**
+ * Token for Swift labels
+ */
+define('SwiftLabelToken', ['SourcePatternIteratorToken', 'SwiftLabelIterator'], (SourcePatternIteratorToken, SwiftLabelIterator) => {
+
+	const SwiftLabelToken = class SwiftLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new SwiftLabelIterator());
+		}
+	};
+
+	return SwiftLabelToken;
+
+});
+
+
+
 /**
  * Tokenizes Swift source code
  */
@@ -3289,6 +3359,9 @@ define(
 		'NestedBlockCommentToken',
 		'SwiftDirectiveToken',
 
+		'SwiftLabelToken',
+		//'SwiftSymbolToken',
+
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
 		'EndOfLineToken'
@@ -3308,6 +3381,9 @@ define(
 		CLineCommentToken,
 		NestedBlockCommentToken,
 		SwiftDirectiveToken,
+
+		SwiftLabelToken,
+		//SwiftSymbolToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -3344,7 +3420,8 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			//this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+			this._tokenPool.push(new SwiftLabelToken());
+			//this._tokenPool.push(new SwiftSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
 
@@ -4347,6 +4424,76 @@ define('KotlinAnnotationToken', ['SourcePatternIteratorToken', 'KotlinAnnotation
 
 
 
+define('KotlinLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const KotlinLabelIterator = class KotlinLabelIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrAt;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrAt(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === '@') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return KotlinLabelIterator;
+
+});
+
+/**
+ * Token for Kotlin labels
+ */
+define('KotlinLabelToken', ['SourcePatternIteratorToken', 'KotlinLabelIterator'], (SourcePatternIteratorToken, KotlinLabelIterator) => {
+
+	const KotlinLabelToken = class KotlinLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new KotlinLabelIterator());
+		}
+	};
+
+	return KotlinLabelToken;
+
+});
+
+
+
 /**
  * Tokenizes Kotlin source code
  */
@@ -4368,6 +4515,9 @@ define(
 		'CLineCommentToken',
 		'CBlockCommentToken',
 
+		'KotlinLabelToken',
+		//'KotlinSymbolToken',
+
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
 		'EndOfLineToken'
@@ -4386,6 +4536,9 @@ define(
 
 		CLineCommentToken,
 		CBlockCommentToken,
+
+		KotlinLabelToken,
+		//KotlinSymbolToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -4421,6 +4574,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
+			this._tokenPool.push(new KotlinLabelToken());
 			//this._tokenPool.push(new KotlinSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
@@ -6542,6 +6696,78 @@ define('CSInterpolatedStringLiteralToken', ['SourcePatternIteratorToken', 'CSInt
 
 });
 
+
+
+define('CSLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const CSLabelIterator = class CSLabelIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return CSLabelIterator;
+
+});
+
+/**
+ * Token for C# labels
+ */
+define('CSLabelToken', ['SourcePatternIteratorToken', 'CSLabelIterator'], (SourcePatternIteratorToken, CSLabelIterator) => {
+
+	const CSLabelToken = class CSLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new CSLabelIterator());
+		}
+	};
+
+	return CSLabelToken;
+
+});
+
+
+
 // var names começam com letras _ ou @
 // @ não pode colidir com nomes iguais sem @
 // @ permite distinguir nomes de palavras-chave
@@ -6630,6 +6856,7 @@ define(
 		'CSInterpolatedStringLiteralToken',
 		'CSAttributeToken',
 
+		'CSLabelToken',
 		'CSSymbolToken',
 
 		'CLineCommentToken',
@@ -6656,6 +6883,7 @@ define(
 		CSInterpolatedStringLiteralToken,
 		CSAttributeToken,
 
+		CSLabelToken,
 		CSSymbolToken,
 
 		CLineCommentToken,
@@ -6721,6 +6949,8 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
+			// FIXME não pode haver espaços em branco antes do label
+			this._tokenPool.push(new CSLabelToken());
 			this._tokenPool.push(new CSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
@@ -7605,6 +7835,76 @@ define('JavaAnnotationToken', ['SourcePatternIteratorToken', 'JavaAnnotationPatt
 
 
 
+define('JavaLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const JavaLabelIterator = class JavaLabelIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return JavaLabelIterator;
+
+});
+
+/**
+ * Token for Java labels
+ */
+define('JavaLabelToken', ['SourcePatternIteratorToken', 'JavaLabelIterator'], (SourcePatternIteratorToken, JavaLabelIterator) => {
+
+	const JavaLabelToken = class JavaLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new JavaLabelIterator());
+		}
+	};
+
+	return JavaLabelToken;
+
+});
+
+
+
 /**
  * Tokenizes Java source code
  */
@@ -7626,6 +7926,9 @@ define(
 		'CLineCommentToken',
 		'CBlockCommentToken',
 
+		'JavaLabelToken',
+		//'JavaSymbolToken',
+
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
 		'EndOfLineToken'
@@ -7644,6 +7947,9 @@ define(
 
 		CLineCommentToken,
 		CBlockCommentToken,
+
+		JavaLabelToken,
+		//JavaSymbolToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -7680,6 +7986,7 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
+			this._tokenPool.push(new JavaLabelToken());
 			//this._tokenPool.push(new JavaSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
@@ -8253,6 +8560,76 @@ define('VbDirectiveToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 
 
 
+define('VbLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
+
+	const VbLabelIterator = class VbLabelIterator  extends SourcePatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return VbLabelIterator;
+
+});
+
+/**
+ * Token for Vb labels
+ */
+define('VbLabelToken', ['SourcePatternIteratorToken', 'VbLabelIterator'], (SourcePatternIteratorToken, VbLabelIterator) => {
+
+	const VbLabelToken = class VbLabelToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('label', new VbLabelIterator());
+		}
+	};
+
+	return VbLabelToken;
+
+});
+
+
+
 /**
  * Tokenizes Visual Basic source code
  */
@@ -8272,6 +8649,9 @@ define(
 		'VbLineCommentToken',
 		'VbDirectiveToken',
 
+		'VbLabelToken',
+		//'VbSymbolToken',
+
 		'HtmlEmphasisToken',
 		'WhitespaceToken',
 		'EndOfLineToken'
@@ -8288,6 +8668,9 @@ define(
 
 		VbLineCommentToken,
 		VbDirectiveToken,
+
+		VbLabelToken,
+		//VbSymbolToken,
 
 		HtmlEmphasisToken,
 		WhitespaceToken,
@@ -8323,6 +8706,8 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
+			// FIXME não pode ter espaço em branco na frente dele
+			this._tokenPool.push(new VbLabelToken());
 			//this._tokenPool.push(new VbSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}

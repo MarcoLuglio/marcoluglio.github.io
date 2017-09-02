@@ -4697,17 +4697,31 @@ Next</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->// switch e match
+>// label e break / continue
+
+'loop1: for i in 0...3 {
+
+	'loop2: for j in 0...3 {
+		if (i == 1 &amp;&amp; j == 1) {
+			continue 'loop1; // pode usar break tb
+		}
+		// println!("i = \(i), j = \(j)")
+	}
+}
+
+
+
+// switch e match
 match x {
-	1 => println!("one"),
-	2 => println!("two"),
-	3 => println!("three"),
-	4 => println!("four"),
-	5 => println!("five"),
+	1 | 2 => println!("one or two"),
+	3...5 => println!("between three and five"),
+	6 => println!("six"),
 	// default é opcional, mas se ausente
 	// os demais cases devem ser exaustivos
 	_ => println!("something else"),
-}</code
+}
+
+// ver <a href='https://doc.rust-lang.org/1.1.0/book/patterns.html'>destructuring</a></code
 >
 </div>
 
@@ -4730,20 +4744,20 @@ match x {
 <code class='swift'
 >// label e break / continue
 loop1:
-for (i = 0; i &lt; 3; i++) {
+for i in 0..&lt;3 {
 	loop2:
-	for (j = 0; j &lt; 3; j++) {
-		if (i === 1 &amp;&amp; j === 1) {
+	for j in 0..&lt;3 {
+		if (i == 1 &amp;&amp; j == 1) {
 			continue loop1; // pode usar break tb
 		}
-		console.log('i = ' + i + ', j = ' + j);
+		print("i = \(i), j = \(j)")
 	}
 }
 
 // testar isso
 /*label: {
 	// do stuff
-	if (check) break label
+	if check break label
 	// do more stuff
 }*/
 
@@ -4822,7 +4836,25 @@ switch yetAnotherPoint {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// switch e match (em kotlin se chama when)
+>// label e break / continue
+for (i in 0 until 3) {
+	loop2@
+	for (j in 0 until 3) {
+		if (i == 1 &amp;&amp; j == 1) {
+			continue@loop1 // pode usar break@ tb
+		}
+		println("i = " + i + ", j = " + j)
+	}
+}
+
+// testar isso
+/*label: {
+	// do stuff
+	if (check) break label
+	// do more stuff
+}*/
+
+// switch e match (em kotlin se chama when)
 when (x) {
 	0, 1 -&gt; print("x == 0 or x == 1")
 	else -&gt; print("otherwise")

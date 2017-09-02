@@ -186,6 +186,44 @@ code .toggle {
 	display: none; /* melhorar isso depois */
 }
 
+/* TODO implementar em javascript */
+
+/*.noRust .codeblock.rust {
+	display: none;
+}
+
+.noCpp .codeblock.cpp {
+	display: none;
+}
+
+.noObjectiveC .codeblock.objectivec {
+	display: none;
+}
+
+.noSwift .codeblock.swift {
+	display: none;
+}
+
+.noKotlin .codeblock.kotlin {
+	display: none;
+}
+
+.noJava .codeblock.java {
+	display: none;
+}
+
+.noCs .codeblock.cs {
+	display: none;
+}
+
+.noJavascript .codeblock.javascript {
+	display: none;
+}
+
+.noVisualbasic .codeblock.visualbasic {
+	display: none;
+}*/
+
 div.codeblock.bubaloop {
 	color: #505B66;
 	background-color: #FBFBFB;
@@ -334,6 +372,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.cpp .label {
+	color: #8D00FF;
+}
+
 /* Objective-C */
 
 .bubaloop.objectivec .keyword,
@@ -378,6 +420,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.objectivec .label {
+	color: #8D00FF;
+}
+
 /* Swift */
 
 .bubaloop.swift .keyword,
@@ -418,6 +464,10 @@ div.codeblock.bubaloop p + code.javascript {
 
 .bubaloop.highlight.swift strong .operator {
 	color: #505B66;
+}
+
+.bubaloop.swift .label {
+	color: #8D00FF;
 }
 
 /* Rust */
@@ -462,7 +512,8 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
-.bubaloop.rust .lifetime {
+.bubaloop.rust .lifetime,
+.bubaloop.rust .label {
 	color: #8D00FF;
 }
 
@@ -513,6 +564,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.cs .label {
+	color: #8D00FF;
+}
+
 /* Kotlin */
 
 .bubaloop.kotlin .keyword,
@@ -560,6 +615,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.kotlin .label {
+	color: #8D00FF;
+}
+
 /* Java */
 
 .bubaloop.java .keyword,
@@ -605,6 +664,10 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #505B66;
 }
 
+.bubaloop.java .label {
+	color: #8D00FF;
+}
+
 /* JavaScript */
 
 .bubaloop.highlight.javascript strong {
@@ -648,7 +711,8 @@ div.codeblock.bubaloop p + code.javascript {
 	color: #ffffff;
 }
 
-.bubaloop.javascript .regex {
+.bubaloop.javascript .regex,
+.bubaloop.javascript .label {
 	color: #8D00FF;
 }
 

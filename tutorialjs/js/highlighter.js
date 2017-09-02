@@ -651,6 +651,61 @@ define('JSStringPatternIterator', () => {
 
 
 
+define('JSLabelIterator', ['JSPatternIterator'], (JSPatternIterator) => {
+
+	const JSLabelIterator = class JSLabelIterator  extends JSPatternIterator {
+
+		constructor() {
+
+			super();
+
+			Object.defineProperties(this, {
+				_isLetterCharacter: {value: /[a-zA-Z]/},
+				_isWordCharacter: {value: /\w/}
+			});
+
+			Object.seal(this);
+
+			this._matchFunction = this._matchLetter;
+
+		}
+
+		_matchLetter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchWordOrColon;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchWordOrColon(matchCharacter) {
+
+			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+				return true;
+			}
+
+			if (matchCharacter === ':') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+	}
+
+	return JSLabelIterator;
+
+});
+
+
+
 define('JSSymbolIterator', ['JSPatternIterator'], (JSPatternIterator) => {
 
 	const JSSymbolIterator = class JSSymbolIterator  extends JSPatternIterator {
@@ -1276,6 +1331,23 @@ define('JSStringLiteralToken', ['JSPatternIteratorToken', 'JSStringPatternIterat
 
 
 /**
+ * Token for JavaScript labels
+ */
+define('JSLabelToken', ['JSPatternIteratorToken', 'JSLabelIterator'], (JSPatternIteratorToken, JSLabelIterator) => {
+
+	const JSLabelToken = class JSLabelToken extends JSPatternIteratorToken {
+		constructor() {
+			super('label', new JSLabelIterator());
+		}
+	};
+
+	return JSLabelToken;
+
+});
+
+
+
+/**
  * Token for symbols
  */
 define('JSSymbolToken', ['JSPatternIteratorToken', 'JSSymbolIterator'], (JSPatternIteratorToken, JSSymbolIterator) => {
@@ -1602,6 +1674,7 @@ define(
 
 		'JSKeywordToken',
 		'JSTypesToken',
+		'JSLabelToken',
 		'JSSymbolToken',
 		'JSPunctuationToken',
 
@@ -1623,6 +1696,7 @@ define(
 
 		JSKeywordToken,
 		JSTypesToken,
+		JSLabelToken,
 		JSSymbolToken,
 		JSPunctuationToken,
 
@@ -1681,6 +1755,7 @@ define(
 
 			this._pushInvisibleTokens();
 
+			this._tokenPool.push(new JSLabelToken());
 			this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
