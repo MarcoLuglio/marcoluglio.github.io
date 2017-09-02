@@ -2463,6 +2463,7 @@ define('SwiftKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpl
 				'do',
 				'enum',
 				'extension',
+				'fallthrough',
 				'final',
 				'for',
 				'func',
