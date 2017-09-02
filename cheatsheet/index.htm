@@ -4730,10 +4730,10 @@ match x {
 <code class='swift'
 >// label e break / continue
 loop1:
-for (i = 0; i < 3; i++) {
+for (i = 0; i &lt; 3; i++) {
 	loop2:
-	for (j = 0; j < 3; j++) {
-		if (i === 1 && j === 1) {
+	for (j = 0; j &lt; 3; j++) {
+		if (i === 1 &amp;&amp; j === 1) {
 			continue loop1; // pode usar break tb
 		}
 		console.log('i = ' + i + ', j = ' + j);
@@ -4779,7 +4779,7 @@ switch a {
 switch approximateCount {
 	case 0:
 		naturalCount = "no"
-	case 1..<5:
+	case 1..&lt;5:
 		naturalCount = "a few"
 	default:
 		naturalCount = "many"
@@ -4864,7 +4864,7 @@ label: {
 <code class='cs'
 >// label e goto
 for (int a = 0; a &lt; 10; a++) {
-	for (int y = 0; y < 10; y++) { // Run until condition.
+	for (int y = 0; y &lt; 10; y++) { // Run until condition.
 		for (int x = 0; x &lt; 10; x++) { // Run until condition.
 			if (x == 5 &amp;&amp; y == 5) {
 				goto Outer;
@@ -4928,7 +4928,7 @@ switch(shape) {
 loop1:
 for (i = 0; i &lt; 3; i++) {
 	loop2:
-	for (j = 0; j < 3; j++) {
+	for (j = 0; j &lt; 3; j++) {
 		if (i === 1 &amp;&amp; j === 1) {
 			continue loop1; // pode usar break tb
 		}
