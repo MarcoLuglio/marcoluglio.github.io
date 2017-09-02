@@ -2598,11 +2598,9 @@ double c1 = 1e0;
 double c2 = 1e-1;
 double c3 = -.7e-2;
 
-// C# 7 deverá ter
-// <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/215'>literais binárias</a>
-// e <a rel='external nofollow' href='https://github.com/dotnet/roslyn/issues/216'>separadores de digitos</a>
-
-
+// notação binária - C# 7+
+val b1 = 0b0000_0001
+val b2 = -0B0000_0010
 
 
 
@@ -4553,6 +4551,467 @@ delegate void StrategyFunctionDelegate();</code
 </ol>
 
 <p>A</p>
+
+</section>
+
+
+<section>
+
+<h2 id='laços'>Laços</h2>
+
+<h3 id='foreach'>for each</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>for item in collection {
+	println!("{}", item);
+}
+
+for index in 0..5 {
+	println!("{}", x); // x: i32
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>for (const auto &amp;item : collection) { // C++ 11+
+	cout &gt;&gt; item;
+}
+
+// functor com contrutor implícito
+struct Functor {
+	void operator()(const Item&&amp;item) {
+		cout &gt;&gt; item;
+	}
+};
+Functor functor();
+std::for_each(collection.begin(), collection.end(), functor);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>for(id item in collection) {
+	NSLog(item);
+} </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>for item in collection {
+	print(item)
+}
+
+for index in 1...5 {
+	print("\(index) times 5 is \(index * 5)")
+}
+
+let minutes = 30
+for tickMark in 0..&lt;minutes {
+	// render the tick mark each minute (30 times)
+}
+
+// range exclusivo - to
+let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+	// render the tick mark every 5 minutes (0, 5, 10 ... 25)
+}
+
+// range inclusivo - through
+let minuteInterval = 5
+for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
+	// render the tick mark every 5 minutes (0, 5, 10 ... 30)
+}
+
+let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+for (animalName, legCount) in numberOfLegs {
+	print("\(animalName)s have \(legCount) legs")
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>for (item in collection) {
+	print(item)
+}</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>for (Object item : collection) {
+	System.out.println(item);
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>foreach (object item in collection) {
+	System.Console.WriteLine(item);
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>for (item of collection) {
+	console.log(item);
+}
+
+for (item in collection) {
+	if (collection.hasOwnProperty(item)) {
+		console.log(item);
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>For Each item In collection
+	Print item
+Next</code
+>
+</div>
+
+</div>
+
+<h3>label, goto, continue, break e switch</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// switch e match
+match x {
+	1 => println!("one"),
+	2 => println!("two"),
+	3 => println!("three"),
+	4 => println!("four"),
+	5 => println!("five"),
+	// default é opcional, mas se ausente
+	// os demais cases devem ser exaustivos
+	_ => println!("something else"),
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// label e break / continue
+loop1:
+for (i = 0; i < 3; i++) {
+	loop2:
+	for (j = 0; j < 3; j++) {
+		if (i === 1 && j === 1) {
+			continue loop1; // pode usar break tb
+		}
+		console.log('i = ' + i + ', j = ' + j);
+	}
+}
+
+// testar isso
+/*label: {
+	// do stuff
+	if (check) break label
+	// do more stuff
+}*/
+
+// switch e fallthrough
+switch a {
+	case "a":
+		// tem que ser indicado explicitamente
+		// com a palavra fallthrough
+		fallthrough
+	case "A":
+		//
+
+	default:
+		//
+}
+
+// switch e match
+switch a {
+
+	case "a", "A":
+		print("The letter A")
+		// break é implícito
+		// mas ainda pode ser usado
+		// no meio de um bloco por exemplo
+
+	// default é opcional, mas se ausente
+	// os demais cases devem ser exaustivos
+	default:
+		print("Not the letter A")
+
+}
+
+switch approximateCount {
+	case 0:
+		naturalCount = "no"
+	case 1..<5:
+		naturalCount = "a few"
+	default:
+		naturalCount = "many"
+}
+
+switch somePoint {
+	case (0, 0):
+		print("\(somePoint) is at the origin")
+	case (_, 0):
+		print("\(somePoint) is on the x-axis")
+	case (0, _):
+		print("\(somePoint) is on the y-axis")
+	case (-2...2, -2...2):
+		print("\(somePoint) is inside the box")
+	default:
+		print("\(somePoint) is outside of the box")
+}
+
+let anotherPoint = (2, 0)
+switch anotherPoint {
+	case (let x, 0):
+		print("on the x-axis with an x value of \(x)")
+	case (0, let y):
+		print("on the y-axis with a y value of \(y)")
+	case let (x, y):
+		print("somewhere else at (\(x), \(y))")
+}
+
+switch yetAnotherPoint {
+	case let (x, y) where x == y:
+		print("(\(x), \(y)) is on the line x == y")
+	case let (x, y) where x == -y:
+		print("(\(x), \(y)) is on the line x == -y")
+	case let (x, y):
+		print("(\(x), \(y)) is just some arbitrary point")
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// switch e match (em kotlin se chama when)
+when (x) {
+	0, 1 -&gt; print("x == 0 or x == 1")
+	else -&gt; print("otherwise")
+}
+
+when (x) {
+	in 1..10 -&gt; print("x is in the range")
+	in validNumbers -&gt; print("x is valid")
+	!in 10..20 -&gt; print("x is outside the range")
+	else -&gt; print("none of the above")
+}</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// label e break / continue
+
+
+
+
+
+
+
+
+
+
+
+label: {
+	// do stuff
+	if (check) break label;
+	// do more stuff
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// label e goto
+for (int a = 0; a &lt; 10; a++) {
+	for (int y = 0; y < 10; y++) { // Run until condition.
+		for (int x = 0; x &lt; 10; x++) { // Run until condition.
+			if (x == 5 &amp;&amp; y == 5) {
+				goto Outer;
+			}
+		}
+		dummy++;
+	}
+Outer:
+	continue;
+}
+return dummy;
+
+// switch e goto
+switch (id) {
+	case 1000:
+		price += 10;
+		goto case 100;
+	case 100:
+		return price * 10;
+	default:
+		return price;
+}
+
+// switch fallthrough
+switch (id) {
+	case "ab":
+	case "cd":
+	case "ef":
+		// não pode haver nenhum código entre os "case"
+		break;
+	case "gh":
+		break;
+	default: // default é opcional
+		break;
+}
+
+// switch e "match" - requer C# 7+
+switch(shape) {
+	case Circle c:
+		WriteLine($"circle with radius {c.Radius}");
+		break;
+	case Rectangle s when (s.Length == s.Height):
+		WriteLine($"{s.Length} x {s.Height} square");
+		break;
+	case Rectangle r:
+		WriteLine($"{r.Length} x {r.Height} rectangle");
+		break;
+	default:
+		WriteLine("<unknown shape>");
+		break;
+	case null:
+		throw new ArgumentNullException(nameof(shape));
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// label e break / continue
+loop1:
+for (i = 0; i &lt; 3; i++) {
+	loop2:
+	for (j = 0; j < 3; j++) {
+		if (i === 1 &amp;&amp; j === 1) {
+			continue loop1; // pode usar break tb
+		}
+		console.log('i = ' + i + ', j = ' + j);
+	}
+}
+
+label: {
+	// do stuff
+	if (check) break label;
+	// do more stuff
+}
+
+
+
+
+
+
+
+
+
+// switch fallthrough
+switch (id) {
+	case "ab":
+	case "cd":
+		// algum código aqui
+	case "ef":
+		// não pode haver nenhum código entre os "case"
+		break;
+	case "gh":
+		break;
+	default: // default é opcional
+		break;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>'label e goto, resume e next
+On Error GoTo Erro
+
+	' Faça alguma coisa e saia da função
+	' antes de chegar nas linhas de tratamento de erro
+	Exit Sub
+
+' Label de erro
+' Labels não podem conter espaços em branco antes dos nomes
+Erro:
+	' Faça alguma coisa e saia da função
+	Exit Sub
+
+	' Ou continue a execução normalmente
+	Resume Next
+
+	' Ou passe para um tratamento específico
+	If Err.Number = 13 Then
+		Resume ErroEspecifico
+
+ErroEspecifico:
+	Exit Sub
+
+
+
+
+'switch ("select")
+Select Case age
+	Case 50
+		ageBlock = "the big five-oh"
+	Case 80, 81, 82, 83, 84, 85, 86, 87, 88, 89
+		ageBlock = "octogenarian"
+	Case 90 To 99
+		ageBlock = "nonagenarian"
+	Case Is >= 100
+		ageBlock = "centenarian"
+	Case Else
+		ageBlock = "just old"
+End Select</code
+>
+</div>
+
+</div>
 
 </section>
 
@@ -9140,7 +9599,12 @@ some_tuple.0;</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->var population = new Tuple&lt;string, int, int&gt;("New York", 7891957, 7781984);
+>// tuple literals - C# 7+
+var population = ("New York", 7891957, 7781984); // com índices // TODO verificar isso
+var population = (a:"New York", b:7891957, c:7781984); // com nomes // TODO verificar isso
+
+// tuple classes
+var population = new Tuple&lt;string, int, int&gt;("New York", 7891957, 7781984);
 population.Item1;</code
 >
 </div>
