@@ -158,6 +158,8 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 
 <h2 id='comentarios'>Comentários <span>e documentação inline</span></h2>
 
+<h3>Comentários básicos</h3>
+
 <div class='comparison'>
 
 <div class='codeblock'>
@@ -169,31 +171,8 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 bloco
 */
 
-/*
-
-bloco
-
-/*
-bloco aninhado
-*/
-
-bloco
-
-*/
-
 fn someFunction(/* bloco */ arg1:i32) -&gt; i32 {
 	0
-}
-
-/// Rustdoc para o item que segue
-/// # Examples
-/// let result = someFunction(2);
-fn someFunction(arg1:i32) -&gt; i32 {
-	0
-}
-
-mod foo {
-	//! Rustdoc para o contêiner externo
 }</code
 >
 </div>
@@ -209,9 +188,274 @@ bloco
 
 void someFunction(/* bloco */ int arg) {
 	//
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// linha
+
+/*
+bloco
+*/
+
+void someFunction(/* bloco */ int arg) {
+	return 0;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// linha
+
+/*
+bloco
+*/
+
+func someFunction(/* bloco */ arg1:Int) -&gt; Int {
+	return 0
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// linha
+
+/*
+bloco
+*/
+
+// TODO function block
+
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// linha
+
+/*
+bloco
+*/
+
+// TODO function block
+
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// linha
+
+/*
+bloco
+*/
+
+// TODO function block
+
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// linha
+
+/*
+bloco
+*/
+
+// TODO function block
+
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>' linha</code
+>
+</div>
+
+</div>
+
+<h3>Comentários aninhados</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+</div>
+
+<h3>Agrupamentos</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>#pragma mark - XCode section with dash
+#pragma mark XCode section</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// MARK: - XCode section with dash
+// MARK: XCode section</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// region idea intellij foldable
+// endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// region idea intellij foldable
+// endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>#region foldable
+#endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+</div>
+
+<h3>Documentação inline</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>/// Rustdoc para o item que segue
+/// # Examples
+/// let result = someFunction(2);
+fn someFunction(arg1:i32) -&gt; i32 {
+	0
 }
 
-/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
+mod foo {
+	//! Rustdoc para o contêiner externo
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
 /// &lt;param&gt;The argument os the function&lt;/param&gt;
 /// &lt;returns&gt;The result of the function call&lt;/returns&gt;
 /// &lt;example&gt;
@@ -282,50 +526,14 @@ int someFunction(int arg) {
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->// linha
-
-/*
-bloco
-*/
-
-void someFunction(/* bloco */ int arg) {
-	return 0;
-}
-
-#pragma mark - XCode section with dash
-#pragma mark XCode section</code
+>// TODO</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->// linha
-
-/*
-bloco
-*/
-
-/*
-
-bloco
-
-/*
-bloco aninhado
-*/
-
-bloco
-
-*/
-
-func someFunction(/* bloco */ arg1:Int) -&gt; Int {
-	return 0
-}
-
-// MARK: - XCode section with dash
-// MARK: XCode section
-
-/**
+>/**
 XCode markdown
 - Parameter arg1: The argument of the function
 - Returns: The result of the function call
@@ -340,44 +548,20 @@ func someFunction(arg1:Int) -&gt; Int {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// linha
-
-/*
-bloco
-*/
-
-// region idea intellij foldable
-// endregion
-
-// TODO javadoc</code
+>// TODO javadoc</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->// linha
-
-/*
-bloco
-*/
-
-// region idea intellij foldable
-// endregion
-
-// region example
-
-public class SomeClass {
-
-	public int example(/* bloco */ int arg1) {
-		return 0;
-	}
+>public class SomeClass {
 
 	/**
 	JavaDoc
 	{@code
-	SomeClass someObject = new SomeClass();
-	int result = someObject.someMethod();
+		SomeClass someObject = new SomeClass();
+		int result = someObject.someMethod();
 	}
 	@param arg1 The argument of the function
 	@return The result of the function call
@@ -386,31 +570,14 @@ public class SomeClass {
 		return 0;
 	}
 
-}
-
-// endregion</code
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// linha
-
-/*
-bloco
-*/
-
-#region foldable
-#endregion
-
-#region example
-
-public class SomeClass {
-
-	public int Example(/* bloco */ int arg1) {
-		return 0;
-	}
+>public class SomeClass {
 
 	/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
 	/// &lt;param name="arg1"&gt;The argument of the function&lt;/param&gt;
@@ -440,26 +607,14 @@ public class SomeClass {
 		return 0;
 	}
 
-}
-
-#endregion</code
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->// linha
-
-/*
-bloco
-*/
-
-function someFunction(/* bloco */ arg1) {
-	return 0;
-}
-
-/**
+>/**
 JSDoc
 @param {number} arg1 The argument of the function
 @returns {number} The result of the function call
@@ -501,9 +656,7 @@ function someFunction(arg1) {
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
->' linha</code
->
+-
 </div>
 
 </div>
@@ -537,10 +690,9 @@ JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso
 >let x = 5; // tipo implícito
 let x:i32 = 5; // tipo explícito
 
-let mut x = 5; // variável
-let x = 5; // constante
 
-let (x, y) = (1, 2); // desestruturação</code
+let mut x = 5; // variável
+let x = 5; // constante</code
 >
 </div>
 
@@ -563,8 +715,14 @@ int* ponteiroDeInt{&amp;x}; // ponteiro</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->int x = 5; // variável
+>
+
+
+
+int x = 5; // variável
 const int x = 5; // constante
+
+
 
 int* x; // ponteiro</code
 >
@@ -576,10 +734,9 @@ int* x; // ponteiro</code
 >let x = 5 // tipo implícito
 let x:Int = 5 // tipo explícito
 
-var x = 5 // variável
-let x = 5 // constante
 
-let (x, y) = (1, 2) // desestruturação</code
+var x = 5 // variável
+let x = 5 // constante</code
 >
 </div>
 
@@ -588,6 +745,7 @@ let (x, y) = (1, 2) // desestruturação</code
 <code class='kotlin'
 >val x = 5 // tipo implícito
 val x:Int = 5 // tipo explícito
+
 
 var x = 5 // variável
 val x = 5 // constante
@@ -598,16 +756,18 @@ x = 5
 
 // constante em tempo de compilação
 // precisa ser inicializada na declaração
-const val x = 5
-
-// ver se tem desestruturação</code
+const val x = 5</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->int x = 5; // variável
+>
+
+
+
+int x = 5; // variável
 final int x = 5; // constante
 
 // não precisa ser inicializada na declaração
@@ -621,6 +781,7 @@ x = 5;</code
 <code class='cs'
 >var x = 5; // tipo implícito
 int a = 5; // tipo explícito
+
 
 var x = 5; // variável
 const int x = 5; // constante
@@ -639,17 +800,17 @@ unsafe {
 <code class='javascript'
 >'use strict';
 
+
+
+let x = 5; // variável
+const x = 5; // constante
+
 let x = 5; // tipo dinâmico
 var x = 5; // estilo antigo
 
 // lança exceção em modo estrito
 // mas é aceito em modo normal
-useSemDeclarar = 5;
-
-let x = 5; // variável
-const x = 5; // constante
-
-[x, y] = [1, 2]; // desestruturação</code
+useSemDeclarar = 5;</code
 >
 </div>
 
@@ -658,11 +819,13 @@ const x = 5; // constante
 <code class='visualbasic'
 >Option Explicit
 
-Dim x: x = 5 ' tipo dinâmico
-Dim x As Variant: x = 5 ' tipo dinâmico
+
 
 Dim x As Integer: x = 5 ' variável
 Const x As Integer = 5 ' constante
+
+Dim x: x = 5 ' tipo dinâmico
+Dim x As Variant: x = 5 ' tipo dinâmico
 
 ' lança exceção com Option Explicit
 ' caso contrário é aceito
@@ -672,6 +835,67 @@ useSemDeclarar = 5
 ' Podemos digitar no formato #yyyy-mm-dd# e a IDE troca automaticamente para nós
 Const dataLimite As Date = #12/30/2017#</code
 >
+</div>
+
+</div>
+
+<h3>Desestruturação</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let (x, y) = (1, 2);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>let (x, y) = (1, 2)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>// TODO</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// TODO  - C# 7+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>[x, y] = [1, 2];</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
 </div>
 
 </div>
@@ -1094,6 +1318,7 @@ oitoOuOitenta = false;
 
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
+
 // TODO Boolean.parseBoolean</code
 >
 </div>
@@ -1107,7 +1332,9 @@ oitoOuOitenta = false;
 
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
-// TODO Boolean.Parse</code
+
+// TODO Boolean.Parse
+// Boolean.TryParse tb</code
 >
 </div>
 
@@ -3076,6 +3303,82 @@ private void recebeByte(byte numero) {
 </div>
 
 
+<h3>Parsing de números</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
 
 <ol>
 	<li>a</li>
@@ -4610,7 +4913,7 @@ std::for_each(collection.begin(), collection.end(), functor);</code
 	print(item)
 }
 
-for index in 1...5 {
+for index in 0...4 {
 	print("\(index) times 5 is \(index * 5)")
 }
 
@@ -4643,6 +4946,10 @@ for (animalName, legCount) in numberOfLegs {
 <code class='kotlin'
 >for (item in collection) {
 	print(item)
+}
+
+for (i in 0..4) {
+	print(i)
 }</code
 ></div>
 
@@ -12611,6 +12918,14 @@ JavaScript ainda não chegou lá.</p>
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -12635,16 +12950,8 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
@@ -12659,10 +12966,25 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
