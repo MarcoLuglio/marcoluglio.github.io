@@ -258,11 +258,6 @@ div.codeblock.bubaloop p + code {
 	font-weight: normal;
 }
 
-div.codeblock.bubaloop p + code.javascript {
-	margin-top: 20px;
-	padding-top: 0;
-}
-
 /* general */
 
 .bubaloop.highlight strong {
