@@ -2546,6 +2546,7 @@ define('SwiftTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Toke
 
 					'Any',
 					'Array',
+					'Bool',
 					'Character',
 					'Double',
 					'Float',
@@ -3420,7 +3421,10 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			this._tokenPool.push(new SwiftLabelToken());
+			// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
+			if (this._isFirstTokenOfLine(tokenSequence)) {
+				this._tokenPool.push(new SwiftLabelToken());
+			}
 			//this._tokenPool.push(new SwiftSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
@@ -3444,6 +3448,39 @@ define(
 				new WhitespaceToken(),
 				new EndOfLineToken()
 			);
+		}
+
+		/**
+		 * Checks if the line has only whitespace so far
+		 * Used to identify labels
+		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+		 */
+		_isFirstTokenOfLine(tokenSequence) {
+
+			let lastToken = null;
+
+			if (!tokenSequence) {
+				return true;
+			}
+
+			for (let i = tokenSequence.length; i > 0; i--) {
+
+				lastToken = tokenSequence[i - 1];
+
+				if (lastToken.type === 'endOfLine') {
+					return true;
+				}
+
+				if (lastToken.ignore) {
+					continue;
+				}
+
+				return false;
+
+			}
+
+			return true;
+
 		}
 
 		/**
@@ -4460,6 +4497,8 @@ define('KotlinLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator)
 			if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
 				return true;
 			}
+
+			// FIXME não sei se o fix vai aqui, mas está fazendo match em this@, que não é umn label
 
 			if (matchCharacter === '@') {
 				this._matchFunction = this._matchEnd;
@@ -7041,8 +7080,10 @@ define(
 			this._pushLiteralTokens();
 			this._pushInvisibleTokens();
 
-			// FIXME não pode haver espaços em branco antes do label
-			this._tokenPool.push(new CSLabelToken());
+			// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
+			if (this._isFirstTokenOfLine(tokenSequence)) {
+				this._tokenPool.push(new CSLabelToken());
+			}
 			this._tokenPool.push(new CSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 		}
@@ -7089,6 +7130,39 @@ define(
 			}
 
 			return false;
+
+		}
+
+		/**
+		 * Checks if the line has only whitespace so far
+		 * Used to identify labels
+		 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+		 */
+		_isFirstTokenOfLine(tokenSequence) {
+
+			let lastToken = null;
+
+			if (!tokenSequence) {
+				return true;
+			}
+
+			for (let i = tokenSequence.length; i > 0; i--) {
+
+				lastToken = tokenSequence[i - 1];
+
+				if (lastToken.type === 'endOfLine') {
+					return true;
+				}
+
+				if (lastToken.ignore) {
+					continue;
+				}
+
+				return false;
+
+			}
+
+			return true;
 
 		}
 
