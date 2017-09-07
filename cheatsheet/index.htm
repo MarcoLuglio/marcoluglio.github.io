@@ -4871,10 +4871,6 @@ delegate void StrategyFunctionDelegate();</code
 <code class='rust'
 >for item in collection {
 	println!("{}", item);
-}
-
-for index in 0..5 {
-	println!("{}", x); // x: i32
 }</code
 >
 </div>
@@ -4913,27 +4909,6 @@ std::for_each(collection.begin(), collection.end(), functor);</code
 	print(item)
 }
 
-for index in 0...4 {
-	print("\(index) times 5 is \(index * 5)")
-}
-
-let minutes = 30
-for tickMark in 0..&lt;minutes {
-	// render the tick mark each minute (30 times)
-}
-
-// range exclusivo - to
-let minuteInterval = 5
-for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
-	// render the tick mark every 5 minutes (0, 5, 10 ... 25)
-}
-
-// range inclusivo - through
-let minuteInterval = 5
-for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
-	// render the tick mark every 5 minutes (0, 5, 10 ... 30)
-}
-
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 for (animalName, legCount) in numberOfLegs {
 	print("\(animalName)s have \(legCount) legs")
@@ -4946,10 +4921,6 @@ for (animalName, legCount) in numberOfLegs {
 <code class='kotlin'
 >for (item in collection) {
 	print(item)
-}
-
-for (i in 0..4) {
-	print(i)
 }</code
 ></div>
 
@@ -4993,6 +4964,85 @@ for (item in collection) {
 	Print item
 Next</code
 >
+</div>
+
+</div>
+
+<h3 id='foreach'>for each + ranges</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>for index in 0..5 {
+	println!("{}", x); // x: i32
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>for index in 0...4 {
+	print("\(index) times 5 is \(index * 5)")
+}
+
+let minutes = 30
+for tickMark in 0..&lt;minutes {
+	// render the tick mark each minute (30 times)
+}
+
+// range exclusivo - to
+let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+	// render the tick mark every 5 minutes (0, 5, 10 ... 25)
+}
+
+// range inclusivo - through
+let minuteInterval = 5
+for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
+	// render the tick mark every 5 minutes (0, 5, 10 ... 30)
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>for (i in 0..4) {
+	print(i)
+}</code
+></div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
 </div>
 
 </div>
@@ -5970,33 +6020,76 @@ End Sub</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
-></code
+>func namedArgs(
+	tooMany:Int,
+	args:Int,
+	toRemember:Bool,
+	theirMeaning:String = "a",
+	byPosition:String = "b"
+	) {
+
+	//
+}
+
+// argumentos devem seguir a ordem
+// mas os que possuem valor padrão
+// podem ser omitidos
+namedArgs(
+	tooMany: 2,
+	args: 1,
+	toRemember: false,
+	byPosition: "args"
+)
+
+// nomes dos argumentos que podem
+// ser omitidos devem usar _ para
+// o nome externo
+func unnamedArgs(
+	tooMany:Int,
+	_ args:Int,
+	_ toRemember:Bool,
+	_ theirMeaning:String = "a",
+	_ byPosition:String = "b"
+	) {
+
+	//
+}
+
+unnamedArgs(tooMany: 2, 1, false, "args")</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->fun reformat(
-	str:String,
-	normalizeCase:Boolean = true,
-	upperCaseFirstLetter:Boolean = true,
-	divideByCamelHumps:Boolean = false,
-	wordSeparator: Char = ' ') {
-	/**/
+>fun namedArgs(
+	tooMany:Int,
+	args:Int,
+	toRemember:Boolean,
+	theirMeaning:String = "a",
+	byPosition:String = "b"
+	) {
+
+	//
 }
 
-reformat(str)
-reformat(str, true, true, false, '_')
-reformat(
-	str,
-	normalizeCase = true,
-	upperCaseFirstLetter = true,
-	divideByCamelHumps = false,
-	wordSeparator = '_'
+namedArgs(
+	tooMany = 2,
+	args = 1,
+	toRemember = false,
+	byPosition = "args"
 )
 
-reformat(str, wordSeparator = '_')</code
+// TODO verificar isso pq tem parâmetro faltando
+namedArgs(
+	2,
+	args = 1,
+	toRemember = false,
+	byPosition = "args"
+)
+
+// TODO verificar isso pq tem parâmetro faltando
+namedArgs(tooMany = 2, 1, false, "args")</code
 ></div>
 
 <div class='codeblock'>
@@ -6010,7 +6103,27 @@ reformat(str, wordSeparator = '_')</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
-></code
+>public class NamedArgs {
+	public NamedArgs(
+		int tooMany,
+		int args,
+		bool toRemember,
+		string theOrder
+		) {
+
+		//
+	}
+}
+
+// argumentos não precisam seguir a ordem
+// e os que possuem valor padrão podem
+// ser omitidos
+var ex = new NamedArgs(
+	args: 1,
+	toRemember: false,
+	tooMany: 2,
+	theOrder: "named"
+);</code
 >
 </div>
 
@@ -10340,9 +10453,9 @@ private:
 			<code class='cpp'
 >#include "ResultadoCaixa.hpp"
 
-ResultadoCaixa::ResultadoCaixa(const int total, const int valorPago) {
-	this-&gt;total = total;
-	this-&gt;valorPago = valorPago;
+ResultadoCaixa::ResultadoCaixa(const int total, const int valorPago)
+	: total{total}, valorPago{valorPago} {
+
 	this-&gt;troco = valorPago - total;
 }
 
@@ -10932,6 +11045,19 @@ a.prop = '';</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>trait HasArea {
+	fn is_invalid(&amp;self) -&gt; bool { !self.is_valid() }
+}
+
+impl HasArea for Circle {
+	// is_invalid "herdado"
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// Herança múltipla tem
@@ -10987,7 +11113,7 @@ a.prop = '';</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->extension C {
+>extension ClassToBeExtended {
 	// posso adicionar initializers
 	// métodos
 	// e propriedades
@@ -10996,23 +11122,15 @@ a.prop = '';</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->trait HasArea {
-	fn is_invalid(&amp;self) -&gt; bool { !self.is_valid() }
+<p>Kotlin</p>
+<code class='kotlin'
+>fun ClassToBeExtended.extensionMethod() {
+	//
 }
 
-impl HasArea for Circle {
-	// is_invalid "herdado"
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->public static class MyExtensions {
-	public static int WordCount(this String str) {
+// ou como Java 8
+public interface Desenhavel {
+	desenhar() {
 		//
 	}
 }</code
@@ -11021,9 +11139,20 @@ impl HasArea for Circle {
 
 <div class='codeblock'>
 <p>Java</p>
-<code class='cpp'
+<code class='java'
 >public interface Desenhavel {
 	default void desenhar() {
+		//
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>public static class MyExtensions {
+	public static int ExtensionMethod(this ClassToBeExtended str) {
 		//
 	}
 }</code
