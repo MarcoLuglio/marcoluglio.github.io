@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Web Sockets com .NET</title>
+	<link rel='stylesheet' href='css/main.css' />
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='../cheatsheet/js/extendedhighlighter.js'></script>
+	<script src='js/home.js'></script>
+</head>
+<body>
+
+	<h1>Web Sockets com .NET</h1>
+	<p>
+		Se você chegou neste artigo após passar por incontáveis páginas desatualizadas, você deu sorte!
+		Vou mostrar para vocês como programar um servidor e um cliente que utilizam o protocolo web socket para comunicação em tempo real.
+		A menos que o cliente esteja vendo aquele vídeo pesadão que come toda a banda enquanto usa sua aplicação, aí vai rolar aquele lag e a comunicação não vai ser em tempo tão real assim 😉
+	</p>
+
+	<p>É possível programar um <em>host</em> de diversas maneiras, tipo preparar Neston® (não fui pago pela propaganda gratuita 😢).</p>
+
+	<ul>
+		<li>Rodando um serviço <code class='cs'>HttpListener</code> auto-hospedado (requer usuário administrador)</li>
+		<li>Rodando um serviço <abbr title='Windows Communication Foundation'>WCF</abbr> hospedado no <abbr title='Internet Information Services'>IIS</abbr></li>
+		<li>Utilizando <a href='http://signalr.net/' rel='external nofollow'>SignalR</a></li>
+		<li>Dentro de uma aplicação web <abbr title='Model View Controller'>MVC</abbr> ou WebForms usando <code class='cs'>HttpContext.AccepWebSocketRequest</code>.</li>
+		<li><a href='https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_server' rel='external nofollow'>Rodando um serviço <code>TcpListener</code></a></li>
+	</ul>
+
+	<p>Procurando pela internet você pode se deparar com <abbr title='Application Programming Interface'>API</abbr>s mais antigas de fazer isso que são mais suportadas ou recomendadas. Listo aqui caso você tropece em alguma delas, mas não utilize.</p>
+
+	<ul>
+		<li><code class='cs'>Microsoft.WebSockets - WebSocketHandler</code>. <strong>Descontinuado.</strong> Surgiu em 2011 e foi atualizado pela última vez em 2015.</li>
+		<li>Versões antigas do <code class='cs'>System.Net.WebSockets</code>. Alguns métodos foram removidos desta classe. Utilize apenas a mais atual que no momento em que estou escrevendo isso é a versão 4.3.0.</li>
+	</ul>
+
+	<p>Vamos ver as primeiras duas alternatvas, que são menos documentadas e a parte do cliente. Usei o Visual Studio 2015.</p>
+
+
+
+	<section>
+		<h2>Índice</h2>
+		<nav id='indice'></nav>
+	</section>
+
+	<h2>Back-end</h2>
+
+
+
+	<section>
+
+		<h3>Serviço <abbr title='Windows Communication Foundation'>WCF</abbr> hospedado no <abbr title='Internet Information Services'>IIS</abbr></h3>
+
+		<p>
+			<abbr title='Windows Communication Foundation'>WCF</abbr> é mais utilizado para trocar mensagens <abbr title='Simple Object Access Protocol'>SOAP</abbr>, mas pode ser configurado para suportar comunicação via WebSockets também.
+			No visual studio, crie um novo projeto através do menu File, New, Project... e selecione o tipo <em>WCF Service Application</em>.
+		</p>
+		<p><img src='imagens/newwcfserviceapp.png' /></p>
+
+		<p>O projeto cria os seguintes arquivos:</p>
+		<p><img src='imagens/wcfserviceappinitialtree.png' /></p>
+
+		<p>Vamos renomear os serviços <code>IService1.cs</code> e <code>Service1.svc</code> para <code>IWebSocketService.cs</code> e <code>WebSocketService.svc</code>.</p>
+		<p><img src='imagens/wcfserviceappnewtree.png' /></p>
+
+		<p>Depois adicione no projeto a referência para <code>System.ServiceModel.Channels</code>.</p>
+		<p><img src='imagens/addreference1.png' /><br /><img src='imagens/addreference2.png' /></p>
+
+		<p>Agora substitua o conteúdo do arquivo <code>IWebSocketService.cs</code> pelo abaixo:</p>
+		<div class='codeblock'>
+			<p>IWebSocketService.cs</p>
+			<code class='cs'
+>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Text;
+
+namespace WcfWebSocketIIS {
+
+	/// &lt;summary&gt;
+	/// Interface do "cliente".
+	/// Irá enviar qualquer tipo de de dado para o cliente (callback do serviço)
+	/// através do único método Send
+	/// &lt;/summary&gt;
+	[ServiceContract]
+	public interface IWebSocketServiceCallback {
+		[OperationContract(IsOneWay = true, Action = "*")]
+		void Send(Message message);
+	}
+
+	/// &lt;summary&gt;
+	/// Interface do serviço.
+	/// Irá receber qualquer tipo de de dado através do único método Receive
+	/// &lt;/summary&gt;
+	[ServiceContract(CallbackContract = typeof(IWebSocketServiceCallback))]
+	public interface IWebSocketService {
+		[OperationContract(IsOneWay = true, Action = "*")]
+		void Receive(Message message);
+	}
+
+}</code
+			>
+		</div>
+
+		<p>
+			<code>Action="*"</code> basicamente indica que <strong>a operação marcada por este atributo receberá todo e qualquer dado ou mensagem enviado para o serviço.</strong>
+			Por esse motivo, uma interface que define um <code>ServiceContract</code> pode ter <strong>apenas um <code>OperationContract</code></strong> marcado com <code>Action="*"</code>.
+			Esta é um das modificações necessárias para o serviço se comunicar usando WebSockets ao invés de <abbr title='Simple Object Access Protocol'>SOAP</abbr>, já que o cliente WebSocket não chama nenhuma operação específica.
+		</p>
+		<p>Se desejar, veja a <a href='https://msdn.microsoft.com/en-us/library/system.servicemodel.operationcontractattribute.action.aspx' rel='external nofollow'>explicação mais detalhada de <code>Action="*"</code></a>.</p>
+
+		<p>Já o arquivo <code>WebSocketService.svc.cs</code> deve ter o seguinte conteúdo:</p>
+
+		<div class='codeblock'>
+			<p>WebSocketService.svc.cs</p>
+			<code class='cs'
+>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.WebSockets;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Text;
+using System.Web;
+
+namespace WcfWebSocketIIS {
+
+	sealed public class WebSocketService : IWebSocketService {
+
+		public WebSocketService() {
+			// Creates a standard duplex service
+			// The service uses the default instancing mode which is PerSession
+			// so a new instance will be created for each client
+			// and the local variable will point to a different callback channel in each service instance
+			this.callback = OperationContext.Current.GetCallbackChannel&lt;IWebSocketServiceCallback&gt;();
+		}
+
+		public void Receive(Message message) {
+
+			if (message == null) {
+				throw new ArgumentNullException("message");
+			}
+
+			var property = (WebSocketMessageProperty)message.Properties["WebSocketMessageProperty"];
+			WebSocketContext context = property.WebSocketContext;
+			var queryParameters = HttpUtility.ParseQueryString(context.RequestUri.Query);
+			string content = string.Empty;
+
+			// if request was made using GET
+			if (!message.IsEmpty) {
+				byte[] body = message.GetBody&lt;byte[]&gt;();
+				content = Encoding.UTF8.GetString(body);
+			}
+
+			// TODO Do something with the content/queryParams
+
+			string str = null;
+			if (string.IsNullOrEmpty(content)) { // Connection open message
+				str = "Opening connection from user";
+				if (!string.IsNullOrEmpty(queryParameters["Name"])) {
+					str += queryParameters["Name"].ToString();
+				}
+			} else { // Message received from client
+				str = "Received message: " + content;
+			}
+
+			this.callback.Send(CreateMessage(str));
+
+		}
+
+		private Message CreateMessage(string content) {
+
+			// se o visual studio não encontrou a classe ByteStreamMessage
+			// é porque você pulou um passo lá em cima onde adicionamos
+			// a referência para System.ServiceModel.Channels ;)
+			Message message = ByteStreamMessage.CreateMessage(
+				new ArraySegment&lt;byte&gt;(
+					Encoding.UTF8.GetBytes(content)
+				)
+			);
+
+			message.Properties["WebSocketMessageProperty"] = new WebSocketMessageProperty { MessageType = WebSocketMessageType.Text };
+
+			return message;
+
+		}
+
+		private IWebSocketServiceCallback callback = null;
+
+	}
+
+}</code
+			>
+		</div>
+
+		<p>Edite também o arquivo <code>WebSocketService.svc</code> clicando sobre ele com o botão esquerdo (ou direito se você for destro 😋), e selecionando a opção de menu <q>View Markup</q>.</p>
+
+		<p><img src='imagens/viewmarkup.png' /></p>
+
+		<p>
+			Para sua conveniência, o Visual Studio 2015 alterou o nome da referência do serviço automaticamente, só que não. Vamos lá alterar na mão.
+			Mude o nome do serviço dentro deste arquivo para o valor <code>WcfWebSocketIIS.WebSocketService</code>, como no exemplo abaixo:
+		</p>
+
+		<div class='codeblock'>
+			<p>WebSocketService.svc</p>
+			<code class='html'
+				>&lt;%@ ServiceHost Language="C#" Debug="true" <strong>Service="WcfWebSocketIIS.WebSocketService"</strong> CodeBehind="WebSocketService.svc.cs" %&gt;</code
+			>
+		</div>
+
+		<p>
+			E já que mexemos em quase todos os arquivos deste projeto, porque não alterar também o <code>Web.config</code>?
+			Nele vamos realizar mais uma modificação para trocar o <abbr title='Simple Object Access Protocol'>SOAP</abbr> por WebSockets.
+			Dizemos que o <em>endpoint</em> vai trafegar bytes ao invés de xml de acordo com a estrutura abaixo:
+		</p>
+
+		<div class='codeblock'>
+			<p>Web.config</p>
+			<code class='html'
+				>&lt;?xml version="1.0"?&gt;
+&lt;configuration&gt;
+	&lt;appSettings&gt;
+		&lt;add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" /&gt;
+	&lt;/appSettings&gt;
+	&lt;system.web&gt;
+		&lt;compilation debug="true" targetFramework="4.6.1" /&gt;
+		&lt;httpRuntime targetFramework="4.6.1"/&gt;
+	&lt;/system.web&gt;
+	<strong>&lt;system.serviceModel&gt;</strong>
+		&lt;services&gt;
+			&lt;service name="WcfWebSockets.WebSocketService"&gt;
+				<strong>&lt;endpoint</strong>
+					address=""
+					<strong>binding="customBinding"</strong>
+					<strong>bindingConfiguration="webSocket"</strong>
+					contract="WcfWebSockets.IWebSocketService"
+				<strong>&gt;&lt;/endpoint&gt;</strong>
+			&lt;/service&gt;
+		&lt;/services&gt;
+		&lt;bindings&gt;
+			&lt;customBinding&gt;
+				<strong>&lt;binding name="webSocket"&gt;</strong>
+					&lt;!--
+					We use the byteStreamMessageEncoding which allows the service to receive simple byte
+					streams as input instead of complex SOAP structures.
+					--&gt;
+					<strong>&lt;byteStreamMessageEncoding/&gt;</strong>
+					&lt;!--
+					We set the transportUsage to Always to force the usage of WebSocket rather than HTTP.
+					We set the createNotificationOnConnection to true to allow our Receive method
+					to be invoked for the connection request message (the first GET request which is sent
+					to the service).
+					--&gt;
+					&lt;httpTransport&gt;
+						&lt;webSocketSettings <strong>transportUsage="Always" createNotificationOnConnection="true"</strong>/&gt;
+					&lt;/httpTransport&gt;
+				<strong>&lt;/binding&gt;</strong>
+			&lt;/customBinding&gt;
+		&lt;/bindings&gt;
+		&lt;serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" /&gt;
+	<strong>&lt;/system.serviceModel&gt;</strong>
+	&lt;system.webServer&gt;
+		&lt;modules runAllManagedModulesForAllRequests="true"/&gt;
+		&lt;directoryBrowse enabled="false"/&gt;
+	&lt;/system.webServer&gt;
+
+&lt;/configuration&gt;</code
+			>
+		</div>
+
+		<p>E já que não tem mais nenhum arquivo para modificar, aperta o play e pronto.</p>
+
+	</section>
+
+
+
+	<section>
+
+		<h3>Serviço auto-hospedado <span>Requer administrador para rodar</span></h3>
+
+		<p>
+			Como vamos escrever um programa que fica escutando uma determinada porta, ele precisa ser executado por um usuário administrador.
+			Afinal de contas, ninguém gosta que um qualquer fique escutando através da porta... 😒
+			Começamos criando um programa de linha de comando básico.
+		</p>
+
+		<p><img src='imagens/newconsoleapp.png' /></p>
+
+		<p>E adicione a referência <code>System.Net.WebSockets</code> pelo Nuget.</p>
+
+		<p><img src='imagens/managenuget.png' /><br /><img src='imagens/installnuget.png' /></p>
+
+		<p>TODO verificar se é preciso adicionar a referência para System.Net</p>
+
+
+		<p>Crie uma classe que será nosso servidor.</p>
+
+		<div class='codeblock'>
+			<p>WebSocketServer.cs</p>
+			<code class='cs'
+>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Net.WebSockets;
+
+namespace WebSocketServer {
+
+	// This console application uses `HttpListener` to receive WebSocket connections.
+	// It expects to receive binary data and it streams back the data as it receives it.
+	// The [source](https://github.com/paulbatum/WebSocket-Samples) for this sample
+	// is on GitHub.
+
+	sealed class WebSocketServer {
+
+		public async void Start(string listenerPrefix) {
+
+			HttpListener listener = new HttpListener();
+			listener.Prefixes.Add(listenerPrefix);
+			listener.Start();
+			Console.WriteLine("Listening...");
+
+			// loop de novas conexões
+			while (true) {
+				HttpListenerContext listenerContext = await listener.GetContextAsync();
+				if (listenerContext.Request.IsWebSocketRequest) {
+					ProcessRequest(listenerContext);
+				} else {
+					listenerContext.Response.StatusCode = 400;
+					listenerContext.Response.Close();
+				}
+			}
+
+		}
+
+		private async void ProcessRequest(HttpListenerContext listenerContext) {
+
+			WebSocketContext webSocketContext = null;
+
+			try {
+
+				// When calling `AcceptWebSocketAsync` the subprotocol must be specified.
+				// This sample assumes that no subprotocol was requested.
+				webSocketContext = await listenerContext.AcceptWebSocketAsync(subProtocol: null);
+				Interlocked.Increment(ref count);
+				Console.WriteLine("Processed: {0}", count);
+
+			} catch (Exception e) {
+
+				// The upgrade process failed somehow.
+				// For simplicity lets assume it was a failure on
+				// the part of the server and indicate this using 500.
+				listenerContext.Response.StatusCode = 500;
+				listenerContext.Response.Close();
+				Console.WriteLine("Exception: {0}", e);
+				return;
+
+			}
+
+			WebSocket webSocket = webSocketContext.WebSocket;
+
+			try {
+
+				// The buffer will be reused as we only need to hold on to the data
+				// long enough to send it back to the sender (this is an echo server).
+				byte[] receiveBuffer = new byte[1024];
+
+				// loop de novos dados
+				while (webSocket.State == WebSocketState.Open) {
+
+					WebSocketReceiveResult receiveResult = await webSocket.ReceiveAsync(
+						new ArraySegment&lt;byte&gt;(receiveBuffer),
+						CancellationToken.None // We are not using timeouts
+					);
+
+					// client requested the connection to close
+					if (receiveResult.MessageType == WebSocketMessageType.Close) {
+
+						await webSocket.CloseAsync(
+							WebSocketCloseStatus.NormalClosure, // omits close message
+							"",
+							CancellationToken.None
+						);
+
+					// client sent text
+					} else if (receiveResult.MessageType == WebSocketMessageType.Text) {
+
+						// we are not handling text in this example so we close the connection
+						await webSocket.CloseAsync(
+							WebSocketCloseStatus.InvalidMessageType,
+							"Cannot accept text frame",
+							CancellationToken.None
+						);
+
+					// client sent binary data
+					} else {
+
+						// Note the use of the `EndOfMessage` flag on the receive result.
+						// This means that if this echo server is sent one continuous stream
+						// of binary data (with EndOfMessage always false) it will just stream
+						// back the same thing.
+						await webSocket.SendAsync(
+							new ArraySegment&lt;byte&gt;(receiveBuffer, 0, receiveResult.Count),
+							WebSocketMessageType.Binary,
+							receiveResult.EndOfMessage,
+							CancellationToken.None
+						);
+
+					}
+
+				}
+
+			} catch (Exception e) {
+
+				// Pretty much any exception that occurs when calling `SendAsync`,
+				// `ReceiveAsync` or `CloseAsync` is unrecoverable in that it will abort
+				// the connection and leave the `WebSocket` instance in an unusable state.
+				Console.WriteLine("Exception: {0}", e);
+
+			} finally {
+
+				// Clean up by disposing the WebSocket once it is closed/aborted.
+				if (webSocket != null) {
+					webSocket.Dispose();
+				}
+
+			}
+
+		}
+
+		/// &lt;summary&gt;
+		/// Number of opened connections
+		/// &lt;/summary&gt;
+		private int count = 0;
+
+	}
+
+	// This extension method wraps the BeginGetContext
+	// and EndGetContext methods on HttpListener as a Task
+	public static class HelperExtensions {
+		public static Task GetContextAsync(this HttpListener listener) {
+			return Task.Factory.FromAsync&lt;HttpListenerContext&gt;(
+				listener.BeginGetContext,
+				listener.EndGetContext,
+				TaskCreationOptions.None
+			);
+		}
+	}
+
+}</code
+			>
+		</div>
+
+		<p>E modifique o conteúdo de <code>Program.cs</code> pra iniciar nossa classe recém criada.</p>
+
+		<div class='codeblock'>
+			<p>Program.cs</p>
+			<code class='cs'
+				>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebSocketServer {
+	sealed class Program {
+		static void Main(string[] args) {
+			var server = new WebSocketServer();
+			server.Start("http://+:80/wsDemo/");
+			Console.WriteLine("Press any key to exit...");
+			Console.ReadKey();
+		}
+	}
+}</code
+			>
+		</div>
+
+		<p>Aperte play.</p>
+
+	</section>
+
+
+
+	<h2>Front-end</h2>
+
+	<p>
+		A parte do front-end é bem resumida, pois o navegador faz a maior parte para nós.
+		É tão simples como criar um objeto <code class='js'>WebSocket</code>, registrar seus eventos e chamar o método <code class='js'>send</code>.
+	</p>
+
+	<div class='codeblock'>
+		<p>websocketclient.html</p>
+		<code class='html'
+>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;Wcf Web Socket Client&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;script src='websocketclient.js'&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>websocketclient.js</p>
+		<code class='javascript'
+>'use strict';
+
+// note que o protocolo é ws:// ou wss:// mesmo que o host
+// esteja escutando via http:// ou https:// respectivamente
+// isso porque o protocolo consiste numa conexão inicial http
+// que é picada por uma aranha, <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism'>ganha super poderes</a> e vira
+// uma conexão web🕸 socket
+const webSocketClient = new WebSocket("ws://troquepeloseuhost/WebSocketService.svc");
+
+webSocketClient.addEventListener('open', (evento) =&gt; {
+	console.log('open');
+	console.log(evento);
+});
+
+webSocketClient.addEventListener('close', (evento) =&gt; {
+	console.log('close');
+	console.log(evento);
+});
+
+webSocketClient.addEventListener('error', (evento) =&gt; {
+	console.log('error');
+	console.log(evento);
+});
+
+webSocketClient.addEventListener('message', (evento) =&gt; {
+	console.log(evento.data);
+	exempleSocket.send('alguma coisa');
+});</code
+		>
+	</div>
+
+	<p>Provavelmente você irá trafegar dados que obedecem algum tipo de formato, e é para isso que o subprotocolo do websockets serve.</p>
+	<p>TODO</p>
+
+</body>
+</html>
