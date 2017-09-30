@@ -533,7 +533,8 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 			Object.defineProperties(this, {
 				_isLetterCharacter: {value: /[a-zA-Z]/},
-				_isSpaceCharacter: {value: /\s/}
+				_isSpaceCharacter: {value: /\s/},
+				_bracesNestingLevel: {value: 0, writable: true}
 			});
 
 			this._matchFunction = this._matchStartBracket;
@@ -562,7 +563,8 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 			}
 
 			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
-				this._matchFunction = this._matchContentOrEndBrace;
+				this._bracesNestingLevel++;
+				this._matchFunction = this._matchContentOrBrace;
 				return true;
 			}
 
@@ -589,7 +591,8 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 			}
 
 			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
-				this._matchFunction = this._matchContentOrEndBrace;
+				this._bracesNestingLevel++;
+				this._matchFunction = this._matchContentOrBrace;
 				return true;
 			}
 
@@ -613,22 +616,30 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 		_matchEndQuote(matchCharacter) {
 
 			if (matchCharacter === '"') {
-				this._matchFunction = this._matchContentOrEndBrace;
+				this._matchFunction = this._matchContentOrBrace;
 			}
 
 			return true;
 
 		}
 
-		_matchContentOrEndBrace(matchCharacter) {
+		_matchContentOrBrace(matchCharacter) {
 
 			if (matchCharacter === ']') {
 				this._hasNext = false;
 				return false;
 			}
 
+			if (matchCharacter === '(') {
+				this._bracesNestingLevel++;
+				return true;
+			}
+
 			if (matchCharacter === ')') { // TODO tem que ter um argumento antes do ) ??
-				this._matchFunction = this._matchEndBracket;
+				this._bracesNestingLevel--;
+				if (this._bracesNestingLevel === 0) {
+					this._matchFunction = this._matchEndBracket;
+				}
 				return true;
 			}
 
@@ -6026,7 +6037,8 @@ define('CSTypesToken', ['Token', 'SourceSimpleCharacterSequenceToken'], (Token, 
 					'BigInteger',
 					'Complex',
 
-					'Exception'
+					'Exception',
+					'Task'
 
 				])}
 			});

@@ -2012,7 +2012,7 @@ define('HtmlTagBeginToken', ['Token', 'JSSimpleCharacterSequenceToken'], (Token,
 				type: {value: 'tag', writable: true},
 				_matchFunction: {value: context._matchStartSequence, writable: true},
 				_startSequence: {value: new JSSimpleCharacterSequenceToken('tagStart', ['&lt;'])},
-				_isAllowedCharacter: {value: /(\w|\d|-|_|\.|:)/}
+				_isAllowedCharacter: {value: /(\w|-|_|\.|:|\?|%|@)/} // ?,% e @ não fazem parte do html, mas são usados no xml e no xaml, e por isso coloco aqui como um fix temporário
 			});
 
 			this.openType = 'tagWrapper';
