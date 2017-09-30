@@ -532,7 +532,7 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 			super();
 
 			Object.defineProperties(this, {
-				_isWordCharacter: {value: /\w/},
+				_isLetterCharacter: {value: /[a-zA-Z]/},
 				_isSpaceCharacter: {value: /\s/}
 			});
 
@@ -542,14 +542,14 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 
 		_matchStartBracket(matchCharacter) {
 			if (matchCharacter === '[') {
-				this._matchFunction = this._matchAttributeNameOrStartBrace;
+				this._matchFunction = this._matchAttributeNameBeginningOrStartBrace;
 				return true;
 			}
 			this._hasNext = false;
 			return false;
 		}
 
-		_matchAttributeNameOrStartBrace(matchCharacter) {
+		_matchAttributeNameBeginningOrStartBrace(matchCharacter) {
 
 			// TODO talvez testar com regex se é uma letra ou identificador válido
 			// não sei quais as regras para nomear atributos
@@ -566,8 +566,39 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				return true;
 			}
 
-			if (matchCharacter !== '.'
-				&& !this._isWordCharacter.test(matchCharacter)
+			if (!this._isLetterCharacter.test(matchCharacter)
+				&& !this._isSpaceCharacter.test(matchCharacter)
+				) {
+
+				this._hasNext = false;
+				return false;
+			}
+
+			this._matchFunction = this._matchAttributeNameOrStartBrace;
+			return true;
+
+		}
+
+		_matchAttributeNameOrStartBrace(matchCharacter) {
+
+			// TODO talvez testar com regex se é uma letra ou identificador válido
+			// não sei quais as regras para nomear atributos
+			if (matchCharacter === ')') {
+				this._hasNext = false;
+				return false;
+			}
+
+			if (matchCharacter === '(') { // TODO tem que ter um nome antes do ( ??
+				this._matchFunction = this._matchContentOrEndBrace;
+				return true;
+			}
+
+			if (matchCharacter === ']') {
+				this._matchFunction = this._matchEnd;
+				return true;
+			}
+
+			if (!this._isLetterCharacter.test(matchCharacter)
 				&& !this._isSpaceCharacter.test(matchCharacter)
 				) {
 
@@ -614,7 +645,7 @@ define('CSAttributePatternIterator', ['SourcePatternIterator'], (SourcePatternIt
 				&& matchCharacter !== ','
 				&& matchCharacter !== '"'
 				&& matchCharacter !== '@'
-				&& !this._isWordCharacter.test(matchCharacter)
+				&& !this._isLetterCharacter.test(matchCharacter)
 				&& !this._isSpaceCharacter.test(matchCharacter)
 				) {
 
@@ -5460,19 +5491,39 @@ define('RustSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) 
 
 			Object.defineProperties(this, {
 				_isWordCharacter: {value: /\w/},
-				_isNumberCharacter: {value: /\d/}
+				_isLetterCharacter: {value: /[a-zA-Z]/}
 			});
 
 			Object.seal(this);
 
-			this._matchFunction = this._matchValidCharacter;
+			this._matchFunction = this._matchBeginningValidCharacter;
+
+		}
+
+		_matchBeginningValidCharacter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchValidCharacter;
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '_'
+				|| matchCharacter === '@'
+				) {
+
+				this._matchFunction = this._matchValidCharacter;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
 
 		}
 
 		_matchValidCharacter(matchCharacter) {
 
 			if (matchCharacter === '_'
-				|| this._isNumberCharacter.test(matchCharacter)
 				|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
 				) {
 
@@ -6914,20 +6965,40 @@ define('CSSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) =>
 
 			Object.defineProperties(this, {
 				_isWordCharacter: {value: /\w/},
-				_isNumberCharacter: {value: /\d/}
+				_isLetterCharacter: {value: /[a-zA-Z]/}
 			});
 
 			Object.seal(this);
 
-			this._matchFunction = this._matchValidCharacter;
+			this._matchFunction = this._matchBeginningValidCharacter;
+
+		}
+
+		_matchBeginningValidCharacter(matchCharacter) {
+
+			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._matchFunction = this._matchValidCharacter;
+				this._isComplete = true;
+				return true;
+			}
+
+			if (matchCharacter === '_'
+				|| matchCharacter === '@'
+				) {
+
+				this._matchFunction = this._matchValidCharacter;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
 
 		}
 
 		_matchValidCharacter(matchCharacter) {
 
 			if (matchCharacter === '_'
-				|| matchCharacter === '@'
-				|| this._isNumberCharacter.test(matchCharacter)
+				//|| matchCharacter === '@' // confirmar isso
 				|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
 				) {
 
