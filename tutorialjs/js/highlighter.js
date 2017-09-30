@@ -2174,7 +2174,7 @@ define('HtmlTagEndToken', ['Token', 'JSSimpleCharacterSequenceToken'], (Token, J
 		_matchStartSequence(matchCharacter, index) {
 
 			if (this.characterSequence.length === 0
-				&&  matchCharacter === '/'
+				&& (matchCharacter === '/' || matchCharacter === '?' || matchCharacter === '%') // ? e % não fazem parte do html, mas são usados no xml e no xaml, e por isso coloco aqui como um fix temporário
 				) {
 
 				return true;
