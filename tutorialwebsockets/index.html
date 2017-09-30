@@ -524,8 +524,8 @@ namespace WebSocketServer {
 // note que o protocolo é ws:// ou wss:// mesmo que o host
 // esteja escutando via http:// ou https:// respectivamente
 // isso porque o protocolo consiste numa conexão inicial http
-// que é picada por uma aranha, <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism'>ganha super poderes</a> e vira
-// uma conexão web🕸 socket
+// que é picada por uma aranha radioativa, <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism'>ganha super poderes</a>
+// e vira uma conexão web🕸 socket
 const webSocketClient = new WebSocket("ws://troquepeloseuhost/WebSocketService.svc");
 
 webSocketClient.addEventListener('open', (evento) =&gt; {
