@@ -240,16 +240,16 @@ public string GerarCpf() {
 	do {
 		<strong>semente</strong> = random.Next(1, <strong>999999999</strong>).ToString()<strong>.PadLeft(9</strong>, '0');
 	} while (
-		semente == "00000000000"
-		|| semente == "11111111111"
-		|| semente == "22222222222"
-		|| semente == "33333333333"
-		|| semente == "44444444444"
-		|| semente == "55555555555"
-		|| semente == "66666666666"
-		|| semente == "77777777777"
-		|| semente == "88888888888"
-		|| semente == "99999999999"
+		semente == "000000000"
+		|| semente == "111111111"
+		|| semente == "222222222"
+		|| semente == "333333333"
+		|| semente == "444444444"
+		|| semente == "555555555"
+		|| semente == "666666666"
+		|| semente == "777777777"
+		|| semente == "888888888"
+		|| semente == "999999999"
 	);
 
 	for (int <strong>i = 1</strong>; i &lt; multiplicadores.Count(); i++) {
