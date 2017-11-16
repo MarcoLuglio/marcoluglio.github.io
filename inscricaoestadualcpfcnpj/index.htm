@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Código fonte de geradores de inscrição estadual, cpf e cnpj</title>
+	<link rel='stylesheet' href='http://marcoluglio.github.io/cheatsheet/css/main.css' />
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='../cheatsheet/js/extendedhighlighter.js'></script>
+	<script src='js/home.js'></script>
+</head>
+<body>
+
+	<h1>Código fonte de geradores de inscrição estadual, cpf e cnpj</h1>
+	<p>
+		Para validar podemos usar a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a>, mas e quanto a gerar dados em massa para testes?
+		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C.
+		Já que pela internet achei basicamente códigos em Pascal ou Basic, segue o código fonte dos geradores de inscrição estadual em linguagens mais portáteis por assim dizer.
+	</p>
+
+	<p>
+		Vou postando a lista a medida que converter os códigos, mas basicamente até agora, a lógica é basicamente a mesma.
+		Alteramos apenas o comprimento de cada formato, e a sequência de números pelos quais multiplicamos para obter os dígitos verificadores.
+	</p>
+
+
+
+	<section>
+		<h2>Índice</h2>
+		<nav id='indice'></nav>
+	</section>
+
+
+
+	<section>
+
+		<h2>Inscrição Estadual</h2>
+
+		<h3>Paraná</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+				<p>main.cpp</p>
+				<code class='cpp'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>main.rs</p>
+				<code class='rust'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs</p>
+				<code class='cs'
+>public string GerarInscricaoEstadualPR() {
+
+	int soma = 0;
+	int resto = 0;
+	int[] <strong>multiplicadores</strong> = new int[] { <strong>4, 3, 2, 7, 6, 5, 4, 3, 2</strong> };
+	var random = new Random();
+	string <strong>semente</strong> = random.Next(1, <strong>99999999</strong>).ToString()<strong>.PadLeft(8</strong>, '0');
+
+	for (var <strong>i = 1</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i - 1</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (var <strong>i = 0</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+
+	return semente;
+
+}</code
+				>
+			</div>
+
+			<div class='codeblock'>
+					<p>main.js</p>
+					<code class='javascript'
+>function gerarInscricaoEstadualPR() {
+
+	let soma = 0;
+	let resto = 0;
+	const <strong>multiplicadores</strong> = [<strong>4, 3, 2, 7, 6, 5, 4, 3, 2</strong>];
+	let <strong>semente</strong> = let semente = Math.round(Math.random() <strong>* 100000000</strong>).toString();
+	semente = semente<strong>.substr(0, 8)</strong>;
+
+	for (let <strong>i = 1</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i - 1</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (let <strong>i = 0</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+
+	return semente;
+
+}</code
+				>
+			</div>
+
+		</div>
+
+	</section>
+
+
+
+	<section>
+
+		<h2><abbr title='Cdastro de Pessoa Física'>CPF</abbr></h2>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+				<p>main.cpp</p>
+				<code class='cpp'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>main.rs</p>
+				<code class='rust'
+>extern crate rand;
+
+use rand::Rng;
+
+fn gerarCpf() {
+
+	let mut soma:u32 = 0; // ver depois como usar u8 e o vetor com u8 tb
+	let mut resto:u32 = 0;
+	let <strong>multiplicadores</strong>[u32;10] = [<strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong>];
+
+	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
+	let mut sementeString = semente.to_string(); // TODO padding da string com 0
+	let mut sementeVetor:Vec&lt;_&gt; = sementeString
+		.chars()
+		.map(|caractere| caractere.to_digit(10).unwrap())
+		.collect();
+
+	for i in <strong>1</strong>..10 {
+		soma += sementeVetor[<strong>i - 1</strong>] * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if resto &lt; 2 {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	sementeVetor.push(resto);
+	soma = 0;
+
+	for i in <strong>0</strong>..10 {
+		soma += sementeVetor[<strong>i</strong>] * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+
+	if resto &lt; 2 {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	sementeVetor.push(resto);
+	sementeString = sementeVetor
+		.into_iter()
+		.map(|numero| numero.to_string())
+		.collect();
+	println!("{}", sementeString);
+	//return semente;
+
+}</code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs</p>
+				<code class='cs'
+>
+
+
+
+public string GerarCpf() {
+
+	var random = new Random();
+
+	int soma = 0;
+	int resto = 0;
+	int[] <strong>multiplicadores</strong> = new int[10] { <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
+	string semente;
+
+	do {
+		<strong>semente</strong> = random.Next(1, <strong>999999999</strong>).ToString()<strong>.PadLeft(9</strong>, '0');
+	} while (
+		semente == "00000000000"
+		|| semente == "11111111111"
+		|| semente == "22222222222"
+		|| semente == "33333333333"
+		|| semente == "44444444444"
+		|| semente == "55555555555"
+		|| semente == "66666666666"
+		|| semente == "77777777777"
+		|| semente == "88888888888"
+		|| semente == "99999999999"
+	);
+
+	for (int <strong>i = 1</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i - 1</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (int <strong>i = 0</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente = semente + resto;
+
+	return semente;
+
+}</code
+					>
+			</div>
+
+			<div class='codeblock'>
+					<p>main.js</p>
+					<code class='js'
+></code
+				>
+			</div>
+
+		</div>
+
+	</section>
+
+
+
+	<section>
+
+		<h2><abbr title='Cadastro Nacional de Pessoa Jurídica'>CNPJ</abbr></h2>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+				<p>main.cpp</p>
+				<code class='cpp'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>main.rs</p>
+				<code class='rust'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs</p>
+				<code class='cs'
+>public string GerarCnpj() {
+
+	var random = new Random();
+
+	int soma = 0;
+	int resto = 0;
+	int[] <strong>multiplicadores</strong> = new int[] { <strong>6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
+	string raiz;
+	string sufixo;
+
+	do {
+		<strong>raiz</strong> = random.Next(1, <strong>99999999</strong>).ToString()<strong>.PadLeft(8</strong>, '0');
+		<strong>sufixo</strong> = random.Next(1, <strong>9999</strong>).ToString()<strong>.PadLeft(4</strong>, '0');
+	} while (
+		(raiz == "00000000" &amp;&amp; sufixo == "0000")
+		|| (raiz == "11111111" &amp;&amp; sufixo == "1111")
+		|| (raiz == "22222222" &amp;&amp; sufixo == "2222")
+		|| (raiz == "33333333" &amp;&amp; sufixo == "3333")
+		|| (raiz == "44444444" &amp;&amp; sufixo == "4444")
+		|| (raiz == "55555555" &amp;&amp; sufixo == "5555")
+		|| (raiz == "66666666" &amp;&amp; sufixo == "6666")
+		|| (raiz == "77777777" &amp;&amp; sufixo == "7777")
+		|| (raiz == "88888888" &amp;&amp; sufixo == "8888")
+		|| (raiz == "99999999" &amp;&amp; sufixo == "9999")
+	);
+
+	string semente = raiz + sufixo;
+
+	for (int <strong>i = 1</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i - 1</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (int <strong>i = 0</strong>; i &lt; multiplicadores.Count(); i++) {
+		soma += int.Parse(semente[<strong>i</strong>].ToString()) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+
+	return semente;
+
+}</code
+					>
+			</div>
+
+			<div class='codeblock'>
+					<p>main.js</p>
+					<code class='js'
+></code
+				>
+			</div>
+
+		</div>
+
+	</section>
+
+
+
+</body>
+</html>
