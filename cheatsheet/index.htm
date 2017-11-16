@@ -6152,6 +6152,11 @@ var ex = new NamedArgs(
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+Até a versão 1.8 não possui
+</div>
+
+<div class='codeblock'>
 
 <p>C++</p>
 <code class='cpp'
@@ -6302,10 +6307,89 @@ imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
 >
 </div>
 
+
+
 <div class='codeblock'>
-<p>Rust</p>
-Até a versão 1.8 não possui
+
+<p>Kotlin</p>
+<code class='kotlin'
+>// argumentos do mesmo tipo
+
+imprimirSimples(String titulo, vararg paginas:Int) {
+	/*for (int pagina : paginas) {
+		System.out.println(String.format("Imprimindo página %1", pagina));
+	}*/
+}
+
+imprimirSimples("resumo", 1, 2, 5);</code
+>
+
+<p>Kotlin</p>
+<code class='kotlin'
+>// argumentos de todos os tipos
+
+/*void imprimir(String titulo, Object... paginas) {
+	for (Object valor : paginas) {
+		if (valor instanceof Integer) {
+			System.out.println(String.format("Imprimindo página %d", valor));
+		} else if (valor instanceof Range&lt;Integer&gt;) {
+			System.out.println(String.format(
+				"Imprimindo páginas %d até %d",
+				((Range&lt;Integer&gt;)valor).getMinimum(),
+				((Range&lt;Integer&gt;)valor).getMaximum()
+			));
+		} else {
+			System.out.println("Imprimindo outra coisa");
+		}
+	}
+}
+
+imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");*/</code
+>
 </div>
+
+
+
+<div class='codeblock'>
+
+<p>Java</p>
+<code class='java'
+>// argumentos do mesmo tipo
+
+void imprimirSimples(String titulo, int... paginas) {
+	for (int pagina : paginas) {
+		System.out.println(String.format("Imprimindo página %1", pagina));
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5);</code
+>
+
+<p>Java</p>
+<code class='java'
+>// argumentos de todos os tipos
+
+void imprimir(String titulo, Object... paginas) {
+	for (Object valor : paginas) {
+		if (valor instanceof Integer) {
+			System.out.println(String.format("Imprimindo página %d", valor));
+		} else if (valor instanceof Range&lt;Integer&gt;) {
+			System.out.println(String.format(
+				"Imprimindo páginas %d até %d",
+				((Range&lt;Integer&gt;)valor).getMinimum(),
+				((Range&lt;Integer&gt;)valor).getMaximum()
+			));
+		} else {
+			System.out.println("Imprimindo outra coisa");
+		}
+	}
+}
+
+imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
+>
+</div>
+
+
 
 <div class='codeblock'>
 
@@ -6350,44 +6434,7 @@ Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
 >
 </div>
 
-<div class='codeblock'>
 
-<p>Java</p>
-<code class='java'
->// argumentos do mesmo tipo
-
-void imprimirSimples(String titulo, int... paginas) {
-	for (int pagina : paginas) {
-		System.out.println(String.format("Imprimindo página %1", pagina));
-	}
-}
-
-imprimirSimples("resumo", 1, 2, 5);</code
->
-
-<p>Java</p>
-<code class='java'
->// argumentos de todos os tipos
-
-void imprimir(String titulo, Object... paginas) {
-	for (Object valor : paginas) {
-		if (valor instanceof Integer) {
-			System.out.println(String.format("Imprimindo página %d", valor));
-		} else if (valor instanceof Range&lt;Integer&gt;) {
-			System.out.println(String.format(
-				"Imprimindo páginas %d até %d",
-				((Range&lt;Integer&gt;)valor).getMinimum(),
-				((Range&lt;Integer&gt;)valor).getMaximum()
-			));
-		} else {
-			System.out.println("Imprimindo outra coisa");
-		}
-	}
-}
-
-imprimir("resumo", 1, Range.between(2, 5), "capítulo 2");</code
->
-</div>
 
 <div class='codeblock'>
 
@@ -10101,6 +10148,85 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// Devemos inicializar todos os campos
+// da struct com a sintaxe de chaves
+// antes de poder usá-la
+pub struct ResultadoCaixa {
+	pub total:i32,
+	pub valorPago:i32,
+	pub troco:i32,
+}
+
+let mut compra2 = ResultadoCaixa{
+	total: 967,
+	valorPago: 1000,
+	troco: 33
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// structs podem ter métodos
+// métodos podem ou não modificar a struct
+// dependendo de como recebem o argumento
+// self. Se &amp;self ou &amp;mut self
+
+impl ResultadoCaixa {
+
+	pub fn descontarFidelidade(&amp;mut self) {
+		self.total = self.calcularFidelidade();
+		self.troco = self.valorPago - self.total;
+	}
+
+	fn calcularFidelidade(&amp;self) -&gt; i32 {
+		self.total - 1
+	}
+
+}
+
+
+
+
+
+// structs não herdam de um objeto comum
+
+
+// Nem suportam herança
+
+
+// No entanto, podem implementar traits
+
+
+
+trait Parcelavel {
+	fn parcelar(&amp;self) -&gt; [i32; 3];
+}
+
+impl Parcelavel for ResultadoCaixa {
+	fn parcelar(&amp;self) -&gt; [i32; 3] {
+		//
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// structs e classes são idênticas
@@ -10128,7 +10254,7 @@ struct ResultadoCaixa {
 // precisamos incluir a palavra struct
 // antes do nome do tipo
 struct ResultadoCaixa compra1;
-compra1.total = 997;
+compra1.total = 967;
 compra1.valorPago = 1000;
 compra1.troco = 33;</code
 >
@@ -10147,7 +10273,7 @@ public struct ResultadoCaixa {
 }
 
 let compra1 = ResultadoCaixa(
-	total: 997,
+	total: 967,
 	valorPago:1000,
 	troco:33
 )
@@ -10213,84 +10339,35 @@ public struct ResultadoCaixaCartao : Parcelavel {
 >
 </div>
 
+
+
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// Devemos inicializar todos os campos
-// da struct com a sintaxe de chaves
-// antes de poder usá-la
-pub struct ResultadoCaixa {
-	pub total:i32,
-	pub valorPago:i32,
-	pub troco:i32,
-}
+<p>Kotlin</p>
+<code class='kotlin'
+>// data classes NÃO SÃO structs
+// mas tem um propósito similar
+public data class ResultadoCaixa(
+	val total:Int,
+	val valorPago:Int,
+	var troco:Int
+)
 
-let mut compra2 = ResultadoCaixa{
-	total: 997,
-	valorPago: 1000,
-	troco: 33
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// structs podem ter métodos
-// métodos podem ou não modificar a struct
-// dependendo de como recebem o argumento
-// self. Se &amp;self ou &amp;mut self
-
-impl ResultadoCaixa {
-
-	pub fn descontarFidelidade(&amp;mut self) {
-		self.total = self.calcularFidelidade();
-		self.troco = self.valorPago - self.total;
-	}
-
-	fn calcularFidelidade(&amp;self) -&gt; i32 {
-		self.total - 1
-	}
-
-}
-
-
-
-
-
-// structs não herdam de um objeto comum
-
-
-// Nem suportam herança
-
-
-// No entanto, podem implementar traits
-
-
-
-trait Parcelavel {
-	fn parcelar(&amp;self) -&gt; [i32; 3];
-}
-
-impl Parcelavel for ResultadoCaixa {
-	fn parcelar(&amp;self) -&gt; [i32; 3] {
-		//
-	}
-}</code
+val compra1 = ResultadoCaixa(
+	total = 967,
+	valorPago = 1000,
+	troco = 33
+)</code
 >
 </div>
+
+
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+
 
 <div class='codeblock'>
 <p>C#</p>
@@ -10371,10 +10448,7 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 >
 </div>
 
-<div class='codeblock'>
-<p>Java</p>
--
-</div>
+
 
 <div class='codeblock'>
 <p>JavaScript</p>
@@ -10415,6 +10489,11 @@ End With</code>
 <h3 id='classes'>Classes</h3>
 
 <div class='comparison large'>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
 
 <div class='codeblock'>
 
@@ -10611,13 +10690,13 @@ class C {
 		//
 	}
 
-	static var myStaticProp:S
+	static var myStaticProp:String
 
 	deinit {
 		//
 	}
 
-	lazy var prop:S
+	lazy var prop:String
 
 }
 
@@ -10653,8 +10732,115 @@ final class R {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
--
+
+<p>Kotlin - ResultadoCaixa.kt</p>
+<code class='kotlin'
+>public class ResultadoCaixa(total:Int, valorPago:Int) {
+
+	public fun descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
+	}
+
+	private fun calcularFidelidade():Int {
+		return this.total - 1;
+	}
+
+	var total = total
+	val valorPago = valorPago
+	var troco = valorPago - total
+
+	lateinit var prop:String
+
+}
+
+// OU
+
+public class ResultadoCaixa constructor(val total:Int, val valorPago:Int) {
+
+	init {
+		this.total = total
+		this.valorPago = valorPago
+		this.troco = valorPago - total
+	}
+
+	public fun descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
+	}
+
+	private fun calcularFidelidade():Int {
+		return this.total - 1;
+	}
+
+	var total:Int
+	val valorPago:Int
+	var troco:Int
+
+}
+
+val compra1 = ResultadoCaixa(997, 1000)
+compra1.descontarFidelidade()
+
+
+
+open class C {
+}
+
+class D : C, P, Q {
+	//
+}</code
+>
+
+<p>Kotlin - Main.kt</p>
+<code class='kotlin'
+></code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Java - ResultadoCaixa.java</p>
+<code class='java'
+>public final class ResultadoCaixa {
+
+	public ResultadoCaixa(int total, int valorPago) {
+		this.total = total;
+		this.valorPago = valorPago;
+		this.troco = this.valorPago - this.troco;
+	}
+
+	public void descontarFidelidade() {
+		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
+	}
+
+	private int calcularFidelidade() {
+		return this.total - 1;
+	}
+
+	private int total = 0;
+
+	// variáveis final não podem ser alteradas
+	// após seu valor ter sido especificado
+	private final int valorPago;
+
+	private int troco = 0;
+
+}</code
+>
+
+<p>Java - Main.java</p>
+<code class='java'
+>public class Main {
+	public static void main(string[] args) {
+		ResultadoCaixa compra1 = new ResultadoCaixa(997, 1000);
+		compra1.descontarFidelidade();
+	}
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -10701,50 +10887,6 @@ final class R {
 		var compra2 = new ResultadoCaixa(total:997, valorPago:1000);
 		compra2.descontarFidelidade();
 
-	}
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
-<p>Java - ResultadoCaixa.java</p>
-<code class='java'
->public final class ResultadoCaixa {
-
-	public ResultadoCaixa(int total, int valorPago) {
-		this.total = total;
-		this.valorPago = valorPago;
-		this.troco = this.valorPago - this.troco;
-	}
-
-	public void descontarFidelidade() {
-		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
-	}
-
-	private int calcularFidelidade() {
-		return this.total - 1;
-	}
-
-	private int total = 0;
-
-	// variáveis final não podem ser alteradas
-	// após seu valor ter sido especificado
-	private final int valorPago;
-
-	private int troco = 0;
-
-}</code
->
-
-<p>Java - Main.java</p>
-<code class='java'
->public class Main {
-	public static void main(string[] args) {
-		ResultadoCaixa compra1 = new ResultadoCaixa(997, 1000);
-		compra1.descontarFidelidade();
 	}
 }</code
 >
@@ -10848,6 +10990,11 @@ Set compra1 = new ResutadoCaixa
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 -
 </div>
@@ -10902,17 +11049,17 @@ int main(int argc, const char* argv[]) {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->public class A {
+>public final class A {
 
 	init() {
 		//
 	}
 
-	var getter:S {
+	var getter:String {
 		return ...
 	}
 
-	var getterSetter:S {
+	var getterSetter:String {
 
 		get {
 			return self._getterSetter
@@ -10924,7 +11071,7 @@ int main(int argc, const char* argv[]) {
 
 	}
 
-	private _getterSetter:S
+	private _getterSetter:String
 
 	// setter pode ser menos visível que o getter
 	public private(set) var numberOfEdits = 0
@@ -10940,7 +11087,41 @@ a.prop = ""</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Kotlin</p>
+<code class='kotlin'
+>// as classes são final por padrão
+// não confundir com sealed class
+// que quer dizer outra coisa
+class A {
+
+	init {
+		//
+	}
+
+	// getter
+	var stringRepresentation: String
+	get() = this.toString()
+
+	// getter e setter
+	var stringRepresentation2: String
+	get() = this.toString()
+	set(value) {
+		setDataFromString(value)
+	}
+
+	// com visibilidades diferentes
+	var stringRepresentation3: String
+	get() = this.toString()
+	private set(value) {
+		setDataFromString(value)
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
 -
 </div>
 
@@ -10997,11 +11178,6 @@ a.prop = ""</code
 }</code
 >
 
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
 </div>
 
 <div class='codeblock'>
@@ -11271,19 +11447,50 @@ impl HasArea for Circle {
 </div>
 
 <div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>interface A {
+	fun foo() { print("A") }
+	fun bar()
+
+	val prop: Int // abstract
+
+	val propertyWithImplementation: String
+		get() = "foo"
+}
+
+interface B {
+	fun foo() { print("B") }
+	fun bar() { print("bar") }
+}
+
+class C : A {
+	override fun bar() { print("bar") }
+}
+
+class D : A, B {
+	override fun foo() {
+		super&lt;A&gt;.foo()
+		super&lt;B&gt;.foo()
+	}
+
+	override fun bar() {
+		super&lt;B&gt;.bar()
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>// TODO</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
->
-</code
->
+-
 </div>
 
 </div>
@@ -11644,7 +11851,7 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->// TODO esperar Swift 3
+>
 </code
 >
 </div>
