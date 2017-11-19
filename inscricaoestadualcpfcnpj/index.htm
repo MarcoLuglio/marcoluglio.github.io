@@ -170,14 +170,14 @@
 
 use rand::Rng;
 
-fn gerarCpf() {
+fn gerarCpf() -&gt; String {
 
 	let mut soma:u32 = 0; // ver depois como usar u8 e o vetor com u8 tb
-	let mut resto:u32 = 0;
-	let <strong>multiplicadores</strong>[u32;10] = [<strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong>];
+	let mut resto:u32;
+	let <strong>multiplicadores</strong>:[u32;10] = [<strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong>];
 
 	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
-	let mut sementeString = semente.to_string(); // TODO padding da string com 0
+	let mut sementeString = format!("{:09}", semente);
 	let mut sementeVetor:Vec&lt;_&gt; = sementeString
 		.chars()
 		.map(|caractere| caractere.to_digit(10).unwrap())
