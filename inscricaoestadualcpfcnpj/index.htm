@@ -107,7 +107,7 @@
 
 	let soma = 0;
 	let resto = 0;
-	const <strong>multiplicadores</strong> = [<strong>4, 3, 2, 7, 6, 5, 4, 3, 2</strong>];
+	const <strong>multiplicadores</strong> = [ <strong>4, 3, 2, 7, 6, 5, 4, 3, 2</strong> ];
 	let <strong>semente</strong> = let semente = Math.round(Math.random() <strong>* 100000000</strong>).toString();
 	semente = semente<strong>.substr(0, 8)</strong>;
 
@@ -159,14 +159,80 @@
 			<div class='codeblock'>
 				<p>main.cpp</p>
 				<code class='cpp'
-></code
+>#include &lt;random&gt;
+#include &lt;sstream&gt; // std::ostringstream
+#include &lt;string&gt; // std::stoi
+#include &lt;iomanip&gt; // std::setfill
+#include &lt;vector&gt; // std::vector
+#include &lt;array&gt; // std::array
+
+std::string gerarCpf() {
+
+	int soma {0};
+	int resto {0};
+	const std::array&lt;int, 10&gt; <strong>multiplicadores</strong> = { <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
+
+	std::random_device randomDevice;
+	std::default_random_engine generator(randomDevice());
+	std::uniform_int_distribution&lt;int&gt; distribution(1, <strong>999999999</strong>);
+	auto <strong>semente</strong> = distribution(generator);
+
+	std::ostringstream outputStringStream;
+	outputStringStream &lt;&lt; std::right &lt;&lt; std::setfill('0') &lt;&lt; std::setw(9) &lt;&lt; semente;
+
+	auto sementeString{outputStringStream.str()};
+
+	std::vector&lt;char&gt; sementeVetor(sementeString.begin(), sementeString.end());
+
+	// calcular os dígitos verificadores
+
+	int sementeInt; // conversão de char para int (- '0')
+
+	for (int <strong>i = 1</strong>; i &lt; multiplicadores.size(); ++i) {
+		sementeInt = sementeVetor[<strong>i - 1</strong>] - '0';
+		soma += (sementeInt * multiplicadores[i]);
+	}
+
+	resto = (soma % 11);
+
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	outputStringStream &lt;&lt; resto;
+	sementeVetor.push_back(resto + '0'); // conversão de int para char (+ '0')
+	soma = 0;
+
+	for (int <strong>i = 0</strong>; i &lt; multiplicadores.size(); ++i) {
+		sementeInt = sementeVetor[<strong>i</strong>] - '0';
+		soma += (sementeInt * multiplicadores[i]);
+	}
+
+	resto = (soma % 11);
+
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	outputStringStream &lt;&lt; resto;
+
+	return outputStringStream.str();
+
+}</code
 				>
 			</div>
 
 			<div class='codeblock'>
 				<p>main.rs</p>
 				<code class='rust'
->extern crate rand;
+>
+
+
+extern crate rand;
 
 use rand::Rng;
 
@@ -174,7 +240,7 @@ fn gerarCpf() -&gt; String {
 
 	let mut soma:u32 = 0; // ver depois como usar u8 e o vetor com u8 tb
 	let mut resto:u32;
-	let <strong>multiplicadores</strong>:[u32;10] = [<strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong>];
+	let <strong>multiplicadores</strong>:[u32;10] = [ <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
 
 	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
 	let mut sementeString = format!("{:09}", semente);
@@ -214,8 +280,8 @@ fn gerarCpf() -&gt; String {
 		.into_iter()
 		.map(|numero| numero.to_string())
 		.collect();
-	println!("{}", sementeString);
-	//return semente;
+
+	return sementeString;
 
 }</code
 				>
@@ -228,14 +294,17 @@ fn gerarCpf() -&gt; String {
 
 
 
-public string GerarCpf() {
 
-	var random = new Random();
+
+
+public string GerarCpf() {
 
 	int soma = 0;
 	int resto = 0;
 	int[] <strong>multiplicadores</strong> = new int[10] { <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
 	string semente;
+
+	var random = new Random();
 
 	do {
 		<strong>semente</strong> = random.Next(1, <strong>999999999</strong>).ToString()<strong>.PadLeft(9</strong>, '0');
@@ -323,13 +392,13 @@ public string GerarCpf() {
 				<code class='cs'
 >public string GerarCnpj() {
 
-	var random = new Random();
-
 	int soma = 0;
 	int resto = 0;
 	int[] <strong>multiplicadores</strong> = new int[] { <strong>6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
 	string raiz;
 	string sufixo;
+
+	var random = new Random();
 
 	do {
 		<strong>raiz</strong> = random.Next(1, <strong>99999999</strong>).ToString()<strong>.PadLeft(8</strong>, '0');
