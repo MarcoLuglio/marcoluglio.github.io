@@ -11833,9 +11833,17 @@ trait FooBar : Foo {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
+>// usar templates
 </code
 >
 </div>
@@ -11857,26 +11865,100 @@ trait FooBar : Foo {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
+<p>Kotlin</p>
+<code class='kotlin'
+>public class Generica&lt;T&gt;() {
+	//
+}
 
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
+// TODO ver where, in e out
+
+// usa type erasure :(</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
+>public class Generica&lt;T&gt; {
+	// valor padrão para T é null
+	private T propriedadeGenerica = null;
+}
+
+Generica gen1 = new Generica&lt;Integer&gt;();
+
+
+public class Generica2Tipos&lt;T, U&gt; {
+	//
+}
+
+Generica2Tipos gen2 = new Generica&lt;Integer, Float&gt;();
+
+public class HerdaDeU&lt;T extends U&gt; {
+	//
+}
+
+public class RegrasCombinadas&lt;T extends U &amp; V&gt; {
+	//
+}
+
+public class Coringa&lt;?&gt; {
+	// ou wildcard, permite qquer coisa
+}
+
+public class CoringaTipado&lt;? extends Number&gt; {
+	// pois Generica&lt;Integer&gt; não herda de Generica&lt;Number&gt;
+	// mas o wild card CoringaTipado&lt;? extends Number&gt;
+	// permite CoringaTipado&lt;Integer&gt;
+}
+
+// usa type erasure, permitindo bugs com casts etc.</code
 >
-</code
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>public class Generica&lt;T&gt; {
+	// valor padrão para T é default(T)
+	private T propriedadeGenerica = default(T);
+}
+
+var gen1 = new Generica&lt;int&gt;();
+
+
+public class Generica2Tipos&lt;T, U&gt; {
+	//
+}
+
+var gen2 = new Generica2Tipos&lt;int, float&gt;();
+
+
+public class SoValueType&lt;T&gt; where T : struct {
+	//
+}
+
+var gen3 = new SoValueType&lt;int&gt;();
+
+
+public class SoReferenceType&lt;T&gt; where T : class {
+	//
+}
+
+var gen4 = new SoReferenceType&lt;object&gt;();
+
+
+public class PossuiConstrutorPublicoPadrao&lt;T&gt; where T : new() {
+	//
+}
+
+public class HerdaDeU&lt;T&gt; where T : U {
+	//
+}
+
+public class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
+	//
+}</code
 >
 </div>
 
