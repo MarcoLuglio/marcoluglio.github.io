@@ -11835,32 +11835,58 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>pub struct Generica&lt;T&gt; {
+	// TODO qual é o valor padrão de T?
+	propriedadeGenerica: T
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->// usar templates
-</code
+>template &lt;class T&gt;
+class Generica final {
+	T propriedadeGenerica;
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>@interface Generica&lt;__covariant ObjectType&gt; : NSObject
+	@property (assign, nonatomic) ObjectType propriedadGenerica;
+@end
+
+@interface HerdaDeU&lt;__covariant ObjectType:U *&gt; : NSObject
+@end
+
+// TODO __contravariant tb pode ser usado?
+
+// usa type erasure :(</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>public final class Generica&lt;T&gt; {
+	// TODO qual é o valor padrão de T?
+	private T propriedadeGenerica// = [Element]()
+}
+
+public final class Generica2Tipos&lt;T, U&gt; {
+	//
+}
+
+public final class HerdaDeU&lt;T : U&gt; {
+	//
+}
+
+public final class Restricoes&lt;T : U&gt; where T.Item == U.Item {
+	//
+}</code
 >
 </div>
 
@@ -11880,7 +11906,7 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->public class Generica&lt;T&gt; {
+>public final class Generica&lt;T&gt; {
 	// valor padrão para T é null
 	private T propriedadeGenerica = null;
 }
@@ -11888,25 +11914,25 @@ trait FooBar : Foo {
 Generica gen1 = new Generica&lt;Integer&gt;();
 
 
-public class Generica2Tipos&lt;T, U&gt; {
+public final class Generica2Tipos&lt;T, U&gt; {
 	//
 }
 
-Generica2Tipos gen2 = new Generica&lt;Integer, Float&gt;();
+Generica2Tipos gen2 = new Generica2Tipos&lt;Integer, Float&gt;();
 
-public class HerdaDeU&lt;T extends U&gt; {
+public final class HerdaDeU&lt;T extends U&gt; {
 	//
 }
 
-public class RegrasCombinadas&lt;T extends U &amp; V&gt; {
+public final class RegrasCombinadas&lt;T extends U &amp; V&gt; {
 	//
 }
 
-public class Coringa&lt;?&gt; {
+public final class Coringa&lt;?&gt; {
 	// ou wildcard, permite qquer coisa
 }
 
-public class CoringaTipado&lt;? extends Number&gt; {
+public final class CoringaTipado&lt;? extends Number&gt; {
 	// pois Generica&lt;Integer&gt; não herda de Generica&lt;Number&gt;
 	// mas o wild card CoringaTipado&lt;? extends Number&gt;
 	// permite CoringaTipado&lt;Integer&gt;
@@ -11919,7 +11945,7 @@ public class CoringaTipado&lt;? extends Number&gt; {
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->public class Generica&lt;T&gt; {
+>public sealed class Generica&lt;T&gt; {
 	// valor padrão para T é default(T)
 	private T propriedadeGenerica = default(T);
 }
@@ -11927,36 +11953,36 @@ public class CoringaTipado&lt;? extends Number&gt; {
 var gen1 = new Generica&lt;int&gt;();
 
 
-public class Generica2Tipos&lt;T, U&gt; {
+public sealed class Generica2Tipos&lt;T, U&gt; {
 	//
 }
 
 var gen2 = new Generica2Tipos&lt;int, float&gt;();
 
 
-public class SoValueType&lt;T&gt; where T : struct {
+public sealed class SoValueType&lt;T&gt; where T : struct {
 	//
 }
 
 var gen3 = new SoValueType&lt;int&gt;();
 
 
-public class SoReferenceType&lt;T&gt; where T : class {
+public sealed class SoReferenceType&lt;T&gt; where T : class {
 	//
 }
 
 var gen4 = new SoReferenceType&lt;object&gt;();
 
 
-public class PossuiConstrutorPublicoPadrao&lt;T&gt; where T : new() {
+public sealed class PossuiConstrutorPublicoPadrao&lt;T&gt; where T : new() {
 	//
 }
 
-public class HerdaDeU&lt;T&gt; where T : U {
+public sealed class HerdaDeU&lt;T&gt; where T : U {
 	//
 }
 
-public class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
+public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 	//
 }</code
 >
