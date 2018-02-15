@@ -3893,7 +3893,7 @@ stringBuilder.ToString();</code
 let mut preAlocada:[i32; 10];
 preAlocada = [0; 10];
 let prePopulada = ["p", "r", "e"];
-
+let prePopuladaT:[&amp;str; 3] = ["p", "o", "p"];
 
 const linhas:usize = 2;
 const colunas:usize = 4;
@@ -3903,7 +3903,32 @@ let mdPreAlocada:[[u8; colunas]; linhas];
 let mdPrePopulada = [
 	[0, 1, 2, 3],
 	[4, 5, 6, 7]
-];</code
+];
+
+
+
+
+
+
+
+
+
+preAlocada[5] = 16000;
+
+let indice0 = prePopulada[0];
+let two = mdPrePopulada[0][2];
+
+for valor in prePopulada.iter() {
+	//
+}
+
+
+
+
+
+let tamanho = mdPrePopulada.len();
+
+// TODO comparar arrays</code
 >
 </div>
 
