@@ -3922,9 +3922,9 @@ for valor in prePopulada.iter() {
 	//
 }
 
-
-
-
+for (indice, valor) in prePopulada.iter().enumerate() {
+	// indice e valor
+}
 
 let tamanho = mdPrePopulada.len();
 
@@ -4012,11 +4012,11 @@ for valor in prePopulada {
 	//
 }
 
-for (indice, valor) in prePopulada.enumerate() {
+for (indice, valor) in prePopulada.enumerated() {
 	// indice e valor
 }
 
-let tamanho =  = mdPrePopulada.count
+let tamanho = mdPrePopulada.count
 
 // também temos a propriedade .empty
 // e os métodos insert e removeAtIndex
@@ -4266,17 +4266,28 @@ Next</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+let mut lista:Vec<i32> = vec![];
+lista.push(1);</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
-</code
+std::vector&lt;int&gt; lista;
+lista.push_back(1);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->NSMutableArray* lista;</code
+>
+NSMutableArray* lista;</code
 >
 </div>
 
@@ -4284,38 +4295,44 @@ Next</code
 <p>Swift</p>
 <code class='swift'
 >
-</code
+var lista = [Int]() // arrays são "listas"
+lista.append(1)</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->List&lt;object&gt; lista;
-</code
+<p>Kotlin</p>
+<code class='kotlin'
+>// temos List (listOf) e MutableList (mutableListOf)
+var lista = mutableListOf<int>()
+lista.add(1)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
+>// List é uma interface com ArrayList e LinkedList
+List&lt;Integer&gt; lista = new ArrayList&lt;Integer&gt;();
+lista.add(1);</code
 >
-</code
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+List&lt;int&gt; lista;
+lista.Add(1);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->let lista = [];</code
+>
+let lista = []; // arrays são "listas"
+lista.push(1);</code
 >
 </div>
 
@@ -4323,7 +4340,8 @@ Next</code
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim lista As Collection
-Set lista = New Collection</code
+Set lista = New Collection
+lista.Add 1</code
 >
 </div>
 
@@ -4344,6 +4362,21 @@ Set lista = New Collection</code
 <h2 id='stackheap'>Stack e Heap</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO
+// &amp;'static str statically allocated lives inside the program binary code
+// stack by default
+// heap
+// String
+// Box&lt;T&gt;
+// Vec&lt;T&gt;
+// growable on heap
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -4383,17 +4416,23 @@ Set lista = New Collection</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// TODO
-// &amp;'static str statically allocated lives inside the program binary code
-// stack by default
-// heap
-// String
-// Box&lt;T&gt;
-// Vec&lt;T&gt;
-// growable on heap
+<p>Kotlin</p>
+<code class='kotlin'
+>
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// tipos primitivos na stack
+int i = 10;
+
+// tipos de referência na heap
+String s = "Na heap"; // TODO verificar string heap
+Object o = new Object();
+// enums tb?</code
 >
 </div>
 
@@ -4422,19 +4461,6 @@ unsafe {
 // class, interface, array e delegate
 string a = "Na heap"; // TODO verificar string heap
 object o = new object();</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->// tipos primitivos na stack
-int i = 10;
-
-// tipos de referência na heap
-String s = "Na heap"; // TODO verificar string heap
-Object o = new Object();
-// enums tb?</code
 >
 </div>
 
@@ -5261,7 +5287,44 @@ match x {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
-></code
+>// TODO testar isso
+// label e goto
+for (int a = 0; a &lt; 10; ++a) {
+	for (int y = 0; y &lt; 10; ++y) { // Run until condition.
+		for (int x = 0; x &lt; 10; ++x) { // Run until condition.
+			if (x == 5 &amp;&amp; y == 5) {
+				goto Outer;
+			}
+		}
+		++dummy;
+	}
+Outer:
+	continue;
+}
+return dummy;
+
+switch(color) {
+case GREEN:
+case RED:
+case BLUE:
+	Paint();
+	break;
+case YELLOW:
+	if(AlsoHasCriteriaX) {
+		Paint();
+		break; /* notice break here */
+	}
+	goto explicit_label;
+
+case FUCHSIA:
+	PokeEyesOut();
+	break;
+
+default:
+explicit_label:
+	Print("Ugly color, no paint.")
+	break;
+}</code
 >
 </div>
 
@@ -5370,6 +5433,7 @@ switch yetAnotherPoint {
 <p>Kotlin</p>
 <code class='kotlin'
 >// label e break / continue
+loop1@
 for (i in 0 until 3) {
 	loop2@
 	for (j in 0 until 3) {
@@ -5405,13 +5469,13 @@ when (x) {
 <p>Java</p>
 <code class='java'
 >// label e break / continue
-
-
-
-
-
-
-
+loop1:
+for (...) {
+	loop2:
+	for (...) {
+		continue loop1; // pode usar break tb
+	}
+}
 
 
 
@@ -6325,7 +6389,39 @@ var ex = new NamedArgs(
 
 <div class='codeblock'>
 <p>Rust</p>
-Até a versão 1.8 não possui
+<code class='rust'
+>// argumentos do mesmo tipo
+
+// usa macros para argumentos variádicos O_O'
+macro_rules! imprimirSimples {
+
+	($titulo:expr, $($pagina:expr), +) => {{
+
+		// na "assinatura" do macro não dá pra diferenciar os tipos
+		// mas o corpo vai lançar exceção na linha quando compilar
+		// se o tipo não for &amp;str
+		let titulo:&amp;str = $titulo;
+
+		$(
+			// poderíamos fazer a verificação dos tipos aqui tb
+			// se necessário
+			let pagina = $pagina;
+			println!("Imprimindo página {}", pagina);
+		)+
+
+	}};
+
+}
+
+imprimirSimples!("resumo", 1, 2, 5);</code
+>
+
+<p>Rust</p>
+<code class='rust'
+>// argumentos de todos os tipos
+
+// TODO terminar exemplo</code
+>
 </div>
 
 <div class='codeblock'>
@@ -6359,7 +6455,7 @@ void imprimirSimples(string titulo, Tipos... paginas) {
 
 }
 
-imprimirSimples(1, 2, 5);</code
+imprimirSimples("resumo", 1, 2, 5);</code
 >
 
 <p>C++</p>
