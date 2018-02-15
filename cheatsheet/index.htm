@@ -846,13 +846,25 @@ Const dataLimite As Date = #12/30/2017#</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->let (x, y) = (1, 2);</code
+>
+let (x, y) = (1, 2);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
--
+<code class='cpp'
+>// C++ 17+
+auto [x, y] = std::make_tuple(1, 2);
+
+struct Point {
+	int x;
+	int y;
+};
+
+Point p {1, 2};
+auto [x, y] = p;</code
+>
 </div>
 
 <div class='codeblock'>
@@ -863,14 +875,16 @@ Const dataLimite As Date = #12/30/2017#</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->let (x, y) = (1, 2)</code
+>
+let (x, y) = (1, 2)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// TODO</code
+>
+var (x, y) = Pair(1, 2)</code
 >
 </div>
 
@@ -882,14 +896,18 @@ Const dataLimite As Date = #12/30/2017#</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// TODO  - C# 7+</code
+>// C# 7+
+(var x, var y) = (1, 2);
+
+// TODO deconstructors</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->[x, y] = [1, 2];</code
+>
+[x, y] = [1, 2];</code
 >
 </div>
 
@@ -1412,6 +1430,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td>i16</td><td>16 bits</td></tr>
 		<tr><td>i32</td><td>32 bits</td></tr>
 		<tr><td>i64</td><td>64 bits</td></tr>
+		<tr><td>i128</td><td>128 bits (experimental)</td></tr>
 	</tbody>
 </table>
 
@@ -1638,6 +1657,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td>u16</td><td>16 bits</td></tr>
 		<tr><td>u32</td><td>32 bits</td></tr>
 		<tr><td>u64</td><td>64 bits</td></tr>
+		<tr><td>u128</td><td>128 bits (experimental)</td></tr>
 	</tbody>
 </table>
 
@@ -2263,6 +2283,30 @@ JavaScript só possui um tipo numérico.</p>
 
 <div class='codeblock'>
 <p>Kotlin</p>
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>byte</td><td>Byte</td></tr>
+		<tr><td>short</td><td>Short</td></tr>
+		<tr><td>int</td><td>Integer</td></tr>
+		<tr><td>long</td><td>Long</td></tr>
+	</tbody>
+</table>
+
+<table>
+	<caption>Floating Point (IEEE 754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>classe</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>float</td><td>Float</td></tr>
+		<tr><td>double</td><td>Double</td></tr>
+	</tbody>
+</table>
 </div>
 
 <div class='codeblock'>
@@ -3605,9 +3649,9 @@ let beeGees = calvinHarris.replacingOccurrences(of: "love", with: "looove")
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->val simples = "A primeira faz \"tchan\" e só";
+>val simples = "A primeira faz \"tchan\" e só"
 
-val calvinHarris = "how deep\nis your love"; // 2 linhas
+val calvinHarris = "how deep\nis your love" // 2 linhas
 
 // concatenação
 val josePauloPaes = "Meu amor é simples, Dora," +
@@ -3648,23 +3692,7 @@ String josePauloPaes = "Meu amor é simples, Dora,\n" +
 "Como a água e o pão.\n" +
 "\n" +
 "Como o céu refletido\n" +
-"Nas pupilas de um cão.";
-
-// concatenação
-StringBuilder leminskiBuilder = new StringBuilder();
-leminskiBuilder.append("Merda é veneno.");
-leminskiBuilder.append("\nNo entanto, não há nada");
-leminskiBuilder.append("\nque seja mais bonito");
-leminskiBuilder.append("\nque uma bela cagada.");
-leminskiBuilder.append("\nCagam ricos, cagam pobres,");
-leminskiBuilder.append("\ncagam reis e cagam fadas.");
-leminskiBuilder.append("\nNão há merda que se compare");
-leminskiBuilder.append("\nà bosta da pessoa amada.");
-
-String leminski = leminskiBuilder.toString();
-
-// StringBuilder não é thread safe
-// Existe também a classe StringBuffer, que é</code
+"Nas pupilas de um cão.";</code
 >
 </div>
 
@@ -3747,6 +3775,103 @@ simples = "A primeira faz ""tchan"""
 
 <p>A</p>
 
+<h3 id='construindostrings'>Construindo strings</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO melhorar isso
+let mut vector:Vec&lt;_&gt;;
+vector.push("Termionu.");
+vector.push(" Só que não");
+vector
+	.chars()
+	.collect();
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>#include &lt;sstream&gt;
+std::ostringstream outputStringStream;
+outputStringStream &lt;&lt; "Terminou." &lt;&lt; " Só que não.";
+outputStringStream.str();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>// TODO NSMutableString
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>// supostamente var string
+// ao invés de let string</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>var stringBuilder = new StringBuilder()
+stringBuilder.append("Terminou.")
+stringBuilder.append(" Só que não.")
+stringBuilder.toString()</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>StringBuilder stringBuilder = new StringBuilder();
+stringBuilder.append("Terminou.");
+stringBuilder.append(" Só que não.");
+stringBuilder.toString();
+
+// StringBuilder não é thread safe
+// Existe também a classe StringBuffer, que é</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>var stringBuilder = new StringBuilder();
+stringBuilder.Append("Terminou.");
+stringBuilder.Append(" Só que não.");
+stringBuilder.ToString();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
 </section>
 
 
@@ -3760,8 +3885,25 @@ simples = "A primeira faz ""tchan"""
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>let vazia:[i32; 0] = [];
+
+
+
+// uma dimensão
+let mut preAlocada:[i32; 10];
+preAlocada = [0; 10];
+let prePopulada = ["p", "r", "e"];
+
+
+const linhas:usize = 2;
+const colunas:usize = 4;
+
+// multidimensional
+let mdPreAlocada:[[u8; colunas]; linhas];
+let mdPrePopulada = [
+	[0, 1, 2, 3],
+	[4, 5, 6, 7]
+];</code
 >
 </div>
 
@@ -3780,9 +3922,13 @@ int arrayCPreAlocada[10];
 <code class='objectivec'
 >int arrayCPreAlocada[10];
 
+
+
 // uma dimensão
 NSArray* prePopulada = @[@"p", @"r", @"e"];
 NSArray* prePopuladaAntiga = [NSArray arrayWithObjects:@"o", @"l", @"d", nil];
+
+
 
 int linhas = 2;
 int colunas = 4;
@@ -3793,7 +3939,7 @@ int arrayCMdPrePopulada[linhas][colunas] = {
 	{0, 1, 2, 3},
 	{4, 5, 6, 7}
 };
-int  arrayCMdPrePopulada2[linhas][colunas] = {0, 1, 2, 3, 4, 5, 6, 7};
+int arrayCMdPrePopulada2[linhas][colunas] = {0, 1, 2, 3, 4, 5, 6, 7};
 
 for (NSString* valor in prePopulada) {
 	//
@@ -3818,11 +3964,11 @@ let linhas = 2
 let colunas = 4
 
 // multi dimensional
-
 var mdPrePopulada:[[Int]] = [
 	[0, 1, 2, 3],
 	[4, 5, 6, 7]
 ]
+
 
 
 
@@ -4002,11 +4148,11 @@ let linha = 0;
 let coluna = 2;
 
 // multi dimensional
-
 let mdPrePopulada = [
 	[0, 1, 2, 3],
 	[4, 5, 6, 7]
 ];
+
 
 
 
@@ -4043,6 +4189,7 @@ Dim preAlocada(9) As Integer
 ' Aloca espaço na array vazia
 ' É possível usar variáveis ao invés de literais fixas
 ReDim Preserve vazia(0 To 9)
+
 
 
 
