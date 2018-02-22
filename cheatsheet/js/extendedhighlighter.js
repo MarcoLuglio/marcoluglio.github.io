@@ -1849,6 +1849,7 @@ define('ObjCKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'const',
 				'copy',
 				'dealloc',
+				'fileprivate',
 				'for',
 				'free',
 				'if',

@@ -4269,7 +4269,7 @@ Next</code
 <p>Rust</p>
 <code class='rust'
 >
-let mut lista:Vec<i32> = vec![];
+let mut lista:Vec&lt;i32&gt; = vec![];
 lista.push(1);</code
 >
 </div>
@@ -4304,7 +4304,7 @@ lista.append(1)</code
 <p>Kotlin</p>
 <code class='kotlin'
 >// temos List (listOf) e MutableList (mutableListOf)
-var lista = mutableListOf<int>()
+var lista = mutableListOf&lt;int&gt;()
 lista.add(1)</code
 >
 </div>
@@ -5166,7 +5166,7 @@ Next</code
 
 </div>
 
-<h3 id='foreach'>for each + ranges</h3>
+<h3 id='foreachrange'>for each + ranges</h3>
 
 <div class='comparison'>
 
@@ -12302,6 +12302,174 @@ public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 
 <div class='codeblock'>
 
+<p>Rust - main.rs</p>
+<code class='rust'
+>mod MusicNote;
+mod Enumerators;
+
+use Enumerators::Step;
+use Enumerators::Semitone;
+
+fn main() {
+
+	let mut musicNote = MusicNote::MusicNote {
+		step: Step::Do,
+		semitone: Default::default()
+	};
+	musicNote = musicNote + Semitone::Sharp;
+
+	println!("{}", musicNote); // Do♯
+
+}</code
+>
+
+<p>Rust - MusicNote.rs</p>
+<code class='rust'
+>use std::ops::Add;
+use std::fmt;
+
+use Enumerators::Step;
+use Enumerators::Semitone;
+
+pub struct MusicNote {
+
+	/*pub Step Step {
+		get;
+		private set;
+	}
+
+	pub Semitone Semitone {
+		get;
+		set;
+	}*/
+
+	pub step:Step,
+
+	pub semitone:Semitone
+
+}
+
+<strong>impl Add&lt;Semitone&gt; for MusicNote {</strong>
+
+	type Output = MusicNote;
+
+	<strong>fn add(self, rightHandSide:Semitone) -&gt; MusicNote {</strong>
+
+		if rightHandSide == Semitone::None {
+			return self;
+		}
+
+		let mut newStep = self.step;
+		let mut newSemitone = rightHandSide;
+
+		if newSemitone == Semitone::Sharp
+			&amp;&amp; (newStep == Step::Mi || newStep == Step::E)
+			{
+
+			newStep = Step::Fa;
+			newSemitone = Semitone::None;
+
+		} else if newSemitone == Semitone::Flat
+			&amp;&amp; (newStep == Step::Fa || newStep == Step::F)
+			{
+
+			newStep = Step::Mi;
+			newSemitone = Semitone::None;
+
+		}
+
+		// Rest of add logic here
+
+		<strong>return MusicNote { step: newStep, semitone: newSemitone }</strong>
+
+	<<strong>}</strong>
+
+<<strong>}</strong>
+
+impl fmt::Display for MusicNote {
+	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -> fmt::Result {
+		write!(formatter, "{}{}", self.step, self.semitone)
+	}
+}</code
+>
+
+<p>Rust - Enumerators.rs</p>
+<code class='rust'
+>use std::default::Default;
+use std::fmt;
+
+// Rust não permite que uma mesma literal
+// seja atribuído a dois valores diferentes
+// Do = 1, C = 1
+#[derive(PartialEq, Eq)]
+pub enum Step {
+
+	// solfèje
+	Do,
+	Re,
+	Mi,
+	Fa,
+	Sol,
+	La,
+	Si,
+
+	// abc
+	C,
+	D,
+	E,
+	F,
+	G,
+	A,
+	B
+
+}
+
+impl fmt::Display for Step {
+	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+		match *self {
+			Step::Do  | Step::C => write!(formatter, "Do"),
+			Step::Re  | Step::D => write!(formatter, "Re"),
+			Step::Mi  | Step::E => write!(formatter, "Mi"),
+			Step::Fa  | Step::F => write!(formatter, "Fa"),
+			Step::Sol | Step::G => write!(formatter, "Sol"),
+			Step::La  | Step::A => write!(formatter, "La"),
+			Step::Si  | Step::B => write!(formatter, "Si")
+		}
+	}
+}
+
+#[derive(PartialEq, Eq)]
+pub enum Semitone {
+	None = 127,
+	Natural = 0,
+	DoubleFlat = -2,
+	Flat = -1,
+	Sharp = 1,
+	DoubleSharp = 2
+}
+
+impl Default for Semitone {
+	fn default() -&gt; Semitone { Semitone::None }
+}
+
+impl fmt::Display for Semitone {
+	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+		match *self {
+			Semitone::None =&gt; write!(formatter, ""),
+			Semitone::Natural =&gt; write!(formatter, "♮"),
+			Semitone::DoubleFlat =&gt; write!(formatter, "𝄫"),
+			Semitone::Flat =&gt; write!(formatter, "♭"),
+			Semitone::Sharp =&gt; write!(formatter, "♯"),
+			Semitone::DoubleSharp =&gt; write!(formatter, "𝄪")
+		}
+	}
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
 	<p>C++ - main.cpp</p>
 	<code class='cpp'
 	>#include &lt;iostream&gt;
@@ -12621,182 +12789,154 @@ namespace OpOvExample {
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+
+<p>Swift - main.swift</p>
 <code class='swift'
+>var musicNote = MusicNote(step: Step.do, semitone: Semitone.none)
+musicNote = musicNote + Semitone.sharp
+print(musicNote) // Do♯</code
+>
+
+<p>Swift - MusicNote.swift</p>
+<code class='swift'
+>public final class MusicNote : CustomStringConvertible {
+
+	init(step:Step, semitone:Semitone = Semitone.none) {
+		self.step = step
+		self.semitone = semitone
+	}
+
+	public var description: String {
+		return "\(self.step)\(self.semitone)"
+	}
+
+	public fileprivate(set) var step = Step.do
+
+	public var semitone = Semitone.none
+
+}
+
+// posso fazer isso estático tb dentro da classe MusicNote
+<strong>func + (left: MusicNote, right: Semitone) -> MusicNote {</strong>
+
+	if right == Semitone.none {
+		return left
+	}
+
+	var newStep:Step = left.step
+	var newSemitone:Semitone = right
+
+	if newSemitone == Semitone.sharp
+		&& (newStep == Step.mi || newStep == Step.e)
+		{
+
+		newStep = Step.fa
+		newSemitone = Semitone.none
+
+	} else if newSemitone == Semitone.flat
+		&& (newStep == Step.fa || newStep == Step.f)
+		{
+
+		newStep = Step.mi;
+		newSemitone = Semitone.none;
+
+	}
+
+	// Rest of add logic here
+
+	<strong>return MusicNote(step: newStep, semitone: newSemitone)</strong>
+
+<strong>}</strong></code
+>
+
+<p>Swift - Enumerators.swift</p>
+<code class='swift'
+>// Rust não permite que uma mesma literal
+// seja atribuído a dois valores diferentes
+// `do` = 1, c = 1
+public enum Step : UInt8, CustomStringConvertible {
+
+	// solfèje
+	case `do`
+	case re
+	case mi
+	case fa
+	case sol
+	case la
+	case si
+
+	// abc
+	case c
+	case d
+	case e
+	case f
+	case g
+	case a
+	case b
+
+	public var description: String {
+		switch self {
+			case .do, .c:
+				return "Do"
+			case .re, .d:
+				return "Reo"
+			case .mi, .e:
+				return "Mi"
+			case .fa, .f:
+				return "Fa"
+			case .sol, .g:
+				return "Sol"
+			case .la, .a:
+				return "La"
+			case .si, .b:
+				return "Si"
+		}
+	}
+
+}
+
+public enum Semitone : Int8, CustomStringConvertible {
+
+	case none = 127
+	case natural = 0
+	case doubleFlat = -2
+	case flat = -1
+	case sharp = 1
+	case doubleSharp = 2
+
+	public var description: String {
+		switch self {
+			case .none:
+				return ""
+			case .natural:
+				return "♮"
+			case .doubleFlat:
+				return "𝄫"
+			case .flat:
+				return "♭"
+			case .sharp:
+				return "♯"
+			case .doubleSharp:
+				return "𝄪"
+		}
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
 </div>
 
 <div class='codeblock'>
-
-<p>Rust - main.rs</p>
-<code class='rust'
->mod MusicNote;
-mod Enumerators;
-
-use Enumerators::Step;
-use Enumerators::Semitone;
-
-fn main() {
-
-	let mut musicNote = MusicNote::MusicNote {
-		step: Step::Do,
-		semitone: Default::default()
-	};
-	musicNote = musicNote + Semitone::Sharp;
-
-	println!("{}", musicNote); // Do♯
-
-}</code
->
-
-<p>Rust - MusicNote.rs</p>
-<code class='rust'
->use std::ops::Add;
-use std::fmt;
-
-use Enumerators::Step;
-use Enumerators::Semitone;
-
-pub struct MusicNote {
-
-	/*pub Step Step {
-		get;
-		private set;
-	}
-
-	pub Semitone Semitone {
-		get;
-		set;
-	}*/
-
-	pub step:Step,
-
-	pub semitone:Semitone
-
-}
-
-impl Add&lt;Semitone&gt; for MusicNote {
-
-	type Output = MusicNote;
-
-	fn add(self, rightHandSide:Semitone) -&gt; MusicNote {
-
-		if rightHandSide == Semitone::None {
-			return self;
-		}
-
-		let mut newStep = self.step;
-		let mut newSemitone = rightHandSide;
-
-		if newSemitone == Semitone::Sharp
-			&amp;&amp; (newStep == Step::Mi || newStep == Step::E)
-			{
-
-			newStep = Step::Fa;
-			newSemitone = Semitone::None;
-
-		} else if newSemitone == Semitone::Flat
-			&amp;&amp; (newStep == Step::Fa || newStep == Step::F)
-			{
-
-			newStep = Step::Mi;
-			newSemitone = Semitone::None;
-
-		}
-
-		// Rest of add logic here
-
-		return MusicNote {
-			step: newStep,
-			semitone: newSemitone
-		}
-
-	}
-
-}
-
-impl fmt::Display for MusicNote {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -> fmt::Result {
-		write!(formatter, "{}{}", self.step, self.semitone)
-	}
-}</code
->
-
-<p>Rust - Enumerators.rs</p>
-<code class='rust'
->use std::default::Default;
-use std::fmt;
-
-// Rust não permite que uma mesma literal
-// seja atribuído a dois valores diferentes
-// Do = 1, C = 1
-#[derive(PartialEq, Eq)]
-pub enum Step {
-
-	// solfèje
-	Do,
-	Re,
-	Mi,
-	Fa,
-	Sol,
-	La,
-	Si,
-
-	// abc
-	C,
-	D,
-	E,
-	F,
-	G,
-	A,
-	B
-
-}
-
-impl fmt::Display for Step {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-		match *self {
-			Step::Do  | Step::C => write!(formatter, "Do"),
-			Step::Re  | Step::D => write!(formatter, "Re"),
-			Step::Mi  | Step::E => write!(formatter, "Mi"),
-			Step::Fa  | Step::F => write!(formatter, "Fa"),
-			Step::Sol | Step::G => write!(formatter, "Sol"),
-			Step::La  | Step::A => write!(formatter, "La"),
-			Step::Si  | Step::B => write!(formatter, "Si")
-		}
-	}
-}
-
-#[derive(PartialEq, Eq)]
-pub enum Semitone {
-	None = 127,
-	Natural = 0,
-	DoubleFlat = -2,
-	Flat = -1,
-	Sharp = 1,
-	DoubleSharp = 2
-}
-
-impl Default for Semitone {
-	fn default() -&gt; Semitone { Semitone::None }
-}
-
-impl fmt::Display for Semitone {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-		match *self {
-			Semitone::None =&gt; write!(formatter, ""),
-			Semitone::Natural =&gt; write!(formatter, "♮"),
-			Semitone::DoubleFlat =&gt; write!(formatter, "𝄫"),
-			Semitone::Flat =&gt; write!(formatter, "♭"),
-			Semitone::Sharp =&gt; write!(formatter, "♯"),
-			Semitone::DoubleSharp =&gt; write!(formatter, "𝄪")
-		}
-	}
-}</code
->
-
+<p>Java</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -12963,11 +13103,6 @@ namespace MarcoLuglio.OpOvExample {
 }<strong style='display: none'></strong></code
 >
 
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
 </div>
 
 <div class='codeblock'>
@@ -13232,7 +13367,7 @@ public final class SubscriptCollection&lt;T:StringLiteralConvertible&gt; {
 				if string.isEmpty || string == "nil" {
 					continue
 				}
-				stringIndex = string.startIndex.advancedBy(key.characters.count)
+				stringIndex = string.startIndex.advancedBy(key.count)
 				stringStart = string.substringToIndex(stringIndex)
 				if stringStart == key {
 					return item
@@ -13256,7 +13391,7 @@ public final class SubscriptCollection&lt;T:StringLiteralConvertible&gt; {
 				if string.isEmpty || string == "nil" {
 					continue
 				}
-				stringIndex = string.startIndex.advancedBy(key.characters.count)
+				stringIndex = string.startIndex.advancedBy(key.count)
 				stringStart = string.substringToIndex(stringIndex)
 				if stringStart == key {
 					if currentIndex == index {
