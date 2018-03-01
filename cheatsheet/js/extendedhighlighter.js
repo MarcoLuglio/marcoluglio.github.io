@@ -5583,8 +5583,7 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 			super();
 			Object.defineProperties(this, {
 				_isLetterCharacter: {value: /[a-zA-Z]/},
-				_isWordCharacter: {value: /\w/},
-				_length: {value: 0, writable: true}
+				_isNumberCharacter: {value: /\d/}
 			});
 			this._matchFunction = this._matchStartQuote;
 			Object.seal(this);
@@ -5602,6 +5601,7 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 		_matchLetter(matchCharacter) {
 
 			if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+				this._isComplete = true;
 				this._matchFunction = this._matchContentOrEnd;
 				return true;
 			}
@@ -5613,14 +5613,13 @@ define('RustLifetimePatternIterator', ['SourcePatternIterator'], (SourcePatternI
 
 		_matchContentOrEnd(matchCharacter) {
 
-			if (!this._isWordCharacter.test(matchCharacter)
-				&& this._length > 0
+			if (!this._isNumberCharacter.test(matchCharacter)
+				|| !this._isLetterCharacter.test(matchCharacter)
 				) {
 
 				return this._matchEnd(matchCharacter);
 			}
 
-			this._length += 1;
 			return true;
 
 		}
