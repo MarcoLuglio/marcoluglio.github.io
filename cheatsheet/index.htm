@@ -6382,6 +6382,80 @@ var ex = new NamedArgs(
 </div>
 
 
+<h3 id='sobrecargadefuncao'>Sobrecarga de função</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
+
 
 <h3 id='funcoesvariadicas'>Funções e Métodos Variádicos</h3>
 
@@ -10425,6 +10499,94 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 
 <section>
 
+<h2 id='enumeradores'>Enumeradores</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// ver Symbol</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='objetos'>Objetos</h2>
 
 
@@ -12122,7 +12284,7 @@ trait FooBar : Foo {
 <p>Rust</p>
 <code class='rust'
 >pub struct Generica&lt;T&gt; {
-	// TODO qual é o valor padrão de T?
+	// valor padrão para T é Default::default()
 	propriedadeGenerica: T
 }</code
 >
@@ -13130,22 +13292,53 @@ namespace MarcoLuglio.OpOvExample {
 
 <div class='codeblock'>
 
-<p>Rust</p>
+<p>Rust - OpOvCollection.rs</p>
 <code class='rust'
->// TODO ver
-// <a href='https://doc.rust-lang.org/std/ops/trait.Index.html'>https://doc.rust-lang.org/std/ops/trait.Index.html</a>
-// <a href='https://doc.rust-lang.org/std/ops/trait.IndexMut.html'>https://doc.rust-lang.org/std/ops/trait.IndexMut.html</a>
-</code
->
+>use std::ops::Index;
+use std::ops::IndexMut;
+use std::default::Default;
 
-<p>Rust - IndexedCollection.rs</p>
-<code class='rust'
-></code
+pub struct OpOvCollection&lt;T&gt; where T:Default {
+	pub array:[T; 10]
+}
+
+// pode ser indexada por inteiros
+impl&lt;T&gt; Index&lt;usize&gt; for OpOvCollection&lt;T&gt; where T:Default {
+	type Output = T;
+
+	fn index(&amp;self, index:usize) -&gt; &amp;T {
+		&amp;self.array[index]
+	}
+
+}
+
+// pode ser indexada por inteiros
+impl&lt;T&gt; IndexMut&lt;usize&gt; for OpOvCollection&lt;T&gt; where T:Default {
+	fn index_mut&lt;'a&gt;(&amp;'a mut self, index:usize) -&gt; &amp;'a mut T {
+		&mut self.array[index]
+	}
+}
+
+// ou por outros tipos
+// TODO
+
+impl&lt;T&gt; Default for OpOvCollection&lt;T&gt; where T:Default {
+	fn default() -&gt; OpOvCollection&lt;T&gt; {
+		OpOvCollection::&lt;T&gt; {
+			array: Default::default()
+		}
+	}
+}</code
 >
 
 <p>Rust - main.rs</p>
 <code class='rust'
-></code
+>let mut opOvCollection:OpOvCollection::OpOvCollection&lt;str&gt; = Default::default();
+opOvCollection[0] = "sunday";
+opOvCollection[1] = "monday I'm in love";
+opOvCollection[2] = "tuesday and wednesday too";
+
+println!("{}", opOvCollection[2]);</code
 >
 
 </div>
@@ -14061,26 +14254,22 @@ JavaScript ainda não chegou lá.</p>
 -->
 
 <!--
-switch fallthrough
+enums
+Sobrecarga de função
 rust loop {}
 swift lazy
 c# explicit e implicit keywords
-named breaks
-goto?
-enums
 pass by reference, inout, ref, etc
+
 unions?
 guard e match
 conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
 observer ou eventos customizados
 default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure, linq, traits, extension methods, if (a = 1) if let while let, macros, floata == floatb ou Math.abs(floata - floatb) < 0.001
 
-Laços for
-Sobrecarga de função
 Pointers, references, pointer to references, pointer to pointer, cast pointers to references
 Eventos e setTimeout
 Observar objetos KVO, notification center, etc.
-Enums
 
 Requisições http
 
