@@ -873,6 +873,26 @@ div.codeblock.bubaloop p + code {
 	color: #505B66;
 }
 
+.bubaloop.sql .keyword {
+	color: #0040B4;
+}
+
+.bubaloop.sql .string {
+	color: #0099FF;
+}
+
+.bubaloop.sql .type {
+	color: #8AD100;
+}
+
+.bubaloop.sql .comment {
+	color: #D10077;
+}
+
+.bubaloop.sql .operator {
+	color: #7F8EA3;
+}
+
 /* highlighter */
 
 .bubaloop .keyword,
