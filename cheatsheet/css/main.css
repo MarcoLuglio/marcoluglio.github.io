@@ -873,7 +873,9 @@ div.codeblock.bubaloop p + code {
 	color: #505B66;
 }
 
-.bubaloop.sql .keyword {
+.bubaloop.sql .keyword,
+.bubaloop.sql .number,
+.bubaloop.sql .boolean {
 	color: #0040B4;
 }
 

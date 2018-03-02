@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Filas (Queues)</title>
+	<link rel='stylesheet' href='http://marcoluglio.github.io/cheatsheet/css/main.css' />
+	<script src='../tutorialjs/js/utils.js'></script>
+	<script src='../tutorialjs/js/index.js'></script>
+	<script src='../tutorialjs/js/highlighter.js'></script>
+	<script src='../cheatsheet/js/extendedhighlighter.js'></script>
+	<!--<script src='js/home.js'></script>-->
+</head>
+<body>
+
+	<h1>Filas (Queues)</h1>
+	<p>
+		Pra melhorar responsividade das consultas...
+	</p>
+
+
+
+	<section>
+		<h2>Índice</h2>
+		<nav id='indice'></nav>
+	</section>
+
+
+
+	<section>
+
+		<h2 id='tabela'>Tabela de banco relacional como fila</h2>
+
+		<p>TODO</p>
+
+		<div class='codeblock'>
+			<p>SQL</p>
+			<code class='sql bubaloop'
+><span class='keyword'>set</span> <span class='keyword'>nocount</span> <span class='boolean'>on</span>
+<span class='keyword'>declare</span> <span class='symbol'>@queueid</span> <span class='type'>int</span>
+
+<span class='keyword'>while</span> (<span class='keyword'>select</span> count(*) <span class='keyword'>from</span> <span class='symbol'>dbo</span>.<span class='symbol'>Queue</span> <span class='keyword'>with</span> (<span class='keyword'>updlock</span>, <span class='keyword'>readpast</span>)) >= 1
+
+<span class='keyword'>begin</span>
+
+	<span class='keyword'>begin</span> <span class='keyword'>tran</span> <span class='symbol'>Tran1</span>
+
+	<span class='keyword'>select</span> <span class='keyword'>top</span> <span class='number'>1</span>
+		<span class='symbol'>@queueid</span> = <span class='symbol'>QueueId</span>
+	<span class='keyword'>from</span>
+		<span class='symbol'>dbo</span>.<span class='symbol'>Queue</span> <span class='keyword'>with</span> (<span class='keyword'>updlock</span>, <span class='keyword'>readpast</span>)
+
+	print <span class='string'>'processing queueid # '</span> + cast(<span class='symbol'>@queueid</span> <span class='keyword'>as</span> <span class='type'>varchar</span>)
+
+	<span class='comment'>-- account for delay in processing time</span>
+	<span class='keyword'>waitfor</span> <span class='keyword'>delay</span> <span class='string'>'00:00:05'</span>
+
+	<span class='keyword'>delete</span>
+	<span class='keyword'>from</span>
+		<span class='symbol'>dbo</span>.<span class='symbol'>Queue</span>
+	<span class='keyword'>where</span>
+		QueueId = <span class='symbol'>@queueid</span>
+
+	<span class='keyword'>commit</span>
+
+<span class='keyword'>end</span></code
+			>
+		</div>
+
+		<!--
+		Usar tabela como fila, usando updlock e readpast
+Exemplo completo em: https://www.mssqltips.com/sqlservertip/1257/processing-data-queues-in-sql-server-with-readpast-and-updlock/
+Algo como:
+		-->
+
+	</section>
+
+
+
+	<section>
+
+		<h2 id='servicebroker'>Service Broker (Corretor de Serviços)</h2>
+
+		<p>TODO</p>
+
+		<!--
+
+Usar service broker do SQL Server
+Exemplo completo em: https://blogs.msdn.microsoft.com/steven_bates/2006/01/05/service-broker-example-creation-of-a-simple-queue-and-posting-a-message/
+ 
+Documentação conceitual:
+https://technet.microsoft.com/en-us/library/ms345108(v=sql.90).aspx
+https://msdn.microsoft.com/en-us/library/bb522893.aspx
+ 
+Algo como:
+ 
+DECLARE @handle uniqueidentifier
+BEGIN DIALOG CONVERSATION @handle
+FROM SERVICE MySendingService
+TO SERVICE ‘MyReceivingService’
+ON CONTRACT MyContract;
+ 
+SEND ON CONVERSATION @handle
+MESSAGE TYPE MyMessage
+(‘<message>hello world</message>’)
+ 
+END CONVERSATION @handle WITH CLEANUP;
+ 
+-- espia a fila
+select * FROM MyReceivingQueue;
+ 
+-- remove da fila
+RECEIVE TOP (1) * FROM MyReceivingQueue;
+
+		-->
+
+	</section>
+
+
+
+	<section>
+
+			<h2 id='mesagequeue'>Message Queue (Mensageria)</h2>
+
+			<p>TODO</p>
+
+			<!--
+   
+Usar serviço de mensageria + C# como o Microsoft Message Queueing
+Em 2 projetos que trabalhei, notificações de usuários eram implementadas usando esse tipo de serviço. Um usava o IBM MQ, e o outro usava Spring + JMS.
+ 
+Exemplos em:
+http://elemarjr.com/pt/2012/01/25/trocando-mensagens-entre-aplicaes-usando-msmq-usando-c/
+http://www.infoworld.com/article/3060115/application-development/how-to-work-with-msmq-in-c.html
+ 
+documentação conceitual:
+https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
+		-->
+
+	</section>
+
+
+
+	<section>
+
+		<h2 id='cloud'>Cloud</h2>
+
+		<p>TODO</p>
+
+		<!--
+		azure e aws seriam interessantes
+		-->
+
+	</section>
+
+
+
+</body>
+</html>
