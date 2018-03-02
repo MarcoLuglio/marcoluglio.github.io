@@ -39,7 +39,7 @@
 ><span class='keyword'>set</span> <span class='keyword'>nocount</span> <span class='boolean'>on</span>
 <span class='keyword'>declare</span> <span class='symbol'>@queueid</span> <span class='type'>int</span>
 
-<span class='keyword'>while</span> (<span class='keyword'>select</span> count(*) <span class='keyword'>from</span> <span class='symbol'>dbo</span>.<span class='symbol'>Queue</span> <span class='keyword'>with</span> (<span class='keyword'>updlock</span>, <span class='keyword'>readpast</span>)) >= 1
+<span class='keyword'>while</span> (<span class='keyword'>select</span> <span class='function'>count</span>(*) <span class='keyword'>from</span> <span class='symbol'>dbo</span>.<span class='symbol'>Queue</span> <span class='keyword'>with</span> (<span class='keyword'>updlock</span>, <span class='keyword'>readpast</span>)) >= 1
 
 <span class='keyword'>begin</span>
 
@@ -50,7 +50,7 @@
 	<span class='keyword'>from</span>
 		<span class='symbol'>dbo</span>.<span class='symbol'>Queue</span> <span class='keyword'>with</span> (<span class='keyword'>updlock</span>, <span class='keyword'>readpast</span>)
 
-	print <span class='string'>'processing queueid # '</span> + cast(<span class='symbol'>@queueid</span> <span class='keyword'>as</span> <span class='type'>varchar</span>)
+	<span class='keyword'>print</span> <span class='string'>'processing queueid # '</span> + <span class='function'>cast</span>(<span class='symbol'>@queueid</span> <span class='keyword'>as</span> <span class='type'>varchar</span>)
 
 	<span class='comment'>-- account for delay in processing time</span>
 	<span class='keyword'>waitfor</span> <span class='keyword'>delay</span> <span class='string'>'00:00:05'</span>
