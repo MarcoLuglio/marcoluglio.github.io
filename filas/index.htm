@@ -33,7 +33,7 @@
 
 		<p>TODO</p>
 
-		<div class='codeblock'>
+		<div class='codeblock bubaloop'>
 			<p>SQL</p>
 			<code class='sql bubaloop'
 ><span class='keyword'>set</span> <span class='keyword'>nocount</span> <span class='boolean'>on</span>
@@ -83,35 +83,107 @@ Algo como:
 
 		<p>TODO</p>
 
-		<!--
+		<div class='codeblock bubaloop'>
+				<p>SQL - Preparar para criar fila</p>
+				<code class='sql bubaloop'
+><span class='comment'>-- Create a Basic Queue</span>
 
+<span class='comment'>-- Create a KEY. This is *required* in order to send / receive messages</span>
+--The database master key is a symmetric key used to protect the private keys
+--of certificates and asymmetric keys that are present in the database
+<span class='keyword'>create</span> MASTER KEY ENCRYPTION BY PASSWORD = <span class='string'>'Password1'</span>;
+
+<span class='comment'>-- Create a message type</span>
+--This could enforce a schema, but in this case enforces that it is well formed xml
+<span class='keyword'>create</span> MESSAGE TYPE
+	MyMessage
+VALIDATION = WELL_FORMED_XML;
+
+<span class='comment'>-- Create a contract</span>
+--This defines the messages that can be sent in a conversation
+--and defines which side of the conversation can send what.
+--In this case only 1 type of message can be sent,
+--but both by the INITIATOR and the TARGET
+<span class='keyword'>create</span> CONTRACT
+	MyContract (MyMessage SENT BY ANY);</code
+	>
+				<p>SQL - Criar fila de envio</p>
+				<code class='sql bubaloop'
+><span class='comment'>-- Creates a queue for sending the message, which is required to send a message</span>
+<span class='keyword'>create</span> <span class='keyword'>queue</span>
+	MySendingQueue
+<span class='keyword'>with</span>
+	STATUS = <span class='boolean'>on</span>,
+	RETENTION = <span class='boolean'>off</span>;
+
+--Creates a sending service. This defines the queue that will send/receive
+--messages, as defined by the contract.
+--In this case it allows MySendingService to send (and receive) MyMessage
+<span class='keyword'>create</span> <span class='keyword'>service</span>
+	MySendingService
+<span class='keyword'>on</span> <span class='keyword'>queue</span>
+	MySendingQueue (MyContract);</code
+	>
+				<p>SQL - Criar fila de recebimento</p>
+				<code class='sql bubaloop'
+>--Creates a queue which will receive the message. In this case it is local,
+--but this could equally be a remote queue. In this case we could create
+--a route to the queue using create route
+<span class='keyword'>create</span> <span class='keyword'>queue</span>
+	MyReceivingQueue
+<span class='keyword'>with</span>
+	STATUS = <span class='boolean'>on</span>,
+	RETENTION = <span class='boolean'>off</span>;
+
+--Creates a receiving service.
+--In this case it allows MyReceiveService to receive (and send) MyMessage
+<span class='keyword'>create</span> <span class='keyword'>service</span>
+	MyReceivingService
+<span class='keyword'>on</span> <span class='keyword'>queue</span>
+	MyReceivingQueue (MyContract);
+
+--Creates a route to a service. This is not strictly required for local services
+--but should be used to route to services on remote sql instances
+<span class='keyword'>create</span> <span class='keyword'>route</span>
+	MyRoute
+<span class='keyword'>with</span>
+	SERVICE_NAME = <span class='string'>'MyReceivingService'</span>,
+	ADDRESS = <span class='string'>'LOCAL'</span></code
+				>
+				<p>SQL - Inserir na fila</p>
+				<code class='sql bubaloop'
+><span class='keyword'>declare</span> @handle uniqueidentifier
+<span class='keyword'>begin</span> <span class='keyword'>dialog</span> <span class='keyword'>conversation</span> <span class='symbol'>@handle</span>
+<span class='keyword'>from</span> <span class='keyword'>service</span> MySendingService
+<span class='keyword'>to</span> <span class='keyword'>service</span> <span class='string'>'MyReceivingService'</span>
+<span class='keyword'>on</span> <span class='keyword'>contract</span> <span class='symbol'>MyContract</span>;
+
+SEND ON <span class='keyword'>conversation</span> <span class='symbol'>@handle</span>
+MESSAGE TYPE MyMessage
+(<span class='string'>'<message>hello world</message>'</span>')</code
+>
+				<p>SQL - Ler a fila</p>
+				<code class='sql bubaloop'
+><span class='comment'>-- espia a fila</span>
+<span class='keyword'>select</span> * <span class='keyword'>from</span> <span class='symbol'>MyReceivingQueue</span>;
+
+<span class='comment'>-- remove da fila</span>
+<span class='keyword'>receive</span> <span class='keyword'>top</span> <span class='number'>1</span> * <span class='keyword'>from</span> <span class='symbol'>MyReceivingQueue</span>;</code
+				>
+
+				<p>SQL - Fechar a fila</p>
+				<code class='sql bubaloop'
+><span class='keyword'>end</span> <span class='keyword'>conversation</span> @handle <span class='keyword'>with</span> <span class='keyword'>cleanup</span>;</code
+				>
+			</div>
+
+		<!--
 Usar service broker do SQL Server
-Exemplo completo em: https://blogs.msdn.microsoft.com/steven_bates/2006/01/05/service-broker-example-creation-of-a-simple-queue-and-posting-a-message/
- 
+Exemplo completo em:https://blogs.msdn.microsoft.com/steven_bates/2006/01/05/service-broker-example-creation-of-a-simple-queue-and-posting-a-message/
+
 Documentação conceitual:
 https://technet.microsoft.com/en-us/library/ms345108(v=sql.90).aspx
 https://msdn.microsoft.com/en-us/library/bb522893.aspx
- 
-Algo como:
- 
-DECLARE @handle uniqueidentifier
-BEGIN DIALOG CONVERSATION @handle
-FROM SERVICE MySendingService
-TO SERVICE ‘MyReceivingService’
-ON CONTRACT MyContract;
- 
-SEND ON CONVERSATION @handle
-MESSAGE TYPE MyMessage
-(‘<message>hello world</message>’)
- 
-END CONVERSATION @handle WITH CLEANUP;
- 
--- espia a fila
-select * FROM MyReceivingQueue;
- 
--- remove da fila
-RECEIVE TOP (1) * FROM MyReceivingQueue;
-
 		-->
 
 	</section>
@@ -125,14 +197,14 @@ RECEIVE TOP (1) * FROM MyReceivingQueue;
 			<p>TODO</p>
 
 			<!--
-   
-Usar serviço de mensageria + C# como o Microsoft Message Queueing
+
+Usar serviço de mensageria + C# como o Microsoft Message Queueing ou Apache Active MQ
 Em 2 projetos que trabalhei, notificações de usuários eram implementadas usando esse tipo de serviço. Um usava o IBM MQ, e o outro usava Spring + JMS.
- 
+
 Exemplos em:
 http://elemarjr.com/pt/2012/01/25/trocando-mensagens-entre-aplicaes-usando-msmq-usando-c/
 http://www.infoworld.com/article/3060115/application-development/how-to-work-with-msmq-in-c.html
- 
+
 documentação conceitual:
 https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 		-->
