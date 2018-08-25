@@ -226,9 +226,146 @@ https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 
 		<p>TODO</p>
 
+		<p><a href='https://docs.microsoft.com/en-us/azure/storage/queues/storage-dotnet-how-to-use-queues'>Microsoft Azure queues</a></p>
+
 		<!--
 		azure e aws seriam interessantes
 		-->
+		<div class='codeblock bubaloop'>
+			<p>App.config</p>
+			<code class='xml bubaloop'
+>&lt;configuration&gt;
+	&lt;startup&gt;
+		&lt;supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" /&gt;
+	&lt;/startup&gt;
+	&lt;appSettings&gt;
+		&lt;add key="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=account-name;AccountKey=account-key" /&gt;
+	&lt;/appSettings&gt;
+&lt;/configuration&gt;
+
+&lt;-- ou se dev --&gt;
+
+&lt;add key="StorageConnectionString" value="UseDevelopmentStorage=true;" /&gt;</code
+			>
+		</div>
+
+		<p></p>
+
+
+		<div class='codeblock bubaloop'>
+			<p>App.config</p>
+			<code class='cs bubaloop'
+>using Microsoft.Azure; // Namespace for CloudConfigurationManager
+using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
+using Microsoft.WindowsAzure.Storage.Queue; // Namespace for Queue storage types
+
+// Parse the connection string and return a reference to the storage account.
+CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+	CloudConfigurationManager.GetSetting("StorageConnectionString")
+);
+
+CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+// Retrieve storage account from connection string.
+CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+	CloudConfigurationManager.GetSetting("StorageConnectionString")
+);
+
+// Create the queue client.
+CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+// Retrieve a reference to a container.
+CloudQueue queue = queueClient.GetQueueReference("myqueue");
+
+// Create the queue if it doesn't already exist
+queue.CreateIfNotExists();
+
+// insert message
+
+// Retrieve storage account from connection string.
+CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+	CloudConfigurationManager.GetSetting("StorageConnectionString")
+);
+
+// Create the queue client.
+CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+// Retrieve a reference to a queue.
+CloudQueue queue = queueClient.GetQueueReference("myqueue");
+
+// Create the queue if it doesn't already exist.
+queue.CreateIfNotExists();
+
+// Create a message and add it to the queue.
+CloudQueueMessage message = new CloudQueueMessage("Hello, World");
+queue.AddMessage(message);
+
+// peek next message
+
+// Retrieve storage account from connection string
+CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+	CloudConfigurationManager.GetSetting("StorageConnectionString")
+);
+
+// Create the queue client
+CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+// Retrieve a reference to a queue
+CloudQueue queue = queueClient.GetQueueReference("myqueue");
+
+// Peek at the next message
+CloudQueueMessage peekedMessage = queue.PeekMessage();
+
+// Display message.
+Console.WriteLine(peekedMessage.AsString);
+
+// de-queue (shift)
+
+// Retrieve storage account from connection string
+CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+	CloudConfigurationManager.GetSetting("StorageConnectionString")
+);
+
+// Create the queue client
+CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+// Retrieve a reference to a queue
+CloudQueue queue = queueClient.GetQueueReference("myqueue");
+
+// Get the next message
+CloudQueueMessage retrievedMessage = queue.GetMessage();
+
+//Process the message in less than 30 seconds, and then delete the message
+queue.DeleteMessage(retrievedMessage);
+
+
+// use async await
+
+// Create the queue if it doesn't already exist
+if(await queue.CreateIfNotExistsAsync()) {
+	Console.WriteLine("Queue '{0}' Created", queue.Name);
+} else {
+	Console.WriteLine("Queue '{0}' Exists", queue.Name);
+}
+
+// Create a message to put in the queue
+CloudQueueMessage cloudQueueMessage = new CloudQueueMessage("My message");
+
+// Async enqueue the message
+await queue.AddMessageAsync(cloudQueueMessage);
+Console.WriteLine("Message added");
+
+// Async dequeue the message
+CloudQueueMessage retrievedMessage = await queue.GetMessageAsync();
+Console.WriteLine("Retrieved message with content '{0}'", retrievedMessage.AsString);
+
+// Async delete the message
+await queue.DeleteMessageAsync(retrievedMessage);
+Console.WriteLine("Deleted message");
+
+</code
+			>
+		</div>
 
 	</section>
 
