@@ -228,9 +228,6 @@ https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 
 		<p><a href='https://docs.microsoft.com/en-us/azure/storage/queues/storage-dotnet-how-to-use-queues'>Microsoft Azure queues</a></p>
 
-		<!--
-		azure e aws seriam interessantes
-		-->
 		<div class='codeblock bubaloop'>
 			<p>App.config</p>
 			<code class='xml bubaloop'
@@ -253,7 +250,7 @@ https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 
 
 		<div class='codeblock bubaloop'>
-			<p>App.config</p>
+			<p>C#</p>
 			<code class='cs bubaloop'
 >using Microsoft.Azure; // Namespace for CloudConfigurationManager
 using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
@@ -364,6 +361,66 @@ await queue.DeleteMessageAsync(retrievedMessage);
 Console.WriteLine("Deleted message");
 
 </code
+			>
+		</div>
+
+		<p><a href='https://docs.aws.amazon.com/sdk-for-net/v2/developer-guide/sqs-apis-intro.html'>AWS Simple Queue Service</a></p>
+		<div class='codeblock bubaloop'>
+			<p>App.config</p>
+			<code class='xml bubaloop'
+>&lt;configuration&gt;
+	&lt;startup&gt;
+	&lt;supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/&gt;
+	&lt;/startup&gt;
+	&lt;configSections&gt;
+	&lt;section name="aws" type="Amazon.AWSSection, AWSSDK"/&gt;
+	&lt;/configSections&gt; &lt;aws profileName="{my_profile}"/&gt;
+&lt;/configuration&gt;</code
+			>
+		</div>
+
+		<p></p>
+
+
+		<div class='codeblock bubaloop'>
+			<p>C#</p>
+			<code class='cs bubaloop'
+>AmazonSQSConfig amazonSQSConfig = new AmazonSQSConfig();
+amazonSQSConfig.ServiceURL = "http://sqs.us-west-2.amazonaws.com";
+
+// AmazonSQSConfig amazonSQSConfig = new AmazonSQSConfig();
+// amazonSQSConfig.ServiceURL = "http://sqs.cn-north-1.amazonaws.com";
+
+amazonSQSClient = new AmazonSQSClient(amazonSQSConfig);
+
+CreateQueueRequest createQueueRequest = new CreateQueueRequest();
+createQueueRequest.QueueName = "MySQSQueue";
+createQueueRequest.DefaultVisibilityTimeout = 10;
+
+CreateQueueResponse createQueueResponse = amazonSQSClient.CreateQueue(createQueueRequest);
+
+
+sendMessageRequest.QueueUrl = myQueueURL;
+sendMessageRequest.MessageBody = "{YOUR_QUEUE_MESSAGE}"; // mensagem até 64kb de tamanho
+
+SendMessageResponse sendMessageResponse = amazonSQSClient.SendMessage(sendMessageRequest);
+
+ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest();
+receiveMessageRequest.QueueUrl = myQueueURL;
+ReceiveMessageResponse receiveMessageResponse = amazonSQSClient.ReceiveMessage(receiveMessageRequest);
+
+if (result.Message.Count != 0) {
+	for (int i = 0; i < result.Message.Count; i++)   {
+		if (result.Message[i].Body == messageBody) {
+		receiptHandle = result.Message[i].ReceiptHandle;
+		}
+	}
+}
+
+DeleteMessageRequest deleteMessageRequest = new DeleteMessageRequest();
+deleteMessageRequest.QueueUrl = queueUrl;
+deleteMessageRequest.ReceiptHandle = recieptHandle;
+DeleteMessageResponse response = amazonSQSClient.DeleteMessage(deleteMessageRequest);</code
 			>
 		</div>
 
