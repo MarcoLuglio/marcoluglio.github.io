@@ -2,7 +2,7 @@
 
 import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/index.js';
-import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/highlighter';
+import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/highlighter.js';
 
 /**
  * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
