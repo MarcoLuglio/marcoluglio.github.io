@@ -1,8 +1,8 @@
 'use strict';
 
 import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
-import { Index } from '../../compartilhado/index.js';
-import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/highlighter.js';
+import { Index } from '../../compartilhado/js/index.js';
+import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/js/highlighter.js';
 
 /**
  * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
