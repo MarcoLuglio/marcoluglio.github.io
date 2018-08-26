@@ -272,4 +272,5 @@ function showCurrentYear(containerId) {
 
 
 
-export { Deferred, Node, NodeListIterator, StringIterator, domReadyPromise, showEmail, showCurrentYear };
+const RangeIterator = class RangeIterator {
+export { Deferred, Node, NodeListIterator, StringIterator, RangeIterator, domReadyPromise, showEmail, showCurrentYear };
