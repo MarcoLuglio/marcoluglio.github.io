@@ -2054,7 +2054,7 @@ const HtmlAttributeToken = class HtmlAttributeToken extends Token {
 /**
  * Token for strings
  */
-const HtmlAttributeValueToken = class HtmlAttributeValueToken extends JSPatternIteratorToken {
+const HtmlAttributeValueToken = class HtmlAttributeValueToken extends SourcePatternIteratorToken {
 	constructor() {
 		super('attributeValue', new HtmlAttributeValuePatternIterator());
 	}

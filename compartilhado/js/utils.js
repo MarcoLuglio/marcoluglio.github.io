@@ -272,4 +272,4 @@ function showCurrentYear(containerId) {
 
 
 
-export { Deferred, Node, NodeListIterator, StringIterator, domReadyPromise, domReadyPromise, showEmail, showCurrentYear };
+export { Deferred, Node, NodeListIterator, StringIterator, domReadyPromise, showEmail, showCurrentYear };
