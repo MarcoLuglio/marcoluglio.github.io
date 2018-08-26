@@ -5,9 +5,7 @@ import { RangeIterator, NodeListIterator } from './utils.js';
 /**
  * Gera um índice da estrutura da página (seções, títulos, etc.)
  */
-//define('Index', ['RangeIterator', 'NodeListIterator'], (RangeIterator, NodeListIterator) => {
-
-const Index = class Index {
+export class Index {
 
 	constructor(containerId, levels, showFirstLevel) {
 		Object.seal(this);
