@@ -1,5 +1,7 @@
 'use strict';
 
+import { StringIterator } from './utils.js';
+
 
 
 const SourcePatternIterator = class SourcePatternIterator {
