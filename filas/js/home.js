@@ -2,6 +2,7 @@
 
 import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
+import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/js/highlighter.js';
 
 /**
@@ -120,11 +121,11 @@ domReadyPromise()
 		}
 	})
 	/*.then(() => {
-		highlightWrapper('code.tsql', CsLexer);
+		highlightWrapper('code.tsql', TSQLLexer);
 	})
 	.then(() => {
 		highlightWrapper('code.cs', CsLexer);
 	})*/
 	.then(() => {
-		highlightWrapper('code.html', CsLexer);
+		highlightWrapper('code.html', HtmlLexer);
 	});
