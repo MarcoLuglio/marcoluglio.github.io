@@ -1553,7 +1553,7 @@ const JavaScriptLexer = class JavaScriptLexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
-			new JSHtmlEmphasisToken(),
+			new HtmlEmphasisToken(),
 			new JSWhitespaceToken(),
 			new EndOfLineToken()
 		);
@@ -2305,7 +2305,7 @@ const HtmlLexer = class HtmlLexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
-			new JSHtmlEmphasisToken(),
+			new HtmlEmphasisToken(),
 			new JSWhitespaceToken(),
 			new EndOfLineToken()
 		);
