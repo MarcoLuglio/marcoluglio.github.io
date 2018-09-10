@@ -203,14 +203,93 @@ https://msdn.microsoft.com/en-us/library/bb522893.aspx
 
 			<p>TODO</p>
 
+			<h3>Filas com Microsoft Message Queueing (MSMQ)</h3>
+
+			<p>Primeiramente instalar no computador o MSMQ.</p>
+
+			<div class='codeblock bubaloop'>
+				<p>Escrever numa fila</p>
+				<code class='cs bubaloop'
+>using System;
+using System.Messaging; // incluir nas referências System.Messaging
+
+namespace MSMQ {
+
+	class Program {
+
+		static void Main(string[] args) {
+
+			const string messageQueuePath = @".\Private$\nomeDaFila";
+			MessageQueue messageQueue = null;
+			var messageQueueLabel = @"this is a test queue";
+			object message = @"This is a test message. Can it be anything?";
+			var messageLabel = @"label for the message";
+
+			try {
+				if (MessageQueue.Exists(messageQueuePath)) {
+					messageQueue = new MessageQueue(messageQueuePath);
+					messageQueue.Label = messageQueueLabel;
+				} else {
+					MessageQueue.Create(messageQueuePath);
+					messageQueue = new MessageQueue(messageQueuePath);
+					messageQueue.Label = messageQueueLabel;
+				}
+				messageQueue.Send(message, messageLabel);
+			} catch {
+				throw;
+			} finally {
+				messageQueue.Dispose();
+			}
+
+		}
+
+	}
+
+}</code
+				>
+			</div>
+
+			<div class='codeblock bubaloop'>
+				<p>Ler uma fila</p>
+				<code class='sql bubaloop'
+>using System;
+using System.Messaging; // incluir nas referências System.Messaging
+
+namespace MSMQ {
+
+	class Program {
+
+		static void Main(string[] args) {
+
+			const string messageQueuePath = @".\Private$\nomeDaFila";
+			using (MessageQueue messageQueue = new MessageQueue(messageQueuePath)) {
+				// usamos mensagem do tipo string, mas pode ser de qualquer classe, desde que ela seja marcada com o atributo [Serializable]
+				messageQueue.Formatter = new XmlMessageFormatter(
+					new Type[] { typeof(string) }
+				);
+				Message[] messages = messageQueue.GetAllMessages();
+				foreach (var message in messages)
+				{
+					System.Diagnostics.Debug.WriteLine(message.Label);
+					System.Diagnostics.Debug.WriteLine((string)message.Body); // fazer o cast equivalente se usar um tipo diferente de string
+				}
+				messageQueue.Purge();
+			}
+
+		}
+
+	}
+
+}</code
+				>
+			</div>
+
 			<!--
 
-Usar serviço de mensageria + C# como o Microsoft Message Queueing ou Apache Active MQ
-Em 2 projetos que trabalhei, notificações de usuários eram implementadas usando esse tipo de serviço. Um usava o IBM MQ, e o outro usava Spring + JMS.
+Usar serviço de mensageria + C# como Apache Active MQ
 
 Exemplos em:
 http://elemarjr.com/pt/2012/01/25/trocando-mensagens-entre-aplicaes-usando-msmq-usando-c/
-http://www.infoworld.com/article/3060115/application-development/how-to-work-with-msmq-in-c.html
 
 documentação conceitual:
 https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
