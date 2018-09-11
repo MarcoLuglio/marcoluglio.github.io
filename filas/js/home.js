@@ -1,6 +1,6 @@
 'use strict';
 
-import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
+import { domReadyPromise, NodeListIterator, Node } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 import { CsLexer, HtmlLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
