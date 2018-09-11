@@ -1435,7 +1435,7 @@ const Lexer = class Lexer {
 
 	}
 
-	parseAsync(source) {
+	async parseAsync(source) {
 
 		const context = this; // TODO arrow talvez não precise de context
 
