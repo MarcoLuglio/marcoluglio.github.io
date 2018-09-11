@@ -1124,7 +1124,7 @@ const JSPunctuationToken = class JSPunctuationToken extends SourceSimpleCharacte
 /**
  * Token for whitespace characters
  */
-const JSWhitespaceToken = class JSWhitespaceToken extends SourceSimpleCharacterToken {
+const WhitespaceToken = class WhitespaceToken extends SourceSimpleCharacterToken {
 
 	constructor() {
 		super('whitespace', false, [
@@ -1190,39 +1190,6 @@ const HtmlEmphasisToken = class HtmlEmphasisToken extends SourcePatternIteratorT
 		super('html', new SourceHtmlEmphasisPatternIterator());
 		this.ignore = true;
 	}
-};
-
-
-
-const WhitespaceToken = class WhitespaceToken extends SourceSimpleCharacterToken {
-
-	constructor() {
-		super('whitespace', false, [
-			' ',
-			'\t',
-			'\v',
-			'\f',
-			'\u00A0'
-		]);
-		this.ignore = true;
-	}
-
-};
-
-
-
-const EndOfLineToken = class EndOfLineToken extends SourceSimpleCharacterToken {
-
-	constructor() {
-		super('endOfLine', true, [
-			'\n',
-			'\r',
-			'\u2028',
-			'\u2029'
-		]);
-		this.ignore = true;
-	}
-
 };
 
 
@@ -1641,7 +1608,7 @@ const JavaScriptLexer = class JavaScriptLexer extends Lexer {
 			this._tokenPool.length,
 			0,
 			new HtmlEmphasisToken(),
-			new JSWhitespaceToken(),
+			new WhitespaceToken(),
 			new EndOfLineToken()
 		);
 	}
@@ -3745,7 +3712,7 @@ const HtmlLexer = class HtmlLexer extends Lexer {
 			this._tokenPool.length,
 			0,
 			new HtmlEmphasisToken(),
-			new JSWhitespaceToken(),
+			new WhitespaceToken(),
 			new EndOfLineToken()
 		);
 	}
