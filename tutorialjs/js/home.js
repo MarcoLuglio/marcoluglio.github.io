@@ -54,7 +54,7 @@ async function highlightAsync(selector, Lexer) {
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
-	await highlightAsync('code.javascript', JavaScriptLexer);
 	await highlightAsync('code.html', HtmlLexer);
+	await highlightAsync('code.javascript', JavaScriptLexer);
 
 })();
