@@ -1891,7 +1891,7 @@ const CSPunctuationToken = class CSPunctuationToken extends SourceSimpleCharacte
 
 
 
-onst CSDecimalPatternIterator = class CSDecimalPatternIterator extends SourcePatternIterator {
+const CSDecimalPatternIterator = class CSDecimalPatternIterator extends SourcePatternIterator {
 
 	constructor() {
 		super();
