@@ -207,9 +207,9 @@ https://msdn.microsoft.com/en-us/library/bb522893.aspx
 
 			<p>Primeiramente instalar no computador o MSMQ.</p>
 
-			<div class='codeblock bubaloop'>
+			<div class='codeblock'>
 				<p>Escrever numa fila</p>
-				<code class='cs bubaloop'
+				<code class='cs'
 >using System;
 using System.Messaging; // incluir nas referências System.Messaging
 
@@ -287,6 +287,7 @@ namespace MSMQ {
 			<!--
 
 Usar serviço de mensageria + C# como Apache Active MQ
+http://activemq.apache.org/nms/examples.html
 
 Exemplos em:
 http://elemarjr.com/pt/2012/01/25/trocando-mensagens-entre-aplicaes-usando-msmq-usando-c/
@@ -307,9 +308,9 @@ https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 
 		<p><a href='https://docs.microsoft.com/en-us/azure/storage/queues/storage-dotnet-how-to-use-queues'>Microsoft Azure queues</a></p>
 
-		<div class='codeblock bubaloop'>
+		<div class='codeblock'>
 			<p>App.config</p>
-			<code class='html bubaloop'
+			<code class='html'
 >&lt;configuration&gt;
 	&lt;startup&gt;
 		&lt;supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" /&gt;
@@ -328,9 +329,9 @@ https://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx
 		<p></p>
 
 
-		<div class='codeblock bubaloop'>
+		<div class='codeblock'>
 			<p>C#</p>
-			<code class='cs bubaloop'
+			<code class='cs'
 >using Microsoft.Azure; // Namespace for CloudConfigurationManager
 using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
 using Microsoft.WindowsAzure.Storage.Queue; // Namespace for Queue storage types
@@ -444,9 +445,9 @@ Console.WriteLine("Deleted message");
 		</div>
 
 		<p><a href='https://docs.aws.amazon.com/sdk-for-net/v2/developer-guide/sqs-apis-intro.html'>AWS Simple Queue Service</a></p>
-		<div class='codeblock bubaloop'>
+		<div class='codeblock'>
 			<p>App.config</p>
-			<code class='html bubaloop'
+			<code class='html'
 >&lt;configuration&gt;
 	&lt;startup&gt;
 	&lt;supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/&gt;
@@ -461,9 +462,9 @@ Console.WriteLine("Deleted message");
 		<p></p>
 
 
-		<div class='codeblock bubaloop'>
+		<div class='codeblock'>
 			<p>C#</p>
-			<code class='cs bubaloop'
+			<code class='cs'
 >AmazonSQSConfig amazonSQSConfig = new AmazonSQSConfig();
 amazonSQSConfig.ServiceURL = "http://sqs.us-west-2.amazonaws.com";
 

@@ -3,7 +3,7 @@
 import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
-import { HtmlLexer, /*CsLexer,*/ Highlighter } from '../../compartilhado/js/highlighter.js';
+import { HtmlLexer, CsLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
 
 /**
  * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
@@ -122,10 +122,10 @@ domReadyPromise()
 	})
 	/*.then(() => {
 		highlightWrapper('code.tsql', TSQLLexer);
-	})
+	})*/
 	.then(() => {
 		highlightWrapper('code.cs', CsLexer);
-	})*/
+	})
 	.then(() => {
 		highlightWrapper('code.html', HtmlLexer);
 	});
