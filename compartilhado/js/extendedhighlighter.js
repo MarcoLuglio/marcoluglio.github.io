@@ -6939,7 +6939,7 @@ define('CSLabelIterator', ['SourcePatternIterator'], (SourcePatternIterator) => 
 
 		}
 
-	}
+	};
 
 	return CSLabelIterator;
 
@@ -7027,7 +7027,7 @@ define('CSSymbolIterator', ['SourcePatternIterator'], (SourcePatternIterator) =>
 
 		}
 
-	}
+	};
 
 	return CSSymbolIterator;
 
