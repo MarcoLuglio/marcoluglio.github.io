@@ -1053,7 +1053,7 @@ const JSTypesToken = class JSTypesToken extends SourceSimpleCharacterSequenceTok
 /**
  * Token for JavaScript punctuation
  */
-const JSPunctuationToken = class JSPunctuationToken extends SourceSimpleCharacterToken {
+const JSPunctuationToken = class JSPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 	constructor() {
 
@@ -1576,8 +1576,8 @@ const JavaScriptLexer = class JavaScriptLexer extends Lexer {
 			new JSPunctuationToken(),
 
 			// comments
-			new JSLineCommentToken(),
-			new JSBlockCommentToken()
+			new CLineCommentToken(),
+			new CBlockCommentToken()
 
 		);
 

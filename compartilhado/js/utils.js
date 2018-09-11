@@ -218,7 +218,7 @@ const RangeIterator = class RangeIterator {
 /**
  * Cross-browser "dom ready"
  */
-function domReadyPromise() {
+async function domReadyPromise() {
 
 	const domReadyPromise = new Promise((resolve, reject) => {
 
