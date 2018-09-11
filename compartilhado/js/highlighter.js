@@ -273,6 +273,52 @@ const CBlockCommentPatternIterator = class CBlockCommentPatternIterator extends 
 
 
 
+const CDirectivePatternIterator = class CDirectivePatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchHash;
+		Object.seal(this);
+	}
+
+	_matchHash(matchCharacter) {
+		if (matchCharacter === '#') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
 const CDirectiveToken = class CDirectiveToken extends SourcePatternIteratorToken {
 	constructor() {
 		super('directive', new CDirectivePatternIterator());
