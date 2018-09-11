@@ -46,6 +46,68 @@ const SourcePatternIterator = class SourcePatternIterator {
 
 
 
+/**
+ * Base class for tokens
+ * Como o código pode potencialmente ter muitos tokens, era melhor que eles fossem
+ * como structs só com dados, e os métodos ficassem em outro lugar
+ */
+const Token = class Token {
+
+	constructor(type) {
+
+		Object.defineProperties(this, {
+			type: {value: '', enumerable: true, configurable: true},
+			openType: {value: '', enumerable: true, writable: true},
+			closeType: {value: '', enumerable: true, writable: true},
+			characterSequence: {value: [], enumerable: true},
+			begin: {value: 0, enumerable: true, writable: true},
+			end: {value: 0, enumerable: true, writable: true},
+			ignore: {value: false, enumerable: true, writable: true},
+			_isInitialized: {value: false, writable: true},
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true}
+		});
+
+		// Object.seal(this); // só nos objetos finais
+
+	}
+
+	hasNext() {
+		if (this._hasNext && !this._isComplete) {
+			return true;
+		}
+		return false;
+	}
+
+	next(matchCharacter, index) {
+
+		// implementado nas sub classes
+
+		// basicamente
+		// se matchCharacter ok
+		// this.characterSequence.push(matchCharacter);
+		// se terminou a sequencia, verificar próximo caractere
+		// se for inválido, this._complete()
+
+		//se matchCharacter not ok
+		// this._hasNext = false
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	_complete() {
+		this.end = this.begin + this.characterSequence.length;
+		this._hasNext = false;
+		this._isComplete = true;
+	}
+
+};
+
+
+
 const SourcePatternIteratorToken = class SourcePatternIteratorToken extends Token {
 
 	constructor(type, patternIterator) {
@@ -731,68 +793,6 @@ const JSSymbolIterator = class JSSymbolIterator  extends SourcePatternIterator {
 		this._hasNext = false;
 		return false;
 
-	}
-
-};
-
-
-
-/**
- * Base class for tokens
- * Como o código pode potencialmente ter muitos tokens, era melhor que eles fossem
- * como structs só com dados, e os métodos ficassem em outro lugar
- */
-const Token = class Token {
-
-	constructor(type) {
-
-		Object.defineProperties(this, {
-			type: {value: '', enumerable: true, configurable: true},
-			openType: {value: '', enumerable: true, writable: true},
-			closeType: {value: '', enumerable: true, writable: true},
-			characterSequence: {value: [], enumerable: true},
-			begin: {value: 0, enumerable: true, writable: true},
-			end: {value: 0, enumerable: true, writable: true},
-			ignore: {value: false, enumerable: true, writable: true},
-			_isInitialized: {value: false, writable: true},
-			_hasNext: {value: true, writable: true},
-			_isComplete: {value: false, writable: true}
-		});
-
-		// Object.seal(this); // só nos objetos finais
-
-	}
-
-	hasNext() {
-		if (this._hasNext && !this._isComplete) {
-			return true;
-		}
-		return false;
-	}
-
-	next(matchCharacter, index) {
-
-		// implementado nas sub classes
-
-		// basicamente
-		// se matchCharacter ok
-		// this.characterSequence.push(matchCharacter);
-		// se terminou a sequencia, verificar próximo caractere
-		// se for inválido, this._complete()
-
-		//se matchCharacter not ok
-		// this._hasNext = false
-
-	}
-
-	get isComplete() {
-		return this._isComplete;
-	}
-
-	_complete() {
-		this.end = this.begin + this.characterSequence.length;
-		this._hasNext = false;
-		this._isComplete = true;
 	}
 
 };
