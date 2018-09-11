@@ -173,6 +173,14 @@ const CBlockCommentPatternIterator = class CBlockCommentPatternIterator extends 
 
 
 
+const CDirectiveToken = class CDirectiveToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('directive', new CDirectivePatternIterator());
+	}
+};
+
+
+
 const SourceHtmlEmphasisPatternIterator = class SourceHtmlEmphasisPatternIterator extends SourcePatternIterator {
 
 	constructor() {
