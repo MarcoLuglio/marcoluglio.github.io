@@ -1194,6 +1194,39 @@ const HtmlEmphasisToken = class HtmlEmphasisToken extends SourcePatternIteratorT
 
 
 
+const WhitespaceToken = class WhitespaceToken extends SourceSimpleCharacterToken {
+
+	constructor() {
+		super('whitespace', false, [
+			' ',
+			'\t',
+			'\v',
+			'\f',
+			'\u00A0'
+		]);
+		this.ignore = true;
+	}
+
+};
+
+
+
+const EndOfLineToken = class EndOfLineToken extends SourceSimpleCharacterToken {
+
+	constructor() {
+		super('endOfLine', true, [
+			'\n',
+			'\r',
+			'\u2028',
+			'\u2029'
+		]);
+		this.ignore = true;
+	}
+
+};
+
+
+
 /**
  * Token for decimal numbers
  */
