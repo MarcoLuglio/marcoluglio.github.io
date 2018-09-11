@@ -849,44 +849,6 @@ const SourceSimpleCharacterToken = class SourceSimpleCharacterToken extends Toke
 
 
 
-const SourcePatternIteratorToken = class SourcePatternIteratorToken extends Token {
-
-	constructor(type, patternIterator) {
-
-		super();
-
-		Object.defineProperties(this, {
-			type: {value: type},
-			_characterPattern: {value: patternIterator}
-		});
-
-		Object.seal(this);
-
-	}
-
-	next(matchCharacter, index) {
-
-		if (!this._characterPattern.next(matchCharacter, index)) {
-			this._hasNext = false;
-			if (this._characterPattern.isComplete) {
-				this._complete();
-			}
-			return;
-		}
-
-		if (!this._isInitialized) {
-			this._isInitialized = true;
-			this.begin = index;
-		}
-
-		this.characterSequence.push(matchCharacter);
-
-	}
-
-};
-
-
-
 /**
  * Token for keywords
  */
