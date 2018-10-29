@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Filas (Queues)</title>
+	<link rel='stylesheet' href='../compartilhado/css/main.css' />
+	<script type='module' src='../compartilhado/js/utils.js'></script>
+	<script type='module' src='../compartilhado/js/index.js'></script>
+</head>
+<body>
+
+	<h1>Docker, IIS, Tomcat, Apache, Node.js e Nginx</h1>
+	<p>
+		Quão fácil são de configurar e quanto espaço usam
+	</p>
+
+
+
+	<section>
+		<h2>Índice</h2>
+		<nav id='indice'></nav>
+	</section>
+
+
+
+	<section>
+		<h2>Preparação</h2>
+		<p>IIS só vai rodar no windows logicamente</p>
+	</section>
+
+
+
+	<section>
+
+		<h2 id='comandosBasicos'>Comandos básicos</h2>
+
+		<p>TODO</p>
+
+		<div class='codeblock bubaloop'>
+			<code class='generic bubaloop'
+>Lista as imagens
+docker imagem ls
+
+Baixa uma imagem
+docker image pull nome:tag
+
+Remove uma imagem
+docker image rm iddaimagem
+
+Lista todos os contêineres
+docker container ls -a
+
+Remove um contêiner
+docker container rm iddocontainer
+
+Cria um novo contêiner
+-d detached -p porta no pc:porta no contêiner --name nome -v mapeia o diretórodocker container run -d -p 8080:80 --name phpA -v "c:\inetpub\wwwroot\phpA":/var/www/html php:7-apache
+
+Inicia um contêiner já existente
+docker container start?
+
+Executa bash no contêiner
+docker container exec -it nome-do-container bash
+
+Pára um contêiner
+docker container stop iddocontainer
+
+
+Diretório atual
+Na linha de comando windows %cd%
+No powershell ou unix ${PWD}
+No unix $PWD
+
+PHP + Apache
+container run -d -p 8080:80 --name phpA -v "c:\inetpub\wwwroot\phpA":/var/www/html php:7-apache
+
+Node Js
+docker run -it --rm --name my-running-script -v "$PWD":/usr/src/app -w /usr/src/app node:10-alpine node your-daemon-or-script.js</code
+			>
+		</div>
+
+	</section>
+
+
+
+</body>
+</html>
