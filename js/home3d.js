@@ -75,7 +75,7 @@ define('buildScene', ['converter', 'Css3DObjectBuilder'], (converter, Css3DObjec
 			.build();
 
 		const objectB6 = new Css3DObjectBuilder()
-			.element('etc')
+			.element('antigamente')
 			.copy(ancoraBiografia)
 			.rotateX(intervaloRotacaoBiografia * 6)
 			.translateX(offsetEspiralBiografia * 6)
