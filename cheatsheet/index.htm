@@ -128,6 +128,13 @@ int main(int argc, const char* argv[]) {
 </div>
 
 <div class='codeblock'>
+<p>Python - Olá Mundo - main.py</p>
+<code class='python'
+>print('Olá Mundo')</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - Olá Mundo - main.bas</p>
 <code class='visualbasic'
 >Debug.Print "Olá Mundo"</code
@@ -283,6 +290,13 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+># linha</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' linha</code
@@ -360,6 +374,11 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+-
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
 </div>
@@ -423,6 +442,14 @@ bloco
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>#region foldable (PyCharm and Visual Studio)
+#endregion</code
+>
 </div>
 
 <div class='codeblock'>
@@ -815,6 +842,18 @@ useSemDeclarar = 5;</code
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+
+
+
+x = 5
+x = 'dynamic type'</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Option Explicit
@@ -1060,13 +1099,14 @@ let $if = "meio confuso";
 	<li>C++</li>
 	<li>Java</li>
 	<li>Objective-C</li>
+	<li>Python</li>
 </ol>
 
 <p>Quem diria que um tópico tão simples seria tão diverso entre as linguagens?</p>
 <p>Rust e Swift são quase idênticos, mudando apenas uma coisa. Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='cpp'>const</code>?<br />
 JavaScript é a única das linguagens comparadas que possibilita mudar os tipos das variáveis dinamicamente. Sua sintaxe de desestruturação não permite declarar e atribuir um valor ao mesmo tempo. As variáveis já devem ser declaradas antes da atribuição. JavaScript possui um estilo legado de declaracão, que cria variáveis com regras de escopo diferentes do que a maioria dos programadores espera, além de possuir um modo estrito para coibir práticas legadas.<br />
 C++ é o que tem mais legado de coisas que não deram certo, e sua última sintaxe pode ter regras mais seguras, mas certamente é bastante estranha. Tipagem implícita requer a palavra <code class='cpp'>auto</code>. Para aumentar a performance de nosso código, temos o recurso <code class='cpp'>constexpr</code>.<br />
-Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas.</p>
+Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas. Python sequer tem constantes e o sistema de tipos é dinâmico.</p>
 
 </section>
 
@@ -1210,6 +1250,16 @@ let m = k || 10;
 
 // ok mas não é idiomático
 let n = (k || k === 0) ? k : 10;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+
+# qualquer tipo é sempre nullable
+k = None</code
 >
 </div>
 
