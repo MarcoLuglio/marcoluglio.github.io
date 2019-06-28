@@ -197,6 +197,117 @@ ng --host 0.0.0.0</code
 >
 </div>
 
+<p>Vamos configurar um caminho para nossos imports. Abra o arquivo tsconfig.json e abaixo de baseUrl inclua:</p>
+
+<div class='codeblock'>
+<p>Fallback routes</p>
+<code class='js'
+>{
+	// ...
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths" : {
+			"@app/*" : [
+				"src/app/*"
+			]
+		}
+		// ...
+	}
+	// ...
+}</code
+>
+</div>
+
+<p>Módulo atividades.</p>
+
+<div class='codeblock'>
+<p>Módulo atividades</p>
+<code class='bash'
+>ng generate module Activities --routing</code
+>
+</div>
+
+<dt>
+	<dt>--routing</dt>
+	<dd>Utiliza lazy loading para o módulo</dd>
+</dt>
+
+<div class='codeblock'>
+<p>Componente lista de atividades</p>
+<code class='bash'
+>ng generate component activities/components/ActivitiesList</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Componente atividade</p>
+<code class='bash'
+>ng generate component activities/components/Activity</code
+>
+</div>
+
+<div class='codeblock'>
+<p>app/activities/activities-routing.module.ts</p>
+<code class='js'
+>import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { ActivitiesListComponent } from '@app/activities/components/activities-list/activities-list.component';
+import { ActivityComponent } from '@app/activities/components/activity/activity.component';
+
+const routes: Routes = [
+  {
+    path: ':id',
+    component: ActivityComponent
+  },
+  {
+    path: '',
+    component: ActivitiesListComponent,
+    data: { title: 'Activities List' }
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ActivitiesRoutingModule {}</code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Componente página não encontrada</p>
+<code class='bash'
+>ng generate component components/PageNotFound</code
+>
+</div>
+
+<p>Abra <code>app/app-routing.module.ts</code> e vamos criar nossas rotas dentro da array <code>const routes: Routes = []</code>.</p>
+
+<div class='codeblock'>
+<p>app/app-routing.module.ts</p>
+<code class='js'
+>const routes: Routes = [
+	// Activities module lazy loading
+	{
+		path: 'activities',
+		loadChildren: () => import('@app/activities/activities.module').then(mod => mod.ActivitiesModule)
+	},
+	// fallback routes
+	{
+		path: '',
+		redirectTo: '/activities',
+		pathMatch: 'full'
+	},
+	{
+		path: '**',
+		component: PageNotFoundComponent
+	}
+];</code
+>
+</div>
+
 </section>
 
 </body>
