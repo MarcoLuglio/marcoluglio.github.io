@@ -81,6 +81,11 @@ ol {
 	margin-bottom: 10px;
 }
 
+dt {
+	font-weight: bold;
+	margin-top: 6px;
+}
+
 blockquote {
 	font-size: 13px;
 	margin: 20px;
@@ -91,7 +96,7 @@ a {
 }
 
 code {
-	font-family: Consolas, Menlo, 'Courier New', Courier;
+	font-family: 'Fira Code', Consolas, Menlo, 'Courier New', Courier;
 	white-space: pre;
 	overflow-x: auto;
 }

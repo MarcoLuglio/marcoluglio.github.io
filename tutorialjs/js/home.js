@@ -3,35 +3,6 @@
 import { domReadyPromise, NodeListIterator, Node } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
-import { JavaScriptLexer, HtmlLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
-
-
-
-async function highlightAsync(selector, Lexer) {
-
-	try {
-
-		const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
-		const lexer = new Lexer();
-		const highlighter = new Highlighter();
-
-		for (let blocoDeCodigo of blocosDeCodigo) {
-
-			const source = blocoDeCodigo.innerHTML;
-			blocoDeCodigo.className += ' bubaloop';
-
-			let tokens = await lexer.parseAsync(source);
-			let highlightedSource = await highlighter.highlightAsync(source, tokens);
-			blocoDeCodigo.innerHTML = highlightedSource;
-			const highlightEnhancer = new HighlightEnhancer(new Node(blocoDeCodigo));
-
-		}
-
-	} catch (erro) {
-		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-	}
-
-}
 
 
 
@@ -54,7 +25,63 @@ async function highlightAsync(selector, Lexer) {
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
-	await highlightAsync('code.html', HtmlLexer);
-	await highlightAsync('code.javascript', JavaScriptLexer);
+	const blocosDeCodigo = [];
+	blocosDeCodigo[0] = document.querySelectorAll('code.html');
+	blocosDeCodigo[1] = document.querySelectorAll('code.javascript');
+
+	const highlighterWorker = new Worker('../../compartilhado/js/highlighterWorker.js', { type: 'module' });
+
+	highlighterWorker.onmessage = (event) => {
+
+		const codeBlocksIndex = event.data[0];
+		const codeBlockIndex = event.data[1];
+		const highlightedSource = event.data[2];
+
+		let blocoDeCodigo = blocosDeCodigo[codeBlocksIndex][codeBlockIndex];
+		blocoDeCodigo.className += ' bubaloop';
+		blocoDeCodigo.innerHTML = highlightedSource;
+		const highlightEnhancer = new HighlightEnhancer(new Node(blocoDeCodigo));
+
+	};
+
+	try {
+
+		const blocosDeCodigoIt = new NodeListIterator(blocosDeCodigo[0]);
+
+		let codeBlockIndex = 0;
+		for (let blocoDeCodigo of blocosDeCodigoIt) {
+			const source = blocoDeCodigo.innerHTML;
+			highlighterWorker.postMessage([
+				0,
+				codeBlockIndex,
+				'html',
+				source
+			]); // TODO posso passar um objeto ao invés de uma array??
+			codeBlockIndex++;
+		}
+
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
+
+	try {
+
+		const blocosDeCodigoIt = new NodeListIterator(blocosDeCodigo[1]);
+
+		let codeBlockIndex = 0;
+		for (let blocoDeCodigo of blocosDeCodigoIt) {
+			const source = blocoDeCodigo.innerHTML;
+			highlighterWorker.postMessage([
+				1,
+				codeBlockIndex,
+				'javascript',
+				source
+			]); // TODO posso passar um objeto ao invés de uma array??
+			codeBlockIndex++;
+		}
+
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
 
 })();

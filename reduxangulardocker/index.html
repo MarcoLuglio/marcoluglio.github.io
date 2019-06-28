@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='pt-BR'
+	xml:lang='pt-br'
+	>
+<head>
+	<title>Redux (NgRx) + Angular + Docker</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='../compartilhado/css/main.css' />
+	<script type='module' src='../compartilhado/js/utils.js'></script>
+	<script type='module' src='../compartilhado/js/index.js'></script>
+	<script src='js/home.js'></script>
+</head>
+<body>
+
+
+
+<h1>Redux (NgRx) + Angular + Docker</h1>
+
+<section>
+
+<h2>Índice</h2>
+<nav id='indice'></nav>
+</section>
+
+
+
+<section>
+
+<h2 id='docker'>Docker</h2>
+
+<ul>
+	<li>Instale o <a rel='external nofollow' href='https://www.docker.com'>docker desktop for developers</a></li>
+	<li>Configure para utilizar contêineres linux</li>
+	<li>Compartilhe seus drives com ele</li>
+</ul>
+
+</section>
+
+
+
+<section>
+
+<h2 id='nodejs'>Node.js</h2>
+
+<ul>
+	<li>Procure a imagem oficial do Node.js no <a rel='external nofollow' href='https://hub.docker.com'>docker hub</a>< (no momento que escrevo esse artigo está em <a rel='external nofollow' href='https://hub.docker.com/_/node'>https://hub.docker.com/_/node</a>)/li>
+	<li>Procure a tag da versão desejada (no momento que escrevo esse artigo, a tag <em>:lts-alpine</em>) pode ser usada</li>
+	<li>No terminal, rode os comandos:</li>
+</ul>
+
+<div class='codeblock'>
+<p>criar um contêiner com Node.js</p>
+<code class='bash'
+>cd ~
+mkdir workspace
+cd workspace
+docker container run -it -p 4200:4200 -v "${PWD}":/usr/src/app -w /usr/src/app --name nodescript node:lts-alpine</code
+>
+</div>
+
+<dl>
+	<dt>docker container run</dt>
+	<dd>Baixa uma imagem cria e executa um contêiner</dd>
+	<dt>-it</dt>
+	<dd>Executa o contêiner em modo interativo, isto é, nosso terminal passa a funcionar como a entrada e saída do contêiner</dd>
+	<dt>-p 4200:4200</dt>
+	<dd>Mapeia a porta 4200 do computador para a porta 4200 do contêiner</dd>
+	<dt>-v "${PWD}":/usr/src/app</dt>
+	<dd>Mapeia o diretório atual (PWD = print working directory) do computador para o diretório /usr/src/app do contêiner</dd>
+	<dt>-w /usr/src/app</dt>
+	<dd>Indica que o diretório atual de trabalho do contêiner é -w /usr/src/app</dd>
+	<dt>--name nodescript</dt>
+	<dd>Dá um nome amigável ao contêiner</dd>
+	<dt>node:lts-alpine</dt>
+	<dd>Utiliza a imagem node com a tag lts-alpine (LTS = long term support e alpine é uma distribuição minimalista do linux de só 5MB) como base para o contêiner</dd>
+</dl>
+
+<p>A janela do terminal está executando o Node.js e portanto virou um console JavaScript. Deixe a janela aberta e o contêiner rodando por enquanto.</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='ngcli'>Angular <abbr title='command line interface'>CLI</abbr></h2>
+
+<p>Agora que temos o Node.js, vamos instalar o Angular <abbr title='command line interface'>CLI</abbr> pelo <abbr title='node package manager'>NPM</abbr>. Pra isso precisamos acessar o terminal dentro do contêiner e rodar alguns comandos.</p>
+
+<p>Se você fechou a janela do terminal sem querer, abra de novo e rode o comando</p>
+
+<div class='codeblock'>
+<p>reabrir o contêiner</p>
+<code class='bash'
+>docker container start -i nodejs</code
+>
+</div>
+
+<p>E agora veja se deixa ela aberta rapaz!</p>
+
+<p>Numa segunda nova janela de terminal do seu computador, digite os comandos:</p>
+
+<div class='codeblock'>
+<p>acessar o terminal do contêiner</p>
+<code class='bash'
+>docker exec -it nodejs sh</code
+>
+</div>
+
+<dl>
+	<dt>docker exec</dt>
+	<dd>Executa um programa/comando dentro de um contêiner que está rodando atualmente (por isso pedi para não fechar a janela anterior)</dd>
+	<dt>-it</dt>
+	<dd>Executa o comando em modo interativo, isto é, nosso terminal passa a funcionar como a entrada e saída do comando</dd>
+	<dt>nodejs</dt>
+	<dd>Nome do contêiner no qual vamos executar o comando</dd>
+	<dt>sh</dt>
+	<dd>Qual comando vamos executar. Nesse caso o sh (shell). Alpine não vem com o bash por padrão, só o sh (5MB se lembra?).</dd>
+</dl>
+
+<p>O <abbr title='node package manager'>NPM</abbr> utiliza o git para baixar as versões do Angular <abbr title='command line interface'>CLI</abbr>, então precisamos instalá-lo antes.</p>
+
+<div class='codeblock'>
+<p>instalar o git</p>
+<code class='bash'
+>apk update
+apk add git</code
+>
+</div>
+
+<dl>
+	<dt>apk update</dt>
+	<dd>Atualiza a lista de pacotes e softwares que podem ser instalados (apk é o apt do alpine)</dd>
+	<dt>apk add git</dt>
+	<dd>Instala o git</dd>
+</dl>
+
+<p>Opcionalmente você pode rodar</p>
+
+<div class='codeblock'>
+<p>configurar o git</p>
+<code class='bash'
+>git config --global user.email "jose@silva.com"
+git config --global user.name "José da Silva"</code
+>
+</div>
+
+<p>E finalmente podemos instalar e rodar o Angular <abbr title='command line interface'>CLI</abbr>.</p>
+
+<div class='codeblock'>
+<p>Angular CLI</p>
+<code class='bash'
+>npm install -g @angular/cli
+ng new redux-app
+cd redux-app
+npm install
+ng --host 0.0.0.0</code
+>
+</div>
+
+<dl>
+	<dt>npm install -g @angular/cli</dt>
+	<dd>Instala a última versão do Angular <abbr title='command line interface'>CLI</abbr> dentro do contêiner. Pra mim instalou a 8.0.6.</dd>
+	<dt>ng new redux-app</dt>
+	<dd>Cria um novo app Angular chamado redux-app. Pro meu exemplo adicionei Angular routing e selecionei SCSS quando apareceu a pergunta.</dd>
+	<dt>cd redux-app</dt>
+	<dd>Entra no diretório da aplicação criada</dd>
+	<dt>npm install</dt>
+	<dd>Instala as dependências de bibliotecas</dd>
+	<dt>ng --host 0.0.0.0</dt>
+	<dd>Compila e serve a aplicação em localhost:4200. Se você não especificar o host 0.0.0.0, não vai conseguir acessar a aplicação de fora do contêiner.</dd>
+</dl>
+
+<p>
+	Podemos acessar do navegador de nosso computador o endereço <a href='http://localhost:4200'>http://localhost:4200</a> e ver a aplicação rodando.
+	Se você voltar para o seu computador, verá que a pasta que você mapeou com <code class='bash'>-v</code> quando criou o contêiner agora contém os arquivos da aplicação.
+	Podemos manipular a pasta e os arquivos em nosso computador normalmente.
+</p>
+
+</section>
+
+
+<section>
+
+<h2 id='redux'>Redux (NgRx)</h2>
+
+<p>Vamos finalmente editar alguns arquivos TypeScript. Mas primeiro pare o servidor, pressioando Ctrl+C na janela onde você digitou <code>ng serve</code>.</p>
+
+<p>Vamos instalar a biblioteca NgRx em nossa aplicação.</p>
+
+</section>
+
+</body>
+</html>
