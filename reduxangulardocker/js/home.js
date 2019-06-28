@@ -3,8 +3,8 @@
 import { domReadyPromise, NodeListIterator, Node } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
-//import { HtmlLexer, CssLExer, TsLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
 import { Highlighter } from '../../compartilhado/js/highlighter.js';
+//import { HtmlLexer, CssLExer, TsLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
 
 
 
