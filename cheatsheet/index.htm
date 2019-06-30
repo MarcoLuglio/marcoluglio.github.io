@@ -682,6 +682,24 @@ function someFunction(arg1) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>some_function.__doc__ = ".__doc__ guarda um texto de ajuda"
+
+def some_function(arg1: int):
+	"""Ou então logo após a linha de definição.
+
+	If the argument `sound` isn't passed in, the default Animal
+	sound is used.
+
+	Parameters
+	----------
+	arg1 : int
+		Primeiro argumento
+	"""</code>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
 </div>
@@ -845,9 +863,9 @@ useSemDeclarar = 5;</code
 <p>Python</p>
 <code class='python'
 >
-
-
-
+# não existe uma declaração explícita
+# erros de digitação podem introduzir bugs
+# indesejados...
 x = 5
 x = 'dynamic type'</code
 >
@@ -947,6 +965,29 @@ var (x, y) = Pair(1, 2)</code
 <code class='javascript'
 >
 [x, y] = [1, 2];</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+x, y = (1, 2)
+head, *tail = [1, 2, 3, 4, 5]
+a, b, *other, z = [1, 2, 3, 4, 5]
+
+a, _ = [1, 2]
+print(a)
+# Prints: 1
+a, _, c = (1, 2, 3)
+print(a)
+# Prints: 1
+print(c)
+# Prints: 3
+
+a, *_ = [1, 2, 3, 4, 5]
+a, *_, b = [1, 2, 3, 4, 5]
+a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 >
 </div>
 
@@ -1436,6 +1477,39 @@ var bObjProto = new Boolean({});*/</code
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+># tipo Boolean
+oitoOuOitenta = True
+oitoOuOitenta = False;
+
+# converte para true
+oitoOuOitenta = not oitoOuOitenta
+
+# falsy
+
+bZero = 0
+bNone = None
+bEmptyString = ''
+bFalse = False
+
+0.0
+0j
+Decimal(0)
+Fraction(0, 1)
+[] - an empty list
+{} - an empty dict
+() - an empty tuple
+b'' - an empty bytes
+set() - an empty set
+an empty range, like range(0)
+objects for which
+	obj.__bool__() returns False
+	obj.__len__() returns 0</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim oitoOuOitenta: oitoOuOitenta = True
@@ -1686,6 +1760,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+-
+</div>
+
 </div>
 
 
@@ -1886,6 +1965,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+-
+</div>
+
 </div>
 
 
@@ -1981,6 +2065,21 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+
+<table>
+	<caption>Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>Integer</td><td>Depende do Hardware</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 </div>
