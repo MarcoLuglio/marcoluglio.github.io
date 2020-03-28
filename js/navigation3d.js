@@ -134,6 +134,8 @@ define('KeysManager', ['getKey'], (getKey) => {
 				'PageDown': false,
 				'End': false,
 				'Home': false,
+				'Alt': false,
+				'Meta': false,
 				'q': false,
 				'w': false,
 				'e': false,
@@ -182,7 +184,8 @@ define('KeysManager', ['getKey'], (getKey) => {
 				'Numpad9': false,
 				'NumpadMultiply': false,
 				'NumpadAdd': false,
-				'NumpadSubtract': false
+				'NumpadSubtract': false,
+				'ı': false // não sei qual tecla é essa
 			};
 			Object.seal(keys);
 			Object.defineProperty(this, '_keys', {value: keys});
@@ -190,7 +193,7 @@ define('KeysManager', ['getKey'], (getKey) => {
 			window.addEventListener('keydown', this, false);
 			window.addEventListener('keyup', this, false);
 
-			Object.seal(this); // TODO ver se é necessário
+			Object.seal(this);
 
 		}
 
@@ -208,24 +211,30 @@ define('KeysManager', ['getKey'], (getKey) => {
 
 		handleEvent(evento) {
 
-			let key = null;
+			try {
 
-			switch(evento.type) {
+				let key = null;
 
-				case 'keydown':
-					this._prevent(evento);
-					key = getKey(evento);
-					this.press(key);
-					break;
+				switch(evento.type) {
 
-				case 'keyup':
-					this._prevent(evento);
-					key = getKey(evento);
-					if (this.isPressed(key)) { // talvez eu possar soltar sem verificar, não sei ainda
-						this.release(key);
-					}
-					break;
+					case 'keydown':
+						this._prevent(evento);
+						key = getKey(evento);
+						this.press(key);
+						break;
 
+					case 'keyup':
+						this._prevent(evento);
+						key = getKey(evento);
+						if (this.isPressed(key)) { // talvez eu possar soltar sem verificar, não sei ainda
+							this.release(key);
+						}
+						break;
+
+				}
+
+			} catch (ex) {
+				console.log(ex);
 			}
 
 		}
