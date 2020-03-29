@@ -181,7 +181,7 @@ section > div {
 	background-repeat: no-repeat;
 	background-image: url(../imagens/rotate.svg);
 	background-size: 32px 32px;
-	padding-right: 40px;
+	padding-right: 0;
 	padding-bottom: 35px;
 }
 
