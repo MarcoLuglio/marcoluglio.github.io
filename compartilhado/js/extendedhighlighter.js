@@ -7293,6 +7293,7 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'private',
 				'protected',
 				'public',
+				'record',
 				'return',
 				'static',
 				'strictfp',
@@ -7304,6 +7305,7 @@ define('JavaKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimple
 				'throws',
 				'transient',
 				'try',
+				'var',
 				// 'void', // vou realçar como tipo
 				'volatile',
 				'while',

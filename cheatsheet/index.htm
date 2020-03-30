@@ -10971,7 +10971,22 @@ val compra1 = ResultadoCaixa(
 
 <div class='codeblock'>
 <p>Java</p>
--
+<code class='java'
+>// java 14 preview
+// records NÃO SÃO structs
+// mas tem um propósito similar
+public record ResultadoCaixa(
+	int total,
+	int valorPago,
+	int troco
+){}
+
+var compra1 = ResultadoCaixa(
+	967,
+	1000,
+	33
+);</code
+>
 </div>
 
 
