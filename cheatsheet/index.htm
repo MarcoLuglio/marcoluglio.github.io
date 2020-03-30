@@ -3868,6 +3868,8 @@ var leadingWhitespace = """
 var dupla = @"A segunda faz ""tchun""";
 var interpolated = $"A segunda faz \"tchun\"";
 
+var calvinHarris = "how deep\nis your love"; // 2 linhas
+
 // concatenação
 var josePauloPaes = "Meu amor é simples, Dora,\n" +
 "Como a água e o pão.\n" +
@@ -3883,7 +3885,19 @@ que uma bela cagada.
 Cagam ricos, cagam pobres,
 cagam reis e cagam fadas.
 Não há merda que se compare
-à bosta da pessoa amada.";</code
+à bosta da pessoa amada.";
+
+var multiplier = 3;
+var stringInterpolada = $"{multiplier} times 2.5 is {multiplier * 2.5}";
+
+var emoji = "😍";
+var combined = "\uD83D\uDE0D";
+var clustered = "\x1F60D";
+
+// string é imutável, então seus métodos retornam novas instâncias
+var beeGees = calvinHarris.Replace("love", "looove");
+
+"Gritando".ToUpper(); // retorna 'GRITANDO'</code
 >
 </div>
 
@@ -3922,8 +3936,8 @@ cagam reis e cagam fadas.
 Não há merda que se compare
 à bosta da pessoa amada.`;
 
-let multiplier = 3
-let stringInterpolada = `${multiplier} times 2.5 is ${multiplier * 2.5}`
+let multiplier = 3;
+let stringInterpolada = `${multiplier} times 2.5 is ${multiplier * 2.5}`;
 
 let emoji = '😍';
 let es5 = '\uD83D\uDE0D'; // code units / surrogates
