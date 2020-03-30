@@ -3759,11 +3759,11 @@ char* cString = "";</code
 let calvinHarris = "how deep\nis your love" // 2 linhas
 
 // concatenação - única maneira de usar várias linhas antes de swift 4
-let josePauloPaes = "Meu amor é simples, Dora," +
-"\nComo a água e o pão." +
+let josePauloPaes = "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
 "\n" +
-"\nComo o céu refletido" +
-"\nNas pupilas de um cão."
+"Como o céu refletido\n" +
+"Nas pupilas de um cão."
 
 // várias linhas (swift 4+)
 let leminskiTemplate = """Merda é veneno.
@@ -3803,11 +3803,11 @@ let beeGees = calvinHarris.replacingOccurrences(of: "love", with: "looove")
 val calvinHarris = "how deep\nis your love" // 2 linhas
 
 // concatenação
-val josePauloPaes = "Meu amor é simples, Dora," +
-"\nComo a água e o pão." +
+val josePauloPaes = "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
 "\n" +
-"\nComo o céu refletido" +
-"\nNas pupilas de um cão."
+"Como o céu refletido\n" +
+"Nas pupilas de um cão."
 
 // várias linhas
 val leminskiTemplate = """Merda é veneno.
@@ -3832,12 +3832,12 @@ val leadingWhitespace = """
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->String simples = "A primeira faz \"tchan\" e só";
+>var simples = "A primeira faz \"tchan\" e só";
 
-String calvinHarris = "how deep\nis your love"; // 2 linhas
+var calvinHarris = "how deep\nis your love"; // 2 linhas
 
 // concatenação
-String josePauloPaes = "Meu amor é simples, Dora,\n" +
+var josePauloPaes = "Meu amor é simples, Dora,\n" +
 "Como a água e o pão.\n" +
 "\n" +
 "Como o céu refletido\n" +
@@ -3851,13 +3851,13 @@ que uma bela cagada.
 Cagam ricos, cagam pobres,
 cagam reis e cagam fadas.
 Não há merda que se compare
-à bosta da pessoa amada."""
+à bosta da pessoa amada.""";
 
 var leadingWhitespace = """
 	Sem leading (alinhado com a última linha)
 		Com um tab de leading
 	Sem leading (alinhado com a última linha)
-	"""</code
+	""";</code
 >
 </div>
 
@@ -3867,7 +3867,23 @@ var leadingWhitespace = """
 >var simples = "A primeira faz \"tchan\"";
 var dupla = @"A segunda faz ""tchun""";
 var interpolated = $"A segunda faz \"tchun\"";
-</code
+
+// concatenação
+var josePauloPaes = "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
+"\n" +
+"Como o céu refletido\n" +
+"Nas pupilas de um cão.";
+
+// várias linhas
+var leminskiTemplate = @"Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada.";</code
 >
 </div>
 
@@ -3882,7 +3898,7 @@ let duplaTemplate = `A primeira faz "tchan". A segunda faz 'tchun'`;
 
 const iara = "mãe d'água";
 const modoDificil = 'O\'Reilly';
-let html = '<em class="especial">ênfase</em>';
+let html = '&lt;em class="especial"&gt;ênfase&lt;/em&gt;';
 
 let calvinHarris = 'how deep\nis your love'; // 2 linhas
 
