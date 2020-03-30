@@ -7989,6 +7989,142 @@ define('JavaStringLiteralToken', ['SourcePatternIteratorToken', 'JavaStringPatte
 
 
 
+define('JavaMultilineStringPatternIterator', () => {
+
+	const JavaMultilineStringPatternIterator = class JavaMultilineStringPatternIterator {
+
+		constructor() {
+
+			const context = this;
+
+			Object.defineProperties(this, {
+				_hasNext: {value: true, writable: true},
+				_isComplete: {value: false, writable: true},
+				_matchFunction: {value: context._matchStartQuote1, writable: true}
+			});
+
+			Object.seal(this);
+
+		}
+
+		get isComplete() {
+			return this._isComplete;
+		}
+
+		hasNext() {
+			return this._hasNext;
+		}
+
+		/**
+		 * @retuns {Boolean} true se o caractere match, false se não
+		 */
+		next(matchCharacter) {
+			return this._matchFunction(matchCharacter);
+		}
+
+		_matchStartQuote1(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchStartQuote2;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote2(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchStartQuote3;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchStartQuote3(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote1;
+				return true;
+			}
+
+			this._hasNext = false;
+			return false;
+
+		}
+
+		_matchContentOrEndQuote1(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote2;
+			}
+
+			return true;
+
+		}
+
+		_matchContentOrEndQuote2(matchCharacter) {
+
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchContentOrEndQuote3;
+			}
+
+			return true;
+
+		}
+
+		_matchContentOrEndQuote3(matchCharacter) {
+
+			// encontrou o caractere final
+			// passa para a próxima função de match só pra fechar
+			// no próximo next
+			if (matchCharacter === '"') {
+				this._matchFunction = this._matchEnd;
+			}
+
+			return true;
+
+		}
+
+		/**
+		 * Indica que a string já terminou no caractere anterior
+		 */
+		_matchEnd(matchCharacter) {
+			this._hasNext = false;
+			this._isComplete = true;
+			return false;
+		}
+
+	};
+
+	return JavaMultilineStringPatternIterator;
+
+});
+
+
+
+/**
+ * Token for Java strings
+ */
+define('JavaMultilineStringLiteralToken', ['SourcePatternIteratorToken', 'JavaMultilineStringPatternIterator'], (SourcePatternIteratorToken, JavaMultilineStringPatternIterator) => {
+
+	const JavaMultilineStringLiteralToken = class JavaMultilineStringLiteralToken extends SourcePatternIteratorToken {
+		constructor() {
+			super('string', new JavaMultilineStringPatternIterator());
+		}
+	};
+
+	return JavaMultilineStringLiteralToken;
+
+});
+
+
+
 define('JavaAnnotationPatternIterator', ['SourcePatternIterator'], (SourcePatternIterator) => {
 
 	const JavaAnnotationPatternIterator = class JavaAnnotationPatternIterator extends SourcePatternIterator {
@@ -8172,6 +8308,7 @@ define(
 		'JavaDecimalLiteralToken',
 		'JavaNumericLiteralToken',
 		'JavaStringLiteralToken',
+		'JavaMultilineStringLiteralToken',
 		'JavaAnnotationToken',
 
 		'CLineCommentToken',
@@ -8194,6 +8331,7 @@ define(
 		JavaDecimalLiteralToken,
 		JavaNumericLiteralToken,
 		JavaStringLiteralToken,
+		JavaMultilineStringLiteralToken,
 		JavaAnnotationToken,
 
 		CLineCommentToken,
@@ -8248,7 +8386,8 @@ define(
 				0,
 				new JavaDecimalLiteralToken(),
 				new JavaNumericLiteralToken(),
-				new JavaStringLiteralToken()
+				new JavaStringLiteralToken(),
+				new JavaMultilineStringLiteralToken()
 			);
 		}
 

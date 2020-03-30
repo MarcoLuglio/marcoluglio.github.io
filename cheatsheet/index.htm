@@ -3836,12 +3836,28 @@ val leadingWhitespace = """
 
 String calvinHarris = "how deep\nis your love"; // 2 linhas
 
-// concatenação - única maneira de usar várias linhas
+// concatenação
 String josePauloPaes = "Meu amor é simples, Dora,\n" +
 "Como a água e o pão.\n" +
 "\n" +
 "Como o céu refletido\n" +
-"Nas pupilas de um cão.";</code
+"Nas pupilas de um cão.";
+
+// várias linhas - java 14+
+var leminskiTemplate = """Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada."""
+
+var leadingWhitespace = """
+	Sem leading (alinhado com a última linha)
+		Com um tab de leading
+	Sem leading (alinhado com a última linha)
+	"""</code
 >
 </div>
 
@@ -10951,7 +10967,8 @@ public struct ResultadoCaixaCartao : Parcelavel {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// data classes NÃO SÃO structs
+>
+// data classes NÃO SÃO structs
 // mas tem um propósito similar
 public data class ResultadoCaixa(
 	val total:Int,
