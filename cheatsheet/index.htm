@@ -3887,6 +3887,9 @@ cagam reis e cagam fadas.
 Não há merda que se compare
 à bosta da pessoa amada.";
 
+var multiInterpolated = $@"{a}
+{b}";
+
 var multiplier = 3;
 var stringInterpolada = $"{multiplier} times 2.5 is {multiplier * 2.5}";
 
@@ -5681,13 +5684,20 @@ label: {
 	// do more stuff
 }
 
-// swicth e "match" - java 12+
+// switch e "match" - java 12+
 switch (day) {
     case MONDAY, FRIDAY, SUNDAY -> System.out.println(6);
     case TUESDAY                -> System.out.println(7);
     case THURSDAY, SATURDAY     -> System.out.println(8);
     case WEDNESDAY              -> System.out.println(9);
-}</code
+}
+
+// switch expressions - java 14+
+var title = switch (person) {
+	case Dali, Picasso      -> "painter";
+	case Mozart, Prokofiev  -> "composer";
+	case Goethe, Dostoevsky -> "writer";
+};</code
 >
 </div>
 
@@ -5749,7 +5759,15 @@ switch(shape) {
 		break;
 	case null:
 		throw new ArgumentNullException(nameof(shape));
-}</code
+}
+
+// switch expressions - requer C# 8+
+var switchValue = id switch
+{
+	"ab" => 1,
+	"cd" => 2,
+	_ => 0
+};</code
 >
 </div>
 
