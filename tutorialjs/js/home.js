@@ -1,6 +1,6 @@
 'use strict';
 
-import { domReadyPromise, NodeListIterator, Node } from '../../compartilhado/js/utils.js';
+import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 
@@ -40,7 +40,7 @@ import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 		let blocoDeCodigo = blocosDeCodigo[codeBlocksIndex][codeBlockIndex];
 		blocoDeCodigo.className += ' bubaloop';
 		blocoDeCodigo.innerHTML = highlightedSource;
-		const highlightEnhancer = new HighlightEnhancer(new Node(blocoDeCodigo));
+		const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 
 	};
 
