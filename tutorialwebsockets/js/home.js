@@ -1,6 +1,6 @@
 'use strict';
 
-import { domReadyPromise, NodeListIterator, Node } from '../../compartilhado/js/utils.js';
+import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 import { CsLexer, JavaScriptLexer, HtmlLexer, Highlighter } from '../../compartilhado/js/highlighter.js';
@@ -23,7 +23,7 @@ async function highlightAsync(selector, Lexer) {
 			let tokens = await lexer.parseAsync(source);
 			let highlightedSource = await highlighter.highlightAsync(source, tokens);
 			blocoDeCodigo.innerHTML = highlightedSource;
-			const highlightEnhancer = new HighlightEnhancer(new Node(blocoDeCodigo));
+			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 
 		}
 
