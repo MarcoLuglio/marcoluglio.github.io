@@ -39,67 +39,6 @@ const Deferred = class Deferred {
 
 
 /**
- * Wraps a dom node and adds method to manipulate its class attribute
- */
-const Node = class Node {
-
-	constructor(htmlNode) {
-		Object.defineProperty(this, '_htmlNode', {value: htmlNode});
-		Object.seal(this);
-	}
-
-	addClass(className) {
-		if (!this.hasClass(className)) {
-			this._htmlNode.className += ' ' + className;
-		}
-	}
-
-	removeClass(className) {
-		var currentClass = ' ' + this._htmlNode.className + ' ';
-		currentClass = currentClass.replace(' ' + className + ' ', ' ');
-		currentClass = this._normalize(currentClass);
-		// TODO if className != currentClass
-		this._htmlNode.className = currentClass;
-	}
-
-	toggleClass(className) {
-		if (this.hasClass(className)) {
-			this.removeClass(className);
-			return;
-		}
-		this.addClass(className);
-	}
-
-	hasClass(className) {
-		var currentClass = ' ' + this._htmlNode.className + ' ';
-		if (currentClass.indexOf(' ' + className + ' ') > -1) {
-			return true;
-		}
-		return false;
-	}
-
-	appendChild(node) {
-		this._htmlNode.appendChild(node);
-	}
-
-	get innerHTML() {
-		return this._htmlNode.innerHTML;
-	}
-
-	set innerHTML(source) {
-		this._htmlNode.innerHTML = source;
-	}
-
-	_normalize(classString) {
-		// TODO if string has more than one space, convert to single space
-		return classString;
-	}
-
-};
-
-
-
-/**
  * Wraps a node list to allow iterating it with for of loops
  */
 const NodeListIterator = class NodeListIterator {
@@ -272,4 +211,4 @@ function showCurrentYear(containerId) {
 
 
 
-export { Deferred, Node, NodeListIterator, StringIterator, RangeIterator, domReadyPromise, showEmail, showCurrentYear };
+export { Deferred, NodeListIterator, StringIterator, RangeIterator, domReadyPromise, showEmail, showCurrentYear };

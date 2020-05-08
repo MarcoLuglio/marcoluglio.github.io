@@ -26,7 +26,7 @@ const HighlightEnhancer = class HighlightEnhancer {
 	}
 
 	highlight() {
-		this.node.addClass('highlight');
+		this.node.classList.add('highlight');
 	}
 
 	addControls() {
@@ -43,7 +43,7 @@ const HighlightEnhancer = class HighlightEnhancer {
 		checkbox.type = 'checkbox';
 		checkbox.value = 'all';
 		checkbox.id = checkboxId;
-		if (this.node.hasClass('highlight')) {
+		if (this.node.classList.contains('highlight')) {
 			checkbox.checked = true;
 		}
 		label.appendChild(labelText);
@@ -60,7 +60,7 @@ const HighlightEnhancer = class HighlightEnhancer {
 	_clickHandler(event) {
 		switch (event.target.value) {
 			case 'all':
-				this.node.toggleClass('highlight');
+				this.node.classList.toggle('highlight');
 				break;
 		}
 	}

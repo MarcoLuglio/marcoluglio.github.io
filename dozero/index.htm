@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='pt-BR'
+	xml:lang='pt-br'
+	>
+<head>
+	<title>Do zero</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='../compartilhado/css/main.css' />
+</head>
+<body>
+
+
+
+	<h1>Do zero <span>projeto web desde o começo</span></h1>
+
+	<p><strong>WORK IN PROGRESS como de sempre ;)</strong></p>
+
+	<section>
+
+	<h2>Índice</h2>
+	<nav id='indice'>
+	</nav>
+
+	</section>
+
+
+
+	<section>
+
+	<h2>Instale</h2>
+
+	<ul>
+		<li><a href='https://git-scm.com/'>Git</a></li>
+		<li><a href='https://www.docker.com/'>Docker</a></li>
+		<li><a href='https://code.visualstudio.com/'>VS Code</a></li>
+	</ul>
+
+	<p>É tudo gratuito porque sabe como é no Brasil, com a economia e tal...</p>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='git'>Controle de versão - Git</h2>
+
+	<p>
+		Abra seu terminal.
+		Eu estou usando um terminal sh like como sh, bash ou zsh.
+		Se estiver no Windows, pode usar o terminal que vem com o Git, ou o <a href='https://docs.microsoft.com/en-us/windows/wsl/about'>Windows Subsystem for Linux</a>.
+	</p>
+
+	<p>Se você nunca usou git antes, vai ter que configurar o nome e email que vai em cada alteração de código que você realizar.</p>
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>git</span> <span class='keyword'>config</span> <span class='parameter'>--global</span> user.name "Marco Luglio"    <span class='comment'># comentários no terminal começam com #</span>
+<span class='keyword'>git</span> <span class='keyword'>config</span> <span class='parameter'>--global</span> user.email marco@gmail.com  <span class='comment'># em cada quebra de linha pressione a tecla "Return" ↩︎ ou "Enter" ⌅ pra executar a linha ;)</span></code
+		>
+	</div>
+
+	<p>Se precisar, verifique a documentação das <a href='https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup'>configurações iniciais</a>.</p>
+
+	<p>
+		Agora vamos criar pastas e repositórios separados para cada projeto.
+		O motivo de separarmos cada projeto em repositórios diferentes vai ficar mais claro quando eu falar sobre <em>continuous integration / continuous deploy</em>.
+	</p>
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+><span class='keyword'>cd</span> ~             <span class='comment'># cd = change directory e ~ = pasta do usuário atual</span>
+<span class='keyword'>mkdir</span> dozero     <span class='comment'># mkdir = make directory</span>
+<span class='keyword'>cd</span> dozero        <span class='comment'># tente digitar só as primeiras letras da pasta e pressionar tab ;)</span>
+
+<span class='keyword'>mkdir</span> front-end  <span class='comment'># pressione a seta para cima, para trazer os comandos digitados anteriormente</span>
+<span class='keyword'>cd</span> front-end
+<span class='keyword'>git</span> <span class='keyword'>init</span>         <span class='comment'># inicia um repositório git na pasta atual</span>
+<em>Initialized empty Git repository in /Users/marco/dozero/front-end/.git/</em>
+<span class='keyword'>cd</span> ..            <span class='comment'># .. = pasta superior e . = pasta atual</span>
+
+<span class='keyword'>mkdir</span> mobile
+<span class='keyword'>cd</span> mobile
+<span class='keyword'>git</span> <span class='keyword'>init</span>
+<em>Initialized empty Git repository in /Users/marco/dozero/mobile/.git/</em>
+<span class='keyword'>cd</span> ..
+
+<span class='keyword'>mkdir</span> back-end
+<span class='keyword'>cd</span> back-end
+<span class='keyword'>git</span> <span class='keyword'>init</span>
+<em>Initialized empty Git repository in /Users/marco/dozero/back-end/.git/</em>
+<span class='keyword'>cd</span> ..
+
+<span class='keyword'>ls</span> <span class='parameter'>-a</span> <span class='parameter'>-R</span>         <span class='comment'># ls = list, -a = all, -R = recursivo</span></code
+		>
+	</div>
+	<p>
+		Isso deve mostrar as pastas escondidas <code class='shell'>.git</code> que indicam quais pastas são repositórios.
+		É dentro das pastas <code class='shell'>.git</code> que ficam todo o histórico de alterações do seu código.
+		Os arquivos <code class='shell'>config</code> dentro das pastas <code class='shell'>.git</code> são de interesse especial para nós.
+		Vamos dar uma olhada neles daqui a pouco quando fizermos mais coisas com nosso repositório.
+		Pra vermos o conteúdo de um arquivo texto como o <code class='shell'>config</code>, usamos o comando <code class='bubaloop shell'><span class='keyword'>cat</span></code>.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>cat</span> ./front-end/.git/config  <span class='comment'># cat = concatenate and show result, mas só temos um arquivo então o resultado é igual ao arquivo</span></code
+		>
+	</div>
+
+	<p>
+		Para saber mais sobre um comando que digitamos no terminal, podemos digitar <code class='bubaloop shell'><span class='keyword'>man</span> comando</code>, por exemplo, <code class='bubaloop shell'><span class='keyword'>man</span> ls</code>.
+		Para sair do <code class='bubaloop shell'><span class='keyword'>man</span></code>, digite <code class='shortcut'>Q</code>.
+	</p>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='frontendsimplessetup'>Front-end web simples</h2>
+	
+	<p>
+		Vamos criar uma página estática simples pra você ficar mais confortável com o Git, Docker e VS Code.
+		Logo em seguida fazemos uma mais elaborada, ok?
+	</p>
+
+	<p>
+		Já que estamos usando o Git, vamos criar um branch (galho) separado pra fazermos nosso trabalho sem atrapalhar o resto do time.
+		Se você prefere passar o máximo de tempo fora de um editor de texto ou <abbr title='Integrate Development Environment'>IDE</abbr>, pode usar o comando no terminal.
+		Vou entrar mais em detalhes sobre o Git mais abaixo.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>cd</span> front-end
+<span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># lista os branches existentes, mas por enquanto não temos nenhum</span>
+<span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html             <span class='comment'># cria e muda para um novo branch chamado static-html</span>
+<em>Switched to a new branch 'features/static-html'</em>
+<span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># ainda não lista nenhum branch, pois ainda não salvamos nenhuma alteração nova</span></code
+		>
+	</div>
+
+	<p>Agora podemos criar um arquivo e editá-lo, tudo pelo terminal!</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>touch</span> index.htm  <span class='comment'># touch cria um arquivo vazio</span>
+<span class='keyword'>nano</span> index.htm   <span class='comment'># o nano (e o pico tb) é mais amigável que o vi, mas na boa, use o VS Code...</span></code
+		>
+	</div>
+
+	<p>Pra sair do nano pressione <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌃</span> + <span class='shortcut'>X</span>.</p>
+
+	<p>
+		Ou, podemos abrir o VS Code do terminal na pasta que quisermos com os comandos abaixo.
+		Se você estiver num Mac, <a href='https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line'>siga esses passos antes</a>.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+><span class='keyword'>code</span> .  <span class='comment'># se lembre que . = pasta atual</span></code
+		>
+	</div>
+
+	<p>Já na tela do VS Code, crie um novo arquivo com <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>N</span>.</p>
+
+	<p>
+		Por padrão o VS Code vai criar um arquivo de texto simples (text/plain).
+		Vamos dizer para ele que queremos um arquivo html (text/html).
+		Pra isso abrimos a barra de comandos do VS Code  pressionando <span class='shortcut'>Ctrl</span> + <span class='shortcut'>Shift</span> + <span class='shortcut'>P</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>⇧</span> + <span class='shortcut'>P</span>.
+	</p>
+
+	<p>
+		A barra vai abrir já com um <code>&gt;</code> preenchido.
+		É a indicação que queremos rodar um comando.
+		Se você apagar este <code>&gt;</code>, o VS Code só vai mostrar uma lista dos arquivos abertos.
+	</p>
+
+	<p>
+		Na barra de comandos, digite ou selecione (ou digite parte, use as setas do teclado e selecione, ou use o mouse, fique bem á vontade...) o comando <code>Change Language Mode</code> e pressione <span class='shortcut'>Return</span> ou <span class='shortcut'>↩︎</span>.
+		Depois selecione <code>HTML</code> na lista de opções.
+		Isto vai habilitar para nós alguns atalhos para escrever <abbr title='Hypertext Markup Language'>HTML</abbr> de um plug-in chamado <a href='https://emmet.io/'>Emmet</a> (ou <a href='https://code.google.com/archive/p/zen-coding/'>Zen Coding</a> se você for velho o suficiente pra lembrar).
+	</p>
+
+	<p>
+		O primeiro atalho que vamos aprender do Emmet é o <code>!</code>. Digite <code>!</code> dentro do arquivo <abbr title='Hypertext Markup Language'>HTML</abbr> do VS Code e ele vai te dar uma sugestão:
+		<br /><img src='imagens/emmetbang.png' alt='atalho Emmet !' />
+	</p>
+
+	<p>Pressione <span class='shortcut'>Return</span> ou  <span class='shortcut'>↩︎</span> para aceitar a sugestão e <em>voilà</em> (isso é francês, se não der certo vc pode usar <em>merde</em>). Temos um html mínimo.</p>
+
+	<div class='codeblock'>
+		<p>Mágica do Emmet - Modelo de HTML</p>
+		<code class='html'
+		>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8" /&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code
+		>
+	</div>
+
+	<p>
+		Salve este arquivo como <code>index.htm</code> na raiz da pasta <code>front-end</code>.
+		Ele será nosso arquivo inicial.
+		O que define na verdade que ele é o arquivo inicial é a configuração do nosso servidor.
+		Por padrão, servidores como Nginx, Apache, <abbr title='Internet Information Services'>IIS</abbr>, WildFly e por aí vai aceitam <code>index.htm</code>.
+	</p>
+
+	<p>
+		Quando você abre um arquivo existente o VS Code adivinha qual a linguagem pela extensão.
+		Se ele não conseguir adivinhar, ou se você quiser sobrescrever a decisão do VS Code, pode usar o comando que mencionei acima, o <code>Change Language Mode</code>.
+	</p>
+
+	<h3 id='nginxdocker'>Controle de Versão - Release Flow</h3>
+
+	<p>
+		Pra não perdermos nosso trabalho incrivelmente árduo até agora de criar esse arquivo html (pelo menos pra escrever até aqui já deu um trabalhão), vamos salvá-lo no Git.
+		Mais precisamente, vamos salvar a versão atual dele no Git, pra termos um histórico futuro das alterações que fizermos no arquivo.
+		Consulte a <a href='https://rogerdudler.github.io/git-guide/'>lista básica de comandos do Git</a>.
+		Existem vários fluxos que as pessoas foram inventando ao longo do tempo pra tentar deixar o uso do Git um pouco menos complicado e simplificar o histório das alterações dentro de um projeto.
+		Vou usar aqui um fluxo chamado <a href='https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/release-flow'>release flow</a> + squash + rebase.
+	</p>
+
+	<p>
+		A primeira parte desse fluxo já fizemos lá em cima, com:
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html             <span class='comment'># cria e muda para um novo branch chamado static-html</span></code
+		>
+	</div>
+
+	<p>
+		Se você não quiser usar uma janela separada com o terminal pra digitar o restante, o VS Code tem um terminal integrado.
+		Acesse pelo menu View, Terminal, ou pelo atalho <span class='shortcut'>Ctrl</span> + <span class='shortcut'>'</span> ou <span class='shortcut'>⌃</span> + <span class='shortcut'>⇧</span> + <span class='shortcut'>'</span>
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra index.htm como untracked (não versionado)</span>
+<span class='keyword'>git</span> <span class='keyword'>add</span> index.htm                                <span class='comment'># adiciona index.htm para a área de staging (ensaio)</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra que index.htm será adicionado quando efetuarmos o commit (executar o que ensaiamos)</span>
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo inicial"        <span class='comment'># efetua o commit com uma mensagem</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra que não há nenhuma nova alteração para ser salva</span></code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>git</span> <span class='keyword'>log</span>     <span class='comment'># mostra o histórico de alterações</span>
+<span class='keyword'>git</span> <span class='keyword'>branch</span>  <span class='comment'># finalmente lista nosso branch</span>
+		</code
+		>
+	</div>
+
+	<p>
+		Vamos melhorar um pouquinho nosso projeto e salvar uma nova versão.
+		Criamos um arquivo <abbr title='Cascading Style Sheet'>CSS</abbr> para melhorar a aparência da nossa página.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>mkdir</span> css
+<span class='keyword'>cd</span> css
+
+<span class='comment'># vamos criar e inserir conteúdo num arquivo pequeno com cat</span>
+<span class='keyword'>cat</span> &gt;&gt; index.css
+/* Digite o conteúdo do arquivo aqui, quando terminar, pressione Ctrl + d ou ⌃ + d */
+h1 {
+	color: #505B66;
+}</code
+		>
+	</div>
+
+	<p>E incluímos um pouco de conteúdo.</p>
+
+	<div class='codeblock'>
+		<p>index.htm</p>
+		<code class='html'
+		>&lt;!DOCTYPE html&gt;
+&lt;html lang=<strong>"pt-br"</strong>&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8" /&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;<strong class='small'>Olá mundo</strong>&lt;/title&gt;
+	<strong class='comment small'>&lt;!-- estilos vão no cabeçalho da página --&gt;</strong>
+	<strong class='small'>&lt;link rel='stylesheet' href='css/index.css' /&gt;</strong>
+&lt;/head&gt;
+&lt;body&gt;
+	<strong>&lt;h1&gt;Pra quem não sabe&lt;/h1&gt;</strong>
+	<strong>&lt;p&gt;Hipertexto é feito de &lt;a href='https://en.wikipedia.org/wiki/Hypertext'&gt;links&lt;/a&gt; ;)&lt;/p&gt;</strong>
+&lt;/body&gt;
+&lt;/html&gt;</code
+		>
+	</div>
+
+	<p>
+		Abra esse arquivo no navegador, clicando duas vezes nele.
+		O navegador vai mostrar na barra de endereços algo como <em>file:///Users/marco/dozero/front-end/index.htm</em>
+		O <em>file://</em> significa que ele está abrindo um arquivo local, do sistema de arquivos.
+		O título deve ficar num cinza ligeiramente diferente do preto original (design está nos detalhes).
+		Mas que você quiser verificar com certeza, inspecione o título TODO.
+	</p>
+
+	<p>
+		Já que tudo parece certo, vamos salvar novamente nosso progresso.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='comment'># tínhamos parado dentro da pasta css se lembra?</span>
+<span class='comment'># então o git mostra ../index.htm como modificado e ./ como não versionado</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>
+
+<span class='comment'># podemos adicionar todas as pendências de uma vez na área de ensaio com *</span>
+<span class='keyword'>git</span> <span class='keyword'>add</span> *
+
+<span class='comment'># mostra que index.htm e css/index.css serão inclusos no commit</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>
+
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo css"
+<span class='keyword'>git</span> <span class='keyword'>status</span></code
+		>
+	</div>
+
+	<p>
+		Por último vamos colocar um pouquinho de programação nessa página.
+		Agora criamos um arquivo JavaScript para melhorar a aparência da nossa página.
+	</p>
+
+	<div class='codeblock'>
+		<p>js/index.js</p>
+		<code class='javascript'
+		>'use strict';
+
+const titulo = document.querySelector('h1');
+titulo.innerText = 'Rodou';</code
+		>
+	</div>
+
+	<p>E incluímos um pouco de conteúdo.</p>
+
+	<div class='codeblock'>
+		<p>index.htm</p>
+		<code class='html'
+		>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8" /&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;Olá mundo&lt;/title&gt;
+	&lt;!-- estilos vão no cabeçalho da página --&gt;
+	&lt;link rel='stylesheet' href='css/index.css' /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;h1&gt;Pra quem não sabe&lt;/h1&gt;
+	&lt;p&gt;Hipertexto é feito de &lt;a href='https://en.wikipedia.org/wiki/Hypertext'&gt;links&lt;/a&gt; ;)&lt;/p&gt;
+	<strong class='comment'>&lt;!-- scripts vão no final da página --&gt;</strong>
+	<strong>&lt;script src='js/index.js'&gt;&lt;/script&gt;</strong>
+&lt;/body&gt;
+&lt;/html&gt;</code
+		>
+	</div>
+
+	<p>
+		Veja novamente a página no navegador.
+	</p>
+
+	<p>
+		Se estiver tudo ok, vamos salvar as alterações de novo.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>git</span> <span class='keyword'>status</span>
+<span class='keyword'>git</span> <span class='keyword'>add</span> *
+<span class='keyword'>git</span> <span class='keyword'>status</span>
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo js"
+<span class='keyword'>git</span> <span class='keyword'>status</span></code
+		>
+	</div>
+
+	<p>Como nossa feature está completa, vamos jogar as alterações de volta na master e criar uma tag.</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		>TODO</code
+		>
+	</div>
+
+
+
+
+
+
+	<p>
+		Vamos fazer uma modificação bem banal nele, mas que já vai ser suficiente para fazê-lo parar de funcionar
+	</p>
+
+	<h3 id='nginxdocker'>Nginx</h3>
+
+	<p>Vamos usar o Docker para resolver nosso problema, rodando um servidor <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> simples.</p>
+
+	<p>
+		Por padrão os servidores <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> usam a porta 80.
+		Se você já estiver usando a porta 80 para alguma coisa, pode mudar no comando abaixo o <code class='shell bubaloop'>80:80</code>> para <code class='shell bubaloop'>8080:80</code>, <code class='shell bubaloop'>8081:80</code> e por aí vai.
+		 O número antes do <code class='shell bubaloop'>:</code> é da porta que você deseja usar.
+	</p>
+
+	<p>
+		Outro detalhe no comando abaixo é como indicamos o diretório atual dentro do shell.
+		No Powershell ou Unix <code class='shell bubaloop'>${PWD}</code> é um variável que contém o diretório onde estamos no terminal.
+		O Unix também suporta <code class='shell bubaloop'>$PWD</code>, que não funciona no Windows.
+		E o Winndows também suporta <code class='shell bubaloop'>%cd%</code>, que não funciona no Unix.
+	</p>
+
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='keyword'>docker</span> <span class='keyword'>container</span> <span class='keyword'>run</span> <span class='parameter'>-d</span> <span class='parameter'>-p</span> 80:80 <span class='parameter'>-v</span> "${PWD}":/usr/share/nginx/html <span class='parameter'>--name</span> nginx nginx:alpine</code
+		>
+	</div>
+
+	<p>Versionamos nosso exemplo de novo.</p>
+
+	<h3 id='webassemblybonus'>Bonus: Web Assembly</h3>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='frontendblazorsetup'>Front-end web Blazor</h2>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='mobilesetup'>Mobile React Native</h2>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='backendsetup'>Back-end APIs</h2>
+	
+	</section>
+
+
+
+	<script type='module' src='../compartilhado/js/utils.js'></script>
+	<script type='module' src='../compartilhado/js/index.js'></script>
+	<script type='module' src='../compartilhado/js/highlighter.js'></script>
+	<script type='module' src='../compartilhado/js/highlightEnhancer.js'></script>
+	<script type='module' src='js/home.js'></script>
+
+
+
+</body>
+</html>

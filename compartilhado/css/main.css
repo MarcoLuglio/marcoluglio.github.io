@@ -95,6 +95,20 @@ a {
 	color: #D10077;
 }
 
+.shortcut {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	display: inline-block;
+	margin: 4px;
+	padding: 8px;
+	padding-top: 5px;
+	border: 1px solid #cecece;
+	min-width: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
 code {
 	font-family: 'Fira Code', Consolas, Menlo, 'Courier New', Courier;
 	white-space: pre;
@@ -326,6 +340,23 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.generic .string {
 	color: #0099FF;
+}
+
+/* Shell */
+
+.bubaloop .shell .keyword,
+.bubaloop.shell .keyword {
+	color: #0040B4;
+}
+
+.bubaloop .shell .parameter,
+.bubaloop.shell .parameter {
+	color: #8AD100;
+}
+
+.bubaloop .shell .comment,
+.bubaloop.shell .comment {
+	color: #D10077;
 }
 
 /* C++ */
@@ -757,10 +788,18 @@ div.codeblock.bubaloop p + code {
 	z-index: 2;
 }
 
+.bubaloop.highlight.html strong.small {
+	box-shadow: 0 0 0 4px #00A6FF; /* h v blur spread color */
+}
+
 .bubaloop.highlight.html strong.comment {
 	background-color: #8AD100;
 	box-shadow: 0 0 0 6px #8AD100; /* h v blur spread color */
 	z-index: 1;
+}
+
+.bubaloop.highlight.html strong.comment.small {
+	box-shadow: 0 0 0 4px #8AD100; /* h v blur spread color */
 }
 
 .bubaloop.highlight.html strong.comment,
