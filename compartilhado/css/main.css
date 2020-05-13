@@ -344,6 +344,13 @@ div.codeblock.bubaloop p + code {
 
 /* Shell */
 
+.bubaloop.highlight .shell strong,
+.bubaloop.highlight.shell strong {
+	color: #ffffff;
+	background-color: #606060;
+	box-shadow: 0 0 0 6px #606060; /* h v blur spread color */
+}
+
 .bubaloop .shell .keyword,
 .bubaloop.shell .keyword {
 	color: #0040B4;
@@ -946,6 +953,7 @@ div.codeblock.bubaloop p + code {
 /* highlighter */
 
 .bubaloop .keyword,
+.bubaloop .parameter,
 .bubaloop .type,
 .bubaloop .symbol,
 .bubaloop .operator,
@@ -981,6 +989,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight .keyword,
+.bubaloop.highlight .parameter,
 .bubaloop.highlight .type,
 .bubaloop.highlight .symbol,
 .bubaloop.highlight .operator,

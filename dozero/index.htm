@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html
 	xmlns='http://www.w3.org/1999/xhtml'
@@ -58,7 +57,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>git</span> <span class='keyword'>config</span> <span class='parameter'>--global</span> user.name "Marco Luglio"    <span class='comment'># comentários no terminal começam com #</span>
+			><span class='keyword'>git</span> <span class='keyword'>config</span> <span class='parameter'>--global</span> user.name "Marco Luglio"    <span class='comment'># comentários no terminal começam com #</span>
 <span class='keyword'>git</span> <span class='keyword'>config</span> <span class='parameter'>--global</span> user.email marco@gmail.com  <span class='comment'># em cada quebra de linha pressione a tecla "Return" ↩︎ ou "Enter" ⌅ pra executar a linha ;)</span></code
 		>
 	</div>
@@ -72,7 +71,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-><span class='keyword'>cd</span> ~             <span class='comment'># cd = change directory e ~ = pasta do usuário atual</span>
+			><span class='keyword'>cd</span> ~             <span class='comment'># cd = change directory e ~ = pasta do usuário atual</span>
 <span class='keyword'>mkdir</span> dozero     <span class='comment'># mkdir = make directory</span>
 <span class='keyword'>cd</span> dozero        <span class='comment'># tente digitar só as primeiras letras da pasta e pressionar tab ;)</span>
 
@@ -108,7 +107,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>cat</span> ./front-end/.git/config  <span class='comment'># cat = concatenate and show result, mas só temos um arquivo então o resultado é igual ao arquivo</span></code
+			><span class='keyword'>cat</span> ./front-end/.git/config  <span class='comment'># cat = concatenate and show result, mas só temos um arquivo então o resultado é igual ao arquivo</span></code
 		>
 	</div>
 
@@ -139,7 +138,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>cd</span> front-end
+			><span class='keyword'>cd</span> front-end
 <span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># lista os branches existentes, mas por enquanto não temos nenhum</span>
 <span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html             <span class='comment'># cria e muda para um novo branch chamado static-html</span>
 <em>Switched to a new branch 'features/static-html'</em>
@@ -152,7 +151,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>touch</span> index.htm  <span class='comment'># touch cria um arquivo vazio</span>
+			><span class='keyword'>touch</span> index.htm  <span class='comment'># touch cria um arquivo vazio</span>
 <span class='keyword'>nano</span> index.htm   <span class='comment'># o nano (e o pico tb) é mais amigável que o vi, mas na boa, use o VS Code...</span></code
 		>
 	</div>
@@ -167,7 +166,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-><span class='keyword'>code</span> .  <span class='comment'># se lembre que . = pasta atual</span></code
+			><span class='keyword'>code</span> .  <span class='comment'># se lembre que . = pasta atual</span></code
 		>
 	</div>
 
@@ -201,7 +200,7 @@
 	<div class='codeblock'>
 		<p>Mágica do Emmet - Modelo de HTML</p>
 		<code class='html'
-		>&lt;!DOCTYPE html&gt;
+			>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
 	&lt;meta charset="UTF-8" /&gt;
@@ -227,7 +226,7 @@
 		Se ele não conseguir adivinhar, ou se você quiser sobrescrever a decisão do VS Code, pode usar o comando que mencionei acima, o <code>Change Language Mode</code>.
 	</p>
 
-	<h3 id='nginxdocker'>Controle de Versão - Release Flow</h3>
+	<h3 id='releaseflow'>Controle de Versão - Release Flow</h3>
 
 	<p>
 		Pra não perdermos nosso trabalho incrivelmente árduo até agora de criar esse arquivo html (pelo menos pra escrever até aqui já deu um trabalhão), vamos salvá-lo no Git.
@@ -244,7 +243,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html             <span class='comment'># cria e muda para um novo branch chamado static-html</span></code
+			><span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html  <span class='comment'># cria e muda para um novo branch chamado static-html</span></code
 		>
 	</div>
 
@@ -256,18 +255,18 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra index.htm como untracked (não versionado)</span>
-<span class='keyword'>git</span> <span class='keyword'>add</span> index.htm                                <span class='comment'># adiciona index.htm para a área de staging (ensaio)</span>
-<span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra que index.htm será adicionado quando efetuarmos o commit (executar o que ensaiamos)</span>
-<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo inicial"        <span class='comment'># efetua o commit com uma mensagem</span>
-<span class='keyword'>git</span> <span class='keyword'>status</span>                                       <span class='comment'># mostra que não há nenhuma nova alteração para ser salva</span></code
+			><span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra index.htm como untracked (não versionado)</span>
+<span class='keyword'>git</span> <span class='keyword'>add</span> index.htm                                  <span class='comment'># adiciona index.htm para a área de staging (ensaio)</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra que index.htm será adicionado quando efetuarmos o commit (executar o que ensaiamos)</span>
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo inicial"   <span class='comment'># efetua o commit com uma mensagem</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra que não há nenhuma nova alteração para ser salva</span></code
 		>
 	</div>
 
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>git</span> <span class='keyword'>log</span>     <span class='comment'># mostra o histórico de alterações</span>
+			><span class='keyword'>git</span> <span class='keyword'>log</span>     <span class='comment'># mostra o histórico de alterações</span>
 <span class='keyword'>git</span> <span class='keyword'>branch</span>  <span class='comment'># finalmente lista nosso branch</span>
 		</code
 		>
@@ -281,7 +280,7 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>mkdir</span> css
+			><span class='keyword'>mkdir</span> css
 <span class='keyword'>cd</span> css
 
 <span class='comment'># vamos criar e inserir conteúdo num arquivo pequeno com cat</span>
@@ -298,7 +297,7 @@ h1 {
 	<div class='codeblock'>
 		<p>index.htm</p>
 		<code class='html'
-		>&lt;!DOCTYPE html&gt;
+			>&lt;!DOCTYPE html&gt;
 &lt;html lang=<strong>"pt-br"</strong>&gt;
 &lt;head&gt;
 	&lt;meta charset="UTF-8" /&gt;
@@ -330,7 +329,7 @@ h1 {
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='comment'># tínhamos parado dentro da pasta css se lembra?</span>
+			><span class='comment'># tínhamos parado dentro da pasta css se lembra?</span>
 <span class='comment'># então o git mostra ../index.htm como modificado e ./ como não versionado</span>
 <span class='keyword'>git</span> <span class='keyword'>status</span>
 
@@ -340,7 +339,7 @@ h1 {
 <span class='comment'># mostra que index.htm e css/index.css serão inclusos no commit</span>
 <span class='keyword'>git</span> <span class='keyword'>status</span>
 
-<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo css"
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo css"
 <span class='keyword'>git</span> <span class='keyword'>status</span></code
 		>
 	</div>
@@ -353,7 +352,7 @@ h1 {
 	<div class='codeblock'>
 		<p>js/index.js</p>
 		<code class='javascript'
-		>'use strict';
+			>'use strict';
 
 const titulo = document.querySelector('h1');
 titulo.innerText = 'Rodou';</code
@@ -365,7 +364,7 @@ titulo.innerText = 'Rodou';</code
 	<div class='codeblock'>
 		<p>index.htm</p>
 		<code class='html'
-		>&lt;!DOCTYPE html&gt;
+			>&lt;!DOCTYPE html&gt;
 &lt;html lang="pt-br"&gt;
 &lt;head&gt;
 	&lt;meta charset="UTF-8" /&gt;
@@ -378,7 +377,7 @@ titulo.innerText = 'Rodou';</code
 	&lt;h1&gt;Pra quem não sabe&lt;/h1&gt;
 	&lt;p&gt;Hipertexto é feito de &lt;a href='https://en.wikipedia.org/wiki/Hypertext'&gt;links&lt;/a&gt; ;)&lt;/p&gt;
 	<strong class='comment'>&lt;!-- scripts vão no final da página --&gt;</strong>
-	<strong>&lt;script src='js/index.js'&gt;&lt;/script&gt;</strong>
+	<strong class='small'>&lt;script src='js/index.js'&gt;&lt;/script&gt;</strong>
 &lt;/body&gt;
 &lt;/html&gt;</code
 		>
@@ -390,25 +389,219 @@ titulo.innerText = 'Rodou';</code
 
 	<p>
 		Se estiver tudo ok, vamos salvar as alterações de novo.
+		A boa prática diz para fazer commits com códigos que funcionem sempre.
+		Se tiver algum erro, corrija antes de comitar.
 	</p>
 
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		><span class='keyword'>git</span> <span class='keyword'>status</span>
+			><span class='keyword'>git</span> <span class='keyword'>status</span> <span class='comment'># O comando status é opcional, mas é interessante para acompanhar o que está acontecendo</span>
 <span class='keyword'>git</span> <span class='keyword'>add</span> *
 <span class='keyword'>git</span> <span class='keyword'>status</span>
-<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>-m</span> "Adição de arquivo js"
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo js"
 <span class='keyword'>git</span> <span class='keyword'>status</span></code
 		>
 	</div>
 
-	<p>Como nossa feature está completa, vamos jogar as alterações de volta na master e criar uma tag.</p>
+	<p>
+		Como nossa funcionalidade está completa, vamos jogar as alterações de volta na master e criar uma tag.
+		Isto é, no meio de todas as alterações que fizemos, vamos congelar um estado específico que esteja completo ou estável, e dar um nome pra ele.
+	</p>
+
+	<p>
+		Dando uma olhada no nosso histório, podemos ver 3 commits.
+	</p>
 
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-		>TODO</code
+			><span class='keyword'>git</span> <span class='keyword'>log</span>
+<em>commit 23c964a8272baa6f839fe1bbe5c12c8ea3116cda (HEAD -> features/static-html)</em>
+<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
+<em>Date:   Tue May 12 18:49:07 2020 -0300</em>
+
+<em>	Adição de arquivo js</em>
+
+<em>commit 8ee9e50f9e32ec140ca0536f7704f934e7a77ab2</em>
+<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
+<em>Date:   Fri May 8 01:40:11 2020 -0300</em>
+
+<em>	Adição de arquivo css</em>
+
+<em>commit e0e10fb63c24680ef277ea4ee4057ae0259da454</em>
+<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
+<em>Date:   Thu May 7 23:21:03 2020 -0300</em>
+
+<em>	Adição de arquivo inicial</em></code
+		>
+	</div>
+
+	<p>
+		As mensagens de commit nesse caso são relevantes enquanto estamos desenvolvendo a funcionalidade, mas podem não ser muito úteis uma vez que ela já está terminada.
+		Nesse caso seria melhor ter uma única mensagem com um resumo das alterações e o código no estado final.
+		Pelo menos essa é a filosofia do squash + rebase.
+		Então vamos achatar nossos três commits em um só.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='comment'># maneira compacta de mostrar as alterações</span>
+<span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
+<em>23c964a (HEAD -> features/static-html) Adição de arquivo js</em>
+<em>8ee9e50 Adição de arquivo css</em>
+<em>e0e10fb Adição de arquivo inicial</em>
+
+<span class='comment'># achata todos os commits em um só</span>
+<span class='keyword'>git</span> <span class='keyword'>rebase</span> <span class='parameter'>--interactive</span> <span class='parameter'>--root</span></code
+		>
+	</div>
+
+	<p>
+		Isso vai abrir o editor padrão do git (vi provavelmente, mas tem como trocar).
+		Preste atenção nas linhas não comentadas no topo, são elas que serão executadas e que precisamos alterar de acordo com o que quisermos fazer com cada commit.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>pick e0e10fb Adição de arquivo inicial
+pick 8ee9e50 Adição de arquivo css
+pick 23c964a Adição de arquivo js</code
+		>
+	</div>
+
+	<p>
+		Vamos mudar o <code>pick</code> para <code>fixup</code>.
+		No vi, aperte <span class='shortcut'>i</span> para entrar no modo de edição.
+		Neste modo ele se comporta quase como um editor normal.
+		Altere o texto com abaixo:
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>pick e0e10fb Adição de arquivo inicial
+<strong>fixup</strong> 8ee9e50 Adição de arquivo css
+<strong>fixup</strong> 23c964a Adição de arquivo js</code
+		>
+	</div>
+
+	<p>
+		Agora pressione <span class='shortcut'>Esc</span> para sair do modo de edição e digite <code>:</code> para entrar no modo de comando.
+		Digite <code>wq</code> e pressione <span class='shortcut'>Return</span> ou <span class='shortcut'>↩︎</span>.
+		Isso vai executar o comando <em>write</em> e o comando <em>quit</em>.
+		Se quiser sair sem salvar, digite <code>q!</code> que descarta as alterações e fecha o arquivo.
+	</p>
+
+	<p>Se verificarmos o histórico de commits novamente:</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
+<em>f4e8059 (HEAD -> features/static-html) Adição de arquivo inicial</em></code
+		>
+	</div>
+
+	<p>
+		Vemos que agora temos novamente um só commit, mas nossos arquivos estão com as alterações dos três.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>cat</span> index.htm  <span class='comment'># note que o CSS e JavaScript ainda estão lá</span></code
+		>
+	</div>
+
+	<p>
+		Podemos ainda alterar a mensagem deste commit, para descrever tudo o que foi feito.
+		Fazemos isso digitando:
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--amend</span> <span class='parameter'>-m</span> "Alteração de título por JavaScript"</code
+		>
+	</div>
+
+	<p>E no log, note que o hash do commit ainda é o mesmo, mas a mensagem não:</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
+<em><strong>f4e8059</strong> (HEAD -> features/static-html) <strong>Alteração de título por JavaScript</strong></em></code
+		>
+	</div>
+
+	<p>Vamos pegar esta única mudança e aplicar no master branch.</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>git checkout master
+git branch
+git merge features/static-html
+git commit --message "Merge de features/static-html para master"
+git tag 1.0.0 commithashere
+git branch -d features/static-html</code
+		>
+	</div>
+
+
+
+
+
+
+
+
+
+Checkout master branch
+git checkout -b master
+Pull master branch
+git pull origin master
+Checkout bug/feature branch
+git checkout branchName
+Rebase from master
+git rebase master
+Handle any conflicts and make sure your code builds and all tests pass. Force push branch to remote.
+git push origin branchName --force
+
+Checkout, merge, and push into master
+git checkout -b master # nosso master estava vazio então não foi salvo, geralmente isso não vai acontecer, eu devia ter colocado um .gitignore e um readme.md no master...
+git branch
+git merge branchName
+git tag 1.0.0 commithashere
+git push origin master</code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>git checkout master
+git fetch --prune
+git pull
+git diff source_branch target_branch
+git merge features/static-html
+git commit --message "Merge de features/static-html para master"
+git tag 1.0.0 commithashere
+git branch -d features/static-html</code
+		>
+	</div>
+
+	<p>
+		If you have previously pushed your code to a remote branch, you will need to force push.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>git push origin branchName --force</code
 		>
 	</div>
 

@@ -22,8 +22,10 @@ try {
 }
 
 const blocosDeCodigo = [];
-blocosDeCodigo[0] = document.querySelectorAll('code.html');
-blocosDeCodigo[1] = document.querySelectorAll('code.javascript');
+blocosDeCodigo[0] = document.querySelectorAll('code.shell');
+blocosDeCodigo[1] = document.querySelectorAll('code.html');
+blocosDeCodigo[2] = document.querySelectorAll('code.javascript');
+
 
 const highlighterWorker = new Worker('../../compartilhado/js/highlighterWorker.js', { type: 'module' });
 
@@ -43,12 +45,26 @@ highlighterWorker.addEventListener('message', (event) => {
 try {
 
 	let codeBlockIndex = 0;
-	const blocosDeCodigoHtmlIt = new NodeListIterator(blocosDeCodigo[0]);
+	const blocosDeCodigoShellIt = new NodeListIterator(blocosDeCodigo[0]);
+
+	for (let blocoDeCodigo of blocosDeCodigoShellIt) {
+		const source = blocoDeCodigo.innerHTML;
+		highlighterWorker.postMessage([
+			0,
+			codeBlockIndex,
+			'shell',
+			source
+		]); // TODO passar um objeto ao invés de uma array
+		codeBlockIndex++;
+	}
+
+	codeBlockIndex = 0;
+	const blocosDeCodigoHtmlIt = new NodeListIterator(blocosDeCodigo[1]);
 
 	for (let blocoDeCodigo of blocosDeCodigoHtmlIt) {
 		const source = blocoDeCodigo.innerHTML;
 		highlighterWorker.postMessage([
-			0,
+			1,
 			codeBlockIndex,
 			'html',
 			source
@@ -57,12 +73,12 @@ try {
 	}
 
 	codeBlockIndex = 0;
-	const blocosDeCodigoJsIt = new NodeListIterator(blocosDeCodigo[1]);
+	const blocosDeCodigoJsIt = new NodeListIterator(blocosDeCodigo[2]);
 
 	for (let blocoDeCodigo of blocosDeCodigoJsIt) {
 		const source = blocoDeCodigo.innerHTML;
 		highlighterWorker.postMessage([
-			1,
+			2,
 			codeBlockIndex,
 			'javascript',
 			source

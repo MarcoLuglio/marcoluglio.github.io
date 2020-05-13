@@ -31,6 +31,10 @@ self.onmessage = function (message) {
 			lexer = new HtmlLexer();
 			break;
 
+		default:
+			self.postMessage([codeBlocksIndex, codeBlockIndex, source]);
+			return;
+
 	}
 
 	lexer.parseAsync(source) // TODO make async await
