@@ -4606,7 +4606,7 @@ lista.Add 1</code
 <p>Swift</p>
 <code class='swift'
 >// TODO
-// primtive on stack
+// primitive on stack
 // structs e enums value types - stack
 // classes and closures on the heap
 </code
@@ -10753,8 +10753,56 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>enum GamePad {
+	case XboxOne
+	case XboxEliteSeries2
+	case Dualshock4
+	case DualSense
+	case JoyCon
+}
+
+// implicit raw values
+enum PreviousGameConsole:UInt8 {
+	case Xbox360 = 0x00
+	case PlayStation4 // 0x01
+	case WiiU // 0x02
+}
+
+// explicit values
+enum GameConsole:UInt8 {
+	case XboxSeriesX = 0x00
+	case PlayStation5 = 0x01
+	case NintendoSwitch = 0x02
+}
+
+// to raw value
+let gameConsole = GameConsoles.NintendoSwitch.rawValue // 0x02
+
+// from raw value
+let playstation5 = GameConsole(rawValue: 0x01)
+
+// associated values of different types
+enum Barcode {
+	case upc(Int, Int, Int, Int)
+	case qrCode(String)
+}
+
+var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+
+// iterable
+enum Beverage:CaseIterable {
+	case coffee, tea, juice
+}
+
+let numberOfChoices = Beverage.allCases.count
+
+for beverage in Beverage.allCases {
+	print(beverage)
+}
+
+// recursivamente
+// TODO</code
 >
 </div>
 
