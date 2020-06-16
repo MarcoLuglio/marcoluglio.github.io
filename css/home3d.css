@@ -237,6 +237,10 @@ section > div {
 	margin-left: 0;
 }
 
+.biografia {
+	height: 380px;
+}
+
 .biografia a {
 	font-family: Code;
 	font-weight: bold;
