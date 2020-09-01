@@ -342,6 +342,77 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
+/* html */
+
+.bubaloop.highlight.html strong {
+	background-color: #00A6FF;
+	box-shadow: 0 0 0 6px #00A6FF; /* h v blur spread color */
+	position: relative;
+	z-index: 2;
+}
+
+.bubaloop.highlight.html strong.small {
+	box-shadow: 0 0 0 4px #00A6FF; /* h v blur spread color */
+}
+
+.bubaloop.highlight.html strong.comment {
+	background-color: #8AD100;
+	box-shadow: 0 0 0 6px #8AD100; /* h v blur spread color */
+	z-index: 1;
+}
+
+.bubaloop.highlight.html strong.comment.small {
+	box-shadow: 0 0 0 4px #8AD100; /* h v blur spread color */
+}
+
+.bubaloop.highlight.html strong.comment,
+.bubaloop.highlight.html strong .comment,
+.bubaloop.highlight.html strong .comment a {
+	color: #ffffff;
+}
+
+.codeblock .bubaloop.html,
+.codeblock .bubaloop.css {
+	background-color: #2E2F31;
+	color: #B6C2D3;
+}
+
+.bubaloop.html .doctype {
+	color: #505B66;
+}
+
+.bubaloop.html .tag,
+.bubaloop.css .selector {
+	color: #0076E6;
+}
+
+.bubaloop.highlight.html strong .tag {
+	color: #272727;
+}
+
+.bubaloop.html .attribute,
+.bubaloop.css .property {
+	color: #788598;
+}
+
+.bubaloop.highlight.html strong .attribute {
+	color: #0040B4;
+}
+
+.bubaloop.html .attributeValue,
+.bubaloop.css .value {
+	color: #00A6FF;
+}
+
+.bubaloop.highlight.html strong .attributeValue {
+	color: #ffffff;
+}
+
+.bubaloop.html .comment,
+.bubaloop.css .comment {
+	color: #91E500;
+}
+
 /* Shell */
 
 .bubaloop.highlight .shell strong,
@@ -364,6 +435,95 @@ div.codeblock.bubaloop p + code {
 .bubaloop .shell .comment,
 .bubaloop.shell .comment {
 	color: #D10077;
+}
+
+/* Rust */
+
+.bubaloop.rust .keyword,
+.bubaloop.rust .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.rust strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.rust .type {
+	color: #8AD100;
+}
+
+.bubaloop.rust .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.rust strong .string {
+	color: #ffffff;
+}
+
+.bubaloop.rust .comment,
+.bubaloop.rust .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.rust strong .comment,
+.bubaloop.highlight.rust strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.rust .attribute,
+.bubaloop.rust .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.rust strong .operator {
+	color: #505B66;
+}
+
+.bubaloop.rust .lifetime,
+.bubaloop.rust .label {
+	color: #8D00FF;
+}
+
+/* Go */
+
+.bubaloop.go .keyword,
+.bubaloop.go .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.go strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.go .type {
+	color: #8AD100;
+}
+
+.bubaloop.go .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.go strong .string {
+	color: #ffffff;
+}
+
+.bubaloop.go .comment,
+.bubaloop.go .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.go strong .comment,
+.bubaloop.highlight.go strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.go .attribute,
+.bubaloop.go .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.go strong .operator {
+	color: #505B66;
 }
 
 /* C++ */
@@ -508,104 +668,6 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
-/* Rust */
-
-.bubaloop.rust .keyword,
-.bubaloop.rust .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.rust strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.rust .type {
-	color: #8AD100;
-}
-
-.bubaloop.rust .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.rust strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.rust .comment,
-.bubaloop.rust .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.rust strong .comment,
-.bubaloop.highlight.rust strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.rust .attribute,
-.bubaloop.rust .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.rust strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.rust .lifetime,
-.bubaloop.rust .label {
-	color: #8D00FF;
-}
-
-/* C# */
-
-.bubaloop.cs .keyword,
-.bubaloop.cs .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.cs strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.cs .type {
-	color: #8AD100;
-}
-
-.bubaloop.cs .string,
-.bubaloop.cs .vstring, /* verbatim (@) strings */
-.bubaloop.cs .istring { /* interpolated ($) strings */
-	color: #0099FF;
-}
-
-.bubaloop.highlight.cs strong .string,
-.bubaloop.highlight.cs strong .vstring,
-.bubaloop.highlight.cs strong .istring {
-	color: #ffffff;
-}
-
-.bubaloop.cs .comment,
-.bubaloop.cs .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.cs strong .comment,
-.bubaloop.highlight.cs strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.cs .directive,
-.bubaloop.cs .operator,
-.bubaloop.cs .attribute {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.cs strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.cs .label {
-	color: #8D00FF;
-}
-
 /* Kotlin */
 
 .bubaloop.kotlin .keyword,
@@ -706,6 +768,57 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
+/* C# */
+
+.bubaloop.cs .keyword,
+.bubaloop.cs .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.cs strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.cs .type {
+	color: #8AD100;
+}
+
+.bubaloop.cs .string,
+.bubaloop.cs .vstring, /* verbatim (@) strings */
+.bubaloop.cs .istring { /* interpolated ($) strings */
+	color: #0099FF;
+}
+
+.bubaloop.highlight.cs strong .string,
+.bubaloop.highlight.cs strong .vstring,
+.bubaloop.highlight.cs strong .istring {
+	color: #ffffff;
+}
+
+.bubaloop.cs .comment,
+.bubaloop.cs .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.cs strong .comment,
+.bubaloop.highlight.cs strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.cs .directive,
+.bubaloop.cs .operator,
+.bubaloop.cs .attribute {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.cs strong .operator {
+	color: #505B66;
+}
+
+.bubaloop.cs .label {
+	color: #8D00FF;
+}
+
 /* JavaScript */
 
 .bubaloop.highlight.javascript strong {
@@ -786,75 +899,46 @@ div.codeblock.bubaloop p + code {
 	color: #000000;
 }
 
-/* html */
+/* Python */
 
-.bubaloop.highlight.html strong {
-	background-color: #00A6FF;
-	box-shadow: 0 0 0 6px #00A6FF; /* h v blur spread color */
-	position: relative;
-	z-index: 2;
-}
-
-.bubaloop.highlight.html strong.small {
-	box-shadow: 0 0 0 4px #00A6FF; /* h v blur spread color */
-}
-
-.bubaloop.highlight.html strong.comment {
-	background-color: #8AD100;
-	box-shadow: 0 0 0 6px #8AD100; /* h v blur spread color */
-	z-index: 1;
-}
-
-.bubaloop.highlight.html strong.comment.small {
-	box-shadow: 0 0 0 4px #8AD100; /* h v blur spread color */
-}
-
-.bubaloop.highlight.html strong.comment,
-.bubaloop.highlight.html strong .comment,
-.bubaloop.highlight.html strong .comment a {
-	color: #ffffff;
-}
-
-.codeblock .bubaloop.html,
-.codeblock .bubaloop.css {
-	background-color: #2E2F31;
-	color: #B6C2D3;
-}
-
-.bubaloop.html .doctype {
-	color: #505B66;
-}
-
-.bubaloop.html .tag,
-.bubaloop.css .selector {
-	color: #0076E6;
-}
-
-.bubaloop.highlight.html strong .tag {
-	color: #272727;
-}
-
-.bubaloop.html .attribute,
-.bubaloop.css .property {
-	color: #788598;
-}
-
-.bubaloop.highlight.html strong .attribute {
+.bubaloop.python .keyword,
+.bubaloop.python .number {
 	color: #0040B4;
 }
 
-.bubaloop.html .attributeValue,
-.bubaloop.css .value {
-	color: #00A6FF;
+.bubaloop.highlight.python strong .type {
+	color: #8a008a;
 }
 
-.bubaloop.highlight.html strong .attributeValue {
+.bubaloop.python .type {
+	color: #8AD100;
+}
+
+.bubaloop.python .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.python strong .string {
 	color: #ffffff;
 }
 
-.bubaloop.html .comment,
-.bubaloop.css .comment {
-	color: #91E500;
+.bubaloop.python .comment,
+.bubaloop.python .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.python strong .comment,
+.bubaloop.highlight.python strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.python .attribute,
+.bubaloop.python .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.python strong .operator {
+	color: #505B66;
 }
 
 /* Visual Basic */
