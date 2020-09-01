@@ -3,8 +3,6 @@
 
 
 // workaround while I don't migrate AMD to ES6 modules
-// not sure if it will work...
-// if it doesn't, now would be a good time to start migrating them
 
 let Lexer;
 let SourceSimpleCharacterSequenceToken;
