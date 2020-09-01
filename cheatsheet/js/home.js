@@ -1,4 +1,7 @@
-'use strict';
+import { GoLexer } from '../../compartilhado/js/GoLexer.js';
+import { PythonLexer } from '../../compartilhado/js/PythonLexer.js';
+
+
 
 /**
  * Entry point function
@@ -187,28 +190,35 @@ define(
 		})
 
 		.then(() => {
+			highlightWrapper('code.cpp', CppLexer); // c++ takes longer to parse
+		})
+		.then(() => {
+			highlightWrapper('code.html', HtmlLexer); // html has less code blocks
+		})
+		.then(() => {
 			highlightWrapper('code.rust', RustLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.cpp', CppLexer);
+			highlightWrapper('code.go', GoLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.swift', SwiftLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.kotlin', KotlinLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.java', JavaLexer);
+			highlightWrapper('code.javascript', JavaScriptLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.cs', CsLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.html', HtmlLexer);
+			highlightWrapper('code.kotlin', KotlinLexer);
+		})
+		// less priority for my article
+		.then(() => {
+			highlightWrapper('code.python', PythonLexer);
 		})
 		.then(() => {
-			highlightWrapper('code.javascript', JavaScriptLexer);
+			highlightWrapper('code.java', JavaLexer);
 		})
 		.then(() => {
 			highlightWrapper('code.objectivec', ObjectiveCLexer);
@@ -216,8 +226,6 @@ define(
 		.then(() => {
 			highlightWrapper('code.visualbasic', VbLexer);
 		});
-
-
 
 	}
 
