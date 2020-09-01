@@ -1,232 +1,120 @@
+import { domReadyPromise } from '../../compartilhado/js/utils.js';
+import { Index } from '../../compartilhado/js/index.js';
 import { GoLexer } from '../../compartilhado/js/GoLexer.js';
 import { PythonLexer } from '../../compartilhado/js/PythonLexer.js';
+import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
+import { Highlighter } from '../../compartilhado/js/highlighter.js';
 
 
 
-/**
- * Entry point function
- */
+// workaround while I don't migrate AMD to ES6 modules
+
+let HtmlLexer;
+let RustLexer;
+let CppLexer;
+let ObjectiveCLexer;
+let SwiftLexer;
+let KotlinLexer;
+let JavaLexer;
+let CsLexer;
+let JavaScriptLexer;
+let VbLexer;
+
 define(
 
-	[
-		'Index',
+	'HomeLegacyAMD',
 
+	[
+		'HtmlLexer',
+		'RustLexer',
 		'CppLexer',
 		'ObjectiveCLexer',
 		'SwiftLexer',
 		'KotlinLexer',
-		'RustLexer',
-		'CsLexer',
-
 		'JavaLexer',
-		'VbLexer',
-		'HtmlLexer',
+		'CsLexer',
 		'JavaScriptLexer',
-
-		'Highlighter',
-		'HighlightEnhancer',
-		'NodeListIterator',
-		'domReadyPromise'
-
+		'VbLexer'
 	], (
-
-		Index,
-
-		CppLexer,
-		ObjectiveCLexer,
-		SwiftLexer,
-		KotlinLexer,
-		RustLexer,
-		CsLexer,
-
-		JavaLexer,
-		VbLexer,
-		HtmlLexer,
-		JavaScriptLexer,
-
-		Highlighter,
-		HighlightEnhancer,
-		NodeListIterator,
-		domReadyPromise
-
+		AMDHtmlLexer,
+		AMDRustLexer,
+		AMDCppLexer,
+		AMDObjectiveCLexer,
+		AMDSwiftLexer,
+		AMDKotlinLexer,
+		AMDJavaLexer,
+		AMDCsLexer,
+		AMDJavaScriptLexer,
+		AMDVbLexer
 	) => {
-
-
-
-	/**
-	 * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
-	 * Generator e Promise quando utilizadas como aqui.
-	 * Usei closures para simular a funcionalidade e contornar tais bugs
-	 */
-	function highlightThemeClosure(blocosDeCodigo) {
-
-		let i = 0;
-		let blocoDeCodigo;
-		let iterador = blocosDeCodigo[Symbol.iterator]();
-		let iteradorTemp;
-
-		return function() {
-
-			iteradorTemp = iterador.next();
-			if (iteradorTemp.done) {
-				return;
-			}
-			blocoDeCodigo = iteradorTemp.value;
-
-			blocoDeCodigo.className += ' bubaloop';
-			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-
-			i++;
-			return blocoDeCodigo;
-
-		}
-
+		HtmlLexer = AMDHtmlLexer;
+		RustLexer = AMDRustLexer;
+		CppLexer = AMDCppLexer;
+		ObjectiveCLexer = AMDObjectiveCLexer;
+		SwiftLexer = AMDSwiftLexer;
+		KotlinLexer = AMDKotlinLexer;
+		JavaLexer = AMDJavaLexer;
+		CsLexer = AMDCsLexer;
+		JavaScriptLexer = AMDJavaScriptLexer;
+		VbLexer = AMDVbLexer;
 	}
-
-
-
-	/**
-	 * Firefox e Edge mostraram bugs em relação ao uso das novas funcionalidades
-	 * Generator e Promise quando utilizadas como aqui.
-	 * Usei closures para simular a funcionalidade e contornar tais bugs
-	 */
-	function highlightClosure(blocosDeCodigo, Lexer) {
-
-		const lexer = new Lexer();
-		const highlighter = new Highlighter();
-		let blocoDeCodigo;
-		let iterador = blocosDeCodigo[Symbol.iterator]();
-		let iteradorTemp;
-
-		return function() {
-
-			iteradorTemp = iterador.next();
-			if (iteradorTemp.done) {
-				return;
-			}
-			blocoDeCodigo = iteradorTemp.value;
-
-			const source = blocoDeCodigo.innerHTML;
-
-			blocoDeCodigo.className += ' bubaloop';
-
-			lexer.parseAsync(source)
-				.then((tokens) => {
-					return highlighter.highlightAsync(source, tokens);
-				})
-				.then((highlightedSource) => {
-					blocoDeCodigo.innerHTML = highlightedSource;
-					const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-				});
-
-			return blocoDeCodigo;
-
-		}
-
-	}
-
-
-	function highlightWrapper(selector, Lexer, timeout) {
-
-		try {
-
-			if (timeout === null || timeout === undefined) {
-				timeout = 0;
-			}
-
-			const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
-
-			const iterator = highlightClosure(blocosDeCodigo, Lexer);
-			function callback() {
-				if (iterator()) {
-					setTimeout(callback, timeout);
-				}
-			}
-			setTimeout(callback, timeout);
-
-		} catch (erro) {
-			console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-		}
-
-	}
-
-
-	domReadyPromise()
-
-		.then(() => {
-			try {
-				const index = new Index('indice', 3, false);
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			try {
-				const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
-				for (let divCodigo of divsDeCodigo) {
-					divCodigo.className += ' bubaloop';
-				}
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			try {
-				const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
-
-				const iterator = highlightThemeClosure(blocosDeCodigo);
-				function callback() {
-					if (iterator()) {
-						setTimeout(callback, 0);
-					}
-				}
-				setTimeout(callback, 0);
-
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			highlightWrapper('code.cpp', CppLexer); // c++ takes longer to parse
-		})
-		.then(() => {
-			highlightWrapper('code.html', HtmlLexer); // html has less code blocks
-		})
-		.then(() => {
-			highlightWrapper('code.rust', RustLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.go', GoLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.swift', SwiftLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.javascript', JavaScriptLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.cs', CsLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.kotlin', KotlinLexer);
-		})
-		// less priority for my article
-		.then(() => {
-			highlightWrapper('code.python', PythonLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.java', JavaLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.objectivec', ObjectiveCLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.visualbasic', VbLexer);
-		});
-
-	}
-
 );
+
+
+
+async function highlightHelper(selector, Lexer) {
+
+	return Array.from(
+		document.querySelectorAll(selector),
+		async function(blocoDeCodigo) {
+			const lexer = new Lexer();
+			const highlighter = new Highlighter();
+			const source = blocoDeCodigo.innerHTML;
+			blocoDeCodigo.className += ' bubaloop';
+			let tokens = await lexer.parseAsync(source);
+			let highlightedSource = await highlighter.highlightAsync(source, tokens);
+			blocoDeCodigo.innerHTML = highlightedSource;
+			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo); // TODO esse aqui poderia ser chamado como um novo map no retorno do primeiro map
+		}
+	);
+
+}
+
+
+
+(async function() {
+
+	await domReadyPromise();
+
+	try {
+
+		const index = new Index('indice', 3, false);
+
+		// Array.from is map
+		Array.from(
+			document.querySelectorAll('div.codeblock'),
+			divCodigo => divCodigo.classList.add('bubaloop')
+		);
+
+		await Promise.all([
+			highlightHelper('code.html', HtmlLexer),
+			highlightHelper('code.rust', RustLexer),
+			highlightHelper('code.go', GoLexer),
+			highlightHelper('code.cpp', CppLexer),
+			highlightHelper('code.objectivec', ObjectiveCLexer),
+			highlightHelper('code.swift', SwiftLexer),
+			highlightHelper('code.kotlin', KotlinLexer),
+			highlightHelper('code.java', JavaLexer),
+			highlightHelper('code.cs', CsLexer),
+			highlightHelper('code.javascript', JavaScriptLexer),
+			highlightHelper('code.python', PythonLexer),
+			highlightHelper('code.visualbasic', VbLexer)
+		]);
+
+		// TODO add bubaloop theme to code.generic and highlight it. will need to breakdown highlightHelper
+
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
+
+})();
