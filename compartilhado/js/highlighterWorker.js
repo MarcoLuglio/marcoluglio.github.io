@@ -1,6 +1,4 @@
-'use strict';
-
-import { JavaScriptLexer, HtmlLexer, CsLexer, Highlighter } from './highlighter.js';
+import { HtmlLexer, RustLexer, GoLexer, CppLexer, ObjectiveCLexer, SwiftLexer, KotlinLexer, JavaLexer, CsLexer, JavaScriptLexer, PythonLexer, VisualBasic6Lexer, Highlighter } from './highlighter.js';
 
 
 
@@ -18,17 +16,53 @@ self.onmessage = function (message) {
 	// TODO avoid recreating lexers
 
 	switch (parser) {
-		
-		case 'javascript':
-			lexer = new JavaScriptLexer();
+
+		case 'html':
+			lexer = new HtmlLexer();
+			break;
+
+		case 'rust':
+			lexer = new RustLexer();
+			break;
+
+		case 'go':
+			lexer = new GoLexer();
+			break;
+
+		case 'cpp':
+			lexer = new CppLexer();
+			break;
+
+		case 'objectivec':
+			lexer = new ObjectiveCLexer();
+			break;
+
+		case 'swift':
+			lexer = new SwiftLexer();
+			break;
+
+		case 'kotlin':
+			lexer = new KotlinLexer();
+			break;
+
+		case 'java':
+			lexer = new JavaLexer();
 			break;
 
 		case 'cs':
 			lexer = new CsLexer();
 			break;
 
-		case 'html':
-			lexer = new HtmlLexer();
+		case 'javascript':
+			lexer = new JavaScriptLexer();
+			break;
+
+		case 'python':
+			lexer = new PythonLexer();
+			break;
+
+		case 'visualbasic':
+			lexer = new VisualBasic6Lexer();
 			break;
 
 		default:

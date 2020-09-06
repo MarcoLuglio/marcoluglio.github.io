@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Helper para uso de promessas. Permite que a decisão de como resolver a promessa seja feita após a criação da promessa.
  */

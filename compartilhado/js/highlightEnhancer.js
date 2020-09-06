@@ -1,5 +1,3 @@
-'use strict';
-
 const HighlightEnhancer = class HighlightEnhancer {
 
 	constructor(codeNode) {

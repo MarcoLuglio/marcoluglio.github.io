@@ -1,5 +1,3 @@
-'use strict';
-
 import { RangeIterator, NodeListIterator } from './utils.js';
 
 /**

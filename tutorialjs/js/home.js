@@ -1,6 +1,4 @@
-'use strict';
-
-import { domReadyPromise, NodeListIterator } from '../../compartilhado/js/utils.js';
+import { domReadyPromise } from '../../compartilhado/js/utils.js';
 import { Index } from '../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 
@@ -8,26 +6,12 @@ import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 
 (async function() {
 
-	await domReadyPromise();
-
-	try {
-		const index = new Index('indice', 3, false);
-	} catch (erro) {
-		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-	}
-
-	try {
-		const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
-		for (let divCodigo of divsDeCodigo) {
-			divCodigo.className += ' bubaloop';
-		}
-	} catch (erro) {
-		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-	}
+	const tiposBlocos = [
+		'html',
+		'javascript'
+	];
 
 	const blocosDeCodigo = [];
-	blocosDeCodigo[0] = document.querySelectorAll('code.html');
-	blocosDeCodigo[1] = document.querySelectorAll('code.javascript');
 
 	const highlighterWorker = new Worker('../../compartilhado/js/highlighterWorker.js', { type: 'module' });
 
@@ -38,47 +22,65 @@ import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 		const highlightedSource = event.data[2];
 
 		let blocoDeCodigo = blocosDeCodigo[codeBlocksIndex][codeBlockIndex];
-		blocoDeCodigo.className += ' bubaloop';
+		blocoDeCodigo.classList.add('bubaloop')
 		blocoDeCodigo.innerHTML = highlightedSource;
 		const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 
 	};
 
+	await domReadyPromise();
+
 	try {
-
-		const blocosDeCodigoIt = new NodeListIterator(blocosDeCodigo[0]);
-
-		let codeBlockIndex = 0;
-		for (let blocoDeCodigo of blocosDeCodigoIt) {
-			const source = blocoDeCodigo.innerHTML;
-			highlighterWorker.postMessage([
-				0,
-				codeBlockIndex,
-				'html',
-				source
-			]); // TODO posso passar um objeto ao invés de uma array??
-			codeBlockIndex++;
-		}
-
+		const index = new Index('indice', 3, false);
 	} catch (erro) {
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
 	try {
 
-		const blocosDeCodigoIt = new NodeListIterator(blocosDeCodigo[1]);
+		// Array.from is map
 
-		let codeBlockIndex = 0;
-		for (let blocoDeCodigo of blocosDeCodigoIt) {
-			const source = blocoDeCodigo.innerHTML;
-			highlighterWorker.postMessage([
-				1,
-				codeBlockIndex,
-				'javascript',
-				source
-			]); // TODO posso passar um objeto ao invés de uma array??
-			codeBlockIndex++;
-		}
+		Array.from(
+			document.querySelectorAll('div.codeblock'),
+			divCodigo => divCodigo.classList.add('bubaloop')
+		);
+
+		// TODO não vai bloquear a Ui por muito tempo se fizer assim de uma vez só?
+		Array.from(
+			tiposBlocos,
+			(tipoBloco, tipoBlocoIndice) => {
+				blocosDeCodigo[tipoBlocoIndice] = document.querySelectorAll(`code.${tipoBloco}`);
+			}
+		);
+
+		// TODO refatorar, tá difícil de ler...
+		Array.from(
+
+			blocosDeCodigo,
+
+			(blocosDeCodigoTipo, blocosDeCodigoTipoIndice) => {
+
+				Array.from(
+
+					blocosDeCodigoTipo,
+
+					(blocoDeCodigo, blocoDeCodigoIndice) => {
+
+						const source = blocoDeCodigo.innerHTML;
+						highlighterWorker.postMessage([
+							blocosDeCodigoTipoIndice,
+							blocoDeCodigoIndice,
+							tiposBlocos[blocosDeCodigoTipoIndice], // ugh...
+							source
+						]); // TODO posso passar um objeto ao invés de uma array??
+
+					}
+
+				);
+
+			}
+
+		);
 
 	} catch (erro) {
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
