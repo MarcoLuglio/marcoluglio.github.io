@@ -5330,7 +5330,7 @@ const KotlinKeywordToken = class KotlinKeywordToken extends SourceSimpleCharacte
 			'sealed',
 			'set',
 			'super',
-			//'suspend',
+			'suspend',
 			'tailrec',
 			'this',
 			'throw',
@@ -8762,6 +8762,8 @@ const JSKeywordToken = class JSKeywordToken extends SourceSimpleCharacterSequenc
 
 	constructor() {
 		super('keyword', [
+			'async',
+			'await',
 			'break',
 			'case',
 			'catch',
@@ -8820,7 +8822,6 @@ const JSKeywordToken = class JSKeywordToken extends SourceSimpleCharacterSequenc
 			// reserved words
 			// TODO fazer num token à parte
 			'abstract',
-			'await',
 			'boolean',
 			'byte',
 			'char',
@@ -9367,11 +9368,13 @@ const JSStringPatternIterator = class JSStringPatternIterator {
 			return true;
 		}
 
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
 		// encontrou o caractere final
 		// passa para a próxima função de match só pra fechar
 		// no próximo next
 		if (matchCharacter === this._quoteType
-			|| (this._matchLineBreak(matchCharacter) && this._quoteType !== '`')
+			|| (isLineBreak && this._quoteType !== '`')
 			) {
 
 			this._matchFunction = this._matchEnd;
@@ -9537,7 +9540,8 @@ const PythonLexer = class PythonLexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
-			new CStringLiteralToken() // TODO check JavaScript string, looks more like it
+			new PythonStringLiteralToken(),
+			new PythonMultilineStringLiteralToken()
 		);
 	}
 
@@ -9562,12 +9566,14 @@ const PythonKeywordToken = class PythonKeywordToken  extends SourceSimpleCharact
 
 	constructor() {
 		super('keyword', [
-
+			'async',
 			'def',
+			'import',
 			'None',
 			'True',
-			'False'
-
+			'False',
+			'while',
+			'yield'
 		]);
 
 		Object.seal(this);
@@ -9609,7 +9615,11 @@ const PythonPunctuationToken = class PythonPunctuationToken  extends SourceSimpl
 
 			'.',
 			':',
+			'+',
+			'-',
 			'=',
+			'&lt;',
+			'&gt;',
 			'(',
 			')',
 			'[',
@@ -9680,6 +9690,252 @@ const PythonLineCommentPatternIterator = class PythonLineCommentPatternIterator 
 
 };
 
+
+
+const PythonStringPatternIterator = class JavaStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === "'"
+			|| matchCharacter === '"') {
+
+			this._quoteType = matchCharacter;
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (this._isEscaped) {
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType
+			|| isLineBreak
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Python strings
+ */
+const PythonStringLiteralToken = class PythonStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new PythonStringPatternIterator());
+	}
+};
+
+
+
+const PythonMultilineStringPatternIterator = class PythonMultilineStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
+			_matchFunction: {value: context._matchStartQuote1, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote1(matchCharacter) {
+
+		if (matchCharacter === "'"
+			|| matchCharacter === '"') {
+
+			this._quoteType = matchCharacter;
+			this._matchFunction = this._matchStartQuote2;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchStartQuote2(matchCharacter) {
+
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchStartQuote3;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchStartQuote3(matchCharacter) {
+
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchContentOrEndQuote1;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote1(matchCharacter) {
+
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchContentOrEndQuote2;
+		}
+
+		return true;
+
+	}
+
+	_matchContentOrEndQuote2(matchCharacter) {
+
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchContentOrEndQuote3;
+		}
+
+		return true;
+
+	}
+
+	_matchContentOrEndQuote3(matchCharacter) {
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for Python strings
+ */
+const PythonMultilineStringLiteralToken = class PythonMultilineStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new PythonMultilineStringPatternIterator());
+	}
+};
+
+
+
 // #endregion
 
 
@@ -9707,7 +9963,9 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 
 			// comments
 			new VbLineCommentToken(),
-			new VbDirectiveToken()
+			new VbDirectiveToken(),
+
+			new CDirectiveToken()
 
 		);
 
