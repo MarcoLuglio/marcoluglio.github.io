@@ -52,7 +52,7 @@ fn main() {
 >// requer um pacote
 package main
 
-// requer uma biblioteca inicial
+// requer uma biblioteca para IO
 import ("fmt")
 
 // requer uma função main
@@ -122,7 +122,11 @@ int main(int argc, const char* argv[]) {
 <div class='codeblock'>
 <p>C# - Olá Mundo - OlaMundo.cs</p>
 <code class='cs'
->public class OlaMundo {
+>// C# 9+
+System.Console.WriteLine("Olá Mundo");
+
+// C# 8-
+public class OlaMundo {
 	// requer um método estático main em uma classe
 	public static void Main(string[] args) {
 		System.Console.WriteLine("Olá Mundo");
@@ -164,9 +168,12 @@ int main(int argc, const char* argv[]) {
 
 <p>Swift é a mais simples de todas. Nem <code class='swift'>;</code> ela precisa, e seu uso nem é recomendado.<br />
 JavaScript perde por pouco. Também não requer <code class='javascript'>;</code> embora ao contrário do que ocorre com Swift, seu uso seja recomendado. Seu <code class='javascript'>console.log</code> também é um pouco maior que o método <code class='swift'>print</code>.<br />
+C# 9+ vem logo atrás, pois ainda requer <code class='cs'>;</code><br />
 Rust ainda requer uma função <code class='rust'>main</code>, mas o retorno dela não precisa ser declarado explicitamente. Diferente das demais linguagens, usa um macro para IO, por isso <code class='rust'>print!</code> leva uma exclamação (não, não era porque eu estava entusiasmado quando escrevi o código).<br />
-C# e Java são idênticos, ambos requerendo uma classe que contenha o método <code class='generic'>main</code>. Sentiu uma leve pressão para escrever orientado a objeto aqui? Também é recomendado que o nome do arquivo tenha o mesmo nome da classe.<br />
-C++ e Objective-C são bastante parecidos pois possuem forte influência do C. São os mais verborrágicos.</p>
+C# 8- e Java são idênticos, ambos requerendo uma classe que contenha o método <code class='generic'>main</code>. Sentiu uma leve pressão para escrever orientado a objeto aqui? Também é recomendado que o nome do arquivo tenha o mesmo nome da classe.<br />
+Go é quase tão comprido quanto C++ e Objective-C. Não requer que a função <code class='go'>main</code> retorne in inteiro, mas requer um pacote.<br />
+C++ e Objective-C são bastante parecidos pois possuem forte influência do C. São os mais verborrágicos.
+</p>
 
 </section>
 
@@ -238,11 +245,12 @@ int someFunction(/* bloco */ int arg) {
 	return 0;
 }
 
-// TODO terminar método de exemplo
-@implementation SomeClass :(int)number1 anotherValue:(int)number2
-- (int) someMethod {
-    return 0;
+@implementation SomeClass
+
+- (int) someMethod /* bloco */ :(int)arg {
+	return 0;
 }
+
 @end</code
 >
 </div>
@@ -271,7 +279,9 @@ func someFunction(/* bloco */ arg1:Int) -&gt; Int {
 bloco
 */
 
-// TODO function block</code
+fun someFunction(/* bloco */ arg:Int): Int {
+    return 0
+}</code
 >
 </div>
 
@@ -284,7 +294,9 @@ bloco
 bloco
 */
 
-// TODO function block</code
+int someMethod(/* bloco */ int arg) {
+	return 0;
+}</code
 >
 </div>
 
@@ -297,7 +309,9 @@ bloco
 bloco
 */
 
-// TODO function block</code
+int someFunction(/* bloco */ int arg) {
+	return 0;
+}</code
 >
 </div>
 
@@ -310,7 +324,9 @@ bloco
 bloco
 */
 
-// TODO function block</code
+function someFunction(/* bloco */ arg) {
+	return 0;
+}</code
 >
 </div>
 
@@ -319,16 +335,16 @@ bloco
 <code class='python'
 ># linha
 
-# TODO function block</code
+"""
+string sendo usada como comentário de bloco
+"""</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
->' linha
-
-' TODO function block</code
+>' linha</code
 >
 </div>
 
@@ -420,7 +436,10 @@ bloco
 
 <div class='codeblock'>
 <p>Rust</p>
--
+<code class='rust'
+>// region idea intellij foldable
+// endregion</code
+>
 </div>
 
 <div class='codeblock'>
@@ -509,9 +528,13 @@ bloco
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->/// Rustdoc para o item que segue
+>/// Rustdoc para o item que segue **com markdown**
+/// # Arguments
+/// * `arg1` - The argument of the function
 /// # Examples
+/// ```
 /// let result = someFunction(2);
+/// ```
 fn someFunction(arg1:i32) -&gt; i32 {
 	0
 }
@@ -526,7 +549,7 @@ mod foo {
 <p>C++</p>
 <code class='cpp'
 >/// &lt;summary&gt;Visual Studio XML Documentation alt 1&lt;/summary&gt;
-/// &lt;param&gt;The argument os the function&lt;/param&gt;
+/// &lt;param&gt;The argument of the function&lt;/param&gt;
 /// &lt;returns&gt;The result of the function call&lt;/returns&gt;
 /// &lt;example&gt;
 /// &lt;code&gt;
@@ -539,7 +562,7 @@ int someFunction(int arg) {
 
 /**
 &lt;summary&gt;Visual Studio XML Documentation alt 2&lt;/summary&gt;
-&lt;param&gt;The argument os the function&lt;/param&gt;
+&lt;param&gt;The argument of the function&lt;/param&gt;
 &lt;returns&gt;The result of the function call&lt;/returns&gt;
 &lt;example&gt;
 &lt;code&gt;
@@ -552,7 +575,7 @@ int someFunction(int arg) {
 }
 
 /// XCode Doxygen / Header Doc alt 1
-/// \param The argument of the function
+/// \param arg The argument of the function
 /// \returns The result of the function call
 /// \code
 /// auto result{someFunction(2)};
@@ -561,7 +584,7 @@ int someFunction(int arg) {
 }
 
 //! XCode Doxygen / Header Doc alt 2
-//! @param The argument of the function
+//! @param arg The argument of the function
 //! @return The result of the function call
 //! @code
 //! auto result{someFunction(2)};
@@ -571,7 +594,7 @@ int someFunction(int arg) {
 
 /**
 XCode Doxygen / Header Doc alt 3
-\param The argument of the function
+\param arg The argument of the function
 \return The result of the function call
 \code
 auto result{someFunction(2)};
@@ -582,7 +605,7 @@ int someFunction(int arg) {
 
 /*!
 XCode Doxygen / Header Doc alt 4
-@param The argument of the function
+@param arg The argument of the function
 @returns The result of the function call
 @code
 auto result{someFunction(2)};
@@ -596,7 +619,97 @@ int someFunction(int arg) {
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->// TODO</code
+>// C style
+
+/// XCode Doxygen / Header Doc alt 1
+/// \param arg The argument of the function
+/// \returns The result of the function call
+/// \code
+/// int result = someFunction(2);
+int someFunction(int arg) {
+	return 0;
+}
+
+//! XCode Doxygen / Header Doc alt 2
+//! @param arg The argument of the function
+//! @return The result of the function call
+//! @code
+//! int result = someFunction(2);
+int someFunction(int arg) {
+	return 0;
+}
+
+/**
+XCode Doxygen / Header Doc alt 3
+\param arg The argument of the function
+\return The result of the function call
+\code
+int result = someFunction(2);
+*/
+int someFunction(int arg) {
+	return 0;
+}
+
+/*!
+XCode Doxygen / Header Doc alt 4
+@param arg The argument of the function
+@returns The result of the function call
+@code
+int result = someFunction(2);
+*/
+int someFunction(int arg) {
+	return 0;
+}
+
+// Objective-C style
+
+@implementation SomeClass
+
+/// XCode Doxygen / Header Doc alt 1
+/// \param arg The argument of the function
+/// \returns The result of the function call
+/// \code
+/// SomeClass *someObject = [SomeClass alloc];
+/// int result = [someObject someMethod:2];
+- (int) someMethod /* bloco */ :(int)arg {
+	return 0;
+}
+
+//! XCode Doxygen / Header Doc alt 2
+//! @param arg The argument of the function
+//! @return The result of the function call
+//! @code
+//! SomeClass *someObject = [SomeClass alloc];
+//! int result = [someObject someMethod:2];
+- (int) someMethod /* bloco */ :(int)arg {
+	return 0;
+}
+
+/**
+XCode Doxygen / Header Doc alt 3
+\param arg The argument of the function
+\return The result of the function call
+\code
+SomeClass *someObject = [SomeClass alloc];
+int result = [someObject someMethod:2];
+*/
+- (int) someMethod /* bloco */ :(int)arg {
+	return 0;
+}
+
+/*!
+XCode Doxygen / Header Doc alt 4
+@param arg The argument of the function
+@returns The result of the function call
+@code
+SomeClass *someObject = [SomeClass alloc];
+int result = [someObject someMethod:2];
+*/
+- (int) someMethod /* bloco */ :(int)arg {
+	return 0;
+}
+
+@end</code
 >
 </div>
 
@@ -618,7 +731,17 @@ func someFunction(arg1:Int) -&gt; Int {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// TODO javadoc</code
+>/**
+KDoc
+{@code
+	var result = someFunction()
+}
+@param arg1 The argument of the function
+@return The result of the function call
+*/
+fun someFunction(arg1:Int): Int {
+	return 0
+}</code
 >
 </div>
 
@@ -3993,6 +4116,55 @@ let es6 = '\u{1F60D}'; // code point
 let beeGees = calvinHarris.replace('love', 'looove');
 
 'Gritando'.toUpperCase(); // retorna 'GRITANDO'</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>simples = 'A primeira faz "tchan"'
+dupla = "A segunda faz 'tchun'"
+
+iara = "mãe d'água"
+modoDificil = 'O\'Reilly'; # TODO verificar isso
+html = '<em class="especial">ênfase</em>'
+
+calvinHarris = 'how deep\nis your love'; # 2 linhas
+
+pareceMasNaoE = 'começa e \
+termina na mesma linha?'; # 1 linha apenas TODO verificar isso
+
+# várias linhas
+josePauloPaes = 'Meu amor é simples, Dora,\n\
+Como a água e o pão.\n\
+\n\
+Como o céu refletido\n\
+Nas pupilas de um cão.'; # TODO verificar isso
+
+# várias linhas
+leminskiTemplate = '''
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada.'''
+
+# várias linhas
+leminskiTemplate2 = """
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada."""
+
+<!--
+let emoji = '😍';
+let es5 = '\uD83D\uDE0D'; // code units / surrogates
+let es6 = '\u{1F60D}'; // code point
+-->
+
+# string é imutável, então seus métodos retornam novas instâncias
+beeGees = calvinHarris.replace('love', 'looove');
+
+'Gritando'.upper(); # retorna 'GRITANDO'</code
 >
 </div>
 
@@ -8303,7 +8475,7 @@ End Sub</code>
 
 <section>
 
-<h2 id='async'>Async</h2>
+<h2 id='async'>Async / Execução em paralelo</h2>
 
 <!-- tasks, promises e futures, deferreds, generators, events/delegates -->
 
@@ -8313,6 +8485,19 @@ End Sub</code>
 <h4>Yield</h4>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// <a href='https://github.com/rust-lang/rust/issues/43122'>track this feature</a>
+// and <a href='https://doc.rust-lang.org/beta/unstable-book/language-features/generators.html'>unstable docs</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -8330,7 +8515,12 @@ End Sub</code>
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Kotlin</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
 -
 </div>
 
@@ -8405,11 +8595,6 @@ namespace MarcoLuglio.ClosureGeneratorExample {
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
--
-</div>
-
-<div class='codeblock'>
 
 <p>JavaScript - animar.js</p>
 <code class='javascript'
@@ -8474,6 +8659,22 @@ do {
 
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>def firstn(n):
+	num = 0
+	while num &lt; n:
+		yield num
+		num += 1</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
 </div>
 
 
@@ -8481,6 +8682,22 @@ do {
 <h4>Closures</h4>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -8507,82 +8724,11 @@ do {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
-</div>
-
-<div class='codeblock'>
-
-<p>C# - AnimadorClosure.cs</p>
-<code class='cs'
->namespace MarcoLuglio.GeneratorExample {
-
-	// assinatura da closure
-	public delegate float? Next();
-
-
-
-
-
-
-
-	public class AnimadorClosure {
-
-		public static Next Animar(float inicio, float fim, int tempo) {
-
-			// variáveis capturadas na closure
-			var tempoAtual = 1;
-			var delta = (fim - inicio) / tempo;
-			var passo = 0f;
-
-
-			// closure
-			Next lambda = () =&gt; {
-				if (tempoAtual &lt;= tempo) {
-					passo = fim - (delta * (tempo - tempoAtual));
-					tempoAtual += 1;
-					return passo;
-				}
-				return null;
-			};
-
-			return lambda;
-
-		}
-
-	}
-
-}</code
->
-
-<p>C# - MainClass.cs</p>
-<code class='cs'
->using System;
-
-namespace MarcoLuglio.GeneratorExample {
-
-	class MainClass {
-
-		public static void Main(string[] args) {
-
-			var animadorClosure = AnimadorClosure.Animar(0, 100, 9);
-			float? resultado;
-
-			do {
-				resultado = animadorClosure();
-				Console.WriteLine(resultado);
-			} while (resultado != null);
-
-		}
-
-	}
-
-}</code
->
-
 </div>
 
 <div class='codeblock'>
@@ -8678,6 +8824,77 @@ PassoField.getFloat(closureState);</code
 
 <div class='codeblock'>
 
+<p>C# - AnimadorClosure.cs</p>
+<code class='cs'
+>namespace MarcoLuglio.GeneratorExample {
+
+	// assinatura da closure
+	public delegate float? Next();
+
+
+
+
+
+
+
+	public class AnimadorClosure {
+
+		public static Next Animar(float inicio, float fim, int tempo) {
+
+			// variáveis capturadas na closure
+			var tempoAtual = 1;
+			var delta = (fim - inicio) / tempo;
+			var passo = 0f;
+
+
+			// closure
+			Next lambda = () =&gt; {
+				if (tempoAtual &lt;= tempo) {
+					passo = fim - (delta * (tempo - tempoAtual));
+					tempoAtual += 1;
+					return passo;
+				}
+				return null;
+			};
+
+			return lambda;
+
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.GeneratorExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+
+			var animadorClosure = AnimadorClosure.Animar(0, 100, 9);
+			float? resultado;
+
+			do {
+				resultado = animadorClosure();
+				Console.WriteLine(resultado);
+			} while (resultado != null);
+
+		}
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+
 <p>JavaScript - animarClosure.js</p>
 <code class='javascript'
 >'use strict';
@@ -8742,6 +8959,19 @@ do {
 
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
 </div>
 
 
@@ -8749,6 +8979,22 @@ do {
 <h4>Functors</h4>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -8775,27 +9021,34 @@ do {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-
-<p>C#</p>
+<p>Java</p>
 -
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
+<p>C#</p>
 -
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='swift'
+>
+</code
+>
 </div>
 
 </div>
@@ -8807,6 +9060,22 @@ do {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -8831,12 +9100,105 @@ do {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
 </div>
+
+<div class='codeblock'>
+
+<p>Java - AnimadorIterator.java</p>
+<code class='java'
+>package marcoluglio.generatorexample;
+
+import java.util.Iterator;
+
+public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Float&gt; {
+
+	public AnimadorIterator(float inicio, float fim, int tempo) {
+		this.fim = fim;
+		this.tempo = tempo;
+		this.delta = (fim - inicio) / tempo;
+		this.reset();
+	}
+
+	// region Interface Iterable&lt;T&gt;
+
+	@Override // "implementação explícita"
+	public Iterator&lt;Float&gt; iterator() {
+		return this;
+	}
+
+	// endregion
+
+
+
+
+	// region Interface Iterator&lt;T&gt;
+
+	@Override // "implementação explícita"
+	public boolean hasNext() {
+		if (this.tempoAtual &lt;= this.tempo) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override // "implementação explícita"
+	public Float next() {
+		this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
+		this.tempoAtual += 1;
+		return this.passo;
+	}
+
+	// endregion
+
+
+
+
+	private void reset() {
+		this.tempoAtual = 1;
+		this.passo = 0;
+	}
+
+
+
+
+
+	private final int tempo;
+	private int tempoAtual;
+	private final float fim;
+	private final float delta;
+	private float passo;
+
+}</code
+>
+
+<p>Java - Main.java</p>
+<code class='java'
+>
+
+import marcoluglio.generatorexample.AnimadorIterator;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		AnimadorIterator animadorIterador = new AnimadorIterator(0, 100, 9);
+
+		for (float resultado : animadorIterador) {
+			System.out.println(resultado);
+		}
+
+	}
+
+}</code
+>
+
+</div>
+
 
 <div class='codeblock'>
 
@@ -8936,98 +9298,6 @@ namespace MarcoLuglio.GeneratorExample {
 
 <div class='codeblock'>
 
-<p>Java - AnimadorIterator.java</p>
-<code class='java'
->package marcoluglio.generatorexample;
-
-import java.util.Iterator;
-
-public class AnimadorIterator implements Iterable&lt;Float&gt;, Iterator&lt;Float&gt; {
-
-	public AnimadorIterator(float inicio, float fim, int tempo) {
-		this.fim = fim;
-		this.tempo = tempo;
-		this.delta = (fim - inicio) / tempo;
-		this.reset();
-	}
-
-	// region Interface Iterable&lt;T&gt;
-
-	@Override // "implementação explícita"
-	public Iterator&lt;Float&gt; iterator() {
-		return this;
-	}
-
-	// endregion
-
-
-
-
-	// region Interface Iterator&lt;T&gt;
-
-	@Override // "implementação explícita"
-	public boolean hasNext() {
-		if (this.tempoAtual &lt;= this.tempo) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override // "implementação explícita"
-	public Float next() {
-		this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual));
-		this.tempoAtual += 1;
-		return this.passo;
-	}
-
-	// endregion
-
-
-
-
-	private void reset() {
-		this.tempoAtual = 1;
-		this.passo = 0;
-	}
-
-
-
-
-
-	private final int tempo;
-	private int tempoAtual;
-	private final float fim;
-	private final float delta;
-	private float passo;
-
-}</code
->
-
-<p>Java - Main.java</p>
-<code class='java'
->
-
-import marcoluglio.generatorexample.AnimadorIterator;
-
-public class Main {
-
-	public static void main(String[] args) {
-
-		AnimadorIterator animadorIterador = new AnimadorIterator(0, 100, 9);
-
-		for (float resultado : animadorIterador) {
-			System.out.println(resultado);
-		}
-
-	}
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
 <p>JavaScript - Iterator.js</p>
 <code class='javascript'
 >class AnimadorIterator {
@@ -9115,6 +9385,22 @@ for (let resultado of animadorIterator) {
 
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>
+</code
+>
+</div>
+
 </div>
 
 
@@ -9127,9 +9413,19 @@ for (let resultado of animadorIterator) {
 
 
 
-<h3 id='tasks'>Tasks</h3>
+<h3 id='tasks'>Tasks e Corrotinas</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'></code>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'></code>
+</div>
 
 <div class='codeblock'>
 
@@ -9322,61 +9618,8 @@ wait(semaforo)</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
--
-</div>
-
-<div class='codeblock'>
-
-<p>C# - MainClass.cs</p>
-<code class='cs'
->using System;
-
-namespace MarcoLuglio.TaskExample {
-
-	class MainClass {
-
-		public static void Main(string[] args) {
-			// async não pode ser usado no método
-			// main, então chamamos no objeto
-			var mainObject = new MainClass();
-			mainObject.main();
-		}
-
-		private async void main() {
-			var promise = new Promise(@"some value");
-			var resultado = await promise.GetResultAsync();
-			Console.WriteLine(@"esperou " + resultado);
-		}
-
-	}
-
-}</code
->
-
-<p>C# - Promise.cs</p>
-<code class='cs'
->using System.Threading.Tasks;
-
-namespace MarcoLuglio.TaskExample {
-
-	public class Promise {
-
-		public Promise(string element) {
-			this.element = element;
-		}
-
-		public async Task&lt;string&gt; GetResultAsync() {
-			return this.element.ToUpper();
-		}
-
-		string element;
-
-	}
-
-}</code
->
-
+<p>Kotlin</p>
+<code class='kotlin'></code>
 </div>
 
 <div class='codeblock'>
@@ -9470,6 +9713,59 @@ public class Task implements Callable&lt;String&gt; {
 </div>
 
 <div class='codeblock'>
+
+<p>C# - MainClass.cs</p>
+<code class='cs'
+>using System;
+
+namespace MarcoLuglio.TaskExample {
+
+	class MainClass {
+
+		public static void Main(string[] args) {
+			// async não pode ser usado no método
+			// main, então chamamos no objeto
+			var mainObject = new MainClass();
+			mainObject.main();
+		}
+
+		private async void main() {
+			var promise = new Promise(@"some value");
+			var resultado = await promise.GetResultAsync();
+			Console.WriteLine(@"esperou " + resultado);
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - Promise.cs</p>
+<code class='cs'
+>using System.Threading.Tasks;
+
+namespace MarcoLuglio.TaskExample {
+
+	public class Promise {
+
+		public Promise(string element) {
+			this.element = element;
+		}
+
+		public async Task&lt;string&gt; GetResultAsync() {
+			return this.element.ToUpper();
+		}
+
+		string element;
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// async await
@@ -9503,6 +9799,27 @@ workAsync('some value')
 >
 </div>
 
+<div class='codeblock'>
+
+<p>Python</p>
+<code class='python'
+>import asyncio
+
+async def main():
+	print('hello')
+	await asyncio.sleep(1)
+	print('world')
+
+asyncio.run(main())</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
 </div>
 
 
@@ -9518,6 +9835,97 @@ workAsync('some value')
 <h3 id='threads'>Threads</h3>
 
 <div class='comparison'>
+
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// queue
+use std::collections::vec_deque::VecDeque;
+
+// threads
+use std::thread;
+
+// channels
+use std::sync::mpsc::{Sender, Receiver};
+use std::sync::mpsc;
+
+fn uppercase(c:char) -&gt; char {
+	c.to_uppercase().next().unwrap()
+}
+
+fn main() {
+
+	let mut model = VecDeque::new();
+	model.push_back("dislexicos");
+	model.push_back("devem");
+	model.push_back("ler");
+	model.push_back("frases");
+	model.push_back("assim");
+
+	let (senderChannel, receiverChannel)
+		:(Sender&lt;&amp;str&gt;, Receiver&lt;&amp;str&gt;)
+		= mpsc::channel();
+
+	// envia dados pelo canal
+	for element in model {
+		senderChannel.send(element);
+	}
+
+	// fecha o canal
+	drop(senderChannel);
+
+	// alternativa 1: thread e lambda
+	let mut lambdaElement = "lambda";
+	let lambda_thread = thread::spawn(move || {
+
+		let mut element:&amp;str;
+		let mut elementUppercase:String;
+
+		// roda até o canal ser fechado
+		for element in receiverChannel {
+			let uppercase:String = element
+				.chars()
+				.map(uppercase)
+				.collect();
+			println!("{:?}", uppercase);
+		}
+
+		// poderíamos usar receiverChannel.recv().unwrap()
+		// e receiverChannel.try_recv().unwrap()
+
+	});
+
+	// alternativa 2: Builder e lambda
+	let mut builderElement = "builder";
+	let builder_thread = thread::Builder::new()
+		.name("builder thread".to_string())
+		.spawn(move || {
+
+		let uppercase:String = builderElement
+			.chars()
+			.map(uppercase)
+			.collect();
+		println!("{:?}", uppercase);
+
+	});
+
+	// espera as threads terminarem antes de prosseguir
+	lambda_thread.join();
+	builder_thread.unwrap().join();
+
+}</code
+>
+</div>
+
+
+
+<div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+
 
 <div class='codeblock'>
 
@@ -9946,85 +10354,362 @@ override NSOperation :(
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// queue
-use std::collections::vec_deque::VecDeque;
 
-// threads
-use std::thread;
+<p>Kotlin - main.kt</p>
+<code class='kotlin'
+>
 
-// channels
-use std::sync::mpsc::{Sender, Receiver};
-use std::sync::mpsc;
 
-fn uppercase(c:char) -&gt; char {
-	c.to_uppercase().next().unwrap()
-}
 
-fn main() {
 
-	let mut model = VecDeque::new();
-	model.push_back("dislexicos");
-	model.push_back("devem");
-	model.push_back("ler");
-	model.push_back("frases");
-	model.push_back("assim");
 
-	let (senderChannel, receiverChannel)
-		:(Sender&lt;&amp;str&gt;, Receiver&lt;&amp;str&gt;)
-		= mpsc::channel();
 
-	// envia dados pelo canal
-	for element in model {
-		senderChannel.send(element);
-	}
+fun main() {
 
-	// fecha o canal
-	drop(senderChannel);
+	// memória compartilhada entre as threads
+	val dataQueue = Model()
+	dataQueue.push("dislexicos")
+	dataQueue.push("devem")
+	dataQueue.push("ler")
+	dataQueue.push("frases")
+	dataQueue.push("assim")
 
-	// alternativa 1: thread e lambda
-	let mut lambdaElement = "lambda";
-	let lambda_thread = thread::spawn(move || {
+	// alternativa 1: subclasse de Thread
+	val parallelThread = ParallelThread(dataQueue)
+	parallelThread.start()
 
-		let mut element:&amp;str;
-		let mut elementUppercase:String;
+	// alternativa 2: interface Runnable
+	val parallelRunnable: Runnable = ParallelRunnable(dataQueue)
+	val parallelRunnableThread = Thread(parallelRunnable)
+	parallelRunnableThread.start()
 
-		// roda até o canal ser fechado
-		for element in receiverChannel {
-			let uppercase:String = element
-				.chars()
-				.map(uppercase)
-				.collect();
-			println!("{:?}", uppercase);
+	// alternativa 3: lambda Runnable
+	// ou interface funcional Runnable
+	val lambda = Runnable {
+		var element: String?
+		var sair = false
+		while (!sair) {
+			// dataQueue capturado pelo lambda
+			element = dataQueue.next()
+			// deixa a thread terminar naturalmente
+			if (element == null) {
+				sair = true
+				continue
+			}
+			println(element.toUpperCase())
 		}
-
-		// poderíamos usar receiverChannel.recv().unwrap()
-		// e receiverChannel.try_recv().unwrap()
-
-	});
-
-	// alternativa 2: Builder e lambda
-	let mut builderElement = "builder";
-	let builder_thread = thread::Builder::new()
-		.name("builder thread".to_string())
-		.spawn(move || {
-
-		let uppercase:String = builderElement
-			.chars()
-			.map(uppercase)
-			.collect();
-		println!("{:?}", uppercase);
-
-	});
+	}
+	val lambdaRunnable = Thread(lambda)
+	lambdaRunnable.start()
 
 	// espera as threads terminarem antes de prosseguir
-	lambda_thread.join();
-	builder_thread.unwrap().join();
+	try {
+		parallelThread.join()
+		parallelRunnableThread.join()
+		lambdaRunnable.join()
+	} catch (e: InterruptedException) {
+		// fazer alguma coisa
+	}
+
+}
+
+
+</code
+>
+
+<p>Kotlin - Model.kt</p>
+<code class='kotlin'
+>package marcoluglio.threadexample
+
+import kotlin.collections.ArrayList
+
+public class Model {
+
+	private var dataQueue = ArrayList<String>()
+
+	// Lock simples explícita para sincronização
+	private val modelLock:Any
+
+	init {
+		this.modelLock = Any()
+		//this.dataQueue = new LinkedList<String>();
+	}
+
+	public fun push(element:String) {
+		// só a main thread insere, então
+		// não precisa sincronizar
+		this.dataQueue.add(element)
+	}
+
+	public fun next(): String? {
+		synchronized(this.modelLock) {
+			if (this.dataQueue.count() > 0)
+				return this.dataQueue.removeAt(0)
+			else
+				return null
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+</code
+>
+
+<p>Kotlin - ParallelThread.kt</p>
+<code class='kotlin'
+>package marcoluglio.threadexample
+
+public class ParallelThread(dataQueue:Model) : Thread() {
+
+	private val dataQueue: Model
+	private var element: String? = null
+
+	// Flag para término da thread
+	private var sair = false
+
+	init {
+		this.dataQueue = dataQueue
+	}
+
+	public override fun run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			println(this.element?.toUpperCase());
+		}
+	}
+
+}
+
+
+
+
+</code
+>
+
+<p>Kotlin - ParallelRunnable.kt</p>
+<code class='kotlin'
+>package marcoluglio.threadexample
+
+public class ParallelRunnable(dataQueue:Model) : Runnable {
+
+	private val dataQueue: Model
+	private var element: String? = null
+
+	// Flag para término da thread
+	private var sair = false
+
+	init {
+		this.dataQueue = dataQueue
+	}
+
+	public override fun run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			println(this.element?.toUpperCase());
+		}
+	}
 
 }</code
 >
+
 </div>
+
+<div class='codeblock'>
+
+<p>Java - Main.java</p>
+<code class='java'
+>
+
+
+
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		// memória compartilhada entre as threads
+		Model dataQueue = new Model();
+		dataQueue.push("dislexicos");
+		dataQueue.push("devem");
+		dataQueue.push("ler");
+		dataQueue.push("frases");
+		dataQueue.push("assim");
+
+		// alternativa 1: subclasse de Thread
+		ParallelThread parallelThread = new ParallelThread(dataQueue);
+		parallelThread.start();
+
+		// alternativa 2: interface Runnable
+		Runnable parallelRunnable = new ParallelRunnable(dataQueue);
+		Thread parallelRunnableThread = new Thread(parallelRunnable);
+		parallelRunnableThread.start();
+
+		// alternativa 3: lambda Runnable
+		// ou interface funcional Runnable
+		Runnable lambda = () -&gt; {
+			String element;
+			boolean sair = false;
+			while (!sair) {
+				// dataQueue capturado pelo lambda
+				element = dataQueue.next();
+				// deixa a thread terminar naturalmente
+				if (element == null) {
+					sair = true;
+					continue;
+				}
+				System.out.println(element.toUpperCase());
+			}
+		};
+		Thread lambdaRunnable = new Thread(lambda);
+		lambdaRunnable.start();
+
+		// espera as threads terminarem antes de prosseguir
+		try {
+			parallelThread.join();
+			parallelRunnableThread.join();
+			lambdaRunnable.join();
+		} catch (InterruptedException e) {
+			// fazer alguma coisa
+		}
+
+	}
+
+}</code
+>
+
+<p>Java - Model.java</p>
+<code class='java'
+>package marcoluglio.threadexample;
+
+import java.util.LinkedList;
+
+// Java possui classes nativas com acesso
+// sincronizado, mas não as utilizei para
+// demonstrar o uso de locks manuais
+public final class Model {
+
+	public Model() {
+		this.modelLock = new Object();
+		this.dataQueue = new LinkedList&lt;String&gt;();
+	}
+
+	public void push(String element) {
+		// só a main thread insere, então
+		// não precisa sincronizar
+		this.dataQueue.add(element);
+	}
+
+	public String next() {
+		// sincroniza o acesso das threads
+		synchronized(this.modelLock) {
+			return this.dataQueue.poll();
+		}
+	}
+
+	private LinkedList&lt;String&gt; dataQueue;
+
+	// Lock simples explícita para sincronização
+	private final Object modelLock;
+
+}
+
+
+
+
+
+
+
+</code
+>
+
+<p>Java - ParallelThread.java</p>
+<code class='java'
+>
+
+package marcoluglio.threadexample;
+
+public final class ParallelThread extends Thread {
+
+	public ParallelThread(Model dataQueue) {
+		this.dataQueue = dataQueue;
+	}
+
+	// método "main" da thread
+	@Override
+	public void run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			System.out.println(this.element.toUpperCase());
+		}
+	}
+
+	private Model dataQueue;
+	private String element;
+
+	/** Flag para término da thread */
+	private boolean sair = false;
+
+}</code
+>
+
+<p>Java - ParallelRunnable.java</p>
+<code class='java'
+>package marcoluglio.threadexample;
+
+public final class ParallelRunnable implements Runnable {
+
+	public ParallelRunnable(Model dataQueue) {
+		this.dataQueue = dataQueue;
+	}
+
+	// método "main" da thread
+	@Override
+	public void run() {
+		while (!this.sair) {
+			this.element = this.dataQueue.next();
+			// deixa a thread terminar naturalmente
+			if (this.element == null) {
+				this.sair = true;
+				continue;
+			}
+			System.out.println(this.element.toUpperCase());
+		}
+	}
+
+	private Model dataQueue;
+	private String element;
+
+	/** Flag para término da thread */
+	private boolean sair = false;
+
+}</code
+>
+
+</div>
+
+
 
 <div class='codeblock'>
 
@@ -10174,183 +10859,7 @@ namespace MarcoLuglio.ThreadExample {
 
 </div>
 
-<div class='codeblock'>
 
-<p>Java - Main.java</p>
-<code class='java'
->
-
-
-
-
-public class Main {
-
-	public static void main(String[] args) {
-
-		// memória compartilhada entre as threads
-		Model dataQueue = new Model();
-		dataQueue.push("dislexicos");
-		dataQueue.push("devem");
-		dataQueue.push("ler");
-		dataQueue.push("frases");
-		dataQueue.push("assim");
-
-		// alternativa 1: subclasse de Thread
-		ParallelThread parallelThread = new ParallelThread(dataQueue);
-		parallelThread.start();
-
-		// alternativa 2: interface Runnable
-		Runnable parallelRunnable = new ParallelRunnable(dataQueue);
-		Thread parallelRunnableThread = new Thread(parallelRunnable);
-		parallelRunnableThread.start();
-
-		// alternativa 3: lambda Runnable
-		// ou interface funcional Runnable
-		Runnable lambda = () -&gt; {
-			String element;
-			boolean sair = false;
-			while (!sair) {
-				// dataQueue capturado pelo lambda
-				element = dataQueue.next();
-				// deixa a thread terminar naturalmente
-				if (element == null) {
-					sair = true;
-					continue;
-				}
-				System.out.println(element.toUpperCase());
-			}
-		};
-		Thread lambdaRunnable = new Thread(lambda);
-		lambdaRunnable.start();
-
-		// espera as threads terminarem antes de prosseguir
-		try {
-			parallelThread.join();
-			parallelRunnable.join();
-			lambdaRunnable.join();
-		} catch (InterruptedException e) {
-			// fazer alguma coisa
-		}
-
-	}
-
-}</code
->
-
-<p>Java - Model.java</p>
-<code class='java'
->package marcoluglio.threadexample;
-
-import java.util.LinkedList;
-
-// Java possui classes nativas com acesso
-// sincronizado, mas não as utilizei para
-// demonstrar o uso de locks manuais
-public final class Model {
-
-	public Model() {
-		this.modelLock = new Object();
-		this.dataQueue = new LinkedList&lt;String&gt;();
-	}
-
-	public void push(String element) {
-		// só a main thread insere, então
-		// não precisa sincronizar
-		this.dataQueue.add(element);
-	}
-
-	public String next() {
-		// sincroniza o acesso das threads
-		synchronized(this.modelLock) {
-			return this.dataQueue.poll();
-		}
-	}
-
-	private LinkedList&lt;String&gt; dataQueue;
-
-	/** Lock simples explícita para sincronização */
-	private final Object modelLock; // TODO testar o final
-
-}
-
-
-
-
-
-
-
-</code
->
-
-<p>Java - ParallelThread.java</p>
-<code class='java'
->
-
-package marcoluglio.threadexample;
-
-public final class ParallelThread extends Thread {
-
-	public ParallelThread(Model dataQueue) {
-		this.dataQueue = dataQueue;
-	}
-
-	// método "main" da thread
-	@Override
-	public void run() {
-		while (!this.sair) {
-			this.element = this.dataQueue.next();
-			// deixa a thread terminar naturalmente
-			if (this.element == null) {
-				this.sair = true;
-				continue;
-			}
-			System.out.println(this.element.toUpperCase());
-		}
-	}
-
-	private Model dataQueue;
-	private String element;
-
-	/** Flag para término da thread */
-	private boolean sair = false;
-
-}</code
->
-
-<p>Java - ParallelRunnable.java</p>
-<code class='java'
->package marcoluglio.threadexample;
-
-public final class ParallelRunnable implements Runnable {
-
-	public ParallelRunnable(Model dataQueue) {
-		this.dataQueue = dataQueue;
-	}
-
-	// método "main" da thread
-	@Override
-	public void run() {
-		while (!this.sair) {
-			this.element = this.dataQueue.next();
-			// deixa a thread terminar naturalmente
-			if (this.element == null) {
-				this.sair = true;
-				continue;
-			}
-			System.out.println(this.element.toUpperCase());
-		}
-	}
-
-	private Model dataQueue;
-	private String element;
-
-	/** Flag para término da thread */
-	private boolean sair = false;
-
-}</code
->
-
-</div>
 
 <div class='codeblock'>
 
@@ -10468,6 +10977,30 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) =&gt; {
 <strong>};</strong></code
 >
 
+</div>
+
+<div class='codeblock'>
+
+<p>Python</p>
+<code class='python'
+>import threading
+import time
+
+def thread_function(name):
+	# fazer alguma coisa
+	time.sleep(2)
+
+def main():
+	x = threading.Thread(target=thread_function, args=(1,))
+	x.start()
+	x.join()</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
 </div>
 
 </div>
