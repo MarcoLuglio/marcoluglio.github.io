@@ -107,14 +107,86 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			><span class='keyword'>cat</span> ./front-end/.git/config  <span class='comment'># cat = concatenate and show result, mas só temos um arquivo então o resultado é igual ao arquivo</span></code
+			><span class='keyword'>cat</span> ./front-end/.git/config  <span class='comment'># cat = concatenate and show result, mas só temos um arquivo então o resultado é igual ao arquivo</span>
+<em>[core]</em>
+<em>repositoryformatversion = 0</em>
+<em>filemode = true</em>
+<em>bare = false</em>
+<em>logallrefupdates = true</em>
+<em>ignorecase = true</em>
+<em>precomposeunicode = true</em></code
 		>
 	</div>
 
 	<p>
-		Para saber mais sobre um comando que digitamos no terminal, podemos digitar <code class='bubaloop shell'><span class='keyword'>man</span> comando</code>, por exemplo, <code class='bubaloop shell'><span class='keyword'>man</span> ls</code>.
+		Para saber mais sobre um comando que digitamos no terminal, podemos digitar <code class='bubaloop shell'><span class='keyword'>man</span> comando</code>, por exemplo, <code class='bubaloop shell'><span class='keyword'>man</span> ls</code> ou <code class='bubaloop shell'><span class='keyword'>man</span> cat</code>.
 		Para sair do <code class='bubaloop shell'><span class='keyword'>man</span></code>, digite <code class='shortcut'>Q</code>.
 	</p>
+
+	<p>
+		Agora podemos criar um arquivo e editá-lo, tudo pelo terminal!
+		Um arquivo comum em todos os repositórios é o .gitignore, ele lista quais pastas e arquivos nunca devem ser versionados.
+		Muitos lugares como <abbr>IDE</abbr>s e o github de fato irão criar este arquivo para você ao criar um projeto novo.
+	</p>
+
+	<p>
+		Na maioria dos casos os arquivos que queremos ignorar são os mesmos para todos os repositórios, então se quiser fazer esta configuração geral, veja a <a href='https://help.github.com/en/github/using-git/ignoring-files'>documentação oficial</a>.
+		Eu vou demonstrar como fazer isso para cada repositório individualmente, já que em nosso caso, os projetos web e mobile tem tipos de arquivos diferentes.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>cd</span> front-end
+<span class='keyword'>touch</span> .gitignore  <span class='comment'># touch cria um arquivo vazio</span>
+<span class='keyword'>nano</span> .gitignore   <span class='comment'># o nano (e o pico tb) é mais amigável que o vi, mas na boa, use o VS Code...</span></code
+		>
+	</div>
+
+	<p>Pra sair do nano pressione <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌃</span> + <span class='shortcut'>X</span>.</p>
+
+	<p>
+		Ou, podemos abrir o VS Code do terminal na pasta que quisermos com os comandos abaixo.
+		Se você estiver num Mac, <a href='https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line'>siga esses passos antes</a>.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>code</span> .  <span class='comment'># se lembre que . = pasta atual</span></code
+		>
+	</div>
+
+	<p>No arquivo .gitignore, vou listar os arquivos pastas muito comuns que nunca queremos versionar.</p>
+
+	<div class='codeblock'>
+		<p>.gitignore</p>
+		<code
+			>Thumbs.db
+.DS_Store
+.vscode</code
+		>
+	</div>
+
+	<p>
+		Salve o arquivo.
+		Pra não perdermos nosso trabalho incrivelmente árduo até agora de criar esse arquivo .gitignore (pelo menos pra escrever até aqui já deu um trabalhão), vamos salvá-lo no Git também.
+		Mais precisamente, vamos salvar a versão atual dele no Git, pra termos um histórico futuro das alterações que fizermos no arquivo.
+		Consulte a <a href='https://rogerdudler.github.io/git-guide/'>lista básica de comandos do Git</a>.
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>git</span> <span class='keyword'>status</span>                                            <span class='comment'># mostra index.html como untracked (não versionado)</span>
+<span class='keyword'>git</span> <span class='keyword'>add</span> .gitignore                                    <span class='comment'># adiciona index.html para a área de staging (ensaio)</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                            <span class='comment'># mostra que index.html será adicionado quando efetuarmos o commit (executar o que ensaiamos)</span>
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo .gitignore"   <span class='comment'># efetua o commit com uma mensagem</span>
+<span class='keyword'>git</span> <span class='keyword'>status</span>                                            <span class='comment'># mostra que não há nenhuma nova alteração para ser salva</span>
+<span class='keyword'>git</span> <span class='keyword'>log</span>                                               <span class='comment'># mostra o histórico de alterações</span>
+</code
+		>
+	</div>
 
 	</section>
 
@@ -138,44 +210,20 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			><span class='keyword'>cd</span> front-end
-<span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># lista os branches existentes, mas por enquanto não temos nenhum</span>
+			><span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># lista os branches existentes, por enquanto só temos o master, que é o padrão</span>
 <span class='keyword'>git</span> <span class='keyword'>checkout</span> <span class='parameter'>-b</span> features/static-html             <span class='comment'># cria e muda para um novo branch chamado static-html</span>
 <em>Switched to a new branch 'features/static-html'</em>
-<span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># ainda não lista nenhum branch, pois ainda não salvamos nenhuma alteração nova</span></code
+<span class='keyword'>git</span> <span class='keyword'>branch</span>                                       <span class='comment'># lista nossos dois branches</span></code
 		>
 	</div>
 
-	<p>Agora podemos criar um arquivo e editá-lo, tudo pelo terminal!</p>
-
-	<div class='codeblock'>
-		<p>terminal (sh like)</p>
-		<code class='shell'
-			><span class='keyword'>touch</span> index.htm  <span class='comment'># touch cria um arquivo vazio</span>
-<span class='keyword'>nano</span> index.htm   <span class='comment'># o nano (e o pico tb) é mais amigável que o vi, mas na boa, use o VS Code...</span></code
-		>
-	</div>
-
-	<p>Pra sair do nano pressione <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌃</span> + <span class='shortcut'>X</span>.</p>
-
-	<p>
-		Ou, podemos abrir o VS Code do terminal na pasta que quisermos com os comandos abaixo.
-		Se você estiver num Mac, <a href='https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line'>siga esses passos antes</a>.
-	</p>
-
-	<div class='codeblock'>
-		<p>terminal (sh like)</p>
-		<code class='shell'
-			><span class='keyword'>code</span> .  <span class='comment'># se lembre que . = pasta atual</span></code
-		>
-	</div>
-
-	<p>Já na tela do VS Code, crie um novo arquivo com <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>N</span>.</p>
+	<p>Na tela do VS Code, crie um novo arquivo que será nosso index.html, com <span class='shortcut'>Ctrl</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>N</span>.</p>
 
 	<p>
 		Por padrão o VS Code vai criar um arquivo de texto simples (text/plain).
 		Vamos dizer para ele que queremos um arquivo html (text/html).
-		Pra isso abrimos a barra de comandos do VS Code  pressionando <span class='shortcut'>Ctrl</span> + <span class='shortcut'>Shift</span> + <span class='shortcut'>P</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>⇧</span> + <span class='shortcut'>P</span>.
+		Poderíamos salvar o arquivo primeiro e o VS Code saberia qual o tipo pela extensão que selecionamos, porém existe outro jeito que não necessita salvar o arquivo, e pode ser útil em outras situações.
+		Abrimos a barra de comandos do VS Code  pressionando <span class='shortcut'>Ctrl</span> + <span class='shortcut'>Shift</span> + <span class='shortcut'>P</span> ou <span class='shortcut'>⌘</span> + <span class='shortcut'>⇧</span> + <span class='shortcut'>P</span>.
 	</p>
 
 	<p>
@@ -215,10 +263,10 @@
 	</div>
 
 	<p>
-		Salve este arquivo como <code>index.htm</code> na raiz da pasta <code>front-end</code>.
+		Salve este arquivo como <code>index.html</code> na raiz da pasta <code>front-end</code>.
 		Ele será nosso arquivo inicial.
 		O que define na verdade que ele é o arquivo inicial é a configuração do nosso servidor.
-		Por padrão, servidores como Nginx, Apache, <abbr title='Internet Information Services'>IIS</abbr>, WildFly e por aí vai aceitam <code>index.htm</code>.
+		Por padrão, servidores como Nginx, Apache, <abbr title='Internet Information Services'>IIS</abbr>, WildFly e por aí vai aceitam <code>index.html</code>.
 	</p>
 
 	<p>
@@ -229,9 +277,6 @@
 	<h3 id='releaseflow'>Controle de Versão - Release Flow</h3>
 
 	<p>
-		Pra não perdermos nosso trabalho incrivelmente árduo até agora de criar esse arquivo html (pelo menos pra escrever até aqui já deu um trabalhão), vamos salvá-lo no Git.
-		Mais precisamente, vamos salvar a versão atual dele no Git, pra termos um histórico futuro das alterações que fizermos no arquivo.
-		Consulte a <a href='https://rogerdudler.github.io/git-guide/'>lista básica de comandos do Git</a>.
 		Existem vários fluxos que as pessoas foram inventando ao longo do tempo pra tentar deixar o uso do Git um pouco menos complicado e simplificar o histório das alterações dentro de um projeto.
 		Vou usar aqui um fluxo chamado <a href='https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/release-flow'>release flow</a> + squash + rebase.
 	</p>
@@ -255,20 +300,8 @@
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			><span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra index.htm como untracked (não versionado)</span>
-<span class='keyword'>git</span> <span class='keyword'>add</span> index.htm                                  <span class='comment'># adiciona index.htm para a área de staging (ensaio)</span>
-<span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra que index.htm será adicionado quando efetuarmos o commit (executar o que ensaiamos)</span>
-<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo inicial"   <span class='comment'># efetua o commit com uma mensagem</span>
-<span class='keyword'>git</span> <span class='keyword'>status</span>                                         <span class='comment'># mostra que não há nenhuma nova alteração para ser salva</span></code
-		>
-	</div>
-
-	<div class='codeblock'>
-		<p>terminal (sh like)</p>
-		<code class='shell'
-			><span class='keyword'>git</span> <span class='keyword'>log</span>     <span class='comment'># mostra o histórico de alterações</span>
-<span class='keyword'>git</span> <span class='keyword'>branch</span>  <span class='comment'># finalmente lista nosso branch</span>
-		</code
+			><span class='keyword'>git</span> <span class='keyword'>add</span> index.html
+<span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo inicial"</code
 		>
 	</div>
 
@@ -295,7 +328,7 @@ h1 {
 	<p>E incluímos um pouco de conteúdo.</p>
 
 	<div class='codeblock'>
-		<p>index.htm</p>
+		<p>index.html</p>
 		<code class='html'
 			>&lt;!DOCTYPE html&gt;
 &lt;html lang=<strong>"pt-br"</strong>&gt;
@@ -316,7 +349,7 @@ h1 {
 
 	<p>
 		Abra esse arquivo no navegador, clicando duas vezes nele.
-		O navegador vai mostrar na barra de endereços algo como <em>file:///Users/marco/dozero/front-end/index.htm</em>
+		O navegador vai mostrar na barra de endereços algo como <em>file:///Users/marco/dozero/front-end/index.html</em>
 		O <em>file://</em> significa que ele está abrindo um arquivo local, do sistema de arquivos.
 		O título deve ficar num cinza ligeiramente diferente do preto original (design está nos detalhes).
 		Mas que você quiser verificar com certeza, inspecione o título TODO.
@@ -330,13 +363,13 @@ h1 {
 		<p>terminal (sh like)</p>
 		<code class='shell'
 			><span class='comment'># tínhamos parado dentro da pasta css se lembra?</span>
-<span class='comment'># então o git mostra ../index.htm como modificado e ./ como não versionado</span>
+<span class='comment'># então o git mostra ../index.html como modificado e ./ como não versionado</span>
 <span class='keyword'>git</span> <span class='keyword'>status</span>
 
 <span class='comment'># podemos adicionar todas as pendências de uma vez na área de ensaio com *</span>
 <span class='keyword'>git</span> <span class='keyword'>add</span> *
 
-<span class='comment'># mostra que index.htm e css/index.css serão inclusos no commit</span>
+<span class='comment'># mostra que index.html e css/index.css serão inclusos no commit</span>
 <span class='keyword'>git</span> <span class='keyword'>status</span>
 
 <span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--message</span> "Adição de arquivo css"
@@ -362,7 +395,7 @@ titulo.innerText = 'Rodou';</code
 	<p>E incluímos um pouco de conteúdo.</p>
 
 	<div class='codeblock'>
-		<p>index.htm</p>
+		<p>index.html</p>
 		<code class='html'
 			>&lt;!DOCTYPE html&gt;
 &lt;html lang="pt-br"&gt;
@@ -410,30 +443,37 @@ titulo.innerText = 'Rodou';</code
 	</p>
 
 	<p>
-		Dando uma olhada no nosso histório, podemos ver 3 commits.
+		Dando uma olhada no nosso histório, podemos ver quatro commits.
+		O primeiro feito ainda no master branch, e os demais no nosso próprio branch.
 	</p>
 
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
 			><span class='keyword'>git</span> <span class='keyword'>log</span>
-<em>commit 23c964a8272baa6f839fe1bbe5c12c8ea3116cda (HEAD -> features/static-html)</em>
-<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
-<em>Date:   Tue May 12 18:49:07 2020 -0300</em>
+<strong>commit</strong> ff63d353dc98bb6a667523eacb5eb6310ec595f5 <strong>(HEAD -> features/static-html)</strong>
+Author: Marco Luglio &lt;marcodejulho@gmail.com&gt;
+Date:   Wed May 13 23:29:24 2020 -0300
 
-<em>	Adição de arquivo js</em>
+	<strong>Adição de arquivo js</strong>
 
-<em>commit 8ee9e50f9e32ec140ca0536f7704f934e7a77ab2</em>
-<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
-<em>Date:   Fri May 8 01:40:11 2020 -0300</em>
+<strong>commit</strong> e723dd356571d0c71b124f3678471917d9826279
+Author: Marco Luglio &lt;marcodejulho@gmail.com&gt;
+Date:   Wed May 13 23:28:12 2020 -0300
 
-<em>	Adição de arquivo css</em>
+	<strong>Adição de arquivo css</strong>
 
-<em>commit e0e10fb63c24680ef277ea4ee4057ae0259da454</em>
-<em>Author: Marco Luglio &lt;marco@gmail.com&gt;</em>
-<em>Date:   Thu May 7 23:21:03 2020 -0300</em>
+<strong>commit</strong> 1b94ef3834278e25ab27b1718ae2cdeb6ef2a2a6
+Author: Marco Luglio &lt;marcodejulho@gmail.com&gt;
+Date:   Wed May 13 23:26:45 2020 -0300
 
-<em>	Adição de arquivo inicial</em></code
+	<strong>Adição de arquivo inicial</strong>
+
+<strong>commit</strong> 299a808ae84a3b08ca8c84c6f374d065cf4da822 <strong>(master)</strong>
+Author: Marco Luglio &lt;marcodejulho@gmail.com&gt;
+Date:   Wed May 13 23:15:52 2020 -0300
+
+	<strong>Adição de arquivo .gitignore</strong></code
 		>
 	</div>
 
@@ -441,7 +481,7 @@ titulo.innerText = 'Rodou';</code
 		As mensagens de commit nesse caso são relevantes enquanto estamos desenvolvendo a funcionalidade, mas podem não ser muito úteis uma vez que ela já está terminada.
 		Nesse caso seria melhor ter uma única mensagem com um resumo das alterações e o código no estado final.
 		Pelo menos essa é a filosofia do squash + rebase.
-		Então vamos achatar nossos três commits em um só.
+		Então vamos achatar nossos três últimos commits em um só.
 	</p>
 
 	<div class='codeblock'>
@@ -449,12 +489,13 @@ titulo.innerText = 'Rodou';</code
 		<code class='shell'
 		><span class='comment'># maneira compacta de mostrar as alterações</span>
 <span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
-<em>23c964a (HEAD -> features/static-html) Adição de arquivo js</em>
-<em>8ee9e50 Adição de arquivo css</em>
-<em>e0e10fb Adição de arquivo inicial</em>
+ff63d35 (HEAD -> features/static-html) Adição de arquivo js
+e723dd3 Adição de arquivo css
+1b94ef3 Adição de arquivo inicial
+299a808 (master) Adição de arquivo .gitignore
 
-<span class='comment'># achata todos os commits em um só</span>
-<span class='keyword'>git</span> <span class='keyword'>rebase</span> <span class='parameter'>--interactive</span> <span class='parameter'>--root</span></code
+<span class='comment'># achata todos os commits após o commit com o hash indicado em um só, também podemos usar --root que achataria tudo, mas perderíamos o histórico do master branch</span>
+<span class='keyword'>git</span> <span class='keyword'>rebase</span> <span class='parameter'>--interactive</span> <span class='parameter'>299a808</span></code
 		>
 	</div>
 
@@ -466,9 +507,9 @@ titulo.innerText = 'Rodou';</code
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			>pick e0e10fb Adição de arquivo inicial
-pick 8ee9e50 Adição de arquivo css
-pick 23c964a Adição de arquivo js</code
+			>pick 1b94ef3 Adição de arquivo inicial
+pick e723dd3 Adição de arquivo css
+pick ff63d35 Adição de arquivo js</code
 		>
 	</div>
 
@@ -482,9 +523,9 @@ pick 23c964a Adição de arquivo js</code
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			>pick e0e10fb Adição de arquivo inicial
-<strong>fixup</strong> 8ee9e50 Adição de arquivo css
-<strong>fixup</strong> 23c964a Adição de arquivo js</code
+			>pick 1b94ef3 Adição de arquivo inicial
+<strong>fixup</strong> e723dd3 Adição de arquivo css
+<strong>fixup</strong> ff63d35 Adição de arquivo js</code
 		>
 	</div>
 
@@ -501,18 +542,19 @@ pick 23c964a Adição de arquivo js</code
 		<p>terminal (sh like)</p>
 		<code class='shell'
 			><span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
-<em>f4e8059 (HEAD -> features/static-html) Adição de arquivo inicial</em></code
+ac490ce (HEAD -> features/static-html) Adição de arquivo inicial
+299a808 (master) Adição de arquivo .gitignore</code
 		>
 	</div>
 
 	<p>
-		Vemos que agora temos novamente um só commit, mas nossos arquivos estão com as alterações dos três.
+		Vemos que agora temos novamente só dois commits, mas nossos arquivos estão com as alterações dos quatro.
 	</p>
 
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			><span class='keyword'>cat</span> index.htm  <span class='comment'># note que o CSS e JavaScript ainda estão lá</span></code
+			><span class='keyword'>cat</span> index.html  <span class='comment'># note que o CSS e JavaScript ainda estão lá</span></code
 		>
 	</div>
 
@@ -524,7 +566,7 @@ pick 23c964a Adição de arquivo js</code
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			><span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--amend</span> <span class='parameter'>-m</span> "Alteração de título por JavaScript"</code
+			><span class='keyword'>git</span> <span class='keyword'>commit</span> <span class='parameter'>--amend</span> <span class='parameter'>--message</span> "Alteração de título por JavaScript"</code
 		>
 	</div>
 
@@ -534,7 +576,8 @@ pick 23c964a Adição de arquivo js</code
 		<p>terminal (sh like)</p>
 		<code class='shell'
 			><span class='keyword'>git</span> <span class='keyword'>log</span> <span class='parameter'>--oneline</span>
-<em><strong>f4e8059</strong> (HEAD -> features/static-html) <strong>Alteração de título por JavaScript</strong></em></code
+ac490ce (HEAD -> features/static-html) Alteração de título por JavaScript
+299a808 (master) Adição de arquivo .gitignore</code
 		>
 	</div>
 
@@ -543,24 +586,166 @@ pick 23c964a Adição de arquivo js</code
 	<div class='codeblock'>
 		<p>terminal (sh like)</p>
 		<code class='shell'
-			>git checkout master
-git branch
-git merge features/static-html
-git commit --message "Merge de features/static-html para master"
-git tag 1.0.0 commithashere
-git branch -d features/static-html</code
+			><span class='keyword'>git</span> <span class='keyword'>checkout</span> master                   <span class='comment'># muda para o master branch</span>
+<span class='keyword'>git</span> <span class='keyword'>branch</span>                            <span class='comment'># confirma que estamos no master branch</span>
+<span class='keyword'>git</span> <span class='keyword'>diff</span> master features/static-html  <span class='comment'># mostra oq será alterado, pressione q pra sair</span>
+<span class='keyword'>git</span> <span class='keyword'>rebase</span> features/static-html       <span class='comment'># coloca as alterações do branch na master</span>
+<span class='keyword'>git</span> <span class='keyword'>log</span>                               <span class='comment'># confirma que as alterações estão lá</span>
+<span class='keyword'>git</span> <span class='keyword'>tag</span> 1.0.0 0296a7f                 <span class='comment'># dá um nome para esse ponto específico da história do repositório</span>
+<span class='keyword'>git</span> <span class='keyword'>log</span>                               <span class='comment'># note que o nome da tag aparece ao lado do commit</span>
+<span class='keyword'>git</span> <span class='keyword'>branch</span> <span class='parameter'>-d</span> features/static-html    <span class='comment'># apaga o branch que já foi reintegrado no master</span></code
 		>
 	</div>
 
+	<h3 id='servidoreshttp'>Servidores <abbr>HTTP</abbr></h3>
+
+	<p>
+		Alguns recursos não funcionam quando abrimos a página direto do sistema de arquivos.
+		Nesses casos precisamos configurar um servidor local para testes.
+		Se este servidor for igual ao que vamos publicar nosso site, melhor.
+	</p>
+
+	<p>
+		A maneira como carregamos os arquivos JavaScript é um desses recursos que dependem de um servidor.
+		Hoje separamos os arquivos em módulos.
+	</p>
+
+	<div class='codeblock'>
+		<p>js/biblioteca.js</p>
+		<code class='javascript'
+			>'use strict';
+
+function mudarTitulo(novoTitulo) {
+	const titulo = document.querySelector('h1');
+	titulo.innerText = novoTitulo;
+}
+
+// módulos só conseguem expor o que é exportado explicitamente
+export { mudarTitulo };</code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>js/index.js</p>
+		<code class='javascript'
+			>'use strict';
+
+// do que é exportado nos módulos, só é visível o que for importado explicitamente
+import { mudarTitulo } from './biblioteca.js';
+
+mudarTitulo('Rodou');</code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>index.html</p>
+		<code class='html'
+			>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8" /&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+	&lt;title&gt;Olá mundo&lt;/title&gt;
+	&lt;!-- estilos vão no cabeçalho da página --&gt;
+	&lt;link rel='stylesheet' href='css/index.css' /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;h1&gt;Pra quem não sabe&lt;/h1&gt;
+	&lt;p&gt;Hipertexto é feito de &lt;a href='https://en.wikipedia.org/wiki/Hypertext'&gt;links&lt;/a&gt; ;)&lt;/p&gt;
+	&lt;!-- scripts vão no final da página --&gt;
+	<strong>&lt;!-- módulos são indicados pelo atributo type, e são carregados de maneira diferente --&gt;</strong>
+	<strong class='small'>&lt;script</strong> src='js/index.js' <strong class='small'>type='module'</strong>&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code
+		>
+	</div>
+
+	<p>
+		Se você abrir este arquivo como fizermos anteriormente, vai notar que nossa programação não vai funcionar.
+		O carregamento destes módulos requer um servidor <abbr>HTTP</abbr>.
+		A Mozilla tem uma página com instruções de como <a href='https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server'>rodar um servidor simples de teste</a> com Python.
+		Basicamente:
+	</p>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			><span class='keyword'>python</span> <span class='parameter'>-m</span> SimpleHTTPServer 8000  <span class='comment'># para python v2, que já vem no Mac</span></code
+		>
+	</div>
+
+	<p>
+		Para páginas simples e testes rápidos isso é suficiente, mais pra frente vou mostrar uma ferramenta mais completa, chamada Docker.
+		Por enquanto quero fazer mais uma alteração em nossa 
+	</p>
 
 
 
 
 
 
+	<p>Vamos usar o Docker para resolver nosso problema, rodando um servidor <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> simples.</p>
+
+	<p>
+		Por padrão os servidores <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> usam a porta 80.
+		Se você já estiver usando a porta 80 para alguma coisa, pode mudar no comando abaixo o <code class='shell bubaloop'>80:80</code> para <code class='shell bubaloop'>8080:80</code>, <code class='shell bubaloop'>8081:80</code> e por aí vai.
+		 O número antes do <code class='shell bubaloop'>:</code> é da porta que você deseja usar.
+	</p>
+
+	<p>
+		Outro detalhe no comando abaixo é como indicamos o diretório atual dentro do shell.
+		No Powershell ou Unix <code class='shell bubaloop'>${PWD}</code> é um variável que contém o diretório onde estamos no terminal.
+		O Unix também suporta <code class='shell bubaloop'>$PWD</code>, que não funciona no Windows.
+		E o Winndows também suporta <code class='shell bubaloop'>%cd%</code>, que não funciona no Unix.
+	</p>
 
 
-Checkout master branch
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+		><span class='comment'># A</span>
+<span class='keyword'>docker</span> <span class='keyword'>container</span> <span class='keyword'>run</span> <span class='parameter'>-d</span> <span class='parameter'>-p</span> 80:80 <span class='parameter'>-v</span> "${PWD}":/usr/share/nginx/html <span class='parameter'>--name</span> nginx nginx:alpine
+
+<span class='comment'># lista os contêineres rodando atualmente, para listar todos use o parâmetro -a</span>
+<span class='keyword'>docker</span> <span class='keyword'>container</span> <span class='keyword'>ls</span></code
+		>
+	</div>
+
+	<p><a href='https://www.johnmackenzie.co.uk/post/creating-self-signed-ssl-certificates-for-docker-and-nginx/'>https://www.johnmackenzie.co.uk/post/creating-self-signed-ssl-certificates-for-docker-and-nginx/</a></p>
+
+	<p>Versionamos nosso exemplo de novo.</p>
+
+	<h3 id='webassemblybonus'>Bonus: Web Assembly</h3>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='frontendblazorsetup'>Front-end web Blazor</h2>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='mobilesetup'>Mobile React Native</h2>
+
+	</section>
+
+
+
+	<section>
+
+	<h2 id='backendsetup'>Back-end APIs</h2>
+	
+	</section>
+
+
+
+	Checkout master branch
 git checkout -b master
 Pull master branch
 git pull origin master
@@ -604,70 +789,6 @@ git branch -d features/static-html</code
 			>git push origin branchName --force</code
 		>
 	</div>
-
-
-
-
-
-
-	<p>
-		Vamos fazer uma modificação bem banal nele, mas que já vai ser suficiente para fazê-lo parar de funcionar
-	</p>
-
-	<h3 id='nginxdocker'>Nginx</h3>
-
-	<p>Vamos usar o Docker para resolver nosso problema, rodando um servidor <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> simples.</p>
-
-	<p>
-		Por padrão os servidores <abbr title='Hypertext Transfer Protocol'>HTTP</abbr> usam a porta 80.
-		Se você já estiver usando a porta 80 para alguma coisa, pode mudar no comando abaixo o <code class='shell bubaloop'>80:80</code>> para <code class='shell bubaloop'>8080:80</code>, <code class='shell bubaloop'>8081:80</code> e por aí vai.
-		 O número antes do <code class='shell bubaloop'>:</code> é da porta que você deseja usar.
-	</p>
-
-	<p>
-		Outro detalhe no comando abaixo é como indicamos o diretório atual dentro do shell.
-		No Powershell ou Unix <code class='shell bubaloop'>${PWD}</code> é um variável que contém o diretório onde estamos no terminal.
-		O Unix também suporta <code class='shell bubaloop'>$PWD</code>, que não funciona no Windows.
-		E o Winndows também suporta <code class='shell bubaloop'>%cd%</code>, que não funciona no Unix.
-	</p>
-
-
-	<div class='codeblock'>
-		<p>terminal (sh like)</p>
-		<code class='shell'
-		><span class='keyword'>docker</span> <span class='keyword'>container</span> <span class='keyword'>run</span> <span class='parameter'>-d</span> <span class='parameter'>-p</span> 80:80 <span class='parameter'>-v</span> "${PWD}":/usr/share/nginx/html <span class='parameter'>--name</span> nginx nginx:alpine</code
-		>
-	</div>
-
-	<p>Versionamos nosso exemplo de novo.</p>
-
-	<h3 id='webassemblybonus'>Bonus: Web Assembly</h3>
-
-	</section>
-
-
-
-	<section>
-
-	<h2 id='frontendblazorsetup'>Front-end web Blazor</h2>
-
-	</section>
-
-
-
-	<section>
-
-	<h2 id='mobilesetup'>Mobile React Native</h2>
-
-	</section>
-
-
-
-	<section>
-
-	<h2 id='backendsetup'>Back-end APIs</h2>
-	
-	</section>
 
 
 
