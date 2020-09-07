@@ -10362,7 +10362,7 @@ override NSOperation :(
 
 
 
-
+import marcoluglio.threadexample.*
 
 fun main() {
 
@@ -10668,7 +10668,7 @@ public final class ParallelThread extends Thread {
 	private Model dataQueue;
 	private String element;
 
-	/** Flag para término da thread */
+	// Flag para término da thread
 	private boolean sair = false;
 
 }</code
@@ -10701,7 +10701,7 @@ public final class ParallelRunnable implements Runnable {
 	private Model dataQueue;
 	private String element;
 
-	/** Flag para término da thread */
+	// Flag para término da thread
 	private boolean sair = false;
 
 }</code
@@ -10986,14 +10986,38 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) =&gt; {
 >import threading
 import time
 
-def thread_function(name):
-	# fazer alguma coisa
-	time.sleep(2)
+class myThread (threading.Thread):
 
-def main():
-	x = threading.Thread(target=thread_function, args=(1,))
-	x.start()
-	x.join()</code
+	def __init__(self, threadID, name):
+		threading.Thread.__init__(self)
+		self.threadID = threadID
+		self.name = name
+		self.counter = counter
+
+	def run(self):
+		threadLock.acquire()
+		# TODO
+		threadLock.release()
+
+threadLock = threading.Lock()
+threads = []
+
+thread1 = myThread(1, 'Thread-1')
+thread2 = myThread(2, 'Thread-2')
+
+threads.append(thread1)
+threads.append(thread2)
+
+for t in threads:
+   t.start()
+
+for t in threads:
+   t.join()
+
+#def main():
+#	x = threading.Thread(target=thread_function, args=(1,))
+#	x.start()
+#	x.join()</code
 >
 
 </div>
