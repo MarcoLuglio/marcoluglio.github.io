@@ -590,7 +590,9 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .string,
-.bubaloop.objectivec .objcstring {
+.bubaloop.objectivec .objcstring,
+.bubaloop.objectivec .char,
+.bubaloop.objectivec .objcchar {
 	color: #0099FF;
 }
 

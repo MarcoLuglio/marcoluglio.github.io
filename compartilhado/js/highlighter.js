@@ -3687,7 +3687,8 @@ const ObjectiveCLexer = class ObjectiveCLexer extends Lexer {
 			new ObjCDecimalLiteralToken(),
 			//new JSNumericLiteralToken(),
 			new CStringLiteralToken(),
-			new ObjCStringLiteralToken()
+			new ObjCStringLiteralToken(),
+			new ObjCCharLiteralToken()
 		);
 	}
 
@@ -3875,6 +3876,7 @@ const ObjCTypesToken = class ObjCTypesToken extends Token {
 				'NSNumber',
 				'NSObject',
 				'NSString',
+				'NSMutableString',
 				'NSUInteger',
 				'short',
 
@@ -4117,6 +4119,120 @@ const ObjCDecimalPatternIterator = class ObjCDecimalPatternIterator extends Sour
 const ObjCDecimalLiteralToken = class ObjCDecimalLiteralToken extends SourcePatternIteratorToken {
 	constructor() {
 		super('number', new ObjCDecimalPatternIterator());
+	}
+};
+
+
+
+const ObjCCharPatternIterator = class ObjCCharPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchAt, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchAt(matchCharacter) {
+
+		if (matchCharacter === '@') {
+			this._matchFunction = this._matchStartQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === "'") {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter) {
+
+		// FIXME verificar o comprimento do char
+		if (this._isEscaped) {
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		if (matchCharacter !== "'") {
+			this._matchFunction = this._matchEndQuote;
+			return true;
+		}
+
+		return false;
+
+	}
+
+	_matchEndQuote(matchCharacter) {
+
+		if (matchCharacter === "'") {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for strings
+ */
+const ObjCCharLiteralToken = class ObjCCharLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('objcchar', new ObjCCharPatternIterator());
 	}
 };
 
@@ -5416,6 +5532,7 @@ const KotlinTypesToken = class KotlinTypesToken extends Token {
 
 				'ArrayList',
 				'Runnable',
+				'StringBuilder',
 				'Thread',
 				'InterruptedException'
 
@@ -6444,6 +6561,7 @@ const JavaTypesToken = class JavaTypesToken extends Token {
 				'Iterator',
 				'FutureTask',
 				'Runnable',
+				'StringBuilder',
 				'Supplier',
 				'Thread',
 
@@ -7589,6 +7707,7 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'Func',
 				'IEnumerable',
 				'IEnumerator',
+				'StringBuilder',
 				'Task',
 				'Thread',
 
