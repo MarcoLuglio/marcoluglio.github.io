@@ -1959,7 +1959,14 @@ const RustTypesToken = class RustTypesToken extends SourceSimpleCharacterSequenc
 			'Any',
 			'Option',
 			'String',
-			'thread'
+			'thread',
+
+			'VecDeque',
+			'Sender',
+			'Receiver',
+			'&str',
+			'&amp;str',
+			'&lt;&amp;str&gt;'
 
 		]);
 
@@ -2075,7 +2082,7 @@ const RustDecimalPatternIterator = class RustDecimalPatternIterator extends Sour
 			return true;
 		}
 
-		if (matchCharacter === '.' && !this._hasMantissa) {
+		if (matchCharacter === '.' && !this._hasMantissa) { // FIXME se o range operator vem depois do número, esse match vai dar problema. Ex 1..5 Válido para Rust, Swift e Kotlin
 			// this._canUseSeparator = false; // TODO verificar isso
 			this._hasMantissa = true;
 			this._isComplete = false;
@@ -3808,7 +3815,13 @@ const ObjCKeywordToken = class ObjCKeywordToken extends SourceSimpleCharacterSeq
 			'Nil',
 			'NULL',
 
-			'__block'
+			'__block',
+
+			// macros actually
+			'va_list',
+			'va_arg',
+			'va_start',
+			'va_end'
 
 		]);
 
@@ -4487,7 +4500,14 @@ const SwiftTypesToken = class SwiftTypesToken extends Token {
 				'NSString',
 				'String',
 				'NSException',
-				'ErrorType'
+				'ErrorType',
+
+				'UnsafePointer',
+				'UnsafeMutablePointer',
+
+				'NSThread',
+				'pthread_t',
+				'pthread_attr_t'
 
 				// TODO Coloco os compatibilidade com C?
 
@@ -4659,7 +4679,7 @@ const SwiftDecimalPatternIterator = class SwiftDecimalPatternIterator extends So
 			return true;
 		}
 
-		if (index > 0 && matchCharacter === '.' && !this._hasMantissa) {
+		if (index > 0 && matchCharacter === '.' && !this._hasMantissa) { // FIXME se o range operator vem depois do número, esse match vai dar problema. Ex 1..5 Válido para Rust, Swift e Kotlin
 			this._hasMantissa = true;
 			this._isComplete = false;
 			return true;
@@ -5331,6 +5351,7 @@ const KotlinKeywordToken = class KotlinKeywordToken extends SourceSimpleCharacte
 			'set',
 			'super',
 			'suspend',
+			'synchronized',
 			'tailrec',
 			'this',
 			'throw',
@@ -5391,7 +5412,12 @@ const KotlinTypesToken = class KotlinTypesToken extends Token {
 				'Short',
 				'String',
 				'CharSequence',
-				'Unit'
+				'Unit',
+
+				'ArrayList',
+				'Runnable',
+				'Thread',
+				'InterruptedException'
 
 			])}
 		});
@@ -5559,7 +5585,7 @@ const KotlinDecimalPatternIterator = class KotlinDecimalPatternIterator extends 
 			return true;
 		}
 
-		if (matchCharacter === '.' && !this._hasMantissa) {
+		if (matchCharacter === '.' && !this._hasMantissa) { // FIXME se o range operator vem depois do número, esse match vai dar problema. Ex 1..5 Válido para Rust, Swift e Kotlin
 			this._hasMantissa = true;
 			this._isComplete = false;
 			return true;
@@ -6404,7 +6430,25 @@ const JavaTypesToken = class JavaTypesToken extends Token {
 				'Field',
 				'Exception',
 				'RuntimeException',
-				'void'
+				'void',
+
+				'LinkedList',
+				'Range',
+
+				'Callable',
+				'ClosureState',
+				'Executors',
+				'ExecutorService',
+				'Future',
+				'Iterable',
+				'Iterator',
+				'FutureTask',
+				'Runnable',
+				'Supplier',
+				'Thread',
+
+				'ExecutionException',
+				'InterruptedException'
 
 			])}
 		});
@@ -7540,8 +7584,15 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'BigInteger',
 				'Complex',
 
+				'Action',
 				'Exception',
-				'Task'
+				'Func',
+				'IEnumerable',
+				'IEnumerator',
+				'Task',
+				'Thread',
+
+				'Queue'
 
 			])}
 		});
@@ -8914,6 +8965,7 @@ const JSTypesToken = class JSTypesToken extends SourceSimpleCharacterSequenceTok
 			'ReferenceError',
 			'Reflect',
 			'RegExp',
+			'SharedWorker',
 			'Set',
 			'String',
 			'Symbol',
@@ -8922,6 +8974,7 @@ const JSTypesToken = class JSTypesToken extends SourceSimpleCharacterSequenceTok
 			'URIError',
 			'WeakMap',
 			'WeakSet',
+			'Worker',
 			'XMLHttpRequest',
 
 			// objetos conhecidos
@@ -9567,8 +9620,12 @@ const PythonKeywordToken = class PythonKeywordToken  extends SourceSimpleCharact
 	constructor() {
 		super('keyword', [
 			'async',
+			'await',
+			'class',
 			'def',
+			'for',
 			'import',
+			'in',
 			'None',
 			'True',
 			'False',
