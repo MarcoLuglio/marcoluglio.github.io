@@ -8,6 +8,7 @@ export class Index {
 	constructor(containerId, levels, showFirstLevel) {
 		Object.seal(this);
 		this.generate(containerId, levels, showFirstLevel);
+		window.addEventListener('hashchange', this.onHashChange.bind(this));
 	}
 
 	/**
@@ -34,6 +35,15 @@ export class Index {
 
 		container.appendChild(list);
 
+	}
+
+	onHashChange(evento) {
+		const oldHash = evento.oldURL.substr(evento.oldURL.indexOf('#'));
+		const newHash = evento.newURL.substr(evento.newURL.indexOf('#'));
+		const oldAnchor = document.querySelector(`a[href="${oldHash}"]`);
+		const newAnchor = document.querySelector(`a[href="${newHash}"]`);
+		oldAnchor?.classList.remove('active');
+		newAnchor.classList.add('active');
 	}
 
 	/**

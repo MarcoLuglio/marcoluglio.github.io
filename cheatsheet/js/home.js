@@ -98,4 +98,15 @@ import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
+	window.addEventListener('scroll', evento => {
+
+		if (window.pageYOffset <= 280) { // TODO magic constant...
+			document.body.classList.remove('scroll');
+			return;
+		}
+
+		document.body.classList.add('scroll');
+
+	});
+
 })();

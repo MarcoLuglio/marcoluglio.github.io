@@ -243,6 +243,10 @@ code .toggle {
 	display: none;
 }*/
 
+#indice .active {
+	font-weight: bold;
+}
+
 div.codeblock.bubaloop {
 	color: #505B66;
 	background-color: #FBFBFB;
