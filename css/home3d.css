@@ -238,7 +238,7 @@ section > div {
 }
 
 .biografia {
-	height: 380px;
+	height: 350px;
 }
 
 .biografia a {
@@ -333,7 +333,7 @@ section > div {
 }
 
 .idiomas {
-	width: 800px;
+	width: 600px;
 }
 
 .legendaIdiomas {
@@ -406,8 +406,7 @@ section > div {
 	/* ver https://css-tricks.com/html5-meter-element/ se eu quiser usar os prefixos etc */
 }
 
-.formacaoacademica h2,
-.experiencia h2 {
+.formacaoacademica h2 {
 	margin-bottom: 8px;
 }
 
@@ -759,8 +758,9 @@ section > div {
 	height: 210px;
 }
 
+.experiencia h2,
 .softwares h2,
-.etc h2 {
+.antigamente h2 {
 	margin-bottom: 12px;
 }
 
@@ -772,7 +772,7 @@ section > div {
 /* =========== */
 
 .experiencia {
-	height: 400px;
+	height: 360px;
 }
 
 .experiencia > div > div {
