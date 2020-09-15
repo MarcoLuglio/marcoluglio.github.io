@@ -24,13 +24,13 @@
 		<!--<link rel='icon' href='/favicon.ico' type='image/x-icon'>-->
 
 		<!-- Esses só na página 'about me' -->
-		<link rel='me' title='Marco Luglio' href='https://www.linkedin.com/in/marcodejulho/?locale=pt_BR' />
+		<link rel='me' title='Marco Luglio' href='https://www.linkedin.com/in/marcodejulho/?locale=en_US' />
 		<link rel='me' title='Marco Luglio' href='https://www.facebook.com/marcoluglio2008' />
 		<link rel='me' title='Marco Luglio' href='https://stackoverflow.com/users/14263/marco-luglio' />
 
 		<!-- Formatação da página -->
-		<link href='css/principal.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
-		<link href='css/home3d.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
+		<link href='../css/principal.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
+		<link href='../css/home3d.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
 
 		<title>Marco Luglio - Programador Full Stack</title>
 
@@ -38,7 +38,7 @@
 	<body>
 
 	<div class='topo'>
-		<div class='gravatar'><img src='imagens/marcoluglio.jpg' alt='Marco Luglio' /></div>
+		<div class='gravatar'><img src='../imagens/marcoluglio.jpg' alt='Marco Luglio' /></div>
 		<header>
 			<h1>Marco Luglio</h1>
 			<h2>Programador Full Stack</h2>
@@ -103,7 +103,7 @@
 
 		<div>
 
-			<p class='linksBio'><a href='br/curriculo/curriculo.pdf'>Currículo em <abbr>PDF</abbr></a></p>
+			<p class='linksBio'><a href='curriculo/curriculo.pdf'>Currículo em <abbr>PDF</abbr></a></p>
 
 			<!--<h3>TL;DR</h3>-->
 			<h3>Programador Full Stack desde 2005</h3>
@@ -383,7 +383,7 @@ Analytics</li
 
 			<section class='comparacaolinguagens'>
 				<h3>Comparação de linguagens</h3>
-				<a href='br/cheatsheet/'
+				<a href='cheatsheet/'
 					><ul>
 						<li>Rust</li>
 						<li>Go</li>
@@ -404,15 +404,15 @@ Analytics</li
 			<section>
 				<h3>Curtos</h3>
 				<ul>
-					<li><a href='br/cheatsheet/'>Comparação de linguagens</a></li>
-					<li><a href='br/filas/'>Filas</a></li>
-					<li><a href='br/docker/'>Docker</a></li>
-					<li><a href='br/tutorialwebsockets/'>Web sockets</a></li>
-					<li><a href='br/inscricaoestadualcpfcnpj/'>Gerador de <abbr title='Inscrição Estadual'>IE</abbr>, CPF e CNPJ</a></li>
-					<li><a href='br/codigodebarras/'>Código de barras (EAN13, <abbr title='Interleaved 2 of 5 ou Intercalado 2 de 5'>ITF</abbr>, Febraban)</a></li>
+					<li><a href='cheatsheet/'>Comparação de linguagens</a></li>
+					<li><a href='filas/'>Filas</a></li>
+					<li><a href='docker/'>Docker</a></li>
+					<li><a href='tutorialwebsockets/'>Web sockets</a></li>
+					<li><a href='inscricaoestadualcpfcnpj/'>Gerador de <abbr title='Inscrição Estadual'>IE</abbr>, CPF e CNPJ</a></li>
+					<li><a href='codigodebarras/'>Código de barras (EAN13, <abbr title='Interleaved 2 of 5 ou Intercalado 2 de 5'>ITF</abbr>, Febraban)</a></li>
 					<!--
-					<li><a href='br/tutorialintern/'>Intern missing tutorial</a></li>
-					<li><a href='br/tutorialemberjs/'>EmberJS antes que vc afunde</a></li>
+					<li><a href='tutorialintern/'>Intern missing tutorial</a></li>
+					<li><a href='tutorialemberjs/'>EmberJS antes que vc afunde</a></li>
 					-->
 				</ul>
 			</section>
@@ -420,12 +420,12 @@ Analytics</li
 			<section>
 				<h3>Compridos</h3>
 				<ul>
-					<li><a href='br/dozero/'>Do zero</a></li>
-					<li><a href='br/webassembly/'>Web assembly com Rust</a></li>
-					<li><a href='br/tutorialjs/'>JavaScript politicamente incorreto</a></li>
+					<li><a href='dozero/'>Do zero</a></li>
+					<li><a href='webassembly/'>Web assembly com Rust</a></li>
+					<li><a href='tutorialjs/'>JavaScript politicamente incorreto</a></li>
 					<!--
-					<li><a href='br/tutorialreact/'>React</a></li>
-					<li><a href='br/tutorialangular/'>Angular</a></li>
+					<li><a href='tutorialreact/'>React</a></li>
+					<li><a href='tutorialangular/'>Angular</a></li>
 					-->
 				</ul>
 			</section>
@@ -462,24 +462,24 @@ Analytics</li
 	<!-- scripts -->
 
 	<!-- bibliotecas de terceiros -->
-	<script src="js/three.js"></script>
-	<script src="js/CSS3DRenderer.js"></script>
+	<script src="../js/three.js"></script>
+	<script src="../js/CSS3DRenderer.js"></script>
 
 	<!-- bibliotecas gerais -->
-	<script src="js/utils.js" type="module"></script>
-	<script src="js/animation.js" type="module"></script>
-	<script src="js/navigation3d.js" type="module"></script>
+	<script src="../js/utils.js" type="module"></script>
+	<script src="../js/animation.js" type="module"></script>
+	<script src="../js/navigation3d.js" type="module"></script>
 
 	<!-- seções individuais -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC59oPPWwENX-iQJLmdjSwJiLsRf6vB1BI" async></script>
-	<script src="js/map.js" type="module"></script>
+	<script src="../js/map.js" type="module"></script>
 
-	<script src="js/drawingCanvas.js" type="module"></script>
-	<script src="js/parallax.js" type="module"></script>
-	<script src="js/languages.js" type="module"></script>
+	<script src="../js/drawingCanvas.js" type="module"></script>
+	<script src="../js/parallax.js" type="module"></script>
+	<script src="../js/languages.js" type="module"></script>
 
 	<!-- página inicial -->
-	<script src="js/home3d.js" type="module"></script>
+	<script src="../js/home3d.js" type="module"></script>
 
 	<!--
 	Hei, já que vc chegou até aqui, deixa eu te contar um segredo.

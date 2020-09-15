@@ -1,3 +1,7 @@
+a {
+	font-family: inherit;
+}
+
 /* Cabeçalho */
 /* ========= */
 
@@ -64,14 +68,11 @@ nav a {
 }
 
 /* nav pra ganhar especificidade */
-nav .menuBiografia,
-nav .menuArtigos {
-	display: none;
+.menuBiografia {
 	margin-top: 12px;
 }
 
-.menuBiografia a,
-.menuArtigos a {
+.menuBiografia a {
 	color: #B6C2D3;
 }
 
@@ -203,6 +204,10 @@ section > div {
 	font-weight: bold;
 }
 
+.biografia {
+	height: 350px;
+}
+
 .biografia > div {
 	margin-left: 86px;
 }
@@ -237,18 +242,66 @@ section > div {
 	margin-left: 0;
 }
 
-.biografia {
-	height: 350px;
-}
-
-.biografia a {
+.linksBio a {
 	font-family: Code;
 	font-weight: bold;
 	text-decoration: none;
 }
 
-.biografia a:hover {
+.linksBio a:hover {
 	text-decoration: underline;
+}
+
+.artigos h3 {
+	margin-bottom: 10px;
+}
+
+.artigos div {
+	display: flex;
+}
+
+.artigos div section {
+	width: auto;
+	height: auto;
+	opacity: 1;
+	overflow: visible;
+	background: transparent;
+	margin-left: 15px;
+}
+
+.artigos ul {
+	margin-left: 15px;
+}
+
+.artigos li {
+	margin-bottom: 5px;
+}
+
+.artigos div .comparacaolinguagens {
+	width: 220px;
+}
+
+.comparacaolinguagens ul {
+	list-style-type: none;
+	margin-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.comparacaolinguagens li:after {
+	content: ',';
+	padding-right: 3px;
+	text-decoration: underline;
+}
+
+.comparacaolinguagens li:nth-last-child(2):after {
+	content: 'and';
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.comparacaolinguagens li:last-child:after {
+	content: '.';
 }
 
 .contato {
