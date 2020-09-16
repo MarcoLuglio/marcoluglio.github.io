@@ -1,8 +1,8 @@
 'use strict';
 
-import { NodeListIterator } from '../../compartilhado/js/utils.js';
-import { Index } from '../../compartilhado/js/index.js';
-import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
+import { NodeListIterator } from '../../../compartilhado/js/utils.js';
+import { Index } from '../../../compartilhado/js/index.js';
+import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
 
 
 
@@ -27,7 +27,7 @@ blocosDeCodigo[1] = document.querySelectorAll('code.html');
 blocosDeCodigo[2] = document.querySelectorAll('code.javascript');
 
 
-const highlighterWorker = new Worker('../../compartilhado/js/highlighterWorker.js', { type: 'module' });
+const highlighterWorker = new Worker('../../../compartilhado/js/highlighterWorker.js', { type: 'module' });
 
 highlighterWorker.addEventListener('message', (event) => {
 
