@@ -1,13 +1,13 @@
 @font-face {
 	font-family: 'Code';
-	src: url('../../fontes/code_light.woff') format('woff');
+	src: url('../../../fontes/code_light.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Code';
-	src: url('../../fontes/code_bold.woff') format('woff');
+	src: url('../../../fontes/code_bold.woff') format('woff');
 	font-weight: bold;
 	font-style: normal;
 }

@@ -1,6 +1,6 @@
-import { domReadyPromise } from '../../compartilhado/js/utils.js';
-import { Index } from '../../compartilhado/js/index.js';
-import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
+import { domReadyPromise } from '../../../compartilhado/js/utils.js';
+import { Index } from '../../../compartilhado/js/index.js';
+import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
 
 
 
@@ -13,7 +13,7 @@ import { HighlightEnhancer } from '../../compartilhado/js/highlightEnhancer.js';
 
 	const blocosDeCodigo = [];
 
-	const highlighterWorker = new Worker('../../compartilhado/js/highlighterWorker.js', { type: 'module' });
+	const highlighterWorker = new Worker('../../../compartilhado/js/highlighterWorker.js', { type: 'module' });
 
 	highlighterWorker.onmessage = (event) => {
 
