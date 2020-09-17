@@ -2754,6 +2754,9 @@ const GoLexer = class GoLexer extends Lexer {
 			new GoPunctuationToken(),
 
 			// comments
+			new GoDirectiveToken(),
+			new GoLineDirectiveToken(),
+			new GoLineBlockDirectiveToken(),
 			new CLineCommentToken(),
 			new CBlockCommentToken()
 
@@ -2934,6 +2937,335 @@ const GoPunctuationToken = class GoPunctuationToken  extends SourceSimpleCharact
 	}
 
 };
+
+
+const GoDirectiveToken = class GoDirectiveToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('directive', new GoDirectivePatternIterator());
+	}
+};
+
+const GoDirectivePatternIterator = class GoDirectivePatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchSlash1;
+		Object.seal(this);
+	}
+
+	_matchSlash1(matchCharacter) {
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchSlash2;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSlash2(matchCharacter) {
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchG;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchG(matchCharacter) {
+		if (matchCharacter === 'g') {
+			this._matchFunction = this._matchO;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchO(matchCharacter) {
+		if (matchCharacter === 'o') {
+			this._matchFunction = this._matchColon;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchColon(matchCharacter) {
+		if (matchCharacter === ':') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	/*_matchSpace(matchCharacter) {
+		if (matchCharacter === ' ') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}*/
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+const GoLineDirectiveToken = class GoLineDirectiveToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('directive', new GoLineDirectivePatternIterator());
+	}
+};
+
+const GoLineDirectivePatternIterator = class GoLineDirectivePatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchSlash1;
+		Object.seal(this);
+	}
+
+	_matchSlash1(matchCharacter) {
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchSlash2;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSlash2(matchCharacter) {
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchL;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchL(matchCharacter) {
+		if (matchCharacter === 'l') {
+			this._matchFunction = this._matchI;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchI(matchCharacter) {
+		if (matchCharacter === 'i') {
+			this._matchFunction = this._matchN;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchN(matchCharacter) {
+		if (matchCharacter === 'n') {
+			this._matchFunction = this._matchE;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchE(matchCharacter) {
+		if (matchCharacter === 'e') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	/*_matchSpace(matchCharacter) {
+		if (matchCharacter === ' ') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}*/
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+const GoLineBlockDirectiveToken = class GoLineBlockDirectiveToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('directive', new GoLineBlockDirectivePatternIterator());
+	}
+};
+
+const GoLineBlockDirectivePatternIterator = class GoLineBlockDirectivePatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchBeginSlash;
+		Object.seal(this);
+	}
+
+	_matchBeginSlash(matchCharacter) {
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchBeginStar;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchBeginStar(matchCharacter) {
+		if (matchCharacter === '*') {
+			this._matchFunction = this._matchL;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchL(matchCharacter) {
+		if (matchCharacter === 'l') {
+			this._matchFunction = this._matchI;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchI(matchCharacter) {
+		if (matchCharacter === 'i') {
+			this._matchFunction = this._matchN;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchN(matchCharacter) {
+		if (matchCharacter === 'n') {
+			this._matchFunction = this._matchE;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchE(matchCharacter) {
+		if (matchCharacter === 'e') {
+			this._matchFunction = this._matchSameLineOrEndStar;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	/*_matchSpace(matchCharacter) {
+		if (matchCharacter === ' ') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}*/
+
+	_matchSameLineOrEndStar(matchCharacter) {
+
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			this._hasNext = false;
+			return false;
+		}
+
+		if (matchCharacter === '*') {
+			this._matchFunction = this._matchEndSlash;
+		}
+
+		return true;
+	}
+
+	_matchEndSlash(matchCharacter) {
+
+		if (matchCharacter === '/') {
+			this._matchFunction = this._matchEnd;
+		} else if (matchCharacter === '*') {
+			// não fazer nada
+			// ou em outras palavras
+			// this._matchFunction = this._matchEndSlash;
+		} else {
+			this._matchFunction = this._matchContentOrEndStar;
+		}
+
+		return true;
+
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
 
 // #endregion
 

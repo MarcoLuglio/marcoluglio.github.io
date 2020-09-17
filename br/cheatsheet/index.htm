@@ -5595,7 +5595,9 @@ Next</code
 
 <div class='codeblock'>
 <p>C++</p>
--
+<code class='cpp'
+>// c++ 20+</code
+>
 </div>
 
 <div class='codeblock'>
@@ -11090,41 +11092,6 @@ for t in threads:
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->/*
-os() OSX, iOS, watchOS, tvOS, Linux
-arch() x86_64, arm, arm64, i386
-swift() &gt;= followed by a version number
-*/
-
-#if os(iOS) &amp;&amp; !swift(&gt;= 2)
-	// statements
-#elseif os(OSX)
-	// statements
-#else
-	// statements
-#endif</code
->
-</div>
-
-<div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
 >// TODO rust tem vários atributos
@@ -11192,6 +11159,86 @@ windows - See target_family.
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>//go:noescape
+//go:uintptrescapes
+//go:noinline
+//go:norace
+//go:nosplit
+//go:linkname localname [importpath.name]
+
+//line :line
+//line :line:col
+//line filename:line
+//line filename:line:col
+/*line :line*/
+/*line :line:col*/
+/*line filename:line*/
+/*line filename:line:col*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>#include &lt;iostream&gt;
+#include "somelib.h"
+
+#pragma once
+
+#ifndef __some_identifier__
+#define __some_identifier__
+// rest of code
+#endif</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>#include &lt;iostream&gt;
+#include "somelib.h"
+
+
+
+#ifndef __some_identifier__
+#define __some_identifier__
+// rest of code
+#endif</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>/*
+os() OSX, iOS, watchOS, tvOS, Linux
+arch() x86_64, arm, arm64, i386
+swift() &gt;= followed by a version number
+*/
+
+#if os(iOS) &amp;&amp; !swift(&gt;= 2)
+	// statements
+#elseif os(OSX)
+	// statements
+#else
+	// statements
+#endif</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C#</p>
 <code class='cs'
 >// não podem ter whitespace antes!
@@ -11241,14 +11288,16 @@ public class C {
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
--
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict'; // modo estrito</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
 >
 </div>
 

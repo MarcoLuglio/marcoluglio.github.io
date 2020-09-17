@@ -511,6 +511,10 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.go .directive {
+	color: #7F8EA3;
+}
+
 .bubaloop.go .comment,
 .bubaloop.go .comment a {
 	color: #D10077;
