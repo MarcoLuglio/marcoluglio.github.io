@@ -58,7 +58,7 @@
 			</div>
 
 			<div class='codeblock'>
-				<p>Program.cs</p>
+				<p>Gerador</p>
 				<code class='cs'
 >public string GerarInscricaoEstadualPR() {
 
@@ -99,6 +99,67 @@
 
 }</code
 				>
+
+				<p>Validador</p>
+				<code class='cs'
+>public bool ValidarInscricaoEstadualParana(string inscricaoEstadual) {
+	return <strong>ValidarInscricaoEstadualModulo11</strong>(
+		inscricaoEstadual,
+		new int[] { <strong>4, 3, 2, 7, 6, 5, 4, 3, 2</strong> },
+		2,
+		true
+	);
+}
+
+private bool ValidarInscricaoEstadualModulo11(
+	string inscricaoEstadual,
+	int[] multiplicadores,
+	int digitosVerificadores = 1,
+	bool padLeft = false
+	) {
+
+	if ((inscricaoEstadual.Length - 1) &gt; multiplicadores.Length) {
+		return false;
+	}
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	var inscricaoEstadualPadding = inscricaoEstadual.PadLeft(
+		multiplicadores.Length + 1,
+		'0'
+	);
+
+	var semente = inscricaoEstadualPadding.Substring(
+		0,
+		inscricaoEstadualPadding.Length - digitosVerificadores
+	);
+
+	// dígitos verificadores
+
+	int soma = 0;
+
+	for (var i = 0; i &lt; digitosVerificadores; i++) {
+
+		soma = SomarProdutos(
+			semente,
+			multiplicadores
+		);
+
+		semente += CalculoModulo11(soma);
+
+	}
+
+	if (semente == inscricaoEstadualPadding) {
+		return true;
+	}
+
+	return false;
+
+}</code
+				>
+
 			</div>
 
 			<div class='codeblock'>
@@ -359,8 +420,73 @@ public string GerarCpf() {
 
 			<div class='codeblock'>
 					<p>main.js</p>
-					<code class='js'
-></code
+					<code class='javascript'
+>
+
+
+
+
+
+
+function gerarCpf() {
+
+	let soma = 0;
+	let resto = 0;
+	const <strong>multiplicadores</strong> = [ <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
+	let semente = '';
+
+	do {
+		let <strong>sementeFloat</strong> = Math.random() * 1000000000;
+		while(sementeFloat &lt; <strong>99999999</strong>) {
+			semente += '0';
+			sementeFloat *= 10;
+		}
+		semente += sementeFloat.toString();
+	} while (
+		semente === '000000000'
+		|| semente === '111111111'
+		|| semente === '222222222'
+		|| semente === '333333333'
+		|| semente === '444444444'
+		|| semente === '555555555'
+		|| semente === '666666666'
+		|| semente === '777777777'
+		|| semente === '888888888'
+		|| semente === '999999999'
+	);
+
+	semente = semente.substr(0, 9);
+
+	for (let <strong>i = 1</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i - 1</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (let <strong>i = 0</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+
+	return semente;
+
+}</code
 				>
 			</div>
 
@@ -458,8 +584,77 @@ public string GerarCpf() {
 
 			<div class='codeblock'>
 					<p>main.js</p>
-					<code class='js'
-></code
+					<code class='javascript'
+>function gerarCnpj() {
+
+	let soma = 0;
+	let resto = 0;
+	const <strong>multiplicadores</strong> = [ <strong>6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
+	let semente;
+	let sementeRaiz = '';
+	let sementeSufixo = '';
+
+	do {
+
+		let <strong>sementeFloatRaiz</strong> = Math.random() * 100000000;
+		while(sementeFloatRaiz &lt; <strong>9999999</strong>) {
+			sementeRaiz += '0';
+			sementeFloatRaiz *= 10; // TODO correção para zeros à esquerda que irão diminuir a string, melhorar isso
+		}
+		sementeRaiz += sementeFloatRaiz.toString();
+
+		let <strong>sementeFloatSufixo</strong> = Math.random() * 10000;
+		while(sementeFloatSufixo &lt; <strong>999</strong>) {
+			sementeSufixo += '0';
+			sementeFloatSufixo *= 10;
+		}
+		sementeSufixo += sementeFloatSufixo.toString();
+
+	} while (
+		sementeRaiz === '000000000' && sementeSufixo === '0000'
+		|| sementeRaiz === '111111111' && sementeSufixo === '1111'
+		|| sementeRaiz === '222222222' && sementeSufixo === '2222'
+		|| sementeRaiz === '333333333' && sementeSufixo === '3333'
+		|| sementeRaiz === '444444444' && sementeSufixo === '4444'
+		|| sementeRaiz === '555555555' && sementeSufixo === '5555'
+		|| sementeRaiz === '666666666' && sementeSufixo === '6666'
+		|| sementeRaiz === '777777777' && sementeSufixo === '7777'
+		|| sementeRaiz === '888888888' && sementeSufixo === '8888'
+		|| sementeRaiz === '999999999' && sementeSufixo === '9999'
+	);
+
+	semente = sementeRaiz.substr(0, 8) + sementeSufixo.substr(0, 4);
+
+	for (let <strong>i = 1</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i - 1</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+	soma = 0;
+
+	for (let <strong>i = 0</strong>; i &lt; multiplicadores.length; i++) {
+		soma += parseInt(semente[<strong>i</strong>], 10) * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	semente += resto;
+
+	return semente;
+
+}</code
 				>
 			</div>
 
