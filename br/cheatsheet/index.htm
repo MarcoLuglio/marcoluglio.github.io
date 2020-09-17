@@ -373,6 +373,11 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 -
 </div>
@@ -440,6 +445,15 @@ bloco
 <code class='rust'
 >// region idea intellij foldable
 // endregion</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// TODO talvez seja suportado
+// por GoLand ou extensão
+// do VS Code</code
 >
 </div>
 
@@ -542,6 +556,16 @@ fn someFunction(arg1:i32) -&gt; i32 {
 
 mod foo {
 	//! Rustdoc para o contêiner externo
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// Comentários simples logo antes das declarações
+func someFunction(/* bloco */ x int) int {
+	return 0
 }</code
 >
 </div>
@@ -7668,6 +7692,22 @@ superior((x) =&gt; {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >#include &lt;iostream&gt;
@@ -7760,45 +7800,10 @@ print(closure()); // 2</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-
-
-
-public class MainClassClosure {
-
-	delegate int InternaDelegate();
-
-
-
-
-	static InternaDelegate Facade() {
-		// acessível somente pela função interna
-		int i = 0;
-		InternaDelegate interna = () =&gt; {
-			i++;
-			return i;
-		};
-		// expõe a função interna
-		return interna;
-	}
-
-	public static void Main(string[] args) {
-		var closure = Facade();
-		System.Console.WriteLine(closure()); // 1
-		System.Console.WriteLine(closure()); // 2
-	}
-
-}</code
 >
 </div>
 
@@ -7854,6 +7859,41 @@ IField.getInteger(closureState);</code
 
 </div>
 
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+
+
+
+public class MainClassClosure {
+
+	delegate int InternaDelegate();
+
+
+
+
+	static InternaDelegate Facade() {
+		// acessível somente pela função interna
+		int i = 0;
+		InternaDelegate interna = () =&gt; {
+			i++;
+			return i;
+		};
+		// expõe a função interna
+		return interna;
+	}
+
+	public static void Main(string[] args) {
+		var closure = Facade();
+		System.Console.WriteLine(closure()); // 1
+		System.Console.WriteLine(closure()); // 2
+	}
+
+}</code
+>
+</div>
+
 <!-- TODO testar captura de variáveis -->
 
 <div class='codeblock'>
@@ -7881,6 +7921,21 @@ function facade() {
 let closure = facade();
 console.log(closure()); // 1
 console.log(closure()); // 2</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -8733,8 +8788,30 @@ do {
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>package main
+
+import "fmt"
+
+func intSeq() func() int {
+	i := 0
+	return func() int {
+		i++
+		return i
+	}
+}
+
+func main() {
+
+	nextInt := intSeq()
+
+	fmt.Println(nextInt())
+	fmt.Println(nextInt())
+	fmt.Println(nextInt())
+
+	newInts := intSeq()
+	fmt.Println(newInts())
+
+}</code
 >
 </div>
 
@@ -9463,7 +9540,68 @@ for (let resultado of animadorIterator) {
 
 <div class='codeblock'>
 <p>Go</p>
-<code class='go'></code>
+<code class='go'>package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+// exemplo go routines e channels
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	for {
+		select {
+		case c &lt;- x:
+			x, y = y, x+y
+		case &lt;-quit:
+			fmt.Println("quit")
+			return
+		}
+	}
+}
+
+// exemplo WaitGroup
+type httpPkg struct{}
+func (httpPkg) Get(url string) {}
+var http httpPkg
+
+func main() {
+
+	// go routines e channels para comunicação
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i &lt; 10; i++ {
+			fmt.Println(&lt;-c)
+		}
+		quit &lt;- 0
+	}()
+	fibonacci(c, quit)
+
+
+	// WaitGroup do pacote sync
+
+	var wg sync.WaitGroup
+	var urls = []string{
+		"http://www.golang.org/",
+		"http://www.google.com/",
+		"http://www.somestupidname.com/",
+	}
+
+	for _, url := range urls {
+		wg.Add(1)
+		go func(url string) {
+			defer wg.Done()
+			http.Get(url)
+		}(url)
+	}
+
+	// Espera todos os itens serem completados
+	wg.Wait()
+
+}</code
+>
 </div>
 
 <div class='codeblock'>
@@ -11087,7 +11225,7 @@ for t in threads:
 
 <section>
 
-<h2 id='diretivas'>Diretivas</h2>
+<h2 id='diretivas'>Diretivas do compilador / Pré-processador</h2>
 
 <div class='comparison'>
 
@@ -11095,6 +11233,7 @@ for t in threads:
 <p>Rust</p>
 <code class='rust'
 >// TODO rust tem vários atributos
+// TODO macros também são pré-processados
 
 // compilação condicional com #cfg é um deles
 
