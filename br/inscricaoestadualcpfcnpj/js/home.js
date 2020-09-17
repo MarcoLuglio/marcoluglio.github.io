@@ -1,158 +1,64 @@
-'use strict';
-
-/**
- * Entry point function
- */
-define(
-
-	[
-		'Index',
-
-		'CppLexer',
-		'RustLexer',
-		'CsLexer',
-		'JavaScriptLexer',
-
-		'Highlighter',
-		'HighlightEnhancer',
-		'NodeListIterator',
-		'domReadyPromise'
-
-	], (
-
-		Index,
-
-		CppLexer,
-		RustLexer,
-		CsLexer,
-		JavaScriptLexer,
-
-		Highlighter,
-		HighlightEnhancer,
-		NodeListIterator,
-		domReadyPromise
-
-	) => {
+import { domReadyPromise, NodeListIterator } from '../../../compartilhado/js/utils.js';
+import { Index } from '../../../compartilhado/js/index.js';
+import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
+import { RustLexer, CppLexer, CsLexer, JavaScriptLexer, HtmlLexer, Highlighter } from '../../../compartilhado/js/highlighter.js';
 
 
 
-	function* highlightThemeGenerator(blocosDeCodigo) {
-		for (let blocoDeCodigo of blocosDeCodigo) {
-			blocoDeCodigo.className += ' bubaloop';
-			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-			yield; // yield blcoDeCodigo;??
-		}
-	}
+async function highlightAsync(selector, Lexer) {
 
+	try {
 
-
-	function* highlightGenerator(blocosDeCodigo, Lexer) {
-
+		const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
 		const lexer = new Lexer();
 		const highlighter = new Highlighter();
 
 		for (let blocoDeCodigo of blocosDeCodigo) {
 
-			yield;
-
 			const source = blocoDeCodigo.innerHTML;
-
 			blocoDeCodigo.className += ' bubaloop';
 
-			lexer.parseAsync(source)
-				.then((tokens) => {
-					return highlighter.highlightAsync(source, tokens);
-				})
-				.then((highlightedSource) => {
-					blocoDeCodigo.innerHTML = highlightedSource;
-					const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
-				});
+			let tokens = await lexer.parseAsync(source);
+			let highlightedSource = await highlighter.highlightAsync(source, tokens);
+			blocoDeCodigo.innerHTML = highlightedSource;
+			const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
 
 		}
 
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
+}
 
-	function highlightWrapper(selector, Lexer, timeout) {
 
-		try {
 
-			if (timeout === null || timeout === undefined) {
-				timeout = 0;
-			}
+(async function() {
 
-			const blocosDeCodigo = new NodeListIterator(document.querySelectorAll(selector));
+	await domReadyPromise();
 
-			const iterator = highlightGenerator(blocosDeCodigo, Lexer);
-			function callback() {
-				if (!iterator.next().done) {
-					setTimeout(callback, timeout);
-				}
-			}
-			setTimeout(callback, timeout);
+	try {
+		const index = new Index('indice', 3, false);
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
 
-		} catch (erro) {
-			console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	try {
+		const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
+		for (let divCodigo of divsDeCodigo) {
+			divCodigo.className += ' bubaloop';
 		}
-
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}
 
+	await highlightAsync('code.rust', RustLexer);
+	await highlightAsync('code.cpp', CppLexer);
+	await highlightAsync('code.cs', CsLexer);
+	await highlightAsync('code.javascript', JavaScriptLexer);
+	await highlightAsync('code.html', HtmlLexer);
 
-	domReadyPromise()
-
-		.then(() => {
-			try {
-				const index = new Index('indice', 3, false);
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			try {
-				const divsDeCodigo = new NodeListIterator(document.querySelectorAll('div.codeblock'));
-				for (let divCodigo of divsDeCodigo) {
-					divCodigo.className += ' bubaloop';
-				}
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			try {
-				const blocosDeCodigo = new NodeListIterator(document.querySelectorAll('code.generic'));
-
-				const iterator = highlightThemeGenerator(blocosDeCodigo);
-				function callback() {
-					if (!iterator.next().done) {
-						setTimeout(callback, 0);
-					}
-				}
-				setTimeout(callback, 0);
-
-			} catch (erro) {
-				console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
-			}
-		})
-
-		.then(() => {
-			highlightWrapper('code.cpp', CppLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.rust', RustLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.cs', CsLexer);
-		})
-		.then(() => {
-			highlightWrapper('code.javascript', JavaScriptLexer);
-		});
-
-	}
-
-);
-
+})();
 
 
 

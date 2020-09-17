@@ -3,21 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Código fonte de geradores de inscrição estadual, cpf e cnpj</title>
-	<link rel='stylesheet' href='../compartilhado/css/main.css' />
-	<script src='../tutorialjs/js/utils.js'></script>
-	<script src='../tutorialjs/js/index.js'></script>
-	<script src='../tutorialjs/js/highlighter.js'></script>
-	<script src='../cheatsheet/js/extendedhighlighter.js'></script>
-	<script src='js/home.js'></script>
+	<title>Código fonte de geradores e validadores de inscrição estadual, cpf e cnpj</title>
+	<link rel='stylesheet' href='../../compartilhado/css/main.css' />
+	<script type='module' src='../../compartilhado/js/utils.js'></script>
+	<script type='module' src='../../compartilhado/js/index.js'></script>
+	<script type='module' src='../../compartilhado/js/highlighter.js'></script>
+	<script type='module' src='../../compartilhado/js/highlightEnhancer.js'></script>
+	<script type='module' src='js/home.js'></script>
 </head>
 <body>
 
 	<h1>Código fonte de geradores de inscrição estadual, cpf e cnpj</h1>
 	<p>
-		Para validar podemos usar a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a>, mas e quanto a gerar dados em massa para testes?
+		Para validar podemos usar a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é apenas 32 bits, mas e quanto a gerar dados em massa para testes?
 		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C.
 		Já que pela internet achei basicamente códigos em Pascal ou Basic, segue o código fonte dos geradores de inscrição estadual em linguagens mais portáteis por assim dizer.
+		Eu também criei <a href='https://addons.mozilla.org/en-US/firefox/addon/gerador-cpf-cnpj-ie/'>gerador para Firefox</a> que cria números com um clique apenas.
 	</p>
 
 	<p>
@@ -43,15 +44,15 @@
 		<div class='comparison'>
 
 			<div class='codeblock'>
-				<p>main.cpp</p>
-				<code class='cpp'
+				<p>main.rs</p>
+				<code class='rust'
 ></code
 				>
 			</div>
 
 			<div class='codeblock'>
-				<p>main.rs</p>
-				<code class='rust'
+				<p>main.cpp</p>
+				<code class='cpp'
 ></code
 				>
 			</div>
@@ -157,6 +158,67 @@
 		<div class='comparison'>
 
 			<div class='codeblock'>
+				<p>main.rs</p>
+				<code class='rust'
+>
+
+
+extern crate rand;
+
+use rand::Rng;
+
+fn gerarCpf() -&gt; String {
+
+	let mut soma:u32 = 0; // ver depois como usar u8 e o vetor com u8 tb
+	let mut resto:u32;
+	let <strong>multiplicadores</strong>:[u32;10] = [ <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
+
+	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
+	let mut sementeString = format!("{:09}", semente);
+	let mut sementeVetor:Vec&lt;_&gt; = sementeString
+		.chars()
+		.map(|caractere| caractere.to_digit(10).unwrap())
+		.collect();
+
+	for i in <strong>1</strong>..10 {
+		soma += sementeVetor[<strong>i - 1</strong>] * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+	if resto &lt; 2 {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	sementeVetor.push(resto);
+	soma = 0;
+
+	for i in <strong>0</strong>..10 {
+		soma += sementeVetor[<strong>i</strong>] * multiplicadores[i];
+	}
+
+	resto = soma % 11;
+
+	if resto &lt; 2 {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	sementeVetor.push(resto);
+	sementeString = sementeVetor
+		.into_iter()
+		.map(|numero| numero.to_string())
+		.collect();
+
+	return sementeString;
+
+}</code
+				>
+			</div>
+
+			<div class='codeblock'>
 				<p>main.cpp</p>
 				<code class='cpp'
 >#include &lt;random&gt;
@@ -221,67 +283,6 @@ std::string gerarCpf() {
 	outputStringStream &lt;&lt; resto;
 
 	return outputStringStream.str();
-
-}</code
-				>
-			</div>
-
-			<div class='codeblock'>
-				<p>main.rs</p>
-				<code class='rust'
->
-
-
-extern crate rand;
-
-use rand::Rng;
-
-fn gerarCpf() -&gt; String {
-
-	let mut soma:u32 = 0; // ver depois como usar u8 e o vetor com u8 tb
-	let mut resto:u32;
-	let <strong>multiplicadores</strong>:[u32;10] = [ <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
-
-	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
-	let mut sementeString = format!("{:09}", semente);
-	let mut sementeVetor:Vec&lt;_&gt; = sementeString
-		.chars()
-		.map(|caractere| caractere.to_digit(10).unwrap())
-		.collect();
-
-	for i in <strong>1</strong>..10 {
-		soma += sementeVetor[<strong>i - 1</strong>] * multiplicadores[i];
-	}
-
-	resto = soma % 11;
-	if resto &lt; 2 {
-		resto = 0;
-	} else {
-		resto = 11 - resto;
-	}
-
-	sementeVetor.push(resto);
-	soma = 0;
-
-	for i in <strong>0</strong>..10 {
-		soma += sementeVetor[<strong>i</strong>] * multiplicadores[i];
-	}
-
-	resto = soma % 11;
-
-	if resto &lt; 2 {
-		resto = 0;
-	} else {
-		resto = 11 - resto;
-	}
-
-	sementeVetor.push(resto);
-	sementeString = sementeVetor
-		.into_iter()
-		.map(|numero| numero.to_string())
-		.collect();
-
-	return sementeString;
 
 }</code
 				>
@@ -374,15 +375,15 @@ public string GerarCpf() {
 		<div class='comparison'>
 
 			<div class='codeblock'>
-				<p>main.cpp</p>
-				<code class='cpp'
+				<p>main.rs</p>
+				<code class='rust'
 ></code
 				>
 			</div>
 
 			<div class='codeblock'>
-				<p>main.rs</p>
-				<code class='rust'
+				<p>main.cpp</p>
+				<code class='cpp'
 ></code
 				>
 			</div>
