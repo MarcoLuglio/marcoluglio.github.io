@@ -15,7 +15,7 @@
 
 	<h1>Código fonte de geradores de inscrição estadual, cpf e cnpj</h1>
 	<p>
-		Para validar podemos usar a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é apenas 32 bits, mas e quanto a gerar dados em massa para testes?
+		Para validar geralmente recorremos a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é apenas 32 bits, mas se precisarmos de uma biblioteca 64 bits ou quando queremos gerar dados em massa para testes?
 		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C.
 		Já que pela internet achei basicamente códigos em Pascal ou Basic, segue o código fonte dos geradores de inscrição estadual em linguagens mais portáteis por assim dizer.
 		Eu também criei <a href='https://addons.mozilla.org/en-US/firefox/addon/gerador-cpf-cnpj-ie/'>gerador para Firefox</a> que cria números com um clique apenas.
@@ -154,6 +154,8 @@
 	<section>
 
 		<h2 id='cpf'><abbr title='Cdastro de Pessoa Física'>CPF</abbr></h2>
+
+		<p>Número fácil de lembrar: 000.000.001-91</p>
 
 		<div class='comparison'>
 
@@ -371,6 +373,8 @@ public string GerarCpf() {
 	<section>
 
 		<h2 id='cnpj'><abbr title='Cadastro Nacional de Pessoa Jurídica'>CNPJ</abbr></h2>
+
+		<p>Número fácil de lembrar: 000.000.001-0001/63</p>
 
 		<div class='comparison'>
 
