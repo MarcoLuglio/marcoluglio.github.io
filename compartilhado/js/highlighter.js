@@ -3072,10 +3072,10 @@ const CppKeywordToken = class CppKeywordToken extends SourceSimpleCharacterSeque
 			'friend',
 			'goto',
 			'if',
+			'import',
 			'inline',
 
-			//'import',
-			//'module',
+			'module',
 
 			'mutable',
 			'namespace',
@@ -3151,7 +3151,10 @@ const CppKeywordToken = class CppKeywordToken extends SourceSimpleCharacterSeque
 			'make_unique',
 			'make_shared',
 			'ref',
-			'async'
+			'async',
+			'co_await',
+			'co_yield',
+			'co_return'
 			// 'begin',
 			// 'end'
 
@@ -3362,6 +3365,7 @@ const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharac
 			'/',
 			'%',
 			'==',
+			'&lt;=&gt;', // spaceship operator <=>
 			'!',
 			'!=',
 			'&gt;',
@@ -5531,6 +5535,7 @@ const KotlinTypesToken = class KotlinTypesToken extends Token {
 				'Unit',
 
 				'ArrayList',
+				'Pair',
 				'Runnable',
 				'StringBuilder',
 				'Thread',
@@ -7567,6 +7572,7 @@ const CSKeywordToken = class CSKeywordToken extends SourceSimpleCharacterSequenc
 			'class',
 			'const',
 			'continue',
+			'data',
 			'default',
 			'delegate',
 			'do',
@@ -7585,6 +7591,7 @@ const CSKeywordToken = class CSKeywordToken extends SourceSimpleCharacterSequenc
 			'if',
 			'implicit',
 			'in', // FIXME está interferindo no tipo int, pq?
+			'init',
 			'interface',
 			'internal',
 			'is',
@@ -7623,6 +7630,7 @@ const CSKeywordToken = class CSKeywordToken extends SourceSimpleCharacterSequenc
 			// 'void', // vou realçar como tipo
 			'volatile',
 			'while',
+			'with',
 			'yield',
 
 			// linq TODO talvez mudar pra um token separado

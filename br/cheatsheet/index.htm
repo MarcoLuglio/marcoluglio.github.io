@@ -7912,6 +7912,34 @@ console.log(closure()); // 2</code
 
 <div class='codeblock'>
 
+	<div>
+
+		<p>C++ 20+ - modulo.cpp</p>
+		<code class='cpp'
+>export module marcoluglio;
+
+export class DentroDoModulo;
+
+class DentroDoModulo final {
+	// ...
+};</code
+		>
+
+		<p>C++ 20+ - main.cpp</p>
+		<code class='cpp'
+>import marcoluglio;
+
+int main() {
+	auto meuObjeto = DentroDoModulo();
+}</code
+		>
+
+	</div>
+
+</div>
+
+<div class='codeblock'>
+
 	<div class='pair'>
 
 		<div>
@@ -8502,7 +8530,15 @@ End Sub</code>
 
 <div class='codeblock'>
 <p>C++</p>
--
+<code class='cpp'
+>#include &lt;coroutine&gt;
+
+generator&lt;int&gt; iota(int n = 0) {
+	while(true) {
+		co_yield n++;
+	}
+}</code
+>
 </div>
 
 <div class='codeblock'>
@@ -9464,6 +9500,8 @@ int main(int argc, const char* argv[]) {
 	// concreto antes de prosseguir
 	cout &lt;&lt; functionFuture.get() &lt;&lt; endl;
 	cout &lt;&lt; lambdaFuture.get() &lt;&lt; endl;
+
+	// c++20+ tem co_return e co_await
 
 	return 0;
 
@@ -11686,7 +11724,7 @@ val compra1 = ResultadoCaixa(
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->// java 14 preview
+>// java 15+
 // records NÃO SÃO structs
 // mas tem um propósito similar
 public record ResultadoCaixa(
@@ -11780,7 +11818,19 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 	public int[] Parcelar() {
 		//
 	}
-}</code
+}
+
+
+// c# 9+
+// records NÃO SÃO structs
+// mas tem um propósito similar
+public data class Person {
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+}
+
+var person = new Person("Scott", "Hunter"); // positional construction
+var otherPerson = person with { LastName = "Hanselman" }; // with</code
 >
 </div>
 
