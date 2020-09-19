@@ -3316,7 +3316,11 @@ const CppLexer = class CppLexer extends Lexer {
 		this._pushLiteralTokens();
 		this._pushInvisibleTokens();
 
-		//this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
+		if (this._isFirstTokenOfLine(tokenSequence)) {
+			this._tokenPool.push(new CppLabelToken());
+		}
+		this._tokenPool.push(new CppSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
 
@@ -3364,6 +3368,39 @@ const CppLexer = class CppLexer extends Lexer {
 		}
 
 		return null;
+
+	}
+
+	/**
+	 * Checks if the line has only whitespace so far
+	 * Used to identify labels
+	 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+	 */
+	_isFirstTokenOfLine(tokenSequence) {
+
+		let lastToken = null;
+
+		if (!tokenSequence) {
+			return true;
+		}
+
+		for (let i = tokenSequence.length; i > 0; i--) {
+
+			lastToken = tokenSequence[i - 1];
+
+			if (lastToken.type === 'endOfLine') {
+				return true;
+			}
+
+			if (lastToken.ignore) {
+				continue;
+			}
+
+			return false;
+
+		}
+
+		return true;
 
 	}
 
@@ -3478,10 +3515,10 @@ const CppKeywordToken = class CppKeywordToken extends SourceSimpleCharacterSeque
 			'or_eq',
 			'xor',
 			'xor_eq',
-			'&lt;%',
+			/*'&lt;%',
 			'%&gt;',
 			'&lt;:',
-			':&gt;',
+			':&gt;',*/
 			'%:',
 			'%:%:',
 
@@ -3553,6 +3590,7 @@ const CppTypesToken = class CppTypesToken extends Token {
 				'long double',
 				'long long',
 				'short',
+				'size_t',
 
 				'unsigned int',
 				'uint8_t',
@@ -3572,14 +3610,20 @@ const CppTypesToken = class CppTypesToken extends Token {
 				'unsigned short',
 				'uintptr_t',
 
+				'array',
+				'default_random_engine',
 				'exception',
 				'lock_guard',
 				'mutex',
 				'nullptr_t',
 				'optional',
+				'ostringstream',
 				'queue',
+				'random_device',
 				'string',
 				'thread',
+				'uniform_int_distribution',
+				'vector',
 				'void'
 
 			])}
@@ -3682,7 +3726,9 @@ const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharac
 			'.',
 			'.*',
 			'-&gt;',
+			'->',
 			'-&gt;*',
+			'->*',
 			'(',
 			')',
 			'{',
@@ -3696,13 +3742,17 @@ const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharac
 			';',
 
 			'&amp;&amp;',
+			'&&',
 			'||',
 			'&amp;', // bitwise and
+			'&',
 			'|', // bitwise or
 			'^', // bitwise xor
 			'~', // bitwise not
 			'&gt;&gt;', // bitwise left shift
+			'>>',
 			'&lt;&lt;', // bitwise right shift
+			'<<',
 			'+',
 			'++',
 			'-',
@@ -3712,12 +3762,17 @@ const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharac
 			'%',
 			'==',
 			'&lt;=&gt;', // spaceship operator <=>
+			'<=>;', // spaceship operator <=>
 			'!',
 			'!=',
 			'&gt;',
+			'>',
 			'&gt;=',
+			'>=',
 			'&lt;',
+			'<',
 			'&lt;=',
+			'<=',
 
 			'=',
 			'+=',
@@ -3727,15 +3782,78 @@ const CppPunctuationToken = class CppPunctuationToken extends SourceSimpleCharac
 			'%=',
 
 			'&amp;=', // bitwise and
+			'&=', // bitwise and
 			'|=', // bitwise or
 			'^=', // bitwise xor
 			// '~=', // bitwise not não existe
 			'&gt;&gt;=', // bitwise left shift
+			'>>=', // bitwise left shift
 			'&lt;&lt;=', // bitwise right shift
+			'<<=', // bitwise right shift
 
-			'...'
+			'...',
+
+			'std::', // FIXME
+			'boost::' // FIXME
 
 		]);
+
+	}
+
+};
+
+
+
+const CppLabelToken = class CppLabelToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('label', new CppLabelIterator());
+	}
+};
+
+
+
+const CppLabelIterator = class CppLabelIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isLetterCharacter: {value: /[a-zA-Z]/},
+			_isWordCharacter: {value: /\w/}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchLetter;
+
+	}
+
+	_matchLetter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchWordOrColon;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchWordOrColon(matchCharacter) {
+
+		if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		if (matchCharacter === ':') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
 
 	}
 
@@ -3988,6 +4106,74 @@ const CppStringLiteralToken = class CppStringLiteralToken extends SourcePatternI
 		super('rstring', new CppStringPatternIterator());
 	}
 };
+
+
+
+const CppSymbolToken = class CppSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new CppSymbolIterator());
+	}
+};
+
+
+
+const CppSymbolIterator = class CppSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: /\w/},
+			_isLetterCharacter: {value: /[a-zA-Z]/}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchBeginningValidCharacter;
+
+	}
+
+	_matchBeginningValidCharacter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchValidCharacter;
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '_') {
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
 
 // #endregion
 
@@ -4858,6 +5044,7 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 			'case',
 			'catch',
 			'class',
+			'continue',
 			'convenience',
 			'default',
 			'defer',
@@ -9050,6 +9237,14 @@ const CSLabelToken = class CSLabelToken extends SourcePatternIteratorToken {
 
 
 
+const CSSymbolToken = class CSSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new CSSymbolIterator());
+	}
+};
+
+
+
 const CSSymbolIterator = class CSSymbolIterator  extends SourcePatternIterator {
 
 	constructor() {
@@ -9111,12 +9306,6 @@ const CSSymbolIterator = class CSSymbolIterator  extends SourcePatternIterator {
 };
 
 
-
-const CSSymbolToken = class CSSymbolToken extends SourcePatternIteratorToken {
-	constructor() {
-		super('symbol', new CSSymbolIterator());
-	}
-};
 
 // #endregion
 
@@ -9332,9 +9521,6 @@ const JSKeywordToken = class JSKeywordToken extends SourceSimpleCharacterSequenc
 			'import',
 			'export',
 
-			// arrow function
-			'=&gt;',
-
 			// literals
 			// fazer num token à parte?
 			'true',
@@ -9493,6 +9679,7 @@ const JSPunctuationToken = class JSPunctuationToken extends SourceSimpleCharacte
 			'&gt;&gt;', // bitwise left shift
 			'&lt;&lt;', // bitwise right shift
 			'&lt;&lt;&lt;', // bitwise unsigned right shift
+			'=&gt;', // arrow function
 			'+',
 			'++',
 			'-',
