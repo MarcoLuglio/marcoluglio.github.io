@@ -352,6 +352,10 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
+.bubaloop.generic .char {
+	color: #0077FF;
+}
+
 /* html */
 
 .bubaloop.highlight.html strong {
@@ -466,7 +470,12 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
-.bubaloop.highlight.rust strong .string {
+.bubaloop.rust .char {
+	color: #0076E6;
+}
+
+.bubaloop.highlight.rust strong .string,
+.bubaloop.highlight.rust strong .char {
 	color: #ffffff;
 }
 
@@ -560,8 +569,13 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
+.bubaloop.cpp .char {
+	color: #0076E6;
+}
+
 .bubaloop.highlight.cpp strong .string,
-.bubaloop.highlight.cpp strong .rstring {
+.bubaloop.highlight.cpp strong .rstring,
+.bubaloop.highlight.cpp strong .char {
 	color: #ffffff;
 }
 
@@ -604,14 +618,19 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .string,
-.bubaloop.objectivec .objcstring,
-.bubaloop.objectivec .char,
-.bubaloop.objectivec .objcchar {
+.bubaloop.objectivec .objcstring {
 	color: #0099FF;
 }
 
+.bubaloop.objectivec .char,
+.bubaloop.objectivec .objcchar {
+	color: #0076E6;
+}
+
 .bubaloop.highlight.objectivec strong .string,
-.bubaloop.highlight.objectivec strong .objcstring {
+.bubaloop.highlight.objectivec strong .objcstring,
+.bubaloop.highlight.objectivec strong .char,
+.bubaloop.highlight.objectivec strong .objcchar {
 	color: #ffffff;
 }
 
@@ -704,8 +723,13 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
+.bubaloop.kotlin .char {
+	color: #0077FF;
+}
+
 .bubaloop.highlight.kotlin strong .string,
-.bubaloop.highlight.kotlin strong .rawstring {
+.bubaloop.highlight.kotlin strong .rawstring,
+.bubaloop.highlight.kotlin strong .char {
 	color: #ffffff;
 }
 
@@ -754,7 +778,12 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
-.bubaloop.highlight.java strong .string {
+.bubaloop.java .char {
+	color: #0077FF;
+}
+
+.bubaloop.highlight.java strong .string,
+.bubaloop.highlight.java strong .char {
 	color: #ffffff;
 }
 
@@ -805,9 +834,14 @@ div.codeblock.bubaloop p + code {
 	color: #0099FF;
 }
 
+.bubaloop.cs .char {
+	color: #0076E6;
+}
+
 .bubaloop.highlight.cs strong .string,
 .bubaloop.highlight.cs strong .vstring,
-.bubaloop.highlight.cs strong .istring {
+.bubaloop.highlight.cs strong .istring,
+.bubaloop.highlight.cs strong .char {
 	color: #ffffff;
 }
 
@@ -1062,6 +1096,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop .number,
 .bubaloop .boolean,
 .bubaloop .string,
+.bubaloop .char,
 
 .bubaloop.javascript .variableName,
 .bubaloop.javascript .functionName,
@@ -1098,6 +1133,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight .number,
 .bubaloop.highlight .boolean,
 .bubaloop.highlight .string,
+.bubaloop.highlight .char,
 
 .bubaloop.highlight.cpp .rstring,
 .bubaloop.highlight.objectivec .objcstring,

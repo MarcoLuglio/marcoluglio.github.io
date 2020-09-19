@@ -685,6 +685,95 @@ const CStringPatternIterator = class CStringPatternIterator {
 
 
 
+const CCharLiteralToken = class CCharLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('char', new CCharPatternIterator());
+	}
+};
+
+
+
+const CCharPatternIterator = class CCharPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === "'") {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter) {
+
+		if (/^[A-Za-z0-9]$/gi.test(matchCharacter)) {
+			this._matchFunction = this._matchEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchEndQuote(matchCharacter) {
+
+		// TODO improve this later
+		if (matchCharacter === "'") {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
 const SourceHtmlEmphasisPatternIterator = class SourceHtmlEmphasisPatternIterator extends SourcePatternIterator {
 
 	constructor() {
@@ -1771,7 +1860,8 @@ const RustLexer = class RustLexer extends Lexer {
 			0,
 			new RustDecimalLiteralToken(),
 			new RustNumericLiteralToken(),
-			new RustStringLiteralToken()
+			new RustStringLiteralToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 
@@ -3331,7 +3421,8 @@ const CppLexer = class CppLexer extends Lexer {
 			new CppDecimalLiteralToken(),
 			//new CppNumericLiteralToken(),
 			new CStringLiteralToken(),
-			new CppStringLiteralToken()
+			new CppStringLiteralToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 
@@ -3609,6 +3700,11 @@ const CppTypesToken = class CppTypesToken extends Token {
 				'unsigned long long',
 				'unsigned short',
 				'uintptr_t',
+
+				'wchar_t',
+				'char16_t',
+				'char32_t',
+				'char8_t',
 
 				'array',
 				'default_random_engine',
@@ -5899,7 +5995,8 @@ const KotlinLexer = class KotlinLexer extends Lexer {
 			new KotlinDecimalLiteralToken(),
 			new KotlinNumericLiteralToken(),
 			new KotlinStringLiteralToken(),
-			new KotlinRawStringLiteralToken()
+			new KotlinRawStringLiteralToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 
@@ -6926,7 +7023,8 @@ const JavaLexer = class JavaLexer extends Lexer {
 			new JavaDecimalLiteralToken(),
 			new JavaNumericLiteralToken(),
 			new JavaStringLiteralToken(),
-			new JavaMultilineStringLiteralToken()
+			new JavaMultilineStringLiteralToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 
@@ -8013,7 +8111,8 @@ const CsLexer = class CsLexer extends Lexer {
 			new CSStringLiteralToken(),
 			new CSVerbatimStringLiteralToken(),
 			new CSInterpolatedStringLiteralToken(),
-			new CSAttributeToken()
+			new CSAttributeToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 

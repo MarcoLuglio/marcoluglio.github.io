@@ -3783,16 +3783,29 @@ private void recebeByte(byte numero) {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
+>let someChar = 'T';
+// suporta 4 bytes unicode \u{0000}</code
 >
-</code
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>var someRune = 'T'
+// go chama de runes
+// suporta 4 bytes unicode \u0000</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>auto someChar = 'T';
+char oitoBits;
+wchar_t trintaEDoisBits; // mas no windows é só 16 bits
+char16_t dezesseisBits;
+char32_t trintaEDoisBits;
+char8_t  oitoBits; // C++11</code
 >
 </div>
 
@@ -3807,32 +3820,35 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// Use strings com apenas um caractere
+// pode usar a notação \u{n}
+// onde n is um número com 1 a 8 dígitos hexadecimais</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>var someChar = 'T'
+// suporta 2 bytes unicode '\u0000' - '\uFFFF'</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>var someChar = 'T';
+// suporta 2 bytes unicode '\u0000' - '\uFFFF'
+// e em alguns métodos que aceitam int pode usar até '\u10FFFF'</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>var someChar = 'T';
+// suporta 2 bytes unicode '\u0000' - '\uFFFF'
+// ou notação em hexadecimal '\x0000'</code
 >
 </div>
 
@@ -3844,13 +3860,41 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+># Usa strings com apenas um caractere</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>Dim someChar: someChar = Chr(0)
+' suporta 8 bits até Chr(255)</code
+>
+</div>
+
 </div>
 
 <ol>
-	<li>a</li>
+	<li>Rust</li>
+	<li>C++</li>
+	<li>Kotlin, Java e C#</li>
+	<li>Objective-C</li>
+	<li>Swift, JavaScript, Python</li>
+	<li>VB6</li>
 </ol>
 
-<p>A</p>
+<p>
+	Suporte a Unicode é o que mais pesou nesta classificação.
+	Rust possui apenas um tipo que suporta até 32 bits, e C++ possui um para cada tamanho.
+	Não sei até que ponto isso é vantagem.
+	Também fiquei em dúvida se ter um tipo exclusivo para caracteres é vantajoso.
+	Vou considerar que sim, embora não tenha feito nenhum benchmark.
+	Objective-C possui dois tipos, o próprio e o herdado do C.
+	Provavelmente VB6 foi descontinuado antes de existir Unicode, suportando apenas ASCII...
+</p>
 
 </section>
 
