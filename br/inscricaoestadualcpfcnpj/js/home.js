@@ -2,6 +2,7 @@ import { domReadyPromise, NodeListIterator } from '../../../compartilhado/js/uti
 import { Index } from '../../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
 import { RustLexer, CppLexer, CsLexer, JavaScriptLexer, HtmlLexer, Highlighter } from '../../../compartilhado/js/highlighter.js';
+import { gerarInscricaoEstadualPR, gerarCpf, validarCpf, gerarCnpj } from './geradores.js';
 
 
 
@@ -58,47 +59,19 @@ async function highlightAsync(selector, Lexer) {
 	await highlightAsync('code.javascript', JavaScriptLexer);
 	await highlightAsync('code.html', HtmlLexer);
 
+	const geradorcpfinput = document.getElementById('geradorcpfinput');
+	const geradorcpfbtn = document.getElementById('geradorcpfbtn');
+	geradorcpfbtn.addEventListener('click', evento => {
+		let cpf = gerarCpf(geradorcpfinput.value);
+		cpf = `${cpf.substr(0, 3)}.${cpf.substr(3, 3)}.${cpf.substr(6, 3)}-${cpf.substr(9, 2)}`;
+		geradorcpfinput.value = cpf;
+	});
+
+	const validadorcpfinput = document.getElementById('validadorcpfinput');
+	const validadorcpfbtn = document.getElementById('validadorcpfbtn');
+	validadorcpfbtn.addEventListener('click', evento => {
+		let valido = validarCpf(validadorcpfinput.value);
+		console.log(`valido: ${valido}`);
+	});
+
 })();
-
-
-
-function gerarInscricaoEstadualPR() {
-
-	let soma = 0;
-	let resto = 0;
-	const multiplicadores = [4, 3, 2, 7, 6, 5, 4, 3, 2];
-	let semente = Math.round(Math.random() * 100000000).toString();
-	semente = semente.substr(0, 8);
-
-	for (let i = 1; i < multiplicadores.length; i++) {
-		soma += parseInt(semente[i - 1], 10) * multiplicadores[i];
-	}
-
-	resto = soma % 11;
-	if (resto < 2) {
-		resto = 0;
-	} else {
-		resto = 11 - resto;
-	}
-
-	semente += resto;
-	soma = 0;
-
-	for (let i = 0; i < multiplicadores.length; i++) {
-		soma += parseInt(semente[i], 10) * multiplicadores[i];
-	}
-
-	resto = soma % 11;
-	if (resto < 2) {
-		resto = 0;
-	} else {
-		resto = 11 - resto;
-	}
-
-	semente += resto;
-
-	return semente;
-
-}
-
-console.log(gerarInscricaoEstadualPR());

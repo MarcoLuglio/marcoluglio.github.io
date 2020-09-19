@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Código fonte de geradores e validadores de inscrição estadual, cpf e cnpj</title>
 	<link rel='stylesheet' href='../../compartilhado/css/main.css' />
+	<link rel='stylesheet' href='css/home.css' />
 	<script type='module' src='../../compartilhado/js/utils.js'></script>
 	<script type='module' src='../../compartilhado/js/index.js'></script>
 	<script type='module' src='../../compartilhado/js/highlighter.js'></script>
@@ -38,6 +39,46 @@
 	<section>
 
 		<h2 id='ie'>Inscrição Estadual</h2>
+
+		<h3 id='ieac'>Acre</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+				<p>main.rs</p>
+				<code class='rust'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>main.cpp</p>
+				<code class='cpp'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+					<p>main.js</p>
+					<code class='javascript'
+></code
+				>
+			</div>
+
+		</div>
 
 		<h3 id='iepr'>Paraná</h3>
 
@@ -216,7 +257,19 @@ private bool ValidarInscricaoEstadualModulo11(
 
 		<h2 id='cpf'><abbr title='Cdastro de Pessoa Física'>CPF</abbr></h2>
 
-		<p>Número fácil de lembrar: 000.000.001-91</p>
+		<p>
+			O documento com a definição da estrutura do CPF e dígitos veriicadores pode ser encontrado em:
+			<a href='http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc'>http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc</a>.
+			<br />O nono dígito (logo antes dos 2 dígitos verificadores) costumava ser o código da região fiscal a qual o CPF pertencia. Porém isso aparentemente não é mais o caso.
+		</p>
+		<p>Números de CPF fáceis de lembrar são: 100.000.000-19 e 000.000.002-72 (o número 000.00.001.91 é proibido conforme o anexo acima).</p>
+
+		<form>
+			<p>
+				<input id='geradorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' /><button id='geradorcpfbtn' type='button'>gerar/completar cpf</button>
+				<br /><input id='validadorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' /><button id='validadorcpfbtn' type='button'>validar cpf</button>
+			</p>
+		</form>
 
 		<div class='comparison'>
 
@@ -236,18 +289,29 @@ fn gerarCpf() -&gt; String {
 	let mut resto:u32;
 	let <strong>multiplicadores</strong>:[u32;10] = [ <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> ];
 
-	let <strong>semente</strong> = rand::thread_rng().gen_range(1, <strong>999999999</strong>);
+
+
+
+	// 000.000.001-91 é proibido conforme o anexo acima
+	// portanto o número 1 é excluído da faixa gerada abaixo
+	let <strong>semente</strong> = rand::thread_rng().gen_range( <strong>2, 999999999</strong> );
+
+
 	let mut sementeString = format!("{:09}", semente);
+
+
 	let mut sementeVetor:Vec&lt;_&gt; = sementeString
 		.chars()
 		.map(|caractere| caractere.to_digit(10).unwrap())
 		.collect();
 
 	for i in <strong>1</strong>..10 {
-		soma += sementeVetor[<strong>i - 1</strong>] * multiplicadores[i];
+		soma += sementeVetor[ <strong>i - 1</strong> ] * multiplicadores[ <strong>i</strong> ];
 	}
 
+
 	resto = soma % 11;
+
 	if resto &lt; 2 {
 		resto = 0;
 	} else {
@@ -255,11 +319,13 @@ fn gerarCpf() -&gt; String {
 	}
 
 	sementeVetor.push(resto);
+
 	soma = 0;
 
 	for i in <strong>0</strong>..10 {
-		soma += sementeVetor[<strong>i</strong>] * multiplicadores[i];
+		soma += sementeVetor[ <strong>i</strong> ] * multiplicadores[ <strong>i</strong> ];
 	}
+
 
 	resto = soma % 11;
 
@@ -293,29 +359,29 @@ fn gerarCpf() -&gt; String {
 
 std::string gerarCpf() {
 
-	int soma {0};
-	int resto {0};
-	const std::array&lt;int, 10&gt; <strong>multiplicadores</strong> = { <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
+	int soma{0};
+	int resto{0};
+	const std::array<span>&lt;int, 10&gt;</span> <strong>multiplicadores</strong> = { <strong>11, 10, 9, 8, 7, 6, 5, 4, 3, 2</strong> };
 
 	std::random_device randomDevice;
 	std::default_random_engine generator(randomDevice());
-	std::uniform_int_distribution&lt;int&gt; distribution(1, <strong>999999999</strong>);
+
+	// 000.000.001-91 é proibido conforme o anexo acima
+	// portanto o número 1 é excluído da faixa gerada abaixo
+	std::uniform_int_distribution<span>&lt;<span>int</span>&gt;</span> distribution( <strong>2, 999999999</strong> );
 	auto <strong>semente</strong> = distribution(generator);
 
 	std::ostringstream outputStringStream;
 	outputStringStream &lt;&lt; std::right &lt;&lt; std::setfill('0') &lt;&lt; std::setw(9) &lt;&lt; semente;
 
 	auto sementeString{outputStringStream.str()};
-
-	std::vector&lt;char&gt; sementeVetor(sementeString.begin(), sementeString.end());
-
-	// calcular os dígitos verificadores
+	std::vector<span>&lt;<span>char</span>&gt;</span> sementeVetor(sementeString.begin(), sementeString.end());
 
 	int sementeInt; // conversão de char para int (- '0')
 
-	for (int <strong>i = 1</strong>; i &lt; multiplicadores.size(); ++i) {
-		sementeInt = sementeVetor[<strong>i - 1</strong>] - '0';
-		soma += (sementeInt * multiplicadores[i]);
+	for (int <strong>i = 1</strong> ; i &lt; multiplicadores.size(); ++i) {
+		sementeInt = sementeVetor[ <strong>i - 1</strong> ] - '0';
+		soma += (sementeInt * multiplicadores[ <strong>i</strong> ]);
 	}
 
 	resto = (soma % 11);
@@ -330,9 +396,9 @@ std::string gerarCpf() {
 	sementeVetor.push_back(resto + '0'); // conversão de int para char (+ '0')
 	soma = 0;
 
-	for (int <strong>i = 0</strong>; i &lt; multiplicadores.size(); ++i) {
-		sementeInt = sementeVetor[<strong>i</strong>] - '0';
-		soma += (sementeInt * multiplicadores[i]);
+	for (int <strong>i = 0</strong> ; i &lt; multiplicadores.size(); ++i) {
+		sementeInt = sementeVetor[ <strong>i</strong> ] - '0';
+		soma += (sementeInt * multiplicadores[ <strong>i</strong> ]);
 	}
 
 	resto = (soma % 11);
@@ -422,10 +488,6 @@ public string GerarCpf() {
 					<p>main.js</p>
 					<code class='javascript'
 >
-
-
-
-
 
 
 function gerarCpf() {

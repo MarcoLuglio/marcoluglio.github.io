@@ -274,14 +274,20 @@ div.codeblock.bubaloop p + code {
 	/*padding-top: 0;*/
 }
 
-.bubaloop.highlight strong,
-.bubaloop.highlight strong * {
+.bubaloop strong,
+.bubaloop strong * {
 	opacity: 1 !important;
 	border-radius: 40px;
 	font-weight: normal;
 }
 
 /* general */
+
+.bubaloop strong {
+	background-color: #F3F3F3;
+	box-shadow: 0 0 0 6px #F3F3F3; /* h v blur spread color */
+	mix-blend-mode: darken;
+}
 
 .bubaloop.highlight strong {
 	color: #101010;
