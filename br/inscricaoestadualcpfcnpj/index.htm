@@ -255,10 +255,10 @@ private bool ValidarInscricaoEstadualModulo11(
 
 	<section>
 
-		<h2 id='cpf'><abbr title='Cdastro de Pessoa Física'>CPF</abbr></h2>
+		<h2 id='cpf'><abbr title='Cadastro de Pessoa Física'>CPF</abbr></h2>
 
 		<p>
-			O documento com a definição da estrutura do CPF e dígitos veriicadores pode ser encontrado em:
+			O documento com a definição da estrutura do CPF e dígitos verificadores pode ser encontrado em:
 			<a href='http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc'>http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc</a>.
 			<br />O nono dígito (logo antes dos 2 dígitos verificadores) costumava ser o código da região fiscal a qual o CPF pertencia. Porém isso aparentemente não é mais o caso.
 		</p>
@@ -562,7 +562,23 @@ function gerarCpf() {
 
 		<h2 id='cnpj'><abbr title='Cadastro Nacional de Pessoa Jurídica'>CNPJ</abbr></h2>
 
-		<p>Número fácil de lembrar: 000.000.001-0001/63</p>
+		<p>
+			O documento com a definição da estrutura do CNPJ e dígitos verificadores pode ser encontrado em:
+			<a href='http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc'>http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc</a>.
+		</p>
+		<p>Números de CNPJ fáceis de lembrar são: 10.000.000-0009/00 e 00.000.000-0001/91 (números começando com 000 misturados com outros números são proibidos conforme o anexo acima).</p>
+
+		<!--
+		-0000 ou maior que -0300 não pode.
+		começando com 000 não pode, exceto quando o número básico do CNPJ for igual a 00.000.000.
+		-->
+
+		<form>
+			<p>
+				<input id='geradorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' /><button id='geradorcnpjbtn' type='button'>gerar/completar cnpj</button>
+				<br /><input id='validadorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' /><button id='validadorcnpjbtn' type='button'>validar cnpj</button>
+			</p>
+		</form>
 
 		<div class='comparison'>
 
@@ -659,7 +675,7 @@ function gerarCpf() {
 	do {
 
 		let <strong>sementeFloatRaiz</strong> = Math.random() * 100000000;
-		while(sementeFloatRaiz &lt; <strong>9999999</strong>) {
+		while(sementeFloatRaiz &lt; <strong>99999999</strong>) {
 			sementeRaiz += '0';
 			sementeFloatRaiz *= 10; // TODO correção para zeros à esquerda que irão diminuir a string, melhorar isso
 		}
@@ -674,15 +690,15 @@ function gerarCpf() {
 
 	} while (
 		sementeRaiz === '000000000' && sementeSufixo === '0000'
-		|| sementeRaiz === '111111111' && sementeSufixo === '1111'
-		|| sementeRaiz === '222222222' && sementeSufixo === '2222'
-		|| sementeRaiz === '333333333' && sementeSufixo === '3333'
-		|| sementeRaiz === '444444444' && sementeSufixo === '4444'
-		|| sementeRaiz === '555555555' && sementeSufixo === '5555'
-		|| sementeRaiz === '666666666' && sementeSufixo === '6666'
-		|| sementeRaiz === '777777777' && sementeSufixo === '7777'
-		|| sementeRaiz === '888888888' && sementeSufixo === '8888'
-		|| sementeRaiz === '999999999' && sementeSufixo === '9999'
+		|| sementeRaiz === '11111111' && sementeSufixo === '1111'
+		|| sementeRaiz === '22222222' && sementeSufixo === '2222'
+		|| sementeRaiz === '33333333' && sementeSufixo === '3333'
+		|| sementeRaiz === '44444444' && sementeSufixo === '4444'
+		|| sementeRaiz === '55555555' && sementeSufixo === '5555'
+		|| sementeRaiz === '66666666' && sementeSufixo === '6666'
+		|| sementeRaiz === '77777777' && sementeSufixo === '7777'
+		|| sementeRaiz === '88888888' && sementeSufixo === '8888'
+		|| sementeRaiz === '99999999' && sementeSufixo === '9999'
 	);
 
 	semente = sementeRaiz.substr(0, 8) + sementeSufixo.substr(0, 4);

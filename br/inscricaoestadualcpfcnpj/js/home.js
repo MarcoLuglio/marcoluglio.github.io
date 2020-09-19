@@ -2,7 +2,7 @@ import { domReadyPromise, NodeListIterator } from '../../../compartilhado/js/uti
 import { Index } from '../../../compartilhado/js/index.js';
 import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
 import { RustLexer, CppLexer, CsLexer, JavaScriptLexer, HtmlLexer, Highlighter } from '../../../compartilhado/js/highlighter.js';
-import { gerarInscricaoEstadualPR, gerarCpf, validarCpf, gerarCnpj } from './geradores.js';
+import { gerarInscricaoEstadualPR, gerarCpf, validarCpf, gerarCnpj, validarCnpj } from './geradores.js';
 
 
 
@@ -71,6 +71,21 @@ async function highlightAsync(selector, Lexer) {
 	const validadorcpfbtn = document.getElementById('validadorcpfbtn');
 	validadorcpfbtn.addEventListener('click', evento => {
 		let valido = validarCpf(validadorcpfinput.value);
+		console.log(`valido: ${valido}`);
+	});
+
+	const geradorcnpjinput = document.getElementById('geradorcnpjinput');
+	const geradorcnpjbtn = document.getElementById('geradorcnpjbtn');
+	geradorcnpjbtn.addEventListener('click', evento => {
+		let cnpj = gerarCnpj(geradorcnpjinput.value);
+		cnpj = `${cnpj.substr(0, 2)}.${cnpj.substr(2, 3)}.${cnpj.substr(5, 3)}-${cnpj.substr(8, 4)}/${cnpj.substr(12, 2)}`;
+		geradorcnpjinput.value = cnpj;
+	});
+
+	const validadorcnpjinput = document.getElementById('validadorcnpjinput');
+	const validadorcnpjbtn = document.getElementById('validadorcnpjbtn');
+	validadorcnpjbtn.addEventListener('click', evento => {
+		let valido = validarCnpj(validadorcnpjinput.value);
 		console.log(`valido: ${valido}`);
 	});
 

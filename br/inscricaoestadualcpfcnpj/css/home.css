@@ -1,3 +1,8 @@
 input:invalid {
 	border: 1px solid #FF0000;
 }
+
+input[type=text],
+input[type=number] {
+	font-family: 'Fira Code', 'SF Mono', Menlo, Consolas, 'Courier New', Courier, monospace;
+}
