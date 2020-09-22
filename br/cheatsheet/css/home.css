@@ -4,7 +4,7 @@
 	bottom: 0;
 	margin-left: calc(-20px - 330px);
 	overflow: scroll;
-	z-index: 1;
+	z-index: 3;
 	background-color: hsl(0deg, 0%, 100%);
 	width: 350px;
 	transition: margin-left 300ms;
