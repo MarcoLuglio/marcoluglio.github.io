@@ -4,7 +4,11 @@ import { StringIterator } from './utils.js';
 
 // TODO Implementar os tokens html. Quais? Já não implementei isso?
 
-
+const isLetterCharacterRegex = /[a-zA-Z]/;
+const isWordCharacterRegex = /\w/;
+const isNumberCharacterRegex = /\d/;
+const isSpaceCharacterRegex = /\s/;
+const isAlphaNumericRegex = /^[A-Za-z0-9]$/gi;
 
 // #region Base classes
 
@@ -738,7 +742,7 @@ const CCharPatternIterator = class CCharPatternIterator {
 
 	_matchContent(matchCharacter) {
 
-		if (/^[A-Za-z0-9]$/gi.test(matchCharacter)) {
+		if (isAlphaNumericRegex.test(matchCharacter)) {
 			this._matchFunction = this._matchEndQuote;
 			return true;
 		}
@@ -1850,6 +1854,7 @@ const RustLexer = class RustLexer extends Lexer {
 		this._pushInvisibleTokens();
 
 		this._tokenPool.push(new RustLabelToken());
+		this._tokenPool.push(new RustRawIdentifierSymbolToken());
 		this._tokenPool.push(new RustSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -2146,7 +2151,7 @@ const RustDecimalPatternIterator = class RustDecimalPatternIterator extends Sour
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_canUseSeparator: {value: false, writable: true},
 			_sufficType:  {value: '', writable: true},
 			_suffixBuffer: {value: '', writable: true},
@@ -2296,7 +2301,7 @@ const RustNumberPatternIterator = class RustNumberPatternIterator extends Source
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -2623,6 +2628,92 @@ const RustAttributeToken = class RustAttributeToken extends SourcePatternIterato
 
 
 
+/**
+ * Token for Rust symbols
+ */
+const RustRawIdentifierSymbolToken = class RustRawIdentifierSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new RustRawIdentifierSymbolIterator());
+	}
+};
+
+
+
+const RustRawIdentifierSymbolIterator = class RustRawIdentifierSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchR;
+
+	}
+
+	_matchR(matchCharacter) {
+
+		if (matchCharacter === 'r') {
+			this._matchFunction = this._matchHash;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchHash(matchCharacter) {
+
+		if (matchCharacter === '#') {
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			|| this._isWordCharacter.test(matchCharacter)
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Rust symbols
+ */
+const RustSymbolToken = class RustSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new RustSymbolIterator());
+	}
+};
+
+
+
 const RustSymbolIterator = class RustSymbolIterator  extends SourcePatternIterator {
 
 	constructor() {
@@ -2630,8 +2721,8 @@ const RustSymbolIterator = class RustSymbolIterator  extends SourcePatternIterat
 		super();
 
 		Object.defineProperties(this, {
-			_isWordCharacter: {value: /\w/},
-			_isLetterCharacter: {value: /[a-zA-Z]/}
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -2682,15 +2773,6 @@ const RustSymbolIterator = class RustSymbolIterator  extends SourcePatternIterat
 
 };
 
-/**
- * Token for Rust symbols
- */
-const RustSymbolToken = class RustSymbolToken extends SourcePatternIteratorToken {
-	constructor() {
-		super('symbol', new RustSymbolIterator());
-	}
-};
-
 
 
 const RustLifetimePatternIterator = class RustLifetimePatternIterator extends SourcePatternIterator {
@@ -2698,8 +2780,8 @@ const RustLifetimePatternIterator = class RustLifetimePatternIterator extends So
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isNumberCharacter: {value: /\d/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchStartQuote;
 		Object.seal(this);
@@ -2760,8 +2842,8 @@ const RustLabelPatternIterator = class RustLabelPatternIterator extends SourcePa
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/},
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex},
 			_length: {value: 0, writable: true}
 		});
 		this._matchFunction = this._matchStartQuote;
@@ -3918,8 +4000,8 @@ const CppLabelIterator = class CppLabelIterator  extends SourcePatternIterator {
 
 		Object.defineProperties(this, {
 			_characterSequence: {value: '', writable: true},
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -3975,7 +4057,7 @@ const CppDecimalPatternIterator = class CppDecimalPatternIterator extends Source
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -4232,8 +4314,8 @@ const CppSymbolIterator = class CppSymbolIterator  extends SourcePatternIterator
 		super();
 
 		Object.defineProperties(this, {
-			_isWordCharacter: {value: /\w/},
-			_isLetterCharacter: {value: /[a-zA-Z]/}
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -4674,7 +4756,7 @@ const ObjCDecimalPatternIterator = class ObjCDecimalPatternIterator extends Sour
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchAtOrNumber;
 		Object.seal(this);
@@ -5425,7 +5507,7 @@ const SwiftDecimalPatternIterator = class SwiftDecimalPatternIterator extends So
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -5480,7 +5562,7 @@ const SwiftNumberPatternIterator = class SwiftNumberPatternIterator extends Sour
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -5910,8 +5992,8 @@ const SwiftLabelIterator = class SwiftLabelIterator  extends SourcePatternIterat
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -6333,7 +6415,7 @@ const KotlinDecimalPatternIterator = class KotlinDecimalPatternIterator extends 
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -6421,7 +6503,7 @@ const KotlinNumberPatternIterator = class KotlinNumberPatternIterator extends So
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -6847,7 +6929,7 @@ const KotlinAnnotationPatternIterator = class KotlinAnnotationPatternIterator ex
 		super();
 		Object.defineProperties(this, {
 			_allowSpaceCharacter: {value: false, writable: true},
-			_isSpaceCharacter: {value: /\s/}
+			_isSpaceCharacter: {value: isSpaceCharacterRegex}
 		});
 		this._matchFunction = this._matchAt;
 		Object.seal(this);
@@ -6933,8 +7015,8 @@ const KotlinLabelIterator = class KotlinLabelIterator  extends SourcePatternIter
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegexgi},
+			_isWordCharacter: {value: isWordCharacterRegexgi}
 		});
 
 		Object.seal(this);
@@ -7370,7 +7452,7 @@ const JavaDecimalPatternIterator = class JavaDecimalPatternIterator extends Sour
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -7461,7 +7543,7 @@ const JavaNumberPatternIterator = class JavaNumberPatternIterator extends Source
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -7908,7 +7990,7 @@ const JavaAnnotationPatternIterator = class JavaAnnotationPatternIterator extend
 		super();
 		Object.defineProperties(this, {
 			_allowSpaceCharacter: {value: false, writable: true},
-			_isSpaceCharacter: {value: /\s/}
+			_isSpaceCharacter: {value: isSpaceCharacterRegex}
 		});
 		this._matchFunction = this._matchAt;
 		Object.seal(this);
@@ -7994,8 +8076,8 @@ const JavaLabelIterator = class JavaLabelIterator  extends SourcePatternIterator
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -8524,7 +8606,7 @@ const CSDecimalPatternIterator = class CSDecimalPatternIterator extends SourcePa
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -8616,7 +8698,7 @@ const CSNumberPatternIterator = class CSNumberPatternIterator extends SourcePatt
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -9134,8 +9216,8 @@ const CSAttributePatternIterator = class CSAttributePatternIterator extends Sour
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isSpaceCharacter: {value: /\s/},
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isSpaceCharacter: {value: isSpaceCharacterRegex},
 			_bracesNestingLevel: {value: 0, writable: true}
 		});
 
@@ -9298,8 +9380,8 @@ const CSLabelIterator = class CSLabelIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -9363,8 +9445,8 @@ const CSSymbolIterator = class CSSymbolIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
-			_isWordCharacter: {value: /\w/},
-			_isLetterCharacter: {value: /[a-zA-Z]/}
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -9840,7 +9922,7 @@ const JSDecimalPatternIterator = class JSDecimalPatternIterator extends SourcePa
 		super();
 		Object.defineProperties(this, {
 			_hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: /\d/}
+			_isNumberCharacter: {value: isNumberCharacterRegex}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -9877,7 +9959,7 @@ const JSNumberPatternIterator = class JSNumberPatternIterator extends SourcePatt
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			_isNumberCharacter: {value: /\d/},
+			_isNumberCharacter: {value: isNumberCharacterRegex},
 			_matchCheck: {value: null, writable: true}
 		});
 		this._matchFunction = this._matchFirstNumber;
@@ -10244,8 +10326,8 @@ const JSLabelIterator = class JSLabelIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -10293,7 +10375,7 @@ const JSSymbolIterator = class JSSymbolIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
-			_isWordCharacter: {value: /\w/}
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -11318,8 +11400,8 @@ const VbLabelIterator = class VbLabelIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: /[a-zA-Z]/},
-			_isWordCharacter: {value: /\w/}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
