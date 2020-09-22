@@ -3917,6 +3917,7 @@ const CppLabelIterator = class CppLabelIterator  extends SourcePatternIterator {
 		super();
 
 		Object.defineProperties(this, {
+			_characterSequence: {value: '', writable: true},
 			_isLetterCharacter: {value: /[a-zA-Z]/},
 			_isWordCharacter: {value: /\w/}
 		});
@@ -3930,6 +3931,7 @@ const CppLabelIterator = class CppLabelIterator  extends SourcePatternIterator {
 	_matchLetter(matchCharacter) {
 
 		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._characterSequence += matchCharacter;
 			this._matchFunction = this._matchWordOrColon;
 			return true;
 		}
@@ -3942,12 +3944,20 @@ const CppLabelIterator = class CppLabelIterator  extends SourcePatternIterator {
 	_matchWordOrColon(matchCharacter) {
 
 		if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+			this._characterSequence += matchCharacter;
 			return true;
 		}
 
 		if (matchCharacter === ':') {
+
+			if (this._characterSequence == 'public' || this._characterSequence == 'protected' || this._characterSequence == 'private') {
+				this._hasNext = false;
+				return false;
+			}
+
 			this._matchFunction = this._matchEnd;
 			return true;
+
 		}
 
 		this._hasNext = false;
