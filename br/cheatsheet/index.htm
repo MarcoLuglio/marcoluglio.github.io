@@ -8398,7 +8398,7 @@ let meuObjeto = new DentroDoModulo();</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust multipart'
->// Result&lt;R, E&gt;
+>// retornar múltiplos valores com Result&lt;R, E&gt;
 
 fn may_return_error(x:i32) -> Result&lt;i32, &'static str&gt; {
 	None => Err("Error"),
@@ -8411,10 +8411,10 @@ match may_return_error(1) {
 	Err(err) =&gt; println!("Error: {}", err),
 }
 
-// runtime panic
+// runtime panic + match Ok, Err
 
 fn may_runtime_panic() {
-	panic!("Erro message");
+	panic!("Error message");
 }
 
 match may_runtime_panic() {
@@ -8448,7 +8448,39 @@ let result = r#try!(may_panic()); // 2018 legacy</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->// defer, panic e recover</code
+>// retornar múltiplos valores
+
+func mayReturnError(fileName string) (content string, err error) {
+
+	file, err := os.Open(fileName)
+	defer file.Close()
+
+	if err != nil {
+		return ""
+	}
+
+	return file.String()
+
+}
+
+// runtime panic + recover
+
+func mayRuntimePanic() {
+	panic("Error message")
+}
+
+func f() {
+
+	// "catch" block as self executing labda
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered control")
+		}
+	}()
+
+	mayRuntimePanic()
+
+}</code
 >
 </div>
 
