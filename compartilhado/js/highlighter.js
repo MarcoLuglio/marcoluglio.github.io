@@ -3036,7 +3036,8 @@ const GoTypesToken = class GoTypesToken  extends SourceSimpleCharacterSequenceTo
 			'int',
 			'uintptr',
 			'string',
-			'bool'
+			'bool',
+			'error',
 
 		]);
 
