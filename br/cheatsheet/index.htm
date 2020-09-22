@@ -548,9 +548,9 @@ bloco
 /// * `arg1` - The argument of the function
 /// # Examples
 /// ```
-/// let result = someFunction(2);
+/// let result = some_function(2);
 /// ```
-fn someFunction(arg1:i32) -&gt; i32 {
+fn some_function(arg1:i32) -&gt; i32 {
 	0
 }
 
@@ -928,7 +928,26 @@ let x:i32 = 5; // tipo explícito
 
 
 let mut x = 5; // variável
-let x = 5; // constante</code
+let x = 5; // constante
+
+let a:i32 = 1;
+let ponteiro_de_int_const:*const i32 = &amp;a;
+let mut b:i32 = 1;
+let ponteiro_de_int_var:*mut i32 = &amp;mut b;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>var x = 5 // tipo implícito
+var x int32 = 5 // tipo explícito
+x := 5 // atalho para declaração
+
+const x = 5 // constante
+
+var a = 1
+var ponteiroDeInt *int = &a // ponteiro</code
 >
 </div>
 
@@ -1100,6 +1119,15 @@ let (x, y) = (1, 2);</code
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// não suporta, mas as funções
+// podem retornar valores múltiplos
+min, max := getBounds(points)</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// C++ 17+
@@ -1200,6 +1228,17 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 let _ = "bem sucinto";
 let _123 = "meio confuso";
 let _if = "meio confuso";</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>var _123 = 1
+var _if = 1
+var π = 3.14159
+var 你好 = "你好世界"
+// letras unicode, números e _</code
 >
 </div>
 
@@ -1377,6 +1416,17 @@ let p = match n { // p será do tipo i32
 
 // ok mas panic se for None
 let q = n.unwrap(); // q será do tipo i32</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>*a := nil
+// nil para ponteiros
+// e tipos que não são structs,
+// array, slice, map, string, rune,
+// boolean e números</code
 >
 </div>
 
@@ -8332,6 +8382,29 @@ let meuObjeto = new DentroDoModulo();</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>match may_panic() {
+	Ok(result) =&gt; println!("{}", result),
+	Err(err) =&gt; println!("Error: {}", err),
+}
+
+// ou
+
+let result may_panic()?;
+// older syntax
+let result = r#try!(may_panic());</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// defer, panic e recover</code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp multipart'
 >#include &lt;exception&gt;
@@ -8403,52 +8476,9 @@ defer {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->match may_panic() {
-	Ok(result) =&gt; println!("{}", result),
-	Err(err) =&gt; println!("Error: {}", err),
-}
-
-// ou
-
-let result may_panic()?;
-// older syntax
-let result = r#try!(may_panic());</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->try {
-
-	someObject.mayThrowException();
-
-} catch (Exception ex) {
-
-	// rethrows exception
-	throw;
-
-	// ou throw nova exceção com InnerException
-	// não devemos lançar System.Exception diretamente
-	throw new ArgumentException("Novo erro", ex);
-
-} finally {
-	//
-}
-
-try {
-	//
-} catch {
-	//
-}
-
-try {
-	//
-} finally {
-	//
-}</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
 >
 </div>
 
@@ -8534,6 +8564,40 @@ public final class PodeOuNao {
 </div>
 
 <div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>try {
+
+	someObject.mayThrowException();
+
+} catch (Exception ex) {
+
+	// rethrows exception
+	throw;
+
+	// ou throw nova exceção com InnerException
+	// não devemos lançar System.Exception diretamente
+	throw new ArgumentException("Novo erro", ex);
+
+} finally {
+	//
+}
+
+try {
+	//
+} catch {
+	//
+}
+
+try {
+	//
+} finally {
+	//
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >try {
@@ -8557,6 +8621,14 @@ try {
 }</code
 >
 <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch -->
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
 </div>
 
 <div class='codeblock'>
@@ -11817,6 +11889,58 @@ impl Parcelavel for ResultadoCaixa {
 </div>
 
 <div class='codeblock'>
+	<p>Go</p>
+	<code class='go'
+>package main
+
+import "fmt"
+
+type SomeBaseStruct struct {
+	a int32
+}
+
+// structs não suportam herança
+// mas tem um atalho para fazer composição
+
+type SomeStruct struct {
+	SomeBaseStruct // composição
+	x int32
+}
+
+// structs tem métodos
+
+func (s *SomeStruct) getX() int32 {
+	return s.x
+}
+
+func (s *SomeStruct) setX(newValue int32) {
+	s.x = newValue
+}
+
+func setToTen(s *SomeStruct) {
+	s.setX(10)
+}
+
+func main() {
+
+	s1 := SomeStruct {
+		x: 2, // vírgula dangling não é um erro, é obrigatório
+	}
+
+	s2 := SomeStruct {
+		x: 2} // ou então } tem que vir na mesma linha
+
+	// mesmo que c++, se passar por valor faz uma cópia sem avisar
+	setToTen(&s2)
+
+	fmt.Println(s1.x)
+	fmt.Println(s2.x)
+
+} </code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// structs e classes são idênticas
@@ -12073,6 +12197,18 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 -
 </div>
 
+
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+
+
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
@@ -12110,6 +12246,11 @@ End With</code>
 
 <div class='codeblock'>
 <p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
 -
 </div>
 
@@ -12543,8 +12684,19 @@ compra1.descontarFidelidade();</code
 >
 </div>
 
-<div class='codeblock'>
 
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - ResultadoCaixa.cls</p>
 <code class='visualbasic'
 >'Evento
@@ -12609,6 +12761,11 @@ Set compra1 = new ResutadoCaixa
 
 <div class='codeblock'>
 <p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
 -
 </div>
 
@@ -12830,6 +12987,21 @@ a.prop = '';</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -12848,6 +13020,13 @@ a.prop = '';</code
 impl HasArea for Circle {
 	// is_invalid "herdado"
 }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='rust'
+>// Possui atalhos para composição de objetos</code
 >
 </div>
 
@@ -12961,6 +13140,21 @@ public interface Desenhavel {
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -12968,6 +13162,47 @@ public interface Desenhavel {
 <h3 id='interfaces'>Interfaces</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>trait HasArea {
+	fn area(&amp;self) -&gt; f64;
+}
+
+impl HasArea for Circle {
+	fn area(&amp;self) -&gt; f64 {
+		std::f64::consts::PI * (self.radius * self.radius)
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// Se uma struct possui todos os métodos
+// listados na interface, ele automaticamente
+// implementa uma interface sem precisar
+// declarar explicitamente
+
+import (
+	"math"
+)
+
+type HasArea interface {
+	Area() float64
+}
+
+type Circle struct {
+    radius float64
+}
+
+func (c Circle) Area() float64 {
+    return math.Pi * (c.radius * c.radius)
+}</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -13041,28 +13276,7 @@ let o2 = D()</code
 >
 </div>
 
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->trait HasArea {
-	fn area(&amp;self) -&gt; f64;
-}
 
-impl HasArea for Circle {
-	fn area(&amp;self) -&gt; f64 {
-		std::f64::consts::PI * (self.radius * self.radius)
-	}
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
@@ -13099,6 +13313,8 @@ class D : A, B {
 >
 </div>
 
+
+
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
@@ -13106,10 +13322,41 @@ class D : A, B {
 >
 </div>
 
+
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+
+
 <div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
+
+
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+
 
 </div>
 
@@ -13118,6 +13365,27 @@ class D : A, B {
 <h3 id='heranca'>Herança</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>trait Foo {
+	fn foo(&amp;self);
+}
+
+trait FooBar : Foo {
+	fn foobar(&amp;self);
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// não suporta herança,
+// mas tem um atalho para composição</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -13200,21 +13468,8 @@ let o2 = D()</code
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->trait Foo {
-	fn foo(&amp;self);
-}
-
-trait FooBar : Foo {
-	fn foobar(&amp;self);
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
@@ -13229,10 +13484,33 @@ trait FooBar : Foo {
 </div>
 
 <div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -13247,6 +13525,13 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
 ></code
 >
 </div>
@@ -13356,6 +13641,21 @@ trait FooBar : Foo {
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -13375,6 +13675,22 @@ trait FooBar : Foo {
 <h2>Resolução de tipos</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// ver "trait objects" na doc oficial
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -13401,16 +13717,8 @@ trait FooBar : Foo {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// ver "trait objects" na doc oficial
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
+<p>Kotlin</p>
+<code class='kotlin'
 >
 </code
 >
@@ -13425,10 +13733,33 @@ trait FooBar : Foo {
 </div>
 
 <div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 

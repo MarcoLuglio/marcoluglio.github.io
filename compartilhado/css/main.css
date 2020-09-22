@@ -295,6 +295,7 @@ div.codeblock.bubaloop p + code {
 	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
 	position: relative;
 	z-index: 2;
+	mix-blend-mode: normal;
 }
 
 .bubaloop.highlight strong.small {
