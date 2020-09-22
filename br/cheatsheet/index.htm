@@ -9668,17 +9668,18 @@ func fibonacci(c, quit chan int) {
 	x, y := 0, 1
 	for {
 		select {
-		case c &lt;- x:
-			x, y = y, x+y
-		case &lt;-quit:
-			fmt.Println("quit")
-			return
+			case c &lt;- x:
+				x, y = y, x + y
+			case &lt;- quit:
+				fmt.Println("quit")
+				return
 		}
 	}
 }
 
 // exemplo WaitGroup
 type httpPkg struct{}
+
 func (httpPkg) Get(url string) {}
 var http httpPkg
 
@@ -9689,7 +9690,7 @@ func main() {
 	quit := make(chan int)
 	go func() {
 		for i := 0; i &lt; 10; i++ {
-			fmt.Println(&lt;-c)
+			fmt.Println(&lt;- c)
 		}
 		quit &lt;- 0
 	}()
@@ -9699,7 +9700,7 @@ func main() {
 	// WaitGroup do pacote sync
 
 	var wg sync.WaitGroup
-	var urls = []string{
+	var urls = []string {
 		"http://www.golang.org/",
 		"http://www.google.com/",
 		"http://www.somestupidname.com/",
@@ -10336,7 +10337,7 @@ namespace ThreadExample {
 
 	private:
 
-		queue&lt;string&gt; dataQueue;
+		queue<span>&lt;<span>string</span>&gt;</span> dataQueue;
 
 		/// Lock simples explícita para sincronização
 		mutex modelLock;
@@ -10367,7 +10368,7 @@ namespace ThreadExample {
 	using std::mutex;
 
 	Model::Model() {
-		dataQueue = queue&lt;string&gt;();
+		dataQueue = <span>queue&lt;<span>string</span>&gt;</span>();
 	};
 
 	Model::~Model() {
@@ -10382,7 +10383,7 @@ namespace ThreadExample {
 
 	string Model::Next() {
 		// sincroniza o acesso das threads
-		lock_guard&lt;mutex&gt; _{modelLock};
+		lock_guard<span>&lt;<span>mutex</span>&gt;</span> _{modelLock};
 		if (!dataQueue.empty()) {
 			string element = dataQueue.front();
 			dataQueue.pop();
