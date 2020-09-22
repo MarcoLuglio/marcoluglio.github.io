@@ -1227,7 +1227,21 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 >let eu1:i32;
 let _ = "bem sucinto";
 let _123 = "meio confuso";
-let _if = "meio confuso";</code
+let _if = "meio confuso";
+
+// podemos ainda usar r# na frente
+// do nome pra evitar colisões
+// com palavras-chave e tipos
+let r#if = "muito confuso";
+let r#int = "muito confuso";
+
+// a diferença de r# ao invés de _
+// é que r# foi introduzido para
+// suportar códigos de edições anteriores
+// por exemplo, a palavra-chave try
+// foi criado na edição 2018,
+// invalidando a macro try! da edição 2015
+// que pode ser chamada com r#try! se necessário</code
 >
 </div>
 
@@ -8383,18 +8397,52 @@ let meuObjeto = new DentroDoModulo();</code
 
 <div class='codeblock'>
 <p>Rust</p>
-<code class='rust'
->match may_panic() {
+<code class='rust multipart'
+>// Result&lt;R, E&gt;
+
+fn may_return_error(x:i32) -> Result&lt;i32, &'static str&gt; {
+	None => Err("Error"),
+	Some(0) => Err("0 não permitido"),
+	Some(_) => Ok(x),
+}
+
+match may_return_error(1) {
+	Ok(result) =&gt; println!("{}", result),
+	Err(err) =&gt; println!("Error: {}", err),
+}
+
+// runtime panic
+
+fn may_runtime_panic() {
+	panic!("Erro message");
+}
+
+match may_runtime_panic() {
 	Ok(result) =&gt; println!("{}", result),
 	Err(err) =&gt; println!("Error: {}", err),
 }
 
 // ou
 
-let result may_panic()?;
-// older syntax
-let result = r#try!(may_panic());</code
+let result may_runtime_panic()?;
+
+// try {} block e ?
+// <a href='https://github.com/rust-lang/rust/issues/31436'>acompanhe essa feature</a>
+// e <a href='https://doc.rust-lang.org/beta/unstable-book/language-features/try-blocks.html'>unstable docs</a></code
 >
+
+<code class='rust'
+><strong>// NÃO COPIE!!! DEPRECATED!!!</strong>
+
+// houve uma proposta de usar do catch {},
+// mas ela foi substituída pelo try {}
+
+// havia uma sintaxe para try!
+// mas ela foi substituída por ?
+let result = try!(may_panic()); // 2015-
+let result = r#try!(may_panic()); // 2018 legacy</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -8691,8 +8739,8 @@ End Sub</code>
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->// <a href='https://github.com/rust-lang/rust/issues/43122'>track this feature</a>
-// and <a href='https://doc.rust-lang.org/beta/unstable-book/language-features/generators.html'>unstable docs</a></code
+>// <a href='https://github.com/rust-lang/rust/issues/43122'>acompanhe essa feature</a>
+// e <a href='https://doc.rust-lang.org/beta/unstable-book/language-features/generators.html'>unstable docs</a></code
 >
 </div>
 
@@ -9287,7 +9335,7 @@ do {
 
 
 
-<h4>Classes</h4>
+<h4>Structs ou classes</h4>
 
 <div class='comparison'>
 
@@ -10172,7 +10220,8 @@ fn main() {
 	drop(senderChannel);
 
 	// alternativa 1: thread e lambda
-	let mut lambdaElement = "lambda";
+	// move captura as variáveis no mesmo escopo
+	// da closure por valor ao invés de por referência
 	let lambda_thread = thread::spawn(move || {
 
 		let mut element:&amp;str;
@@ -10218,7 +10267,12 @@ fn main() {
 
 <div class='codeblock'>
 <p>Go</p>
--
+<code class='cpp'
+>// Não possui threads
+// mas veja o exemplo
+// acima para sincronização
+// de corrotinas</code
+>
 </div>
 
 
