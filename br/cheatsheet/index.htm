@@ -8597,6 +8597,155 @@ let meuObjeto = new DentroDoModulo();</code
 
 <section>
 
+<h2 id='visibilidade'>Visibilidade</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// se não especificar é private
+// pub para tornar padrão</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>/*
+In Go, an identifier that starts with
+a capital letter is exported from the package,
+and can be accessed by anyone outside
+the package that declares it.
+
+If an identifier starts with a lower case letter,
+it can only be accessed from within the package.
+
+If you need members in a type to only be accessed
+by members of that type, you then need to place
+that type and its member functions in a separate
+package, as the only type in that package.
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// padrão é??
+// public protected private
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>/*
+padrão é internal
+public class SomePublicClass {}
+internal class SomeInternalClass {}
+fileprivate class SomeFilePrivateClass {}
+private class SomePrivateClass {}
+
+extensions podem acessar private
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>/*
+public é padrão
+private, protected, internal and public
+
+tem traits? podem acessar private?
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// padrão é package private
+// que subclasses não conseguem acessar
+// public protected private para modificar</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>/*
+public 	Access is not restricted.
+protected 	Access is limited to the containing class or types derived from the containing class.
+internal 	Access is limited to the current assembly.
+protected internal 	Access is limited to the current assembly or types derived from the containing class.
+private 	Access is limited to the containing type.
+private protected 	Access is limited to the containing class or types derived from the containing class within the current assembly. Available since C# 7.2.
+
+extension methods podem acessar private?
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// export import
+// dentro de um módulo tudo é public
+// pode documentar com JSDoc
+// a visibilidade sugerida
+// usar _ como sugestão
+// ou closures</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+># começando com _ é protected
+# começando com __ é private</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>'<a href='http://www.macoratti.net/vb_class.htm'>ver descrição</a>
+'Private 	A classe não pode ser acessada fora do projeto.
+'Public Not Creatable 	Instâncias da classe somente podem ser criadas dentro do projeto que definiu a classe.Outras aplicações , no entanto, podem acessar a classe.
+'SingleUse 	Outras aplicações podem criar instâncias da classe.Porém a cada instância criada inicia uma cópia do programa que contém a classe.
+'Global SingleUse 	A classe atua como uma variável goblal no programa cliente.
+'MultiUse 	Outras aplicações podem criar inúmeras instâncias da classe iniciando somente uma vez o programa que contém a classe. Os projetos ActiveX DLL comportam-se assim.
+'Global MultiUse 	Idêntica a MultiUse mas a classe atua como uma variável goblal no programa cliente.
+</code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='excecoes'>Exceções</h2>
 
 <div class='comparison'>
