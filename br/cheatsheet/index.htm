@@ -5045,6 +5045,21 @@ object o = new object();</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust - Ownership e Lifetimes</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go - Mark and Sweep GC</p>
+<code class='go'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++ - RAII</p>
 <code class='cpp'
 >// smart pointers
@@ -5069,17 +5084,9 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
-<p>Rust - Ownership e Lifetimes</p>
-<code class='rust'
+<p>Kotlin</p>
+<code class='kotlin'
 >
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C# - Mark and Sweep GC</p>
-<code class='cs'
->// weak references
 </code
 >
 </div>
@@ -5093,10 +5100,33 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
+<p>C# - Mark and Sweep GC</p>
+<code class='cs'
+>// weak references
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript - Mark and Sweep GC</p>
 <code class='javascript'
 >// weak maps
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -5820,12 +5850,12 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 
 // switch e match
 match x {
-	1 | 2 => println!("one or two"),
-	3...5 => println!("between three and five"),
-	6 => println!("six"),
+	1 | 2 =&gt; println!("one or two"),
+	3...5 =&gt; println!("between three and five"),
+	6 =&gt; println!("six"),
 	// default é opcional, mas se ausente
 	// os demais cases devem ser exaustivos
-	_ => println!("something else"),
+	_ =&gt; println!("something else"),
 }
 
 // ver <a href='https://doc.rust-lang.org/1.1.0/book/patterns.html'>destructuring</a></code
@@ -6036,17 +6066,17 @@ label: {
 
 // switch e "match" - java 12+
 switch (day) {
-    case MONDAY, FRIDAY, SUNDAY -> System.out.println(6);
-    case TUESDAY                -> System.out.println(7);
-    case THURSDAY, SATURDAY     -> System.out.println(8);
-    case WEDNESDAY              -> System.out.println(9);
+    case MONDAY, FRIDAY, SUNDAY -&gt; System.out.println(6);
+    case TUESDAY                -&gt; System.out.println(7);
+    case THURSDAY, SATURDAY     -&gt; System.out.println(8);
+    case WEDNESDAY              -&gt; System.out.println(9);
 }
 
 // switch expressions - java 14+
 var title = switch (person) {
-	case Dali, Picasso      -> "painter";
-	case Mozart, Prokofiev  -> "composer";
-	case Goethe, Dostoevsky -> "writer";
+	case Dali, Picasso      -&gt; "painter";
+	case Mozart, Prokofiev  -&gt; "composer";
+	case Goethe, Dostoevsky -&gt; "writer";
 };</code
 >
 </div>
@@ -6114,9 +6144,9 @@ switch(shape) {
 // switch expressions - requer C# 8+
 var switchValue = id switch
 {
-	"ab" => 1,
-	"cd" => 2,
-	_ => 0
+	"ab" =&gt; 1,
+	"cd" =&gt; 2,
+	_ =&gt; 0
 };</code
 >
 </div>
@@ -6588,6 +6618,13 @@ retorno = ComParametroERetorno(param, param2)</code
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// ver <a href='#ponteiros'>ponteiros</a></code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// ver <a href='#ponteiros'>ponteiros</a></code
@@ -6679,6 +6716,14 @@ if (!OutExample(c)) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ><strong class='small comment'>'O padrão é passar tudo por referência,</strong>
@@ -6710,6 +6755,11 @@ End Sub</code
 
 <div class='codeblock'>
 <p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
 -
 </div>
 
@@ -6785,6 +6835,15 @@ function point(x, y) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+def point(x, y = 4):
+	#</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Private Sub Point(X As Integer, Optional Y As Integer = 4)
@@ -6803,6 +6862,14 @@ End Sub</code
 
 <div class='codeblock'>
 <p>Rust</p>
+<code class='rust'
+>// usar builder pattern
+// como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
 <code class='rust'
 >// usar builder pattern
 // como alternativa</code
@@ -6915,7 +6982,8 @@ namedArgs(tooMany = 2, 1, false, "args")</code
 		int tooMany,
 		int args,
 		bool toRemember,
-		string theOrder
+		string theirMeaning = "a",
+		string byPosition = "b"
 		) {
 
 		//
@@ -6929,7 +6997,8 @@ var ex = new NamedArgs(
 	args: 1,
 	toRemember: false,
 	tooMany: 2,
-	theOrder: "named"
+	theirMeaning: "named",
+	byPosition: "arg"
 );</code
 >
 </div>
@@ -6939,6 +7008,18 @@ var ex = new NamedArgs(
 <code class='javascript'
 >// usar builder pattern
 // como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>def named_args(tooMany, args, toRemember, theirMeaning = 'a', byPosition = 'b'):
+	#
+
+# TODO mais testes
+
+named_args(tooMany = 2, args = 1, toRemember = false)</code
 >
 </div>
 
@@ -6966,6 +7047,11 @@ var ex = new NamedArgs(
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -6980,10 +7066,7 @@ var ex = new NamedArgs(
 
 <div class='codeblock'>
 <p>Swift</p>
-<code class='swift'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -7012,7 +7095,12 @@ var ex = new NamedArgs(
 
 <div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
+-
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
 >
 </code
 >
@@ -7020,9 +7108,7 @@ var ex = new NamedArgs(
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -7040,7 +7126,7 @@ var ex = new NamedArgs(
 // usa macros para argumentos variádicos O_O'
 macro_rules! imprimirSimples {
 
-	($titulo:expr, $($pagina:expr), +) => {{
+	($titulo:expr, $($pagina:expr), +) =&gt; {{
 
 		// na "assinatura" do macro não dá pra diferenciar os tipos
 		// mas o corpo vai lançar exceção na linha quando compilar
@@ -7067,6 +7153,48 @@ imprimirSimples!("resumo", 1, 2, 5);</code
 
 // TODO terminar exemplo</code
 >
+</div>
+
+<div class='codeblock'>
+
+<p>Go</p>
+<code class='go'
+>// argumentos do mesmo tipo
+
+func imprimirSimples(titulo string, paginas ...int) {
+	for _, pagina := range paginas {
+		fmt.Printf("Imprimindo página %v)\n", pagina)
+	}
+}
+
+imprimirSimples("resumo", 1, 2, 5)</code
+>
+
+<p>Go</p>
+<code class='go'
+>// argumentos de todos os tipos
+
+// TODO Object ou interface{}
+func imprimir(titulo string, paginas ...interface{}) {
+	for _, pagina := range paginas {
+		/*
+		TODO
+		switch v := x.(type) {
+			case string:
+				 return "A string"
+			case int32:
+				 return "An Integer"
+			default:
+				 return "A default"
+		}
+		fmt.Println("Imprimindo página " + pagina)
+		*/
+	}
+}
+
+imprimir("resumo", 1, /*Enumerable.Range(2, 4),*/ "capítulo 2")</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -7391,6 +7519,16 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>def imprimirSimples(titulo, *paginas):
+for pagina in paginas:
+	print("Imprimindo página " + pagina)
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' argumentos do mesmo tipo
@@ -7420,6 +7558,52 @@ Imprimir "resumo", 1, 2, 5</code>
 <h3 id='lambdas'>Lambdas</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>fn main() {
+
+	// Increment via closures and functions.
+	fn function(i: i32) -> i32 { i + 1 }
+
+	// Closures are anonymous, here we are binding them to references
+	// Annotation is identical to function annotation but is optional
+	// as are the `{}` wrapping the body. These nameless functions
+	// are assigned to appropriately named variables.
+	let closure_annotated = |i: i32| -> i32 { i + 1 };
+	let closure_inferred  = |i     |          i + 1  ;
+
+	let i = 1;
+	// Call the function and closures.
+	println!("function: {}", function(i));
+	println!("closure_annotated: {}", closure_annotated(i));
+	println!("closure_inferred: {}", closure_inferred(i));
+
+	// A closure taking no arguments which returns an `i32`.
+	// The return type is inferred.
+	let one = || 1;
+	println!("closure returning one: {}", one());
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// suporta funções anônimas e closures
+// mas não lambda com arrow syntax ou algo parecido
+
+func adder() func(int) int {
+	sum := 0
+	return func(x int) int {
+		sum += x
+		return sum
+	}
+}</code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -7467,61 +7651,11 @@ superior({(x:Int) -&gt; Int in
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
+<p>Kotlin</p>
+<code class='kotlin'
+>val sum: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
 
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->public class Main {
-
-	public static void Main(string[] args) {
-
-
-
-
-
-
-
-		// declaração simplificada
-		Main.superior(() =&gt; System.Console.WriteLine("lambda"));
-
-
-		// declaração simplificada
-		Main.superior(x =&gt; x + 1);
-
-		// declaração completa
-		Main.superior((int x) =&gt; {
-			return x + 1;
-		});
-
-		// Main.superior(x, y -&gt; x + y);
-
-	}
-
-	public delegate void LambdaDelegate();
-
-
-
-
-	public static void superior(LambdaDelegate funcao) {
-		funcao();
-	}
-
-	public delegate int Lambda2Delegate(int x);
-
-
-
-
-	public static void superior(Lambda2Delegate funcao) {
-		System.Console.WriteLine(funcao(1));
-	}
-
-}</code
+// suporta closures tb</code
 >
 </div>
 
@@ -7577,6 +7711,57 @@ superior({(x:Int) -&gt; Int in
 </div>
 
 <div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>public class Main {
+
+	public static void Main(string[] args) {
+
+
+
+
+
+
+
+		// declaração simplificada
+		Main.superior(() =&gt; System.Console.WriteLine("lambda"));
+
+
+		// declaração simplificada
+		Main.superior(x =&gt; x + 1);
+
+		// declaração completa
+		Main.superior((int x) =&gt; {
+			return x + 1;
+		});
+
+		// Main.superior(x, y -&gt; x + y);
+
+	}
+
+	public delegate void LambdaDelegate();
+
+
+
+
+	public static void superior(LambdaDelegate funcao) {
+		funcao();
+	}
+
+	public delegate int Lambda2Delegate(int x);
+
+
+
+
+	public static void superior(Lambda2Delegate funcao) {
+		System.Console.WriteLine(funcao(1));
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >function superior(funcao) {
@@ -7603,6 +7788,27 @@ superior((x) =&gt; {
 
 // superior(x, y =&gt; x + y)</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>x = lambda a, b, c : a + b + c
+
+# TODO mover para exemplo de closure
+def myfunc(n):
+	return lambda a : a * n
+
+mydoubler = myfunc(2)
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>// ver <a href='https://www.vbforums.com/showthread.php?888672-VBA-Lambda-Syntax-No-script-control-or-cheats!-Happy-for-ports-to-VB6'>exemplo</a>
 </div>
 
 </div>
@@ -8400,10 +8606,10 @@ let meuObjeto = new DentroDoModulo();</code
 <code class='rust multipart'
 >// retornar múltiplos valores com Result&lt;R, E&gt;
 
-fn may_return_error(x:i32) -> Result&lt;i32, &'static str&gt; {
-	None => Err("Error"),
-	Some(0) => Err("0 não permitido"),
-	Some(_) => Ok(x),
+fn may_return_error(x:i32) -&gt; Result&lt;i32, &amp;'static str&gt; {
+	None =&gt; Err("Error"), // retorna um erro
+	Some(0) =&gt; Err("0 não permitido"), // retorna um erro
+	Some(_) =&gt; Ok(x),
 }
 
 match may_return_error(1) {
@@ -8413,8 +8619,9 @@ match may_return_error(1) {
 
 // runtime panic + match Ok, Err
 
-fn may_runtime_panic() {
-	panic!("Error message");
+fn may_runtime_panic() -&gt; &amp;str {
+	panic!("Error message"); // gera uma exceção
+	"Ok"
 }
 
 match may_runtime_panic() {
@@ -8424,7 +8631,11 @@ match may_runtime_panic() {
 
 // ou
 
-let result may_runtime_panic()?;
+// pode usar Result ou Option
+fn a() -&gt; Result&lt;a, b&gt; { // TODO
+	let result = may_runtime_panic()?;
+	Ok(result)
+}
 
 // try {} block e ?
 // <a href='https://github.com/rust-lang/rust/issues/31436'>acompanhe essa feature</a>
@@ -8452,30 +8663,44 @@ let result = r#try!(may_panic()); // 2018 legacy</code
 
 func mayReturnError(fileName string) (content string, err error) {
 
+	// defer é mais ou menos um bloco "finally"
+	// sempre vai executar ao final da função
+	// em que foi definido
+
+	// se você tiver vários defers eles irão
+	// executar na ordem oposta em que foram
+	// definidos (first in, last out)
+
 	file, err := os.Open(fileName)
 	defer file.Close()
 
 	if err != nil {
-		return ""
+		return "", err // retorna um erro
 	}
 
-	return file.String()
+	return file.String(), err
 
 }
 
 // runtime panic + recover
 
 func mayRuntimePanic() {
-	panic("Error message")
+	panic("Error message") // gera uma exceção
 }
 
 func f() {
 
-	// "catch" block as self executing labda
+	// bloco "catch" como um lambda auto executável
+	// o que torna ele um catch ao invés de um finally
+	// é que nós checamos o resultado de recover antes
+	// de prosseguir
+
 	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("Recovered control")
+		// recover() == nil se nenhum panic ocorreu
+		if r := recover(); r == nil {
+			return
 		}
+		fmt.Println("Recovered control")
 	}()
 
 	mayRuntimePanic()
@@ -8492,13 +8717,13 @@ func f() {
 using std::exception;
 
 try {
-	throw anyType;
+	throw anyType; // gera uma exceção
 	// ou simplesmente
-	throw;
+	throw; // gera uma exceção
 } catch (const exception&amp; ex) {
-	//
+	// roda se jogou uma exceção
 } catch (...) {
-	//
+	// roda sempre, independente se uma exceção ocorreu ou não
 }</code
 >
 
@@ -8506,8 +8731,8 @@ try {
 ><strong>// NÃO COPIE!!! DEPRECATED!!!</strong>
 
 // havia uma sintaxe para "checked exceptions"
-int myfunction(int param) throw();
-int myfunction(int param) throw(someType);</code
+int podeOuNao(int param) throw();
+int podeOuNao(int param) throw(someType);</code
 >
 </div>
 
@@ -8516,43 +8741,88 @@ int myfunction(int param) throw(someType);</code
 <code class='objectivec'
 >- (void) someMethod {
 	@try {
-		//
+		@throw exception; // gera uma exceção
 	} @catch (NSException *exception) {
-		@throw exception; //  rethrows exception?
+		// roda se jogou uma exceção
 	} @finally {
-		//
+		// roda sempre, independente se uma exceção ocorreu ou não
 	}
 }
 
 // ou
 
-someCFunction(); // TODO</code
+someCFunction(); // TODO exception estilo C, com error codes?</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
-<code class='swift'
->enum MLError : ErrorType {
+<code class='swift multipart'
+>enum MLError : Error {
 	case Bad
 	case Worse
-}
+	case Worst
+}</code
+>
 
-func canThrowErrors() throws -&gt; String {
+<code class='swift multipart'
+><strong>// throws antes do corpo da função indica</strong>
+<strong class='small comment'>// que ela pode gerar uma exceção e</strong>
+<strong class='small comment'>// vai propagá-la ao invés de tratá-la</strong>
+<strong class='small comment'>// cabe a quem executou a função tratar</strong>
+<strong class='small comment'>// a exceção OBRIGATORIAMENTE</strong>
+<strong class='small comment'>// ou indicar que vai propagá-la também</strong>
+func podeOuNao() <strong class='small'>throws</strong> -&gt; String {
 	throw MLError.Bad
 }
 
-func cannotThrowErrors() -&gt; String {
+// para outras funções, é esperado que
+// a exceção seja tratada dentro dela mesma
+func naoPode() -&gt; String {
 	//
-}
-
-defer {
-	//
-}
-
-// usar do-catch, try?, try! ou indicar throws</code
+}</code
 >
-<!-- https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html -->
+
+<code class='swift multipart'
+>// para tratar exceções
+
+// defer é mais ou menos um bloco "finally"
+// sempre vai executar ao final da função
+// em que foi definido
+
+// se você tiver vários defers eles irão
+// executar na ordem oposta em que foram
+// definidos (first in, last out)
+
+do {
+	// abrir resources
+	defer {
+		// fechar resources
+	}
+	try throw MLError.Bad // gera uma exceção
+} catch MLError.Bad {
+	// roda se jogou uma exceção
+} catch MLError.Worse, MLError.Worst {
+	// roda se jogou uma exceção
+}
+
+// ou com try? - nil se jogar exceção
+
+let result = try? podeOuNao() {
+	// roda se for tudo bem
+}
+
+// mesmo que
+
+let result = try? podeOuNao()
+guard result != nil else { return }
+
+// ou com try! - gera runtime exception se throws
+
+let result = try! podeOuNao()
+
+// TODO rethrows</code
+>
 </div>
 
 <div class='codeblock'>
@@ -8568,13 +8838,14 @@ defer {
 <code class='java'
 >public class Main {
 
-	<strong>// Indicamos que não queremos cuidar da checked exception</strong>
-	<strong class='small comment'>// neste ponto do código com "throws" e deixamos o erro</strong>
-	<strong class='small comment'>// se propagar</strong>
+	<strong>// throws antes do corpo da função indica</strong>
+	<strong class='small comment'>// que ela pode gerar uma exceção e</strong>
+	<strong class='small comment'>// vai propagá-la ao invés de tratá-la</strong>
+	<strong class='small comment'>// cabe a quem executou a função tratar</strong>
+	<strong class='small comment'>// a exceção OBRIGATORIAMENTE</strong>
+	<strong class='small comment'>// ou indicar que vai propagá-la também</strong>
 	public static void main(String[] args) <strong class='small'>throws Exception</strong> {
-		PodeOuNao problematico = new PodeOuNao();
-		<strong>problematico.checkedMethod();</strong>
-		problematico.uncheckedMethod();
+		throw new Exception();
 	}
 
 }</code
@@ -8584,18 +8855,25 @@ defer {
 <code class='java'
 >public class Main {
 
+	// para outras funções, é esperado que
+	// a exceção seja tratada dentro dela mesma
 	public static void main(String[] args) {
+
 		PodeOuNao problematico = new PodeOuNao();
-		<strong>// Contemos a propagação da checked exception</strong>
-		<strong class='small comment'>// com try catch</strong>
+
+		// para tratar exceções
+
+		// obrigatório tratar ou indicar que vai propagar
 		<strong class='small'>try {</strong>
 			<strong>problematico.checkedMethod();</strong>
 		<strong class='small'>} catch (Exception ex) {</strong>
-			//
+			// roda se jogou uma exceção
 		<strong>} finally {</strong>
-			//
+			// roda sempre
 		<strong>}</strong>
+
 		problematico.uncheckedMethod();
+
 	}
 
 }</code
@@ -8606,15 +8884,20 @@ defer {
 >public class Main {
 
 	public static void main(String[] args) {
+
 		PodeOuNao problematico = new PodeOuNao();
+
+		// para tratar exceções
+
+		// opcional tratar ou indicar que vai propagar
 		try {
 			problematico.uncheckedMethod();
 		} catch (Exception ex) {
-			// throw nova exceção com cause
-			throw new RuntimeException(ex);
+			// roda se jogou uma exceção
 		} finally {
-			//
+			// roda sempre
 		}
+
 	}
 
 }</code
@@ -8647,32 +8930,23 @@ public final class PodeOuNao {
 <p>C#</p>
 <code class='cs'
 >try {
-
-	someObject.mayThrowException();
-
+	throw new ArgumentException("Error"); // gera uma exceção
 } catch (Exception ex) {
-
-	// rethrows exception
-	throw;
-
-	// ou throw nova exceção com InnerException
-	// não devemos lançar System.Exception diretamente
-	throw new ArgumentException("Novo erro", ex);
-
+	// roda se jogou uma exceção
 } finally {
-	//
+	// roda sempre
 }
 
 try {
-	//
+	// sem finally
 } catch {
-	//
+	// roda se jogou uma exceção
 }
 
 try {
-	//
+	// sem catch
 } finally {
-	//
+	// roda sempre
 }</code
 >
 </div>
@@ -8681,18 +8955,16 @@ try {
 <p>JavaScript</p>
 <code class='javascript'
 >try {
-	throw anyType;
+	throw anyType; // gera uma exceção
 	// mas geralmente
-	throw new Error('Whoops!');
+	throw new Error('Whoops!'); // gera uma exceção
 } catch (e if e instanceof Error) {
-	//
+	// roda se jogou uma exceção
 } catch (ex) {
-	throw ex; // rethrows
+	// roda se jogou uma exceção
 } finally {
-	//
+	// roda sempre
 }
-
-// TODO pode nested
 
 try {
 	// sem catch
@@ -8700,14 +8972,29 @@ try {
 	//
 }</code
 >
-<!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch -->
 </div>
 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>try:
+	raise Exception("Error") # gera uma exceção
+	# ou simplesmente
+	raise # gera uma exceção
+except Exception as ex:
+	# roda se jogou uma exceção
+finally:
+	# roda sempre
+
+try:
+	# sem finally
+except:
+	# roda se jogou uma exceção
+
+try:
+	# sem except
+finally:
+	# roda sempre</code
 >
 </div>
 
@@ -11699,8 +11986,8 @@ std::get&lt;0&gt;(valores);</code
 >let someTuple: (Double, Double, Double) = (3.14159, 2.71828, 1.1)
 someTuple.0
 // lembrando que uma tuple vazia em swift significa Void
-// () -> ()
-// () -> Void</code
+// () &gt; ()
+// () &gt; Void</code
 >
 </div>
 
@@ -12707,7 +12994,7 @@ class D : C, P, Q {
 	}
 
 	// c# 7
-	private int calcularFidelidade => this.total - 1;
+	private int calcularFidelidade =&gt; this.total - 1;
 
 	private int total = 0;
 
@@ -14137,7 +14424,7 @@ pub struct MusicNote {
 <<strong>}</strong>
 
 impl fmt::Display for MusicNote {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -> fmt::Result {
+	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
 		write!(formatter, "{}{}", self.step, self.semitone)
 	}
 }</code
@@ -14177,13 +14464,13 @@ pub enum Step {
 impl fmt::Display for Step {
 	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
 		match *self {
-			Step::Do  | Step::C => write!(formatter, "Do"),
-			Step::Re  | Step::D => write!(formatter, "Re"),
-			Step::Mi  | Step::E => write!(formatter, "Mi"),
-			Step::Fa  | Step::F => write!(formatter, "Fa"),
-			Step::Sol | Step::G => write!(formatter, "Sol"),
-			Step::La  | Step::A => write!(formatter, "La"),
-			Step::Si  | Step::B => write!(formatter, "Si")
+			Step::Do  | Step::C =&gt; write!(formatter, "Do"),
+			Step::Re  | Step::D =&gt; write!(formatter, "Re"),
+			Step::Mi  | Step::E =&gt; write!(formatter, "Mi"),
+			Step::Fa  | Step::F =&gt; write!(formatter, "Fa"),
+			Step::Sol | Step::G =&gt; write!(formatter, "Sol"),
+			Step::La  | Step::A =&gt; write!(formatter, "La"),
+			Step::Si  | Step::B =&gt; write!(formatter, "Si")
 		}
 	}
 }
@@ -14567,7 +14854,7 @@ print(musicNote) // Do♯</code
 }
 
 <strong>// posso fazer isso estático tb dentro da classe MusicNote</strong>
-<strong class='small'>func + (left: MusicNote, right: Semitone) -> MusicNote {</strong>
+<strong class='small'>func + (left: MusicNote, right: Semitone) -&gt; MusicNote {</strong>
 
 	if right == Semitone.none {
 		return left
@@ -14577,14 +14864,14 @@ print(musicNote) // Do♯</code
 	var newSemitone:Semitone = right
 
 	if newSemitone == Semitone.sharp
-		&& (newStep == Step.mi || newStep == Step.e)
+		&amp;&amp; (newStep == Step.mi || newStep == Step.e)
 		{
 
 		newStep = Step.fa
 		newSemitone = Semitone.none
 
 	} else if newSemitone == Semitone.flat
-		&& (newStep == Step.fa || newStep == Step.f)
+		&amp;&amp; (newStep == Step.fa || newStep == Step.f)
 		{
 
 		newStep = Step.mi;
@@ -15858,19 +16145,20 @@ JavaScript ainda não chegou lá.</p>
 -->
 
 <!--
-enums
-Sobrecarga de função
+pass by reference, inout, ref, etc
 rust loop {}
 swift lazy
-c# explicit e implicit keywords
-pass by reference, inout, ref, etc
-
 stategy pattern
 Sintaxe pra aceitar uma função - se for strategy interna mais fácil, se for externa c++ e rust são mais complicados por causa da lifetime da função
+enums
+guard e match
+Sobrecarga de função
+Requisições http
+c# explicit e implicit keywords
 
 macros
 unions?
-guard e match
+
 conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
 observer ou eventos customizados
 default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure, linq, traits, extension methods, if (a = 1) if let while let, macros, floata == floatb ou Math.abs(floata - floatb) < 0.001
@@ -15879,8 +16167,7 @@ Pointers, references, pointer to references, pointer to pointer, cast pointers t
 Eventos e setTimeout
 Observar objetos KVO, notification center, etc.
 
-Requisições http
-
+GUI
 
 Certificação
 Overload pode ter visibilidade diferente?
@@ -15890,6 +16177,9 @@ Cast um tipo para string chama tostring?
 Functional interface exemplo com métodos possíveis default overwrite object etc.
 
 Type erasure
+
+Dart
+PHP
 -->
 
 <script type='module' src='../../compartilhado/js/utils.js'></script>
