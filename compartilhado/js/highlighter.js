@@ -2987,6 +2987,7 @@ const GoKeywordToken = class GoKeywordToken  extends SourceSimpleCharacterSequen
 			'if',
 			'import',
 			'interface',
+			'iota',
 			'map',
 			'nil',
 			'select',
@@ -5267,6 +5268,7 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 			'protocol',
 			'public',
 			'required',
+			'rethrows',
 			'return',
 			'self',
 			'set',
@@ -7016,8 +7018,8 @@ const KotlinLabelIterator = class KotlinLabelIterator  extends SourcePatternIter
 		super();
 
 		Object.defineProperties(this, {
-			_isLetterCharacter: {value: isLetterCharacterRegexgi},
-			_isWordCharacter: {value: isWordCharacterRegexgi}
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
 		});
 
 		Object.seal(this);
@@ -10473,17 +10475,28 @@ const PythonKeywordToken = class PythonKeywordToken  extends SourceSimpleCharact
 
 	constructor() {
 		super('keyword', [
+			'__init__',
+			'as',
 			'async',
 			'await',
 			'class',
 			'def',
+			'else',
+			'except',
+			'finally',
 			'for',
+			'if',
 			'import',
 			'in',
+			'lambda',
 			'None',
+			'raise',
+			'self',
 			'True',
+			'try',
 			'False',
 			'while',
+			'with',
 			'yield'
 		]);
 
@@ -10504,6 +10517,7 @@ const PythonTypesToken = class PythonTypesToken  extends SourceSimpleCharacterSe
 	constructor() {
 		super('type', [
 
+			'Exception',
 			'int'
 
 		]);
@@ -10528,6 +10542,7 @@ const PythonPunctuationToken = class PythonPunctuationToken  extends SourceSimpl
 			':',
 			'+',
 			'-',
+			'*',
 			'=',
 			'&lt;',
 			'&gt;',
