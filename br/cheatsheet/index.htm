@@ -182,6 +182,101 @@ C++ e Objective-C são bastante parecidos pois possuem forte influência do C. S
 
 <section>
 
+<h2 id='tipolinguagem'>Tipo da linguagem</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+Nativa compilada
+<br />Usa LLVM
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+Nativa compilada
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+Nativa compilada
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+Nativa compilada
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+Nativa compilada
+<br />Usa LLVM
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+Process virtual machine
+<br />Register based vm
+<br />* Kotlin native é nativo
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+Process virtual machine (JVM)
+<br />Stack based vm
+<br />No Android utiliza Ahead of time compilation (AOT),
+<br />Em versões mais antigas utilizava register based vm (Dalvik)
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+Process virtual machine (<abbr title='Common language runtime'>CLR</abbr>)
+<br />Stack based vm
+<br />* .NET native é nativo
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+Interpretada + Just in time compiler
+<br />Runtime dentro dos navegadores ou Node.js
+<br />Spidermonkey para Firefox - stack based
+<br />V8 para Chrome/Opera/Edge Chromium/Node.js - register based
+<br />JavaScriptCore (também Nitro ou Squirrel Fish) para Safari - register based
+<br />Chakra para Edge antigo e Internet Explorer - ?? based
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+Interpretada (versão oficial sem just in time compiler)
+<br />Process virtual machine (PVM)
+<br />Stack based
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+Nativa compilada
+<br />Pode ser executada em modo interpretado
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+Instruções baixo nível que serão compiladas
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='comentarios'>Comentários <span>e documentação inline</span></h2>
 
 <h3>Comentários básicos</h3>
@@ -1612,6 +1707,13 @@ let parsed = i32::from_str(toParse).unwrap();</code
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >// tipo bool
@@ -2225,6 +2327,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 -
 </div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+
+</div>
+
 </div>
 
 
@@ -2334,6 +2441,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td>Integer</td><td>Depende do Hardware</td></tr>
 	</tbody>
 </table>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 
 </div>
 
@@ -2518,6 +2630,16 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+
+</div>
+
 </div>
 
 
@@ -2624,6 +2746,16 @@ oitoOuOitenta = Not oitoOuOitenta</code
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+
+</div>
+
 </div>
 
 
@@ -2660,6 +2792,11 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>Rust</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+
 </div>
 
 <div class='codeblock'>
@@ -2799,6 +2936,16 @@ JavaScript só possui um tipo numérico.</p>
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+
+</div>
+
 </div>
 
 <ol>
@@ -2866,6 +3013,13 @@ let u641 = 1_u64;
 // pointer size
 let isize1 = 1_isize;
 let usize1 = 1_usize;        </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -3029,6 +3183,20 @@ var l5 = 1L;
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -3047,6 +3215,13 @@ let f1 = 1f32;
 // f64 (double)
 let d1 = 1f64;
 let d2 = 1.0;                </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -3143,6 +3318,20 @@ let d6 = .7;                 </code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -3173,6 +3362,13 @@ let x1 = -0x0123456789ABCDEF;
 
 // TODO misturar notações
 // com sufixos</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -3310,6 +3506,20 @@ let x1 = -0X0123456789ABCDEF;</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -3324,6 +3534,13 @@ let x1 = -0X0123456789ABCDEF;</code
 >let i1 = 10;
 let p1 = 01;
 let p2 = 00.1;               </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -3385,6 +3602,20 @@ var p1 = 00.1;               </code
 <code class='javascript'
 >let i1 = 10;
 let p1 = 01;                 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -3451,6 +3682,13 @@ let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
 // e não realizam operações matemáticas
 
 // TODO converte para char e boolean</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -3660,6 +3898,20 @@ if (i === j) {
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -3673,6 +3925,13 @@ if (i === j) {
 <code class='rust'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -3748,6 +4007,20 @@ private void recebeByte(byte numero) {
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 
@@ -3760,6 +4033,13 @@ private void recebeByte(byte numero) {
 <code class='rust'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -3816,6 +4096,20 @@ private void recebeByte(byte numero) {
 <code class='javascript'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
 >
 </div>
 
@@ -4000,6 +4294,13 @@ let leminski = concat!("Merda é veneno.",
 // tipo String
 
 let simples = "A primeira faz \"tchan\" e só".to_string();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -4308,8 +4609,7 @@ beeGees = calvinHarris.replace('love', 'looove');
 
 Dim simples As String
 
-simples = "A primeira faz ""tchan"""
-</code
+simples = "A primeira faz ""tchan"""</code
 >
 </div>
 
@@ -4336,6 +4636,13 @@ vector
 	.chars()
 	.collect();
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -4401,6 +4708,13 @@ stringBuilder.ToString();</code
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -4475,6 +4789,13 @@ for (indice, valor) in prePopulada.iter().enumerate() {
 let tamanho = mdPrePopulada.len();
 
 // TODO comparar arrays</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -4571,6 +4892,7 @@ let tamanho = mdPrePopulada.count
 // comparar arrays</code
 >
 </div>
+
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
@@ -4752,6 +5074,13 @@ let tamanho =  = mdPrePopulada.length;
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim vazia() As Integer
@@ -4821,6 +5150,13 @@ lista.push(1);</code
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >
@@ -4883,6 +5219,13 @@ lista.push(1);</code
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim lista As Collection
@@ -4921,6 +5264,13 @@ lista.Add 1</code
 // Vec&lt;T&gt;
 // growable on heap
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -5020,6 +5370,20 @@ object o = new object();</code
 // e tipos de referência
 // tanto na stack quanto na heap
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -5147,6 +5511,13 @@ object o = new object();</code
 <h2 id='ponteiros'>Apontar é feio <span>Já dizia sua mãe</span></h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -5509,6 +5880,20 @@ namespace MarcoLuglio.PonteirosExample {
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -5533,6 +5918,13 @@ namespace MarcoLuglio.PonteirosExample {
 <h2 id='typealias'>Type Aliasing</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -5621,6 +6013,20 @@ delegate void StrategyFunctionDelegate();</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -5646,6 +6052,13 @@ delegate void StrategyFunctionDelegate();</code
 >for item in collection {
 	println!("{}", item);
 }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -5732,6 +6145,13 @@ for (item in collection) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >For Each item In collection
@@ -5752,6 +6172,13 @@ Next</code
 >for index in 0..5 {
 	println!("{}", x); // x: i32
 }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -5817,6 +6244,13 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
 </div>
@@ -5859,6 +6293,13 @@ match x {
 }
 
 // ver <a href='https://doc.rust-lang.org/1.1.0/book/patterns.html'>destructuring</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -6197,6 +6638,13 @@ switch (id) {
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >'label e goto, resume e next
@@ -6295,6 +6743,13 @@ fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
 superior(normal);
 superior(normalUnit);
 superior(retorno);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -6486,6 +6941,13 @@ normal('lolo'); // texto será 'lolo' e  arguments será ['lolo']
 normal(); // o parâmetro texto terá o valor undefined e arguments será []
 
 normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' e arguments será ['dadaísmo']</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
 >
 </div>
 
@@ -7826,6 +8288,13 @@ mydoubler = myfunc(2)
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >void externa() {
@@ -7931,6 +8400,13 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Java</p>
 <code class='java'
 >public class Main {
@@ -7979,6 +8455,20 @@ mydoubler = myfunc(2)
 	internaLambda();
 
 }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -8282,6 +8772,13 @@ console.log(closure()); // 2</code
 <div class='comparison large'>
 
 <div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
+
+<div class='codeblock'>
 
 	<div>
 
@@ -8519,6 +9016,13 @@ class MainClass {
 </div>
 
 <div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Java - marcoluglio/DentroDoModulo.java</p>
 <code class='java'
 >package marcoluglio;
@@ -8570,6 +9074,20 @@ export default class DentroDoModulo { /**/ }</code
 import DentroDoModulo from 'DentroDoModulo';
 
 let meuObjeto = new DentroDoModulo();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -12113,6 +12631,11 @@ Option Explicit
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >#include &lt;tuple&gt;
@@ -12162,6 +12685,13 @@ population.Item1;</code
 </div>
 
 <div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Java</p>
 -
 </div>
@@ -12169,6 +12699,20 @@ population.Item1;</code
 <div class='codeblock'>
 <p>JavaScript</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
 </div>
 
 </div>
@@ -12197,6 +12741,13 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 <code class='rust'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
 >
 </div>
 
@@ -12300,6 +12851,13 @@ for beverage in Beverage.allCases {
 <p>JavaScript</p>
 <code class='javascript'
 >// ver Symbol</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
 >
 </div>
 
@@ -14315,6 +14873,11 @@ let o2 = D()</code
 </div>
 
 <div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
 >template &lt;class T&gt;
@@ -14465,6 +15028,20 @@ public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 <code class='javascript'
 >// tipagem dinâmica
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -14652,6 +15229,11 @@ impl fmt::Display for Semitone {
 }</code
 >
 
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -15296,6 +15878,20 @@ namespace MarcoLuglio.OpOvExample {
 -
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -15365,6 +15961,11 @@ opOvCollection[2] = "tuesday and wednesday too";
 println!("{}", opOvCollection[2]);</code
 >
 
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -15822,6 +16423,20 @@ console.log(indexedCollection["tuesday"]);</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -15847,6 +16462,13 @@ console.log(indexedCollection["tuesday"]);</code
 <h3>Exportar para C</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
 
 <div class='codeblock'>
 
@@ -16016,16 +16638,33 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 </div>
 
 <div class='codeblock'>
-<p>Java</p>
-<code class='java'
->-</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
 >
 </div>
 
 <div class='codeblock'>
+<p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
-<code class='javascript'
->-</code
+-
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -16036,6 +16675,13 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 <h3>Importar do C</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+></code
+>
+</div>
 
 <div class='codeblock'>
 <p>C++</p>
@@ -16116,7 +16762,13 @@ namespace MarcoLuglio.FFIExample {
 </div>
 
 <div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
+<div class='codeblock'>
 <p>Java - TabelaNutricional.java</p>
 <code class='java'
 >package marcoLuglio.ffiExample;
@@ -16159,6 +16811,20 @@ public final class TabelaNutricionalBibliotecaNative {
 >// No navegador não existe, mas veja
 // <a href='https://webassembly.github.io/'>Web Assembly</a>
 // Já usando node.js veja o <a href='https://github.com/node-ffi/node-ffi'>plug-in FFI</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
 >
 </div>
 
@@ -16282,6 +16948,13 @@ JavaScript ainda não chegou lá.</p>
 >
 </div>
 
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -16327,8 +17000,12 @@ Functional interface exemplo com métodos possíveis default overwrite object et
 
 Type erasure
 
-Dart
+LLVM IR
+Assembly
+RISC
+
 PHP
+Dart
 -->
 
 <script type='module' src='../../compartilhado/js/utils.js'></script>
