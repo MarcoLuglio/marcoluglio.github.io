@@ -992,6 +992,10 @@ div.codeblock.bubaloop p + code {
 	color: #505B66;
 }
 
+.bubaloop.python .decorator {
+	color: #7F8EA3;
+}
+
 /* Visual Basic */
 
 .bubaloop.highlight.visualbasic strong {
@@ -1144,6 +1148,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.cs .istring,
 .bubaloop.highlight.cs .attribute,
 .bubaloop.highlight.java .annotation,
+.bubaloop.highlight.kotlin .annotation,
+.bubaloop.highlight.python .decorator,
 
 .bubaloop.highlight.javascript .variableName,
 .bubaloop.highlight.javascript .functionName,
