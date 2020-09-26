@@ -14288,16 +14288,45 @@ func (c Circle) Area() float64 {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// use herança múltipla</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>@protocol A
+
+	- (NSInteger)requiredMethod;
+	- (NSInteger)anotherRequiredMethod;
+	@property (nonatomic, assign) NSInteger aProp;
+
+	@optional
+
+	- (NSInteger)optionalMethod;
+
+	// required methods again
+	@required
+
+	- (NSInteger)requireMethodAfterOptional;
+
+@end
+
+@protocol B
+	//
+@end
+
+@protocol C &lt;A&gt;
+	//
+@end
+
+@protocol D &lt;A, B&gt;
+	//
+@end
+
+@interface : NSObject &lt;C, D&gt;
+	@synthesize aProp
+@end</code
 >
 </div>
 
@@ -14310,10 +14339,19 @@ func (c Circle) Area() float64 {
 
 protocol P {
 	// pode conter variáveis e métodos
+	func someMethod() -&gt; int
 }
 
 protocol Q {
 	//
+}
+
+// implementação default
+// com extension methods
+extension P { // where Element: Equatable { // podemos passar condições se precisar
+	func someMethod() -&gt; {
+		return 1
+	}
 }
 
 // structs
@@ -14363,6 +14401,7 @@ let o2 = D()</code
 <p>Kotlin</p>
 <code class='kotlin'
 >interface A {
+
 	fun foo() { print("A") }
 	fun bar()
 
@@ -14370,6 +14409,7 @@ let o2 = D()</code
 
 	val propertyWithImplementation: String
 		get() = "foo"
+
 }
 
 interface B {
@@ -14377,19 +14417,29 @@ interface B {
 	fun bar() { print("bar") }
 }
 
+interface I :  B {
+	//
+}
+
 class C : A {
 	override fun bar() { print("bar") }
 }
 
 class D : A, B {
+
 	override fun foo() {
 		super&lt;A&gt;.foo()
 		super&lt;B&gt;.foo()
 	}
 
+	// se as interfaces tiverem
+	// implementações default
+	// de métodos com a mesma assinatura
+	// é obrigatório redefiní-lo na classe
 	override fun bar() {
 		super&lt;B&gt;.bar()
 	}
+
 }</code
 >
 </div>
@@ -14399,7 +14449,40 @@ class D : A, B {
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->// TODO</code
+>interface A {
+
+	// método estático
+	static public int someStaticMethod() {
+		return 1;
+	}
+
+	// método virtual
+	int someMethod();
+
+}
+
+interface B {
+
+	// método virtual
+	int someOtherMethod();
+
+	// método default
+	// é sempre público também
+	// java 8+
+	default int anotherMethod() {
+		return 1;
+	}
+
+}
+
+class C implements A, B {
+
+	// se as interfaces tiverem
+	// implementações default
+	// de métodos com a mesma assinatura
+	// é obrigatório redefiní-lo na classe
+
+}</code
 >
 </div>
 
@@ -14408,8 +14491,43 @@ class D : A, B {
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>interface IA {
+
+	// método estático
+	static public int someStaticMethod() {
+		return 1;
+	}
+
+	// método virtual
+	int someMethod();
+
+}
+
+interface IB {
+
+	// método virtual
+	int someOtherMethod();
+
+	// método default
+	// c# 8+
+	int anotherMethod() {
+		return 1;
+	}
+
+	// TODO interfaces agora podem
+	// ter métodos e pripriedades
+	// private, protected, etc...
+
+}
+
+class C : IA, IB {
+
+	// se as interfaces tiverem
+	// implementações default
+	// de métodos com a mesma assinatura
+	// é obrigatório redefiní-lo na classe
+
+}</code
 >
 </div>
 
@@ -14424,17 +14542,48 @@ class D : A, B {
 
 <div class='codeblock'>
 <p>Python</p>
-<code class='python'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> IA.cls</p>
 <code class='visualbasic'
-></code
+>[File: IA.cls, Instancing: PublicNotCreatable]
+Option Explicit
+
+Public Property Get Name() As String
+End Property</code
 >
+
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - C.cls</p>
+<code class='visualbasic'
+>[File: C.cls, Instancing: Private]
+Option Explicit
+Implements IA
+
+Private m_name As String
+
+Private Sub Class_Initialize()
+	m_name = ""
+End Sub
+
+Public Property Get Name() as String
+	Name = m_name
+End Property</code
+>
+
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - Module.bas</p>
+<code class='visualbasic'
+>[File: Module1.bas]
+Option Explicit
+
+Public Sub TestInterface()
+	Dim someObject As New C
+	someObject.Name = "John"
+End Sub</code
+>
+
 </div>
 
 
@@ -14454,7 +14603,11 @@ class D : A, B {
 	fn foo(&amp;self);
 }
 
-trait FooBar : Foo {
+trait Bar {
+	fn bar(&amp;self);
+}
+
+trait FooBar : Foo + Bar {
 	fn foobar(&amp;self);
 }</code
 >
@@ -14471,16 +14624,37 @@ trait FooBar : Foo {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>class A {
+	//
+}
+
+class B : A {
+	//
+}
+
+class C : A {
+	//
+}
+
+// herança múltipla
+// usar herança virtual para diminuir
+// problemas com ambiguidade
+class D final : B, C {
+	// super
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>@interface A : NSObject
+	//
+@end
+
+@interface B : A
+	// super
+@end</code
 >
 </div>
 
@@ -14535,10 +14709,10 @@ trait FooBar : Foo {
 
 }
 
-final class R {
+final class R : C {
 
 	required init() {
-		//
+		// super
 	}
 
 }
@@ -14551,51 +14725,221 @@ let o2 = D()</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>open class A() {
+	//
+}
+
+class B() : A() {
+	// super
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>class A {
+	//
+}
+
+final class B extends A {
+	// super
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>class A {
+	//
+}
+
+sealed class B : A {
+	// base
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>class A {
+	//
+}
+
+class B extends A {
+	constructor() {
+		super(); // TODO verificar
+		Object.seal(this);
+	}
+}
+
+// ou
+
+let a = {};
+
+let b = Object.create(a, {});</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>class A:
+
+class B(A):
+
+class C(A):
+
+# herança múltipla
+# veja C3 para resolução
+# de métodos com mesma assinatura
+class D(B, C):
+	pass # super()</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+</div>
+
+
+
+<section>
+
+<h3 id='classesabstratas'>Classes abstratas</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>class AbstractClass {
+
+	// virtual e =0 fazem essa função ser puramente virtual
+	// o que torna a classe abstrata
+	virtual void AbstractMemberFunction() = 0;
+
+	// uma classe abstrata ainda pode conter outros tipos de métodos
+	// e  atributos
+	virtual void NonAbstractMemberFunction1(); // Virtual function.
+	void NonAbstractMemberFunction2();
+
+};</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>abstract class A {
+	//
+}
+
+// uma classe abstrata pode ser inserida
+// no meio de uma cadeia de herança
+
+open class B {
+	open fun someMethod() {}
+}
+
+abstract class C : B() {
+	abstract override fun someMethod()
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>abstract class A {
+	//
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>abstract class A {
+	//
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>from abc import ABC
+
+class AbstractBaseClass(ABC):
+	pass
+
+# ou
+
+class AbstractBaseClass(ABC):
+
+	@abstractmethod
+	def my_abstract_method(self, ...):
+		#
+
+	@property
+	@abstractmethod
+	def my_abstract_property(self):
+		#</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 <code class='visualbasic'
 ></code
 >
 </div>
 
 </div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
 
 
 
@@ -14605,39 +14949,27 @@ let o2 = D()</code
 
 <div class='codeblock'>
 <p>Rust</p>
-<code class='rust'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
-<code class='go'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
-<code class='cpp'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
-<code class='swift'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -14709,32 +15041,32 @@ let o2 = D()</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>// C# tem anonymus types
+// que só podem ter atributos e nada mais</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>// JavaScript não tem classes
+// apenas objetos
+// Objetos anônimos podem
+// ser criados facilmente
+// com a sintaxe {}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+># ver https://docs.python.org/3/library/types.html</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -15034,15 +15366,42 @@ public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
+>from typing import TypeVar, Generic
+
+T = TypeVar('T')
+S = TypeVar('S', int, str)
+
+class StrangePair(Generic[T, S]):
+
+#
+
+from typing import TypeVar, Generic
+from logging import Logger
+
+T = TypeVar('T')
+
+class LoggedVar(Generic[T]):
+	def __init__(self, value: T, name: str, logger: Logger) -> None:
+		self.name = name
+		self.logger = logger
+		self.value = value
+
+	def set(self, new: T) -> None:
+		self.log('Set ' + repr(self.value))
+		self.value = new
+
+	def get(self) -> T:
+		self.log('Get ' + repr(self.value))
+		return self.value
+
+	def log(self, message: str) -> None:
+		self.logger.info('%s: %s', self.name, message)</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -15695,11 +16054,34 @@ public enum Semitone : Int8, CustomStringConvertible {
 </div>
 
 <div class='codeblock'>
-<p>Kotlin</p>
+
+<p>Kotlin - main.kt</p>
 <code class='kotlin'
+>fun main(args: Array<String>) {
+	//
+}</code
 >
-</code
+
+<p>Kotlin - MusicNote.kt</p>
+<code class='kotlin'
+>public final class MusicNote {
+	//
+}
+
+operator fun MusicNote.inc():MusicNote {
+	//
+}
+
+operator fun MusicNote.plus(semitone:Semitone) {
+	//
+}</code
 >
+
+<p>Kotlin - Semitone.kt</p>
+<code class='kotlin'
+></code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -15879,17 +16261,33 @@ namespace MarcoLuglio.OpOvExample {
 </div>
 
 <div class='codeblock'>
-<p>Python</p>
+
+<p>Python - main.py</p>
 <code class='python'
-></code
+>#</code
 >
+
+<p>Python - MusicNote.py</p>
+<code class='python'
+>class MusicNote:
+	#</code
+>
+
+<p>Python - Semitone.py</p>
+<code class='python'
+>from enum import Enum
+
+class Color(Enum):
+	RED = 1
+	GREEN = 2
+	BLUE = 3</code
+>
+
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -16273,7 +16671,24 @@ print(subscriptCollection["monday", 1]);</code
 
 <p>Kotlin - IndexedCollection.kt</p>
 <code class='kotlin'
-></code
+>class Point(val x: Int, val y: Int)
+operator fun Point.get(i) = Point(-x, -y)
+
+val point = Point(10, 20)
+
+fun main() {
+   println(-point)  // prints "Point(x=-10, y=-20)"
+}
+
+// TODO implementar operador get conforme abaixo
+/*
+a[i]	a.get(i)
+a[i, j]	a.get(i, j)
+a[i_1, ..., i_n]	a.get(i_1, ..., i_n)
+a[i] = b	a.set(i, b)
+a[i, j] = b	a.set(i, j, b)
+a[i_1, ..., i_n] = b	a.set(i_1, ..., i_n, b)
+*/</code
 >
 
 <p>Kotlin - main.kt</p>
@@ -16426,15 +16841,13 @@ console.log(indexedCollection["tuesday"]);</code
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
+># implementar object.__getitem__(self, key)</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -16465,9 +16878,7 @@ console.log(indexedCollection["tuesday"]);</code
 
 <div class='codeblock'>
 <p>Go</p>
-<code class='go'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -16656,9 +17067,7 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 
 <div class='codeblock'>
 <p>Python</p>
-<code class='python'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -16679,7 +17088,17 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// CFLAGS, CPPFLAGS, CXXFLAGS, FFLAGS e LDFLAGS
+// podem ajustar o comportamento das bibliotecas C
+// #cgo CFLAGS: -DPNG_DEBUG=1
+// #cgo amd64 386 CFLAGS: -DX86=1
+// #cgo LDFLAGS: -lpng
+// ou podemos usar pkg-config
+// #cgo pkg-config: png cairo
+// #include &lt;png.h&gt;
+import "C"
+
+// mais detalhes na <a href='https://golang.org/cmd/cgo/'>documentação oficial</a></code
 >
 </div>
 
@@ -16696,16 +17115,18 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// Objective-C é um superset de C
+// portanto pode incluir cabeçalhos
+// chamar funções e usar structs C
+// normalmente</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// XCode cria um bridging header
+// quando inserimos arquivos C</code
 >
 </div>
 
@@ -16764,7 +17185,7 @@ namespace MarcoLuglio.FFIExample {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>// Somente Kotlin native?</code
 >
 </div>
 
@@ -16817,14 +17238,21 @@ public final class TabelaNutricionalBibliotecaNative {
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
+>from cffi import FFI
+ffi = FFI()
+ffi.cdef("size_t strlen(const char*);")
+clib = ffi.dlopen(None)
+length = clib.strlen("String to be evaluated.")
+# prints: 23
+print("{}".format(length))</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+>Declare Function CFunction Lib "C:\full\path\to\someC.dll" Alias "_testdll@0" (ByVal _ lpRootPathName As String) As Long
+</code
 >
 </div>
 
