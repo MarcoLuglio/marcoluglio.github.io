@@ -550,6 +550,10 @@ div.codeblock.bubaloop p + code {
 	color: #505B66;
 }
 
+.bubaloop.go .label {
+	color: #8D00FF;
+}
+
 /* C++ */
 
 .bubaloop.cpp .keyword,
