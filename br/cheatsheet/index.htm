@@ -6058,7 +6058,38 @@ delegate void StrategyFunctionDelegate();</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>slice := []int{2, 3, 4}
+
+for i, numero := range slice {
+	// os valores dentro de for each
+	// são cópias e não referências
+}
+
+dicionario := map[string]string{ "a": "apple", "b": "banana" }
+
+for chave, valor := range dicionario {
+	// ordem não é garantida para maps
+}
+
+texto := "um texto"
+
+for i, letra := range texto {
+	//
+}
+
+canal := make(chan int)
+
+go func() {
+	canal &lt;- 1
+	canal &lt;- 2
+	canal &lt;- 3
+	close(canal)
+}()
+
+for numero := range canal {
+	// se o canal for fechado
+	// for each bloqueia!?
+}</code
 >
 </div>
 
@@ -6146,8 +6177,11 @@ for (item in collection) {
 
 <div class='codeblock'>
 <p>Python</p>
-<code class='visualbasic'
-></code
+<code class='python'
+>collection =
+
+for n in collection:
+	#</code
 >
 </div>
 
@@ -6178,7 +6212,8 @@ Next</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// usar range + uma coleção
+// não possui um operador ..</code
 >
 </div>
 
@@ -6246,7 +6281,8 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
+>for n in range(0, 4, 1):
+	#</code
 >
 </div>
 
@@ -6299,7 +6335,21 @@ match x {
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>Outer:
+for i := 0; i &lt; 3; i++ {
+	for j := 0; j &lt; 3; j++ {
+		//
+		continue Outer
+	}
+}
+
+switch 1 {
+	case 1:
+		fmt.Println(1)
+		fallthrough
+	case 2:
+		fmt.Println(2)
+}</code
 >
 </div>
 
@@ -6885,7 +6935,11 @@ superior(retorno)</code
 
 <div class='codeblock'>
 <p>Kotlin</p>
--
+<code class='kotlin'
+>fun runTransformation(f: (String, Int) -> String): String {
+	return f("hello", 3)
+}</code
+>
 </div>
 
 <div class='codeblock'>
@@ -10242,47 +10296,246 @@ do {
 
 
 
-<h4>Functors</h4>
+<h4 id='functors'>Functors</h4>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// funcionalidade experimental!
+// requer versão nightly
+
+// para habilitar implementação de FnMut
+#![feature(fn_traits)]
+#![feature(unboxed_closures)]
+
+struct Animar {
+
+	fim:f32,
+	tempo:i32,
+
+	tempoAtual:i32,
+	delta:f32,
+	passo:f32
+
+}
+
+impl Animar {
+
+	fn new(inicio:f32, fim:f32, tempo:i32) -&gt; Animar {
+		Animar {
+			fim,
+			tempo,
+			tempoAtual: 1,
+			delta: (fim - inicio) / (tempo as f32),
+			passo: 0.0
+		}
+	}
+
+}
+
+impl FnOnce&lt;()&gt; for Animar {
+
+	type Output = Option&lt;f32&gt;;
+
+	extern "rust-call" fn call_once(mut self, _args: ()) -&gt; Self::Output {
+		self()
+	}
+
+}
+
+impl FnMut&lt;()&gt; for Animar {
+
+	extern "rust-call" fn call_mut(&mut self, _args: ()) -&gt; Option&lt;f32&gt; {
+
+		if self.tempoAtual &lt;= self.tempo {
+			let tempoPassado = (self.tempo - self.tempoAtual) as f32;
+			self.passo = self.fim - (self.delta * tempoPassado);
+			self.tempoAtual += 1;
+			return Some(self.passo);
+		}
+
+		return None;
+
+	}
+
+}
+
+fn main() {
+
+	let mut animar = Animar::new(0.0, 100.0, 9);
+
+	loop {
+
+		let resultado = animar();
+
+		match resultado {
+			Some(some) => println!("{}", some),
+			None => break
+		}
+
+	}
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
-<code class='go'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
+	<div class='pair'>
+		<div>
+			<p>C++ - Animar.hpp</p>
+			<code class='cpp'
+>#pragma once
+
+class Animar final {
+
+	public:
+
+		explicit Animar(
+			float inicio,
+			float fim,
+			int tempo
+		);
+
+		~Animar();
+
+		// overload de ()
+		float operator()();
+
+	private:
+
+		float fim;
+		int tempo;
+
+		int tempoAtual;
+		float delta;
+		float passo;
+
+};</code
+			>
+		</div>
+		<div>
+			<p>C++ - Animar.cpp</p>
+			<code class='cpp'
+>#include "Animar.hpp";
+
+Animar::Animar(float inicio, float fim, int tempo) {
+	this->fim = fim;
+	this->tempo = tempo;
+	tempoAtual = 1;
+	delta = (fim - inicio) / tempo;
+	passo = 0;
+}
+
+~Animar::Animar(float inicio, float fim, int tempo) {
+	//
+}
+
+// overload de ()
+float Animar::operator()() {
+
+		if (tempoAtual <= tempo) {
+			passo = fim - (delta * (tempo - tempoAtual));
+			tempoAtual += 1;
+			return passo;
+		}
+
+		// TODO selecionar um valor melhor
+		// para indicar o fim
+		return 0;
+
+	}
+
+}</code
+			>
+		</div>
+	</div>
+
+	<p>C++ - Animar.hpp</p>
+		<code class='cpp'
+>#include "Animar.hpp"
+
+int main(int argc, const char* argv[]) {
+
+	auto animar = Animar(0, 100, 9);
+	while (/* TODO */) {
+		animar();
+	}
+
+	return 0;
+
+}</code
+		>
+
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>// atual não permite overload de ()
+// <a href='https://github.com/apple/swift-evolution/blob/master/proposals/0216-dynamic-callable.md'>acompanhe essa proposta</a>
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>class Animar constructor(inicio:Float, fim:Float, tempo:Int) {
+
+	var fim:Float
+	var tempo:Int
+
+	var tempoAtual:Int
+	var delta:Float
+	var passo:Float
+
+	init {
+		this.fim = fim
+		this.tempo = tempo
+		this.tempoAtual = 1
+		this.delta = (fim - inicio) / tempo
+		this.passo = 0f
+	}
+
+	// overload de ()
+	operator fun invoke(): Float? {
+
+		if (this.tempoAtual <= this.tempo) {
+			this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual))
+			this.tempoAtual += 1
+			return passo
+		}
+
+		// TODO selecionar um valor melhor
+		// para indicar o fim
+		return null
+
+	}
+
+}
+
+fun main() {
+
+	var animar = Animar(0f, 100f, 9)
+
+	do {
+		val resultado = animar()
+		println(resultado)
+	} while (resultado != null)
+
+}</code
 >
 </div>
 
@@ -10304,8 +10557,16 @@ do {
 <div class='codeblock'>
 <p>Python</p>
 <code class='swift'
->
-</code
+>class Animar(object):
+
+	def __init__(self, inicio, fim, tempo):
+		# TODO
+
+	def __call__(self):
+		# TODO
+
+animar = Animar(0, 100, 9)
+animar()</code
 >
 </div>
 
@@ -13283,8 +13544,17 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+># python 3.7+
+# data classes NÃO SÃO structs
+# mas tem um propósito similar
+
+@dataclass(eq=True, unsafe_hash=False, frozen=False)
+class ResultadoCaixa:
+	total: int
+	valorPago: int
+	troco: int
+
+compra1 = ResultadoCaixa(967, 1000, 33)</code
 >
 </div>
 
@@ -13742,7 +14012,7 @@ class D : C, P, Q {
 
 		Object.defineProperties(this, {
 			total: {value: total, writable: true},
-			valorPago: {value: valorPago, writable: true},
+			valorPago: {value: valorPago}, // não writable por padrão
 			troco: {value: valorPago - total, writable: true}
 		});
 
@@ -13752,6 +14022,7 @@ class D : C, P, Q {
 
 	descontarFidelidade() {
 		this.total = this.calcularFidelidade();
+		this.troco = this.valorPago - this.troco;
 	}
 
 	calcularFidelidade() {
@@ -13760,7 +14031,7 @@ class D : C, P, Q {
 
 };
 
-const compra1 = new ResultadoCaixa();
+const compra1 = new ResultadoCaixa(997, 1000);
 compra1.descontarFidelidade();</code
 >
 </div>
@@ -13770,8 +14041,22 @@ compra1.descontarFidelidade();</code
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>class ResultadoCaixa:
+
+	def __init__(self, total, valorPago):
+		self.total = total
+		self.valorPago = valorPago
+		self.troco = self.valorPago - self.troco
+
+	def descontarFidelidade(self):
+		self.total = self.calcularFidelidade()
+		self.troco = self.valorPago - self.troco
+
+	def calcularFidelidade(self):
+		return self.total - 1
+
+compra1 = ResultadoCaixa(997, 1000)
+compra1.descontarFidelidade()</code
 >
 </div>
 
@@ -13836,7 +14121,7 @@ Set compra1 = new ResutadoCaixa
 
 
 
-<h4 id='gettersSetters'>Getters e Setters</h4>
+<h4 id='gettersSetters'>Getters e setters (propriedades)</h4>
 
 <div class='comparison'>
 
@@ -13978,7 +14263,11 @@ class A {
 
 <div class='codeblock'>
 <p>Java</p>
--
+<code class='cs'
+>// não tem getters e setters implícitos
+// tem que usar métodos com convenção de nome
+// começando com Get ou Set</code
+>
 </div>
 
 <div class='codeblock'>
@@ -14071,15 +14360,38 @@ a.prop = '';</code
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>class A:
+def __init__(self, prop = 0):
+	self.prop = prop
+
+@property
+def prop(self):
+	return self._prop
+
+@prop.setter
+def prop(self, value):
+	self._prop = value</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+>Option Explicit
+
+Private m_prop As String
+
+Private Sub Class_Initialize()
+	m_name = ""
+End Sub
+
+Public Property Get Prop() as String
+	Prop = m_name
+End Property
+
+Public Property Let Prop(ByVal Value As String)
+	m_prop = Value
+End Property</code
 >
 </div>
 
@@ -14231,9 +14543,7 @@ public interface Desenhavel {
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 </div>
@@ -14568,7 +14878,7 @@ Private Sub Class_Initialize()
 	m_name = ""
 End Sub
 
-Public Property Get Name() as String
+Public Property Get Name() As String
 	Name = m_name
 End Property</code
 >
