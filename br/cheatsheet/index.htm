@@ -10556,17 +10556,32 @@ fun main() {
 
 <div class='codeblock'>
 <p>Python</p>
-<code class='swift'
+<code class='python'
 >class Animar(object):
 
 	def __init__(self, inicio, fim, tempo):
-		# TODO
+		self.fim = fim
+		self.tempo = tempo
+		self.tempoAtual = 1
+		self.delta = (fim - inicio) / tempo
+		self.passo = 0
 
 	def __call__(self):
-		# TODO
+
+		if (self.tempoAtual <= self.tempo):
+			self.passo = self.fim - (self.delta * (self.tempo - self.tempoAtual))
+			self.tempoAtual += 1
+			return self.passo
+
+		return None
 
 animar = Animar(0, 100, 9)
-animar()</code
+
+while True:
+	result = animar()
+	if result is None:
+		break
+	print(result)</code
 >
 </div>
 
