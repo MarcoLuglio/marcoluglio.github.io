@@ -2936,6 +2936,10 @@ const GoLexer = class GoLexer extends Lexer {
 
 		this._pushLiteralTokens();
 		this._pushInvisibleTokens();
+		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
+		if (this._isFirstTokenOfLine(tokenSequence)) {
+			this._tokenPool.push(new GoLabelToken());
+		}
 		//this._tokenPool.push(new GoSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -2956,6 +2960,39 @@ const GoLexer = class GoLexer extends Lexer {
 			new WhitespaceToken(),
 			new EndOfLineToken()
 		);
+	}
+
+	/**
+	 * Checks if the line has only whitespace so far
+	 * Used to identify labels
+	 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+	 */
+	_isFirstTokenOfLine(tokenSequence) {
+
+		let lastToken = null;
+
+		if (!tokenSequence) {
+			return true;
+		}
+
+		for (let i = tokenSequence.length; i > 0; i--) {
+
+			lastToken = tokenSequence[i - 1];
+
+			if (lastToken.type === 'endOfLine') {
+				return true;
+			}
+
+			if (lastToken.ignore) {
+				continue;
+			}
+
+			return false;
+
+		}
+
+		return true;
+
 	}
 
 };
@@ -3474,6 +3511,67 @@ const GoLineBlockDirectivePatternIterator = class GoLineBlockDirectivePatternIte
 	}
 
 };
+
+
+
+/**
+ * Token for Go labels
+ */
+const GoLabelToken = class GoLabelToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('label', new GoLabelIterator());
+	}
+};
+
+
+
+const GoLabelIterator = class GoLabelIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchLetter;
+
+	}
+
+	_matchLetter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchWordOrColon;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchWordOrColon(matchCharacter) {
+
+		if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		if (matchCharacter === ':') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
 
 
 // #endregion
