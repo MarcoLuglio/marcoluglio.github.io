@@ -1692,24 +1692,31 @@ Dim x: x = Empty
 <p>Rust</p>
 <code class='rust'
 >// tipo bool
-let oitoOuOintenta = true;
-oitoOuOintenta = false;
+let oitoOuOitenta = true;
+oitoOuOitenta = false;
 
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
 
 // parse
-use std::str::FromStr;
-
-let toParse = "5";
-let parsed = i32::from_str(toParse).unwrap();</code
+let toParse = "true";
+let parsed:bool = toParse.parse().unwrap();</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// tipo bool
+oitoOuOitenta := true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+
+// parse
+toParse := "true"
+parsed, err := strconv.ParseBool(toParse)</code
 >
 </div>
 
@@ -10587,10 +10594,7 @@ while True:
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='swift'
->
-</code
->
+-
 </div>
 
 </div>
@@ -17189,6 +17193,116 @@ console.log(indexedCollection["tuesday"]);</code
 
 </section>
 
+
+<section>
+
+<h2 id='metadados'>Meta dados (annotations / attributes)</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
 
 
 <section>
