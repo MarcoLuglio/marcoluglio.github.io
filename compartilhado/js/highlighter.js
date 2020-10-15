@@ -2950,7 +2950,8 @@ const GoLexer = class GoLexer extends Lexer {
 			0,
 			new GoDecimalLiteralToken(),
 			new GoNumericLiteralToken(),
-			new GoStringLiteralToken()
+			new GoStringLiteralToken(),
+			new CCharLiteralToken() // TODO this is not the full implementation...
 		);
 	}
 
