@@ -8439,8 +8439,8 @@ mydoubler = myfunc(2)
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
->// ver <a href='https://www.vbforums.com/showthread.php?888672-VBA-Lambda-Syntax-No-script-control-or-cheats!-Happy-for-ports-to-VB6'>exemplo</a>
+>' ver <a href='https://www.vbforums.com/showthread.php?888672-VBA-Lambda-Syntax-No-script-control-or-cheats!-Happy-for-ports-to-VB6'>exemplo</a></code
+>
 </div>
 
 </div>
@@ -8456,6 +8456,22 @@ mydoubler = myfunc(2)
 <h3 id='funcoesinternas'>Funções Internas</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>fn externa() {
+
+	fn interna() { /**/ }
+
+	// let internaLambda = || { /**/ };
+
+	interna();
+	internaLambda();
+
+}</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Go</p>
@@ -8511,16 +8527,43 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->fn externa() {
+<p>Kotlin</p>
+<code class='kotlin'
+></code
+>
+</div>
 
-	fn interna() { /**/ }
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>public class Main {
 
-	// let internaLambda = || { /**/ };
+	public static void main(String[] args) {
 
-	interna();
-	internaLambda();
+		// não são funções de verdade
+		// ver lambdas acima para explicação
+
+		Funcional interna = () -&gt; {
+			System.out.println("interna");
+		};
+
+		interna.call();
+
+		Funcional2 interna2 = x -&gt; x + 1;
+
+		int y = interna2.call(1);
+
+	}
+
+	@FunctionalInterface
+	public interface Funcional {
+		void call();
+	}
+
+	@FunctionalInterface
+	public interface Funcional2 {
+		int call(int x);
+	}
 
 }</code
 >
@@ -8564,49 +8607,6 @@ mydoubler = myfunc(2)
 
 
 	delegate int Interna2Delegate(int x);
-
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>Kotlin</p>
-<code class='kotlin'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->public class Main {
-
-	public static void main(String[] args) {
-
-		// não são funções de verdade
-		// ver lambdas acima para explicação
-
-		Funcional interna = () -&gt; {
-			System.out.println("interna");
-		};
-
-		interna.call();
-
-		Funcional2 interna2 = x -&gt; x + 1;
-
-		int y = interna2.call(1);
-
-	}
-
-	@FunctionalInterface
-	public interface Funcional {
-		void call();
-	}
-
-	@FunctionalInterface
-	public interface Funcional2 {
-		int call(int x);
-	}
 
 }</code
 >
