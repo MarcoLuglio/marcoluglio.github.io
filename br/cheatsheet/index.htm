@@ -1708,11 +1708,11 @@ let parsed:bool = toParse.parse().unwrap();</code
 <p>Go</p>
 <code class='go'
 >// tipo bool
-oitoOuOitenta := true;
-oitoOuOitenta = false;
+oitoOuOitenta := true
+oitoOuOitenta = false
 
 // converte para true
-oitoOuOitenta = !oitoOuOitenta;
+oitoOuOitenta = !oitoOuOitenta
 
 // parse
 toParse := "true"
@@ -5606,6 +5606,34 @@ object o = new object();</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// TODO
+let p:*const i32 = ptr::null();
+let p:*mut i32 = ptr::null();
+
+let x = 5;
+let raw = &amp;x as *const i32;
+
+let mut y = 10;
+let raw_mut = &amp;mut y as *mut i32;
+
+let points_at = unsafe { *raw };
+
+unsafe {
+	let points_at = *raw;
+}
+
+use std::mem;
+
+unsafe {
+	let a = [0u8, 0u8, 0u8, 0u8];
+	let b = mem::transmute::&lt;[u8; 4], u32&gt;(a);
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Go</p>
 <code class='go'
 ></code
@@ -5784,31 +5812,15 @@ let ponteiroDePonteiro = AutoreleasingUnsafeMutablePointer&lt;Int?&gt; // tem qu
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// TODO
-let p:*const i32 = ptr::null();
-let p:*mut i32 = ptr::null();
-
-let x = 5;
-let raw = &amp;x as *const i32;
-
-let mut y = 10;
-let raw_mut = &amp;mut y as *mut i32;
-
-let points_at = unsafe { *raw };
-
-unsafe {
-	let points_at = *raw;
-}
-
-use std::mem;
-
-unsafe {
-	let a = [0u8, 0u8, 0u8, 0u8];
-	let b = mem::transmute::&lt;[u8; 4], u32&gt;(a);
-}</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -5961,11 +5973,6 @@ namespace MarcoLuglio.PonteirosExample {
 
 }</code
 >
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
 </div>
 
 <div class='codeblock'>
@@ -8934,6 +8941,19 @@ console.log(closure()); // 2</code
 <div class='comparison large'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>mod
+</code
+>
+<p>Rust</p>
+<code class='rust'
+>use
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Go</p>
 <code class='go'
 ></code
@@ -9145,39 +9165,6 @@ class DentroDoModulo: UIViewController {
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->mod
-</code
->
-<p>Rust</p>
-<code class='rust'
->use
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C# - DentroDoModulo.cs</p>
-<code class='cs'
->namespace marcoluglio {
-	public class DentroDoModulo { /**/ }
-}</code
->
-<p>C# - main.cs</p>
-<code class='cs'
->using marcoluglio;
-
-class MainClass {
-	public static void Main(string[] args) {
-		DentroDoModulo meuObjeto;
-		meuObjeto = new DentroDoModulo();
-	}
-}</code
->
-</div>
-
-<div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
 ></code
@@ -9197,6 +9184,26 @@ public class DentroDoModulo { /**/ }</code
 
 public class OlaMundo {
 	public static void main(String[] args) {
+		DentroDoModulo meuObjeto;
+		meuObjeto = new DentroDoModulo();
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C# - DentroDoModulo.cs</p>
+<code class='cs'
+>namespace marcoluglio {
+	public class DentroDoModulo { /**/ }
+}</code
+>
+<p>C# - main.cs</p>
+<code class='cs'
+>using marcoluglio;
+
+class MainClass {
+	public static void Main(string[] args) {
 		DentroDoModulo meuObjeto;
 		meuObjeto = new DentroDoModulo();
 	}
@@ -13012,6 +13019,14 @@ Option Explicit
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>let some_tuple = (1u8, 2u16, 2f32);
+some_tuple.0;</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Go</p>
 -
 </div>
@@ -13045,11 +13060,15 @@ someTuple.0
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->let some_tuple = (1u8, 2u16, 2f32);
-some_tuple.0;</code
+<p>Kotlin</p>
+<code class='kotlin'
+></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -13063,18 +13082,6 @@ var population = (a:"New York", b:7891957, c:7781984); // com nomes // TODO veri
 var population = new Tuple&lt;string, int, int&gt;("New York", 7891957, 7781984);
 population.Item1;</code
 >
-</div>
-
-<div class='codeblock'>
-<p>Kotlin</p>
-<code class='kotlin'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
--
 </div>
 
 <div class='codeblock'>
@@ -17417,6 +17424,43 @@ console.log(indexedCollection["tuesday"]);</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust - TabelaNutricional.rs</p>
+<code class='rust'
+>#[repr(C)]
+pub struct TabelaNutricional {
+	valorEnergetico: f32,
+	carboidratos: f32,
+	proteinas: f32,
+	gordurasTotais: f32,
+	gordurasSaturadas: f32,
+	gordurasTrans: f32,
+	fibraAlimentar: f32,
+	sodio: f32
+}
+
+#[no_mangle]
+pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
+	let mut tabela = TabelaNutricional{
+		valorEnergetico: 1_f32,
+		carboidratos: 1_f32,
+		proteinas: 1_f32,
+		gordurasTotais: 1_f32,
+		gordurasSaturadas: 1_f32,
+		gordurasTrans: 1_f32,
+		fibraAlimentar: 1_f32,
+		sodio: 2_f32
+	};
+	// TODO usar porcao
+	return tabela;
+}
+
+// compilar com
+// rustc --crate-type dylib TabelaNutricional.rs
+// vai gerar libTabelaNutricional.dylib</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Go</p>
 -
 </div>
@@ -17545,50 +17589,6 @@ namespace FFIExample {
 </div>
 
 <div class='codeblock'>
-<p>Rust - TabelaNutricional.rs</p>
-<code class='rust'
->#[repr(C)]
-pub struct TabelaNutricional {
-	valorEnergetico: f32,
-	carboidratos: f32,
-	proteinas: f32,
-	gordurasTotais: f32,
-	gordurasSaturadas: f32,
-	gordurasTrans: f32,
-	fibraAlimentar: f32,
-	sodio: f32
-}
-
-#[no_mangle]
-pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
-	let mut tabela = TabelaNutricional{
-		valorEnergetico: 1_f32,
-		carboidratos: 1_f32,
-		proteinas: 1_f32,
-		gordurasTotais: 1_f32,
-		gordurasSaturadas: 1_f32,
-		gordurasTrans: 1_f32,
-		fibraAlimentar: 1_f32,
-		sodio: 2_f32
-	};
-	// TODO usar porcao
-	return tabela;
-}
-
-// compilar com
-// rustc --crate-type dylib TabelaNutricional.rs
-// vai gerar libTabelaNutricional.dylib</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->-</code
->
-</div>
-
-<div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
 ></code
@@ -17597,6 +17597,11 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 
 <div class='codeblock'>
 <p>Java</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
 -
 </div>
 
@@ -17624,6 +17629,22 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 <h3>Importar do C</h3>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>#[link(name = "TabelaNutricionalBiblioteca")]
+extern "C" {
+	fn calcular(porcao:f32) -&gt; i32;
+}
+
+fn main() {
+	unsafe {
+		calcular(20);
+	}
+}</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Go</p>
@@ -17671,20 +17692,41 @@ import "C"
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->#[link(name = "TabelaNutricionalBiblioteca")]
-extern "C" {
-	fn calcular(porcao:f32) -&gt; i32;
-}
-
-fn main() {
-	unsafe {
-		calcular(20);
-	}
-}</code
+<p>Kotlin</p>
+<code class='kotlin'
+>// Somente Kotlin native?</code
 >
 </div>
+
+<div class='codeblock'>
+<p>Java - TabelaNutricional.java</p>
+<code class='java'
+>package marcoLuglio.ffiExample;
+
+public final class TabelaNutricional {
+	public float valorEnergetico;
+	public float carboidratos;
+	public float proteinas;
+	public float gordurasTotais;
+	public float gordurasSaturadas;
+	public float gordurasTrans;
+	public float fibraAlimentar;
+	public float sodio;
+}</code
+>
+
+<p>Java - TabelaNutricionalBibliotecaNative.java</p>
+<code class='java'
+>package marcoLuglio.ffiExample;
+
+public final class TabelaNutricionalBibliotecaNative {
+
+	static {System.loadLibrary("TabelaNutricionalBiblioteca");}
+
+	private native TabelaNutricional calcular(float porcao);
+
+}</code
+>
 
 <div class='codeblock'>
 <p>C# - TabelaNutricionalBibliotecaNative.cs</p>
@@ -17721,43 +17763,6 @@ namespace MarcoLuglio.FFIExample {
 }</code
 >
 </div>
-
-<div class='codeblock'>
-<p>Kotlin</p>
-<code class='kotlin'
->// Somente Kotlin native?</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java - TabelaNutricional.java</p>
-<code class='java'
->package marcoLuglio.ffiExample;
-
-public final class TabelaNutricional {
-	public float valorEnergetico;
-	public float carboidratos;
-	public float proteinas;
-	public float gordurasTotais;
-	public float gordurasSaturadas;
-	public float gordurasTrans;
-	public float fibraAlimentar;
-	public float sodio;
-}</code
->
-
-<p>Java - TabelaNutricionalBibliotecaNative.java</p>
-<code class='java'
->package marcoLuglio.ffiExample;
-
-public final class TabelaNutricionalBibliotecaNative {
-
-	static {System.loadLibrary("TabelaNutricionalBiblioteca");}
-
-	private native TabelaNutricional calcular(float porcao);
-
-}</code
->
 
 <p>C - ?.c</p>
 <code class='c'
