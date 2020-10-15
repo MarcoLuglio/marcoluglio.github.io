@@ -6013,20 +6013,40 @@ namespace MarcoLuglio.PonteirosExample {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>// tipo simples
+type Name = String;
+
+
+// tipo função
+// TODO testar
+// type StrategyFunctionPointer = Fn(i32) -&gt; i32;</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// tipo simples
+type T1 = T2
+
+// novo tipo baseado em T2
+type T1 T2
+
+// tipo função
+type StrategyFunctionPointer func(int) int</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->// simple type
+>// tipo simples
 using size_t = unsigned int;
 typedef unsigned char BYTE; // old
 
-// function type
+// tipo função
 using StrategyFunctionPointer = void(*)();
 
 // ou
@@ -6047,11 +6067,11 @@ typedef void(*StrategyFunctionPointer)();
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->// simple type
+>// tipo simples
 @compatibility_alias UICollectionViewController PSTCollectionViewController;
 typedef unsigned char BYTE;
 
-// function type
+// tipo função
 typedef void(*StrategyFunctionPointer)();</code
 >
 </div>
@@ -6059,43 +6079,38 @@ typedef void(*StrategyFunctionPointer)();</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->// simple type
+>// tipo simples
 typealias AudioSample = UInt16
 
 
-// function type
+// tipo função
 typealias StrategyFunctionPointer = () -&gt; ()</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->// simple type
-type Name = String;
-
-
-// function type
-// TODO testar
-// type StrategyFunctionPointer = Fn(i32) -&gt; i32;</code
+<p>Kotlin</p>
+<code class='kotlin'
 >
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->// simple type
-using R = N1.N2;
-
-
-// function type
-delegate void StrategyFunctionDelegate();</code
+</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 -
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// tipo simples
+using R = N1.N2;
+
+
+// tipo função
+delegate void StrategyFunctionDelegate();</code
+>
 </div>
 
 <div class='codeblock'>
