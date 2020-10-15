@@ -4388,7 +4388,6 @@ clustered := "\U0001F60D" // code point
 bytes := "\xf0\x9f\x98\x8d"
 
 // string é imutável, então seus métodos retornam novas instâncias
-// import "strings"
 
 beeGees := strings.ReplaceAll(calvinHarris, "love", "looove")
 strings.ToUpper("Gritando") // retorna "GRITANDO"</code
@@ -4721,7 +4720,7 @@ simples = "A primeira faz ""tchan"""</code
 <code class='rust'
 >// TODO melhorar isso
 let mut vector:Vec&lt;_&gt;;
-vector.push("Termionu.");
+vector.push("Terminou.");
 vector.push(" Só que não");
 vector
 	.chars()
@@ -4733,7 +4732,10 @@ vector
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>var stringBuilder strings.Builder
+stringBuilder.WriteString("Terminou")
+stringBuilder.WriteString(" Só que não")
+stringBuilder.String()</code
 >
 </div>
 
