@@ -3026,7 +3026,19 @@ let usize1 = 1_usize;        </code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// pointer size
+i1 := 1
+i2 := 2_147_483_648 // se x64 ok
+i3 := -2_147_483_649 // se x64 ok
+
+// lança exceção
+// contant ix overflows int32
+var i4 int32 = 2_147_483_648
+var i5 int32 = -2_147_483_649
+
+// lança exceção
+// contant e1 overflows int
+e1 := 9_223_372_036_854_775_808</code
 >
 </div>
 
@@ -3228,7 +3240,12 @@ let d2 = 1.0;                </code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// float32
+f1 := float32(1)
+
+// float64
+d1 := 1.0
+d2 := .7                         </code
 >
 </div>
 
@@ -3375,7 +3392,22 @@ let x1 = -0x0123456789ABCDEF;
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// notação científica
+c1 := 1e0
+c2 := 1e-1
+c3 := -.7e-2
+
+// notação binária
+b1 := 0b_0000_0001
+b2 := -0B0000_0010
+
+// notação octal
+o1 := 0o_01234567
+o2 := -0O1234567
+
+// notação hexadecimal
+cor := 0x_ff_00_00
+x1 := -0X0123456789ABCDEF        </code
 >
 </div>
 
@@ -3547,7 +3579,12 @@ let p2 = 00.1;               </code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>i1 := 10
+
+// desde go 1.13, antes era
+// considerado octal
+p1 := 01
+p2 := 00.1                       </code
 >
 </div>
 
@@ -4300,7 +4337,12 @@ let leminski = concat!("Merda é veneno.",
 
 // tipo String
 
-let simples = "A primeira faz \"tchan\" e só".to_string();</code
+let simples = "A primeira faz \"tchan\" e só".to_string();
+
+let raw_string = r"escape not \n processed";
+let raw_string = r#"escape not " processed"#; // can also use other delimiters if needed
+let integer_array = b"will be stored as an [u8] array";
+let raw_integer_array = br"will be stored as an [u8] array with unescaped characters"</code
 >
 </div>
 
