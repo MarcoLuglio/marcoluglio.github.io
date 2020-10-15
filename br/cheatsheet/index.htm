@@ -3407,7 +3407,12 @@ o2 := -0O1234567
 
 // notação hexadecimal
 cor := 0x_ff_00_00
-x1 := -0X0123456789ABCDEF        </code
+x1 := -0X0123456789ABCDEF
+
+// notação hexadecimal científica
+xc1 := 0x1p-2       // == 0.25
+xc2 := 0x2.p10      // == 2048.0
+xc3 := 0x1.Fp+0     // == 1.9375 </code
 >
 </div>
 
@@ -4354,7 +4359,39 @@ let raw_integer_array = br"will be stored as an [u8] array with unescaped charac
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>
+dupla := "A segunda faz 'tchun'"
+rawString := `A primeira faz "tchan". A segunda faz 'tchun'`
+
+calvinHarris := "how deep\nis your love" // 2 linhas
+
+// concatenação
+josePauloPaes := "Meu amor é simples, Dora,\n" +
+"Como a água e o pão.\n" +
+"\n" +
+"Como o céu refletido\n" +
+"Nas pupilas de um cão."
+
+// várias linhas
+leminskiTemplate := `Merda é veneno.
+No entanto, não há nada
+que seja mais bonito
+que uma bela cagada.
+Cagam ricos, cagam pobres,
+cagam reis e cagam fadas.
+Não há merda que se compare
+à bosta da pessoa amada.`
+
+emoji := "😍"
+clustered := "\u1F60D" // code point
+clustered := "\U0001F60D" // code point
+bytes := "\xf0\x9f\x98\x8d"
+
+// string é imutável, então seus métodos retornam novas instâncias
+// import "strings"
+
+beeGees := strings.ReplaceAll(calvinHarris, "love", "looove")
+strings.ToUpper("Gritando") // retorna "GRITANDO"</code
 >
 </div>
 
@@ -4615,7 +4652,7 @@ dupla = "A segunda faz 'tchun'"
 
 iara = "mãe d'água"
 modoDificil = 'O\'Reilly'; # TODO verificar isso
-html = '<em class="especial">ênfase</em>'
+html = '&lt;em class="especial"&gt;ênfase&lt;/em&gt;'
 
 calvinHarris = 'how deep\nis your love'; # 2 linhas
 

@@ -2950,7 +2950,7 @@ const GoLexer = class GoLexer extends Lexer {
 			0,
 			new GoDecimalLiteralToken(),
 			new GoNumericLiteralToken(),
-			new CStringLiteralToken() // TODO check JavaScript string, looks more like it
+			new GoStringLiteralToken()
 		);
 	}
 
@@ -3391,6 +3391,121 @@ const GoNumberPatternIterator = class GoNumberPatternIterator extends SourcePatt
 			|| lowerMatchCharacter === 'd'
 			|| lowerMatchCharacter === 'e'
 			|| lowerMatchCharacter === 'f'
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for strings
+ */
+const GoStringLiteralToken = class GoStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new GoStringPatternIterator());
+	}
+};
+
+const GoStringPatternIterator = class GoStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === '"'
+			|| matchCharacter === '`' // TODO futuramente reimplementar isso com this.openType e this.closeType e as expressões
+			) {
+
+			this._quoteType = matchCharacter;
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (this._isEscaped) {
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\' && this._quoteType === '"') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType
+			|| (isLineBreak && this._quoteType === '"')
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
 			) {
 
 			return true;
