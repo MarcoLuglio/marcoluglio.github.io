@@ -2948,6 +2948,8 @@ const GoLexer = class GoLexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
+			new GoDecimalLiteralToken(),
+			new GoNumericLiteralToken(),
 			new CStringLiteralToken() // TODO check JavaScript string, looks more like it
 		);
 	}
@@ -3183,6 +3185,223 @@ const GoPunctuationToken = class GoPunctuationToken  extends SourceSimpleCharact
 	}
 
 };
+
+
+
+/**
+ * Token for decimal numbers
+ */
+const GoDecimalLiteralToken = class GoDecimalLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new GoDecimalPatternIterator());
+	}
+};
+
+const GoDecimalPatternIterator = class GoDecimalPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_hasMantissa: {value: false, writable: true},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
+		});
+		this._matchFunction = this._matchNumber;
+		Object.seal(this);
+	}
+
+	_matchNumber(matchCharacter) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '.' && !this._hasMantissa) {
+			this._hasMantissa = true;
+			this._isComplete = false;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for binary, octal and hexadecimal numbers
+ */
+const GoNumericLiteralToken = class GoNumericLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new GoNumberPatternIterator());
+	}
+};
+
+const GoNumberPatternIterator = class GoNumberPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_isNumberCharacter: {value: isNumberCharacterRegex},
+			_matchCheck: {value: null, writable: true}
+		});
+		this._matchFunction = this._matchFirstNumber;
+		Object.seal(this);
+	}
+
+	/*
+	números válidos
+
+	binario
+	tem que ter 1 número depois do b
+	só 0 e 1
+	0b10101110
+	0B10101
+
+	octal
+	tem que ter 1 número depois do o
+	só 0 até 7
+	0o07
+	0O07
+
+	hexadecimal
+	tem que ter 1 número depois do x
+	só 0 até 9 e A até F
+	0x07
+	0X07
+	*/
+
+	_matchFirstNumber(matchCharacter) {
+
+		if (matchCharacter === '0') {
+			this._matchFunction = this._matchIdentifier;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchIdentifier(matchCharacter) {
+
+		if (matchCharacter === null) {
+			this._hasNext = false;
+			return false;
+		}
+
+		// o algoritmo da máquina de estados é o mesmo sempre a partir daqui
+		// só muda o tipo de verificação para cada formato de número
+		this._matchFunction = this._matchEndNumber;
+
+		// verifica qual tipo de número
+
+		const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+		if (lowerMatchCharacter === 'b') {
+			this._matchCheck = this._isBinary;
+			return true;
+		}
+
+		if (lowerMatchCharacter === 'o') {
+			this._matchCheck = this._isOctal;
+			return true;
+		}
+
+		if (lowerMatchCharacter === 'x') {
+			this._matchCheck = this._isHexadecimal;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchEndNumber(matchCharacter) {
+
+		if (matchCharacter === null) {
+			this._hasNext = false;
+			return false;
+		}
+
+		if (this._matchCheck(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_isBinary(matchCharacter) {
+
+		if (matchCharacter === '0' || matchCharacter === '1') {
+			return true;
+		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
+			return true;
+		}
+
+		return false;
+	}
+
+	_isOctal(matchCharacter) {
+
+		// FIXME transformar matchCharacter em número
+		if (this._isNumberCharacter.test(matchCharacter) && matchCharacter > -1 && matchCharacter < 8) {
+			return true;
+		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
+			return true;
+		}
+
+		return false;
+	}
+
+	_isHexadecimal(matchCharacter) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
+			return true;
+		}
+
+		const lowerMatchCharacter = matchCharacter.toLowerCase();
+
+		if (lowerMatchCharacter === 'a'
+			|| lowerMatchCharacter === 'b'
+			|| lowerMatchCharacter === 'c'
+			|| lowerMatchCharacter === 'd'
+			|| lowerMatchCharacter === 'e'
+			|| lowerMatchCharacter === 'f'
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
 
 
 const GoDirectiveToken = class GoDirectiveToken extends SourcePatternIteratorToken {
@@ -10179,23 +10398,39 @@ const JSNumberPatternIterator = class JSNumberPatternIterator extends SourcePatt
 	}
 
 	_isBinary(matchCharacter) {
+
 		if (matchCharacter === '0' || matchCharacter === '1') {
 			return true;
 		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
+			return true;
+		}
+
 		return false;
 	}
 
 	_isOctal(matchCharacter) {
+
 		// FIXME transformar matchCharacter em número
 		if (this._isNumberCharacter.test(matchCharacter) && matchCharacter > -1 && matchCharacter < 8) {
 			return true;
 		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
+			return true;
+		}
+
 		return false;
 	}
 
 	_isHexadecimal(matchCharacter) {
 
 		if (this._isNumberCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		if (matchCharacter === '_') { // TODO melhorar isso
 			return true;
 		}
 
