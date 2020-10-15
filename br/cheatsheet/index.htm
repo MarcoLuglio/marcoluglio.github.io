@@ -3532,16 +3532,21 @@ let c2 = 1e-1;
 let c3 = -.7e-2;
 
 // notação binária
-let b1 = 0B00000001;
-let b2 = -0b00000010;
+let b1 = 0B0000_0001;
+let b2 = -0b0000_0010;
 
 // notação octal
-let o1 = 0o01234567;
-let o2 = -0O1234567;
+let o1 = 0o0123_4567;
+let o2 = -0O123_4567;
 
 // notação hexadecimal
-let cor = 0xff0000;
-let x1 = -0X0123456789ABCDEF;</code
+let cor = 0xff_00_00;
+let x1 = -0X0123456789ABCDEF;
+
+// separadores _ requerem
+// Chrome 75+
+// Firefox 70+
+// Safari 13+</code
 >
 </div>
 
