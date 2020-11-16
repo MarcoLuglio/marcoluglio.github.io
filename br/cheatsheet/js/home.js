@@ -18,7 +18,10 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 		'cs',
 		'javascript',
 		'python',
-		'visualbasic'
+		'visualbasic',
+		//'sql',
+		'llvm',
+		'assembly'
 	];
 
 	const blocosDeCodigo = [];
@@ -55,7 +58,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 			divCodigo => divCodigo.classList.add('bubaloop')
 		);
 
-		// TODO não vai bloquear a Ui por muito tempo se fizer assim de uma vez só?
+		// TODO não vai bloquear a UI por muito tempo se fizer assim de uma vez só?
 		Array.from(
 			tiposBlocos,
 			(tipoBloco, tipoBlocoIndice) => {

@@ -157,6 +157,72 @@ public class OlaMundo {
 >
 </div>
 
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+>source_filename <span class='operator'>=</span> <span class='string'>"main"</span>
+
+<span class='comment lineComment'>; requer uma função externa para IO</span>
+<span class='keyword'>declare</span> <span class='type'>i32</span> <span class='symbol globalSymbol'>@puts</span><span class='operator'>(</span><span class='type'>i8*</span> <span class='keyword'>nocapture</span><span class='operator'>)</span> <span class='keyword'>nounwind</span>
+
+<span class='symbol globalSymbol'>@helloWorld</span> <span class='operator'>=</span> <span class='keyword'>private</span> <span class='keyword'>constant</span> <span class='operator'>[</span><span class='number'>10</span> <span class='operator'>x</span> <span class='type'>i8</span><span class='operator'>]</span> <span class='string'>c"Olá Mundo\00"</span>
+
+<span class='comment lineComment'>; requer um bloco main</span>
+<span class='keyword'>define</span> <span class='type'>void</span> <span class='symbol globalSymbol'>@main</span><span class='operator'>() {</span>
+
+	<span class='label'>entry:</span>
+
+	<span class='symbol localsymbol'>%cast210</span> <span class='operator'>=</span> <span class='symbol'>getelementptr</span> <span class='operator'>[</span><span class='number'>10</span> <span class='operator'>x</span> <span class='type'>i8</span><span class='operator'>]</span><span class='operator'>,</span> <span class='operator'>[</span><span class='number'>10</span> <span class='operator'>x</span> <span class='type'>i8</span><span class='operator'>]*</span> <span class='symbol globalSymbol'>@helloWorld</span><span class='operator'>,</span> <span class='type'>i64</span> <span class='number'>0</span><span class='operator'>,</span> <span class='type'>i64</span> <span class='number'>0</span>
+	<span class='keyword'>call</span> <span class='type'>i32</span> <span class='symbol globalSymbol'>@puts</span><span class='operator'>(</span><span class='type'>i8*</span> <span class='symbol localsymbol'>%cast210</span><span class='operator'>)</span>
+
+	<span class='comment lineComment'>; requer um código de retorno TODO testar</span>
+	<span class='keyword'>ret</span> <span class='type'>i32</span> <span class='number'>0</span>
+
+<span class='operator'>}</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+><span class='keyword'>section</span> <span class='section segment'>.text</span>
+	<span class='keyword'>global</span> <span class='label'>_start</span> <span class='comment lineComment'>; requer um bloco "main"</span>
+
+<span class='label'>_start:</span>
+	<span class='keyword instruction' title='pushes current address and jumps to label'>call</span> <span class='label'>io</span>
+	<span class='keyword instruction' title='pushes current address and jumps to label'>call</span> <span class='label'>exit</span>
+
+<span class='label'>io:</span>
+	<span class='comment lineComment'>; requer um system call para IO</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits accumulator register'>eax</span><span class='operator'>,</span> <span class='symbol'>system_interrupt_write</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits base register'>ebx</span><span class='operator'>,</span> <span class='symbol'>standard_output</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits count register'>ecx</span><span class='operator'>,</span> <span class='symbol'>message</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits data register'>edx</span><span class='operator'>,</span> <span class='symbol'>message_length</span>
+	<span class='keyword instruction' title='generates a software interrupt'>int</span> <span class='symbol'>system_call_interrupt</span>
+	<span class='keyword instruction' title='pops address and jumps there'>ret</span>
+
+<span class='label'>exit:</span>
+	<span class='comment lineComment'>; requer um código de retorno</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits accumulator register'>eax</span><span class='operator'>,</span> <span class='symbol'>system_interrupt_exit</span>
+	<span class='keyword instruction' title='generates a software interrupt'>int</span> <span class='symbol'>system_call_interrupt</span>
+	<span class='keyword instruction' title='pops address and jumps to it'>ret</span>
+
+
+<span class='keyword'>section</span> <span class='section segment'>.data</span>
+
+	<span class='comment lineComment'>; dados do programa</span>
+	<span class='symbol'>message</span> <span class='type' title='define byte'>db</span> <span class='string'>'Olá Mundo'</span><span class='operator'>,</span> <span class='number'>0xa</span>
+	<span class='symbol'>message_length</span> <span class='keyword' title='define a constant'>equ</span> <span class='operator'>$</span> <span class='operator'>-</span> <span class='symbol'>message</span>
+
+	<span class='comment lineComment'>; dados padrões do sistema</span>
+	<span class='symbol'>standard_output</span> <span class='keyword' title='define a constant'>equ</span> <span class='number'>1</span>
+	<span class='symbol'>system_interrupt_write</span> <span class='keyword' title='define a constant'>equ</span> <span class='number'>4</span>
+	<span class='symbol'>system_interrupt_exit</span> <span class='keyword' title='define a constant'>equ</span> <span class='number'>1</span>
+	<span class='symbol'>system_call_interrupt</span> <span class='keyword' title='define a constant'>equ</span> <span class='number'>0x80</span
+	></code
+>
+</div>
+
 </div>
 
 <ol>
@@ -18129,7 +18195,14 @@ JavaScript ainda não chegou lá.</p>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-<code class='visualbasic'
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
 ></code
 >
 </div>

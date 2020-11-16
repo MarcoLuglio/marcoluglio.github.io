@@ -1093,6 +1093,62 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
+/* llvm */
+
+.bubaloop.llvm .keyword,
+.bubaloop.llvm .number {
+	color: #0040B4;
+}
+
+.bubaloop.llvm .type {
+	color: #8AD100;
+}
+
+.bubaloop.llvm .string {
+	color: #0099FF;
+}
+
+.bubaloop.llvm .comment {
+	color: #D10077;
+}
+
+.bubaloop.llvm .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.llvm .label {
+	color: #8D00FF;
+}
+
+/* assembly */
+
+.bubaloop.assembly .keyword,
+.bubaloop.assembly .number {
+	color: #0040B4;
+}
+
+.bubaloop.assembly .section,
+.bubaloop.assembly .segment {
+	color: #8D00FF;
+}
+
+.bubaloop.assembly .type {
+	color: #8AD100;
+}
+
+.bubaloop.assembly .string {
+	color: #0099FF;
+}
+
+.bubaloop.assembly .comment {
+	color: #D10077;
+}
+
+.bubaloop.assembly .operator,
+.bubaloop.assembly .register {
+	color: #7F8EA3;
+}
+
 /* highlighter */
 
 .bubaloop .keyword,
@@ -1100,6 +1156,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop .type,
 .bubaloop .symbol,
 .bubaloop .operator,
+.bubaloop .label,
 .bubaloop .comment,
 .bubaloop .directive,
 .bubaloop .number,
@@ -1127,7 +1184,10 @@ div.codeblock.bubaloop p + code {
 .bubaloop.html .tag,
 .bubaloop.html .attribute,
 .bubaloop.html .attributeValue,
-.bubaloop.html .text {
+.bubaloop.html .text,
+
+.bubaloop.assembly .section,
+.bubaloop.assembly .register {
 
 	transition: opacity 500ms, color 300ms;
 }
@@ -1137,6 +1197,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight .type,
 .bubaloop.highlight .symbol,
 .bubaloop.highlight .operator,
+.bubaloop.highlight .label,
 .bubaloop.highlight .comment,
 .bubaloop.highlight .directive,
 .bubaloop.highlight .number,
@@ -1178,7 +1239,10 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.html .attribute,
 .bubaloop.highlight.html .attributeValue,
 .bubaloop.highlight.html .text,
-.bubaloop.highlight.html .comment {
+.bubaloop.highlight.html .comment,
+
+.bubaloop.highlight.assembly .section,
+.bubaloop.highlight.assembly .register {
 
 	opacity: 0.4;
 }
