@@ -13650,7 +13650,8 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 // c# 9+
 // records NÃO SÃO structs
 // mas tem um propósito similar
-public data class Person {
+// record chegou a ser anunciado como data class antes da versão final
+public record Person {
     public string FirstName { get; init; }
     public string LastName { get; init; }
 }
