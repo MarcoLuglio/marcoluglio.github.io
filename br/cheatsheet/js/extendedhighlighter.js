@@ -5926,6 +5926,7 @@ define('CSKeywordToken', ['SourceSimpleCharacterSequenceToken'], (SourceSimpleCh
 				'protected',
 				'public',
 				'readonly',
+				'record',
 				'ref',
 				'remove',
 				'return',
