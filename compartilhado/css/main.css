@@ -1128,7 +1128,8 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.assembly .section,
-.bubaloop.assembly .segment {
+.bubaloop.assembly .segment,
+.bubaloop.assembly .label {
 	color: #8D00FF;
 }
 
