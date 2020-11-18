@@ -8865,6 +8865,7 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'double',
 				'float',
 				'int',
+				'nint',
 				'long',
 				'object',
 
@@ -8873,6 +8874,7 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'string',
 				'ushort',
 				'uint',
+				'nuint',
 				'ulong',
 				'void',
 
