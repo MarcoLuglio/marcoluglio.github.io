@@ -367,7 +367,7 @@ section > div {
 .sub h2 {
 	font-family: Code;
 	display: block;
-	vertical-align: baseline;
+	/*vertical-align: baseline;*/
 	font-size: 31px;
 	line-height: 31px;
 	color: #E52E78;
@@ -457,6 +457,10 @@ section > div {
 .idiomas dd div {
 	height: 33px;
 	/* ver https://css-tricks.com/html5-meter-element/ se eu quiser usar os prefixos etc */
+}
+
+.formacaoacademica {
+	height: 440px;
 }
 
 .formacaoacademica h2 {
