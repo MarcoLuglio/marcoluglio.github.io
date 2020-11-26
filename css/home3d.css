@@ -23,12 +23,16 @@ a {
 	overflow: hidden;
 	margin-left: 5px;
 	margin-right: 9px;
+	margin-top: 4px;
+	width: 54px;
+	height: 54px;
 }
 
 .gravatar img {
 	width: 54px;
 	height: 54px;
 	display: block;
+	margin-top: 2px;
 }
 
 header {
@@ -460,7 +464,13 @@ section > div {
 }
 
 .formacaoacademica {
-	height: 440px;
+	width: 830px;
+	height: 420px; /* 360 */
+}
+
+.formacaoacademica > div {
+	margin-left: 40px;
+	margin-top: 38px;
 }
 
 .formacaoacademica h2 {
