@@ -109,7 +109,7 @@ const buildScene = (sceneManager) => {
 		.copy(ancoraBiografia)
 		.rotateX(intervaloRotacaoBiografia * 5)
 		.translateX(offsetEspiralBiografia * 5)
-		.translateZ(offsetFZ)
+		.translateZ(offsetFZ + 30)
 		.build();
 
 	const objectF6 = new Css3DObjectBuilder()

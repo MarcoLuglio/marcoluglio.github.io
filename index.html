@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='en-us'
+	xml:lang='en-us'
+	>
+
+	<head>
+
+		<meta charset='UTF-8' />
+
+		<!-- mobile tags -->
+		<!-- <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' /> -->
+
+		<!-- FB Open Graph tags -->
+		<meta property='og:title' content='Marco Luglio' />
+		<meta property='og:type' content='website' />
+		<meta property='og:image' content='TODO' />
+		<meta property='og:url' content='http://marcoluglio.github.io' />
+		<meta property='og:locale' content='pt_BR' />
+		<meta property='fb:admins' content='1418167237' />
+
+		<!-- ícone da barra de tarefas 64x64 px -->
+		<!--<link rel='icon' href='/favicon.ico' type='image/x-icon'>-->
+
+		<!-- Esses só na página 'about me' -->
+		<link rel='me' title='Marco Luglio' href='https://www.linkedin.com/in/marcodejulho/?locale=pt_BR' />
+		<link rel='me' title='Marco Luglio' href='https://www.facebook.com/marcoluglio2008' />
+		<link rel='me' title='Marco Luglio' href='https://stackoverflow.com/users/14263/marco-luglio' />
+
+		<!-- Formatação da página -->
+		<link href='css/principal.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
+		<link href='css/home3d.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
+
+		<title>Marco Luglio - Programador Full Stack</title>
+
+	</head>
+	<body>
+
+		<p>
+			Go to the <a href='/en/index.html'>local version if my web site.</a>
+			<br />Redirecting you there in <span>3 seconds…</span>
+		</p>
+		<script>
+			(() =>{
+				'use strict';
+				setTimeout(() => {
+					window.location = '/en/index.html';
+				}, 3000)
+			})();
+			(() =>{
+				'use strict';
+				const secondsSpan = document.getElementsByTagName('span')[0];
+				let seconds = 3;
+				let intervalId = 0;
+				intervalId = setInterval(() => {
+					seconds--;
+					if (seconds < 0) {
+						clearInterval(intervalId);
+						return;
+					}
+					secondsSpan.innerText = seconds > 1 ? `${seconds} seconds…` : 'now! Hold on to your hat 🤠💂🏻🧑🏻‍🍳🧑🏻‍🎨';
+				}, 1000)
+			})();
+		</script>
+
+	</body>
+</html>
