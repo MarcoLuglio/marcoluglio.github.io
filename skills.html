@@ -109,6 +109,7 @@
 					name: 'core',
 					svgId: 'lightBlueChart',
 					labelColor: '#448BC9',
+					topCapColor: '#519AD4',
 					list: [
 						{ name: 'infra as code', score: 5 },
 						{ name: 'i18n', score: 5 },
@@ -129,53 +130,56 @@
 				{
 					name: 'front-end',
 					svgId: 'grayChart',
-					labelColor: '#A9B4C4',
+					labelColor: '#788598',
+					topCapColor: '#A9B7C9',
 					list: [
-						{ name: 'js/ts', score: 5 },
+						{ name: 'speech', score: 2 },
+						{ name: 'sockets', score: 4 },
 						{ name: 'web assembly', score: 5 },
 						{ name: 'swift', score: 5 },
-						{ name: 'css/responsive', score: 5 },
 						{ name: 'pwa', score: 5 },
-						{ name: 'react/redux', score: 5 },
-						{ name: 'angular/ngrx', score: 5 },
-						{ name: 'sockets', score: 5 },
-						{ name: 'maps', score: 5 },
-						{ name: 'speech', score: 5 },
-						{ name: 'e2e tests', score: 5 },
-						{ name: 'webforms/mvc', score: 5 },
+						{ name: 'react/redux', score: 6 },
+						{ name: 'angular/ngrx', score: 7 },
+						{ name: 'maps', score: 7 },
+						{ name: 'e2e tests', score: 7 },
+						{ name: 'webforms/mvc', score: 8 },
+						{ name: 'css/responsive', score: 10 },
+						{ name: 'js/ts', score: 10 },
 					]
 				},
 				{
 					name: 'back-end',
 					svgId: 'magentaChart',
 					labelColor: '#E72E88',
+					topCapColor: '#FF54A6',
 					list: [
-						{ name: 'c#', score: 5 },
+						{ name: 'machine learning', score: 4 },
+						{ name: 'c++/rust', score: 4 },
 						{ name: 'go', score: 5 },
-						{ name: 'c++/rust', score: 5 },
 						{ name: 'containers', score: 5 },
-						{ name: 'serverless', score: 5 },
-						{ name: 'graphql', score: 5 },
-						{ name: 'grpc', score: 5 },
-						{ name: 'rest', score: 5 },
-						{ name: 'microservices', score: 5 },
-						{ name: 'wcf/soap', score: 5 },
-						{ name: 'machine learning', score: 5 },
-						{ name: 'swagger/raml', score: 5 },
-						{ name: 'tests', score: 5 }
+						{ name: 'serverless', score: 6 },
+						{ name: 'tests', score: 7 },
+						{ name: 'wcf/soap', score: 7 },
+						{ name: 'graphql', score: 7 },
+						{ name: 'grpc', score: 7 },
+						{ name: 'microservices', score: 8 },
+						{ name: 'swagger/raml', score: 8 },
+						{ name: 'rest', score: 9 },
+						{ name: 'c#', score: 10 },
 					]
 				},
 				{
 					name: 'storage',
 					svgId: 'wineChart',
 					labelColor: '#731744',
+					topCapColor: '#A32161',
 					list: [
 						{ name: 'kafka', score: 5 },
 						{ name: 'mongodb', score: 6 },
-						{ name: 'cosmosdb', score: 7 },
 						{ name: 'indexeddb', score: 6 },
-						{ name: 'entity fw', score: 8 },
+						{ name: 'cosmosdb', score: 7 },
 						{ name: 'dapper', score: 7 },
+						{ name: 'entity fw', score: 8 },
 						{ name: 't-sql', score: 9 }
 					],
 				}
@@ -287,6 +291,7 @@
 						topCap.points.appendItem(topCapPoint);
 
 						// TODO calcular cor dos caps baseado na inclinação...
+						topCap.setAttribute('fill', skillGroup.topCapColor);
 
 						chart.appendChild(topCap);
 
