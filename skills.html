@@ -8,7 +8,7 @@
 	<link href='css/principal.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
 </head>
 <body>
-	<svg id='chart' width="800" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<svg id='chart' width="800" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg">
 
 		<style>
 			text {
@@ -74,19 +74,19 @@
 			<polygon class='rightFace' points='' fill="url('#darkBlueGradientRight')" />
 		</g>
 		-->
-		<g id='lightBlueChart' transform="translate(20 0)">
+		<g id='lightBlueChart' transform="translate(60 30)">
 			<polygon class='leftFace' points='' fill="url('#lightBlueGradientLeft')" />
 			<polygon class='rightFace' points='' fill="url('#lightBlueGradientRight')" />
 		</g>
-		<g id='grayChart' transform="translate(140 0)">
+		<g id='grayChart' transform="translate(160 80)">
 			<polygon class='leftFace' points='' fill="url('#grayGradientLeft')" />
 			<polygon class='rightFace' points='' fill="url('#grayGradientRight')" />
 		</g>
-		<g id='magentaChart' transform="translate(260 0)">
+		<g id='magentaChart' transform="translate(260 130)">
 			<polygon class='leftFace' points='' fill="url('#magentaGradientLeft')" />
 			<polygon class='rightFace' points='' fill="url('#magentaGradientRight')" />
 		</g>
-		<g id='wineChart' transform="translate(380 0)">
+		<g id='wineChart' transform="translate(360 180)">
 			<polygon class='leftFace' points='' fill="url('#wineGradientLeft')" />
 			<polygon class='rightFace' points='' fill="url('#wineGradientRight')" />
 		</g>
@@ -108,15 +108,16 @@
 				{
 					name: 'core',
 					svgId: 'lightBlueChart',
+					labelColor: '#448BC9',
 					list: [
 						{ name: 'infra as code', score: 5 },
 						{ name: 'i18n', score: 5 },
 						{ name: 'metrics', score: 6 },
 						{ name: 'devops', score: 7 },
 						{ name: 'oauth', score: 7 },
-						{ name: 'azure / aws', score: 7 },
+						{ name: 'azure/aws', score: 7 },
 						{ name: 'ux', score: 8 },
-						{ name: 'bdd / tdd', score: 8 },
+						{ name: 'bdd/tdd', score: 8 },
 						{ name: 'ddd', score: 8 },
 						{ name: 'git', score: 9 },
 						{ name: 'architecture', score: 9 },
@@ -128,28 +129,30 @@
 				{
 					name: 'front-end',
 					svgId: 'grayChart',
+					labelColor: '#A9B4C4',
 					list: [
-						{ name: 'js / ts', score: 5 },
+						{ name: 'js/ts', score: 5 },
 						{ name: 'web assembly', score: 5 },
 						{ name: 'swift', score: 5 },
-						{ name: 'css / responsive', score: 5 },
+						{ name: 'css/responsive', score: 5 },
 						{ name: 'pwa', score: 5 },
-						{ name: 'react / redux', score: 5 },
-						{ name: 'angular / ngrx', score: 5 },
+						{ name: 'react/redux', score: 5 },
+						{ name: 'angular/ngrx', score: 5 },
 						{ name: 'sockets', score: 5 },
 						{ name: 'maps', score: 5 },
 						{ name: 'speech', score: 5 },
 						{ name: 'e2e tests', score: 5 },
-						{ name: '.net web forms / mvc', score: 5 },
+						{ name: 'webforms/mvc', score: 5 },
 					]
 				},
 				{
 					name: 'back-end',
 					svgId: 'magentaChart',
+					labelColor: '#E72E88',
 					list: [
 						{ name: 'c#', score: 5 },
 						{ name: 'go', score: 5 },
-						{ name: 'c++ / rust', score: 5 },
+						{ name: 'c++/rust', score: 5 },
 						{ name: 'containers', score: 5 },
 						{ name: 'serverless', score: 5 },
 						{ name: 'graphql', score: 5 },
@@ -158,13 +161,14 @@
 						{ name: 'microservices', score: 5 },
 						{ name: 'wcf/soap', score: 5 },
 						{ name: 'machine learning', score: 5 },
-						{ name: 'swagger / raml', score: 5 },
+						{ name: 'swagger/raml', score: 5 },
 						{ name: 'tests', score: 5 }
 					]
 				},
 				{
 					name: 'storage',
 					svgId: 'wineChart',
+					labelColor: '#731744',
 					list: [
 						{ name: 'kafka', score: 5 },
 						{ name: 'mongodb', score: 6 },
@@ -321,7 +325,7 @@
 					skillTextRect.setAttribute('width', 80);
 					skillTextRect.setAttribute('height', 28);
 
-					skillTextRect.setAttribute('fill', '#448BC9'); // TODO make dynamic
+					skillTextRect.setAttribute('fill', skillGroup.labelColor);
 
 					skillText.appendChild(skillTextRect);
 					skillText.appendChild(skillTextLabel);
