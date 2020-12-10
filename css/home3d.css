@@ -506,11 +506,10 @@ section > div {
 	display: block;
 }
 
-/*
-.dominiotecnico div {
-
+.dominiotecnico {
+	width: 830px;
+	height: 390px; /* 360 */
 }
-*/
 
 /* Softwares */
 /* ========= */
