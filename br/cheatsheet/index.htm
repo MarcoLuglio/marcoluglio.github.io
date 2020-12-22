@@ -5155,7 +5155,7 @@ stringBuilder.ToString();</code
 
 // uma dimensão
 let mut preAlocada:[i32; 10];
-preAlocada = [0; 10];
+preAlocada = [0; 17];
 let prePopulada = ["p", "r", "e"];
 let prePopuladaT:[&amp;str; 3] = ["p", "o", "p"];
 
@@ -5199,7 +5199,48 @@ let tamanho = mdPrePopulada.len();
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>vazia := [0]int{}
+var vazia2 [0]int
+
+// uma dimensão
+var preAlocada [10]int
+// não é possível redimensionar uma array em Go
+prePopulada := [3]string{"p", "r", "e"}
+var prePopuladaT [3]string = [3]string{"p", "o", "p"}
+
+// tem que ser constantes
+const linhas = 2
+const colunas = 4
+
+// multidimensional
+var mdPreAlocada [linhas][colunas]uint8
+mdPrePopulada := [linhas][colunas]uint8 {
+	{0, 1, 2, 3},
+	{4, 5, 6, 7}, // , no final não é um erro, go requer
+}
+
+
+
+
+
+
+
+
+
+preAlocada[5] = 16000
+
+indice0 := prePopulada[0]
+two := mdPrePopulada[0][2]
+
+for indice, valor := range prePopulada {
+	//
+}
+
+
+
+
+
+tamanho := len(mdPrePopulada)</code
 >
 </div>
 
@@ -8122,7 +8163,7 @@ func imprimir(titulo string, paginas ...interface{}) {
 	for _, pagina := range paginas {
 		/*
 		TODO
-		switch v := x.(type) {
+		switch v := pagina.(type) {
 			case string:
 				 return "A string"
 			case int32:
