@@ -724,7 +724,7 @@ mod foo {
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->// Comentários simples logo antes das declarações
+>// someFunction Comentários simples logo antes das declarações
 func someFunction(/* bloco */ x int) int {
 	return 0
 }</code
@@ -13554,15 +13554,32 @@ C++ e C# tratam <em>tuples</em> como se fossem uma funcionalidade construída so
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>enum WithoutValues {
+	A,
+	B,
+	C
+}
+
+// podemos misturar os tipos
+enum WithValues {
+	A(i32),
+	B(i32, i32),
+	C(String)
+}
+
+let someEnum = WithValues::B(1, 2);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// use constantes + iota
+const (
+	a = 1 &lt;&lt; iota  // a == 1 (iota has been reset)
+	b = 1 &lt;&lt; iota  // b == 2
+	c = 1 &lt;&lt; iota  // c == 4
+)</code
 >
 </div>
 
@@ -17936,95 +17953,251 @@ console.log(indexedCollection["tuesday"]);</code
 
 <section>
 
-<h2 id='metadados'>Meta dados (annotations / attributes)</h2>
+<h2 id='metadados'>Meta dados (annotations / attributes / decorators)</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// use procedural macros
+// TODO
+
+#[proc_macro_attribute]
+pub fn show_streams(
+		attr: TokenStream,
+		item: TokenStream
+	) -> TokenStream {
+
+	println!("attr: \"{}\"", attr.to_string());
+	println!("item: \"{}\"", item.to_string());
+	item
+}
+
+#[show_streams(bar)]
+fn invoke2() {}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>package main
+
+import (
+	"fmt"
+	"reflect"
+)
+type T struct {
+	f1     string "f one"
+	f2     string
+	f3     string `f three`
+	f4, f5 int64  `f four and five`
+	f6     string `one:"1" two:"2"blank:""`
+}
+
+func main() {
+
+	t := reflect.TypeOf(T{})
+
+	f1, _ := t.FieldByName("f1")
+	fmt.Println(f1.Tag) // f one
+	f4, _ := t.FieldByName("f4")
+	fmt.Println(f4.Tag) // f four and five
+	f5, _ := t.FieldByName("f5")
+	fmt.Println(f5.Tag) // f four and five
+
+	f6, _ := t.FieldByName("f6")
+    fmt.Println(f6.Tag) // one:"1" two:"2"blank:""
+    v, ok := f6.Tag.Lookup("one")
+    fmt.Printf("%s, %t\n", v, ok) // 1, true
+    v, ok = f6.Tag.Lookup("blank")
+    fmt.Printf("%s, %t\n", v, ok) // , true
+    v, ok = f6.Tag.Lookup("five")
+	fmt.Printf("%s, %t\n", v, ok) // , false
+
+}</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
-<code class='cpp'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>// não permite atributos customizados
+// apenas pré-definidos</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>// não permite atributos customizados
+// apenas pré-definidos</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>@Target(AnnotationTarget.CLASS)
+annotation class AClassAnnotation(val aParam: String)
+
+@Target(AnnotationTarget.FUNCTION)
+annotation class AMethodAnnotation(val aParam: String)
+
+@AClassAnnotation("metadata about class")
+class AnnotatedClass {
+
+	@AMethodAnnotation("metadata about class")
+	void AnnotatedMethod() {
+		//
+	}
+
+}
+
+val aClassAnnotation = AnnotatedClass::class
+	.annotations
+	.find { it is AClassAnnotation } as? AClassAnnotation
+
+println(AClassAnnotation?.aParam)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>@Target(ElementType.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AClassAnnotation {
+	public String aParam() default "";
+}
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AMethodAnnotation {
+	public String aParam() default "";
+}
+
+@AClassAnnotation(aParam = "metadata about class")
+class AnnotatedClass {
+
+	@AMethodAnnotation(aParam = "metadata about class")
+	void AnnotatedMethod() {
+		//
+	}
+
+}
+
+AClassAnnotation aClassAnnotation = obj
+	.getClass()
+	.getAnnotation(AClassAnnotation.class);
+
+if (aClassAnnotation != null) {
+	String aParam = aClassAnnotation.aParam();
+}</code
 >
 </div>
 
 <div class='codeblock'>
+
 <p>C#</p>
 <code class='cs'
+>[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+public class AClassAttribute : Attribute {
+
+	public AClassAttribute(string aParam) {
+		//
+	}
+
+}
+
+[AttributeUsage(AttributeTargets.Method, Inherited = false)]
+public class AMethodAttribute : Attribute {
+
+	public AMethodAttribute(string aParam) {
+		//
+	}
+
+}
+
+[AClassAttribute("metadata about class")]
+public sealed class AnnotatedClass {
+
+	[AMethodAttribute("metadata about method")]
+	public void AnnotatedMethod() {
+		...
+	}
+
+}
+
+var annotatedClassType = typeof(AnnotatedClass);
+var aClassAttribute = (AClassAttribute) Attribute.GetCustomAttribute(
+	annotatedClassType,
+	typeof (AClassAttribute)
+);</code
 >
-</code
->
+
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>// <a href='https://github.com/tc39/proposal-decorators'>acompanhe essa feature</a></code
 >
 </div>
 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>def a_class_decorator(cls):
+	class NewClass(cls):
+		attr = 100
+		return NewClass
+
+@a_class_decorator
+class X:
+	pass
+
+def a_function_decorator(aParam, func):
+	def wrapper():
+		print("Do something")
+		func()
+	return wrapper
+
+@a_function_decorator("a param")
+def say_whee():
+	print("Whee!")
+
+#####################################
+
+import functools
+
+class state_decorator:
+
+	def __init__(self, func):
+		functools.update_wrapper(self, func)
+		self.func = func
+		self.num_calls = 0
+
+	def __call__(self, *args, **kwargs):
+		self.num_calls += 1
+		print(f"Call {self.num_calls} of {self.func.__name__!r}")
+		return self.func(*args, **kwargs)
+
+@state_decorator
+def say_whee():
+	print("Whee!")</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -18584,11 +18757,11 @@ rust loop {}
 swift lazy
 stategy pattern
 Sintaxe pra aceitar uma função - se for strategy interna mais fácil, se for externa c++ e rust são mais complicados por causa da lifetime da função
-enums
 guard e match
 Sobrecarga de função
 Requisições http
 c# explicit e implicit keywords
+Dictionary / Map
 
 macros
 unions?
@@ -18612,8 +18785,6 @@ Functional interface exemplo com métodos possíveis default overwrite object et
 
 Type erasure
 
-LLVM IR
-Assembly
 RISC
 
 PHP
