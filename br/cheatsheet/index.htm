@@ -5597,7 +5597,11 @@ lista.push(1);</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>var lista []int // em go se chamam slices
+listaPreAlocada := make([]int, 1)
+// slices são imutáveis, assim como strings
+lista = append(lista, 1)
+listaPreAlocada = append(listaPreAlocada, 1)</code
 >
 </div>
 
@@ -9307,10 +9311,80 @@ console.log(closure()); // 2</code
 </div>
 
 <div class='codeblock'>
-<p>Go</p>
-<code class='go'
-></code
+
+<p>Go - moduleRootFolder</p>
+<code class='shell'
+><span class='comment'># dentro de um diretório</span>
+<span class='keyword'>go</span> <span class='keyword'>mod</span> <span class='keyword'>init</span> github.com/path/to/module/repo
+
+<span class='comment'># isso vai criar um go.mod</span></code
 >
+
+<p>Go - moduleRootFolder/go.mod</p>
+<code class='generic'
+>module github.com/path/to/module/repo
+
+go 1.15</code
+>
+
+<p>Go - moduleRootFolder/subfolder/sub.go</p>
+<code class='go'
+>package subfolder
+// nome do pacote não precisa ser
+// o mesmo da pasta, mas é recomendado
+
+func init() {
+	// executado quando um pacote é importado
+}
+
+// nomes começando com maiúsculo
+// são visíveis fora do pacote
+
+func ExportedFunc() {
+	//
+}
+
+type ExportedStruct struct {
+	//
+}
+
+// nomes começando com minúsculo
+// só são visíveis dentro do próprio pacote
+
+func packagePrivate() {
+	//
+}</code
+>
+
+<p>Go - moduleRootFolder/othersubfolder/main.go</p>
+<code class='go'
+>package main
+
+// import with . in front will remove the need to use
+// the full package.struct name, only struct name would do
+// import with _ in front for using side-effects only
+// (running the init func)
+
+// use o caminho configurado em go.mod + nome do pacote
+import (
+	"github.com/path/to/module/repo/subfolder"
+)
+
+// ExportedStruct alias without namespace
+type ExportedStruct = sub.ExportedStruct
+
+func main() {
+
+	// use o alias criado
+	exportedStruct := ExportedStruct{}
+
+	// ou o nome completo
+	exportedStruct := sub.ExportedStruct{}
+	sub.ExportedFunc()
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
