@@ -4052,8 +4052,37 @@ let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
 
 <div class='codeblock'>
 <p>Go</p>
-<code class='visualbasic'
-></code
+<code class='go'
+>// requer import "math"
+
+// integer literals without type are int by default, not int32
+var i32_1 int32 = 2
+var i32_2 int32 = 4
+var i32_min int32 = math.MinInt32
+var i32_max int32 = math.MaxInt32
+
+i64 := int64(i32_max) // explicit conversion 2147483647 (int64)
+i16 := int16(i32_max) // explicit conversion -1 (int16)
+
+// implicit conversion
+adicao1 := i32_max + 1 // 2147483648 (int64)
+subtracao1 := i32_min - 1 // -2147483649 (int64)
+
+// explicit conversion
+adicao2 := i64 + int64(i32_1) // 2147483649 (int64)
+adicao3 := i64 + int64(i32_max) // 4294967294 (int64)
+subtracao2 := int32(i16) - i32_1 // -3 (int32)
+subtracao3 := int32(i16) - i32_max // -2147483648 (int32)
+
+// explicit conversion
+multiplicacao1 := i32_1 * i32_2 // 8 (int32)
+multiplicacao2 := i32_max * i32_1 // -2 (int32)
+multiplicacao3 := int64(i32_1) * i64 // 4294967294 (int64)
+
+// explicit conversion
+divisao1 := i32_2 / i32_1 // 2 (int32)
+divisao2 := i32_1 / i32_2 // 0 (int32)
+divisao3 := int32(i16) / i32_1 // 0 (int32)</code
 >
 </div>
 
@@ -18752,14 +18781,21 @@ JavaScript ainda não chegou lá.</p>
 -->
 
 <!--
-pass by reference, inout, ref, etc
-rust loop {}
 swift lazy
+Sobrecarga de função
+
 stategy pattern
 Sintaxe pra aceitar uma função - se for strategy interna mais fácil, se for externa c++ e rust são mais complicados por causa da lifetime da função
-guard e match
-Sobrecarga de função
+
 Requisições http
+JSON
+
+Observar objetos KVO, notification center, etc.
+
+pass by reference, inout, ref, etc
+rust loop {}
+guard e match
+
 c# explicit e implicit keywords
 Dictionary / Map
 
@@ -18772,13 +18808,13 @@ default parameter values, compare strings, valores não iniciados, null pointer 
 
 Pointers, references, pointer to references, pointer to pointer, cast pointers to references
 Eventos e setTimeout
-Observar objetos KVO, notification center, etc.
+
 
 GUI
 
 Certificação
 Overload pode ter visibilidade diferente?
-Operator mess?
+Operator precedence mess?
 Cast um tipo para string chama tostring?
 
 Functional interface exemplo com métodos possíveis default overwrite object etc.
