@@ -4019,28 +4019,28 @@ let i32_2:i32 = 4;
 let i32_min:i32 = std::i32::MIN;
 let i32_max:i32 = std::i32::MAX;
 
-let i641:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
-let i161:i16 = i32_max as i16; // explicit conversion -1 (i16)
+let i64_1:i64 = i32_max as i64; // explicit conversion 2147483647 (i64)
+let i16_1:i16 = i32_max as i16; // explicit conversion -1 (i16)
 
 // explicit conversion
 let adicao1 = i32_max + 1; // -2147483648 (i32)
-let adicao2 = i641 + (i32_1 as i64); // 2147483649 (i64)
-let adicao3 = i641 + (i32_max as i64); // 4294967294 (i64)
+let adicao2 = i64_1 + (i32_1 as i64); // 2147483649 (i64)
+let adicao3 = i64_1 + (i32_max as i64); // 4294967294 (i64)
 
 // explicit conversion
 let subtracao1 = i32_min - 1; // 2147483647 (i32)
-let subtracao2 = (i161 as i32) - i32_1; // -3 (i32)
-let subtracao3 = (i161 as i32) - i32_max; // -2147483648 (i32)
+let subtracao2 = (i16_1 as i32) - i32_1; // -3 (i32)
+let subtracao3 = (i16_1 as i32) - i32_max; // -2147483648 (i32)
 
 // explicit conversion
 let multiplicacao1 = i32_1 * i32_2; // 8 (i32)
 let multiplicacao2 = i32_max * i32_1; // -2 (i32)
-let multiplicacao3 = (i32_1 as i64) * i641; // 4294967294 (i64)
+let multiplicacao3 = (i32_1 as i64) * i64_1; // 4294967294 (i64)
 
 // explicit conversion
 let divisao1 = i32_2 / i32_1; // 2 (i32)
 let divisao2 = i32_1 / i32_2; // 0 (i32)
-let divisao3 = (i161 as i32) / i32_1; // 0 (i32)
+let divisao3 = (i16_1 as i32) / i32_1; // 0 (i32)
 
 // NOTA
 // literais numéricas sem sufixo possuem o tipo _
@@ -4082,7 +4082,18 @@ multiplicacao3 := int64(i32_1) * i64 // 4294967294 (int64)
 // explicit conversion
 divisao1 := i32_2 / i32_1 // 2 (int32)
 divisao2 := i32_1 / i32_2 // 0 (int32)
-divisao3 := int32(i16) / i32_1 // 0 (int32)</code
+divisao3 := int32(i16) / i32_1 // 0 (int32)
+
+intVar := 1
+doubleVar := 0.1
+
+// requer conversão explícita
+somaVar := float64(intVar) + doubleVar
+doubleVar += float64(intVar)
+
+// não requer
+somaLiteral := 1 + 0.1
+doubleVar += 1</code
 >
 </div>
 
