@@ -4436,92 +4436,110 @@ private void recebeByte(byte numero) {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>let i = s.parse::&lt;i32&gt;().unwrap();
+let i:i32 = s.parse().unwrap();
+let i:i32 = s.parse::&lt;i32&gt;().unwrap_or(0);
+let i = match s.parse::&lt;i32&gt;() {
+	Ok(i) => i,
+	Err(_e) => 0,
+};</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// requer import "strconv"
+
+// "a to i" e "i to a" string &lt;--&gt; int base 10
+i, err := strconv.Atoi("-42")
+s := strconv.Itoa(-42)
+
+b, err := strconv.ParseBool("true")
+f, err := strconv.ParseFloat("3.1415", 64) // size 64
+i, err := strconv.ParseInt("-42", 10, 64) //  base 10 size 64
+u, err := strconv.ParseUint("42", 10, 64) // base 10 size 64</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>auto i = std::stoi(s); // #include <string></string>
+
+int i;
+i = std::from_chars(s.data(), s.data() + s.size(), i, 10);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->
-</code
+>int i = [s intValue];</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>let i = Int(s) ?? 0</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>val i = s.toInt()</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Java</p>
 <code class='java'
->
-</code
+>var i = Integer.parseInt(s);
+var i = new Integer(s).intValue();</code
 >
 </div>
 
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>var i = int.Parse(s);
+var i = Convert.ToInt64(s);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>parseInt('1111', 2); // base 2
+parseInt(15.99, 10);
+parseInt('15,123', 10);
+parseInt('15 * 3', 10);
+parseInt('15e2', 10);
+parseInt('FXX123', 16);
+
+// dangerous, no base specified
+// chooses base depending on string format
+parseFloat('3.14');
+parseFloat('314e-2');
+parseFloat('0.0314E+2');
+parseInt('015', 10); // but `parseInt(015, 8)` will return 13
+parseFloat('3.14some non-digit characters');</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+>Dim i As Integer = CInt((s))</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
+>i = int(s)</code
 >
 </div>
 
