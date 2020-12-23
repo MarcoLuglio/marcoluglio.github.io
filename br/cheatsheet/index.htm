@@ -4475,7 +4475,9 @@ i = std::from_chars(s.data(), s.data() + s.size(), i, 10);</code
 <div class='codeblock'>
 <p>Objective-C</p>
 <code class='objectivec'
->int i = [s intValue];</code
+>int i = [s intValue];
+s.intValue;
+[@"     2     some non-digit characters" intValue]; // 2</code
 >
 </div>
 
@@ -8220,25 +8222,30 @@ imprimirSimples("resumo", 1, 2, 5)</code
 <code class='go'
 >// argumentos de todos os tipos
 
-// TODO Object ou interface{}
 func imprimir(titulo string, paginas ...interface{}) {
+
 	for _, pagina := range paginas {
-		/*
-		TODO
-		switch v := pagina.(type) {
+
+		switch value := pagina.(type) {
 			case string:
-				 return "A string"
+				fmt.Println("A string")
+				fmt.Println("Imprimindo página ", value)
 			case int32:
-				 return "An Integer"
+				fmt.Println("An integer")
+				fmt.Println("Imprimindo página ", value)
+			case []int32:
+				fmt.Println("A slice")
+				fmt.Println("Imprimindo páginas ", value)
 			default:
-				 return "A default"
+				fmt.Println("A default")
 		}
-		fmt.Println("Imprimindo página " + pagina)
-		*/
+
 	}
+
 }
 
-imprimir("resumo", 1, /*Enumerable.Range(2, 4),*/ "capítulo 2")</code
+pageSlice := make([]int32, 3)
+imprimir("resumo", 1, pageSlice, "capítulo 2")</code
 >
 
 </div>
@@ -9344,6 +9351,125 @@ console.log(closure()); // 2</code
 <br />C++ por sua vez, requer cuidados no gerenciamento de memória das variáveis acessadas pela closure com <code class='cpp'>make_shared</code>.
 <br />Java complica um pouco o padrão, requerendo que as variáveis sejam membros de um objeto marcado como <code class='java'>final</code>.
 <br />Objective-C possui uma sintaxe bastante difícil para identificar as closures, e o uso de <em>aliases</em> torna as assinaturas um pouco mais legíveis. Também é necessário identificar de maneira especial as variáveis que serão usadas na closure com <code class='objectivec'>__block</code>.</p>
+
+</section>
+
+
+
+<section>
+
+<h3 id='strategypattern'>Assinatura e strategy pattern</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>// delegates
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
 
 </section>
 
