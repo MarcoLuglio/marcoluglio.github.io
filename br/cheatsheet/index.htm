@@ -6445,7 +6445,7 @@ type Name = String;
 
 // tipo função
 // TODO testar
-// type StrategyFunctionPointer = Fn(i32) -&gt; i32;</code
+// type StrategyFunctionPointer = fn(i32) -&gt; i32;</code
 >
 </div>
 
@@ -6516,7 +6516,11 @@ typealias StrategyFunctionPointer = () -&gt; ()</code
 <p>Kotlin</p>
 <code class='kotlin'
 >
-</code
+
+
+
+// tipo função
+typealias StrategySignature = //</code
 >
 </div>
 
@@ -7312,11 +7316,11 @@ fn retornoMisturado() -&gt; Any {
 
 
 
-fn superior&lt;F&gt;(funcao:F) where F:Fn() {
+fn superior&lt;F&gt;(funcao:F) where F:fn() {
 	funcao();
 }
 
-fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:Fn() {
+fn superior&lt;F&gt;(funcao:F) -&gt; &amp;'static str where F:fn() {
 	funcao();
 }
 
@@ -9365,16 +9369,41 @@ console.log(closure()); // 2</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>type StrategySignature = fn(i32, i32) -> i32
+
+//</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>type StrategySignature func(int, int) int
+
+func AddStrategy(i1 int, i2 int) int {
+	return i1 + i2
+}
+
+func MultiplyStrategy(i1 int, i2 int) int {
+	return i1 * i2
+}
+
+func main() {
+
+	var typeCurrentStrategy StrategySignature
+	var inlineCurrentStrategy func(int, int) int
+
+	typeCurrentStrategy = AddStrategy
+	inlineCurrentStrategy = AddStrategy
+	typeCurrentStrategy(1, 2) // 3
+	typeCurrentStrategy(1, 2) // 3
+
+	typeCurrentStrategy = MultiplyStrategy
+	inlineCurrentStrategy = typeCurrentStrategy
+	typeCurrentStrategy(1, 2) // 2
+	typeCurrentStrategy(1, 2) // 2
+
+}</code
 >
 </div>
 
@@ -9397,16 +9426,58 @@ console.log(closure()); // 2</code
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
-</code
+>typealias StrategySignature = (Int, Int) -> Int
+
+func addStrategy(_ i1:Int, _ i2:Int) -> Int {
+	return i1 + i2
+}
+
+func multiplyStrategy(_ i1:Int, _ i2:Int) -> Int {
+	i1 * i2
+}
+
+var subtractStrategy = {(i1:Int, i2:Int) -> Int in
+	i1 - i2
+}
+
+var divideStrategy:StrategySignature = { i1, i2 in i1 / i2 }
+
+var otherStrategy:StrategySignature = {$0 + $1}
+
+var typeCurrentStrategy:StrategySignature
+var inlineCurrentStrategy:func(Int, Int) -> Int
+
+typeCurrentStrategy = addStrategy
+inlineCurrentStrategy = addStrategy
+typeCurrentStrategy(1, 2) // 3
+typeCurrentStrategy(1, 2) // 3
+
+typeCurrentStrategy = multiplyStrategy
+inlineCurrentStrategy = typeCurrentStrategy
+typeCurrentStrategy(1, 2) // 2
+typeCurrentStrategy(1, 2) // 2</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>// notice that for signatures
+// the return type is separated by -> and not :
+// ugh...
+typealias StrategySignature = (Int, Int) -> Int
+
+fun addStrategy(i1:Int, i2:Int) : Int {
+	return i1 + i2
+}
+
+val multiplyStrategy = fun(i1:Int, i2:Int) : Int {
+	i1 * i2
+}
+
+val subtractStrategy:StrategySignature = { i1, i2 -> i1 - i2 }
+
+//</code
 >
 </div>
 
@@ -9421,8 +9492,9 @@ console.log(closure()); // 2</code
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->// delegates
-</code
+>delegate int StrategySignature(int, int);
+
+//</code
 >
 </div>
 
@@ -18816,6 +18888,244 @@ JavaScript ainda não chegou lá.</p>
 
 
 
+<section>
+
+<h2 id='http'><abbr>HTTP</abbr></h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='json'>JSON</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
 <!--
 <section>
 
@@ -18936,43 +19246,37 @@ JavaScript ainda não chegou lá.</p>
 -->
 
 <!--
-swift lazy
-Sobrecarga de função
+swift lazy e guard
 
-stategy pattern
-Sintaxe pra aceitar uma função - se for strategy interna mais fácil, se for externa c++ e rust são mais complicados por causa da lifetime da função
-
-Requisições http
-JSON
-
-Observar objetos KVO, notification center, etc.
-
-pass by reference, inout, ref, etc
 rust loop {}
-guard e match
+
+Cast um tipo para string chama tostring?
+
+unions?
+Observar objetos KVO, notification center, reactive, etc..
+observer ou eventos customizados
+Eventos e setTimeout
+
+match
 
 c# explicit e implicit keywords
 Dictionary / Map
 
 macros
-unions?
 
 conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
-observer ou eventos customizados
-default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure, linq, traits, extension methods, if (a = 1) if let while let, macros, floata == floatb ou Math.abs(floata - floatb) < 0.001
 
-Pointers, references, pointer to references, pointer to pointer, cast pointers to references
-Eventos e setTimeout
+default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure,
+linq, traits, extension methods, if (a = 1) if let while let, macros,
+floata == floatb ou Math.abs(floata - floatb) < 0.001
 
+pointer to references, pointer to pointer, cast pointers to references
 
 GUI
 
 Certificação
 Overload pode ter visibilidade diferente?
 Operator precedence mess?
-Cast um tipo para string chama tostring?
-
-Functional interface exemplo com métodos possíveis default overwrite object etc.
 
 Type erasure
 
