@@ -8698,13 +8698,11 @@ Imprimir "resumo", 1, 2, 5</code>
 >// suporta funções anônimas e closures
 // mas não lambda com arrow syntax ou algo parecido
 
-func adder() func(int) int {
-	sum := 0
-	return func(x int) int {
-		sum += x
-		return sum
-	}
-}</code
+func superiorRetorno(funcao func(x int) int) {
+	fmt.Println(funcao(1))
+}
+
+superiorRetorno(func(x) { return x + 1 })</code
 >
 </div>
 
@@ -8947,7 +8945,16 @@ mydoubler = myfunc(2)
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>func externa() {
+
+	func main() {
+
+		internaLambda := func() { /**/ }
+		internaLambda()
+
+	}
+
+}</code
 >
 </div>
 
@@ -9147,8 +9154,28 @@ mydoubler = myfunc(2)
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>package main
+
+import "fmt"
+
+func facade() func() int {
+	// acessível somente pela função interna
+	i := 0
+	interna := func() int {
+		i++
+		return i
+	}
+	// expõe a função interna
+	return interna
+}
+
+func main() {
+
+	closure := facade()
+	fmt.Println(closure()) // 1
+	fmt.Println(closure()) // 2
+
+}</code
 >
 </div>
 
