@@ -1108,7 +1108,16 @@ x := 5 // atalho para declaração
 const x = 5 // constante
 
 var a = 1
-var ponteiroDeInt *int = &a // ponteiro</code
+var ponteiroDeInt *int = &a // ponteiro
+
+// variáveis relacionadas
+// podem ser declaradas juntas
+var (
+	countLock   sync.Mutex
+	inputCount  uint32
+	outputCount uint32
+	errorCount  uint32
+)</code
 >
 </div>
 
@@ -7309,8 +7318,11 @@ fn retorno() -&gt; &amp;'static str {
 
 use std::any::Any;
 
-fn retornoMisturado() -&gt; Any {
-	// TODO
+fn retorno_misturado(numero:i32) -> Option&lt;Box&lt;dyn Any&gt;&gt; {
+	if numero &gt; 0 {
+		return Some(Box::new("string"))
+	}
+	Some(Box::new(25))
 }
 
 
@@ -7335,7 +7347,41 @@ superior(retorno);</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>// declaração de função
+func normal() { /**/ }
+
+
+// expressão de função
+var expressaoInline = func() { /**/ }
+var expressao = normal
+
+func retorno() string { return "retorno" }
+func retornoMultiplo() (string, string) {
+	return "retorno", "multiplo"
+}
+
+func retornoMisturado(numero int) interface{} {
+	if numero > 0 {
+		return "texto"
+	}
+	return 25
+}
+
+func retornoNomeado() (nome string) {
+	nome = "Zé" // declarado pelo nome do retorno
+	return nome
+}
+
+func superior(funcao func()) {
+	funcao()
+}
+
+func superiorRetorno(funcao func() string) {
+	funcao()
+}
+
+superior(normal)
+superiorRetorno(retorno)</code
 >
 </div>
 
