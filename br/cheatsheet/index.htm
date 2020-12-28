@@ -442,7 +442,7 @@ bloco
 */
 
 fun someFunction(/* bloco */ arg:Int): Int {
-    return 0
+	return 0
 }</code
 >
 </div>
@@ -4466,7 +4466,7 @@ s := strconv.Itoa(-42)
 
 b, err := strconv.ParseBool("true")
 f, err := strconv.ParseFloat("3.1415", 64) // size 64
-i, err := strconv.ParseInt("-42", 10, 64) //  base 10 size 64
+i, err := strconv.ParseInt("-42", 10, 64) // base 10 size 64
 u, err := strconv.ParseUint("42", 10, 64) // base 10 size 64</code
 >
 </div>
@@ -4597,7 +4597,7 @@ char oitoBits;
 wchar_t trintaEDoisBits; // mas no windows é só 16 bits
 char16_t dezesseisBits;
 char32_t trintaEDoisBits;
-char8_t  oitoBits; // C++11</code
+char8_t oitoBits; // C++11</code
 >
 </div>
 
@@ -5474,7 +5474,7 @@ for (String valor : prePopulada) {
 
 
 
-int tamanho =  = mdPrePopulada.length;
+int tamanho = mdPrePopulada.length;
 
 // TODO comparar arrays
 
@@ -5582,7 +5582,7 @@ for (let valor of prePopulada) {
 
 
 
-let tamanho =  = mdPrePopulada.length;
+let tamanho = mdPrePopulada.length;
 // TODO comparar arrays</code
 >
 </div>
@@ -6091,7 +6091,7 @@ int segundoIntOriginal{95};
 
 // variável tipo ponteiro de int (int*) aponta
 // para variável comum tipo int
-//  seu valor é um inteiro 32 ou 64 bits, representando
+// seu valor é um inteiro 32 ou 64 bits, representando
 // o endereço de memória de intOriginal, que podemos
 // obter usando o operador &amp;
 int* ponteiroDeInt{&amp;intOriginal};
@@ -7102,10 +7102,10 @@ label: {
 
 // switch e "match" - java 12+
 switch (day) {
-    case MONDAY, FRIDAY, SUNDAY -&gt; System.out.println(6);
-    case TUESDAY                -&gt; System.out.println(7);
-    case THURSDAY, SATURDAY     -&gt; System.out.println(8);
-    case WEDNESDAY              -&gt; System.out.println(9);
+	case MONDAY, FRIDAY, SUNDAY -&gt; System.out.println(6);
+	case TUESDAY                -&gt; System.out.println(7);
+	case THURSDAY, SATURDAY     -&gt; System.out.println(8);
+	case WEDNESDAY              -&gt; System.out.println(9);
 }
 
 // switch expressions - java 14+
@@ -7537,7 +7537,7 @@ superior(retorno)</code
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->//  declaração de função
+>// declaração de função
 function comum() { /**/ }
 function normal(texto) { /**/ }
 
@@ -7571,7 +7571,7 @@ function superior(funcao) {
 comum(); // arguments será []
 comum('lala'); // arguments será ['lala']
 comum('lala', 'lolo'); // arguments será ['lala', 'lolo']
-normal('lolo'); // texto será 'lolo' e  arguments será ['lolo']
+normal('lolo'); // texto será 'lolo' e arguments será ['lolo']
 
 // chamada válida
 normal(); // o parâmetro texto terá o valor undefined e arguments será []
@@ -11634,7 +11634,7 @@ namespace MarcoLuglio.GeneratorExample {
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
-			return this;  // implementação explícita --^
+			return this; // implementação explícita --^
 		}
 
 		#endregion
@@ -13489,10 +13489,10 @@ threads.append(thread1)
 threads.append(thread2)
 
 for t in threads:
-   t.start()
+	t.start()
 
 for t in threads:
-   t.join()
+	t.join()
 
 #def main():
 #	x = threading.Thread(target=thread_function, args=(1,))
@@ -13905,9 +13905,9 @@ let someEnum = WithValues::B(1, 2);</code
 <code class='go'
 >// use constantes + iota
 const (
-	a = 1 &lt;&lt; iota  // a == 1 (iota has been reset)
-	b = 1 &lt;&lt; iota  // b == 2
-	c = 1 &lt;&lt; iota  // c == 4
+	a = 1 &lt;&lt; iota // a == 1 (iota has been reset)
+	b = 1 &lt;&lt; iota // b == 2
+	c = 1 &lt;&lt; iota // c == 4
 )</code
 >
 </div>
@@ -14424,8 +14424,8 @@ public struct ResultadoCaixaCartao : Parcelavel { // ok
 // mas tem um propósito similar
 // record chegou a ser anunciado como data class antes da versão final
 public record Person {
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
+	public string FirstName { get; init; }
+	public string LastName { get; init; }
 }
 
 var person = new Person("Scott", "Hunter"); // positional construction
@@ -15691,11 +15691,11 @@ type HasArea interface {
 }
 
 type Circle struct {
-    radius float64
+	radius float64
 }
 
 func (c *Circle) Area() float64 {
-    return math.Pi * (c.radius * c.radius)
+	return math.Pi * (c.radius * c.radius)
 }</code
 >
 </div>
@@ -15832,7 +15832,7 @@ interface B {
 	fun bar() { print("bar") }
 }
 
-interface I :  B {
+interface I : B {
 	//
 }
 
@@ -16250,7 +16250,7 @@ class D(B, C):
 	virtual void AbstractMemberFunction() = 0;
 
 	// uma classe abstrata ainda pode conter outros tipos de métodos
-	// e  atributos
+	// e atributos
 	virtual void NonAbstractMemberFunction1(); // Virtual function.
 	void NonAbstractMemberFunction2();
 
@@ -18092,7 +18092,7 @@ operator fun Point.get(i) = Point(-x, -y)
 val point = Point(10, 20)
 
 fun main() {
-   println(-point)  // prints "Point(x=-10, y=-20)"
+	println(-point) // prints "Point(x=-10, y=-20)"
 }
 
 // TODO implementar operador get conforme abaixo
@@ -18337,12 +18337,12 @@ func main() {
 	fmt.Println(f5.Tag) // f four and five
 
 	f6, _ := t.FieldByName("f6")
-    fmt.Println(f6.Tag) // one:"1" two:"2"blank:""
-    v, ok := f6.Tag.Lookup("one")
-    fmt.Printf("%s, %t\n", v, ok) // 1, true
-    v, ok = f6.Tag.Lookup("blank")
-    fmt.Printf("%s, %t\n", v, ok) // , true
-    v, ok = f6.Tag.Lookup("five")
+	fmt.Println(f6.Tag) // one:"1" two:"2"blank:""
+	v, ok := f6.Tag.Lookup("one")
+	fmt.Printf("%s, %t\n", v, ok) // 1, true
+	v, ok = f6.Tag.Lookup("blank")
+	fmt.Printf("%s, %t\n", v, ok) // , true
+	v, ok = f6.Tag.Lookup("five")
 	fmt.Printf("%s, %t\n", v, ok) // , false
 
 }</code
@@ -19079,108 +19079,7 @@ JavaScript ainda não chegou lá.</p>
 
 
 
-<h3 id='websockets'><abbr>Web sockets</abbr></h3>
-
-<div class='comparison'>
-
-<div class='codeblock'>
-<p>Rust</p>
-<code class='rust'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Go</p>
-<code class='go'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C++</p>
-<code class='cpp'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Objective-C</p>
-<code class='objectivec'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Swift</p>
-<code class='swift'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Kotlin</p>
-<code class='kotlin'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Java</p>
-<code class='java'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>C#</p>
-<code class='cs'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Python</p>
-<code class='python'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-<code class='visualbasic'
-></code
->
-</div>
-
-</div>
-
-<ol>
-	<li>a</li>
-</ol>
-
-<p>A</p>
-
-
-
-<h3 id='sockets'><abbr>Sockets</abbr></h3>
+<h3 id='grpc'><abbr>gRPC</abbr></h3>
 
 <div class='comparison'>
 
@@ -19293,13 +19192,10 @@ JavaScript ainda não chegou lá.</p>
 
 <p>A</p>
 
-</section>
 
 
-
-<section>
-
-<h2 id='json'>JSON</h2>
+<!--
+<h3 id='graphql'><abbr>GraphQL</abbr></h3>
 
 <div class='comparison'>
 
@@ -19371,6 +19267,824 @@ JavaScript ainda não chegou lá.</p>
 <p>JavaScript</p>
 <code class='javascript'
 >
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+-->
+
+
+
+<h3 id='websockets'><abbr>Web sockets</abbr></h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// se also:
+// <a href="https://yalantis.com/blog/how-to-build-websockets-in-go/">https://yalantis.com/blog/how-to-build-websockets-in-go/</a>
+// <a href="https://devcenter.heroku.com/articles/go-websockets">https://devcenter.heroku.com/articles/go-websockets</a>
+
+package main
+
+import (
+	"bufio"
+	"flag"
+	"fmt"
+	"net"
+	"os"
+	"strings"
+)
+
+type ClientManager struct {
+	clients    map[*Client]bool
+	broadcast  chan []byte
+	register   chan *Client
+	unregister chan *Client
+}
+
+type Client struct {
+	socket net.Conn
+	data   chan []byte
+}
+
+func (manager *ClientManager) start() {
+
+	for {
+
+		select {
+
+			case connection := &lt;-manager.register:
+				manager.clients[connection] = true
+				fmt.Println("Added new connection!")
+
+			case connection := &lt;-manager.unregister:
+				if _, ok := manager.clients[connection]; ok {
+					close(connection.data)
+					delete(manager.clients, connection)
+					fmt.Println("A connection has terminated!")
+				}
+
+			case message := &lt;-manager.broadcast:
+				for connection := range manager.clients {
+					select {
+					case connection.data &lt;- message:
+					default:
+						close(connection.data)
+						delete(manager.clients, connection)
+					}
+				}
+
+		}
+
+	}
+
+}
+
+func (manager *ClientManager) receive(client *Client) {
+
+	for {
+
+		message := make([]byte, 4096)
+		length, err := client.socket.Read(message)
+		if err != nil {
+			manager.unregister &lt;- client
+			client.socket.Close()
+			break
+		}
+		if length > 0 {
+			fmt.Println("RECEIVED: " + string(message))
+			manager.broadcast &lt;- message
+		}
+
+	}
+
+}
+
+func (client *Client) receive() {
+
+	for {
+
+		message := make([]byte, 4096)
+		length, err := client.socket.Read(message)
+		if err != nil {
+			client.socket.Close()
+			break
+		}
+		if length > 0 {
+			fmt.Println("RECEIVED: " + string(message))
+		}
+
+	}
+
+}
+
+func (manager *ClientManager) send(client *Client) {
+
+	defer client.socket.Close()
+
+	for {
+
+		select {
+			case message, ok := &lt;-client.data:
+				if !ok {
+					return
+				}
+				client.socket.Write(message)
+		}
+
+	}
+
+}
+
+func startServerMode() {
+
+	fmt.Println("Starting server...")
+	listener, error := net.Listen("tcp", ":12345")
+	if error != nil {
+		fmt.Println(error)
+	}
+
+	manager := ClientManager{
+		clients:    make(map[*Client]bool),
+		broadcast:  make(chan []byte),
+		register:   make(chan *Client),
+		unregister: make(chan *Client),
+	}
+	go manager.start()
+
+	for {
+
+		connection, _ := listener.Accept()
+		if error != nil {
+			fmt.Println(error)
+		}
+		client := &Client{socket: connection, data: make(chan []byte)}
+		manager.register &lt;- client
+		go manager.receive(client)
+		go manager.send(client)
+
+	}
+
+}
+
+func startClientMode() {
+
+	fmt.Println("Starting client...")
+	connection, error := net.Dial("tcp", "localhost:12345")
+	if error != nil {
+		fmt.Println(error)
+	}
+	client := &amp;Client{socket: connection}
+	go client.receive()
+
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		message, _ := reader.ReadString('\n')
+		connection.Write([]byte(strings.TrimRight(message, "\n")))
+	}
+
+}
+
+func main() {
+
+	flagMode := flag.String("mode", "server", "start in client or server mode")
+	flag.Parse()
+
+	if strings.ToLower(*flagMode) == "server" {
+		startServerMode()
+	} else {
+		startClientMode()
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>Swift - Server</p>
+<code class='swift'
+><a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift</a>
+</code
+>
+
+<p>Swift - Client</p>
+<code class='swift'
+><a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift</a>
+</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+
+
+<h3 id='sockets'><abbr>Sockets</abbr></h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+
+<p>Rust - server.rs</p>
+<code class='rust'
+>
+</code
+>
+
+<p>Rust - client.rs</p>
+<code class='rust'
+>
+</code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Go - server.go</p>
+<code class='go'
+>package main
+
+import (
+	"log"
+	"net"
+)
+
+func echoServer(c net.Conn) {
+
+	for {
+
+		buf := make([]byte, 512)
+		nr, err := c.Read(buf)
+		if err != nil {
+			return
+		}
+
+		data := buf[0:nr]
+		println("Server got:", string(data))
+		_, err = c.Write(data)
+		if err != nil {
+			log.Fatal("Write: ", err)
+		}
+
+	}
+
+}
+
+func main() {
+
+	l, err := net.Listen("unix", "/tmp/echo.sock")
+	if err != nil {
+		log.Fatal("listen error:", err)
+	}
+
+	for {
+
+		fd, err := l.Accept()
+		if err != nil {
+			log.Fatal("accept error:", err)
+		}
+
+		go echoServer(fd)
+	}
+
+}</code
+>
+
+<p>Go - client.go</p>
+<code class='go'
+>package main
+
+import (
+	"io"
+	"log"
+	"net"
+	"time"
+)
+
+func reader(r io.Reader) {
+
+	buf := make([]byte, 1024)
+
+	for {
+
+		n, err := r.Read(buf[:])
+		if err != nil {
+			return
+		}
+		println("Client got:", string(buf[0:n]))
+
+	}
+
+}
+
+func main() {
+
+	c, err := net.Dial("unix", "/tmp/echo.sock")
+	if err != nil {
+		panic(err)
+	}
+	defer c.Close()
+
+	go reader(c)
+	for {
+
+		_, err := c.Write([]byte("hi"))
+		if err != nil {
+			log.Fatal("write error:", err)
+			break
+		}
+		time.Sleep(1e9)
+
+	}
+
+}</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='json'>JSON</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Point {
+	x: i32,
+	y: i32,
+}
+
+fn main() {
+
+	let point = Point { x: 1, y: 2 };
+
+	// Convert the Point to a JSON string.
+	let serialized = serde_json::to_string(&amp;point).unwrap();
+
+	// Prints serialized = {"x":1,"y":2}
+	println!("serialized = {}", serialized);
+
+	// Convert the JSON string back to a Point.
+	let deserialized: Point = serde_json::from_str(&amp;serialized).unwrap();
+
+	// Prints deserialized = Point { x: 1, y: 2 }
+	println!("deserialized = {:?}", deserialized);
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
+type response1 struct {
+	Page   int
+	Fruits []string
+}
+
+type response2 struct {
+	Page   int      `json:"page"`
+	Fruits []string `json:"fruits"`
+}
+
+func main() {
+
+	mapD := map[string]int{"apple": 5, "lettuce": 7}
+	mapB, _ := json.Marshal(mapD)
+	fmt.Println(string(mapB))
+
+	res1D := &response1{
+		Page:   1,
+		Fruits: []string{"apple", "peach", "pear"}}
+	res1B, _ := json.Marshal(res1D)
+	fmt.Println(string(res1B))
+
+	byt := []byte(`{"num":6.13,"strs":["a","b"]}`)
+
+	var dat map[string]interface{}
+
+	if err := json.Unmarshal(byt, &dat); err != nil {
+		panic(err)
+	}
+	fmt.Println(dat)
+
+	num := dat["num"].(float64)
+	fmt.Println(num)
+
+	strs := dat["strs"].([]interface{})
+	str1 := strs[0].(string)
+	fmt.Println(str1)
+
+	str := `{"page": 1, "fruits": ["apple", "peach"]}`
+	res := response2{}
+	json.Unmarshal([]byte(str), &res)
+	fmt.Println(res)
+	fmt.Println(res.Fruits[0])
+
+	enc := json.NewEncoder(os.Stdout)
+	d := map[string]int{"apple": 5, "lettuce": 7}
+	enc.Encode(d)
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>import Foundation
+
+let str = "{\"names\": [\"Bob\", \"Tim\", \"Tina\"]}"
+let data = Data(str.utf8)
+
+let json = try? JSONSerialization.jsonObject(with: data, options: [])
+
+if let dictionary = jsonWithObjectRoot as? [String: Any] {
+
+	if let number = dictionary["someKey"] as? Double {
+		// access individual value in dictionary
+	}
+
+	for (key, value) in dictionary {
+		// access all key / value pairs in dictionary
+	}
+
+	if let nestedDictionary = dictionary["anotherKey"] as? [String: Any] {
+		// access nested dictionary values by key
+	}
+
+}
+
+if let array = jsonWithArrayRoot as? [Any] {
+
+	if let firstObject = array.first {
+		// access individual object in array
+	}
+
+	for object in array {
+		// access all objects in array
+	}
+
+	for case let string as String in array {
+		// access only string values in array
+	}
+
+}
+
+// we need to manually map the dictionary to a struct
+
+struct Restaurant {
+
+	enum Meal: String {
+		case breakfast, lunch, dinner
+	}
+
+	let name: String
+	let location: (latitude: Double, longitude: Double)
+	let meals: Set&lt;Meal&gt;
+
+}
+
+extension Restaurant {
+
+	init(json: [String: Any]) throws {
+
+		// Extract name
+		guard let name = json["name"] as? String else {
+			throw SerializationError.missing("name")
+		}
+
+		// Extract and validate coordinates
+		guard let coordinatesJSON = json["coordinates"] as? [String: Double],
+			let latitude = coordinatesJSON["lat"],
+			let longitude = coordinatesJSON["lng"]
+		else {
+			throw SerializationError.missing("coordinates")
+		}
+
+		let coordinates = (latitude, longitude)
+		guard case (-90...90, -180...180) = coordinates else {
+			throw SerializationError.invalid("coordinates", coordinates)
+		}
+
+		// Extract and validate meals
+		guard let mealsJSON = json["meals"] as? [String] else {
+			throw SerializationError.missing("meals")
+		}
+
+		var meals: Set&lt;Meal&gt; = []
+		for string in mealsJSON {
+
+			guard let meal = Meal(rawValue: string) else {
+				throw SerializationError.invalid("meals", string)
+			}
+
+			meals.insert(meal)
+		}
+
+		// Initialize properties
+		self.name = name
+		self.coordinates = coordinates
+		self.meals = meals
+
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>using System.Text.Json;
+
+public sealed class CsEntity {
+	public string Id { get; set; } = String.Empty;
+	public IEnumerable&lt;OtherCsEntity&gt;? OtherProp { get; set; }
+}
+
+var jsonSerializerOptions = new JsonSerializerOptions {
+	PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+	IncludeFields = true
+};
+
+var fromJson = await JsonSerializer
+	.DeserializeAsync&lt;CsEntity&gt;(
+		responseString,
+		jsonSerializerOptions
+	);
+
+var fromJsonList = JsonSerializer
+	.Deserialize&lt;IEnumerable&lt;CsEntity&gt;&gt;(
+		responseString,
+		jsonSerializerOptions
+	);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>const fromJson = JSON.parse('{ "a": "b" }');
 </code
 >
 </div>
