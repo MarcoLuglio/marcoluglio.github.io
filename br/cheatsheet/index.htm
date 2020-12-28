@@ -18969,19 +18969,331 @@ JavaScript ainda não chegou lá.</p>
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>Rust</p>
+
+<p>Rust - server.rs - actix framework</p>
 <code class='rust'
+>// actix uses tokio for async .await
+use actix_web::{web, App, HttpRequest, HttpServer, Responder};
+
+#[get("/")]
+async fn index(_req: HttpRequest) -&gt; impl Responder {
+	"Hello from the index page!"
+}
+
+async fn greet(req: HttpRequest) -&gt; impl Responder {
+	let name = req.match_info().get("name").unwrap_or("World");
+	format!("Hello {}!", &name)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+	HttpServer::new(|| {
+		App::new()
+			.service(index)
+			.route("/", web::get().to(greet))
+			.route("/{name}", web::get().to(greet))
+	})
+	.bind(("127.0.0.1", 8080))?
+	.run()
+	.await
+}</code
 >
-</code
+
+<p>Rust - server.rs</p>
+<code class='rust'
+>use std::fs;
+use std::io::prelude::*;
+use std::net::TcpListener;
+use std::net::TcpStream;
+
+
+
+fn main() {
+
+	// TODO handle SIGINT, SIGTERM, etc.
+
+	println!("Starting go server on port 80");
+	let listener = TcpListener::bind("0.0.0.0:80"); // containers must use 0.0.0.0! localhost or 127.0.0.1 do not work!
+
+	match listener {
+		Ok(result) => {
+			// TODO match here too
+			listen_incoming_connections(result);
+		},
+		Err(err) => println!("{}", err)
+	}
+
+}
+
+fn listen_incoming_connections(listener:std::net::TcpListener) -> Result<(), std::io::Error> {
+
+	for stream in listener.incoming() {
+		handle_connection(stream?)?;
+	}
+
+	Ok(())
+
+}
+
+fn handle_connection(mut stream: TcpStream) -> Result<usize, std::io::Error> {
+
+	let mut buffer = [0; 1024];
+	let buffer_result = stream.read(&mut buffer)?; // TODO implement timeouts
+
+	// formato das requisições
+	// https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+
+	// methods and root uri
+	let options = b"OPTIONS / ";
+	let get = b"GET / ";
+
+	if buffer.starts_with(options) {
+		handle_options(buffer, stream)?;
+	} else if buffer.starts_with(get) {
+		handle_get(buffer, stream)?;
+	} else {
+
+		println!("TODO 404")
+		/*(
+			"HTTP/1.1 404 NOT FOUND",
+			"content-type: text/html".to_string(),
+			"404.html"
+		)*/
+
+	};
+
+	Ok(buffer_result)
+
+}
+
+// formato das respostas
+// https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
+
+fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result<(), std::io::Error> {
+
+	let (status_line, headers) = (
+		"HTTP/1.1 200 OK",
+		concat!(
+			"access-control-allow-origin: *", // posso usar *, mas não se requerir autenticação com bearer:
+			"access-control-allow-methods: options, get, post, put, delete",
+			"access-control-allow-headers: content-type", // posso usar *
+		)
+		.to_string()
+	);
+
+	let response = format!("{}\r\n{}", status_line, headers);
+
+	// TODO implement timeouts
+	stream.write(response.as_bytes())?;
+	stream.flush()?;
+
+	Ok(())
+
+}
+
+fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -> Result<(), std::io::Error> {
+
+	let (status_line, mut headers, filename) = (
+		"HTTP/1.1 200 OK",
+		"content-type: application/json".to_string(),
+		"hello.json"
+	);
+
+	let body = fs::read_to_string(filename)?;
+
+	headers = [
+		headers,
+		"\r\ncontent-length: ".to_string(),
+		body.len().to_string()
+	]
+	.concat();
+
+	let response = format!("{}\r\n{}\r\n\r\n{}", status_line, headers, body);
+
+	// TODO implement timeouts
+	stream.write(response.as_bytes())?;
+	stream.flush()?;
+
+	Ok(())
+
+}</code
 >
+
+<p>Rust - client.rs - ureq crate</p>
+<code class='rust'
+>fn main() -&gt; Result&lt;(), ureq::Error&gt; {
+	let body: String = ureq::get("http://example.com")
+		.set("Example-Header", "header value")
+		.call()?
+		.into_string()?;
+	Ok(())
+}</code
+>
+
+<p>Rust - client.rs - reqwest crate</p>
+<code class='rust'
+>let body = reqwest::get("https://www.rust-lang.org")
+	.await?
+	.text()
+	.await?;</code
+>
+
 </div>
 
 <div class='codeblock'>
-<p>Go</p>
+
+<p>Go - server.go</p>
 <code class='go'
+>package main
+
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func main() {
+
+	fmt.Println("Starting go server on port 80")
+
+	handler := timeoutHandler{}
+	timeoutServer := &http.Server{
+		ReadHeaderTimeout: 20 * time.Second,
+		ReadTimeout:       1 * time.Minute,
+		WriteTimeout:      2 * time.Minute,
+		Handler:           handler,
+		Addr:              ":80",
+	}
+	timeoutServer.ListenAndServe()
+
+}
+
+// #region timeoutHandler struct
+
+type timeoutHandler struct{}
+
+func (handler timeoutHandler) ServeHTTP(
+	responseWriter http.ResponseWriter,
+	request *http.Request
+	) {
+
+	defer request.Body.Close()
+
+	switch request.RequestURI {
+
+		case "/":
+			// OK
+
+		default:
+			// TODO 404
+			return
+
+	}
+
+	/*
+	// this is how to do a varible timeout to read the request
+	// but it will also eat part of the write timeout
+	timer := time.AfterFunc(5*time.Second, func() {
+		request.Body.Close()
+	})
+	// if more time is needed to write the response
+	// reset the timer here, os in another method
+	timer.Reset(1 * time.Second)
+	*/
+
+	var err error
+
+	switch request.Method {
+
+		case "OPTIONS":
+			err = handleOptions(responseWriter, request)
+
+		case "GET":
+			err = handleGet(responseWriter, request)
+
+	}
+
+	if err != nil {
+		// util.CheckError(err)
+		// return
+	}
+
+}
+
+// #endregion
+
+func handleOptions(
+	responseWriter http.ResponseWriter,
+	request *http.Request
+	) (err error) {
+
+	// posso usar *, mas não se requerir autenticação com bearer:
+	responseWriter.Header().Set(
+		"access-control-allow-origin",
+		"*"
+	)
+
+	responseWriter.Header().Set(
+		"access-control-allow-methods",
+		"options, get, post, put, delete"
+	)
+
+	// posso usar *
+	responseWriter.Header().Set(
+		"access-control-allow-headers",
+		"content-type"
+	)
+
+	return
+}
+
+func handleGet(
+	responseWriter http.ResponseWriter,
+	request *http.Request
+	) (err error) {
+
+	responseWriter.Header().Set(
+		"content-type",
+		"application/json"
+	)
+	responseWriter.WriteHeader(200)
+	responseWriter.Write([]byte(`{"hello":"world"}`))
+	return
+}</code
 >
-</code
+
+<p>Go - client.go</p>
+<code class='go'
+>package main
+
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func main() {
+
+	resp, err := http.Get("http://example.com/")
+	resp, err := http.Post(
+		"http://example.com/upload",
+		"image/jpeg", &amp;buf
+	)
+	resp, err := http.PostForm(
+		"http://example.com/form",
+		url.Values{"key": {"Value"}, "id": {"123"}}
+	)
+
+	if err != nil {
+		// handle error
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -19001,11 +19313,19 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
-<p>Swift</p>
+
+<p>Swift - client.swift</p>
 <code class='swift'
+>let url = URL(string: "http://www.stackoverflow.com")!
+
+let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+	guard let data = data else { return }
+	print(String(data: data, encoding: .utf8)!)
+}
+
+task.resume()</code
 >
-</code
->
+
 </div>
 
 <div class='codeblock'>
@@ -19025,19 +19345,50 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - server</p>
 <code class='cs'
+>// Use the Asp.Net templates</code
 >
-</code
+
+<p>C# - client.cs</p>
+<code class='cs'
+>var httpClient = new HttpClient();
+httpClient.BaseAddress = new Uri("http://example.com");
+// httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+var response = await httpClient.GetAsync("/someResource");
+// TODO maybe there's a faster way to check for success
+// without throwing exceptions?
+// response.EnsureSuccessStatusCode();
+using var responseStream = await response.Content.ReadAsStreamAsync();
+string responseString = String.Empty;
+using (var reader = new System.IO.StreamReader(responseStream, Encoding.UTF8)) {
+	responseString = await reader.ReadToEndAsync();
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
+
+<p>JavaScript - server.mjs - nodejs</p>
 <code class='javascript'
+>import http from 'http';
+
+//create a server object:
+http.createServer(function (req, res) {
+	res.write('Hello World!');
+	res.end();
+}).listen(8080);</code
 >
-</code
+
+<p>JavaScript - client.js</p>
+<code class='javascript'
+>fetch('http://example.com/movies.json')
+	.then(response => response.json())
+	.then(data => console.log(data));</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -19180,7 +19531,6 @@ JavaScript ainda não chegou lá.</p>
 
 
 
-<!--
 <h3 id='graphql'><abbr>GraphQL</abbr></h3>
 
 <div class='comparison'>
@@ -19196,8 +19546,55 @@ JavaScript ainda não chegou lá.</p>
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+
+	"github.com/graphql-go/graphql"
+)
+
+func main() {
+
+	// Schema
+
+	fields := graphql.Fields {
+
+		// resolver for hello
+		"hello": &amp;graphql.Field {
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				return "world", nil
+			},
+		},
+
+	}
+
+	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
+	schemaConfig := graphql.SchemaConfig{ Query: graphql.NewObject(rootQuery) }
+	schema, err := graphql.NewSchema(schemaConfig)
+	if err != nil {
+		log.Fatalf("failed to create new schema, error: %v", err)
+	}
+
+	// Query
+
+	query := `
+		{
+			hello
+		}
+	`
+
+	params := graphql.Params{Schema: schema, RequestString: query}
+	r := graphql.Do(params)
+	if len(r.Errors) > 0 {
+		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
+	}
+	rJSON, _ := json.Marshal(r)
+	fmt.Printf("%s \n", rJSON) // {"data":{"hello":"world"}}
+}</code
 >
 </div>
 
@@ -19279,7 +19676,6 @@ JavaScript ainda não chegou lá.</p>
 </ol>
 
 <p>A</p>
--->
 
 
 
@@ -19372,7 +19768,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var upgrader = websocket.Upgrader{
+var upgrader = websocket.Upgrader {
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
@@ -19792,21 +20188,22 @@ type response2 struct {
 
 func main() {
 
-	mapD := map[string]int{"apple": 5, "lettuce": 7}
+	mapD := map[string]int { "apple": 5, "lettuce": 7 }
 	mapB, _ := json.Marshal(mapD)
 	fmt.Println(string(mapB))
 
-	res1D := &response1{
+	res1D := &response1 {
 		Page:   1,
-		Fruits: []string{"apple", "peach", "pear"}}
+		Fruits: []string { "apple", "peach", "pear" }
+	}
 	res1B, _ := json.Marshal(res1D)
 	fmt.Println(string(res1B))
 
-	byt := []byte(`{"num":6.13,"strs":["a","b"]}`)
+	byt := []byte(`{ "num":6.13,"strs":["a","b"] }`)
 
 	var dat map[string]interface{}
 
-	if err := json.Unmarshal(byt, &dat); err != nil {
+	if err := json.Unmarshal(byt, &amp;dat); err != nil {
 		panic(err)
 	}
 	fmt.Println(dat)
@@ -19818,14 +20215,14 @@ func main() {
 	str1 := strs[0].(string)
 	fmt.Println(str1)
 
-	str := `{"page": 1, "fruits": ["apple", "peach"]}`
-	res := response2{}
+	str := `{ "page": 1, "fruits": ["apple", "peach"] }`
+	res := response2 {}
 	json.Unmarshal([]byte(str), &res)
 	fmt.Println(res)
 	fmt.Println(res.Fruits[0])
 
 	enc := json.NewEncoder(os.Stdout)
-	d := map[string]int{"apple": 5, "lettuce": 7}
+	d := map[string]int { "apple": 5, "lettuce": 7 }
 	enc.Encode(d)
 
 }</code
