@@ -19432,22 +19432,108 @@ http.createServer(function (req, res) {
 
 <h3 id='grpc'><abbr>gRPC</abbr></h3>
 
+<div class='codeblock bubaloop'>
+<p>Protocol Buffer definition</p>
+<code class='generic bubaloop'
+><span class='keyword'>service</span> Greeter <span class='operator'>{</span>
+	<span class='keyword'>rpc</span> SayHello <span class='operator'>(</span>HelloRequest<span class='operator'>)</span> <span class='keyword'>returns</span> <span class='operator'>(</span>HelloReply<span class='operator'>)</span> <span class='operator'>{</span><span class='operator'>}</span>
+<span class='operator'>}</span>
+
+<span class='keyword'>message</span> HelloRequest <span class='operator'>{</span>
+	<span class='type'>string</span> name <span class='operator'>=</span> <span class='number'>1</span><span class='operator'>;</span>
+<span class='operator'>}</span>
+
+<span class='keyword'>message</span> HelloReply <span class='operator'>{</span>
+	<span class='type'>string</span> message <span class='operator'>=</span> 1<span class='operator'>;</span>
+<span class='operator'>}</span>
+
+<span class='comment lineComment'>// then run protoc for the given language</span></code
+>
+</div>
+
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>// no official one yet</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Go</p>
+
+<p>Go - server.go</p>
 <code class='go'
+>package main
+
+import (
+	"context"
+	"log"
+	"net"
+
+	"google.golang.org/grpc"
+	pb "google.golang.org/grpc/examples/helloworld/helloworld"
+)
+
+// SayHello implements helloworld.GreeterServer
+func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("Received: %v", in.GetName())
+	return &amp;pb.HelloReply{Message: "Hello " + in.GetName()}, nil
+}
+
+func main() {
+	lis, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	s := grpc.NewServer()
+	pb.RegisterGreeterServer(s, &server{})
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
+}</code
 >
-</code
+
+<p>Go - client.go</p>
+<code class='go'
+>package main
+
+import (
+	"context"
+	"log"
+	"os"
+	"time"
+
+	"google.golang.org/grpc"
+	pb "google.golang.org/grpc/examples/helloworld/helloworld"
+)
+
+func main() {
+
+	// Set up a connection to the server.
+	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+	c := pb.NewGreeterClient(conn)
+
+	// Contact the server and print out its response.
+	name := defaultName
+	if len(os.Args) &gt; 1 {
+		name = os.Args[1]
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Greeting: %s", r.GetMessage())
+
+}</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -19469,7 +19555,7 @@ http.createServer(function (req, res) {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>// check <a href='https://github.com/apple/swift-protobuf'>apple documentation</a>
 </code
 >
 </div>
@@ -19491,11 +19577,41 @@ http.createServer(function (req, res) {
 </div>
 
 <div class='codeblock'>
-<p>C#</p>
+
+<p>C# - server</p>
 <code class='cs'
+>public sealed class GreeterImpl : Greeter.GreeterBase
+{
+	// Server side handler of the SayHello RPC
+	public override Task&lt;HelloReply&gt; SayHello(HelloRequest request, ServerCallContext context)
+	{
+		return Task.FromResult(new HelloReply { Message = "Hello " + request.Name });
+	}
+
+	// Server side handler for the SayHelloAgain RPC
+	public override Task&lt;HelloReply&gt; SayHelloAgain(HelloRequest request, ServerCallContext context)
+	{
+		return Task.FromResult(new HelloReply { Message = "Hello again " + request.Name });
+	}
+}</code
 >
-</code
+
+<p>C# - client</p>
+<code class='cs'
+>Channel channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+
+var client = new Greeter.GreeterClient(channel);
+String user = "you";
+
+var reply = client.SayHello(new HelloRequest { Name = user });
+Console.WriteLine("Greeting: " + reply.Message);
+
+var secondReply = client.SayHelloAgain(new HelloRequest { Name = user });
+Console.WriteLine("Greeting: " + secondReply.Message);
+
+channel.ShutdownAsync().Wait();</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -20569,19 +20685,18 @@ macros
 
 conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
 
-default parameter values, compare strings, valores não iniciados, null pointer exception, type erasure,
-linq, traits, extension methods, if (a = 1) if let while let, macros,
+default parameter values, compare strings, valores não iniciados, type erasure,
+linq, traits, if (a = 1) if let while let, macros,
 floata == floatb ou Math.abs(floata - floatb) < 0.001
 
 pointer to references, pointer to pointer, cast pointers to references
 
 GUI
+Dependency injection
 
 Certificação
 Overload pode ter visibilidade diferente?
 Operator precedence mess?
-
-Type erasure
 
 RISC
 
