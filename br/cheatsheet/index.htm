@@ -19025,7 +19025,7 @@ fn main() {
 
 }
 
-fn listen_incoming_connections(listener:std::net::TcpListener) -> Result<(), std::io::Error> {
+fn listen_incoming_connections(listener:std::net::TcpListener) -> Result&lt;(), std::io::Error&gt; {
 
 	for stream in listener.incoming() {
 		handle_connection(stream?)?;
@@ -19035,7 +19035,7 @@ fn listen_incoming_connections(listener:std::net::TcpListener) -> Result<(), std
 
 }
 
-fn handle_connection(mut stream: TcpStream) -> Result<usize, std::io::Error> {
+fn handle_connection(mut stream: TcpStream) -> Result&lt;usize, std::io::Error&gt; {
 
 	let mut buffer = [0; 1024];
 	let buffer_result = stream.read(&mut buffer)?; // TODO implement timeouts
@@ -19069,7 +19069,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<usize, std::io::Error> {
 // formato das respostas
 // https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
 
-fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result<(), std::io::Error> {
+fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, headers) = (
 		"HTTP/1.1 200 OK",
@@ -19091,7 +19091,7 @@ fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result<(), std::i
 
 }
 
-fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -> Result<(), std::io::Error> {
+fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -> Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, mut headers, filename) = (
 		"HTTP/1.1 200 OK",
