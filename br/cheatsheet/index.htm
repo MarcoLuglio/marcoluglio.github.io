@@ -19170,20 +19170,6 @@ JavaScript ainda não chegou lá.</p>
 >
 </div>
 
-<div class='codeblock'>
-<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-<code class='llvm'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Assembly</p>
-<code class='assembly'
-></code
->
-</div>
-
 </div>
 
 <ol>
@@ -19286,20 +19272,6 @@ JavaScript ainda não chegou lá.</p>
 >
 </div>
 
-<div class='codeblock'>
-<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-<code class='llvm'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Assembly</p>
-<code class='assembly'
-></code
->
-</div>
-
 </div>
 
 <ol>
@@ -19316,194 +19288,129 @@ JavaScript ainda não chegou lá.</p>
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>Rust</p>
+
+<p>Rust - Cargo.toml</p>
+<code class='generic'
+>tokio-tungstenite = "0.12.0"</code
+>
+
+<p>Rust - server.rs</p>
 <code class='rust'
+>use std::net::TcpListener;
+//use tungstenite::server::accept;
+use tokio_tungstenite::accept_async;
+
+#[tokio::main]
+async fn main() {
+
+	let server = TcpListener::bind("127.0.0.1:9001").unwrap();
+	// let size = 5;
+	// let mut workers = Vec::with_capacity(size);
+
+	for stream in server.incoming() {
+
+		let worker = tokio::spawn(async move {
+
+			let mut websocket = accept_async(stream.unwrap())
+				.await
+				.unwrap();
+
+			loop {
+
+				let msg = match websocket.read_message().await {
+
+					// socket closed
+					Ok(msg) if msg == 0 => return,
+
+					// We do not want to send back ping/pong messages
+					Ok(msg) if msg.is_binary() || msg.is_text() => msg, // websocket.write_message(msg).unwrap();
+					//Ok(msg) => msg,
+
+					Err(e) => {
+						eprintln!("failed to read from socket; err = {:?}", e);
+						return;
+					}
+
+				};
+
+			}
+
+		});
+
+		// workers.push(worker);
+
+	}
+
+	/*
+	// close all sockets
+	for _ in &workers {
+		let _ = sender.send(Message::Terminate);
+	}
+
+	// wait for the close message to be acknoledged
+	for worker in workers {
+		let _ = worker.await;
+	}
+	*/
+
+}</code
 >
-</code
->
+
 </div>
 
 <div class='codeblock'>
-<p>Go</p>
-<code class='go'
->// se also:
-// <a href="https://yalantis.com/blog/how-to-build-websockets-in-go/">https://yalantis.com/blog/how-to-build-websockets-in-go/</a>
-// <a href="https://devcenter.heroku.com/articles/go-websockets">https://devcenter.heroku.com/articles/go-websockets</a>
 
+<p>Go - gorilla library</p>
+<code class='go'
+>// <a href='https://yalantis.com/blog/how-to-build-websockets-in-go/'>great article comparing alternatives</a>
 package main
 
 import (
-	"bufio"
-	"flag"
 	"fmt"
-	"net"
-	"os"
-	"strings"
+	"net/http"
+
+	"github.com/gorilla/websocket"
 )
 
-type ClientManager struct {
-	clients    map[*Client]bool
-	broadcast  chan []byte
-	register   chan *Client
-	unregister chan *Client
-}
-
-type Client struct {
-	socket net.Conn
-	data   chan []byte
-}
-
-func (manager *ClientManager) start() {
-
-	for {
-
-		select {
-
-			case connection := &lt;-manager.register:
-				manager.clients[connection] = true
-				fmt.Println("Added new connection!")
-
-			case connection := &lt;-manager.unregister:
-				if _, ok := manager.clients[connection]; ok {
-					close(connection.data)
-					delete(manager.clients, connection)
-					fmt.Println("A connection has terminated!")
-				}
-
-			case message := &lt;-manager.broadcast:
-				for connection := range manager.clients {
-					select {
-					case connection.data &lt;- message:
-					default:
-						close(connection.data)
-						delete(manager.clients, connection)
-					}
-				}
-
-		}
-
-	}
-
-}
-
-func (manager *ClientManager) receive(client *Client) {
-
-	for {
-
-		message := make([]byte, 4096)
-		length, err := client.socket.Read(message)
-		if err != nil {
-			manager.unregister &lt;- client
-			client.socket.Close()
-			break
-		}
-		if length > 0 {
-			fmt.Println("RECEIVED: " + string(message))
-			manager.broadcast &lt;- message
-		}
-
-	}
-
-}
-
-func (client *Client) receive() {
-
-	for {
-
-		message := make([]byte, 4096)
-		length, err := client.socket.Read(message)
-		if err != nil {
-			client.socket.Close()
-			break
-		}
-		if length > 0 {
-			fmt.Println("RECEIVED: " + string(message))
-		}
-
-	}
-
-}
-
-func (manager *ClientManager) send(client *Client) {
-
-	defer client.socket.Close()
-
-	for {
-
-		select {
-			case message, ok := &lt;-client.data:
-				if !ok {
-					return
-				}
-				client.socket.Write(message)
-		}
-
-	}
-
-}
-
-func startServerMode() {
-
-	fmt.Println("Starting server...")
-	listener, error := net.Listen("tcp", ":12345")
-	if error != nil {
-		fmt.Println(error)
-	}
-
-	manager := ClientManager{
-		clients:    make(map[*Client]bool),
-		broadcast:  make(chan []byte),
-		register:   make(chan *Client),
-		unregister: make(chan *Client),
-	}
-	go manager.start()
-
-	for {
-
-		connection, _ := listener.Accept()
-		if error != nil {
-			fmt.Println(error)
-		}
-		client := &Client{socket: connection, data: make(chan []byte)}
-		manager.register &lt;- client
-		go manager.receive(client)
-		go manager.send(client)
-
-	}
-
-}
-
-func startClientMode() {
-
-	fmt.Println("Starting client...")
-	connection, error := net.Dial("tcp", "localhost:12345")
-	if error != nil {
-		fmt.Println(error)
-	}
-	client := &amp;Client{socket: connection}
-	go client.receive()
-
-	for {
-		reader := bufio.NewReader(os.Stdin)
-		message, _ := reader.ReadString('\n')
-		connection.Write([]byte(strings.TrimRight(message, "\n")))
-	}
-
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
 }
 
 func main() {
 
-	flagMode := flag.String("mode", "server", "start in client or server mode")
-	flag.Parse()
+	http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
 
-	if strings.ToLower(*flagMode) == "server" {
-		startServerMode()
-	} else {
-		startClientMode()
-	}
+		conn, _ := upgrader.Upgrade(w, r, nil) // error ignored for sake of simplicity
 
+		for {
+
+			// Read message from browser
+			msgType, msg, err := conn.ReadMessage()
+			if err != nil {
+				return
+			}
+
+			// Print the message to the console
+			fmt.Printf("%s sent: %s\n", conn.RemoteAddr(), string(msg))
+
+			// Write message back to browser
+			if err = conn.WriteMessage(msgType, msg); err != nil {
+				return
+			}
+
+		}
+
+	})
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "websockets.html")
+	})
+
+	http.ListenAndServe(":8080", nil)
 }</code
 >
+
 </div>
 
 <div class='codeblock'>
@@ -19524,15 +19431,17 @@ func main() {
 
 <div class='codeblock'>
 
-<p>Swift - Server</p>
+<p>Swift - server.swift</p>
 <code class='swift'
-><a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift</a>
+>// <a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketServer/main.swift</a>
 </code
 >
 
-<p>Swift - Client</p>
+<p>Swift - client.swift</p>
 <code class='swift'
-><a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift</a>
+>// <a href='https://developer.apple.com/documentation/foundation/urlsessionwebsockettask'>https://developer.apple.com/documentation/foundation/urlsessionwebsockettask</a>
+// or cross platform
+// <a href='https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift'>https://github.com/apple/swift-nio/blob/main/Sources/NIOWebSocketClient/main.swift</a>
 </code
 >
 
@@ -19557,16 +19466,23 @@ func main() {
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>// <a href='https://marcoluglio.github.io/br/tutorialwebsockets/'>https://marcoluglio.github.io/br/tutorialwebsockets/</a>
+// <a href='https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0'></a>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0</code
 >
 </div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>const socket = new WebSocket('ws://localhost:8080');
+
+socket.addEventListener('open', function (event) {
+	socket.send('Hello Server!');
+});
+
+socket.addEventListener('message', function (event) {
+	console.log('Message from server ', event.data);
+});</code
 >
 </div>
 
@@ -20100,20 +20016,6 @@ var fromJsonList = JsonSerializer
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-<code class='llvm'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Assembly</p>
-<code class='assembly'
 ></code
 >
 </div>
