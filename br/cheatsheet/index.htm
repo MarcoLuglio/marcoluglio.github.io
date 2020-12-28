@@ -4449,8 +4449,8 @@ private void recebeByte(byte numero) {
 let i:i32 = s.parse().unwrap();
 let i:i32 = s.parse::&lt;i32&gt;().unwrap_or(0);
 let i = match s.parse::&lt;i32&gt;() {
-	Ok(i) => i,
-	Err(_e) => 0,
+	Ok(i) =&gt; i,
+	Err(_e) =&gt; 0,
 };</code
 >
 </div>
@@ -7318,7 +7318,7 @@ fn retorno() -&gt; &amp;'static str {
 
 use std::any::Any;
 
-fn retorno_misturado(numero:i32) -> Option&lt;Box&lt;dyn Any&gt;&gt; {
+fn retorno_misturado(numero:i32) -&gt; Option&lt;Box&lt;dyn Any&gt;&gt; {
 	if numero &gt; 0 {
 		return Some(Box::new("string"))
 	}
@@ -7518,7 +7518,7 @@ superior(retorno)</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->fun runTransformation(f: (String, Int) -> String): String {
+>fun runTransformation(f: (String, Int) -&gt; String): String {
 	return f("hello", 3)
 }</code
 >
@@ -8668,13 +8668,13 @@ Imprimir "resumo", 1, 2, 5</code>
 >fn main() {
 
 	// Increment via closures and functions.
-	fn function(i: i32) -> i32 { i + 1 }
+	fn function(i: i32) -&gt; i32 { i + 1 }
 
 	// Closures are anonymous, here we are binding them to references
 	// Annotation is identical to function annotation but is optional
 	// as are the `{}` wrapping the body. These nameless functions
 	// are assigned to appropriately named variables.
-	let closure_annotated = |i: i32| -> i32 { i + 1 };
+	let closure_annotated = |i: i32| -&gt; i32 { i + 1 };
 	let closure_inferred  = |i     |          i + 1  ;
 
 	let i = 1;
@@ -8754,7 +8754,7 @@ superior({(x:Int) -&gt; Int in
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->val sum: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
+>val sum: (Int, Int) -&gt; Int = { x: Int, y: Int -&gt; x + y }
 
 // suporta closures tb</code
 >
@@ -9442,7 +9442,7 @@ console.log(closure()); // 2</code
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->type StrategySignature = fn(i32, i32) -> i32
+>type StrategySignature = fn(i32, i32) -&gt; i32
 
 //</code
 >
@@ -9499,17 +9499,17 @@ func main() {
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->typealias StrategySignature = (Int, Int) -> Int
+>typealias StrategySignature = (Int, Int) -&gt; Int
 
-func addStrategy(_ i1:Int, _ i2:Int) -> Int {
+func addStrategy(_ i1:Int, _ i2:Int) -&gt; Int {
 	return i1 + i2
 }
 
-func multiplyStrategy(_ i1:Int, _ i2:Int) -> Int {
+func multiplyStrategy(_ i1:Int, _ i2:Int) -&gt; Int {
 	i1 * i2
 }
 
-var subtractStrategy = {(i1:Int, i2:Int) -> Int in
+var subtractStrategy = {(i1:Int, i2:Int) -&gt; Int in
 	i1 - i2
 }
 
@@ -9518,7 +9518,7 @@ var divideStrategy:StrategySignature = { i1, i2 in i1 / i2 }
 var otherStrategy:StrategySignature = {$0 + $1}
 
 var typeCurrentStrategy:StrategySignature
-var inlineCurrentStrategy:func(Int, Int) -> Int
+var inlineCurrentStrategy:func(Int, Int) -&gt; Int
 
 typeCurrentStrategy = addStrategy
 inlineCurrentStrategy = addStrategy
@@ -9536,9 +9536,9 @@ typeCurrentStrategy(1, 2) // 2</code
 <p>Kotlin</p>
 <code class='kotlin'
 >// notice that for signatures
-// the return type is separated by -> and not :
+// the return type is separated by -&gt; and not :
 // ugh...
-typealias StrategySignature = (Int, Int) -> Int
+typealias StrategySignature = (Int, Int) -&gt; Int
 
 fun addStrategy(i1:Int, i2:Int) : Int {
 	return i1 + i2
@@ -9548,7 +9548,7 @@ val multiplyStrategy = fun(i1:Int, i2:Int) : Int {
 	i1 * i2
 }
 
-val subtractStrategy:StrategySignature = { i1, i2 -> i1 - i2 }
+val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 
 //</code
 >
@@ -11242,8 +11242,8 @@ fn main() {
 		let resultado = animar();
 
 		match resultado {
-			Some(some) => println!("{}", some),
-			None => break
+			Some(some) =&gt; println!("{}", some),
+			None =&gt; break
 		}
 
 	}
@@ -11297,8 +11297,8 @@ class Animar final {
 >#include "Animar.hpp";
 
 Animar::Animar(float inicio, float fim, int tempo) {
-	this->fim = fim;
-	this->tempo = tempo;
+	this-&gt;fim = fim;
+	this-&gt;tempo = tempo;
 	tempoAtual = 1;
 	delta = (fim - inicio) / tempo;
 	passo = 0;
@@ -16796,20 +16796,20 @@ from logging import Logger
 T = TypeVar('T')
 
 class LoggedVar(Generic[T]):
-	def __init__(self, value: T, name: str, logger: Logger) -> None:
+	def __init__(self, value: T, name: str, logger: Logger) -&gt; None:
 		self.name = name
 		self.logger = logger
 		self.value = value
 
-	def set(self, new: T) -> None:
+	def set(self, new: T) -&gt; None:
 		self.log('Set ' + repr(self.value))
 		self.value = new
 
-	def get(self) -> T:
+	def get(self) -&gt; T:
 		self.log('Get ' + repr(self.value))
 		return self.value
 
-	def log(self, message: str) -> None:
+	def log(self, message: str) -&gt; None:
 		self.logger.info('%s: %s', self.name, message)</code
 >
 </div>
@@ -18296,7 +18296,7 @@ console.log(indexedCollection["tuesday"]);</code
 pub fn show_streams(
 		attr: TokenStream,
 		item: TokenStream
-	) -> TokenStream {
+	) -&gt; TokenStream {
 
 	println!("attr: \"{}\"", attr.to_string());
 	println!("item: \"{}\"", item.to_string());
@@ -19016,16 +19016,16 @@ fn main() {
 	let listener = TcpListener::bind("0.0.0.0:80"); // containers must use 0.0.0.0! localhost or 127.0.0.1 do not work!
 
 	match listener {
-		Ok(result) => {
+		Ok(result) =&gt; {
 			// TODO match here too
 			listen_incoming_connections(result);
 		},
-		Err(err) => println!("{}", err)
+		Err(err) =&gt; println!("{}", err)
 	}
 
 }
 
-fn listen_incoming_connections(listener:std::net::TcpListener) -> Result&lt;(), std::io::Error&gt; {
+fn listen_incoming_connections(listener:std::net::TcpListener) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	for stream in listener.incoming() {
 		handle_connection(stream?)?;
@@ -19035,7 +19035,7 @@ fn listen_incoming_connections(listener:std::net::TcpListener) -> Result&lt;(), 
 
 }
 
-fn handle_connection(mut stream: TcpStream) -> Result&lt;usize, std::io::Error&gt; {
+fn handle_connection(mut stream: TcpStream) -&gt; Result&lt;usize, std::io::Error&gt; {
 
 	let mut buffer = [0; 1024];
 	let buffer_result = stream.read(&mut buffer)?; // TODO implement timeouts
@@ -19069,7 +19069,7 @@ fn handle_connection(mut stream: TcpStream) -> Result&lt;usize, std::io::Error&g
 // formato das respostas
 // https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
 
-fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result&lt;(), std::io::Error&gt; {
+fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, headers) = (
 		"HTTP/1.1 200 OK",
@@ -19091,7 +19091,7 @@ fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -> Result&lt;(), std
 
 }
 
-fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -> Result&lt;(), std::io::Error&gt; {
+fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, mut headers, filename) = (
 		"HTTP/1.1 200 OK",
@@ -19385,8 +19385,8 @@ http.createServer(function (req, res) {
 <p>JavaScript - client.js</p>
 <code class='javascript'
 >fetch('http://example.com/movies.json')
-	.then(response => response.json())
-	.then(data => console.log(data));</code
+	.then(response =&gt; response.json())
+	.then(data =&gt; console.log(data));</code
 >
 
 </div>
@@ -19832,13 +19832,13 @@ async fn main() {
 				let msg = match websocket.read_message().await {
 
 					// socket closed
-					Ok(msg) if msg == 0 => return,
+					Ok(msg) if msg == 0 =&gt; return,
 
 					// We do not want to send back ping/pong messages
-					Ok(msg) if msg.is_binary() || msg.is_text() => msg, // websocket.write_message(msg).unwrap();
-					//Ok(msg) => msg,
+					Ok(msg) if msg.is_binary() || msg.is_text() =&gt; msg, // websocket.write_message(msg).unwrap();
+					//Ok(msg) =&gt; msg,
 
-					Err(e) => {
+					Err(e) =&gt; {
 						eprintln!("failed to read from socket; err = {:?}", e);
 						return;
 					}
