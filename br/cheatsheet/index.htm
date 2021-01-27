@@ -158,6 +158,63 @@ public class OlaMundo {
 </div>
 
 <div class='codeblock'>
+
+	<p>Web Assembly - main.wasm</p>
+	<code class='webassembly'
+>(<span class='keyword'>module</span>
+
+	<span class='comment'>;; web assembly does not interact with the DOM</span>
+	<span class='comment'>;; so we must import certain browser functions</span>
+	(<span class='keyword'>import</span> <span class='string'>"console"</span> <span class='string'>"log"</span> (<span class='keyword'>func</span> <span class='symbol'>$log</span> (<span class='keyword'>param</span> <span class='type'>i32</span> <span class='type'>i32</span>)))
+	(<span class='keyword'>import</span> <span class='string'>"js"</span> <span class='string'>"mem"</span> (<span class='keyword'>memory</span> <span class='number'>1</span>))
+
+	(<span class='keyword'>data</span> (<span class='type'>i32</span>.const <span class='number'>0</span>)
+		<span class='string'>"Hello World"</span>
+	)
+
+	(<span class='keyword'>func</span> (<span class='keyword'>export</span> <span class='string'>"main"</span>)
+		<span class='type'>i32</span>.const <span class='number'>0</span> <span class='comment'>;; pass offset 0 to log</span>
+		<span class='type'>i32</span>.const <span class='number'>11</span> <span class='comment'>;; pass length 11 to log</span>
+		<span class='keyword'>call</span> <span class='symbol'>$log</span>
+	)
+
+)</code
+>
+
+	<p>JavaScript</p>
+	<code class='javascript'
+>let memory = new WebAssembly.Memory({ initial: 1 });
+
+// object to be imported by web assembly
+let importObject = {
+	console: {
+		// web assembly can only send numbers and bytes
+		// so it requires a special console.log
+		log: function(offset, length) {
+			var bytes = new Uint8Array(memory.buffer, offset, length);
+			var string = new TextDecoder('utf8').decode(bytes);
+			console.log(string);
+		}
+	},
+	js: {
+		mem: memory
+	}
+};
+
+WebAssembly
+	.instantiateStreaming(
+		fetch('main.wasm'),
+		importObject
+	)
+	.then(obj => {
+		obj.instance.exports.main();
+	});</code
+>
+
+</div>
+
+
+<div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 <code class='llvm'
 >source_filename <span class='operator'>=</span> <span class='string'>"main"</span>
@@ -20668,6 +20725,9 @@ var fromJsonList = JsonSerializer
 swift lazy e guard
 
 rust loop {}
+rust string types, for instance br##"..."##, my parser does not support this
+https://doc.rust-lang.org/reference/tokens.html
+https://doc.rust-lang.org/book/appendix-02-operators.html#non-operator-symbols
 
 Cast um tipo para string chama tostring?
 
@@ -20680,6 +20740,8 @@ match
 
 c# explicit e implicit keywords
 Dictionary / Map
+ExpandoObject
+https://docs.microsoft.com/en-us/dotnet/api/system.dynamic.expandoobject?redirectedfrom=MSDN&view=netcore-3.1
 
 macros
 

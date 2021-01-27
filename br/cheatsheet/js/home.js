@@ -20,6 +20,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 		'python',
 		'visualbasic',
 		//'sql',
+		'webassembly',
 		'llvm',
 		'assembly'
 	];

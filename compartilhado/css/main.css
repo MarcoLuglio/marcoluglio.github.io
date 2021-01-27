@@ -1093,6 +1093,29 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
+/* webassembly */
+
+.bubaloop.webassembly .keyword,
+.bubaloop.webassembly .number {
+	color: #0040B4;
+}
+
+.bubaloop.webassembly .type {
+	color: #8AD100;
+}
+
+.bubaloop.webassembly .string {
+	color: #0099FF;
+}
+
+.bubaloop.webassembly .comment {
+	color: #D10077;
+}
+
+.bubaloop.webassembly .operator {
+	color: #7F8EA3;
+}
+
 /* llvm */
 
 .bubaloop.llvm .keyword,
