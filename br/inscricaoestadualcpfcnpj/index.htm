@@ -17,9 +17,9 @@
 	<h1>Código fonte de geradores de inscrição estadual, cpf e cnpj</h1>
 	<p>
 		Para validar geralmente recorremos a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é apenas 32 bits, mas se precisarmos de uma biblioteca 64 bits ou quando queremos gerar dados em massa para testes?
-		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C.
+		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C, tanto x86 quanto x64.
 		Já que pela internet achei basicamente códigos em Pascal ou Basic, segue o código fonte dos geradores de inscrição estadual em linguagens mais portáteis por assim dizer.
-		Eu também criei <a href='https://addons.mozilla.org/en-US/firefox/addon/gerador-cpf-cnpj-ie/'>gerador para Firefox</a> que cria números com um clique apenas.
+		Eu também criei um <a href='https://addons.mozilla.org/en-US/firefox/addon/gerador-cpf-cnpj-ie/'>gerador para Firefox</a> que cria números com um clique apenas.
 	</p>
 
 	<p>
@@ -42,29 +42,57 @@
 
 		<h3 id='ieac'>Acre</h3>
 
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do Acre e dígitos verificadores pode ser encontrado em:
+			<a href='http://www.sintegra.gov.br/Cad_Estados/cad_AC.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AC.html</a> ou
+			<a href='http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp'>http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp</a>
+		</p>
+
+		<p>Números de inscrição estadual do Acre fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='geradorieacbtn' type='button'>gerar/completar inscrição estadual do acre</button>
+				<br /><input id='validadorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='validadorieacbtn' type='button'>validar inscrição estadual do acre</button>
+			</p>
+		</form>
+
 		<div class='comparison'>
 
 			<div class='codeblock'>
-				<p>main.rs</p>
+
+				<p>main.rs - Gerador</p>
 				<code class='rust'
 ></code
 				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
 			</div>
 
 			<div class='codeblock'>
-				<p>main.cpp</p>
+
+				<p>main.cpp - Gerador</p>
 				<code class='cpp'
 ></code
 				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
 			</div>
 
 			<div class='codeblock'>
-				<p>Gerador</p>
+				<p>Program.cs - Gerador</p>
 				<code class='cs'
 ></code
 				>
 
-				<p>Validador</p>
+				<p>Program.cs - Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -72,15 +100,517 @@
 			</div>
 
 			<div class='codeblock'>
-					<p>main.js</p>
+
+					<p>main.js - Gerador</p>
 					<code class='javascript'
 ></code
 				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='ieam'>Amazonas</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iece'>Ceará</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iedf'>Distrito Federal</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iees'>Espírito Santo</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iema'>Maranhão</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iemt'>Mato Grosso</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iems'>Mato Grosso do Sul</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iepa'>Pará</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
 			</div>
 
 		</div>
 
 		<h3 id='iepr'>Paraná</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do Paraná e dígitos verificadores pode ser encontrado em:
+			<a href='http://www.fazenda.pr.gov.br/modules/conteudo/conteudo.php?conteudo=186'>http://www.fazenda.pr.gov.br/modules/conteudo/conteudo.php?conteudo=186</a> ou
+			<a href='http://www.sintegra.gov.br/Cad_Estados/cad_PR.html'>http://www.sintegra.gov.br/Cad_Estados/cad_PR.html</a>
+		</p>
+
+		<p>Números de inscrição estadual do Paraná fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradorieprinput' type='text' pattern='\d{3}\.\d{5}\-\d{2}' placeholder='12.34567-89' /><button id='geradorieprbtn' type='button'>gerar/completar inscrição estadual do paraná</button>
+				<br /><input id='validadorieprinput' type='text' pattern='\d{3}\.\d{5}-\d{2}' placeholder='12.34567-89' /><button id='validadorieprbtn' type='button'>validar inscrição estadual do paraná</button>
+			</p>
+		</form>
 
 		<div class='comparison'>
 
@@ -249,6 +779,306 @@ private bool ValidarInscricaoEstadualModulo11(
 
 		</div>
 
+		<h3 id='iepi'>Piauí</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='ierj'>Rio de Janeiro</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iers'>Rio Grande do Sul</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iesc'>Santa Catarina</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='iese'>Sergipe</h3>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>main.rs - Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>main.rs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>main.cpp - Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>main.cpp - Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>Program.cs - Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>Program.cs - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+					<p>main.js - Gerador</p>
+					<code class='javascript'
+></code
+				>
+
+				<p>main.js - Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
 	</section>
 
 
@@ -262,12 +1092,12 @@ private bool ValidarInscricaoEstadualModulo11(
 			<a href='http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc'>http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc</a>.
 			<br />O nono dígito (logo antes dos 2 dígitos verificadores) costumava ser o código da região fiscal a qual o CPF pertencia. Porém isso aparentemente não é mais o caso.
 		</p>
-		<p>Números de CPF fáceis de lembrar são: 100.000.000-19 e 000.000.002-72 (o número 000.00.001.91 é proibido conforme o anexo acima).</p>
+		<p>Números de CPF fáceis de lembrar são: <strong>100.000.000-19</strong> e <strong>000.000.002-72</strong> (o número 000.00.001.91 é proibido conforme o anexo acima).</p>
 
 		<form>
 			<p>
-				<input id='geradorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' /><button id='geradorcpfbtn' type='button'>gerar/completar cpf</button>
-				<br /><input id='validadorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' /><button id='validadorcpfbtn' type='button'>validar cpf</button>
+				<input id='geradorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' placeholder='123.456.789-12' /><button id='geradorcpfbtn' type='button'>gerar/completar cpf</button>
+				<br /><input id='validadorcpfinput' type='text' pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' placeholder='123.456.789-12' /><button id='validadorcpfbtn' type='button'>validar cpf</button>
 			</p>
 		</form>
 
@@ -566,7 +1396,10 @@ function gerarCpf() {
 			O documento com a definição da estrutura do CNPJ e dígitos verificadores pode ser encontrado em:
 			<a href='http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc'>http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc</a>.
 		</p>
-		<p>Números de CNPJ fáceis de lembrar são: 10.000.000-0009/00 e 00.000.000-0001/91 (números começando com 000 misturados com outros números são proibidos conforme o anexo acima).</p>
+		<p>
+			Números de CNPJ fáceis de lembrar são: <strong>10.000.000-0009/00</strong> e <strong>00.000.000-0001/91</strong> (números começando com 000 misturados com outros números são proibidos conforme o anexo acima).
+			<br />Os quatro dígitos após o hífen são referentes ao número da filial da empresa. Portanto o mais comum é 0001.
+		</p>
 
 		<!--
 		-0000 ou maior que -0300 não pode.
@@ -575,8 +1408,8 @@ function gerarCpf() {
 
 		<form>
 			<p>
-				<input id='geradorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' /><button id='geradorcnpjbtn' type='button'>gerar/completar cnpj</button>
-				<br /><input id='validadorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' /><button id='validadorcnpjbtn' type='button'>validar cnpj</button>
+				<input id='geradorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' placeholder='12.345.678-0123/45' /><button id='geradorcnpjbtn' type='button'>gerar/completar cnpj</button>
+				<br /><input id='validadorcnpjinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{4}\/\d{2}' placeholder='12.345.678-0123/45' /><button id='validadorcnpjbtn' type='button'>validar cnpj</button>
 			</p>
 		</form>
 
