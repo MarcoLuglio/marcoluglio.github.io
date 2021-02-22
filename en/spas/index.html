@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html
+	xmlns='http://www.w3.org/1999/xhtml'
+	lang='pt-BR'
+	xml:lang='pt-br'
+	>
+<head>
+	<title>Single page applications</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' href='../../compartilhado/css/main.css' />
+	<link rel='stylesheet' href='css/home.css' />
+</head>
+<body>
+
+
+
+<h1>Single page applications <span>Angular, React, Vue, Blazor and Rust Web Assembly</span></h1>
+
+<p>Intro here.</p>
+
+<section class='indice'>
+
+<h2>Index</h2>
+<nav id='index'>
+</nav>
+
+</section>
+
+
+
+<section>
+
+<h2 id='createaproject'>Create a project</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+><span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @angular/cli
+<span class='keyword'>ng</span> <span class='keyword'>new</span> spa-sample-project
+<span class='comment lineComment'># will always use TypeScript and will ask you about router</span>
+<span class='comment lineComment'># PWA support and NgRx (Redux like) must be added later</span>
+
+<span class='keyword'>cd</span> spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>start</span> <span class='comment lineComment'># uses port 4200 by default</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>create-react-app</p>
+<code class='shell'
+><span class='comment lineComment'># this template adds TypeScript, router and Redux</span>
+<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux-typescript
+
+<span class='comment lineComment'># or this template based on JavaScript, router and Redux</span>
+<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux
+
+<span class='keyword'>cd</span> spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>start</span> <span class='comment lineComment'># uses port 3000 by default</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+><span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
+<span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
+<span class='comment lineComment'># manually select features for adding TypeScript, router and Vuex (Redux like)</span>
+<span class='comment lineComment'># PWA support must be added later</span>
+
+<span class='keyword'>cd</span> create spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>run</span> serve <span class='comment lineComment'># uses port 8080 by default</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor - C#</p>
+<code class='shell'
+><span class='comment lineComment'># usually project creation through GUI, but the command line is</span>
+<span class='keyword'>dotnet</span> <span class='keyword'>new</span> blazorwasm <span class='parameter'>-o</span> SpaSampleProject <span class='comment lineComment'># notice it is blazorWASM, NOT blazorSERVER</span>
+<span class='comment lineComment'># no real Redux like support for now</span>
+
+<span class='keyword'>cd</span> SpaSampleProject
+<span class='keyword'>dotnet</span> <span class='keyword'>restore</span>
+<span class='keyword'>dotnet</span> <span class='keyword'>watch</span> <span class='keyword'>run</span> <span class='comment lineComment'># uses port 5001 by default</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	Angular, React and Vue create git local repositories as part of their starting templates without asking you.
+	<br />At the time of this writing, I'm using node 15 (15.9.0 specifically) which is not LTS.
+	<br />Angular <abbr title='Command line interface'>CLI</abbr> complained about npm 7, and asked me to downgrade to npm 6.
+	<br />The <code>redux-typescript</code> react template failed to install due to the TypeScript version being incompatible and I had to fallback to the original <code>typescript</code> template and manually configure Redux.
+	<br />And Vue 3 is still in beta.
+</p>
+
+<p>
+	The size of these projects is what always turned me down.
+	They’re massive with a <strong>huge amount of files</strong>.
+</p>
+
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th scope='col'>Angular 11.2.1</th>
+			<th scope='col'>React 17.0.1 TypeScript</th>
+			<th scope='col'>React 17.0.1 JavaScript</th>
+			<th scope='col'>Vue 3.0.0 TypeScript</th>
+			<th scope='col'>Vue 3.0.0 JavaScript</th>
+			<th scope='col'>Blazor</th>
+			<th scope='col'>Rust</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope='row'>source + libraries</th>
+			<td>448.2MB</td>
+			<td>219.1MB+</td>
+			<td>237.9MB</td>
+			<td>493.2MB</td>
+			<td>120.1MB</td>
+			<td>48.6MB</td>
+			<td>?</td>
+		</tr>
+		<tr>
+			<th scope='row'>compiled</th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th scope='row'>initial page load</th>
+			<td>2.88MB</td>
+			<td>1.65MB+</td>
+			<td>1.94MB</td>
+			<td>2.80MB</td>
+			<td>2.33MB</td>
+			<td>0.52MB</td>
+			<td>?</td>
+		</tr>
+	</tbody>
+	<tfoot>
+
+	</tfoot>
+</table>
+
+</section>
+
+
+
+<section>
+
+<h2 id=''>Install remaining dependencies</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+><span class='comment lineComment'># https://angular.io/guide/service-worker-getting-started</span>
+<span class='keyword'>ng</span> <span class='keyword'>add</span> @angular/pwa
+
+<span class='comment lineComment'># https://ngrx.io/guide/store/install</span>
+<span class='keyword'>ng</span> <span class='keyword'>add</span> @ngrx/store@latest <span class='parameter'>--minimal</span> false</code
+>
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id=''>Create a module</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+><span class='comment lineComment'># https://angular.io/guide/lazy-loading-ngmodules</span>
+<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>module</span> languages <span class='parameter'>--route</span> languages <span class='parameter'>--module</span> app.module</code
+>
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id=''>Create a component</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<!--
+<section>
+
+<h2 id=''>A</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+-->
+
+
+
+<script type='module' src='../../compartilhado/js/utils.js'></script>
+<script type='module' src='../../compartilhado/js/index.js'></script>
+<script type='module' src='../../compartilhado/js/highlighter.js'></script>
+<script type='module' src='../../compartilhado/js/highlightEnhancer.js'></script>
+<script type='module' src='js/home.js'></script>
+
+</body>
+</html>
