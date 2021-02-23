@@ -7,22 +7,24 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 (async function() {
 
 	const tiposBlocos = [
+		'shell',
 		'html',
 		'rust',
-		'go',
-		'cpp',
-		'objectivec',
-		'swift',
-		'kotlin',
-		'java',
+		//'go',
+		//'cpp',
+		//'objectivec',
+		//'swift',
+		//'kotlin',
+		//'java',
 		'cs',
 		'javascript',
-		'python',
-		'visualbasic',
+		//'python',
+		//'visualbasic',
 		//'sql',
 		'webassembly',
-		'llvm',
-		'assembly'
+		'toml'
+		//'llvm',
+		//'assembly'
 	];
 
 	const blocosDeCodigo = [];
@@ -45,7 +47,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 	await domReadyPromise();
 
 	try {
-		const index = new Index('indice', 3, false);
+		const index = new Index('indexList', 3, false);
 	} catch (erro) {
 		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
 	}

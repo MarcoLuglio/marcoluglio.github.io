@@ -14,14 +14,17 @@
 
 
 
-<h1>Single page applications <span>Angular, React, Vue, Blazor and Rust Web Assembly</span></h1>
+<h1>Single page applications <span>Angular, React, Vue and Web Assembly with C# + Blazor, Rust + Yew and Rust + Seed</span></h1>
 
-<p>Intro here.</p>
+<p>
+	Rust has a few <a href='https://www.arewewebyet.org/topics/frameworks/#frontend'>spa frameworks</a>.
+	I’m testing the two most popular ones.
+</p>
 
 <section class='indice'>
 
-<h2>Index</h2>
-<nav id='index'>
+<h2 id='index'>Index</h2>
+<nav id='indexList'>
 </nav>
 
 </section>
@@ -35,9 +38,10 @@
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
-><span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @angular/cli
+><span class='comment lineComment'><a href='https://cli.angular.io'># https://cli.angular.io</a></span>
+<span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @angular/cli
 <span class='keyword'>ng</span> <span class='keyword'>new</span> spa-sample-project
 <span class='comment lineComment'># will always use TypeScript and will ask you about router</span>
 <span class='comment lineComment'># PWA support and NgRx (Redux like) must be added later</span>
@@ -49,10 +53,11 @@
 </div>
 
 <div class='codeblock'>
-<p>create-react-app</p>
+<p>create-react-app - terminal (sh like)</p>
 <code class='shell'
-><span class='comment lineComment'># this template adds TypeScript, router and Redux</span>
-<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux-typescript
+><span class='comment lineComment'><a href='https://create-react-app.dev/docs/adding-typescript'># https://create-react-app.dev/docs/adding-typescript</a></span>
+<span class='comment lineComment'># this template adds TypeScript, router and Redux</span>
+<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> typescript
 
 <span class='comment lineComment'># or this template based on JavaScript, router and Redux</span>
 <span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux
@@ -64,12 +69,12 @@
 </div>
 
 <div class='codeblock'>
-<p>Vue <abbr title='Command line interface'>CLI</abbr></p>
+<p>Vue <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
-><span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
+><span class='comment lineComment'><a href='https://cli.vuejs.org'># https://cli.vuejs.org</a></span>
+<span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
 <span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
 <span class='comment lineComment'># manually select features for adding TypeScript, router and Vuex (Redux like)</span>
-<span class='comment lineComment'># PWA support must be added later</span>
 
 <span class='keyword'>cd</span> create spa-sample-project
 <span class='keyword'>npm</span> <span class='keyword'>install</span>
@@ -78,9 +83,10 @@
 </div>
 
 <div class='codeblock'>
-<p>Blazor - C#</p>
+<p>Blazor (C#) - terminal (sh like)</p>
 <code class='shell'
-><span class='comment lineComment'># usually project creation through GUI, but the command line is</span>
+><span class='comment lineComment'><a href='https://docs.microsoft.com/en-us/aspnet/core/blazor/tooling?view=aspnetcore-5.0'># https://docs.microsoft.com/en-us/aspnet/core/blazor/tooling?view=aspnetcore-5.0</a></span>
+<span class='comment lineComment'># usually project creation through GUI, but the command line is</span>
 <span class='keyword'>dotnet</span> <span class='keyword'>new</span> blazorwasm <span class='parameter'>-o</span> SpaSampleProject <span class='comment lineComment'># notice it is blazorWASM, NOT blazorSERVER</span>
 <span class='comment lineComment'># no real Redux like support for now</span>
 
@@ -91,20 +97,100 @@
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+
+<p>Rust (Yew) - terminal (sh like)</p>
 <code class='shell'
-></code
+><span class='comment lineComment'><a href='https://yew.rs/en'># https://yew.rs/en</a></span>
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> wasm-pack
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> cargo-make
+<span class='comment lineComment'># optional</span>
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> simple-http-server
+<span class='keyword'>cargo</span> <span class='keyword'>new</span> <span class='parameter'>--lib</span> spa_sample_project
+<span class='keyword'>cd</span> spa_sample_project_yew</code
 >
+
+<p>Cargo.toml</p>
+<code class='toml'
+>[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+<strong>yew = "0.17"</strong>
+wasm-bindgen = "0.2"</code
+>
+
+
+<p>Makefile.toml</p>
+<code class='toml'
+>[tasks.build]
+command = "wasm-pack"
+args = ["build", "--dev", "--target", "web", "--out-name", "wasm", "--out-dir", "./static"]
+watch = { ignore_pattern = "static/*" }
+
+[tasks.serve]
+command = "simple-http-server"
+args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/index.html"]</code
+>
+
+<p>terminal (sh like)</p>
+<code class='shell'
+><span class='keyword'>cargo</span> <span class='keyword'>make</span> <span class='keyword'>build</span></code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Rust (Seed) - terminal (sh like)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://seed-rs.org'># https://seed-rs.org</a></span>
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> wasm-pack
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> cargo-make
+<span class='comment lineComment'># optional</span>
+<span class='keyword'>cargo</span> <span class='keyword'>install</span> simple-http-server
+<span class='keyword'>cargo</span> <span class='keyword'>new</span> <span class='parameter'>--lib</span> spa_sample_project
+<span class='keyword'>cd</span> spa_sample_project_seed</code
+>
+
+<p>Cargo.toml</p>
+<code class='toml'
+>[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+<strong>seed = "0.8.0"</strong>
+wasm-bindgen = "0.2"</code
+>
+
+
+<p>Makefile.toml</p>
+<code class='toml'
+>[tasks.build]
+command = "wasm-pack"
+args = ["build", "--dev", "--target", "web", "--out-name", "wasm", "--out-dir", "./static"]
+watch = { ignore_pattern = "static/*" }
+
+[tasks.serve]
+command = "simple-http-server"
+args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/index.html"]</code
+>
+
+<p>terminal (sh like)</p>
+<code class='shell'
+><span class='keyword'>cargo</span> <span class='keyword'>make</span> <span class='keyword'>build</span></code
+>
+
 </div>
 
 </div>
 
 <p>
-	Angular, React and Vue create git local repositories as part of their starting templates without asking you.
-	<br />At the time of this writing, I'm using node 15 (15.9.0 specifically) which is not LTS.
-	<br />Angular <abbr title='Command line interface'>CLI</abbr> complained about npm 7, and asked me to downgrade to npm 6.
+	Angular, React, Vue and Blazor create git local repositories as part of their starting templates without asking you.
+	<br />At the time of this writing, I'm using Node.js 15 (15.9.0 specifically) which is not LTS.
+	For this Node.js version, Angular <abbr title='Command line interface'>CLI</abbr> complained about npm 7, and asked me to downgrade to npm 6.
 	<br />The <code>redux-typescript</code> react template failed to install due to the TypeScript version being incompatible and I had to fallback to the original <code>typescript</code> template and manually configure Redux.
-	<br />And Vue 3 is still in beta.
+	<br />Vue 3 is still in beta.
+	<br />And obviously Rust Yew and Seed are still a long way to go when it comes to project templates.
 </p>
 
 <p>
@@ -121,8 +207,9 @@
 			<th scope='col'>React 17.0.1 JavaScript</th>
 			<th scope='col'>Vue 3.0.0 TypeScript</th>
 			<th scope='col'>Vue 3.0.0 JavaScript</th>
-			<th scope='col'>Blazor</th>
-			<th scope='col'>Rust</th>
+			<th scope='col'>C# Blazor</th>
+			<th scope='col'>Rust Yew</th>
+			<th scope='col'>Rust Seed</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -134,10 +221,12 @@
 			<td>493.2MB</td>
 			<td>120.1MB</td>
 			<td>48.6MB</td>
-			<td>?</td>
+			<td>633.2MB</td>
+			<td></td>
 		</tr>
 		<tr>
 			<th scope='row'>compiled</th>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -154,11 +243,14 @@
 			<td>2.80MB</td>
 			<td>2.33MB</td>
 			<td>0.52MB</td>
-			<td>?</td>
+			<td>0.223MB</td>
+			<td></td>
 		</tr>
 	</tbody>
 	<tfoot>
-
+		<tr>
+			<td colspan='9'></td>
+		</tr>
 	</tfoot>
 </table>
 
@@ -168,17 +260,19 @@
 
 <section>
 
-<h2 id=''>Install remaining dependencies</h2>
+<h2 id='installdependencies'>Install remaining dependencies</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
-><span class='comment lineComment'># https://angular.io/guide/service-worker-getting-started</span>
+><span class='comment lineComment'><a href='https://angular.io/cli/add'># https://angular.io/cli/add</a></span>
+
+<span class='comment lineComment'><a href='https://angular.io/guide/service-worker-getting-started'># https://angular.io/guide/service-worker-getting-started</a></span>
 <span class='keyword'>ng</span> <span class='keyword'>add</span> @angular/pwa
 
-<span class='comment lineComment'># https://ngrx.io/guide/store/install</span>
+<span class='comment lineComment'><a href='https://ngrx.io/guide/store/install'># https://ngrx.io/guide/store/install</a></span>
 <span class='keyword'>ng</span> <span class='keyword'>add</span> @ngrx/store@latest <span class='parameter'>--minimal</span> false</code
 >
 </div>
@@ -192,30 +286,22 @@
 
 <div class='codeblock'>
 <p>React JavaScript</p>
-<code class='shell'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Vue TypeScript</p>
-<code class='shell'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Vue JavaScript</p>
-<code class='shell'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Blazor</p>
-<code class='shell'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -228,7 +314,9 @@
 </div>
 
 <p>
-	A
+	Not sure why Angular doesn’t provide <abbr title='Progressive Web App'>PWA</abbr> support out of the box.
+	<br />Redux + TypeScript template for React will probably get fixed eventually.
+	Nevertheless, it is interesting to know that Redux is not providing TypeScript support at the same level as JavaScript.
 </p>
 
 </section>
@@ -237,16 +325,32 @@
 
 <section>
 
-<h2 id=''>Create a module</h2>
+<h2 id='createamodule'>Create a module</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
-><span class='comment lineComment'># https://angular.io/guide/lazy-loading-ngmodules</span>
+><span class='comment lineComment'><a href='https://angular.io/guide/lazy-loading-ngmodules'># https://angular.io/guide/lazy-loading-ngmodules</a></span>
+<span class='comment lineComment'># this will create a languages.module.ts where we can declare our components</span>
+<span class='comment lineComment'># and add an entry for the module in the routes table</span>
+
 <span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>module</span> languages <span class='parameter'>--route</span> languages <span class='parameter'>--module</span> app.module</code
 >
+
+<p>app-routing.module.ts</p>
+<code class='javascript'
+><strong>// this will ba added automatically</strong>
+const routes:Routes = [{
+	path: 'languages',
+	<strong>// lazy loading using the import().then() async function</strong>
+	loadChildren: () => <strong class='small'>import(</strong>'./languages/languages.module'<strong>)</strong>
+		<strong>.then(</strong> => m.LanguagesModule<strong>)</strong>
+}];</code
+>
+
+
 </div>
 
 <div class='codeblock'>
@@ -257,10 +361,31 @@
 </div>
 
 <div class='codeblock'>
+
 <p>React JavaScript</p>
 <code class='shell'
-></code
+><span class='comment lineComment'><a href='https://reactjs.org/docs/code-splitting.html'># https://reactjs.org/docs/code-splitting.html</a></span>
+<span class='keyword'>cd</span> src
+<span class='keyword'>cd</span> features
+<span class='keyword'>mkdir</span> languages
+<span class='keyword'>cd</span> languages
+<span class='keyword'>touch</span> Languages.js</code
 >
+
+<p>App.js</p>
+<code class='javascript'
+><strong>// lazy loading using the lazy(import()) async functions</strong>
+const Languages = <strong class='small'>lazy(</strong>() => <strong class='small'>import(</strong>'./features/languages/Languages'<strong>));</strong>
+
+function App() {
+	return (
+		&lt;&gt;
+			&lt;Languages /&gt;
+		&lt;/&gt;
+	)
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -271,21 +396,46 @@
 </div>
 
 <div class='codeblock'>
+
 <p>Vue JavaScript</p>
 <code class='shell'
-></code
+><span class='comment lineComment'><a href='https://router.vuejs.org/guide/advanced/lazy-loading.html'># https://router.vuejs.org/guide/advanced/lazy-loading.html</a></span>
+<span class='keyword'>cd</span> src
+<span class='keyword'>cd</span> components
+<span class='keyword'>mkdir</span> languages
+<span class='keyword'>cd</span> languages
+<span class='keyword'>touch</span> Languages.js</code
 >
+
+<p>router/index.js</p>
+<code class='javascript'
+>const routes = [{
+	path: '/languages',
+	name: 'Languages',
+	<strong>// lazy loading using the import() async function</strong>
+	component: () => <strong class='small'>import(</strong>/* webpackChunkName: "languages" */ '../components/languages/Languages.vue'<strong>)</strong>
+}]</code
+>
+
 </div>
 
+
 <div class='codeblock'>
-<p>Blazor</p>
+<p>Blazor (C#)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
 <code class='shell'
 ></code
 >
@@ -303,15 +453,63 @@
 
 <section>
 
-<h2 id=''>Create a component</h2>
+<h2 id='createaservice'>Create a service</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
+
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
-></code
+><span class='comment lineComment'><a href='https://angular.io/cli/generate'># https://angular.io/cli/generate</a></span>
+<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>class</span> languages/entities/timelineEntry <span class='parameter'>--type</span> entity
+<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>service</span> languages/services/timelineSorter</code
 >
+
+<p>timeline-entry.entity.ts</p>
+<code class='javascript'
+>export class TimelineEntry {
+	name:string = '';
+	date:number = 0;
+}</code
+>
+
+<p>timeline-sorter.service.ts</p>
+<code class='javascript'
+>import { Injectable } from '@angular/core';
+import { TimelineEntry } from '../entities/timeline-entry.entity';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class TimelineSorterService {
+
+	constructor() {
+		//
+	}
+
+	numberSorter(a:TimelineEntry, b:TimelineEntry) {
+		return a.date - b.date;
+	}
+
+	stringSorter(a:TimelineEntry, b:TimelineEntry) {
+
+		var nameA = a.name.toUpperCase();
+		var nameB = b.name.toUpperCase();
+		if (nameA &lt; nameB) {
+			return -1;
+		}
+		if (nameA &gt; nameB) {
+			return 1;
+		}
+
+		return 0;
+
+	}
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -343,14 +541,299 @@
 </div>
 
 <div class='codeblock'>
-<p>Blazor</p>
+<p>Blazor (C#)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='createacomponent'>Create a component</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://angular.io/cli/generate'># https://angular.io/cli/generate</a></span>
+<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>component</span> timeline <span class='parameter'>--module</span> languages</code
+>
+
+<p>timeline.component.ts</p>
+<code class='javascript'
+>import { Component, Input, OnInit } from '@angular/core';
+import { TimelineEntry } from './entities/timeline-entry.entity';
+import { TimelineSorterService } from './services/timeline-sorter.service';
+
+@Component({
+	selector: 'timeline',
+	templateUrl: './timeline.component.html',
+	styleUrls: ['./timeline.component.scss']
+})
+export class TimelineComponent implements OnInit {
+
+	@Input() title:string = 'Timeline';
+
+	@Input()
+	get entries():Array&lt;TimelineEntry&gt; { return this._entries; }
+
+	set entries(entries:Array&lt;TimelineEntry&gt;) {
+
+		let sortedEntries:Array&lt;TimelineEntry&gt; = [];
+
+		switch (this.sortBy) {
+			case 'name':
+				sortedEntries = entries.sort(this.timelineSorterService.stringSorter);
+				break;
+			case 'date':
+				sortedEntries = entries.sort(this.timelineSorterService.numberSorter);
+				break;
+			default:
+				sortedEntries = entries;
+				break;
+		}
+
+		this._entries = sortedEntries;
+
+	}
+
+	private _entries:Array&lt;TimelineEntry&gt; = [];
+
+	@Input() sortBy:string = 'year';
+
+	constructor(
+		private timelineSorterService:TimelineSorterService
+		) {
+
+	}
+
+	ngOnInit(): void {
+	}
+
+}</code
+>
+
+<p>timeline.component.html</p>
+<code class='html'
+>&lt;ng-container&gt;
+	&lt;h2&gt;{{title}}&lt;/h2&gt;
+	&lt;ul *ngIf='entries'&gt;
+		&lt;li *ngFor='let entry of entries'&gt;
+			{{entry.name}} - {{entry.year}}
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/ng-container&gt;</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor (C#)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='useacomponent'>Use a component</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+
+<p>languages.component.ts</p>
+<code class='javascript'
+>import { Component, OnInit } from '@angular/core';
+
+@Component({
+	selector: 'app-languages',
+	templateUrl: './languages.component.html',
+	styleUrls: ['./languages.component.scss']
+})
+export class LanguagesComponent implements OnInit {
+
+	timelineTitle:string = 'Programming languages';
+
+	timelineEntries:Array&lt;{ name: string; year:number }&gt; = [
+		{ name: 'Fortran', year: 1957 },
+		{ name: 'Lisp', year: 1958 },
+		{ name: 'Algol', year: 1958 },
+		{ name: 'Cobol', year: 1959 },
+		{ name: 'Simula', year: 1962 },
+		{ name: 'Basic', year: 1964 },
+		{ name: 'Pascal', year: 1970 },
+		{ name: 'C', year: 1972 },
+		{ name: 'Smalltalk 72', year: 1972 },
+		{ name: 'Ada', year: 1980 },
+		{ name: 'Smalltalk 80', year: 1980 },
+		{ name: 'Objective-C', year: 1984 },
+		{ name: 'C++', year: 1985 },
+		{ name: 'Object Pascal', year: 1986 },
+		{ name: 'Erlang', year: 1986 },
+		{ name: 'Python', year: 1990 },
+		{ name: 'Haskell', year: 1990 },
+		{ name: 'Java', year: 1995 },
+		{ name: 'JavaScript', year: 1995 },
+		{ name: 'Php', year: 1995 },
+		{ name: 'Ruby', year: 1995 },
+		{ name: 'ActionScript', year: 1998 },
+		{ name: 'Visual Basic 6', year: 1998 },
+		{ name: 'C#', year: 2000 },
+		{ name: 'F#', year: 2005 },
+		{ name: 'Go', year: 2009 },
+		{ name: 'Rust', year: 2010 },
+		{ name: 'Kotlin', year: 2011 },
+		{ name: 'Dart', year: 2011 },
+		{ name: 'TypeScript', year: 2012 },
+		{ name: 'Swift', year: 2014 }
+	];
+
+	constructor() {
+	}
+
+	ngOnInit(): void {
+	}
+
+}</code
+>
+
+<p>languages.component.html</p>
+<code class='html'
+>&lt;div&gt;
+	&lt;timeline
+		[title]='timelineTitle'
+		[entries]='timelineEntries'
+		sortBy='name'
+		&gt;&lt;/timeline
+	&gt;
+&lt;/div&gt;</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue JavaScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor (C#)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
 <code class='shell'
 ></code
 >
@@ -409,14 +892,21 @@
 </div>
 
 <div class='codeblock'>
-<p>Blazor</p>
+<p>Blazor (C#)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust</p>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
 <code class='shell'
 ></code
 >
