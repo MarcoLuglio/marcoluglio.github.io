@@ -365,11 +365,9 @@ const routes:Routes = [{
 <p>React JavaScript</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://reactjs.org/docs/code-splitting.html'># https://reactjs.org/docs/code-splitting.html</a></span>
-<span class='keyword'>cd</span> src
-<span class='keyword'>cd</span> features
+<span class='keyword'>cd</span> src/features
 <span class='keyword'>mkdir</span> languages
-<span class='keyword'>cd</span> languages
-<span class='keyword'>touch</span> Languages.js</code
+<span class='keyword'>touch</span> ./languages/Languages.js</code
 >
 
 <p>App.js</p>
@@ -400,11 +398,9 @@ function App() {
 <p>Vue JavaScript</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://router.vuejs.org/guide/advanced/lazy-loading.html'># https://router.vuejs.org/guide/advanced/lazy-loading.html</a></span>
-<span class='keyword'>cd</span> src
-<span class='keyword'>cd</span> components
+<span class='keyword'>cd</span> src/components
 <span class='keyword'>mkdir</span> languages
-<span class='keyword'>cd</span> languages
-<span class='keyword'>touch</span> Languages.js</code
+<span class='keyword'>touch</span> ./languages/Languages.js</code
 >
 
 <p>router/index.js</p>
@@ -413,7 +409,10 @@ function App() {
 	path: '/languages',
 	name: 'Languages',
 	<strong>// lazy loading using the import() async function</strong>
-	component: () => <strong class='small'>import(</strong>/* webpackChunkName: "languages" */ '../components/languages/Languages.vue'<strong>)</strong>
+	component: () => <strong class='small'>import(</strong>
+		/* webpackChunkName: "languages" */
+		'../components/languages/Languages.vue'
+	<strong>)</strong>
 }]</code
 >
 
@@ -468,7 +467,7 @@ function App() {
 
 <p>timeline-entry.entity.ts</p>
 <code class='javascript'
->export class TimelineEntry {
+>export default class TimelineEntryEntity {
 	name:string = '';
 	date:number = 0;
 }</code
@@ -477,22 +476,24 @@ function App() {
 <p>timeline-sorter.service.ts</p>
 <code class='javascript'
 >import { Injectable } from '@angular/core';
-import { TimelineEntry } from '../entities/timeline-entry.entity';
+import TimelineEntryEntity from '../entities/timeline-entry.entity';
 
+// requires a class decorated with @Injectable
+// to use dependency injection
 @Injectable({
 	providedIn: 'root'
 })
-export class TimelineSorterService {
+export default class TimelineSorterService {
 
 	constructor() {
 		//
 	}
 
-	numberSorter(a:TimelineEntry, b:TimelineEntry) {
+	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
 		return a.date - b.date;
 	}
 
-	stringSorter(a:TimelineEntry, b:TimelineEntry) {
+	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
 
 		var nameA = a.name.toUpperCase();
 		var nameB = b.name.toUpperCase();
@@ -520,10 +521,46 @@ export class TimelineSorterService {
 </div>
 
 <div class='codeblock'>
+
 <p>React JavaScript</p>
 <code class='shell'
-></code
+><span class='keyword'>cd</span> src/features/languages
+<span class='keyword'>mkdir</span> entities
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.js
+<span class='keyword'>touch</span> ./entities/TimelineSorterServices.js</code
 >
+
+<p>TimelineEntryEntity.js</p>
+<code class='javascript'
+>export default class TimelineEntryEntity {
+	name = '';
+	date = 0;
+}</code
+>
+
+<p>TimelineSorterServices.js</p>
+<code class='javascript'
+>export function numberSorterService(a, b) {
+	return a.date - b.date;
+}
+
+export function stringSorterService(a, b) {
+
+	var nameA = a.name.toUpperCase();
+	var nameB = b.name.toUpperCase();
+	if (nameA &lt; nameB) {
+		return -1;
+	}
+	if (nameA &gt; nameB) {
+		return 1;
+	}
+
+	return 0;
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -588,9 +625,14 @@ export class TimelineSorterService {
 <p>timeline.component.ts</p>
 <code class='javascript'
 >import { Component, Input, OnInit } from '@angular/core';
-import { TimelineEntry } from './entities/timeline-entry.entity';
-import { TimelineSorterService } from './services/timeline-sorter.service';
+import TimelineEntryEntity from '../../entities/timeline-entry.entity';
+import TimelineSorterService from '../../services/timeline-sorter.service';
 
+// components classes must be decorated with @Component
+// provide a markup tag name that uses this class
+// and separated files for template and style
+// or inline strings equivalents
+// template: '<div>...</div>' and styles: ['div {...}', 'p {...}']
 @Component({
 	selector: 'timeline',
 	templateUrl: './timeline.component.html',
@@ -598,14 +640,16 @@ import { TimelineSorterService } from './services/timeline-sorter.service';
 })
 export class TimelineComponent implements OnInit {
 
+	// component markup attributes must be decorated with @Input
 	@Input() title:string = 'Timeline';
 
+	// for getter and setters, only one of the pair is decorated
 	@Input()
-	get entries():Array&lt;TimelineEntry&gt; { return this._entries; }
+	get entries():Array&lt;TimelineEntryEntity&gt; { return this._entries; }
 
-	set entries(entries:Array&lt;TimelineEntry&gt;) {
+	set entries(entries:Array&lt;TimelineEntryEntity&gt;) {
 
-		let sortedEntries:Array&lt;TimelineEntry&gt; = [];
+		let sortedEntries:Array&lt;TimelineEntryEntity&gt; = [];
 
 		switch (this.sortBy) {
 			case 'name':
@@ -623,16 +667,16 @@ export class TimelineComponent implements OnInit {
 
 	}
 
-	private _entries:Array&lt;TimelineEntry&gt; = [];
-
 	@Input() sortBy:string = 'year';
 
 	constructor(
-		private timelineSorterService:TimelineSorterService
+		private timelineSorterService:TimelineSorterService,
+		private _entries:Array&lt;TimelineEntryEntity&gt; = []
 		) {
 
 	}
 
+	// ngOnInit is part of the OnInit interface, for components lifecycle events
 	ngOnInit(): void {
 	}
 
@@ -641,8 +685,19 @@ export class TimelineComponent implements OnInit {
 
 <p>timeline.component.html</p>
 <code class='html'
->&lt;ng-container&gt;
+>&lt;!--
+&lt;ng-container&gt; is a container tag that will not generate
+any html tag in the final rendering
+--&gt;
+&lt;ng-container&gt;
+	&lt;!--
+	Angular has three differet binding syntaxes
+	{{inputProperty}} is for binding @Input properties inside text nodes
+	[inputProperty] is for binding @Input properties in attributes
+	and @Output is for binding events also in attributes
+	--&gt;
 	&lt;h2&gt;{{title}}&lt;/h2&gt;
+	&lt;!-- *ng... are structural directives, they may change the DOM tree --&gt;
 	&lt;ul *ngIf='entries'&gt;
 		&lt;li *ngFor='let entry of entries'&gt;
 			{{entry.name}} - {{entry.year}}
@@ -650,7 +705,6 @@ export class TimelineComponent implements OnInit {
 	&lt;/ul&gt;
 &lt;/ng-container&gt;</code
 >
-
 </div>
 
 <div class='codeblock'>
@@ -661,10 +715,68 @@ export class TimelineComponent implements OnInit {
 </div>
 
 <div class='codeblock'>
+
 <p>React JavaScript</p>
 <code class='shell'
-></code
+><span class='keyword'>cd</span> src/features/languages
+<span class='keyword'>mkdir</span> components
+<span class='keyword'>touch</span> ./components/Timeline.js</code
 >
+
+<p>Timeline.js</p>
+<code class='javascript'
+>import { numberSorterService, stringSorterService } from '../services/TimelineSorterServices';
+
+// component markup attributes are passed in the props parameter
+// The class name is the markup tag name
+export default function Timeline(props) {
+
+	let title = 'Timeline';
+
+	let _entries = [];
+
+	let sortBy = 'year';
+
+	function setEntries(entries) {
+
+		let sortedEntries = [];
+
+		switch (sortBy) {
+			case 'name':
+				sortedEntries = entries.sort(stringSorterService);
+				break;
+			case 'date':
+				sortedEntries = entries.sort(numberSorterService);
+				break;
+			default:
+				sortedEntries = entries;
+				break;
+		}
+
+		_entries = sortedEntries;
+
+	}
+
+	setEntries(props.entries);
+
+	return (
+		&lt;&gt;
+			&lt;h2&gt;{title}&lt;/h2&gt;
+			{ _entries.length &gt; 0 ?
+				_entries.map((entry) =&gt;
+					&lt;li key={entry.name}&gt;
+						{entry.name} - {entry.year}
+					&lt;/li&gt;
+				)
+				:
+				&lt;&gt;&lt;/&gt;
+			}
+		&lt;/&gt;
+	);
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
