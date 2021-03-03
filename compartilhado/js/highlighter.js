@@ -909,10 +909,14 @@ const SourceSimpleCharacterSequenceToken = class SourceSimpleCharacterSequenceTo
 
 	reset() {
 		this._matchedKeyword = false;
+		this._previousMatchedKeyword = false;
 		//this._completeNextTurn = false;
 		this._keyword = null;
 		this._keywordPointer = 0;
+		this._isComplete = false;
+		this._hasNext = true;
 		this._resetKeywords();
+		this._isInitialized = false;
 	}
 
 	_matchKeywords(matchCharacter) {
