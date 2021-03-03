@@ -942,6 +942,7 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.javascript .decorator,
 .bubaloop.javascript .operator {
 	color: #7F8EA3;
 }
