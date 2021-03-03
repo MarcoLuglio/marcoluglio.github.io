@@ -1,5 +1,13 @@
 @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@4/distr/fira_code.css);
 
+@font-face{
+	font-family: 'JetBrains Mono';
+	src: url('https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2'),
+		url('https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 @font-face {
 	font-family: 'Code';
 	src: url('../../../fontes/code_light.woff') format('woff');
@@ -82,7 +90,7 @@ a {
 }
 
 code {
-	font-family: 'Fira Code', Consolas, 'SF Mono', Menlo, 'Courier New', Courier;
+	font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', Consolas, 'SF Mono', Menlo, 'Courier New', Courier;
 	white-space: pre;
 	overflow-x: auto;
 }
