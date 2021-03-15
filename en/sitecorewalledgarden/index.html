@@ -36,7 +36,7 @@
 
 <section>
 
-<h2 id='magicquadrant'>Gartner Magic Quadrant</h2>
+<h2 id='magicquadrant'>Languages of Gartner Magic Quadrant</h2>
 
 <p>
 	In <a rel='external nofollow' href='https://www.gartner.com/en/documents/3995917/magic-quadrant-for-digital-experience-platforms'>Gartner Magic Quadrant</a>,
@@ -98,17 +98,37 @@
 
 <p>
 	Sitecore uses the .Net <strong>Framework,</strong> which is <strong>only available for Windows,</strong> and requires <abbr>IIS</abbr> for hosting.
-	Sitecore 10 does have some parts written in .Net core, and an official Docker image, but because it is still bound to <abbr>IIS</abbr>, those are fat ass Windows images that take a lot of disk space, and require 16GB of ram.
+	Sitecore 10 does have <strong>some parts</strong> written in .Net core, and an official Docker image, but because it is still bound to <abbr>IIS</abbr>, those are fat ass Windows images that take a lot of disk space, and require 16GB of ram.
 </p>
 
 <p>
 	The <strong>Docker + Sitecore 10 path is easier to get started if you have the hardware.</strong>
-	As simple as installing Docker and running <code>init.ps1</code> a command in the prompt.
-	<a>https://github.com/Sitecore/docker-examples/tree/develop/getting-started</a> and <a>https://github.com/Sitecore/Helix.Examples/tree/master/examples/helix-basic-aspnetcore</a> are two places where you can clone starting reference projects.
+	As simple as installing <a rel='external nofollow' href='https://www.docker.com/products/docker-desktop'>Docker Desktop</a> and running <code>init.ps1</code> a command in PowerShell.
+	<a href='https://github.com/Sitecore/docker-examples/tree/develop/getting-started'>https://github.com/Sitecore/docker-examples/tree/develop/getting-started</a> and <a href='https://github.com/Sitecore/Helix.Examples/tree/master/examples/helix-basic-aspnetcore'>https://github.com/Sitecore/Helix.Examples/tree/master/examples/helix-basic-aspnetcore</a> are two places where you can clone starting reference projects.
 </p>
 
 <p>
-	a
+	If you do not have 16GB of ram, or just want a lighter environment, installing Sitecore on premisses is the way to go. For that you won’t need anything out of the ordinary:
+</p>
+
+<ul>
+	<li><a rel='external nofollow' href='https://dotnet.microsoft.com/download/dotnet-framework'>.Net Framework</a> (likely installed already)</li>
+	<li><abbr>IIS</abbr> (enable it in Windows features)</li>
+	<li><a rel='external nofollow' href='https://www.microsoft.com/en-us/sql-server/sql-server-downloads'><abbr>SQL</abbr> Server</a> (use mixed mode authentication and write down the sa password, you will need it later)</li>
+</ul>
+
+<p>
+	Same for development:
+</p>
+
+<ul>
+	<li><a rel='external nofollow' href=''>Visual Studio</a></li>
+	<li><a rel='external nofollow' href='https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15'><abbr>SQL</abbr> Server Management Studio</a>*</li>
+	<li>A content serialization tool for Sitecore. I’ll use <a rel='external nofollow' href='https://github.com/SitecoreUnicorn/Unicorn'>Unicorn</a>. That’s just a Nuget package, unlike other alternatives.</li>
+</ul>
+
+<p>
+	* It is not usual to access the database directly, but some questions about it may arise in the certification exam.
 </p>
 
 </section>
