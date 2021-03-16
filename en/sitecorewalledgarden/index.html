@@ -98,7 +98,7 @@
 
 <p>
 	Sitecore uses the .Net <strong>Framework,</strong> which is <strong>only available for Windows,</strong> and requires <abbr>IIS</abbr> for hosting.
-	Sitecore 10 does have <strong>some parts</strong> written in .Net core, and an official Docker image, but because it is still bound to <abbr>IIS</abbr>, those are fat ass Windows images that take a lot of disk space, and require 16GB of ram.
+	Sitecore 10 does have <strong>some parts</strong> written in .Net core, and an official Docker image, but because it is still bound to <abbr>IIS</abbr>, those are fat ass Windows images that take a lot of disk space, and require 32GB of <abbr>RAM</abbr>.
 </p>
 
 <p>
@@ -108,7 +108,7 @@
 </p>
 
 <p>
-	If you do not have 16GB of ram, or just want a lighter environment, installing Sitecore on premisses is the way to go. For that you won’t need anything out of the ordinary:
+	If you do not have 32GB of <abbr>RAM</abbr>, or just want a lighter environment, installing Sitecore on premisses is the way to go. For that you won’t need anything out of the ordinary:
 </p>
 
 <ul>
@@ -166,6 +166,93 @@
 		<img src='images/sitecoredownload.png' alt='Sitecore inintuitive download' />
 	</picture>
 </p>
+
+<p>
+	Use that mouse scroll and find the link entitled <q>Graphical setup package for XP Single</q>.
+</p>
+
+<p>
+	At this point I should go into a bit of Sitecore lingo and explain what is <abbr>XP</abbr>, <abbr>XM</abbr> and <abbr>XC</abbr>.
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='glossary'>Glossary</h2>
+
+<table>
+<tr>
+	<th scope='row'>CM</th>
+	<td>Content manager</td>
+</tr>
+<tr>
+	<th scope='row'>CD (Sitecore)</th>
+	<td>Content delivery</td>
+</tr>
+<tr>
+	<th scope='row'>Headless</th>
+	<td>CMS API development. The CMS content will be returned by the APIs for consumption elsewhere.</td>
+</tr>
+<tr>
+	<th scope='row'>Helix</th>
+	<td>Architectural patterns for sitecore development</td>
+</tr>
+<tr>
+	<th scope='row'>JSS</th>
+	<td>JavaScript Services used along Sitecore headless APIs</td>
+</tr>
+<tr>
+	<th scope='row'>Lucene</th>
+	<td></td>
+</tr>
+<tr>
+	<th scope='row'>Pipeline (Sitecore Pipelines)</th>
+	<td>A pipeline consists of a sequence of processors. A processor is a .NET class that implements a method. When a pipeline is invoked, the processors are run in order. You can extend and customize the pipelines by adding or replacing processors. Extending a pipeline involves modifying the pipeline definition located in a Sitecore patch file.</td>
+</tr>
+<tr>
+	<th scope='row'>Publish</th>
+	<td>Push (sync) data from master database to web database</td>
+</tr>
+<tr>
+	<th scope='row'>template</th>
+	<td>Nothing to do with gui or display, but a data related concept.</td>
+</tr>
+<tr>
+	<th scope='row'>Template standard values</th>
+	<td>Data template presentation</td>
+</tr>
+<tr>
+	<th scope='row'>Traefik</th>
+	<td>Reverse proxy for use with Docker</td>
+</tr>
+<tr>
+	<th scope='row'>SDN</th>
+	<td>Sitecore Developer Network</td>
+</tr>
+<tr>
+	<th scope='row'>Solr</th>
+	<td>Search indexing service</td>
+</tr>
+<tr>
+	<th scope='row'>SXA</th>
+	<td>Sitecore Experience Accelerator</td>
+</tr>
+<tr>
+	<th scope='row'>XC</th>
+	<td>Experience commerce</td>
+</tr>
+<tr>
+	<th scope='row'>XM</th>
+	<td>Experience manager - CMS only</td>
+</tr>
+<tr>
+	<th scope='row'>XP</th>
+	<td>Experience platform - CMS + marketing tools like analytics, tracking, AB testing, email marketing lists, integration with salesforce and microsoft dynamics Customer Relationship Managers</td>
+</tr>
+</table>
 
 </section>
 
