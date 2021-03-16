@@ -103,7 +103,7 @@
 
 <p>
 	The <strong>Docker + Sitecore 10 path is easier to get started if you have the hardware.</strong>
-	As simple as installing <a rel='external nofollow' href='https://www.docker.com/products/docker-desktop'>Docker Desktop</a> and running <code>init.ps1</code> a command in PowerShell.
+	As simple as installing <a rel='external nofollow' href='https://git-scm.com/downloads'>Git</a>, <a rel='external nofollow' href='https://www.docker.com/products/docker-desktop'>Docker Desktop</a> and running <code>init.ps1</code> a command in PowerShell.
 	<a href='https://github.com/Sitecore/docker-examples/tree/develop/getting-started'>https://github.com/Sitecore/docker-examples/tree/develop/getting-started</a> and <a href='https://github.com/Sitecore/Helix.Examples/tree/master/examples/helix-basic-aspnetcore'>https://github.com/Sitecore/Helix.Examples/tree/master/examples/helix-basic-aspnetcore</a> are two places where you can clone starting reference projects.
 </p>
 
@@ -114,7 +114,7 @@
 <ul>
 	<li><a rel='external nofollow' href='https://dotnet.microsoft.com/download/dotnet-framework'>.Net Framework</a> (likely installed already)</li>
 	<li><abbr>IIS</abbr> (enable it in Windows features)</li>
-	<li><a rel='external nofollow' href='https://www.microsoft.com/en-us/sql-server/sql-server-downloads'><abbr>SQL</abbr> Server</a> (use mixed mode authentication and write down the sa password, you will need it later)</li>
+	<li><a rel='external nofollow' href='https://www.microsoft.com/en-us/sql-server/sql-server-downloads'><abbr>SQL</abbr> Server</a> <strong>(use mixed mode authentication and write down the sa password, you will need it later)</strong></li>
 </ul>
 
 <p>
@@ -122,6 +122,7 @@
 </p>
 
 <ul>
+	<li><a rel='external nofollow' href='https://git-scm.com/downloads'>Git</a></li>
 	<li><a rel='external nofollow' href=''>Visual Studio</a></li>
 	<li><a rel='external nofollow' href='https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15'><abbr>SQL</abbr> Server Management Studio</a>*</li>
 	<li>A content serialization tool for Sitecore. I’ll use <a rel='external nofollow' href='https://github.com/SitecoreUnicorn/Unicorn'>Unicorn</a>. That’s just a Nuget package, unlike other alternatives.</li>
@@ -168,7 +169,7 @@
 </p>
 
 <p>
-	Use that mouse scroll and find the link entitled <q>Graphical setup package for XP Single</q>.
+	Use that mouse scroll and find the link entitled <strong><q>Graphical setup package for XP Single</q></strong>.
 </p>
 
 <p>
@@ -184,10 +185,18 @@
 	<h2 id='gui'>GUI</h2>
 
 	<h3>Desktop</h3>
+	<p>
+		If Sitecore was your computer, this would be your Desktop.
+		It has a wallpaper, a start menu and a Cortana/Siri like search field.
+		The recycle bin however, is inside the start menu.
+		Your <g>programs</g> listed inside the start menu are pages of the admin section.
+	</p>
 
 	<h3>Content Editor</h3>
+	<p>Where we edit text</p>
 
 	<h3>Experience Editor</h3>
+	<p>Where we preview pages</p>
 
 </section>
 
@@ -209,28 +218,71 @@
 
 <section>
 
+<h2 id='search'>Search</h2>
+
+<p>For search API add nuget:</p>
+
+<ul>
+	<li>Sitecore.ContentSearch</li>
+	<li>Sitecore.ContentSearch.Linq</li>
+</ul>
+
+<p>In search controller</p>
+
+<div class='codeblock'>
+<code class='cs'
+>// step 1 - get index
+var Index = ContentSearchManager.GetIndex((SitecoreIndexableItem)Item);
+
+// step 2 - get context
+using(var context = Index.CreateSearchContext()) {
+
+	// setp 3 - perform search
+
+	var searchResults = context
+		.GetQueryable&lt;SearchResultItem&gt;()
+		.Where(s => s.Content.Contains("hello, world!"));
+
+	// or
+
+	var mySearch = context
+		.GetQueryable&lt;SearchResultItem&gt;()
+		.Where(x => x.Content.Contains("hello, world!"))
+		.ToList()
+		.Select(item => item.GetItem()).ToList();
+
+}</code
+>
+</div>
+
+</section>
+
+
+
+<section>
+
 <h2 id='docs'>Documentation</h2>
 
 <dl>
 
 	<dt>Knowledge base</dt>
-	<dd><a href='https://kb.sitecore.net'>https://kb.sitecore.net</a></dd>
-	<dd><a href='https://helix.sitecore.com'>https://helix.sitecore.com</a></dd>
+	<dd><a rel='external nofollow' href='https://kb.sitecore.net'>https://kb.sitecore.net</a></dd>
+	<dd><a rel='external nofollow' href='https://helix.sitecore.com'>https://helix.sitecore.com</a></dd>
 
 	<dt>Marketplace</dt>
-	<dd><a href='https://marketplace.sitecore.net'>https://marketplace.sitecore.net (not really a documentation, but certification asks something along the lines)</a></dd>
+	<dd><a rel='external nofollow' href='https://marketplace.sitecore.net'>https://marketplace.sitecore.net (not really a documentation, but certification asks something along the lines)</a></dd>
 
 	<dt>Helpdesk</dt>
-	<dd><a href='https://support.sitecore.net/helpdesk'>https://support.sitecore.net/helpdesk</a></dd>
+	<dd><a rel='external nofollow' href='https://support.sitecore.net/helpdesk'>https://support.sitecore.net/helpdesk</a></dd>
 
 	<dt>Sitecore Developer Network (SDN)</dt>
 	<dd>no longer active</dd>
 
 	<dt>Stack Exchange</dt>
-	<dd><a href='https://sitecore.stackexchange.com'>https://sitecore.stackexchange.com</a></dd>
+	<dd><a rel='external nofollow' href='https://sitecore.stackexchange.com'>https://sitecore.stackexchange.com</a></dd>
 
 	<dt>Official training</dt>
-	<dd><a href='https://learning.sitecore.com'>https://learning.sitecore.com (Start with the last course on the list: <q>Developer's Fundamentals 9.3 Collection</q>)</a></dd>
+	<dd><a rel='external nofollow' href='https://learning.sitecore.com'>https://learning.sitecore.com (Start with the last course on the list: <q>Developer's Fundamentals 9.3 Collection</q>)</a></dd>
 
 </dl>
 
