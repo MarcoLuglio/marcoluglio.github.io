@@ -18,8 +18,120 @@
 
 <p><strong>WORK IN PROGRESS ;)</strong></p>
 
-<p>Artigo criado por necessidades práticas no desenvolvimento de aplicativos para dispositivos móveis. Fui parcialmente inspirado no <a rel='external nofollow' href='http://www.25hoursaday.com/CsharpVsJava.html'>artigo icônico de Dare Obasanjo comparando C# e Java</a>.</p>
-<p>É quase como um Rust vs Go vs C++ vs Objective-c vs Swift vs Kotlin vs Java vs C# vs JavaScript vs Python :P</p>
+<p>
+	Artigo criado por necessidades práticas no desenvolvimento de aplicativos para dispositivos móveis.
+	Porém, com o tempo, fui adicionando mais linguagens para comparação, migração de código ou interesse histórico.
+	Fui parcialmente inspirado no <a rel='external nofollow' href='http://www.25hoursaday.com/CsharpVsJava.html'>artigo icônico de Dare Obasanjo comparando C# e Java</a>.
+</p>
+<p>
+	É quase como um Rust vs Go vs C++ vs Swift vs Kotlin vs Java vs C# vs JavaScript vs Dart vs Python :P
+	Mas também estou começando a comparar duas linguagens funcionais (Lisp e Haskell) e linguagens de mais baixo nível como Web Assembly text format (AssemblyScript), LLVM e Assembly.
+	E linguagens que de algum modo foram ou ainda são populares como TypeScript, ActionScript, Ada, Objective-C, Object Pascal (Delphi), <abbr title='Visual Basic 6'>VB6</abbr> e PHP.
+</p>
+
+<p>
+	Não viu a linguagem que você queria aqui ou gostaria de contribuir com alguma nova linguagem?
+	Esta página é um esforço individual, mas você pode tentar o site colaborativo <a rel='external nofollow' href='http://www.rosettacode.org'>http://www.rosettacode.org</a>.
+</p>
+
+<ul>
+
+	<li>
+		<ul>
+			<li>First generation programming languages &lt; 1949</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Assembly 1949</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Fortran 1957</li>
+			<li>Lisp 1958</li>
+			<li>Algol 1958</li>
+			<li>FLOW-MATIC 1959</li>
+			<li>Cobol 1959</li>
+			<li>Simula first oo language 1962</li>
+			<li>Basic 1964</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Pascal 1970</li>
+			<li>C 1972</li>
+			<li>Smalltalk 72 1972</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Ada 1980</li>
+			<li>Smalltalk 80 oo language 1980</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Common Lisp dialect 1984</li>
+			<li>Objective-C 1984</li>
+			<li>C++ 1985</li>
+			<li>Object Pascal 1986</li>
+			<li>Erlang 1986</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Python 1990</li>
+			<li>Haskell 1990</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Java 1995</li>
+			<li>JavaScript 1995</li>
+			<li>Php 1995</li>
+			<li>Ruby 1995</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Visual Basic 6 1998</li>
+			<li>C# 2000</li>
+			<li>LLVM 2003</li>
+			<li>ActionScript 2 rewrite 2003</li>
+			<li>F# 2005</li>
+			<li>ActionScript 3 rewrite 2006</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Go 2009</li>
+			<li>Rust 2010</li>
+			<li>Kotlin 2011</li>
+			<li>Dart 2011</li>
+			<li>TypeScript 2012</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<li>Swift 2014</li>
+			<li>JavaScript ES6 rewrite 2015</li>
+			<li>Web Assembly 2017</li>
+			<li>Dart 2 rewrite 2018</li>
+		</ul>
+	</li>
+
+</ul>
 
 <section class='indice'>
 
@@ -103,7 +215,8 @@ int main(int argc, const char* argv[]) {
 <div class='codeblock'>
 <p>Kotlin - Olá Mundo - main.kt</p>
 <code class='kotlin'
->fun main(args: Array&lt;String&gt;) {
+>// requer uma função main
+fun main(args: Array&lt;String&gt;) {
 	println("Hello, world!")
 }</code
 ></div>
@@ -143,10 +256,56 @@ public class OlaMundo {
 >
 </div>
 
+<div class='codeblock bubaloop'>
+<p>ActionScript - Olá Mundo - main.as</p>
+<code class='actionscript generic bubaloop'
+><span class='symbol'>trace</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>)</span></code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>TypeScript - Olá Mundo - main.ts</p>
+<code class='typescript generic bubaloop'
+>console.log('Olá Mundo')</code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>Dart - Olá Mundo - main.dart</p>
+<code class='dart generic bubaloop'
+><span class='comment lineComment'>// requer uma função main</span>
+<span class='type'>void</span> <span class='symbol'>main</span><span class='operator'>() {</span>
+	<span class='symbol'>print</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>);</span>
+<span class='operator'>}</span></code
+>
+</div>
+
 <div class='codeblock'>
 <p>Python - Olá Mundo - main.py</p>
 <code class='python'
 >print('Olá Mundo')</code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>PHP - Olá Mundo - index.php</p>
+<code class='php generic bubaloop'
+><span class='tag openTag'>&lt;?=</span> <span class='string'>'Olá Mundo'</span> <span class='tag closeTag'>?&gt;</span>
+
+ou
+
+<span class='tag openTag'>&lt;?php</span> <span class='keyword'>echo</span> <span class='string'>'Olá Mundo'</span> <span class='tag closeTag'>?&gt;</span>
+
+ou
+
+<span class='tag openTag'>&lt;?php</span> <span class='keyword'>echo</span> <span class='string'>&lt;&lt;&lt;'EOD'
+Olá Mundo
+EOD;</span> <span class='tag closeTag'>?&gt;</span>
+
+embora o primeiro código que você
+vai escrever provavelmente seja
+
+<span class='tag openTag'>&lt;?php</span> <span class='symbol'>phpinfo</span><span class='operator'>();</span> <span class='tag closeTag'>?&gt;</span></code
 >
 </div>
 
@@ -157,9 +316,64 @@ public class OlaMundo {
 >
 </div>
 
+<div class='codeblock bubaloop'>
+<p>Ada - Olá Mundo - main.adb</p>
+<code class='ada generic bubaloop'
+><span class='comment lineComment'>-- requer uma biblioteca para IO</span>
+<span class='keyword'>with</span> Ada<span class='operator'>.</span>Text_IO<span class='operator'>;</span> <span class='keyword'>use</span> Ada<span class='operator'>.</span>Text_IO<span class='operator'>;</span>
+
+<span class='comment lineComment'>-- requer uma função main</span>
+<span class='comment lineComment'>-- mas pode ter um nome diferente</span>
+<span class='keyword'>procedure</span> <span class='symbol'>Main</span> <span class='keyword'>is</span>
+<span class='keyword'>begin</span>
+	<span class='symbol'>Put_Line</span><span class='operator'>(</span><span class='string'>"Olá Mundo"</span><span class='operator'>);</span>
+<span class='keyword'>end</span> <span class='symbol'>Main</span><span class='operator'>;</span></code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>Object Pascal (Delphi) - Olá Mundo - main.dpr</p>
+<code class='objectivepascal generic bubaloop'
+><span class='comment blockComment'>{
+requer uma função main
+mas pode ter um nome diferente
+}</span>
+<span class='keyword'>program</span> Main<span class='operator'>;</span>
+
+<span class='keyword'>begin</span>
+	WriteLn<span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>);</span>
+<span class='keyword'>end</span><span class='operator'>.</span></code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>SmallTalk - Olá Mundo - main.st</p>
+<code class='smalltalk generic bubaloop'
+>Transcript show<span class='operator'>:</span> <span class='string'>'Olá Mundo'</span><span class='operator'>.</span></code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>Common Lisp - Olá Mundo - main.lisp</p>
+<code class='commonlisp generic bubaloop'
+>(print <span class='string'>"Olá Mundo"</span>)
+<span class='comment'>; ou para retornar uma string do programa</span>
+<span class='string'>"Olá Mundo"</span></code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>Haskell - Olá Mundo - main.hs</p>
+<code class='haskell generic bubaloop'
+>putStrLn <span class='string'>"Olá Mundo"</span>
+<span class='comment'>-- ou para retornar uma string do programa</span>
+<span class='string'>"Olá Mundo"</span></code
+>
+</div>
+
 <div class='codeblock'>
 
-	<p>Web Assembly - main.wasm</p>
+	<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
 	<code class='webassembly'
 >(<span class='keyword'>module</span>
 
@@ -283,20 +497,45 @@ WebAssembly
 </div>
 
 <ol>
-	<li>Swift</li>
-	<li>JavaScript</li>
+	<li>Python / Swift / <abbr title='Visual Basic 6'>VB6</abbr></li>
+	<li>JavaScript / PHP</li>
 	<li>Rust</li>
+	<li>Dart / Kotlin / Object Pascal (Delphi)</li>
 	<li>C# / Java</li>
+	<li>Go</li>
+	<li>Ada</li>
 	<li>C++ / Objective-C</li>
+	<li>LLVM <abbr title='Intermediate representation'>IR</abbr></li>
+	<li>Assembly</li>
+	<li>Web Assembly text format (AssemblyScript)</li>
 </ol>
 
-<p>Swift é a mais simples de todas. Nem <code class='swift'>;</code> ela precisa, e seu uso nem é recomendado.<br />
-JavaScript perde por pouco. Também não requer <code class='javascript'>;</code> embora ao contrário do que ocorre com Swift, seu uso seja recomendado. Seu <code class='javascript'>console.log</code> também é um pouco maior que o método <code class='swift'>print</code>.<br />
-C# 9+ vem logo atrás, pois ainda requer <code class='cs'>;</code><br />
-Rust ainda requer uma função <code class='rust'>main</code>, mas o retorno dela não precisa ser declarado explicitamente. Diferente das demais linguagens, usa um macro para IO, por isso <code class='rust'>print!</code> leva uma exclamação (não, não era porque eu estava entusiasmado quando escrevi o código).<br />
-C# 8- e Java são idênticos, ambos requerendo uma classe que contenha o método <code class='generic'>main</code>. Sentiu uma leve pressão para escrever orientado a objeto aqui? Também é recomendado que o nome do arquivo tenha o mesmo nome da classe.<br />
-Go é quase tão comprido quanto C++ e Objective-C. Não requer que a função <code class='go'>main</code> retorne in inteiro, mas requer um pacote.<br />
-C++ e Objective-C são bastante parecidos pois possuem forte influência do C. São os mais verborrágicos.
+<p>
+	Python e Swift são as mais simples de todas.
+	Nem <code class='swift'>;</code> elas precisam, e seu uso nem é recomendado no caso do Swift.<br />
+	Curioso encontrar <abbr title='Visual Basic 6'>VB6</abbr> aqui na mesma posição.<br />
+	JavaScript perde por pouco.
+	Também não requer <code class='javascript'>;</code> embora ao contrário do que ocorre com Swift, seu uso seja recomendado.
+	Seu <code class='javascript'>console.log</code> também é um pouco maior que o método <code class='swift'>print</code>.<br />
+	C# 9+ vem logo atrás, pois tem mais um namespace a ser digitado antes da função.<br />
+	PHP foi criado para ser utilizado em conjunto com HTML, e por isso requer tags para abrir e fechar os blocos de código.
+	Possui uma tag de atalho para casos simples e uma alternativa para textos longos, que acho confusa e pessoalmente nunca vi ser usada.
+	Usos mais complexos tendem a utilizar frameworks ou mecanismos de template<br />
+	Rust ainda requer uma função <code class='rust'>main</code>, mas o retorno dela não precisa ser declarado explicitamente.
+	Diferente das demais linguagens, usa um macro para IO, por isso <code class='rust'>print!</code> leva uma exclamação (não, não era porque eu estava entusiasmado quando escrevi o código).<br />
+	Dart, Kotlin e Object Pascal (Delphi) tem uma ou outra coisa a mais qua deve ser digitada a mais do qua Rust.
+	Object Pascal (Delphi), assim como Ada e <abbr title='Visual Basic 6'>VB6</abbr> utilizam mais palavras reservadas do que símbolos.<br />
+	C# 8- e Java são idênticos, ambos requerendo uma classe que contenha o método <code class='generic'>main</code>.
+	Sentiu uma leve pressão para escrever orientado a objeto aqui?
+	Também é recomendado que o nome do arquivo tenha o mesmo nome da classe.<br />
+	Go é quase tão comprido quanto C++ e Objective-C.
+	Não requer que a função <code class='go'>main</code> retorne um inteiro, mas requer um pacote.<br />
+	Ada<br />
+	C++ e Objective-C são bastante parecidos pois possuem forte influência do C.<br />
+	LLVM <abbr title='Intermediate representation'>IR</abbr> TODO<br />
+	Assembly é completamente diferente dos demais. Se bem organizado para este exemplo simples, até fica bastante legível, embora verboso.
+	A ordem invertida dos argumentos e nome da função é pouco intuitiva.<br />
+	Web Assembly text format (AssemblyScript)
 </p>
 
 </section>
@@ -382,8 +621,18 @@ Nativa compilada
 </div>
 
 <div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+Stack based vm
+</div>
+
+<div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 Instruções baixo nível que serão compiladas
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+Nativa compilada
 </div>
 
 </div>
@@ -567,6 +816,30 @@ string sendo usada como comentário de bloco
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+<code class='webassembly'
+><span class='comment'>;; linha</span>
+</code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+><span class='comment lineComment'>; linha</span></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+><span class='comment lineComment'>; linha</span>
+</code
+>
+</div>
+
 </div>
 
 <h3>Comentários aninhados</h3>
@@ -649,6 +922,21 @@ bloco
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
 -
 </div>
 
@@ -748,6 +1036,21 @@ bloco
 >#Region vs code foldable
 #End Region</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -1113,6 +1416,21 @@ def some_function(arg1: int):
 -
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -1442,6 +1760,21 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 -
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <h3 id='nomesvalidos'>Nomes Válidos</h3>
@@ -1599,6 +1932,20 @@ let $if = "meio confuso";
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
 
 
 </div>
@@ -1800,6 +2147,21 @@ Dim x: x = Empty
 
 ' Nothing só é usado com objetos TODO confirmar isso</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -2013,6 +2375,21 @@ oitoOuOitenta = False
 
 oitoOuOitenta = Not oitoOuOitenta</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -2286,6 +2663,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 
 <table>
@@ -2299,6 +2681,11 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td>i8388607</td><td>8388607 bits</td></tr>
 	</tbody>
 </table>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
 
 </div>
 
@@ -3733,6 +4120,21 @@ let d6 = .7;                 </code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -3946,6 +4348,21 @@ let x1 = -0X0123456789ABCDEF;
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -4048,6 +4465,21 @@ let p1 = 01;                 </code
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -4383,6 +4815,21 @@ if (i === j) {
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -4492,6 +4939,21 @@ private void recebeByte(byte numero) {
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -4578,6 +5040,13 @@ var i = Convert.ToInt64(s);</code
 </div>
 
 <div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>i = int(s)</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >parseInt('1111', 2); // base 2
@@ -4605,10 +5074,18 @@ parseFloat('3.14some non-digit characters');</code
 </div>
 
 <div class='codeblock'>
-<p>Python</p>
-<code class='python'
->i = int(s)</code
->
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -4722,6 +5199,21 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 >Dim someChar: someChar = Chr(0)
 ' suporta 8 bits até Chr(255)</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -5140,6 +5632,21 @@ simples = "A primeira faz ""tchan"""</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -5252,6 +5759,21 @@ stringBuilder.ToString();</code
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -5693,6 +6215,21 @@ Next</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -5807,6 +6344,21 @@ lista.push(1);</code
 Set lista = New Collection
 lista.Add 1</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -5962,6 +6514,21 @@ object o = new object();</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -6067,6 +6634,21 @@ object o = new object();</code
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -6477,6 +7059,21 @@ namespace MarcoLuglio.PonteirosExample {
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -6627,6 +7224,21 @@ delegate void StrategyFunctionDelegate();</code
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -6891,6 +7503,21 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -7341,6 +7968,21 @@ End Select</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 </section>
@@ -7752,6 +8394,21 @@ retorno = ComParametroERetorno(param, param2)</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -7900,6 +8557,21 @@ End Sub</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -8005,6 +8677,21 @@ def point(x, y = 4):
 	'
 End Sub</code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -8186,6 +8873,21 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -8264,6 +8966,21 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -8703,6 +9420,21 @@ End Sub
 Imprimir "resumo", 1, 2, 5</code>
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 
@@ -8969,6 +9701,21 @@ mydoubler = myfunc(2)
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -9175,6 +9922,21 @@ mydoubler = myfunc(2)
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -9468,6 +10230,21 @@ console.log(closure()); // 2</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
+</div>
+
 </div>
 
 <ol>
@@ -9649,6 +10426,11 @@ val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
 </div>
 
 <div class='codeblock'>
@@ -10071,6 +10853,21 @@ let meuObjeto = new DentroDoModulo();</code
 <code class='visualbasic'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript)</p>
+
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+
 </div>
 
 </div>
@@ -20682,6 +21479,30 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >
@@ -20690,8 +21511,51 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectivepascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
 ></code
 >
 </div>
@@ -20762,7 +21626,6 @@ Operator precedence mess?
 
 RISC
 
-PHP
 Dart
 -->
 
