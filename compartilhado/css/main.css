@@ -1070,9 +1070,13 @@ div.codeblock.bubaloop p + code {
 	color: #7F8EA3;
 }
 
-/* Visual Basic */
+/* Visual Basic, Ada, Object Pascal, Smalltalk, Common Lisp */
 
-.bubaloop.highlight.visualbasic strong {
+.bubaloop.highlight.visualbasic strong,
+.bubaloop.highlight.ada strong,
+.bubaloop.highlight.objectpascal strong,
+.bubaloop.highlight.smalltalk strong,
+.bubaloop.highlight.commonlisp strong {
 	color: #101010;
 	background-color: hsl(195, 100%, 50%);
 	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
@@ -1080,37 +1084,22 @@ div.codeblock.bubaloop p + code {
 	z-index: 2;
 }
 
-.bubaloop.highlight.visualbasic strong.small {
+.bubaloop.highlight.visualbasic strong.small,
+.bubaloop.highlight.ada strong.small,
+.bubaloop.highlight.objectpascal strong.small,
+.bubaloop.highlight.smalltalk strong.small,
+.bubaloop.highlight.commonlisp strong.small {
 	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
 }
 
-.bubaloop.highlight.visualbasic strong.comment {
+.bubaloop.highlight.visualbasic strong.comment,
+.bubaloop.highlight.ada strong.comment,
+.bubaloop.highlight.objectpascal strong.comment,
+.bubaloop.highlight.smalltalk strong.comment,
+.bubaloop.highlight.commonlisp strong.comment {
 	background-color: #D10077;
 	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
 	z-index: 1;
-}
-
-.bubaloop.visualbasic .keyword,
-.bubaloop.visualbasic .functionName,
-.bubaloop.visualbasic .number,
-.bubaloop.visualbasic .boolean {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.visualbasic strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.visualbasic .type {
-	color: #8AD100;
-}
-
-.bubaloop.visualbasic .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.visualbasic strong .string {
-	color: #ffffff;
 }
 
 .bubaloop.visualbasic .date,
@@ -1118,73 +1107,89 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
-.bubaloop.visualbasic .comment,
-.bubaloop.visualbasic .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.visualbasic strong .comment,
-.bubaloop.highlight.visualbasic strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.visualbasic .directive,
-.bubaloop.visualbasic .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.visualbasic strong .operator {
-	color: #505B66;
-}
-
-/* Ada, Objecl Pascal */
-
+.bubaloop.visualbasic .keyword,
+.bubaloop.visualbasic .functionName,
+.bubaloop.visualbasic .number,
+.bubaloop.visualbasic .boolean,
 .bubaloop.ada .keyword,
-.bubaloop.objectpascal .keyword,
 .bubaloop.ada .number,
-.bubaloop.objectpascal .number {
+.bubaloop.objectpascal .keyword,
+.bubaloop.objectpascal .number,
+.bubaloop.smalltalk .keyword,
+.bubaloop.smalltalk .number,
+.bubaloop.commonlisp .keyword,
+.bubaloop.commonlisp .number {
 	color: #0040B4;
 }
 
+.bubaloop.highlight.visualbasic strong .type,
 .bubaloop.highlight.ada strong .type,
 .bubaloop.highlight.objectpascal strong .type {
 	color: #8a008a;
 }
 
+.bubaloop.visualbasic .type,
 .bubaloop.ada .type,
 .bubaloop.objectpascal .type {
 	color: #8AD100;
 }
 
+.bubaloop.visualbasic .string,
 .bubaloop.ada .string,
-.bubaloop.objectpascal .string {
+.bubaloop.objectpascal .string,
+.bubaloop.smalltalk .string,
+.bubaloop.commonlisp .string {
 	color: #0099FF;
 }
 
+.bubaloop.highlight.visualbasic strong .string,
 .bubaloop.highlight.ada strong .string,
-.bubaloop.highlight.objectpascal strong .string {
+.bubaloop.highlight.objectpascal strong .string,
+.bubaloop.highlight.smalltalk strong .string,
+.bubaloop.highlight.commonlisp strong .string {
 	color: #ffffff;
 }
 
+.bubaloop.visualbasic .comment,
+.bubaloop.visualbasic .comment a,
 .bubaloop.ada .comment,
-.bubaloop.objectpascal .comment,
 .bubaloop.ada .comment a,
-.bubaloop.objectpascal .comment a {
+.bubaloop.objectpascal .comment,
+.bubaloop.objectpascal .comment a,
+.bubaloop.smalltalk .comment,
+.bubaloop.smalltalk .comment a,
+.bubaloop.commonlisp .comment,
+.bubaloop.commonlisp .comment a {
 	color: #D10077;
 }
 
+.bubaloop.highlight.visualbasic strong .comment,
+.bubaloop.highlight.visualbasic strong .comment a
 .bubaloop.highlight.ada strong .comment,
-.bubaloop.highlight.objectpascal strong .comment a {
+.bubaloop.highlight.ada strong .comment a,
+.bubaloop.highlight.objectpascal strong .comment,
+.bubaloop.highlight.objectpascal strong .comment a,
+.bubaloop.highlight.smalltalk strong .comment,
+.bubaloop.highlight.smalltalk strong .comment a,
+.bubaloop.highlight.commonlisp strong .comment,
+.bubaloop.highlight.commonlisp strong .comment a {
 	color: #ffffff;
 }
 
+.bubaloop.visualbasic .directive,
+.bubaloop.visualbasic .operator,
 .bubaloop.ada .operator,
-.bubaloop.objectpascal .operator {
+.bubaloop.objectpascal .operator,
+.bubaloop.smalltalk .operator,
+.bubaloop.commonlisp .operator {
 	color: #7F8EA3;
 }
 
+.bubaloop.highlight.visualbasic strong .operator,
 .bubaloop.highlight.ada strong .operator,
-.bubaloop.highlight.objectpascal strong .operator {
+.bubaloop.highlight.objectpascal strong .operator,
+.bubaloop.highlight.smalltalk strong .operator,
+.bubaloop.highlight.commonlisp strong .operator {
 	color: #505B66;
 }
 
