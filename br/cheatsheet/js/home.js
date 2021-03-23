@@ -17,8 +17,18 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 		'java',
 		'cs',
 		'javascript',
+		'actionscript',
+		'typescript',
+		'dart',
 		'python',
+		'php',
 		'visualbasic',
+		'ada',
+		'objectpascal',
+		'ruby',
+		'smalltalk',
+		'commonlisp',
+		'haskell',
 		//'sql',
 		'webassembly',
 		'llvm',
@@ -104,7 +114,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 
 	window.addEventListener('scroll', evento => {
 
-		if (window.pageYOffset <= 280) { // TODO magic constant...
+		if (window.pageYOffset <= 1080) { // TODO magic constant...
 			document.body.classList.remove('scroll');
 			return;
 		}
