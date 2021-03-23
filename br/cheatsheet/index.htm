@@ -65,6 +65,7 @@
 			<li>Pascal 1970</li>
 			<li>C 1972</li>
 			<li>Smalltalk 72 1972</li>
+			<li>CLU 1975 iterators, abstract types, parallel assignment</li>
 		</ul>
 	</li>
 
@@ -270,13 +271,13 @@ public class OlaMundo {
 >
 </div>
 
-<div class='codeblock bubaloop'>
+<div class='codeblock'>
 <p>Dart - Olá Mundo - main.dart</p>
-<code class='dart generic bubaloop'
-><span class='comment lineComment'>// requer uma função main</span>
-<span class='type'>void</span> <span class='symbol'>main</span><span class='operator'>() {</span>
-	<span class='symbol'>print</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>);</span>
-<span class='operator'>}</span></code
+<code class='dart'
+>// requer uma função main
+void main() {
+	print('Olá Mundo');
+}</code
 >
 </div>
 
@@ -316,33 +317,40 @@ vai escrever provavelmente seja
 >
 </div>
 
-<div class='codeblock bubaloop'>
+<div class='codeblock'>
 <p>Ada - Olá Mundo - main.adb</p>
-<code class='ada generic bubaloop'
-><span class='comment lineComment'>-- requer uma biblioteca para IO</span>
-<span class='keyword'>with</span> Ada<span class='operator'>.</span>Text_IO<span class='operator'>;</span> <span class='keyword'>use</span> Ada<span class='operator'>.</span>Text_IO<span class='operator'>;</span>
+<code class='ada'
+>-- requer uma biblioteca para IO
+with Ada.Text_IO; use Ada.Text_IO;
 
-<span class='comment lineComment'>-- requer uma função main</span>
-<span class='comment lineComment'>-- mas pode ter um nome diferente</span>
-<span class='keyword'>procedure</span> <span class='symbol'>Main</span> <span class='keyword'>is</span>
-<span class='keyword'>begin</span>
-	<span class='symbol'>Put_Line</span><span class='operator'>(</span><span class='string'>"Olá Mundo"</span><span class='operator'>);</span>
-<span class='keyword'>end</span> <span class='symbol'>Main</span><span class='operator'>;</span></code
+-- requer uma função main
+-- mas pode ter um nome diferente
+procedure Main is
+begin
+	Put_Line("Olá Mundo");
+end Main;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi) - Olá Mundo - main.dpr</p>
+<code class='objectpascal'
+>{
+	requer uma função main
+	mas pode ter um nome diferente
+}
+program Main;
+
+begin
+	WriteLn('Olá Mundo');
+end.</code
 >
 </div>
 
 <div class='codeblock bubaloop'>
-<p>Object Pascal (Delphi) - Olá Mundo - main.dpr</p>
-<code class='objectivepascal generic bubaloop'
-><span class='comment blockComment'>{
-requer uma função main
-mas pode ter um nome diferente
-}</span>
-<span class='keyword'>program</span> Main<span class='operator'>;</span>
-
-<span class='keyword'>begin</span>
-	WriteLn<span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>);</span>
-<span class='keyword'>end</span><span class='operator'>.</span></code
+<p>Ruby - Olá Mundo - main.rb</p>
+<code class='ruby generic bubaloop'
+>puts <span class='string'>"Olá Mundo"</span></code
 >
 </div>
 
@@ -608,6 +616,30 @@ Interpretada + Just in time compiler
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 Interpretada (versão oficial sem just in time compiler)
 <br />Process virtual machine (PVM)
@@ -615,9 +647,59 @@ Interpretada (versão oficial sem just in time compiler)
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 Nativa compilada
 <br />Pode ser executada em modo interpretado
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -799,6 +881,39 @@ function someFunction(/* bloco */ arg) {
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>// linha
+
+/*
+bloco
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>// linha
+
+/*
+bloco
+*/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// linha
+
+/*
+bloco
+*/</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 ># linha
@@ -810,9 +925,76 @@ string sendo usada como comentário de bloco
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>// linha
+# linha
+
+/*
+bloco
+*/</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' linha</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+>-- linha</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+>// linha
+
+{
+bloco
+}
+
+(*
+bloco
+*)
+</code
+>
+</div>
+
+<div class='codeblock'>
+	<p>Ruby</p>
+	<code class='ruby'
+	></code
+	>
+	</div>
+
+	<div class='codeblock'>
+	<p>Smalltalk</p>
+	<code class='smalltalk'
+	></code
+	>
+	</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+>; linha
+
+#|
+bloco
+|#</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+>-- linha</code
 >
 </div>
 
@@ -916,12 +1098,94 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>/*
+
+bloco
+
+/*
+bloco aninhado
+*/
+
+bloco
+
+*/</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 -
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+-
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+>// Turbo Pascal and Delphi do not support
+// Free Pascal supports it
+// better not use</code
+>
+</div>
+
+<div class='codeblock'>
+	<p>Ruby</p>
+	<code class='ruby'
+	></code
+	>
+	</div>
+
+	<div class='codeblock'>
+	<p>Smalltalk</p>
+	<code class='smalltalk'
+	></code
+	>
+	</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+>#|
+
+bloco
+
+#|
+bloco aninhado
+|#
+
+bloco
+
+|#</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
 -
 </div>
 
@@ -1023,6 +1287,30 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >#region foldable (pycharm, visual studio and vs code)
@@ -1031,10 +1319,60 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >#Region vs code foldable
 #End Region</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+	<p>Ruby</p>
+	<code class='ruby'
+	></code
+	>
+	</div>
+
+	<div class='codeblock'>
+	<p>Smalltalk</p>
+	<code class='smalltalk'
+	></code
+	>
+	</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -1394,6 +1732,30 @@ function someFunction(arg1) {
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >some_function.__doc__ = ".__doc__ guarda um texto de ajuda"
@@ -1412,8 +1774,58 @@ def some_function(arg1: int):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+	<p>Ruby</p>
+	<code class='ruby'
+	></code
+	>
+	</div>
+
+	<div class='codeblock'>
+	<p>Smalltalk</p>
+	<code class='smalltalk'
+	></code
+	>
+	</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -1536,7 +1948,11 @@ let x:Int = 5 // tipo explícito
 
 
 var x = 5 // variável
-let x = 5 // constante</code
+let x = 5 // constante
+
+// Swift tem lazy properties declaradas com
+// lazy var x = ...
+// veja classes para exemplos dessa declaração</code
 >
 </div>
 
@@ -1615,6 +2031,41 @@ useSemDeclarar = 5;</code
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>var x = 5 // tipo implícito
+int x = 5 // tipo explícito
+
+int x = 5; // variável
+final int x = 5; // assign only once constant
+const int x = 5; // compile time constant
+
+// não precisa ser inicializada na declaração
+final int x;
+x = 5;
+
+// lazy
+late int x = expensiveCall();</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >
@@ -1623,6 +2074,34 @@ useSemDeclarar = 5;</code
 # indesejados...
 x = 5
 x = 'dynamic type'</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>$x = 5; // variável
+const x = 5; // constante
+define('x', '5'); // constante
+
+$referenciaDeX =&amp;$x; // referência
+
+// variáveis Variáveis
+$Bar = "a";
+$Foo = "Bar";
+$World = "Foo";
+$Hello = "World";
+$a = "Hello";
+
+$a; // retorna Hello
+$$a; // retorna World
+$$$a; // retorna Foo
+$$$$a; // retorna Bar
+$$$$$a; // retorna a
+
+$$$$$$a; // retorna Hello
+$$$$$$$a; // retorna World
+</code
 >
 </div>
 
@@ -1646,6 +2125,56 @@ useSemDeclarar = 5
 ' Datas tem uma literal especial, em formato americano...
 ' Podemos digitar no formato #yyyy-mm-dd# e a IDE troca automaticamente para nós
 Const dataLimite As Date = #12/30/2017#</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+>procedure Main is
+	<strong>-- variáveis são declaradas</strong>
+	<strong>-- num bloco separado</strong>
+	<strong class='small'>X:Integer := 0; -- variável</strong>
+	<strong>Y:constant Integer := 0; -- constante</strong>
+begin
+
+	<strong>-- variáveis são declaradas</strong>
+	<strong>-- num bloco separado</strong>
+	<strong class='small'>declare</strong>
+		<strong>Y:Integer := 0;</strong>
+	begin
+		null;
+	end;
+
+end Main;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -1733,6 +2262,30 @@ var (x, y) = Pair(1, 2)</code
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >
@@ -1756,8 +2309,58 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -1926,8 +2529,89 @@ let $if = "meio confuso";
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -2124,12 +2808,44 @@ let n = (k || k === 0) ? k : 10;</code
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
 >
 
 # qualquer tipo é sempre nullable
 k = None</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
 >
 </div>
 
@@ -2146,6 +2862,62 @@ k = None</code
 Dim x: x = Empty
 
 ' Nothing só é usado com objetos TODO confirmar isso</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+>nil</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -2368,12 +3140,62 @@ objects for which
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim oitoOuOitenta: oitoOuOitenta = True
 oitoOuOitenta = False
 
 oitoOuOitenta = Not oitoOuOitenta</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -5040,13 +5862,6 @@ var i = Convert.ToInt64(s);</code
 </div>
 
 <div class='codeblock'>
-<p>Python</p>
-<code class='python'
->i = int(s)</code
->
-</div>
-
-<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >parseInt('1111', 2); // base 2
@@ -5063,6 +5878,13 @@ parseFloat('314e-2');
 parseFloat('0.0314E+2');
 parseInt('015', 10); // but `parseInt(015, 8)` will return 13
 parseFloat('3.14some non-digit characters');</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>i = int(s)</code
 >
 </div>
 
@@ -5194,10 +6016,60 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim someChar: someChar = Chr(0)
 ' suporta 8 bits até Chr(255)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -5622,6 +6494,14 @@ beeGees = calvinHarris.replace('love', 'looove');
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Option Explicit
@@ -5629,6 +6509,48 @@ beeGees = calvinHarris.replace('love', 'looove');
 Dim simples As String
 
 simples = "A primeira faz ""tchan"""</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -5755,8 +6677,58 @@ stringBuilder.ToString();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -6174,6 +7146,14 @@ let tamanho = mdPrePopulada.length;
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim vazia() As Integer
@@ -6212,6 +7192,48 @@ Dim valor As Integer
 For Each valor In prePopulada
 	'
 Next</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -6338,11 +7360,61 @@ lista.push(1);</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim lista As Collection
 Set lista = New Collection
 lista.Add 1</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -6508,8 +7580,58 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -6630,8 +7752,58 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -7053,8 +8225,58 @@ namespace MarcoLuglio.PonteirosExample {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -7220,8 +8442,58 @@ delegate void StrategyFunctionDelegate();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -7400,11 +8672,61 @@ for n in collection:
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >For Each item In collection
 	Print item
 Next</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -7501,8 +8823,58 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -7924,6 +9296,14 @@ switch (id) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >'label e goto, resume e next
@@ -7965,6 +9345,48 @@ Select Case age
 	Case Else
 		ageBlock = "just old"
 End Select</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -8252,7 +9674,7 @@ const outraSurpresa = normal;
 })();
 
 function retorno() {
-	return "retorno";
+	return 'retorno';
 }
 
 function retornoMisturado(numero) {
@@ -8282,7 +9704,38 @@ normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' 
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
-></code
+># declaração de função
+def normal():
+	pass
+
+def normal(texto):
+	pass
+
+# expressão de função?
+# TODO
+
+def retorno():
+	return 'retorno'
+
+def retornoMisturado(numero):
+	if (numero &gt; 0):
+		return 'texto'
+	else:
+		return 25
+
+def superior(funcao):
+	funcao()
+
+superior(normal)
+superior(retorno)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
 >
 </div>
 
@@ -8391,6 +9844,62 @@ ComParametroERetorno param, param2 'Passado por referência
 ComParametroERetorno(param, param2) 'Passado por valor
 Call ComParametroERetorno(param, param2)
 retorno = ComParametroERetorno(param, param2)</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -8536,6 +10045,14 @@ if (!OutExample(c)) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ><strong class='small comment'>'O padrão é passar tudo por referência,</strong>
@@ -8554,6 +10071,48 @@ End Sub
 Private Sub PorReferencia(ByRef i As Long)
 	'...
 End Sub</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -8671,11 +10230,61 @@ def point(x, y = 4):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Private Sub Point(X As Integer, Optional Y As Integer = 4)
 	'
 End Sub</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -8866,10 +10475,60 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >'usar builder pattern
 'como alternativa</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -8964,8 +10623,58 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -9406,6 +11115,14 @@ for pagina in paginas:
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' argumentos do mesmo tipo
@@ -9418,6 +11135,48 @@ Public Sub ImprimirSimples(titulo As String, ParamArray paginas() As Integer)
 End Sub
 
 Imprimir "resumo", 1, 2, 5</code>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -9695,9 +11454,59 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' ver <a href='https://www.vbforums.com/showthread.php?888672-VBA-Lambda-Syntax-No-script-control-or-cheats!-Happy-for-ports-to-VB6'>exemplo</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -9918,8 +11727,58 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -10224,8 +12083,58 @@ console.log(closure()); // 2</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -10422,8 +12331,58 @@ val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -10849,8 +12808,58 @@ let meuObjeto = new DentroDoModulo();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -11016,6 +13025,14 @@ extension methods podem acessar private?
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >'<a href='http://www.macoratti.net/vb_class.htm'>ver descrição</a>
@@ -11026,6 +13043,48 @@ extension methods podem acessar private?
 'MultiUse 	Outras aplicações podem criar inúmeras instâncias da classe iniciando somente uma vez o programa que contém a classe. Os projetos ActiveX DLL comportam-se assim.
 'Global MultiUse 	Idêntica a MultiUse mas a classe atua como uma variável goblal no programa cliente.
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -11445,6 +13504,14 @@ finally:
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Private Sub CapturaDeErro()
@@ -11474,6 +13541,48 @@ ErroEspecifico:
 	Exit Sub
 
 End Sub</code>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -11694,8 +13803,58 @@ do {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -12013,8 +14172,58 @@ do {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -12311,8 +14520,58 @@ while True:
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -12658,10 +14917,60 @@ for (let resultado of animadorIterator) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -13144,8 +15453,58 @@ asyncio.run(main())</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -14357,8 +16716,58 @@ for t in threads:
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -14596,6 +17005,14 @@ public class C {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Option Compare
@@ -14608,6 +17025,48 @@ Option Explicit
 #Else
 	'Código normal
 #End If</code>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -14707,8 +17166,58 @@ population.Item1;</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -14877,8 +17386,58 @@ for beverage in Beverage.allCases {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -15316,6 +17875,16 @@ compra1 = ResultadoCaixa(967, 1000, 33)</code
 
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >' User Defined Types (UDTs) se parecem com structs
@@ -15340,6 +17909,50 @@ With compra1
 	.valorPago = 1000; ' 10,00
 	.troco = 33; ' 00,33
 End With</code>
+</div>
+
+
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -15431,8 +18044,58 @@ End With</code>
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -15920,6 +18583,16 @@ compra1.descontarFidelidade()</code
 
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> - ResultadoCaixa.cls</p>
 <code class='visualbasic'
 >'Evento
@@ -15972,6 +18645,48 @@ End Function</code>
 Set compra1 = new ResutadoCaixa
 ' TODO</code>
 
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -16063,8 +18778,58 @@ Set compra1 = new ResutadoCaixa
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -16334,6 +19099,14 @@ def prop(self, value):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Option Explicit
@@ -16351,6 +19124,48 @@ End Property
 Public Property Let Prop(ByVal Value As String)
 	m_prop = Value
 End Property</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -16501,8 +19316,58 @@ public interface Desenhavel {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -16814,6 +19679,18 @@ class C : IA, IB {
 -
 </div>
 
+
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+
+
 <div class='codeblock'>
 
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr> IA.cls</p>
@@ -16855,7 +19732,47 @@ End Sub</code
 
 </div>
 
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
 
 </div>
 
@@ -17070,8 +19987,58 @@ class D(B, C):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -17189,8 +20156,58 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -17334,8 +20351,58 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -17439,8 +20506,58 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -17669,8 +20786,58 @@ class LoggedVar(Generic[T]):
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -19115,8 +22282,58 @@ console.log(indexedCollection["tuesday"]);</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -19379,8 +22596,58 @@ def say_whee():
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -19604,8 +22871,58 @@ namespace FFIExample {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -19782,10 +23099,60 @@ print("{}".format(length))</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Declare Function CFunction Lib "C:\full\path\to\someC.dll" Alias "_testdll@0" (ByVal _ lpRootPathName As String) As Long
 </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
 >
 </div>
 
@@ -20254,8 +23621,58 @@ http.createServer(function (req, res) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -20485,8 +23902,58 @@ channel.ShutdownAsync().Wait();</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -20633,8 +24100,58 @@ func main() {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -20861,8 +24378,58 @@ socket.addEventListener('message', function (event) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -21066,8 +24633,58 @@ func main() {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -21381,8 +24998,58 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
 ></code
 >
 </div>
@@ -21534,7 +25201,21 @@ var fromJsonList = JsonSerializer
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
-<code class='objectivepascal'
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
 ></code
 >
 </div>
