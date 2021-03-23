@@ -369,6 +369,10 @@ div.codeblock.bubaloop p + code {
 
 /* html */
 
+.bubaloop.html a {
+	color: #91E500;
+}
+
 .bubaloop.highlight.html strong {
 	background-color: #00A6FF;
 	box-shadow: 0 0 0 6px #00A6FF; /* h v blur spread color */
@@ -965,6 +969,56 @@ div.codeblock.bubaloop p + code {
 	color: #000000;
 }
 
+/* Dart */
+
+.bubaloop.dart .keyword,
+.bubaloop.dart .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.dart strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.dart .type {
+	color: #8AD100;
+}
+
+.bubaloop.dart .string { /* interpolated ($) strings */
+	color: #0099FF;
+}
+
+/*.bubaloop.dart .char {
+	color: #0076E6;
+}*/
+
+.bubaloop.highlight.dart strong .string/*,
+.bubaloop.highlight.dart strong .char*/ {
+	color: #ffffff;
+}
+
+.bubaloop.dart .comment,
+.bubaloop.dart .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.dart strong .comment,
+.bubaloop.highlight.dart strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.dart .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.dart strong .operator {
+	color: #505B66;
+}
+
+/*.bubaloop.dart .label {
+	color: #8D00FF;
+}*/
+
 /* Python */
 
 .bubaloop.python .keyword,
@@ -1008,6 +1062,11 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.python .decorator {
+	color: #7F8EA3;
+}
+
+/* PHP */
+.bubaloop.php .tag {
 	color: #7F8EA3;
 }
 
@@ -1077,6 +1136,59 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.visualbasic strong .operator {
 	color: #505B66;
 }
+
+/* Ada, Objecl Pascal */
+
+.bubaloop.ada .keyword,
+.bubaloop.objectpascal .keyword,
+.bubaloop.ada .number,
+.bubaloop.objectpascal .number {
+	color: #0040B4;
+}
+
+.bubaloop.highlight.ada strong .type,
+.bubaloop.highlight.objectpascal strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.ada .type,
+.bubaloop.objectpascal .type {
+	color: #8AD100;
+}
+
+.bubaloop.ada .string,
+.bubaloop.objectpascal .string {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.ada strong .string,
+.bubaloop.highlight.objectpascal strong .string {
+	color: #ffffff;
+}
+
+.bubaloop.ada .comment,
+.bubaloop.objectpascal .comment,
+.bubaloop.ada .comment a,
+.bubaloop.objectpascal .comment a {
+	color: #D10077;
+}
+
+.bubaloop.highlight.ada strong .comment,
+.bubaloop.highlight.objectpascal strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.ada .operator,
+.bubaloop.objectpascal .operator {
+	color: #7F8EA3;
+}
+
+.bubaloop.highlight.ada strong .operator,
+.bubaloop.highlight.objectpascal strong .operator {
+	color: #505B66;
+}
+
+/* SQL */
 
 .bubaloop.sql .keyword,
 .bubaloop.sql .number,

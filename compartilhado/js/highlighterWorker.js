@@ -1,4 +1,31 @@
-import { HtmlLexer, RustLexer, GoLexer, CppLexer, ObjectiveCLexer, SwiftLexer, KotlinLexer, JavaLexer, CsLexer, JavaScriptLexer, PythonLexer, VisualBasic6Lexer, Highlighter } from './highlighter.js';
+import {
+	HtmlLexer,
+	RustLexer,
+	GoLexer,
+	CppLexer,
+	ObjectiveCLexer,
+	SwiftLexer,
+	KotlinLexer,
+	JavaLexer,
+	CsLexer,
+	JavaScriptLexer,
+	/*ActionScriptLexer,
+	TypeScriptLexer,*/
+	DartLexer,
+	PythonLexer,
+	// PhpLexer,
+	VisualBasic6Lexer,
+	AdaLexer,
+	ObjectPascalLexer,
+	/*RubyLexer,
+	SmalltalkLexer,
+	CommonLispLexer,
+	HaskellLexer,
+	AssemblyScriptLexer,
+	LLVMLexer,
+	AssemblyLexer,*/
+	Highlighter
+} from './highlighter.js';
 
 
 
@@ -57,12 +84,24 @@ self.onmessage = function (message) {
 			lexer = new JavaScriptLexer();
 			break;
 
+		case 'dart':
+			lexer = new DartLexer();
+			break;
+
 		case 'python':
 			lexer = new PythonLexer();
 			break;
 
 		case 'visualbasic':
 			lexer = new VisualBasic6Lexer();
+			break;
+
+		case 'ada':
+			lexer = new AdaLexer();
+			break;
+
+		case 'objectpascal':
+			lexer = new ObjectPascalLexer();
 			break;
 
 		default:
