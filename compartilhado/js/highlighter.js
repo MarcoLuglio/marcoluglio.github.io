@@ -778,6 +778,52 @@ const CCharPatternIterator = class CCharPatternIterator {
 
 
 
+const TempDecimalPatternIterator = class TempDecimalPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_hasMantissa: {value: false, writable: true},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
+		});
+		this._matchFunction = this._matchNumber;
+		Object.seal(this);
+	}
+
+	_matchNumber(matchCharacter, index) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '.' && !this._hasMantissa) {
+			this._hasMantissa = true;
+			this._isComplete = false;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+const TempDecimalLiteralToken = class TempDecimalLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new TempDecimalPatternIterator());
+	}
+};
+
+
+
 const SourceHtmlEmphasisPatternIterator = class SourceHtmlEmphasisPatternIterator extends SourcePatternIterator {
 
 	constructor() {
@@ -11001,7 +11047,7 @@ const JSSymbolIterator = class JSSymbolIterator  extends SourcePatternIterator {
 
 
 
-// #region C# lexer
+// #region Dart lexer
 
 const DartLexer = class DartLexer extends Lexer {
 
@@ -11047,7 +11093,7 @@ const DartLexer = class DartLexer extends Lexer {
 
 			// comments
 			new CLineCommentToken(),
-			new CBlockCommentToken(),
+			new NestedBlockCommentToken(),
 
 			new CDirectiveToken()
 
@@ -11070,6 +11116,7 @@ const DartLexer = class DartLexer extends Lexer {
 			0,
 			/*new DartDecimalLiteralToken(),
 			new DartNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
 			new DartStringLiteralToken()/*,
 			new DartVerbatimStringLiteralToken(),
 			new DartInterpolatedStringLiteralToken(),
@@ -11153,10 +11200,68 @@ const DartKeywordToken = class DartKeywordToken extends SourceSimpleCharacterSeq
 	constructor() {
 		super('keyword', [
 
+			'abstract',
+			'as',
+			'assert',
+			'async',
+			'async*',
+			'await',
+			'await*',
+			'break',
+			'case',
+			'catch',
+			'class',
 			'const',
+			'continue',
+			'default',
+			'deferred',
+			'do',
+			'dynamic',
+			'else',
+			'enum',
+			'export',
+			'extends',
+			'factory',
 			'final',
+			'finally',
+			'for',
+			'get',
+			'hide',
+			'if',
+			'implements',
+			'import',
+			'in',
+			'is',
+			'is!',
 			'late',
-			'var'
+			// 'library', // TODO check
+			'mixin',
+			'new',
+			'on',
+			'operator',
+			// 'part', // TODO check
+			'required',
+			'rethrow',
+			'set',
+			'show',
+			'static',
+			'super',
+			'switch',
+			'this',
+			'throw',
+			'try',
+			'typedef',
+			'var',
+			'while',
+			'with',
+			'yield',
+			'yield*',
+
+			// literals
+			// TODO put in a separate token
+			'null',
+			'true',
+			'false'
 
 		]);
 
@@ -11181,7 +11286,23 @@ const DartTypesToken = class DartTypesToken extends Token {
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-				'int'
+				'bool',
+				'double',
+				'int',
+				'void',
+
+				'Exception',
+				'Function',
+				'Future',
+				'Iterable',
+				'List', // List<Type>
+				'Map', // Map<KeyType, ValueType>
+				'Never',
+				'Object',
+				// 'Set', // <Type>{}
+				'Stream',
+				'String',
+				'Symbol'
 
 			])}
 		});
@@ -11279,10 +11400,61 @@ const DartPunctuationToken = class DartPunctuationToken extends SourceSimpleChar
 		super('operator', [
 
 			'.',
+			':',
+			'..',
+			'?..',
+			'...',
+			'?.',
+			'?',
+			',',
 			';',
 			'=',
+			'==',
+			'*=',
+			'/=',
+			'~/=',
+			'%=',
+			'+=',
+			'-=',
+			'&=',
+			'|=',
+			'&amp;=',
+			'^=',
+			'>>=',
+			'<<=',
+			'!',
+			'!=',
+			'=>',
+			'=&gt;',
+			'<=',
+			'&lt;=',
+			'<<',
+			'>>',
+			'>>>',
+			'&lt;&lt;',
+			'&gt;&gt;',
+			'&gt;&gt;&gt;',
+			'&&',
+			'&amp;&amp;',
+			'||',
+			'??',
+			'&',
+			'&amp;',
+			'^',
+			'|',
+			'++',
+			'--',
+			'+',
+			'-',
+			'*',
+			'/',
+			'~/',
+			'~',
+			'%',
 			'(',
 			')',
+			'[',
+			']',
 			'{',
 			'}'
 
@@ -11641,7 +11813,6 @@ const PythonKeywordToken = class PythonKeywordToken  extends SourceSimpleCharact
 			'__floor__',
 			'__ceil__',
 
-			'and',
 			'as',
 			'async',
 			'await',
@@ -11661,8 +11832,6 @@ const PythonKeywordToken = class PythonKeywordToken  extends SourceSimpleCharact
 			'is',
 			'lambda',
 			'None',
-			'not',
-			'or',
 			'pass',
 			'raise',
 			'return',
@@ -11728,6 +11897,8 @@ const PythonPunctuationToken = class PythonPunctuationToken  extends SourceSimpl
 			']',
 			'{',
 			'}',
+			'and',
+			'or',
 			'not'
 
 		]);
@@ -12280,7 +12451,6 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 	constructor() {
 		super('keyword', [
 
-			'AddressOf',
 			'As',
 			'ByVal',
 			'ByRef',
@@ -12296,7 +12466,6 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 			'ElseIf',
 			'End',
 			'Enum',
-			'Eqv',
 			'Event',
 			'Exit',
 			'Explicit',
@@ -12308,7 +12477,6 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 			'GoSub',
 			'GoTo',
 			'If',
-			'Imp',
 			'Implements',
 			'In',
 			'Is',
@@ -12316,10 +12484,9 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 			'Like',
 			'Loop',
 			'Me',
-			'Mod',
 			'New',
 			'Next',
-			'Not',
+
 			'On Error',
 			'Open',
 			'Option',
@@ -12344,10 +12511,6 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 			'Wend',
 			'While',
 			'With',
-
-			'And',
-			'Or',
-			'Xor',
 
 			'Empty',
 			'False',
@@ -12463,11 +12626,23 @@ const VbPunctuationToken = class VbPunctuationToken extends SourceSimpleCharacte
 			'.',
 			':',
 			'=',
+			'>',
+			'<',
+			'&',
 			'&gt;',
 			'&lt;',
+			'&amp;',
 			'_',
 			'(',
-			')'
+			')',
+			'AddressOf',
+			'And',
+			'Or',
+			'Xor',
+			'Eqv',
+			'Mod',
+			'Not',
+			'Imp'
 		]);
 
 	}
@@ -12753,11 +12928,11 @@ const AdaLexer = class AdaLexer extends Lexer {
 
 			// language
 			new AdaKeywordToken(),
-			// new AdaTypesToken(),
+			new AdaTypesToken(),
 			new AdaPunctuationToken(),
 
 			// comments
-			new AdaLineCommentToken(),
+			new SimulaLineCommentToken(),
 			// new AdaDirectiveToken()
 
 		);
@@ -12775,6 +12950,7 @@ const AdaLexer = class AdaLexer extends Lexer {
 			this._tokenPool.length,
 			0,
 			//new AdaNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
 			new AdaStringLiteralToken()
 		);
 	}
@@ -12819,7 +12995,7 @@ const AdaLexer = class AdaLexer extends Lexer {
 
 
 
-const AdaLineCommentPatternIterator = class AdaLineCommentPatternIterator extends SourcePatternIterator {
+const SimulaLineCommentPatternIterator = class SimulaLineCommentPatternIterator extends SourcePatternIterator {
 
 	constructor() {
 		super();
@@ -12877,9 +13053,9 @@ const AdaLineCommentPatternIterator = class AdaLineCommentPatternIterator extend
 /**
  * Token for Ada line comments
  */
-const AdaLineCommentToken = class AdaLineCommentToken extends SourcePatternIteratorToken {
+const SimulaLineCommentToken = class SimulaLineCommentToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('comment lineComment', new AdaLineCommentPatternIterator());
+		super('comment lineComment', new SimulaLineCommentPatternIterator());
 	}
 };
 
@@ -12921,7 +13097,6 @@ const AdaKeywordToken = class AdaKeywordToken extends SourceSimpleCharacterSeque
 			'is',
 			'loop',
 			'new',
-			'or',
 			'others',
 			'out',
 			'package',
@@ -13077,10 +13252,16 @@ const AdaPunctuationToken = class AdaPunctuationToken extends SourceSimpleCharac
 			')',
 			'<',
 			'>',
+			'<=',
+			'>=',
+			'&',
 			'&lt;',
 			'&gt;',
+			'&lt;=',
+			'&gt;=',
 			'=>',
 			'=&gt;',
+			'&amp;',
 			'|',
 			':',
 			':=',
@@ -13089,13 +13270,18 @@ const AdaPunctuationToken = class AdaPunctuationToken extends SourceSimpleCharac
 			'.',
 			';',
 			'mod',
+			'rem',
 			'not',
-			'and', // check how this is used
+			'and',
+			'and then',
+			'or',
+			'or else',
 			'xor',
 			'+',
 			'*',
+			'**',
 			'/',
-			'/='
+			'/=' // not equal
 		]);
 
 	}
@@ -13218,7 +13404,7 @@ const ObjectPascalLexer = class ObjectPascalLexer extends Lexer {
 
 			// language
 			new ObjectPascalKeywordToken(),
-			// new ObjectPascalTypesToken(),
+			new ObjectPascalTypesToken(),
 			new ObjectPascalPunctuationToken(),
 
 			// comments
@@ -13243,6 +13429,7 @@ const ObjectPascalLexer = class ObjectPascalLexer extends Lexer {
 			this._tokenPool.length,
 			0,
 			//new ObjectPascalNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
 			new ObjectPascalStringLiteralToken()
 		);
 	}
@@ -13462,9 +13649,55 @@ const ObjectPascalKeywordToken = class ObjectPascalKeywordToken extends SourceSi
 	constructor() {
 		super('keyword', [
 
+			'abstract',
 			'begin',
+			'case',
+			'class',
+			'const',
+			'constructor',
+			'do',
+			'downto',
+			'else',
 			'end',
-			'program'
+			'except',
+			'finally',
+			'for',
+			'function',
+			'if',
+			'implementation',
+			'interface',
+			'of',
+			'on',
+			'out',
+			'private',
+			'procedure',
+			'property',
+			'protected',
+			'public',
+			'published',
+			'program',
+			'raise',
+			'read',
+			'record',
+			'repeat',
+			'set',
+			'then',
+			'to',
+			'try',
+			'type',
+			'unit',
+			'until',
+			'uses',
+			'var',
+			'virtual',
+			'while',
+			'with',
+
+			// literals
+			// fazer num token à parte!
+			'nil',
+			'true',
+			'false'
 
 		]);
 
@@ -13491,15 +13724,84 @@ const ObjectPascalTypesToken = class ObjectPascalTypesToken extends Token {
 			type: {value: 'type'},
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
-				/*'Boolean',
+
+				'Variant',
+				'Boolean',
+				'Array', // TODO
+
 				'Byte',
-				'Currency',
-				'Date',
-				'Double',
+				'ShortInt',
+				'Word',
+				'SmallInt',
+				'LongWord',
+				'Cardinal',
+				'LongInt',
 				'Integer',
-				'Long',
+				'integer', // while the parser is still case sensitive
+				'Int64',
+
 				'Single',
-				'String'*/
+				'Currency',
+				'Double',
+				'Extended',
+
+				'Real', // obsolete
+
+				'Char',
+				'WideChar',
+				'AnsiChar',
+				'ShortString',
+				'String',
+				'AnsiString',
+				'WideString',
+
+				'Pointer',
+				'PChar',
+				'PExtended',
+				'PInt64',
+
+				'Exception',
+				'EAbort',
+				'EAbstractError',
+				'AssertionFailed',
+				'EBitsError',
+				'ECommonCalendarError',
+				'EDateTimeError',
+				'EMonthCalError',
+				'EConversionError',
+				'EConvertError',
+				'EDatabaseError',
+				'EExternal',
+				'EAccessViolation',
+				'EControlC',
+				'EExternalException',
+				'EIntError',
+				'EDivByZero',
+				'EIntOverflow',
+				'ERangeError',
+				'EMathError',
+				'EInvalidArgument',
+				'EInvalidOp',
+				'EOverflow',
+				'EUnderflow',
+				'EZeroDivide',
+				'EStackOverflow',
+				'EHeapException',
+				'EInvalidPointer',
+				'EOutOfMemory',
+				'EInOutError',
+				'EInvalidCast',
+				'EInvalidOperation',
+				'EMenuError',
+				'EOSError',
+				'EParserError',
+				'EPrinter',
+				'EPropertyError',
+				'EPropReadOnly',
+				'EPropWriteOnly',
+				'EThread',
+				'EVariantError'
+
 			])}
 		});
 
@@ -13567,6 +13869,37 @@ const ObjectPascalPunctuationToken = class ObjectPascalPunctuationToken extends 
 			'(',
 			')',
 			'.',
+			'..',
+			':',
+			':=',
+			'=',
+			'+',
+			'-',
+			'*',
+			'/',
+			'div',
+			'mod',
+			'<',
+			'>',
+			'<=',
+			'>=',
+			'<>',
+			'&lt;',
+			'&gt;',
+			'&lt;=',
+			'&gt;=',
+			'&lt;&gt;',
+			'^',
+			'@',
+			'And',
+			'Or',
+			'Xor',
+			'Not',
+			'and',
+			'or',
+			'xor',
+			'not',
+			',',
 			';'
 		]);
 
@@ -13669,6 +14002,824 @@ const ObjectPascalStringLiteralToken = class ObjectPascalStringLiteralToken exte
 
 
 // #endregion
+
+
+
+// #region Common Lisp lexer
+
+const CommonLispLexer = class CommonLispLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new CommonLispKeywordToken(),
+			new CommonLispPunctuationToken(),
+
+			// comments
+			new CommonLispLineCommentToken(),
+			new CommonLispBlockCommentToken()//,
+
+			// new CDirectiveToken()
+
+		);
+
+		this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+		this._tokenPool.push(new CommonLispSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			//new CommonLispDecimalLiteralToken(),
+			new TempDecimalLiteralToken(),
+			//new CommonLispNumericLiteralToken(),
+			new CommonLispStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+};
+
+
+
+const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'let',
+			'let*',
+			'defvar',
+			'defparameter',
+			'defconstant',
+
+			// literals
+			'true',
+			'false',
+			'null'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+const CommonLispPunctuationToken = class CommonLispPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			'(',
+			')'
+
+		]);
+
+	}
+
+};
+
+
+
+const CommonLispLineCommentPatternIterator = class CommonLispLineCommentPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchSemiColon;
+		Object.seal(this);
+	}
+
+	_matchSemiColon(matchCharacter) {
+		if (matchCharacter === ';') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+/**
+ * Token for Common Lisp line comments
+ */
+ const CommonLispLineCommentToken = class CommonLispLineCommentToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('comment lineComment', new CommonLispLineCommentPatternIterator());
+	}
+};
+
+
+
+const CommonLispBlockCommentPatternIterator = class CommonLispBlockCommentPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_nestingLevel: {value: 0, writable: true}
+		});
+
+		this._matchFunction = this._matchBeginSlash;
+		Object.seal(this);
+
+	}
+
+	_matchBeginSlash(matchCharacter) {
+
+		if (matchCharacter === '#') {
+			this._matchFunction = this._matchBeginStar;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchBeginStar(matchCharacter) {
+
+		if (matchCharacter === '|') {
+			this._matchFunction = this._matchContent;
+			this._nestingLevel++;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter) {
+
+		if (matchCharacter === '#') {
+			this._matchFunction = this._matchBeginStar;
+		}
+
+		if (matchCharacter === '|') {
+			this._matchFunction = this._matchEndSlash;
+		}
+
+		return true;
+
+	}
+
+	_matchEndSlash(matchCharacter) {
+
+		if (matchCharacter === '#') {
+			this._nestingLevel--;
+			if (this._nestingLevel === 0) {
+				this._matchFunction = this._matchEnd;
+			} else {
+				this._matchFunction = this._matchContent;
+			}
+		} else if (matchCharacter === '|') {
+			// não fazer nada
+			// ou em outras palavras
+			// this._matchFunction = this._matchEndSlash;
+		} else {
+			this._matchFunction = this._matchContent;
+		}
+
+		return true;
+
+	}
+
+};
+
+/**
+ * Token for CommonLisp block comments
+ */
+ const CommonLispBlockCommentToken = class CommonLispBlockCommentToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('comment blockComment', new CommonLispBlockCommentPatternIterator());
+	}
+};
+
+
+
+const CommonLispStringPatternIterator = class CommonLispStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === '"') {
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		if (this._isEscaped && !isLineBreak) { // line break não é escapável em c#
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '"'
+			|| isLineBreak
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+const CommonLispStringLiteralToken = class CommonLispStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new CommonLispStringPatternIterator());
+	}
+};
+
+
+
+const CommonLispSymbolToken = class CommonLispSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new CommonLispSymbolIterator());
+	}
+};
+
+
+
+const CommonLispSymbolIterator = class CommonLispSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchBeginningValidCharacter;
+
+	}
+
+	_matchBeginningValidCharacter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchValidCharacter;
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '_'
+			|| matchCharacter === '@'
+			) {
+
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			//|| matchCharacter === '@' // confirmar isso
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+// #endregion
+
+
+
+// #region Haskell lexer
+
+
+
+const HaskellLexer = class HaskellLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new HaskellKeywordToken(),
+			new HaskellTypesToken(),
+			new HaskellPunctuationToken(),
+
+			// comments
+			new SimulaLineCommentToken(),
+			new HaskellBlockCommentToken()
+			// new HaskellDirectiveToken()
+
+		);
+
+		this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+		// FIXME não pode ter espaço em branco na frente dele
+		//this._tokenPool.push(new HaskellSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			//new HaskellNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
+			new CStringLiteralToken()
+			//new HaskellStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+	/**
+	 * Gets last meaningful token
+	 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+	 */
+	_getLastToken(tokenSequence) {
+
+		let lastToken = null;
+
+		for (let i = tokenSequence.length; i > 0; i--) {
+
+			lastToken = tokenSequence[i - 1];
+
+			if (!lastToken.ignore
+				&& lastToken.type !== 'whitespace'
+				&& lastToken.type !== 'endOfLine'
+				) {
+
+				return lastToken;
+			}
+
+		}
+
+		return null;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Haskell keywords
+ */
+ const HaskellKeywordToken = class HaskellKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'case',
+			'data',
+			'do',
+			'if',
+			'import',
+			'else',
+			'let',
+			'module',
+			'of',
+			'return',
+			'then',
+			'type',
+			'where',
+
+			// literals
+			// TODO separate in its own token
+			'True',
+			'False',
+			'Nothing'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for Haskell types
+ */
+ const HaskellTypesToken = class HaskellTypesToken extends Token {
+
+	constructor() {
+
+		super();
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			type: {value: 'type'},
+			_matchFunction: {value: context._matchTypesSequence, writable: true},
+			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'Integral',
+				'Double'
+			])}
+		});
+
+		Object.seal(this);
+
+	}
+
+	/**
+	 * @param {String} matchCharacter
+	 * @param {Number} index Character index relative to the whole string being parsed
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+
+		if (!this._matchFunction(matchCharacter, index)) {
+			return;
+		}
+
+		if (!this._isInitialized) {
+			this._isInitialized = true;
+			this.begin = index;
+		}
+
+		this.characterSequence.push(matchCharacter);
+
+	}
+
+	_matchTypesSequence(matchCharacter, index) {
+
+		this._typesSequence.next(matchCharacter, index);
+
+		if (this._typesSequence.isComplete) {
+			return this._matchEnd(matchCharacter, index);
+		}
+
+		if (this._typesSequence.hasNext()) {
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que o pattern já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter, index) {
+		this._complete();
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for Haskell punctuation
+ */
+ const HaskellPunctuationToken = class HaskellPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+			'(',
+			')',
+			'[',
+			']',
+			'|',
+			':',
+			'::',
+			'=',
+			'==',
+			'+',
+			'-',
+			'*',
+			'**',
+			'^',
+			'/',
+			'/=',
+			'++',
+			'^',
+			'%',
+			'<',
+			'>',
+			'<=',
+			'>=',
+			'&gt,&gt,=',
+			'>>=',
+			'=>',
+			'->',
+			'<-',
+			'&lt;',
+			'&gt;',
+			'&lt;=',
+			'&gt;=',
+			'=&gt;',
+			'-&gt;',
+			'&lt;-',
+			'&&',
+			'&amp;&amp;',
+			'||',
+			'not',
+			'div',
+			'mod',
+			'rem',
+			// shiftL x 4
+			// shiftR x 4
+			'.&amp;.',
+			'.&.',
+			'.|.',
+			'xor',
+			'complement',
+			':+',
+			',',
+			'..',
+			'.'
+		]);
+
+	}
+
+};
+
+
+
+const HaskellBlockCommentPatternIterator = class HaskellBlockCommentPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_nestingLevel: {value: 0, writable: true}
+		});
+
+		this._matchFunction = this._matchBeginSlash;
+		Object.seal(this);
+
+	}
+
+	_matchBeginSlash(matchCharacter) {
+
+		if (matchCharacter === '{') {
+			this._matchFunction = this._matchBeginStar;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchBeginStar(matchCharacter) {
+
+		if (matchCharacter === '-') {
+			this._matchFunction = this._matchContent;
+			this._nestingLevel++;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter) {
+
+		if (matchCharacter === '{') {
+			this._matchFunction = this._matchBeginStar;
+		}
+
+		if (matchCharacter === '-') {
+			this._matchFunction = this._matchEndSlash;
+		}
+
+		return true;
+
+	}
+
+	_matchEndSlash(matchCharacter) {
+
+		if (matchCharacter === '}') {
+			this._nestingLevel--;
+			if (this._nestingLevel === 0) {
+				this._matchFunction = this._matchEnd;
+			} else {
+				this._matchFunction = this._matchContent;
+			}
+		} else if (matchCharacter === '-') {
+			// não fazer nada
+			// ou em outras palavras
+			// this._matchFunction = this._matchEndSlash;
+		} else {
+			this._matchFunction = this._matchContent;
+		}
+
+		return true;
+
+	}
+
+};
+
+/**
+ * Token for Haskell block comments
+ */
+ const HaskellBlockCommentToken = class HaskellBlockCommentToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('comment blockComment', new HaskellBlockCommentPatternIterator());
+	}
+};
+
+
+
+// #endregion
+
+
+
+
+
+
+
+
 
 
 
@@ -13787,10 +14938,10 @@ export {
 	AdaLexer,
 	ObjectPascalLexer,
 	/*RubyLexer,
-	SmalltalkLexer,
+	SmalltalkLexer,*/
 	CommonLispLexer,
 	HaskellLexer,
-	AssemblyScriptLexer,
+	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/
 	Highlighter
