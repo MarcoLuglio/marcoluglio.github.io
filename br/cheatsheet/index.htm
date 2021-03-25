@@ -363,19 +363,19 @@ end.</code
 
 <div class='codeblock bubaloop'>
 <p>Common Lisp - Olá Mundo - main.lisp</p>
-<code class='commonlisp generic bubaloop'
->(print <span class='string'>"Olá Mundo"</span>)
-<span class='comment'>; ou para retornar uma string do programa</span>
-<span class='string'>"Olá Mundo"</span></code
+<code class='commonlisp'
+>(print "Olá Mundo")
+; ou para retornar uma string do programa
+"Olá Mundo"</code
 >
 </div>
 
 <div class='codeblock bubaloop'>
 <p>Haskell - Olá Mundo - main.hs</p>
-<code class='haskell generic bubaloop'
->putStrLn <span class='string'>"Olá Mundo"</span>
-<span class='comment'>-- ou para retornar uma string do programa</span>
-<span class='string'>"Olá Mundo"</span></code
+<code class='haskell'
+>putStrLn "Olá Mundo"
+-- ou para retornar uma string do programa
+"Olá Mundo"</code
 >
 </div>
 
@@ -617,27 +617,19 @@ Interpretada + Just in time compiler
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+Process virtual machine (<abbr title='ActionScript Virtual Machine'>AVM2</abbr>)
 </div>
 
 <div class='codeblock'>
 <p>TypeScript</p>
-<code class='typescript'
->
-</code
->
+É transcompilada para JavaScript
+<br />Não é executada diretamente
 </div>
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
-</div>
+<br />Stack based vm (Dart VM)
+<br />com Ahead of time (AOT) ou Just in Time (JIT) compilation</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -648,10 +640,7 @@ Interpretada (versão oficial sem just in time compiler)
 
 <div class='codeblock'>
 <p>PHP</p>
-<code class='php'
->
-</code
->
+Versões mais novas usams Zend Virtual Machine, mas o código é recompilado a cada execução
 </div>
 
 <div class='codeblock'>
@@ -662,44 +651,34 @@ Nativa compilada
 
 <div class='codeblock'>
 <p>Ada</p>
-<code class='ada'
-></code
->
+Nativa compilada
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
-<code class='objectpascal'
-></code
->
+Nativa compilada
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
-<code class='ruby'
-></code
->
+Process virtual machine (YARV)
+<br />Stack based vm
 </div>
 
 <div class='codeblock'>
 <p>Smalltalk</p>
-<code class='smalltalk'
-></code
->
+Interpretada
 </div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
-<code class='commonlisp'
-></code
->
+Interpretada
 </div>
 
 <div class='codeblock'>
 <p>Haskell</p>
-<code class='haskell'
-></code
->
+Nativa compilada via GHC (realiza transpilação, depois compilação)
+ou interpretada
 </div>
 
 <div class='codeblock'>
@@ -967,18 +946,22 @@ bloco
 </div>
 
 <div class='codeblock'>
-	<p>Ruby</p>
-	<code class='ruby'
-	></code
-	>
-	</div>
+<p>Ruby</p>
+<code class='ruby'
+># linha
 
-	<div class='codeblock'>
-	<p>Smalltalk</p>
-	<code class='smalltalk'
-	></code
-	>
-	</div>
+=begin
+bloco
+=end</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+>"bloco"</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
@@ -994,7 +977,11 @@ bloco
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
->-- linha</code
+>-- linha
+
+{-
+bloco
+-}</code
 >
 </div>
 
@@ -1154,18 +1141,14 @@ bloco
 </div>
 
 <div class='codeblock'>
-	<p>Ruby</p>
-	<code class='ruby'
-	></code
-	>
-	</div>
+<p>Ruby</p>
+-
+</div>
 
-	<div class='codeblock'>
-	<p>Smalltalk</p>
-	<code class='smalltalk'
-	></code
-	>
-	</div>
+<div class='codeblock'>
+<p>Smalltalk</p>
+-
+</div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
@@ -1186,7 +1169,19 @@ bloco
 
 <div class='codeblock'>
 <p>Haskell</p>
--
+<code class='haskell'
+>{-
+
+bloco
+
+{-
+bloco aninhado
+-}
+
+bloco
+
+-}</code
+>
 </div>
 
 <div class='codeblock'>
@@ -1349,18 +1344,18 @@ bloco
 </div>
 
 <div class='codeblock'>
-	<p>Ruby</p>
-	<code class='ruby'
-	></code
-	>
-	</div>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Smalltalk</p>
-	<code class='smalltalk'
-	></code
-	>
-	</div>
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
@@ -1801,18 +1796,18 @@ def some_function(arg1: int):
 </div>
 
 <div class='codeblock'>
-	<p>Ruby</p>
-	<code class='ruby'
-	></code
-	>
-	</div>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Smalltalk</p>
-	<code class='smalltalk'
-	></code
-	>
-	</div>
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
@@ -2068,8 +2063,7 @@ late int x = expensiveCall();</code
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-# não existe uma declaração explícita
+># não existe uma declaração explícita
 # erros de digitação podem introduzir bugs
 # indesejados...
 x = 5
@@ -2080,11 +2074,16 @@ x = 'dynamic type'</code
 <div class='codeblock'>
 <p>PHP</p>
 <code class='php'
->$x = 5; // variável
+>// não existe uma declaração explícita
+// erros de digitação podem introduzir bugs
+// indesejados...
+$x = 5; // variável
 const x = 5; // constante
 define('x', '5'); // constante
 
 $referenciaDeX =&amp;$x; // referência
+
+global $g; // variável global
 
 // variáveis Variáveis
 $Bar = "a";
@@ -2153,28 +2152,83 @@ end Main;</code
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>program Main;
+	<strong>// variáveis são declaradas</strong>
+	<strong>// num bloco separado</strong>
+	<strong class='small'>var x:Integer = 0; // variável</strong>
+	<strong>const y:Integer = 0; // constante</strong>
+begin
+	//
+end.</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+># não existe uma declaração explícita
+# erros de digitação podem introduzir bugs
+# indesejados...
+x = 0 # variável
+X = 0 # constante (maiúscula, lança warning apenas)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Smalltalk</p>
 <code class='smalltalk'
-></code
+>"variáveis são declaradas"
+"num bloco separado?"
+|x|
+x := 5</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>; variáveis
+(let(
+	(x 0)
+	(y 0)
+	z
+))
+
+(let*(
+	(x 0)
+	(y 0)
+	z
+))
+
+(defvar *x* 0)
+
+(defparameter *x* 0.001)
+
+; constante
+(defconstant x 0 "constante")</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
-></code
+>x &lt;- return 0 -- variável
+x = 0 -- constante
+let x = 0 -- constante
+
+{-
+identificadores são declarados
+num bloco separado <q>where</q>
+se o escopo for local
+
+Além disso, como os identificadores
+nunca mudam de valor, a declaração
+pode ser feita depois do seu uso
+-}
+minhaFuncao paramA = paramA * valorB
+	where
+	-- valorB declarado depois
+	valorB = paramA + 1</code
 >
 </div>
 
@@ -2280,7 +2334,7 @@ var (x, y) = Pair(1, 2)</code
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
+>// <a href='https://github.com/dart-lang/language/issues/207'>check progress</a>
 </code
 >
 </div>
@@ -2311,8 +2365,11 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 <div class='codeblock'>
 <p>PHP</p>
 <code class='php'
->
-</code
+>// list() style
+list($x, $y) = [1, 2];
+
+// [] style
+[$x, $y] = [1, 2];</code
 >
 </div>
 
@@ -2323,22 +2380,18 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 
 <div class='codeblock'>
 <p>Ada</p>
-<code class='ada'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
-<code class='objectpascal'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>x, y = 1, 2</code
 >
 </div>
 
@@ -2352,15 +2405,15 @@ a, _, b, _, c, *_ = [1, 2, 3, 4, 5, 6]</code
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>(destructuring-bind (x y) (list 1 2)
+	;...
+)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Haskell</p>
-<code class='haskell'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -2646,10 +2699,19 @@ let $if = "meio confuso";
 </ol>
 
 <p>Quem diria que um tópico tão simples seria tão diverso entre as linguagens?</p>
-<p>Rust e Swift são quase idênticos, mudando apenas uma coisa. Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='cpp'>const</code>?<br />
+<p>
+	Fortran usava <code class='generic bubaloop'><span class='operator'>=</span></code> e ALGOL usava <code class='generic bubaloop'><span class='operator'>:=</span></code> para atribuir valores às variáveis.
+	Nessa lista, apenas Ada, Object Pascal (Delphi) e Smalltalk utilizam o estilo ALGOL.
+	Como consequência, nestas linguagens como podemos ver, usamos <code class='generic bubaloop'><span class='operator'>=</span></code> para comparação, enquanto que as demais precisam usar algo como <code class='generic bubaloop'><span class='operator'>==</span></code>.
+	Algumas linguagens como Lisp e SQL usam uma palavra-chave como <code class='generic bubaloop'><span class='keyword'>set</span></code> para atribuição.
+</p>
+<p>
+	Rust e Swift são quase idênticos, mudando apenas uma coisa.
+	Swift faz a declaração de variáveis e constantes serem <q>equivalentes</q>, enquanto Rust faz a declaração de variávies mais difíceis que de constantes. Mas porque Swift utilizou <code class='swift'>let</code> ao invés de <code class='cpp'>const</code>?<br />
 JavaScript é a única das linguagens comparadas que possibilita mudar os tipos das variáveis dinamicamente. Sua sintaxe de desestruturação não permite declarar e atribuir um valor ao mesmo tempo. As variáveis já devem ser declaradas antes da atribuição. JavaScript possui um estilo legado de declaracão, que cria variáveis com regras de escopo diferentes do que a maioria dos programadores espera, além de possuir um modo estrito para coibir práticas legadas.<br />
 C++ é o que tem mais legado de coisas que não deram certo, e sua última sintaxe pode ter regras mais seguras, mas certamente é bastante estranha. Tipagem implícita requer a palavra <code class='cpp'>auto</code>. Para aumentar a performance de nosso código, temos o recurso <code class='cpp'>constexpr</code>.<br />
-Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas. Python sequer tem constantes e o sistema de tipos é dinâmico.</p>
+Java parou no tempo e Objective-C também (mas cá entre nós, a Apple pelo menos admite). Porém, Objective-c ainda tem tipos ponteiro para deixar as coisas mais confusas. Python sequer tem constantes e o sistema de tipos é dinâmico.
+</p>
 
 </section>
 
@@ -8526,7 +8588,679 @@ delegate void StrategyFunctionDelegate();</code
 
 <section>
 
-<h2 id='lacos'>Laços</h2>
+<h2 id='lacos'>Branching / Laços</h2>
+
+<h3 id='if'>If, else if e else</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+>
+
+
+
+Dim number As Integer: number = 10
+
+If Number &gt; 0 Then
+	' positivo
+ElseIf Number &lt; 0 Then
+	' negativo
+Else
+	' zero
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+' logical operators
+
+
+Dim condition1 As Boolean
+Dim condition2 As Boolean
+
+
+
+
+
+
+	' short circuit
+	If condition1 And condition2 Then
+		'
+
+
+
+
+
+	' short circuit
+	If condition1 Or condition2 Then
+		'
+
+	If condition1 Xor condition2 Then
+		'
+
+	If condition1 &lt;&gt; condition2 Then
+		'
+
+	If condition1 = False Then
+		'
+
+	If Not condition1 Then
+		'</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+>declare
+	number:Integer;
+begin
+
+	number := 10;
+
+	if number &gt; 0 then
+		-- positivo
+	elsif number &lt; 0 then
+		-- negativo
+	else
+		-- zero
+	end if;
+
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- logical operators
+
+declare
+	condition1:Bool;
+	condition2:Bool;
+begin
+
+	-- evaluates both conditions!
+	if condition1 and condition2 then
+		--
+
+	-- short circuit
+	if condition1 and then condition2 then
+		--
+
+	-- evaluates both conditions!
+	if condition1 or condition2 then
+		--
+
+	-- short circuit
+	if condition1 or else condition2 then
+		--
+
+	if condition1 xor condition2 then
+		--
+
+	if condition1 /= condition2 then
+		--
+
+	if condition1 = False then
+		--
+
+	if not condition1 then
+		--
+
+end;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+>var
+	number:Integer;
+begin
+
+	number := 10;
+
+	if number &gt; 0 then
+		// positivo
+	else if number &lt; 0 then
+		// negativo
+	else
+		// zero
+
+
+end;
+
+// ou
+
+var
+	number:Integer;
+begin
+
+	number := 10;
+
+	if number &gt; 0 then // positivo
+		begin
+			// multiline
+		end;
+	else if number &lt; 0 then // negativo
+		begin
+			// multiline
+		end;
+	else // zero
+		begin
+			// multiline
+		end;
+
+end;
+
+// logical operators
+
+var
+	condition1:Bool;
+	condition2:Bool;
+begin
+
+
+
+
+
+	// short circuit
+	if condition1 and condition2 then
+		//
+
+
+
+
+
+	// short circuit
+	if condition1 or condition2 then
+		//
+
+	if condition1 xor condition2 then
+		//
+
+	if condition1 &lt;&gt; condition2 then
+		//
+
+	if condition1 = false then
+		//
+
+	if not condition1 then
+		//
+
+end;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+>
+
+
+
+number = 0
+
+if number &gt; 0
+	# positivo
+elsif number &lt; 0
+	# negativo
+else
+	# zero
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+condition1 = true
+condition2 = false
+
+
+# short circuit
+if condition1 &amp;&amp; condition2
+	#...
+
+# same as &amp;&amp; but with lower precedence
+if condition1 and condition2
+	#...
+
+# short circuit
+if condition1 || condition2
+	#...
+
+# same as || but with lower precedence
+if condition1 or condition2
+	#...
+
+if condition1 ^ condition2
+	#...
+
+if condition1 != condition2
+	#...
+
+if condition1 == false
+	#...
+
+if !condition1
+	#...
+
+# same as ! but with lower precedence
+if not condition1
+	#...</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<h3 id='while'>while e do while</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
 
 <h3 id='foreach'>for each</h3>
 
@@ -8894,7 +9628,195 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 
 </div>
 
-<h3 id='labelgotoswitch'>label, goto, continue, break e switch</h3>
+<h3 id='for'>For</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<h3 id='labelgotoswitch'>label, goto, continue, break e switch / case / when</h3>
 
 <div class='comparison'>
 
@@ -25279,6 +26201,7 @@ Cast um tipo para string chama tostring?
 unions?
 Observar objetos KVO, notification center, reactive, etc..
 observer ou eventos customizados
+exceções customizadas
 Eventos e setTimeout
 
 match
@@ -25306,8 +26229,6 @@ Overload pode ter visibilidade diferente?
 Operator precedence mess?
 
 RISC
-
-Dart
 -->
 
 <script type='module' src='../../compartilhado/js/utils.js'></script>
