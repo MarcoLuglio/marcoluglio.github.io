@@ -14098,16 +14098,28 @@ const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSeq
 	constructor() {
 		super('keyword', [
 
+			'alias',
+			'case',
+			'class',
+			'def',
+			'do',
 			'else',
 			'elsif',
 			'end',
 			'if',
+			'private',
+			'protected',
+			'self',
+			'unless',
+			'until',
+			'when',
+			'while',
 
 			// literals
 			// fazer num token à parte?
 			'true',
 			'false',
-			'null'
+			'nil'
 
 		]);
 
@@ -14199,6 +14211,18 @@ const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleChar
 	constructor() {
 
 		super('operator', [
+			'(',
+			')',
+			'{',
+			'}',
+			',',
+			'.',
+			'..',
+			':',
+			'...',
+			'::',
+			'&.',
+			'&amp;.',
 			'<',
 			'>',
 			'<=',
@@ -14208,19 +14232,43 @@ const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleChar
 			'&lt;=',
 			'&gt;=',
 			'=',
+			'==',
+			'===',
 			'!=',
+			'<=>',
+			'&lt;=&gt;',
+			'+=',
+			'-=',
+			'*=',
+			'/=',
+			'%=',
+			'||=',
+			'&&=',
+			'<<',
+			'>>',
+			'&lt;&lt;',
+			'&gt;&gt;',
+			'?',
 			'!',
 			'not',
 			'&&',
 			'&amp;&amp;',
 			'||',
+			'|',
+			'~',
+			'=~',
+			'!~',
 			'and',
 			'or',
 			'+',
 			'-',
 			'*',
+			'**',
 			'/',
-			'^'
+			'%',
+			'^',
+			':',
+			','
 		]);
 
 	}
