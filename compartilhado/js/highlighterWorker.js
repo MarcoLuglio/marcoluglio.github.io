@@ -17,11 +17,11 @@ import {
 	VisualBasic6Lexer,
 	AdaLexer,
 	ObjectPascalLexer,
-	/*RubyLexer,
-	SmalltalkLexer,
+	RubyLexer,
+	//SmalltalkLexer,
 	CommonLispLexer,
 	HaskellLexer,
-	AssemblyScriptLexer,
+	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/
 	Highlighter
@@ -84,6 +84,14 @@ self.onmessage = function (message) {
 			lexer = new JavaScriptLexer();
 			break;
 
+		/*case 'actionscript':
+			lexer = new ActionScriptLexer();
+			break;
+
+		case 'typescript':
+			lexer = new TypeScriptLexer();
+			break;*/
+
 		case 'dart':
 			lexer = new DartLexer();
 			break;
@@ -91,6 +99,10 @@ self.onmessage = function (message) {
 		case 'python':
 			lexer = new PythonLexer();
 			break;
+
+		/*case 'php':
+			lexer = new PhpLexer();
+			break;*/
 
 		case 'visualbasic':
 			lexer = new VisualBasic6Lexer();
@@ -102,6 +114,22 @@ self.onmessage = function (message) {
 
 		case 'objectpascal':
 			lexer = new ObjectPascalLexer();
+			break;
+
+		case 'ruby':
+			lexer = new RubyLexer();
+			break;
+
+		/*case 'smalltalk':
+			lexer = new SmalltalkLexer();
+			break;*/
+
+		case 'commonlisp':
+			lexer = new CommonLispLexer();
+			break;
+
+		case 'haskell':
+			lexer = new HaskellLexer();
 			break;
 
 		default:
