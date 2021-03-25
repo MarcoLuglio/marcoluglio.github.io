@@ -14005,6 +14005,326 @@ const ObjectPascalStringLiteralToken = class ObjectPascalStringLiteralToken exte
 
 
 
+// #region Ruby lexer
+
+const RubyLexer = class RubyLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new RubyKeywordToken(),
+			new RubyTypesToken(),
+			new RubyPunctuationToken(),
+
+			// comments
+			new PythonLineCommentToken(),
+			// new RubyDirectiveToken()
+
+		);
+
+		this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+		// FIXME não pode ter espaço em branco na frente dele
+		//this._tokenPool.push(new RubySymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizRubys
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			//new RubyNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
+			new RubyStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+	/**
+	 * Gets last meaningful token
+	 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+	 */
+	_getLastToken(tokenSequence) {
+
+		let lastToken = null;
+
+		for (let i = tokenSequence.length; i > 0; i--) {
+
+			lastToken = tokenSequence[i - 1];
+
+			if (!lastToken.ignore
+				&& lastToken.type !== 'whitespace'
+				&& lastToken.type !== 'endOfLine'
+				) {
+
+				return lastToken;
+			}
+
+		}
+
+		return null;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Ruby keywords
+ */
+const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'else',
+			'elsif',
+			'end',
+			'if',
+
+			// literals
+			// fazer num token à parte?
+			'true',
+			'false',
+			'null'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for Ruby types
+ */
+const RubyTypesToken = class RubyTypesToken extends Token {
+
+	constructor() {
+
+		super();
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			type: {value: 'type'},
+			_matchFunction: {value: context._matchTypesSequence, writable: true},
+			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'range', // TODO
+			])}
+		});
+
+		Object.seal(this);
+
+	}
+
+	/**
+	 * @param {String} matchCharacter
+	 * @param {Number} index Character index relative to the whole string being parsed
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+
+		if (!this._matchFunction(matchCharacter, index)) {
+			return;
+		}
+
+		if (!this._isInitialized) {
+			this._isInitialized = true;
+			this.begin = index;
+		}
+
+		this.characterSequence.push(matchCharacter);
+
+	}
+
+	_matchTypesSequence(matchCharacter, index) {
+
+		this._typesSequence.next(matchCharacter, index);
+
+		if (this._typesSequence.isComplete) {
+			return this._matchEnd(matchCharacter, index);
+		}
+
+		if (this._typesSequence.hasNext()) {
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que o pattern já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter, index) {
+		this._complete();
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for Ruby punctuation
+ */
+const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+			'<',
+			'>',
+			'<=',
+			'>=',
+			'&lt;',
+			'&gt;',
+			'&lt;=',
+			'&gt;=',
+			'=',
+			'!=',
+			'!',
+			'not',
+			'&&',
+			'&amp;&amp;',
+			'||',
+			'and',
+			'or',
+			'+',
+			'-',
+			'*',
+			'/',
+			'^'
+		]);
+
+	}
+
+};
+
+
+
+const RubyStringPatternIterator = class RubyStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === '"') {
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (matchCharacter === '"') {
+
+			if (this._isEscaped) {
+				this._isEscaped = false;
+			} else {
+				this._isEscaped = true;
+			}
+
+			return true;
+
+		}
+
+		// se aspas não foi seguido de outras aspas
+		// termina a string imediatamente
+		if (this._isEscaped) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for Ruby strings
+ */
+const RubyStringLiteralToken = class RubyStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new RubyStringPatternIterator());
+	}
+};
+
+
+
+// #endregion
+
+
+
 // #region Common Lisp lexer
 
 const CommonLispLexer = class CommonLispLexer extends Lexer {
@@ -14937,8 +15257,8 @@ export {
 	VisualBasic6Lexer,
 	AdaLexer,
 	ObjectPascalLexer,
-	/*RubyLexer,
-	SmalltalkLexer,*/
+	RubyLexer,
+	// SmalltalkLexer,
 	CommonLispLexer,
 	HaskellLexer,
 	/*AssemblyScriptLexer,
