@@ -5773,6 +5773,7 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 			'private',
 			'protocol',
 			'public',
+			'repeat',
 			'required',
 			'rethrows',
 			'return',

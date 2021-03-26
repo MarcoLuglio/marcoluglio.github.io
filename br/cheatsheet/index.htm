@@ -8636,8 +8636,11 @@ delegate void StrategyFunctionDelegate();</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>val max = if (a > b) {
+	a
+} else {
+	b
+}</code
 >
 </div>
 
@@ -9159,16 +9162,54 @@ if not condition1
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->
-</code
+>while i &lt; 10 {
+	// ...
+}
+
+let mut optional = Some(0);
+while let Some(i) = optional {
+	// use i here
+}
+
+// mesmo que while true {...}
+loop {
+
+	//...
+
+	// to exit the loop call
+	break;
+
+}
+
+// no do while
+// use loop + if break</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->
-</code
+>for i &lt; 10 {
+	// ...
+}
+
+// TODO testar
+for i := returnBoolOrNullable {
+	// ..
+}
+
+// equivalente à while true {...}
+for {
+
+	//...
+
+	// to exit the loop call
+	break;
+
+}
+
+// no do while
+// use for + if break</code
 >
 </div>
 
@@ -9191,7 +9232,14 @@ if not condition1
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'
->
+>while i &lt; 10 {
+	// ...
+}
+
+// do while
+repeat {
+	// ...
+} while i &lt; 10
 </code
 >
 </div>
@@ -9199,8 +9247,14 @@ if not condition1
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>while (i &lt; 10) {
+	// ...
+}
+
+
+do {
+	// ...
+} while (i &lt; 10) // y is visible here!</code
 >
 </div>
 
@@ -9255,8 +9309,13 @@ if not condition1
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>while i &lt; 10:
+	# ...
+
+while i &lt; 10:
+	# ...
+else:
+	# ...</code
 >
 </div>
 
