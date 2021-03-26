@@ -8685,6 +8685,49 @@ delegate void StrategyFunctionDelegate();</code
 <p>Dart</p>
 <code class='dart'
 >
+
+
+
+var number = 10;
+
+if (number &gt; 0) {
+	// positivo
+} else if (number &lt; 0) {
+	// negativo
+} else {
+	// zero
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// logical operators
+
+
+bool condition1;
+bool condition2;
 </code
 >
 </div>
@@ -9038,7 +9081,39 @@ if not condition1
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>(let(
+		(number 10)
+	)
+
+	; if
+	; (if (condition) (then code))
+
+	; if / else
+	; (if (condition) (then code) (else code))
+
+	; if / else if... / else chain
+	; (if (condition)
+	;	(then code)
+	; (if (else if condition)
+	;	(then code)
+	; (if (else if condition)
+	;	(then code)
+	; 	(else code)
+	; ))) ; close all ifs
+
+	(if (&gt; number 0)
+		(print "positivo")
+
+	; else if
+	(if (&lt; number 0)
+		(print "negativo")
+
+	; else
+		(print "zero")
+
+	))
+
+)</code
 >
 </div>
 
