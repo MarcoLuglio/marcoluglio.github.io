@@ -14438,11 +14438,13 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 	constructor() {
 		super('keyword', [
 
+			'if',
 			'let',
 			'let*',
 			'defvar',
 			'defparameter',
 			'defconstant',
+			'then',
 
 			// literals
 			'true',
@@ -14466,7 +14468,11 @@ const CommonLispPunctuationToken = class CommonLispPunctuationToken extends Sour
 		super('operator', [
 
 			'(',
-			')'
+			')',
+			'>',
+			'<',
+			'&gt;',
+			'&lt;'
 
 		]);
 
