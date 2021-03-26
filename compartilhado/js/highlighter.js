@@ -14438,6 +14438,8 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 	constructor() {
 		super('keyword', [
 
+			'case',
+			'cond',
 			'if',
 			'let',
 			'let*',
@@ -14445,6 +14447,8 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 			'defparameter',
 			'defconstant',
 			'then',
+			'unless',
+			'when',
 
 			// literals
 			'true',
