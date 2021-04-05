@@ -13711,6 +13711,7 @@ const ObjectPascalKeywordToken = class ObjectPascalKeywordToken extends SourceSi
 			'private',
 			'procedure',
 			'program',
+			// 'project',
 			'property',
 			'protected',
 			'public',
@@ -14194,10 +14195,13 @@ const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSeq
 			'protected',
 			'require',
 			'self',
+			'undef',
 			'unless',
 			'until',
 			'when',
 			'while',
+
+			'Struct',
 
 			// literals
 			// fazer num token à parte?
