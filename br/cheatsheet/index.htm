@@ -9330,28 +9330,57 @@ else:
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+>While i &lt; 10
+	'...
+Wend</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>while i &lt; 10 loop
+	-- ...
+end loop;
+
+-- equivalente à while true {...}
+loop
+	-- ...
+end loop;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>while i &lt; 10 do
+begin
+	// ...
+end;
+
+repeat
+	// ...
+until i &lt; 10;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>while i &lt; 10
+	# ...
+end
+
+loop do
+	# ...
+end
+
+# until conditional [do]
+# unlike “loop do”,
+# here the “do” is optional
+until conditional
+	# ...
+end</code
 >
 </div>
 
@@ -18535,7 +18564,8 @@ pub struct ResultadoCaixa {
 	pub troco:i32,
 }
 
-let mut compra2 = ResultadoCaixa{
+
+let mut compra1 = ResultadoCaixa{
 	total: 967,
 	valorPago: 1000,
 	troco: 33
@@ -18621,7 +18651,7 @@ type SomeStruct struct {
 	x int32
 }
 
-// structs tem métodos
+// structs podem ter métodos
 
 func (s *SomeStruct) getX() int32 {
 	return s.x
@@ -18670,7 +18700,7 @@ func main() {
 >// Objective-C usa structs do C
 // que são um simples agrupamento
 // de variáveis sem nenhuma outra
-//funcionalidade extra
+// funcionalidade extra
 struct ResultadoCaixa {
 	public var total:int
 	public var valorPago:int
@@ -18699,6 +18729,7 @@ public struct ResultadoCaixa {
 	public var valorPago:Int
 	public var troco:Int
 }
+
 
 let compra1 = ResultadoCaixa(
 	total: 967,
@@ -18781,6 +18812,7 @@ public data class ResultadoCaixa(
 	var troco:Int
 )
 
+
 val compra1 = ResultadoCaixa(
 	total = 967,
 	valorPago = 1000,
@@ -18802,6 +18834,7 @@ public record ResultadoCaixa(
 	int valorPago,
 	int troco
 ){}
+
 
 var compra1 = ResultadoCaixa(
 	967,
@@ -18825,6 +18858,7 @@ public struct ResultadoCaixa {
 	public int troco;
 }
 
+
 ResultadoCaixa compra1;
 compra1.total = 967; // 9,67
 compra1.valorPago = 1000; // 10,00
@@ -18837,7 +18871,7 @@ public struct ResultadoCaixaC {
 	ResultadoCaixaC(int total, int valorPago) {
 		this.total = total;
 		this.valorPago = valorPago;
-		this.troco = valorPago = total;
+		this.troco = valorPago - total;
 	}
 
 	public int total;
@@ -18857,7 +18891,7 @@ public struct ResultadoCaixaFidelidade {
 
 	public void descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago = this.total;
+		this.troco = this.valorPago - this.total;
 	}
 
 	private int calcularFidelidade() {
@@ -18921,11 +18955,11 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 # data classes NÃO SÃO structs
 # mas tem um propósito similar
 
-@dataclass(eq=True, unsafe_hash=False, frozen=False)
+@dataclass(eq = True, unsafe_hash = False, frozen = False)
 class ResultadoCaixa:
-	total: int
-	valorPago: int
-	troco: int
+	total:int
+	valorPago:int
+	troco:int
 
 compra1 = ResultadoCaixa(967, 1000, 33)</code
 >
@@ -18955,13 +18989,15 @@ Public Type ResultadoCaixa
 	Troco As Integer
 End Type
 
+
 Dim compra1 As ResultadoCaixa
+
 
 compra1.total = 967; ' 9,67
 compra1.valorPago = 1000; ' 10,00
 compra1.troco = 33; ' 00,33
 
-'ou com With
+' ou com With
 
 With compra1
 	.total = 967; ' 9,67
@@ -18982,7 +19018,80 @@ End With</code>
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>
+
+
+type TResultadoCaixa = record
+	Total:Integer;
+	ValorPago:Integer;
+	Troco:Integer;
+end;
+
+program Main;
+	var compra1:TResultadoCaixa;
+begin
+
+	compra1.Total := 967;
+	compra1.ValorPago =: 1000;
+	compra1.Troco =: 33;
+
+	// ou com with
+
+	with compra1 do
+	begin
+		Total := 967;
+		ValorPago := 1000;
+		Troco := 33;
+	end;
+
+end.
+
+// structs podem ter a parte final
+// variável
+type type TResultadoCaixa2 = record
+	fieldList1: type1;
+		...
+	fieldListn: typen;
+	case tag: ordinalType of
+		constantList1: (variant1);
+		...
+		constantListn: (variantn);
+end;
+
+// structs podem ter construtores, métodos, getters e setters
+
+type TResultadoCaixa3 = record
+
+	constructor Create(total:Integer, valorPago:Integer);
+
+	// property RedProperty: TInnerColorType read Red write Red;
+
+	procedure DescontarFidelidade();
+	function CalcularFidelidade():Integer;
+
+	Total:Integer;
+	ValorPago:Integer;
+	Troco:Integer;
+
+end;
+
+constructor TResultadoCaixa3.Create(Total:Integer, ValorPago:Integer);
+begin
+	Self.Total := Total;
+	Self.ValorPago := ValorPago;
+	Self.Troco := ValorPago - Total;
+end;
+
+procedure TResultadoCaixa3.DescontarFidelidade;
+begin
+	Self.Total := Self.CalcularFidelidade();
+	Self.Troco := Self.ValorPago - Self.Total;
+end;
+
+function TResultadoCaixa3.CalcularFidelidade:Integer;
+begin
+	Result := Self.Total - 1;
+end;</code
 >
 </div>
 
@@ -23742,18 +23851,18 @@ def say_whee():
 <code class='rust'
 >#[repr(C)]
 pub struct TabelaNutricional {
-	valorEnergetico: f32,
-	carboidratos: f32,
-	proteinas: f32,
-	gordurasTotais: f32,
-	gordurasSaturadas: f32,
-	gordurasTrans: f32,
-	fibraAlimentar: f32,
-	sodio: f32
+	valorEnergetico:f32,
+	carboidratos:f32,
+	proteinas:f32,
+	gordurasTotais:f32,
+	gordurasSaturadas:f32,
+	gordurasTrans:f32,
+	fibraAlimentar:f32,
+	sodio:f32
 }
 
 #[no_mangle]
-pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
+pub extern "C" fn calcular(porcao:f32) -&gt; TabelaNutricional {
 	let mut tabela = TabelaNutricional{
 		valorEnergetico: 1_f32,
 		carboidratos: 1_f32,
@@ -23770,13 +23879,30 @@ pub extern fn calcular(porcao:f32) -&gt; TabelaNutricional {
 
 // compilar com
 // rustc --crate-type dylib TabelaNutricional.rs
-// vai gerar libTabelaNutricional.dylib</code
+// vai gerar libTabelaNutricional.dylib
+
+/*
+Calling conventons válidas:
+stdcall
+aapcs
+cdecl
+fastcall
+Rust
+rust-intrinsic
+system
+C
+win64
+sysv64
+*/</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Go</p>
--
+<code class='go'
+>// compile using -buildmode=c-shared
+// go build -o nutricao.so -buildmode=c-shared nutricao.go</code
+>
 </div>
 
 <div class='codeblock'>
@@ -23890,23 +24016,17 @@ namespace FFIExample {
 
 <div class='codeblock'>
 <p>Objective-C</p>
-<code class='objectivec'
->-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Swift</p>
-<code class='swift'
->-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p>Kotlin</p>
-<code class='kotlin'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -23925,36 +24045,127 @@ namespace FFIExample {
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+-
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 -
 </div>
 
 <div class='codeblock'>
 <p>PHP</p>
-<code class='php'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+>' ??</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Ada</p>
+
+<p>Ada - Nutricao.ads</p>
 <code class='ada'
-></code
+>-- usar pragma Convention e Export
+
+with Interfaces.C;
+
+package Nutricao is
+
+type TabelaNutricional is
+record
+	ValorEnergetico:Interfaces.C.C_float;
+	Carboidratos:Interfaces.C.C_float;
+	Proteinas:Interfaces.C.C_float;
+	GordurasTotais:Interfaces.C.C_float;
+	GordurasSaturadas:Interfaces.C.C_float;
+	GordurasTrans:Interfaces.C.C_float;
+	FibraAlimentar:Interfaces.C.C_float;
+	Sodio:Interfaces.C.C_float;
+end record;
+
+pragma Convention (
+	Convention =&gt; C,
+	Entity =&gt; TabelaNutricional
+);
+
+function Calcular(Porcao:Float) return TabelaNutricional;
+pragma Export (C, Calcular, "calcular");
+
+end Nutricao;</code
 >
+
+<p>Nutricao.adb</p>
+<code class='ada'
+>package body Nutricao is
+
+function Calcular(Porcao:Float) return TabelaNutricional is
+begin
+	-- return ...;
+end Calcular;
+
+end Nutricao;</code
+>
+
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>Type
+TObj = object
+Private
+  Caption : ShortString;
+Public
+  Constructor init;
+  Destructor done;
+  Procedure SetCaption (AValue : String);
+  Function GetCaption : String;
+end;
+
+Type
+Point = Record
+		X,Y,Z : Real;
+		end;
+RPoint = Record
+		Case Boolean of
+		False : (X,Y,Z : Real);
+		True : (R,theta,phi : Real);
+		end;
+BetterRPoint = Record
+		Case UsePolar : Boolean of
+		False : (X,Y,Z : Real);
+		True : (R,theta,phi : Real);
+		end;
+
+function calcular(porcao:Double): TabelaNutricional; cdecl;
+begin
+	// return ...;
+end;
+
+{
+Calling conventons válidas:
+register
+pascal
+cdecl
+stdcall
+safecall
+winapi
+}</code
 >
 </div>
 
@@ -23997,9 +24208,21 @@ namespace FFIExample {
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust'
->#[link(name = "TabelaNutricionalBiblioteca")]
+>#[repr(C)]
+pub struct TabelaNutricional {
+	valorEnergetico:f32,
+	carboidratos:f32,
+	proteinas:f32,
+	gordurasTotais:f32,
+	gordurasSaturadas:f32,
+	gordurasTrans:f32,
+	fibraAlimentar:f32,
+	sodio:f32
+}
+
+#[link(name = "TabelaNutricionalBiblioteca")]
 extern "C" {
-	fn calcular(porcao:f32) -&gt; i32;
+	fn calcular(porcao:f32) -&gt; TabelaNutricional;
 }
 
 fn main() {
@@ -24023,6 +24246,15 @@ fn main() {
 // #include &lt;png.h&gt;
 import "C"
 
+// When the Go tool sees that one or more Go files use the special import "C",
+// it will look for other non-Go files in the directory and compile them
+// as part of the Go package.
+// Any .c, .s, .S or .sx files will be compiled with the C compiler.
+// Any .cc, .cpp, or .cxx files will be compiled with the C++ compiler.
+// Any .f, .F, .for or .f90 files will be compiled with the fortran compiler.
+// Any .h, .hh, .hpp, or .hxx files will not be compiled separately,
+// but, if these header files are changed, the package (including its non-Go
+// source files) will be recompiled.
 // mais detalhes na <a href='https://golang.org/cmd/cgo/'>documentação oficial</a></code
 >
 </div>
@@ -24058,7 +24290,8 @@ import "C"
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->// Somente Kotlin native?</code
+>// Somente Kotlin native?
+// import kotlinx.cinterop.*</code
 >
 </div>
 
@@ -24091,6 +24324,7 @@ public final class TabelaNutricionalBibliotecaNative {
 
 }</code
 >
+</div>
 
 <div class='codeblock'>
 <p>C# - TabelaNutricionalBibliotecaNative.cs</p>
@@ -24128,13 +24362,6 @@ namespace MarcoLuglio.FFIExample {
 >
 </div>
 
-<p>C - ?.c</p>
-<code class='c'
->// TODO</code
->
-
-</div>
-
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
@@ -24145,22 +24372,79 @@ namespace MarcoLuglio.FFIExample {
 </div>
 
 <div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>// calls a host function
+flash.external.ExternalInterface.call('calcular', 1);
+
+// then the host needs to interface with c</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>import 'dart:ffi'
+show DynamicLibrary, NativeFunction, Int32;
+
+main() {
+
+	final lib = DynamicLibrary.open('TabelaNutricionalBiblioteca.dylib');
+
+	final TabelaNutricional Function(double porcao) calcular = lib
+		.lookup&lt;NativeFunction&lt;Int32 Function(Int32, Int32)&gt;&gt;('calcular')
+		.asFunction();
+
+	// calcular(1);
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Python</p>
 <code class='python'
->from cffi import FFI
-ffi = FFI()
-ffi.cdef("size_t strlen(const char*);")
-clib = ffi.dlopen(None)
-length = clib.strlen("String to be evaluated.")
-# prints: 23
-print("{}".format(length))</code
+>import ctypes
+
+TabelaNutricionalBiblioteca_dll = ctypes.cdll.LoadLibrary('TabelaNutricionalBiblioteca.dll')
+TabelaNutricionalBiblioteca_dll.calcular(1)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>PHP</p>
 <code class='php'
->
+>$ffi = FFI::load(__DIR__ . '/TabelaNutricionalBiblioteca.h');
+
+// or
+
+$ffi = FFI::cdef(
+
+	'struct TabelaNutricional {
+		float valorEnergetico;
+		float carboidratos;
+		float proteinas;
+		float gordurasTotais;
+		float gordurasSaturadas;
+		float gordurasTrans;
+		float fibraAlimentar;
+		float sodio;
+	};
+
+	TabelaNutricional calcular(float porcao);',
+
+	'TabelaNutricionalBiblioteca.so' // or 'libc.so.6'??
+
+);
+
+$ffi-&gt;calcular(1);
 </code
 >
 </div>
@@ -24168,43 +24452,119 @@ print("{}".format(length))</code
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
->Declare Function CFunction Lib "C:\full\path\to\someC.dll" Alias "_testdll@0" (ByVal _ lpRootPathName As String) As Long
-</code
+>Declare Function calcular Lib "C:\pathto\TabelaNutricionalBiblioteca.dll" (ByVal porcao As Double) As TabelaNutricional</code
 >
 </div>
 
 <div class='codeblock'>
+
 <p>Ada</p>
 <code class='ada'
-></code
+>with Interfaces.C; use Interfaces.C;
+with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Main is
+
+	type TabelaNutricional is record
+		valorEnergetico:float;
+		carboidratos:float;
+		proteinas:float;
+		gordurasTotais:float;
+		gordurasSaturadas:float;
+		gordurasTrans:float;
+		fibraAlimentar:float;
+		sodio:float;
+	end record
+		with Convention => C;
+
+	function calcular(porcao:float) return TabelaNutricional
+		with Import =&gt; True, Convention =&gt; C;
+
+	tabelaNutricional:TabelaNutricional;
+
+begin
+
+	tabelaNutricional := calcular (2);
+
+end Main;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>procedure calcular; external 'TabelaNutricionalBiblioteca.dll';
+
+// or
+
+procedure calcular; external 'TabelaNutricionalBiblioteca.dll' delayed;
+
+// or
+
+var
+	lLibraryHandle:THandle;
+	lCalcular:procedure; stdcall;
+begin
+	lLibraryHandle := LoadLibrary('TabelaNutricionalBiblioteca.dll');
+	if lLibraryHandle &lt;= 32 then begin // 32 magic constant for success
+		lCalcular := GetProcAddress(lLibraryHandle, 'calcular');
+		lCalcular();
+		FreeLibrary(lLibraryHandle);
+	end;
+end;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>require 'ffi'
+
+module LibC
+	extend FFI::Library
+	ffi_lib FFI::Platform::LIBC
+
+	attach_function :strdup, [:string], :pointer
+	attach_function :free, [:pointer], :void
+end
+
+string = "Hello, World!"
+duplicate = LibC.strdup(string)
+puts duplicate.get_string(0)
+LibC.free(duplicate)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Smalltalk</p>
 <code class='smalltalk'
-></code
+>DLD addLibrary: 'TabelaNutricionalBiblioteca'.
+
+Object subclass: ExtLib [
+	ExtLib class >> openimage: aString [
+		(CFunctionDescriptor isFunction: 'openimage')
+		ifTrue: [
+			(CFunctionDescriptor for: 'openimage'
+									returning: #int
+									withArgs: #(#string)
+			) callInto: (ValueHolder null).
+		] ifFalse: [ ('internal open image %1' % { aString }) displayNl ]
+	]
+].
+
+ExtLib calcular: 1.</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>(cffi:load-foreign-library "TabelaNutricionalBiblioteca.so")
+(cffi:foreign-funcall "calcular"
+	:string #+sbcl (sb-posix:getenv "DISPLAY")
+			#-sbcl ":0.0"
+	:pointer
+)</code
 >
 </div>
 
@@ -26358,8 +26718,9 @@ floata == floatb ou Math.abs(floata - floatb) < 0.001
 
 pointer to references, pointer to pointer, cast pointers to references
 
-GUI
 Dependency injection
+GUI
+database access and mapping
 
 Certificação
 Overload pode ter visibilidade diferente?
