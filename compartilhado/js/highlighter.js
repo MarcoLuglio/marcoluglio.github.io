@@ -11292,8 +11292,13 @@ const DartTypesToken = class DartTypesToken extends Token {
 				'int',
 				'void',
 
+				// c ffi
+				'DynamicLibrary',
+				'Int32',
+
 				'Exception',
 				'Function',
+				'NativeFunction',
 				'Future',
 				'Iterable',
 				'List', // List<Type>
@@ -11694,6 +11699,7 @@ const PythonLexer = class PythonLexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
+			new TempDecimalLiteralToken(),
 			new PythonStringLiteralToken(),
 			new PythonMultilineStringLiteralToken()
 		);
@@ -12342,6 +12348,7 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 			this._tokenPool.length,
 			0,
 			//new VbNumericLiteralToken(),*/
+			new TempDecimalLiteralToken(),
 			new VbDateLiteralToken(),
 			new VbStringLiteralToken()
 		);
@@ -12452,7 +12459,9 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 	constructor() {
 		super('keyword', [
 
+			'Alias',
 			'As',
+			'Binary',
 			'ByVal',
 			'ByRef',
 			'Call',
@@ -12482,6 +12491,7 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 			'In',
 			'Is',
 			'Let',
+			'Lib',
 			'Like',
 			'Loop',
 			'Me',
@@ -13093,7 +13103,7 @@ const AdaKeywordToken = class AdaKeywordToken extends SourceSimpleCharacterSeque
 			'function',
 			'goto',
 			'if',
-			'in',
+			'in', // TODO debug why it is highlighting int
 			'interface',
 			'is',
 			'loop',
@@ -13101,7 +13111,12 @@ const AdaKeywordToken = class AdaKeywordToken extends SourceSimpleCharacterSeque
 			'others',
 			'out',
 			'package',
+
 			'pragma',
+			'Convention',
+			'Export',
+			'Import',
+
 			'private',
 			'procedure',
 			'protected',
@@ -13184,7 +13199,15 @@ const AdaTypesToken = class AdaTypesToken extends Token {
 				'Float',
 				'float',
 				'character',
-				'String'
+				'String',
+
+				'C_float',
+
+				// TODO check those, maybe imported from Interfaces.C
+				'int',
+				'long',
+				'unsigned',
+				'double'
 			])}
 		});
 
@@ -13651,27 +13674,43 @@ const ObjectPascalKeywordToken = class ObjectPascalKeywordToken extends SourceSi
 		super('keyword', [
 
 			'abstract',
+			'at',
 			'begin',
 			'case',
 			'class',
 			'const',
 			'constructor',
+			'default',
+			'delayed',
+			'destructor',
 			'do',
 			'downto',
+			'dynamic',
 			'else',
 			'end',
 			'except',
+			'final',
 			'finally',
 			'for',
+			'forward',
 			'function',
 			'if',
 			'implementation',
+			'index',
+			'inherited',
+			'initialization',
 			'interface',
+			'message',
+			'nodefault',
 			'of',
 			'on',
+			'operator',
+			'overload',
+			'override',
 			'out',
 			'private',
 			'procedure',
+			'program',
 			'property',
 			'protected',
 			'public',
@@ -13680,8 +13719,17 @@ const ObjectPascalKeywordToken = class ObjectPascalKeywordToken extends SourceSi
 			'raise',
 			'read',
 			'record',
+			'reintroduce',
 			'repeat',
+			'result',
+			'Result',
+			'sealed',
+			'self',
+			'Self',
 			'set',
+			'static',
+			'stored',
+			'strict',
 			'then',
 			'to',
 			'try',
@@ -13690,15 +13738,39 @@ const ObjectPascalKeywordToken = class ObjectPascalKeywordToken extends SourceSi
 			'until',
 			'uses',
 			'var',
+			'varargs',
 			'virtual',
 			'while',
 			'with',
+			'write',
+
+			'external',
+			'framework',
+			'name',
+			'object',
 
 			// literals
 			// fazer num token à parte!
 			'nil',
 			'true',
-			'false'
+			'True',
+			'false',
+			'False',
+
+			// calling conventions
+			// mudar pra diretivas de compilador?
+			'register',
+			'pascal',
+			'cdecl',
+			'stdcall',
+			'safecall',
+			'winapi',
+
+			// warnings
+			// create a separate token for that?
+			'platform',
+			'deprecated',
+			'library'
 
 		]);
 
@@ -13726,10 +13798,14 @@ const ObjectPascalTypesToken = class ObjectPascalTypesToken extends Token {
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 
-				'Variant',
+				'boolean',
 				'Boolean',
-				'Array', // TODO
+				'array',
+				'array of',
+				'Array',
+				'Array of', // TODO
 
+				'byte',
 				'Byte',
 				'ShortInt',
 				'Word',
@@ -13737,14 +13813,16 @@ const ObjectPascalTypesToken = class ObjectPascalTypesToken extends Token {
 				'LongWord',
 				'Cardinal',
 				'LongInt',
-				'Integer',
 				'integer', // while the parser is still case sensitive
+				'Integer',
 				'Int64',
 
 				'Single',
-				'Currency',
 				'Double',
 				'Extended',
+				'Currency',
+
+				'Variant',
 
 				'Real', // obsolete
 
@@ -13900,6 +13978,8 @@ const ObjectPascalPunctuationToken = class ObjectPascalPunctuationToken extends 
 			'or',
 			'xor',
 			'not',
+			'shl',
+			'shr',
 			',',
 			';'
 		]);
@@ -14108,8 +14188,11 @@ const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSeq
 			'elsif',
 			'end',
 			'if',
+			'loop',
+			'module',
 			'private',
 			'protected',
+			'require',
 			'self',
 			'unless',
 			'until',
@@ -14921,8 +15004,10 @@ const HaskellLexer = class HaskellLexer extends Lexer {
 		super('keyword', [
 
 			'case',
+			'ccall',
 			'data',
 			'do',
+			'foreign',
 			'if',
 			'import',
 			'else',
@@ -14932,6 +15017,7 @@ const HaskellLexer = class HaskellLexer extends Lexer {
 			'return',
 			'then',
 			'type',
+			'unsafe',
 			'where',
 
 			// literals
