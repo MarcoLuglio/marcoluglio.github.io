@@ -73,8 +73,14 @@
 <code class='shell'
 ><span class='comment lineComment'><a href='https://cli.vuejs.org'># https://cli.vuejs.org</a></span>
 <span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
+
+<span class='comment lineComment'># the command below should work for windows</span>
 <span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
-<span class='comment lineComment'># manually select features for adding TypeScript, router and Vuex (Redux like)</span>
+
+<span class='comment lineComment'># but in my mac I had to use</span>
+<span class='keyword'>env</span> CC=clang CXX=clang++ <span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
+
+<span class='comment lineComment'># then manually select features for adding TypeScript, router and Vuex (Redux like)</span>
 
 <span class='keyword'>cd</span> create spa-sample-project
 <span class='keyword'>npm</span> <span class='keyword'>install</span>
@@ -286,7 +292,10 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 
 <div class='codeblock'>
 <p>React JavaScript</p>
--
+<code class='shell'
+><span class='comment lineComment'><a href='https://reactrouter.com/web/guides/quick-start'># https://reactrouter.com/web/guides/quick-start</a></span>
+<span class='keyword'>npm</span> <span class='keyword'>install</span> react-router-dom</code
+>
 </div>
 
 <div class='codeblock'>
@@ -341,16 +350,34 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 
 <p>app-routing.module.ts</p>
 <code class='javascript'
-><strong>// this will ba added automatically</strong>
+><strong>// this will be added automatically</strong>
 const routes:Routes = [{
-	path: 'languages',
+	<strong>// here we map the path to a module</strong>
+	<strong class='small'>path: 'languages',</strong>
 	<strong>// lazy loading using the import().then() async function</strong>
 	loadChildren: () => <strong class='small'>import(</strong>'./languages/languages.module'<strong>)</strong>
 		<strong>.then(</strong> => m.LanguagesModule<strong>)</strong>
 }];</code
 >
 
+<p>languages-routing.module.ts</p>
+<code class='javascript'
+><strong>// this will be created automatically</strong>
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LanguagesComponent } from './languages.component';
 
+const routes: Routes = [
+	<strong>// and here we map the path to a component which we will create later</strong>
+	<strong class='small'>{ path: '', component: LanguagesComponent }</strong>
+];
+
+@NgModule({
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
+})
+export class LanguagesRoutingModule { }</code
+>
 </div>
 
 <div class='codeblock'>
@@ -367,21 +394,62 @@ const routes:Routes = [{
 ><span class='comment lineComment'><a href='https://reactjs.org/docs/code-splitting.html'># https://reactjs.org/docs/code-splitting.html</a></span>
 <span class='keyword'>cd</span> src/features
 <span class='keyword'>mkdir</span> languages
-<span class='keyword'>touch</span> ./languages/Languages.js</code
+<span class='keyword'>touch</span> ./languages/Languages.jsx</code
 >
 
-<p>App.js</p>
+<p>index.jsx</p>
+<code class='javascript'
+>import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import store from './app/store';
+import { Provider } from 'react-redux';
+
+<strong>import { BrowserRouter as Router, Route } from 'react-router-dom';</strong>
+
+ReactDOM.render(
+	&lt;React.StrictMode&gt;
+		&lt;Provider store={store}&gt;
+			<strong>&lt;Router&gt;</strong>
+				<strong>&lt;Route path='/'&gt;</strong>
+					&lt;App /&gt;
+				<strong>&lt;/Route&gt;</strong>
+			<strong>&lt;/Router&gt;</strong>
+		&lt;/Provider&gt;
+	&lt;/React.StrictMode&gt;,
+	document.getElementById('root')
+);</code
+>
+
+<p>App.jsx</p>
 <code class='javascript'
 ><strong>// lazy loading using the lazy(import()) async functions</strong>
-const Languages = <strong class='small'>lazy(</strong>() => <strong class='small'>import(</strong>'./features/languages/Languages'<strong>));</strong>
+import React, { lazy, Suspense } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
+
+const Languages = <strong>lazy(</strong>() => <strong>import(</strong>'./features/languages/Languages'<strong>));</strong>
 
 function App() {
 	return (
 		&lt;&gt;
-			&lt;Languages /&gt;
+			{<strong>/*</strong>
+			<strong class='comment'><span class='comment blockComment'>routes are declarative</span></strong>
+			<strong class='comment'><span class='comment blockComment'>also notice how simple it is to provide alternate content</span></strong>
+			<strong class='comment'><span class='comment blockComment'>while a module is loading</span></strong>
+			<strong class='comment'><span class='comment blockComment'>*/</span></strong>}
+			<strong>&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;</strong>
+				<strong>&lt;Switch&gt;</strong>
+					<strong class='small'>&lt;Route path={'/languages'}&gt;</strong>
+						{<strong>/* here we add a component for this route, which we will create later */</strong>}
+						<strong class='small'>&lt;Languages /&gt;</strong>
+					<strong>&lt;/Route&gt;</strong>
+				<strong>&lt;/Switch&gt;</strong>
+			<strong>&lt;/Suspense&gt;</strong>
 		&lt;/&gt;
 	)
-}</code
+}
+
+export default App;</code
 >
 
 </div>
@@ -398,22 +466,34 @@ function App() {
 <p>Vue JavaScript</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://router.vuejs.org/guide/advanced/lazy-loading.html'># https://router.vuejs.org/guide/advanced/lazy-loading.html</a></span>
-<span class='keyword'>cd</span> src/components
-<span class='keyword'>mkdir</span> languages
-<span class='keyword'>touch</span> ./languages/Languages.js</code
+<span class='keyword'>mkdir</span> ./src/languages
+<span class='keyword'>mkdir</span> ./src/languages/components
+<span class='keyword'>touch</span> ./src/languages/components/Languages.vue</code
 >
 
 <p>router/index.js</p>
 <code class='javascript'
->const routes = [{
-	path: '/languages',
-	name: 'Languages',
-	<strong>// lazy loading using the import() async function</strong>
-	component: () => <strong class='small'>import(</strong>
-		/* webpackChunkName: "languages" */
-		'../components/languages/Languages.vue'
-	<strong>)</strong>
-}]</code
+>import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = [
+	{
+		<strong>// here we map the path to a component which we will create later</strong>
+		<strong class='small'>path: '/languages',</strong>
+		name: 'Languages',
+		<strong>// lazy loading using the import() async function</strong>
+		component: () => <strong class='small'>import(</strong>
+			/* webpackChunkName: "languages" */
+			'../languages/components/Languages.vue'
+		<strong>)</strong>
+	}
+]
+
+const router = createRouter({
+	history: createWebHistory(process.env.BASE_URL),
+	routes
+})
+
+export default router</code
 >
 
 </div>
@@ -495,8 +575,8 @@ export default class TimelineSorterService {
 
 	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
 
-		var nameA = a.name.toUpperCase();
-		var nameB = b.name.toUpperCase();
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
 		if (nameA &lt; nameB) {
 			return -1;
 		}
@@ -514,29 +594,38 @@ export default class TimelineSorterService {
 </div>
 
 <div class='codeblock'>
+
 <p>React TypeScript</p>
 <code class='shell'
+><span class='keyword'>cd</span> src/features/languages
+<span class='keyword'>mkdir</span> entities
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.ts
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.ts</code
+>
+
+<p>TimelineEntryEntity.ts</p>
+<code class='javascript'
+>export default class TimelineEntryEntity {
+	name:string = '';
+	date:number = 0;
+}</code
+>
+
+<p>TimelineSorterServices.ts</p>
+<code class='javascript'
 ></code
 >
+
 </div>
 
 <div class='codeblock'>
 
 <p>React JavaScript</p>
 <code class='shell'
-><span class='keyword'>cd</span> src/features/languages
-<span class='keyword'>mkdir</span> entities
+><span class='keyword'>cd</span> src/languages
 <span class='keyword'>mkdir</span> services
-<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.js
-<span class='keyword'>touch</span> ./entities/TimelineSorterServices.js</code
->
-
-<p>TimelineEntryEntity.js</p>
-<code class='javascript'
->export default class TimelineEntryEntity {
-	name = '';
-	date = 0;
-}</code
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
 >
 
 <p>TimelineSorterServices.js</p>
@@ -547,8 +636,8 @@ export default class TimelineSorterService {
 
 export function stringSorterService(a, b) {
 
-	var nameA = a.name.toUpperCase();
-	var nameB = b.name.toUpperCase();
+	const nameA = a.name.toUpperCase();
+	const nameB = b.name.toUpperCase();
 	if (nameA &lt; nameB) {
 		return -1;
 	}
@@ -564,17 +653,62 @@ export function stringSorterService(a, b) {
 </div>
 
 <div class='codeblock'>
+
 <p>Vue TypeScript</p>
 <code class='shell'
+><span class='keyword'>cd</span> src/languages
+<span class='keyword'>mkdir</span> entities
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.ts
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
+>
+
+<p>timeline-entry.entity.ts</p>
+<code class='javascript'
+>export default class TimelineEntryEntity {
+	name:string = '';
+	date:number = 0;
+}</code
+>
+
+<p>TimelineSorterServices.ts</p>
+<code class='javascript'
 ></code
 >
+
 </div>
 
 <div class='codeblock'>
+
 <p>Vue JavaScript</p>
 <code class='shell'
-></code
+><span class='keyword'>cd</span> src/languages
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
 >
+
+<p>TimelineSorterServices.js</p>
+<code class='javascript'
+>export function numberSorterService(a, b) {
+	return a.date - b.date;
+}
+
+export function stringSorterService(a, b) {
+
+	const nameA = a.name.toUpperCase();
+	const nameB = b.name.toUpperCase();
+	if (nameA &lt; nameB) {
+		return -1;
+	}
+	if (nameA &gt; nameB) {
+		return 1;
+	}
+
+	return 0;
+
+}</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -669,9 +803,12 @@ export class TimelineComponent implements OnInit {
 
 	@Input() sortBy:string = 'year';
 
+	private _entries:Array&lt;TimelineEntryEntity&gt; = []
+
 	constructor(
-		private timelineSorterService:TimelineSorterService,
-		private _entries:Array&lt;TimelineEntryEntity&gt; = []
+		// while this is a TypeScript shortcut to define a inputProperty
+		// Angular highjacked it for dependency injection
+		private timelineSorterService:TimelineSorterService
 		) {
 
 	}
@@ -694,13 +831,22 @@ any html tag in the final rendering
 	Angular has three differet binding syntaxes
 	{{inputProperty}} is for binding @Input properties inside text nodes
 	[inputProperty] is for binding @Input properties in attributes
-	and @Output is for binding events also in attributes
+	and (observable) is for binding @Output events also in attributes
 	--&gt;
-	&lt;h2&gt;{{title}}&lt;/h2&gt;
-	&lt;!-- *ng... are structural directives, they may change the DOM tree --&gt;
+	&lt;h2&gt;{{ title }}&lt;/h2&gt;
+	&lt;!--
+	*ng... are structural directives, they may change the DOM tree,
+	adding or removing elements. Structural directives always begin
+	with * and have additional options
+	<a href='https://angular.io/api/common/NgIf'>https://angular.io/api/common/NgIf</a>
+	<a href='https://angular.io/api/common/NgForOf'>https://angular.io/api/common/NgForOf</a>
+	--&gt;
 	&lt;ul *ngIf='entries'&gt;
 		&lt;li *ngFor='let entry of entries'&gt;
-			{{entry.name}} - {{entry.year}}
+			&lt;!-- routerLink is used for internal links --&gt;
+			&lt;a [routerLink]='entry.name'&gt;
+				{{ entry.name }} - {{ entry.year }}
+			&lt;/a&gt;
 		&lt;/li&gt;
 	&lt;/ul&gt;
 &lt;/ng-container&gt;</code
@@ -720,10 +866,10 @@ any html tag in the final rendering
 <code class='shell'
 ><span class='keyword'>cd</span> src/features/languages
 <span class='keyword'>mkdir</span> components
-<span class='keyword'>touch</span> ./components/Timeline.js</code
+<span class='keyword'>touch</span> ./components/Timeline.jsx</code
 >
 
-<p>Timeline.js</p>
+<p>Timeline.jsx</p>
 <code class='javascript'
 >import { numberSorterService, stringSorterService } from '../services/TimelineSorterServices';
 
@@ -759,17 +905,32 @@ export default function Timeline(props) {
 
 	setEntries(props.entries);
 
+	// React uses a file type called JSX, that mixes JavaScript/TypeScript with markup
+	// It is not the same as HTML and we can interpolate scripts in the markup inside {}
+	// so comments for instance, must be added with {/*  */} instead of &lt;!-- --&gt;
+
+	// &lt;&gt; is a shortcut for &lt;React.Fragment&gt; <a href='https://reactjs.org/docs/fragments.html'>https://reactjs.org/docs/fragments.html</a>
+	// It is a container tag that will not generate any html tag in the final rendering
+	// JSX requires you to return only a sinqle node from a component function, so these
+	// will come in handy
 	return (
 		&lt;&gt;
+			{/* Binding in JSX is done with the sintax {variable} */}
 			&lt;h2&gt;{title}&lt;/h2&gt;
-			{ _entries.length &gt; 0 ?
-				_entries.map((entry) =&gt;
-					&lt;li key={entry.name}&gt;
-						{entry.name} - {entry.year}
-					&lt;/li&gt;
-				)
-				:
-				&lt;&gt;&lt;/&gt;
+			{/*
+			Adding or removing elements is done by mixing JavaScript with markup
+			<a href='https://reactjs.org/docs/conditional-rendering.html'>https://reactjs.org/docs/conditional-rendering.html</a>
+			<a href='https://reactjs.org/docs/lists-and-keys.html'>https://reactjs.org/docs/lists-and-keys.html</a>
+			*/}
+			{ _entries.length &gt; 0 &&
+				&lt;ul&gt;
+					{ _entries.map((entry) =&gt;
+						&lt;li key={entry.name}&gt;{/* Each item in a loop must have an unique key */}
+							{/* Link is used for internal links */}
+							&lt;Link to={`languages/${entry.name}`}&gt;{entry.name} - {entry.year}&lt;/Link&gt;
+						&lt;/li&gt;
+					)}
+				&lt;/ul&gt;
 			}
 		&lt;/&gt;
 	);
@@ -789,8 +950,119 @@ export default function Timeline(props) {
 <div class='codeblock'>
 <p>Vue JavaScript</p>
 <code class='shell'
-></code
+><span class='keyword'>cd</span> src/languages
+<span class='keyword'>touch</span> ./languages/Timeline.vue
+<span class='keyword'>touch</span> ./languages/Timeline.js</code
 >
+
+<p>Timeline.js</p>
+<code class='javascript'
+>import { stringSorterService, numberSorterService } from '../services/TimelineSorterServices'
+
+// https://v3.vuejs.org/guide/single-file-component.html
+// to use a proper class, a TypeScript project is required
+export default {
+
+	name: 'Timeline',
+	// inheritAttrs: false,
+
+	props: {
+		title: {
+			required: false,
+			type: String,
+			default: 'Timeline'
+		},
+		entries: Array,
+		sortBy: {
+			required: false,
+			type: String,
+			default: 'year'
+		}
+	},
+
+	computed: {
+
+		sortedEntries: {
+
+			get() {
+
+				// creating a setter for this setter throws an error!
+				// So the sorting logic needs to be called on the getter 🤮
+
+				let sortedEntriesTemp = [];
+
+				switch (this.sortBy) {
+					case 'name':
+						sortedEntriesTemp = this.entries.sort(stringSorterService);
+						break;
+					case 'year':
+						sortedEntriesTemp = this.entries.sort(numberSorterService);
+						break;
+					default:
+						sortedEntriesTemp = this.entries;
+						break;
+				}
+
+				return sortedEntriesTemp;
+
+			}
+
+		}
+
+	},
+
+	methods: {
+
+		hasEntries() {
+			return this.entries;
+		}
+
+	}
+
+}</code
+>
+
+<p>Timeline.vue</p>
+<code class='html'
+>&lt;!-- &lt;template&gt; is a container tag for the markup --&gt;
+&lt;template&gt;
+	&lt;!--
+	Vue has three differet binding syntaxes
+	{{property}} is for binding properties inside text nodes
+	:property is for binding properties in attributes
+	and @event is for binding events also in attributes
+	There are longer alternate syntaxes, but why would you
+	want to use them?
+	--&gt;
+	&lt;h2&gt;{{ title }}&lt;/h2&gt;
+	&lt;!--
+	Adding or removing elements is done with directives
+	such as v-if and v-for.
+	<a href='https://v3.vuejs.org/guide/conditional.html'>https://v3.vuejs.org/guide/conditional.html</a>
+	<a href='https://v3.vuejs.org/guide/list.html'>https://v3.vuejs.org/guide/list.html</a>
+	--&gt;
+	&lt;ul v-if='hasEntries()'&gt;
+		&lt;!--
+		we need to use a separate getter 'sortedEntries'
+		for the sorting to work
+		--&gt;
+		&lt;li v-for='entry in sortedEntries' :key='entry.name'&gt;
+			&lt;!-- router-link is used for internal links --&gt;
+			&lt;router-link :to='entry.name'&gt;
+				{{ entry.name }} - {{ entry.year }}
+			&lt;/router-link&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/template&gt;
+
+&lt;!--
+Vue documentation usually puts everything in a single file
+But at least they did not forbid us from separating them
+like this
+--&gt;
+&lt;script src='./Timeline.js'&gt;&lt;/script&gt;</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -832,9 +1104,38 @@ export default function Timeline(props) {
 
 <div class='codeblock'>
 
+<p>languages.module.ts</p>
+<code class='javascript'
+><strong>// this will be created automatically</strong>
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { LanguagesRoutingModule } from './languages-routing.module';
+
+<strong>// this will be added automatically</strong>
+<strong>// import components</strong>
+<strong class='small'>import { LanguagesComponent } from './components/languages.component';</strong>
+<strong>import { TimelineComponent } from './components/timeline/timeline.component';</strong>
+
+<strong>// this will be added automatically</strong>
+<strong>// declare components in the module scope</strong>
+@NgModule({
+	<strong>declarations: [</strong>
+		<strong>LanguagesComponent,</strong>
+		<strong>TimelineComponent</strong>
+	<strong>],</strong>
+	imports: [
+		CommonModule,
+		LanguagesRoutingModule
+	]
+})
+export class LanguagesModule { }</code
+>
+
 <p>languages.component.ts</p>
 <code class='javascript'
 >import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-languages',
@@ -879,10 +1180,14 @@ export class LanguagesComponent implements OnInit {
 		{ name: 'Swift', year: 2014 }
 	];
 
-	constructor() {
+	constructor(private titleService: Title) {
 	}
 
 	ngOnInit(): void {
+		// Angular has a dedicated service for changing the browser title
+		// allegedly to prevent issues if running angular as a native app
+		// for instance
+		this.titleService.setTitle('Languages');
 	}
 
 }</code
@@ -890,14 +1195,13 @@ export class LanguagesComponent implements OnInit {
 
 <p>languages.component.html</p>
 <code class='html'
->&lt;div&gt;
-	&lt;timeline
-		[title]='timelineTitle'
-		[entries]='timelineEntries'
-		sortBy='name'
-		&gt;&lt;/timeline
-	&gt;
-&lt;/div&gt;</code
+>&lt;!-- use the tag without the “app-” prefix --&gt;
+&lt;timeline
+	[title]='timelineTitle'
+	[entries]='timelineEntries'
+	sortBy='name'
+	&gt;&lt;/timeline
+&gt;</code
 >
 
 </div>
@@ -911,9 +1215,226 @@ export class LanguagesComponent implements OnInit {
 
 <div class='codeblock'>
 <p>React JavaScript</p>
+<code class='javascript'
+>import React, { useEffect } from 'react';
+
+// import the component
+import Timeline from './components/Timeline';
+
+export default function Languages() {
+
+	let timelineTitle = 'Programming languages';
+
+	let timelineEntries = [
+		{ name: 'Fortran', year: 1957 },
+		{ name: 'Lisp', year: 1958 },
+		{ name: 'Algol', year: 1958 },
+		{ name: 'Cobol', year: 1959 },
+		{ name: 'Simula', year: 1962 },
+		{ name: 'Basic', year: 1964 },
+		{ name: 'Pascal', year: 1970 },
+		{ name: 'C', year: 1972 },
+		{ name: 'Smalltalk 72', year: 1972 },
+		{ name: 'Ada', year: 1980 },
+		{ name: 'Smalltalk 80', year: 1980 },
+		{ name: 'Objective-C', year: 1984 },
+		{ name: 'C++', year: 1985 },
+		{ name: 'Object Pascal', year: 1986 },
+		{ name: 'Erlang', year: 1986 },
+		{ name: 'Python', year: 1990 },
+		{ name: 'Haskell', year: 1990 },
+		{ name: 'Java', year: 1995 },
+		{ name: 'JavaScript', year: 1995 },
+		{ name: 'Php', year: 1995 },
+		{ name: 'Ruby', year: 1995 },
+		{ name: 'ActionScript', year: 1998 },
+		{ name: 'Visual Basic 6', year: 1998 },
+		{ name: 'C#', year: 2000 },
+		{ name: 'F#', year: 2005 },
+		{ name: 'Go', year: 2009 },
+		{ name: 'Rust', year: 2010 },
+		{ name: 'Kotlin', year: 2011 },
+		{ name: 'Dart', year: 2011 },
+		{ name: 'TypeScript', year: 2012 },
+		{ name: 'Swift', year: 2014 }
+	];
+
+	// component rendering side effects use the useEffect() function
+	// it cannot be placed inside an if (must always be called),
+	// but you can still put the if inside the callback if you need to
+	useEffect(() =&gt; {
+		document.title = 'Languages';
+	});
+
+	// use the tag according to the class name
+	return (
+		&lt;Timeline
+			title={timelineTitle}
+			entries={timelineEntries}
+			sortBy='name'
+			&gt;&lt;/Timeline
+		&gt;
+	);
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>Languages.ts</p>
+<code class='javascript'
+></code
+>
+
+<p>Languages.vue</p>
+<code class='html'
+></code
+>
+
+</div>
+
+<div class='codeblock'>
+
+<p>Languages.js</p>
+<code class='javascript'
+>// import the component,
+// even though we will not reference it from JavaScript!
+import Timeline from './Timeline.vue'
+
+export default {
+	name: 'Languages',
+	components: {
+		Timeline
+	},
+	data() {
+		return {
+			timelineTitle: 'Programming languages',
+			timelineEntries: [
+				{ name: 'Fortran', year: 1957 },
+				{ name: 'Lisp', year: 1958 },
+				{ name: 'Algol', year: 1958 },
+				{ name: 'Cobol', year: 1959 },
+				{ name: 'Simula', year: 1962 },
+				{ name: 'Basic', year: 1964 },
+				{ name: 'Pascal', year: 1970 },
+				{ name: 'C', year: 1972 },
+				{ name: 'Smalltalk 72', year: 1972 },
+				{ name: 'Ada', year: 1980 },
+				{ name: 'Smalltalk 80', year: 1980 },
+				{ name: 'Objective-C', year: 1984 },
+				{ name: 'C++', year: 1985 },
+				{ name: 'Object Pascal', year: 1986 },
+				{ name: 'Erlang', year: 1986 },
+				{ name: 'Python', year: 1990 },
+				{ name: 'Haskell', year: 1990 },
+				{ name: 'Java', year: 1995 },
+				{ name: 'JavaScript', year: 1995 },
+				{ name: 'Php', year: 1995 },
+				{ name: 'Ruby', year: 1995 },
+				{ name: 'ActionScript', year: 1998 },
+				{ name: 'Visual Basic 6', year: 1998 },
+				{ name: 'C#', year: 2000 },
+				{ name: 'F#', year: 2005 },
+				{ name: 'Go', year: 2009 },
+				{ name: 'Rust', year: 2010 },
+				{ name: 'Kotlin', year: 2011 },
+				{ name: 'Dart', year: 2011 },
+				{ name: 'TypeScript', year: 2012 },
+				{ name: 'Swift', year: 2014 }
+			]
+		}
+	}
+}</code
+>
+
+<p>Languages.vue</p>
+<code class='html'
+>&lt;template&gt;
+	&lt;Timeline
+		:title='timelineTitle'
+		:entries='timelineEntries'
+		sortBy='name'
+	/&gt;
+&lt;/template&gt;
+
+&lt;script src='./Languages.js'&gt;&lt;/script&gt;</code
+>
+
+</div>
+
+<div class='codeblock'>
+<p>Blazor (C#)</p>
 <code class='shell'
 ></code
 >
+</div>
+
+<div class='codeblock'>
+<p>Rust (Yew)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Rust (Seed)</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	Angular cleanly separates concers here, and the boilerplate parts of configuring the dependencies in the module are done automatically by the CLI.
+</p>
+
+<p>
+	React is pretty clean and straightforward in this simple example, but again, putting both the logic and the view in a single file proves to be hard to manage when your code grows.
+	Separating the rendering portion is not a common practice in React, and would mean more varibles passing in function calls.
+</p>
+
+<p>
+	Vue seems to make things more confusing.
+	Custom tags centric frameworks such as .Net Web Forms or JSP imported new tags in the markup if needed, which is were they would be used anyway.
+	But Vue moves this to the code portion, where there’s no mention of it.
+	To make matters worse, the .vue file lists the markup first, and the code later.
+	Maybe we can change the order, but that is not what the examples in the official documentation do.
+	This makes a tiny more sense if everything is crammed up in a single file, but again, I don’t believe that is a good practice either.
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='statemanagement'>Use state management (redux)</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React TypeScript</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>React JavaScript</p>
+<code class='shell'
+></code
+>
+
 </div>
 
 <div class='codeblock'>
