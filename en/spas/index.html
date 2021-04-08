@@ -1273,34 +1273,6 @@ like this
 
 <div class='codeblock'>
 
-<p>languages.module.ts</p>
-<code class='javascript'
-><strong>// this will be created automatically</strong>
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { LanguagesRoutingModule } from './languages-routing.module';
-
-<strong>// this will be added automatically</strong>
-<strong>// import components</strong>
-<strong class='small'>import { LanguagesComponent } from './components/languages.component';</strong>
-<strong>import { TimelineComponent } from './components/timeline/timeline.component';</strong>
-
-<strong>// this will be added automatically</strong>
-<strong>// declare components in the module scope</strong>
-@NgModule({
-	<strong>declarations: [</strong>
-		<strong>LanguagesComponent,</strong>
-		<strong>TimelineComponent</strong>
-	<strong>],</strong>
-	imports: [
-		CommonModule,
-		LanguagesRoutingModule
-	]
-})
-export class LanguagesModule { }</code
->
-
 <p>languages.component.ts</p>
 <code class='javascript'
 >import { Component, OnInit } from '@angular/core';
@@ -1372,6 +1344,34 @@ export class LanguagesComponent implements OnInit {
 	sortBy='name'
 	&gt;&lt;/timeline
 &gt;</code
+>
+
+<p>languages.module.ts</p>
+<code class='javascript'
+><strong>// this will be created automatically</strong>
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { LanguagesRoutingModule } from './languages-routing.module';
+
+<strong>// this will be added automatically</strong>
+<strong>// import components</strong>
+<strong class='small'>import { LanguagesComponent } from './components/languages.component';</strong>
+<strong>import { TimelineComponent } from './components/timeline/timeline.component';</strong>
+
+<strong>// this will be added automatically</strong>
+<strong>// declare components in the module scope</strong>
+@NgModule({
+	<strong>declarations: [</strong>
+		<strong>LanguagesComponent,</strong>
+		<strong>TimelineComponent</strong>
+	<strong>],</strong>
+	imports: [
+		CommonModule,
+		LanguagesRoutingModule
+	]
+})
+export class LanguagesModule { }</code
 >
 
 </div>
@@ -1514,6 +1514,9 @@ export default {
 				{ name: 'Swift', year: 2014 }
 			]
 		}
+	},
+	created() {
+		document.title = 'Languages';
 	}
 }</code
 >
@@ -1580,7 +1583,7 @@ export default {
 
 <section>
 
-<h2 id='statemanagement'>Use state management (redux)</h2>
+<h2 id='statemanagement'>Use state management (redux like)</h2>
 
 <div class='comparison'>
 
