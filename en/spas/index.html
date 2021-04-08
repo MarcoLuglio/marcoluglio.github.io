@@ -1111,8 +1111,10 @@ export default function Timeline(props) {
 
 <div class='codeblock'>
 <p>Vue TypeScript</p>
-<code class='shell'
-></code
+<code class='javascript'
+>// <a href='https://class-component.vuejs.org/'>follow progress on class based components</a>
+// right now the documentation seems out of date
+// and fragmented</code
 >
 </div>
 
@@ -1454,12 +1456,22 @@ export default function Languages() {
 
 <p>Languages.ts</p>
 <code class='javascript'
-></code
+>// <a href='https://class-component.vuejs.org/'>follow progress on class based components</a>
+// right now the documentation seems out of date
+// and fragmented</code
 >
 
 <p>Languages.vue</p>
 <code class='html'
-></code
+>&lt;template&gt;
+	&lt;Timeline
+		:title='timelineTitle'
+		:entries='timelineEntries'
+		sortBy='name'
+	/&gt;
+&lt;/template&gt;
+
+&lt;script src='./Languages.ts' lang='ts'&gt;&lt;/script&gt;</code
 >
 
 </div>
