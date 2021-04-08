@@ -542,15 +542,26 @@ export default router</code
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/cli/generate'># https://angular.io/cli/generate</a></span>
 <span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>class</span> languages/entities/timelineEntry <span class='parameter'>--type</span> entity
-<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>service</span> languages/services/timelineSorter</code
+<span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>service</span> languages/services/timelineSorter
+
+
+</code
 >
 
 <p>timeline-entry.entity.ts</p>
 <code class='javascript'
 >export default class TimelineEntryEntity {
+
+	constructor(name:string = '', date:number = 0) {
+		this.name = name;
+		this.date = date;
+	}
+
 	name:string = '';
 	date:number = 0;
-}</code
+
+}
+</code
 >
 
 <p>timeline-sorter.service.ts</p>
@@ -607,14 +618,54 @@ export default class TimelineSorterService {
 <p>TimelineEntryEntity.ts</p>
 <code class='javascript'
 >export default class TimelineEntryEntity {
+
+	constructor(name:string = '', date:number = 0) {
+		this.name = name;
+		this.date = date;
+	}
+
 	name:string = '';
 	date:number = 0;
+
 }</code
 >
 
 <p>TimelineSorterServices.ts</p>
 <code class='javascript'
-></code
+>import TimelineEntryEntity from '../entities/TimelineEntryEntity';
+
+
+
+
+
+
+
+export default class TimelineSorterService {
+
+	constructor() {
+		//
+	}
+
+	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+		return a.date - b.date;
+	}
+
+	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
+		if (nameA &lt; nameB) {
+			return -1;
+		}
+		if (nameA &gt; nameB) {
+			return 1;
+		}
+
+		return 0;
+
+	}
+
+}</code
 >
 
 </div>
@@ -625,12 +676,45 @@ export default class TimelineSorterService {
 <code class='shell'
 ><span class='keyword'>cd</span> src/languages
 <span class='keyword'>mkdir</span> services
-<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code
 >
 
 <p>TimelineSorterServices.js</p>
 <code class='javascript'
->export function numberSorterService(a, b) {
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function numberSorterService(a, b) {
 	return a.date - b.date;
 }
 
@@ -660,20 +744,60 @@ export function stringSorterService(a, b) {
 <span class='keyword'>mkdir</span> entities
 <span class='keyword'>mkdir</span> services
 <span class='keyword'>touch</span> ./entities/TimelineEntryEntity.ts
-<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.ts</code
 >
 
-<p>timeline-entry.entity.ts</p>
+<p>TimelineEntryEntity.ts</p>
 <code class='javascript'
 >export default class TimelineEntryEntity {
+
+	constructor(name:string = '', date:number = 0) {
+		this.name = name;
+		this.date = date;
+	}
+
 	name:string = '';
 	date:number = 0;
+
 }</code
 >
 
 <p>TimelineSorterServices.ts</p>
 <code class='javascript'
-></code
+>import TimelineEntryEntity from '../entities/TimelineEntryEntity';
+
+
+
+
+
+
+
+export default class TimelineSorterService {
+
+	constructor() {
+		//
+	}
+
+	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+		return a.date - b.date;
+	}
+
+	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
+		if (nameA &lt; nameB) {
+			return -1;
+		}
+		if (nameA &gt; nameB) {
+			return 1;
+		}
+
+		return 0;
+
+	}
+
+}</code
 >
 
 </div>
@@ -684,12 +808,45 @@ export function stringSorterService(a, b) {
 <code class='shell'
 ><span class='keyword'>cd</span> src/languages
 <span class='keyword'>mkdir</span> services
-<span class='keyword'>touch</span> ./services/TimelineSorterServices.js</code
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code
 >
 
 <p>TimelineSorterServices.js</p>
 <code class='javascript'
->export function numberSorterService(a, b) {
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function numberSorterService(a, b) {
 	return a.date - b.date;
 }
 
@@ -873,11 +1030,23 @@ any html tag in the final rendering
 <code class='javascript'
 >import { numberSorterService, stringSorterService } from '../services/TimelineSorterServices';
 
+
+
+
+
+
+
+
+
+
+
+
 // component markup attributes are passed in the props parameter
 // The class name is the markup tag name
 export default function Timeline(props) {
 
 	let title = 'Timeline';
+
 
 	let _entries = [];
 
@@ -1136,6 +1305,7 @@ export class LanguagesModule { }</code
 <code class='javascript'
 >import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import TimelineEntryEntity from '../entities/timeline-entry.entity';
 
 @Component({
 	selector: 'app-languages',
@@ -1146,38 +1316,38 @@ export class LanguagesComponent implements OnInit {
 
 	timelineTitle:string = 'Programming languages';
 
-	timelineEntries:Array&lt;{ name: string; year:number }&gt; = [
-		{ name: 'Fortran', year: 1957 },
-		{ name: 'Lisp', year: 1958 },
-		{ name: 'Algol', year: 1958 },
-		{ name: 'Cobol', year: 1959 },
-		{ name: 'Simula', year: 1962 },
-		{ name: 'Basic', year: 1964 },
-		{ name: 'Pascal', year: 1970 },
-		{ name: 'C', year: 1972 },
-		{ name: 'Smalltalk 72', year: 1972 },
-		{ name: 'Ada', year: 1980 },
-		{ name: 'Smalltalk 80', year: 1980 },
-		{ name: 'Objective-C', year: 1984 },
-		{ name: 'C++', year: 1985 },
-		{ name: 'Object Pascal', year: 1986 },
-		{ name: 'Erlang', year: 1986 },
-		{ name: 'Python', year: 1990 },
-		{ name: 'Haskell', year: 1990 },
-		{ name: 'Java', year: 1995 },
-		{ name: 'JavaScript', year: 1995 },
-		{ name: 'Php', year: 1995 },
-		{ name: 'Ruby', year: 1995 },
-		{ name: 'ActionScript', year: 1998 },
-		{ name: 'Visual Basic 6', year: 1998 },
-		{ name: 'C#', year: 2000 },
-		{ name: 'F#', year: 2005 },
-		{ name: 'Go', year: 2009 },
-		{ name: 'Rust', year: 2010 },
-		{ name: 'Kotlin', year: 2011 },
-		{ name: 'Dart', year: 2011 },
-		{ name: 'TypeScript', year: 2012 },
-		{ name: 'Swift', year: 2014 }
+	timelineEntries:Array&lt;TimelineEntryEntity&gt; = [
+		new TimelineEntryEntity('Fortran', 1957),
+		new TimelineEntryEntity('Lisp', 1958),
+		new TimelineEntryEntity('Algol', 1958),
+		new TimelineEntryEntity('Cobol', 1959),
+		new TimelineEntryEntity('Simula', 1962),
+		new TimelineEntryEntity('Basic', 1964),
+		new TimelineEntryEntity('Pascal', 1970),
+		new TimelineEntryEntity('C', 1972),
+		new TimelineEntryEntity('Smalltalk 72', 1972),
+		new TimelineEntryEntity('Ada', 1980),
+		new TimelineEntryEntity('Smalltalk 80', 1980),
+		new TimelineEntryEntity('Objective-C', 1984),
+		new TimelineEntryEntity('C++', 1985),
+		new TimelineEntryEntity('Object Pascal', 1986),
+		new TimelineEntryEntity('Erlang', 1986),
+		new TimelineEntryEntity('Python', 1990),
+		new TimelineEntryEntity('Haskell', 1990),
+		new TimelineEntryEntity('Java', 1995),
+		new TimelineEntryEntity('JavaScript', 1995),
+		new TimelineEntryEntity('Php', 1995),
+		new TimelineEntryEntity('Ruby', 1995),
+		new TimelineEntryEntity('ActionScript', 1998),
+		new TimelineEntryEntity('Visual Basic 6', 1998),
+		new TimelineEntryEntity('C#', 2000),
+		new TimelineEntryEntity('F#', 2005),
+		new TimelineEntryEntity('Go', 2009),
+		new TimelineEntryEntity('Rust', 2010),
+		new TimelineEntryEntity('Kotlin', 2011),
+		new TimelineEntryEntity('Dart', 2011),
+		new TimelineEntryEntity('TypeScript', 2012),
+		new TimelineEntryEntity('Swift', 2014)
 	];
 
 	constructor(private titleService: Title) {
