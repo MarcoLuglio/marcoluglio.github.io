@@ -11222,6 +11222,7 @@ const DartKeywordToken = class DartKeywordToken extends SourceSimpleCharacterSeq
 			'enum',
 			'export',
 			'extends',
+			'extension',
 			'factory',
 			'final',
 			'finally',
@@ -11243,6 +11244,7 @@ const DartKeywordToken = class DartKeywordToken extends SourceSimpleCharacterSeq
 			// 'part', // TODO check
 			'required',
 			'rethrow',
+			'return',
 			'set',
 			'show',
 			'static',
@@ -11308,7 +11310,20 @@ const DartTypesToken = class DartTypesToken extends Token {
 				// 'Set', // <Type>{}
 				'Stream',
 				'String',
-				'Symbol'
+				'Symbol',
+
+				'MaterialApp',
+				'ThemeData',
+				'Colors',
+				'Widget',
+				'StatelessWidget',
+				'StatefulWidget',
+				'Key',
+				'BuildContext',
+				'WidgetBuilder',
+				'FutureBuilder',
+				'ListView',
+				'Text'
 
 			])}
 		});
