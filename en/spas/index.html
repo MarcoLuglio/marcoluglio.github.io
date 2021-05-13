@@ -14,7 +14,7 @@
 
 
 
-<h1>Single page applications <span>Angular, React, Vue and Web Assembly with C# + Blazor, Rust + Yew and Rust + Seed</span></h1>
+<h1>Single page applications <span>Flutter, Angular, React, Vue and Web Assembly with C# + Blazor, Rust + Yew, Rust + Seed and Web Components</span></h1>
 
 <p>
 	Rust has a few <a href='https://www.arewewebyet.org/topics/frameworks/#frontend'>spa frameworks</a>.
@@ -36,6 +36,19 @@
 <h2 id='createaproject'>Create a project</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://flutter.dev/docs/get-started/web'># https://flutter.dev/docs/get-started/web</a></span>
+<span class='keyword'>flutter</span> <span class='keyword'>create</span> spa_sample_project
+
+<span class='keyword'>cd</span> spa_sample_project
+<span class='keyword'>flutter</span> <span class='keyword'>run</span> <span class='parameter'>-d</span> chrome <span class='parameter'>--web-renderer</span> html
+<span class='comment lineComment'># uses port 51068 by default</span>
+<span class='comment lineComment'># canvaskit or auto can also be used as --web-renderer option</span></code
+>
+</div>
 
 <div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
@@ -271,6 +284,13 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/cli/add'># https://angular.io/cli/add</a></span>
@@ -309,12 +329,19 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 </div>
 
 <div class='codeblock'>
-<p>Blazor</p>
+<p>Blazor (C#)</p>
 -
 </div>
 
 <div class='codeblock'>
 <p>Rust</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Components</p>
 <code class='shell'
 ></code
 >
@@ -339,6 +366,62 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Flutter (Dart) - main.dart</p>
+<code class='dart'
+>import 'package:flutter/material.dart';
+
+<strong>// lazy loading using the import deferred as keywords</strong>
+<strong class='small'>import</strong> 'Languages.dart' <strong class='small'>deferred as</strong> LanguagesLoader;
+
+void main() {
+	runApp(App());
+}
+
+class App extends StatelessWidget {
+
+	@override
+	Widget build(BuildContext context) {
+
+		return MaterialApp(
+
+			title: 'SpaSampleFlutter',
+
+			theme: ThemeData(
+				primarySwatch: Colors.blue,
+			),
+
+			<strong>routes: &lt;String, WidgetBuilder&gt;{</strong>
+
+				home: Text('Home'),
+
+				<strong>/*</strong>
+				<strong class='comment'><span class='comment blockComment'>Here we map the path to a component which we will create later</span></strong>
+				<strong class='comment'><span class='comment blockComment'>FutureBuilder is used to display lazy loaded content</span></strong>
+				<strong class='comment'><span class='comment blockComment'>Also notice how simple it is to provide alternate content</span></strong>
+				<strong class='comment'><span class='comment blockComment'>while a module is loading</span></strong>
+				<strong class='comment'><span class='comment blockComment'>*/</span></strong>
+				<strong>'/languages':</strong> (BuildContext context) => <strong>FutureBuilder(</strong>
+					<strong>future: LanguagesLoader.loadLibrary(),</strong>
+					builder: (context, snapshot) {
+						<strong>if (snapshot.connectionState == ConnectionState.done) {</strong>
+							<strong>return LanguagesLoader.Languages();</strong>
+						<strong>} else {</strong>
+							<strong>return Text('Loading...');</strong>
+						<strong>}</strong>
+					},
+				<strong>)</strong>
+
+			<strong>}</strong>
+
+		);
+
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/guide/lazy-loading-ngmodules'># https://angular.io/guide/lazy-loading-ngmodules</a></span>
@@ -356,7 +439,7 @@ const routes:Routes = [{
 	<strong class='small'>path: 'languages',</strong>
 	<strong>// lazy loading using the import().then() async function</strong>
 	loadChildren: () => <strong class='small'>import(</strong>'./languages/languages.module'<strong>)</strong>
-		<strong>.then(</strong> => m.LanguagesModule<strong>)</strong>
+		<strong>.then(</strong>m => m.LanguagesModule<strong>)</strong>
 }];</code
 >
 
@@ -520,6 +603,13 @@ export default router</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
 </div>
 
 <p>
@@ -537,6 +627,13 @@ export default router</code
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
 
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
@@ -552,13 +649,13 @@ export default router</code
 <code class='javascript'
 >export default class TimelineEntryEntity {
 
-	constructor(name:string = '', date:number = 0) {
+	constructor(name:string = '', year:number = 0) {
 		this.name = name;
-		this.date = date;
+		this.year = year;
 	}
 
 	name:string = '';
-	date:number = 0;
+	year:number = 0;
 
 }
 </code
@@ -581,7 +678,7 @@ export default class TimelineSorterService {
 	}
 
 	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
-		return a.date - b.date;
+		return a.year - b.year;
 	}
 
 	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
@@ -619,13 +716,13 @@ export default class TimelineSorterService {
 <code class='javascript'
 >export default class TimelineEntryEntity {
 
-	constructor(name:string = '', date:number = 0) {
+	constructor(name:string = '', year:number = 0) {
 		this.name = name;
-		this.date = date;
+		this.year = year;
 	}
 
 	name:string = '';
-	date:number = 0;
+	year:number = 0;
 
 }</code
 >
@@ -647,7 +744,7 @@ export default class TimelineSorterService {
 	}
 
 	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
-		return a.date - b.date;
+		return a.year - b.year;
 	}
 
 	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
@@ -715,7 +812,7 @@ export default class TimelineSorterService {
 
 
 export function numberSorterService(a, b) {
-	return a.date - b.date;
+	return a.year - b.year;
 }
 
 export function stringSorterService(a, b) {
@@ -751,13 +848,13 @@ export function stringSorterService(a, b) {
 <code class='javascript'
 >export default class TimelineEntryEntity {
 
-	constructor(name:string = '', date:number = 0) {
+	constructor(name:string = '', year:number = 0) {
 		this.name = name;
-		this.date = date;
+		this.year = year;
 	}
 
 	name:string = '';
-	date:number = 0;
+	year:number = 0;
 
 }</code
 >
@@ -779,7 +876,7 @@ export default class TimelineSorterService {
 	}
 
 	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
-		return a.date - b.date;
+		return a.year - b.year;
 	}
 
 	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
@@ -847,7 +944,7 @@ export default class TimelineSorterService {
 
 
 export function numberSorterService(a, b) {
-	return a.date - b.date;
+	return a.year - b.year;
 }
 
 export function stringSorterService(a, b) {
@@ -889,6 +986,13 @@ export function stringSorterService(a, b) {
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
 </div>
 
 <p>
@@ -904,6 +1008,70 @@ export function stringSorterService(a, b) {
 <h2 id='createacomponent'>Create a component</h2>
 
 <div class='comparison'>
+
+<div class='codeblock'>
+
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+
+<p>timeline.dart</p>
+<code class='dart'
+>import 'package:flutter/material.dart';
+import 'package:spa_sample_flutter/SortBy.dart';
+import 'package:spa_sample_flutter/entities/TimelineEntryEntity.dart';
+
+// widgets that change their content must inherit from StatefulWidget
+class Timeline extends StatefulWidget {
+
+	// component attributes are passed in the constructor
+	Timeline({Key key, this.title, @required this.entries, this.sortBy}) : super(key: key);
+
+	final String title;
+
+	final List&lt;TimelineEntryEntity&gt; entries;
+
+	final SortBy sortBy;
+
+	@override
+	_TimelineState createState() => _TimelineState();
+
+}
+
+class _TimelineState extends State<Timeline> {
+
+	List&lt;TimelineEntryEntity&gt; _sortedEntries;
+
+	void sort() {
+
+		var sortedEntries = this.widget.entries;
+
+		// setState triggers a rebuild
+		setState(() {
+			_sortedEntries = sortedEntries;
+		});
+
+	}
+
+	// view is built with dart language syntax
+	@override
+	Widget build(BuildContext context) {
+		return ListView.builder(
+			padding: const EdgeInsets.all(8),
+			itemCount: this._sortedEntries.length,
+			itemBuilder: (BuildContext context, int index) {
+				var entry = this._sortedEntries[index];
+				// TODO convert to links
+				return Text('${entry.name} - ${entry.year}');
+			}
+		);
+	}
+
+}</code
+>
+
+</div>
 
 <div class='codeblock'>
 
@@ -946,7 +1114,7 @@ export class TimelineComponent implements OnInit {
 			case 'name':
 				sortedEntries = entries.sort(this.timelineSorterService.stringSorter);
 				break;
-			case 'date':
+			case 'year':
 				sortedEntries = entries.sort(this.timelineSorterService.numberSorter);
 				break;
 			default:
@@ -1060,7 +1228,7 @@ export default function Timeline(props) {
 			case 'name':
 				sortedEntries = entries.sort(stringSorterService);
 				break;
-			case 'date':
+			case 'year':
 				sortedEntries = entries.sort(numberSorterService);
 				break;
 			default:
@@ -1257,6 +1425,13 @@ like this
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
 </div>
 
 <p>
@@ -1275,7 +1450,84 @@ like this
 
 <div class='codeblock'>
 
-<p>languages.component.ts</p>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+
+<p>Languages.dart</p>
+<code class='dart'
+>import 'package:flutter/material.dart';
+import 'package:spa_sample_flutter/SortBy.dart';
+import 'package:spa_sample_flutter/Timeline.dart';
+import 'package:spa_sample_flutter/entities/TimelineEntryEntity.dart';
+// import 'Timeline.dart';
+
+class Languages extends StatelessWidget {
+
+	Languages({Key key, this.timelineTitle}) : super(key: key);
+
+	final String timelineTitle;
+
+	final List&lt;TimelineEntryEntity&gt; timelineEntries = [
+		// new keyword is optional
+		new TimelineEntryEntity(name: 'Fortran', year: 1957),
+		new TimelineEntryEntity(name: 'Lisp', year: 1958),
+		new TimelineEntryEntity(name: 'Algol', year: 1958),
+		new TimelineEntryEntity(name: 'Cobol', year: 1959),
+		new TimelineEntryEntity(name: 'Simula', year: 1962),
+		new TimelineEntryEntity(name: 'Basic', year: 1964),
+		new TimelineEntryEntity(name: 'Pascal', year: 1970),
+		new TimelineEntryEntity(name: 'C', year: 1972),
+		new TimelineEntryEntity(name: 'Smalltalk 72', year: 1972),
+		new TimelineEntryEntity(name: 'Ada', year: 1980),
+		new TimelineEntryEntity(name: 'Smalltalk 80', year: 1980),
+		new TimelineEntryEntity(name: 'Objective-C', year: 1984),
+		new TimelineEntryEntity(name: 'C++', year: 1985),
+		new TimelineEntryEntity(name: 'Object Pascal', year: 1986),
+		new TimelineEntryEntity(name: 'Erlang', year: 1986),
+		new TimelineEntryEntity(name: 'Python', year: 1990),
+		new TimelineEntryEntity(name: 'Haskell', year: 1990),
+		new TimelineEntryEntity(name: 'Java', year: 1995),
+		new TimelineEntryEntity(name: 'JavaScript', year: 1995),
+		new TimelineEntryEntity(name: 'Php', year: 1995),
+		new TimelineEntryEntity(name: 'Ruby', year: 1995),
+		new TimelineEntryEntity(name: 'ActionScript', year: 1998),
+		new TimelineEntryEntity(name: 'Visual Basic 6', year: 1998),
+		new TimelineEntryEntity(name: 'C#', year: 2000),
+		new TimelineEntryEntity(name: 'F#', year: 2005),
+		new TimelineEntryEntity(name: 'Go', year: 2009),
+		new TimelineEntryEntity(name: 'Rust', year: 2010),
+		new TimelineEntryEntity(name: 'Kotlin', year: 2011),
+		new TimelineEntryEntity(name: 'Dart', year: 2011),
+		new TimelineEntryEntity(name: 'TypeScript', year: 2012),
+		new TimelineEntryEntity(name: 'Swift', year: 2014)
+	];
+
+	@override
+	Widget build(BuildContext context) {
+
+		// TODO change page title
+
+		return Scaffold(
+			body: Timeline(
+			title: 'Programming languages',
+			entries: this.timelineEntries,
+			sortBy: SortBy.name,
+		));
+	}
+
+}</code
+>
+
+
+</div>
+
+
+
+<div class='codeblock'>
+
+<p>Angular - languages.component.ts</p>
 <code class='javascript'
 >import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -1386,7 +1638,7 @@ export class LanguagesModule { }</code
 </div>
 
 <div class='codeblock'>
-<p>React JavaScript</p>
+<p>React JavaScript - languages.jsx</p>
 <code class='javascript'
 >import React, { useEffect } from 'react';
 
@@ -1454,7 +1706,7 @@ export default function Languages() {
 
 <div class='codeblock'>
 
-<p>Languages.ts</p>
+<p>Vue TypeScript - Languages.ts</p>
 <code class='javascript'
 >// <a href='https://class-component.vuejs.org/'>follow progress on class based components</a>
 // right now the documentation seems out of date
@@ -1478,7 +1730,7 @@ export default function Languages() {
 
 <div class='codeblock'>
 
-<p>Languages.js</p>
+<p>Vue JavaScript - Languages.js</p>
 <code class='javascript'
 >// import the component,
 // even though we will not reference it from JavaScript!
@@ -1569,6 +1821,13 @@ export default {
 >
 </div>
 
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
 </div>
 
 <p>
@@ -1600,6 +1859,13 @@ export default {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ></code
@@ -1618,6 +1884,139 @@ export default {
 <p>React JavaScript</p>
 <code class='shell'
 ></code
+>
+
+<p>languageSlice.js</p>
+<code class='javascript'
+>import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+// for async operations such as an http request
+// redux gives us a helper called createAsyncThunk
+// that emits events during the execution and
+// play nice with reducers (applicaton state mutators)
+
+const languageReduxSliceKey = 'language';
+
+export const languageAsyncThunk = createAsyncThunk(
+
+	`${languageReduxSliceKey}/get`,
+
+	async (payload) => {
+
+		const response = await new Promise((resolve, reject) => {
+			resolve({
+				title: 'some title',
+				description: 'some description'
+			});
+		});
+
+		return response;
+
+	}
+
+);
+
+// redux also gives us a helper called createSlice, that simplifies
+// operating on a branch (or slice) of the application state tree
+const languageSlice = createSlice({
+
+	name: languageReduxSliceKey,
+
+	initialState: {
+		status: 'idle',
+		title: '',
+		description: ''
+	},
+
+	// the regular (non thunk event) reducers are registered here
+	reducers: {
+	},
+
+	// the thunk event reducers are registered here
+	extraReducers: builder => {
+		builder
+			.addCase(languageAsyncThunk.pending, (state, action) => {
+				state.status = 'loading';
+			})
+			.addCase(languageAsyncThunk.fulfilled, (state, action) => {
+				const payload = action.payload;
+				state.title = payload.title;
+				state.description = payload.description;
+				state.status = 'idle';
+			})
+			.addCase(languageAsyncThunk.rejected, (state, action) => {
+				state.status = 'error';
+			});
+	}
+
+});
+
+// we export all reducers like this
+export default languageSlice.reducer;
+
+// and the selectors for the branch (or slice)
+// of the applicaton state tree like this
+export const selectLanguage = state => state[languageReduxSliceKey];</code
+>
+
+<p>store.js</p>
+<code class='javascript'
+>import { configureStore } from '@reduxjs/toolkit';
+import languageReducer from '../features/languages/languageSlice';
+
+export default configureStore({
+	reducer: {
+		language: languageReducer
+	},
+});</code
+>
+
+<p>Language.jsx</p>
+<code class='javascript'
+>// redux
+import { useSelector, useDispatch } from 'react-redux';
+import { languageAsyncThunk, selectLanguage } from '../languageSlice';
+
+export default function Language(props) {
+
+	// read the current redux tree state branch
+
+	const language = useSelector(selectLanguage);
+	let languageTitle = language.title ?? '';
+	let languageDescription = language.description ?? '';
+
+	// push a new state for a branch
+
+	const dispatch = useDispatch();
+
+	async function loadLanguage(language) {
+
+		const resultAction = await dispatch(languageAsyncThunk({
+			language: language
+		}));
+
+		if (languageAsyncThunk.fulfilled.match(resultAction)) {
+			languageTitle = language.title;
+			languageDescription = language.description;
+		} else {
+			// resultAction.payload
+			// resultAction.error
+		}
+
+	}
+
+	loadLanguage('JavaScript'); // TODO check a flag to prevent multiple calls
+
+	// render the current state
+
+	return (
+		&lt;&gt;
+			{languageTitle}
+			{languageDescription}
+		&lt;/&gt;
+	);
+
+}</code
 >
 
 </div>
@@ -1652,6 +2051,13 @@ export default {
 
 <div class='codeblock'>
 <p>Rust (Seed)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Components</p>
 <code class='shell'
 ></code
 >
@@ -1675,6 +2081,13 @@ export default {
 <div class='comparison'>
 
 <div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Angular <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ></code
@@ -1725,6 +2138,13 @@ export default {
 
 <div class='codeblock'>
 <p>Rust (Seed)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Components</p>
 <code class='shell'
 ></code
 >
