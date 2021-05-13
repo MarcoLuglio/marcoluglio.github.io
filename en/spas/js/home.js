@@ -7,24 +7,21 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 (async function() {
 
 	const tiposBlocos = [
-		'shell',
-		'html',
-		'rust',
-		//'go',
 		//'cpp',
-		//'objectivec',
-		//'swift',
-		//'kotlin',
-		//'java',
 		'cs',
+		'dart',
+		//'go',
+		'html',
+		//'java',
 		'javascript',
-		//'python',
-		//'visualbasic',
-		//'sql',
-		'webassembly',
-		'toml'
+		//'kotlin',
 		//'llvm',
-		//'assembly'
+		//'python',
+		'rust',
+		'shell',
+		//'swift',
+		'toml',
+		'webassembly'
 	];
 
 	const blocosDeCodigo = [];
