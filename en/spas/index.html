@@ -14,10 +14,10 @@
 
 
 
-<h1>Single page applications <span>Flutter, Angular, React, Vue and Web Assembly with C# + Blazor, Rust + Yew, Rust + Seed and Web Components</span></h1>
+<h1>Single page applications <span>Flutter, React, Angular, Vue, Web Assembly with C# + Blazor,  + Yew,  + Seed, Go with Vugu and Web Components with Kotlin/JS and JavaScript</span></h1>
 
 <p>
-	Rust has a few <a href='https://www.arewewebyet.org/topics/frameworks/#frontend'>spa frameworks</a>.
+	 has a few <a href='https://www.arewewebyet.org/topics/frameworks/#frontend'>spa frameworks</a>.
 	I’m testing the two most popular ones.
 </p>
 
@@ -50,8 +50,37 @@
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
+<p>React (TypeScript) - create-react-app - terminal (sh like)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://create-react-app.dev/docs/adding-typescript'># https://create-react-app.dev/docs/adding-typescript</a></span>
+<span class='comment lineComment'># this template adds TypeScript, router and Redux</span>
+<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> typescript
+
+<span class='keyword'>cd</span> spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>start</span> <span class='comment lineComment'># uses port 3000 by default</span></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>React (JavaScript) - create-react-app - terminal (sh like)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://create-react-app.dev/docs/adding-typescript'># https://create-react-app.dev/docs/adding-typescript</a></span>
+<span class='comment lineComment'># this template adds JavaScript, router and Redux</span>
+<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux
+
+<span class='keyword'>cd</span> spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>start</span> <span class='comment lineComment'># uses port 3000 by default</span></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://cli.angular.io'># https://cli.angular.io</a></span>
 <span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @angular/cli
@@ -65,24 +94,9 @@
 >
 </div>
 
-<div class='codeblock'>
-<p>create-react-app - terminal (sh like)</p>
-<code class='shell'
-><span class='comment lineComment'><a href='https://create-react-app.dev/docs/adding-typescript'># https://create-react-app.dev/docs/adding-typescript</a></span>
-<span class='comment lineComment'># this template adds TypeScript, router and Redux</span>
-<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> typescript
-
-<span class='comment lineComment'># or this template based on JavaScript, router and Redux</span>
-<span class='keyword'>npx</span> <span class='keyword'>create-react-app</span> spa-sample-project <span class='parameter'>--template</span> redux
-
-<span class='keyword'>cd</span> spa-sample-project
-<span class='keyword'>npm</span> <span class='keyword'>install</span>
-<span class='keyword'>npm</span> <span class='keyword'>start</span> <span class='comment lineComment'># uses port 3000 by default</span></code
->
-</div>
 
 <div class='codeblock'>
-<p>Vue <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
+<p>Vue (TypeScript) <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://cli.vuejs.org'># https://cli.vuejs.org</a></span>
 <span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
@@ -101,6 +115,28 @@
 >
 </div>
 
+
+<div class='codeblock'>
+<p>Vue (JavaScript) <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://cli.vuejs.org'># https://cli.vuejs.org</a></span>
+<span class='keyword'>npm</span> <span class='keyword'>install</span> <span class='parameter'>-g</span> @vue/cli @vue/cli-service-global
+
+<span class='comment lineComment'># the command below should work for windows</span>
+<span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
+
+<span class='comment lineComment'># but in my mac I had to use</span>
+<span class='keyword'>env</span> CC=clang CXX=clang++ <span class='keyword'>vue</span> <span class='keyword'>create</span> spa-sample-project
+
+<span class='comment lineComment'># then manually select features for adding TypeScript, router and Vuex (Redux like)</span>
+
+<span class='keyword'>cd</span> create spa-sample-project
+<span class='keyword'>npm</span> <span class='keyword'>install</span>
+<span class='keyword'>npm</span> <span class='keyword'>run</span> serve <span class='comment lineComment'># uses port 8080 by default</span></code
+>
+</div>
+
+
 <div class='codeblock'>
 <p>Blazor (C#) - terminal (sh like)</p>
 <code class='shell'
@@ -115,9 +151,10 @@
 >
 </div>
 
+
 <div class='codeblock'>
 
-<p>Rust (Yew) - terminal (sh like)</p>
+<p>Yew (Rust) - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://yew.rs/en'># https://yew.rs/en</a></span>
 <span class='keyword'>cargo</span> <span class='keyword'>install</span> wasm-pack
@@ -158,9 +195,10 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 
 </div>
 
+
 <div class='codeblock'>
 
-<p>Rust (Seed) - terminal (sh like)</p>
+<p>Seed (Rust) - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://seed-rs.org'># https://seed-rs.org</a></span>
 <span class='keyword'>cargo</span> <span class='keyword'>install</span> wasm-pack
@@ -201,15 +239,43 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 
 </div>
 
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://www.vugu.org/doc/start'># https://www.vugu.org/doc/start</a></span></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://kotlinlang.org/docs/js-project-setup.html'># https://kotlinlang.org/docs/js-project-setup.html</a></span></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
+
 </div>
 
 <p>
-	Angular, React, Vue and Blazor create git local repositories as part of their starting templates without asking you.
-	<br />At the time of this writing, I'm using Node.js 15 (15.9.0 specifically) which is not LTS.
-	For this Node.js version, Angular <abbr title='Command line interface'>CLI</abbr> complained about npm 7, and asked me to downgrade to npm 6.
+	React, Angular, Vue and Blazor create git local repositories as part of their starting templates without asking you.
+	<br />At the time of this writing, I'm using Node.js 15 (15.9.0 specifically) which is not <abbr title='long term support'>LTS</abbr>.
 	<br />The <code>redux-typescript</code> react template failed to install due to the TypeScript version being incompatible and I had to fallback to the original <code>typescript</code> template and manually configure Redux.
+	For this Node.js version, Angular <abbr title='command line interface'>CLI</abbr> complained about npm 7, and asked me to downgrade to npm 6.
 	<br />Vue 3 is still in beta.
+	<br />Vugu is still experimental
 	<br />And obviously Rust Yew and Seed are still a long way to go when it comes to project templates.
+	<br />KotlinJS and raw web components don’t really have a starting template.
+	They are not frameworks or libraries per se, but make use of browser APIs.
 </p>
 
 <p>
@@ -221,54 +287,89 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 	<thead>
 		<tr>
 			<th></th>
-			<th scope='col'>Angular 11.2.1</th>
-			<th scope='col'>React 17.0.1 TypeScript</th>
-			<th scope='col'>React 17.0.1 JavaScript</th>
-			<th scope='col'>Vue 3.0.0 TypeScript</th>
-			<th scope='col'>Vue 3.0.0 JavaScript</th>
-			<th scope='col'>C# Blazor</th>
-			<th scope='col'>Rust Yew</th>
-			<th scope='col'>Rust Seed</th>
+			<th scope='col'>source + libraries</th>
+			<th scope='col'>compiled</th>
+			<th scope='col'>initial page load</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<th scope='row'>source + libraries</th>
-			<td>448.2MB</td>
+			<th scope='row'>Flutter 2 (Dart)</th>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th scope='row'>React 17.0.1 (TypeScript)</th>
 			<td>219.1MB+</td>
+			<td></td>
+			<td>1.65MB+</td>
+		</tr>
+		<tr>
+			<th scope='row'>React 17.0.1 (JavaScript)</th>
 			<td>237.9MB</td>
+			<td></td>
+			<td>1.94MB</td>
+		</tr>
+		<tr>
+			<th scope='row'>Angular 11.2.1 (TypeScript)</th>
+			<td>448.2MB</td>
+			<td></td>
+			<td>2.88MB</td>
+		</tr>
+
+		<tr>
+			<th scope='row'>Vue 3.0.0 (TypeScript)</th>
 			<td>493.2MB</td>
+			<td></td>
+			<td>2.80MB</td>
+		</tr>
+		<tr>
+			<th scope='row'>Vue 3.0.0 (JavaScript)</th>
 			<td>120.1MB</td>
+			<td></td>
+			<td>2.33MB</td>
+		</tr>
+		<tr>
+			<th scope='row'>Blazor (C#)</th>
 			<td>48.6MB</td>
+			<td></td>
+			<td>0.52MB</td>
+		</tr>
+		<tr>
+			<th scope='row'>Yew (Rust)</th>
 			<td>633.2MB</td>
 			<td></td>
+			<td>0.22MB</td>
 		</tr>
 		<tr>
-			<th scope='row'>compiled</th>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<th scope='row'>Seed (Rust)</th>
 			<td></td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<th scope='row'>initial page load</th>
-			<td>2.88MB</td>
-			<td>1.65MB+</td>
-			<td>1.94MB</td>
-			<td>2.80MB</td>
-			<td>2.33MB</td>
-			<td>0.52MB</td>
-			<td>0.223MB</td>
+			<th scope='row'>Vugu (Go)</th>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th scope='row'>Kotlin/JS</th>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<th scope='row'>Web components</th>
+			<td></td>
+			<td></td>
 			<td></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan='9'></td>
+			<td colspan='('></td>
 		</tr>
 	</tfoot>
 </table>
@@ -290,8 +391,27 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
+	<p>React (TypeScript)</p>
+	<code class='shell'
+	><span class='comment lineComment'><a href='https://reactrouter.com/web/guides/quick-start'># https://reactrouter.com/web/guides/quick-start</a></span>
+	<span class='keyword'>npm</span> <span class='keyword'>install</span> react-router-dom</code
+	>
+</div>
+
+
+<div class='codeblock'>
+	<p>React (JavaScript)</p>
+	<code class='shell'
+	><span class='comment lineComment'><a href='https://reactrouter.com/web/guides/quick-start'># https://reactrouter.com/web/guides/quick-start</a></span>
+	<span class='keyword'>npm</span> <span class='keyword'>install</span> react-router-dom</code
+	>
+</div>
+
+
+<div class='codeblock'>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr> - terminal (sh like)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/cli/add'># https://angular.io/cli/add</a></span>
 
@@ -303,42 +423,55 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 >
 </div>
 
-<div class='codeblock'>
-<p>React TypeScript</p>
-<code class='shell'
-></code
->
-</div>
 
 <div class='codeblock'>
-<p>React JavaScript</p>
-<code class='shell'
-><span class='comment lineComment'><a href='https://reactrouter.com/web/guides/quick-start'># https://reactrouter.com/web/guides/quick-start</a></span>
-<span class='keyword'>npm</span> <span class='keyword'>install</span> react-router-dom</code
->
-</div>
-
-<div class='codeblock'>
-<p>Vue TypeScript</p>
+<p>Vue (TypeScript)</p>
 -
 </div>
 
+
 <div class='codeblock'>
-<p>Vue JavaScript</p>
+<p>Vue (JavaScript)</p>
 -
 </div>
+
 
 <div class='codeblock'>
 <p>Blazor (C#)</p>
 -
 </div>
 
+
 <div class='codeblock'>
-<p>Rust</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
+
+<div class='codeblock'>
+<p>Seed (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
 
 <div class='codeblock'>
 <p>Web Components</p>
@@ -350,9 +483,9 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 </div>
 
 <p>
-	Not sure why Angular doesn’t provide <abbr title='Progressive Web App'>PWA</abbr> support out of the box.
-	<br />Redux + TypeScript template for React will probably get fixed eventually.
-	Nevertheless, it is interesting to know that Redux is not providing TypeScript support at the same level as JavaScript.
+	Redux + TypeScript template for React will probably get fixed eventually.
+	<br />Nevertheless, it is interesting to know that Redux is not providing TypeScript support at the same level as JavaScript.
+	<br />Not sure why Angular doesn’t provide <abbr title='Progressive Web App'>PWA</abbr> support out of the box.
 </p>
 
 </section>
@@ -361,7 +494,7 @@ args = ["-i", "./static/", "-p", "3000", "--nocache", "--try-file", "./static/in
 
 <section>
 
-<h2 id='createamodule'>Create a module</h2>
+<h2 id='createamoduleroute'>Create a module and route</h2>
 
 <div class='comparison'>
 
@@ -421,8 +554,84 @@ class App extends StatelessWidget {
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>React (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+
+<p>React (JavaScript)</p>
+<code class='shell'
+><span class='comment lineComment'><a href='https://reactjs.org/docs/code-splitting.html'># https://reactjs.org/docs/code-splitting.html</a></span>
+<span class='keyword'>cd</span> src/features
+<span class='keyword'>mkdir</span> languages
+<span class='keyword'>touch</span> ./languages/Languages.jsx</code
+>
+
+<p>index.jsx</p>
+<code class='javascript'
+>import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import store from './app/store';
+import { Provider } from 'react-redux';
+
+<strong>import { BrowserRouter as Router, Route } from 'react-router-dom';</strong>
+
+ReactDOM.render(
+	&lt;React.StrictMode&gt;
+	&lt;Provider store={store}&gt;
+	<strong>&lt;Router&gt;</strong>
+	<strong>&lt;Route path='/'&gt;</strong>
+	&lt;App /&gt;
+	<strong>&lt;/Route&gt;</strong>
+	<strong>&lt;/Router&gt;</strong>
+	&lt;/Provider&gt;
+	&lt;/React.StrictMode&gt;,
+	document.getElementById('root')
+);</code
+>
+
+<p>App.jsx</p>
+<code class='javascript'
+><strong>// lazy loading using the lazy(import()) async functions</strong>
+import React, { lazy, Suspense } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
+
+const Languages = <strong>lazy(</strong>() => <strong>import(</strong>'./features/languages/Languages'<strong>));</strong>
+
+function App() {
+	return (
+		&lt;&gt;
+			{<strong>/*</strong>
+			<strong class='comment'><span class='comment blockComment'>routes are declarative</span></strong>
+			<strong class='comment'><span class='comment blockComment'>also notice how simple it is to provide alternate content</span></strong>
+			<strong class='comment'><span class='comment blockComment'>while a module is loading</span></strong>
+			<strong class='comment'><span class='comment blockComment'>*/</span></strong>}
+			<strong>&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;</strong>
+			<strong>&lt;Switch&gt;</strong>
+			<strong class='small'>&lt;Route path={'/languages'}&gt;</strong>
+			{<strong>/* here we add a component for this route, which we will create later */</strong>}
+			<strong class='small'>&lt;Languages /&gt;</strong>
+			<strong>&lt;/Route&gt;</strong>
+			<strong>&lt;/Switch&gt;</strong>
+			<strong>&lt;/Suspense&gt;</strong>
+		&lt;/&gt;
+	)
+}
+
+export default App;</code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/guide/lazy-loading-ngmodules'># https://angular.io/guide/lazy-loading-ngmodules</a></span>
 <span class='comment lineComment'># this will create a languages.module.ts where we can declare our components</span>
@@ -463,90 +672,18 @@ export class LanguagesRoutingModule { }</code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>React TypeScript</p>
+<p>Vue (TypeScript)</p>
 <code class='shell'
 ></code
 >
 </div>
 
-<div class='codeblock'>
-
-<p>React JavaScript</p>
-<code class='shell'
-><span class='comment lineComment'><a href='https://reactjs.org/docs/code-splitting.html'># https://reactjs.org/docs/code-splitting.html</a></span>
-<span class='keyword'>cd</span> src/features
-<span class='keyword'>mkdir</span> languages
-<span class='keyword'>touch</span> ./languages/Languages.jsx</code
->
-
-<p>index.jsx</p>
-<code class='javascript'
->import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import store from './app/store';
-import { Provider } from 'react-redux';
-
-<strong>import { BrowserRouter as Router, Route } from 'react-router-dom';</strong>
-
-ReactDOM.render(
-	&lt;React.StrictMode&gt;
-		&lt;Provider store={store}&gt;
-			<strong>&lt;Router&gt;</strong>
-				<strong>&lt;Route path='/'&gt;</strong>
-					&lt;App /&gt;
-				<strong>&lt;/Route&gt;</strong>
-			<strong>&lt;/Router&gt;</strong>
-		&lt;/Provider&gt;
-	&lt;/React.StrictMode&gt;,
-	document.getElementById('root')
-);</code
->
-
-<p>App.jsx</p>
-<code class='javascript'
-><strong>// lazy loading using the lazy(import()) async functions</strong>
-import React, { lazy, Suspense } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-
-const Languages = <strong>lazy(</strong>() => <strong>import(</strong>'./features/languages/Languages'<strong>));</strong>
-
-function App() {
-	return (
-		&lt;&gt;
-			{<strong>/*</strong>
-			<strong class='comment'><span class='comment blockComment'>routes are declarative</span></strong>
-			<strong class='comment'><span class='comment blockComment'>also notice how simple it is to provide alternate content</span></strong>
-			<strong class='comment'><span class='comment blockComment'>while a module is loading</span></strong>
-			<strong class='comment'><span class='comment blockComment'>*/</span></strong>}
-			<strong>&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;</strong>
-				<strong>&lt;Switch&gt;</strong>
-					<strong class='small'>&lt;Route path={'/languages'}&gt;</strong>
-						{<strong>/* here we add a component for this route, which we will create later */</strong>}
-						<strong class='small'>&lt;Languages /&gt;</strong>
-					<strong>&lt;/Route&gt;</strong>
-				<strong>&lt;/Switch&gt;</strong>
-			<strong>&lt;/Suspense&gt;</strong>
-		&lt;/&gt;
-	)
-}
-
-export default App;</code
->
-
-</div>
-
-<div class='codeblock'>
-<p>Vue TypeScript</p>
-<code class='shell'
-></code
->
-</div>
 
 <div class='codeblock'>
 
-<p>Vue JavaScript</p>
+<p>Vue (JavaScript)</p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://router.vuejs.org/guide/advanced/lazy-loading.html'># https://router.vuejs.org/guide/advanced/lazy-loading.html</a></span>
 <span class='keyword'>mkdir</span> ./src/languages
@@ -584,24 +721,46 @@ export default router</code
 
 <div class='codeblock'>
 <p>Blazor (C#)</p>
+<code class='cs'
+>// <a href='https://docs.microsoft.com/en-us/aspnet/core/blazor/webassembly-lazy-load-assemblies?view=aspnetcore-5.0'>https://docs.microsoft.com/en-us/aspnet/core/blazor/webassembly-lazy-load-assemblies?view=aspnetcore-5.0</a></span>
+// add a new project to your solution of the type “Razor Class Library”
+// and make sure that “Support pages and views” is UNselcted
+//</code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Seed (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Vugu (Go)</p>
 <code class='shell'
 ></code
 >
 </div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
 
 <div class='codeblock'>
 <p>Web Components</p>
@@ -609,6 +768,7 @@ export default router</code
 ></code
 >
 </div>
+
 
 </div>
 
@@ -633,9 +793,144 @@ export default router</code
 >
 </div>
 
+
 <div class='codeblock'>
 
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>React (TypeScript)</p>
+<code class='shell'
+><span class='keyword'>cd</span> src/features/languages
+<span class='keyword'>mkdir</span> entities
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.ts
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.ts</code
+>
+
+<p>TimelineEntryEntity.ts</p>
+<code class='javascript'
+>export default class TimelineEntryEntity {
+
+	constructor(name:string = '', year:number = 0) {
+		this.name = name;
+		this.year = year;
+	}
+
+	name:string = '';
+	year:number = 0;
+
+}</code
+>
+
+<p>TimelineSorterServices.ts</p>
+<code class='javascript'
+>import TimelineEntryEntity from '../entities/TimelineEntryEntity';
+
+
+
+
+
+
+
+export default class TimelineSorterService {
+
+	constructor() {
+		//
+	}
+
+	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+		return a.year - b.year;
+	}
+
+	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
+
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
+		if (nameA &lt; nameB) {
+			return -1;
+		}
+		if (nameA &gt; nameB) {
+			return 1;
+		}
+
+		return 0;
+
+	}
+
+}</code
+>
+
+</div>
+
+
+<div class='codeblock'>
+
+<p>React (JavaScript)</p>
+<code class='shell'
+><span class='keyword'>cd</span> src/languages
+<span class='keyword'>mkdir</span> services
+<span class='keyword'>touch</span> ./services/TimelineSorterServices.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code
+>
+
+<p>TimelineSorterServices.js</p>
+<code class='javascript'
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function numberSorterService(a, b) {
+	return a.year - b.year;
+}
+
+export function stringSorterService(a, b) {
+
+	const nameA = a.name.toUpperCase();
+	const nameB = b.name.toUpperCase();
+	if (nameA &lt; nameB) {
+		return -1;
+	}
+	if (nameA &gt; nameB) {
+		return 1;
+	}
+
+	return 0;
+
+}</code
+>
+
+</div>
+
+
+<div class='codeblock'>
+
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/cli/generate'># https://angular.io/cli/generate</a></span>
 <span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>class</span> languages/entities/timelineEntry <span class='parameter'>--type</span> entity
@@ -701,141 +996,10 @@ export default class TimelineSorterService {
 
 </div>
 
-<div class='codeblock'>
-
-<p>React TypeScript</p>
-<code class='shell'
-><span class='keyword'>cd</span> src/features/languages
-<span class='keyword'>mkdir</span> entities
-<span class='keyword'>mkdir</span> services
-<span class='keyword'>touch</span> ./entities/TimelineEntryEntity.ts
-<span class='keyword'>touch</span> ./services/TimelineSorterServices.ts</code
->
-
-<p>TimelineEntryEntity.ts</p>
-<code class='javascript'
->export default class TimelineEntryEntity {
-
-	constructor(name:string = '', year:number = 0) {
-		this.name = name;
-		this.year = year;
-	}
-
-	name:string = '';
-	year:number = 0;
-
-}</code
->
-
-<p>TimelineSorterServices.ts</p>
-<code class='javascript'
->import TimelineEntryEntity from '../entities/TimelineEntryEntity';
-
-
-
-
-
-
-
-export default class TimelineSorterService {
-
-	constructor() {
-		//
-	}
-
-	numberSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
-		return a.year - b.year;
-	}
-
-	stringSorter(a:TimelineEntryEntity, b:TimelineEntryEntity):number {
-
-		const nameA = a.name.toUpperCase();
-		const nameB = b.name.toUpperCase();
-		if (nameA &lt; nameB) {
-			return -1;
-		}
-		if (nameA &gt; nameB) {
-			return 1;
-		}
-
-		return 0;
-
-	}
-
-}</code
->
-
-</div>
 
 <div class='codeblock'>
 
-<p>React JavaScript</p>
-<code class='shell'
-><span class='keyword'>cd</span> src/languages
-<span class='keyword'>mkdir</span> services
-<span class='keyword'>touch</span> ./services/TimelineSorterServices.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</code
->
-
-<p>TimelineSorterServices.js</p>
-<code class='javascript'
->
-
-
-
-
-
-
-
-
-
-
-
-
-
-export function numberSorterService(a, b) {
-	return a.year - b.year;
-}
-
-export function stringSorterService(a, b) {
-
-	const nameA = a.name.toUpperCase();
-	const nameB = b.name.toUpperCase();
-	if (nameA &lt; nameB) {
-		return -1;
-	}
-	if (nameA &gt; nameB) {
-		return 1;
-	}
-
-	return 0;
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
-<p>Vue TypeScript</p>
+<p>Vue (TypeScript)</p>
 <code class='shell'
 ><span class='keyword'>cd</span> src/languages
 <span class='keyword'>mkdir</span> entities
@@ -901,7 +1065,7 @@ export default class TimelineSorterService {
 
 <div class='codeblock'>
 
-<p>Vue JavaScript</p>
+<p>Vue (JavaScript)</p>
 <code class='shell'
 ><span class='keyword'>cd</span> src/languages
 <span class='keyword'>mkdir</span> services
@@ -964,6 +1128,7 @@ export function stringSorterService(a, b) {
 >
 
 </div>
+
 
 <div class='codeblock'>
 <p>Blazor (C#)</p>
@@ -972,19 +1137,38 @@ export function stringSorterService(a, b) {
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Seed (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
+
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
 
 <div class='codeblock'>
 <p>Web Components</p>
@@ -992,6 +1176,7 @@ export function stringSorterService(a, b) {
 ></code
 >
 </div>
+
 
 </div>
 
@@ -1062,8 +1247,18 @@ class _TimelineState extends State<Timeline> {
 			itemCount: this._sortedEntries.length,
 			itemBuilder: (BuildContext context, int index) {
 				var entry = this._sortedEntries[index];
-				// TODO convert to links
-				return Text('${entry.name} - ${entry.year}');
+				return TextButton(
+					/*style: TextButton.styleFrom(
+						textStyle: const TextStyle(fontSize: 20),
+					),*/
+					onPressed: () {
+						Navigator.push(
+							context,
+							MaterialPageRoute(builder: (context) => SecondRoute()),
+						)
+					},
+					child: const Text('${entry.name} - ${entry.year}')
+				),
 			}
 		);
 	}
@@ -1073,9 +1268,110 @@ class _TimelineState extends State<Timeline> {
 
 </div>
 
+
+<div class='codeblock'>
+<p>React (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
 <div class='codeblock'>
 
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>React (JavaScript)</p>
+<code class='shell'
+><span class='keyword'>cd</span> src/features/languages
+<span class='keyword'>mkdir</span> components
+<span class='keyword'>touch</span> ./components/Timeline.jsx</code
+>
+
+<p>Timeline.jsx</p>
+<code class='javascript'
+>import { numberSorterService, stringSorterService } from '../services/TimelineSorterServices';
+
+
+
+
+
+
+
+
+
+
+
+
+// component markup attributes are passed in the props parameter
+// The class name is the markup tag name
+export default function Timeline(props) {
+
+	let title = 'Timeline';
+
+
+	let _entries = [];
+
+	let sortBy = 'year';
+
+	function setEntries(entries) {
+
+		let sortedEntries = [];
+
+		switch (sortBy) {
+			case 'name':
+				sortedEntries = entries.sort(stringSorterService);
+				break;
+			case 'year':
+				sortedEntries = entries.sort(numberSorterService);
+				break;
+			default:
+				sortedEntries = entries;
+				break;
+		}
+
+		_entries = sortedEntries;
+
+	}
+
+	setEntries(props.entries);
+
+	// React uses a file type called JSX, that mixes JavaScript/TypeScript with markup
+	// It is not the same as HTML and we can interpolate scripts in the markup inside {}
+	// so comments for instance, must be added with {/*  */} instead of &lt;!-- --&gt;
+
+	// &lt;&gt; is a shortcut for &lt;React.Fragment&gt; <a href='https://reactjs.org/docs/fragments.html'>https://reactjs.org/docs/fragments.html</a>
+	// It is a container tag that will not generate any html tag in the final rendering
+	// JSX requires you to return only a sinqle node from a component function, so these
+	// will come in handy
+	return (
+		&lt;&gt;
+			{/* Binding in JSX is done with the sintax {variable} */}
+			&lt;h2&gt;{title}&lt;/h2&gt;
+			{/*
+			Adding or removing elements is done by mixing JavaScript with markup
+			<a href='https://reactjs.org/docs/conditional-rendering.html'>https://reactjs.org/docs/conditional-rendering.html</a>
+			<a href='https://reactjs.org/docs/lists-and-keys.html'>https://reactjs.org/docs/lists-and-keys.html</a>
+			*/}
+			{ _entries.length &gt; 0 &&
+				&lt;ul&gt;
+					{ _entries.map((entry) =&gt;
+						&lt;li key={entry.name}&gt;{/* Each item in a loop must have an unique key */}
+							{/* Link is used for internal links */}
+							&lt;Link to={`languages/${entry.name}`}&gt;{entry.name} - {entry.year}&lt;/Link&gt;
+						&lt;/li&gt;
+					)}
+				&lt;/ul&gt;
+			}
+		&lt;/&gt;
+	);
+
+}</code
+>
+
+</div>
+
+
+<div class='codeblock'>
+
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ><span class='comment lineComment'><a href='https://angular.io/cli/generate'># https://angular.io/cli/generate</a></span>
 <span class='keyword'>ng</span> <span class='keyword'>generate</span> <span class='keyword'>component</span> timeline <span class='parameter'>--module</span> languages</code
@@ -1178,107 +1474,9 @@ any html tag in the final rendering
 >
 </div>
 
-<div class='codeblock'>
-<p>React TypeScript</p>
-<code class='shell'
-></code
->
-</div>
 
 <div class='codeblock'>
-
-<p>React JavaScript</p>
-<code class='shell'
-><span class='keyword'>cd</span> src/features/languages
-<span class='keyword'>mkdir</span> components
-<span class='keyword'>touch</span> ./components/Timeline.jsx</code
->
-
-<p>Timeline.jsx</p>
-<code class='javascript'
->import { numberSorterService, stringSorterService } from '../services/TimelineSorterServices';
-
-
-
-
-
-
-
-
-
-
-
-
-// component markup attributes are passed in the props parameter
-// The class name is the markup tag name
-export default function Timeline(props) {
-
-	let title = 'Timeline';
-
-
-	let _entries = [];
-
-	let sortBy = 'year';
-
-	function setEntries(entries) {
-
-		let sortedEntries = [];
-
-		switch (sortBy) {
-			case 'name':
-				sortedEntries = entries.sort(stringSorterService);
-				break;
-			case 'year':
-				sortedEntries = entries.sort(numberSorterService);
-				break;
-			default:
-				sortedEntries = entries;
-				break;
-		}
-
-		_entries = sortedEntries;
-
-	}
-
-	setEntries(props.entries);
-
-	// React uses a file type called JSX, that mixes JavaScript/TypeScript with markup
-	// It is not the same as HTML and we can interpolate scripts in the markup inside {}
-	// so comments for instance, must be added with {/*  */} instead of &lt;!-- --&gt;
-
-	// &lt;&gt; is a shortcut for &lt;React.Fragment&gt; <a href='https://reactjs.org/docs/fragments.html'>https://reactjs.org/docs/fragments.html</a>
-	// It is a container tag that will not generate any html tag in the final rendering
-	// JSX requires you to return only a sinqle node from a component function, so these
-	// will come in handy
-	return (
-		&lt;&gt;
-			{/* Binding in JSX is done with the sintax {variable} */}
-			&lt;h2&gt;{title}&lt;/h2&gt;
-			{/*
-			Adding or removing elements is done by mixing JavaScript with markup
-			<a href='https://reactjs.org/docs/conditional-rendering.html'>https://reactjs.org/docs/conditional-rendering.html</a>
-			<a href='https://reactjs.org/docs/lists-and-keys.html'>https://reactjs.org/docs/lists-and-keys.html</a>
-			*/}
-			{ _entries.length &gt; 0 &&
-				&lt;ul&gt;
-					{ _entries.map((entry) =&gt;
-						&lt;li key={entry.name}&gt;{/* Each item in a loop must have an unique key */}
-							{/* Link is used for internal links */}
-							&lt;Link to={`languages/${entry.name}`}&gt;{entry.name} - {entry.year}&lt;/Link&gt;
-						&lt;/li&gt;
-					)}
-				&lt;/ul&gt;
-			}
-		&lt;/&gt;
-	);
-
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-<p>Vue TypeScript</p>
+<p>Vue (TypeScript)</p>
 <code class='javascript'
 >// <a href='https://class-component.vuejs.org/'>follow progress on class based components</a>
 // right now the documentation seems out of date
@@ -1286,8 +1484,9 @@ export default function Timeline(props) {
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Vue JavaScript</p>
+<p>Vue (JavaScript)</p>
 <code class='shell'
 ><span class='keyword'>cd</span> src/languages
 <span class='keyword'>touch</span> ./languages/Timeline.vue
@@ -1404,6 +1603,7 @@ like this
 
 </div>
 
+
 <div class='codeblock'>
 <p>Blazor (C#)</p>
 <code class='shell'
@@ -1411,19 +1611,38 @@ like this
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Seed (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
+
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
 
 <div class='codeblock'>
 <p>Web Components</p>
@@ -1431,6 +1650,7 @@ like this
 ></code
 >
 </div>
+
 
 </div>
 
@@ -1458,6 +1678,7 @@ like this
 <p>Languages.dart</p>
 <code class='dart'
 >import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:spa_sample_flutter/SortBy.dart';
 import 'package:spa_sample_flutter/Timeline.dart';
 import 'package:spa_sample_flutter/entities/TimelineEntryEntity.dart';
@@ -1507,7 +1728,12 @@ class Languages extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 
-		// TODO change page title
+		SystemChrome.setApplicationSwitcherDescription(
+			ApplicationSwitcherDescription(
+				label: timelineTitle,
+				primaryColor: Theme.of(context).primaryColor.value,
+			)
+		);
 
 		return Scaffold(
 			body: Timeline(
@@ -1523,6 +1749,81 @@ class Languages extends StatelessWidget {
 
 </div>
 
+
+<div class='codeblock'>
+<p>React (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>React (JavaScript) - languages.jsx</p>
+<code class='javascript'
+>import React, { useEffect } from 'react';
+
+// import the component
+import Timeline from './components/Timeline';
+
+export default function Languages() {
+
+	let timelineTitle = 'Programming languages';
+
+	let timelineEntries = [
+		{ name: 'Fortran', year: 1957 },
+		{ name: 'Lisp', year: 1958 },
+		{ name: 'Algol', year: 1958 },
+		{ name: 'Cobol', year: 1959 },
+		{ name: 'Simula', year: 1962 },
+		{ name: 'Basic', year: 1964 },
+		{ name: 'Pascal', year: 1970 },
+		{ name: 'C', year: 1972 },
+		{ name: 'Smalltalk 72', year: 1972 },
+		{ name: 'Ada', year: 1980 },
+		{ name: 'Smalltalk 80', year: 1980 },
+		{ name: 'Objective-C', year: 1984 },
+		{ name: 'C++', year: 1985 },
+		{ name: 'Object Pascal', year: 1986 },
+		{ name: 'Erlang', year: 1986 },
+		{ name: 'Python', year: 1990 },
+		{ name: 'Haskell', year: 1990 },
+		{ name: 'Java', year: 1995 },
+		{ name: 'JavaScript', year: 1995 },
+		{ name: 'Php', year: 1995 },
+		{ name: 'Ruby', year: 1995 },
+		{ name: 'ActionScript', year: 1998 },
+		{ name: 'Visual Basic 6', year: 1998 },
+		{ name: 'C#', year: 2000 },
+		{ name: 'F#', year: 2005 },
+		{ name: 'Go', year: 2009 },
+		{ name: 'Rust', year: 2010 },
+		{ name: 'Kotlin', year: 2011 },
+		{ name: 'Dart', year: 2011 },
+		{ name: 'TypeScript', year: 2012 },
+		{ name: 'Swift', year: 2014 }
+	];
+
+	// component rendering side effects use the useEffect() function
+	// it cannot be placed inside an if (must always be called),
+	// but you can still put the if inside the callback if you need to
+	useEffect(() =&gt; {
+		document.title = 'Languages';
+	});
+
+	// use the tag according to the class name
+	return (
+		&lt;Timeline
+			title={timelineTitle}
+			entries={timelineEntries}
+			sortBy='name'
+			&gt;&lt;/Timeline
+		&gt;
+	);
+
+}</code
+>
+</div>
 
 
 <div class='codeblock'>
@@ -1630,83 +1931,10 @@ export class LanguagesModule { }</code
 
 </div>
 
-<div class='codeblock'>
-<p>React TypeScript</p>
-<code class='shell'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>React JavaScript - languages.jsx</p>
-<code class='javascript'
->import React, { useEffect } from 'react';
-
-// import the component
-import Timeline from './components/Timeline';
-
-export default function Languages() {
-
-	let timelineTitle = 'Programming languages';
-
-	let timelineEntries = [
-		{ name: 'Fortran', year: 1957 },
-		{ name: 'Lisp', year: 1958 },
-		{ name: 'Algol', year: 1958 },
-		{ name: 'Cobol', year: 1959 },
-		{ name: 'Simula', year: 1962 },
-		{ name: 'Basic', year: 1964 },
-		{ name: 'Pascal', year: 1970 },
-		{ name: 'C', year: 1972 },
-		{ name: 'Smalltalk 72', year: 1972 },
-		{ name: 'Ada', year: 1980 },
-		{ name: 'Smalltalk 80', year: 1980 },
-		{ name: 'Objective-C', year: 1984 },
-		{ name: 'C++', year: 1985 },
-		{ name: 'Object Pascal', year: 1986 },
-		{ name: 'Erlang', year: 1986 },
-		{ name: 'Python', year: 1990 },
-		{ name: 'Haskell', year: 1990 },
-		{ name: 'Java', year: 1995 },
-		{ name: 'JavaScript', year: 1995 },
-		{ name: 'Php', year: 1995 },
-		{ name: 'Ruby', year: 1995 },
-		{ name: 'ActionScript', year: 1998 },
-		{ name: 'Visual Basic 6', year: 1998 },
-		{ name: 'C#', year: 2000 },
-		{ name: 'F#', year: 2005 },
-		{ name: 'Go', year: 2009 },
-		{ name: 'Rust', year: 2010 },
-		{ name: 'Kotlin', year: 2011 },
-		{ name: 'Dart', year: 2011 },
-		{ name: 'TypeScript', year: 2012 },
-		{ name: 'Swift', year: 2014 }
-	];
-
-	// component rendering side effects use the useEffect() function
-	// it cannot be placed inside an if (must always be called),
-	// but you can still put the if inside the callback if you need to
-	useEffect(() =&gt; {
-		document.title = 'Languages';
-	});
-
-	// use the tag according to the class name
-	return (
-		&lt;Timeline
-			title={timelineTitle}
-			entries={timelineEntries}
-			sortBy='name'
-			&gt;&lt;/Timeline
-		&gt;
-	);
-
-}</code
->
-</div>
 
 <div class='codeblock'>
 
-<p>Vue TypeScript - Languages.ts</p>
+<p>Vue (TypeScript) - Languages.ts</p>
 <code class='javascript'
 >// <a href='https://class-component.vuejs.org/'>follow progress on class based components</a>
 // right now the documentation seems out of date
@@ -1730,7 +1958,7 @@ export default function Languages() {
 
 <div class='codeblock'>
 
-<p>Vue JavaScript - Languages.js</p>
+<p>Vue (JavaScript) - Languages.js</p>
 <code class='javascript'
 >// import the component,
 // even though we will not reference it from JavaScript!
@@ -1800,6 +2028,7 @@ export default {
 
 </div>
 
+
 <div class='codeblock'>
 <p>Blazor (C#)</p>
 <code class='shell'
@@ -1807,19 +2036,38 @@ export default {
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
+
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Seed (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
+
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
 
 <div class='codeblock'>
 <p>Web Components</p>
@@ -1827,6 +2075,7 @@ export default {
 ></code
 >
 </div>
+
 
 </div>
 
@@ -1866,14 +2115,7 @@ export default {
 </div>
 
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
-<code class='shell'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>React TypeScript</p>
+<p>React (TypeScript)</p>
 <code class='shell'
 ></code
 >
@@ -1881,7 +2123,7 @@ export default {
 
 <div class='codeblock'>
 
-<p>React JavaScript</p>
+<p>React (JavaScript)</p>
 <code class='shell'
 ></code
 >
@@ -2016,20 +2258,139 @@ export default function Language(props) {
 		&lt;/&gt;
 	);
 
-}</code
+}
+
+// https://redux.js.org/recipes/implementing-undo-history</code
 >
 
 </div>
 
+
 <div class='codeblock'>
-<p>Vue TypeScript</p>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Vue (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Vue (JavaScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Blazor (C#)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Yew (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Seed (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='forms'>Forms</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Flutter (Dart)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Vue JavaScript</p>
+<p>React (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React (JavaScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+>// https://angular.io/guide/reactive-forms</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue (JavaScript)</p>
 <code class='shell'
 ></code
 >
@@ -2043,14 +2404,128 @@ export default function Language(props) {
 </div>
 
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Seed (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Components</p>
+<code class='shell'
+></code
+>
+</div>
+
+</div>
+
+<p>
+	A
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='focus'>Focus management</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Flutter (Dart)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>React (JavaScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
+<code class='shell'
+>// https://angular.io/guide/reactive-forms</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue (TypeScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vue (JavaScript)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Blazor (C#)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Yew (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Seed (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
 <code class='shell'
 ></code
 >
@@ -2088,35 +2563,35 @@ export default function Language(props) {
 </div>
 
 <div class='codeblock'>
-<p>Angular <abbr title='Command line interface'>CLI</abbr></p>
+<p>React (TypeScript)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>React TypeScript</p>
+<p>React (JavaScript)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>React JavaScript</p>
+<p>Angular (TypeScript) <abbr title='Command line interface'>CLI</abbr></p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Vue TypeScript</p>
+<p>Vue (TypeScript)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Vue JavaScript</p>
+<p>Vue (JavaScript)</p>
 <code class='shell'
 ></code
 >
@@ -2130,14 +2605,28 @@ export default function Language(props) {
 </div>
 
 <div class='codeblock'>
-<p>Rust (Yew)</p>
+<p>Yew (Rust)</p>
 <code class='shell'
 ></code
 >
 </div>
 
 <div class='codeblock'>
-<p>Rust (Seed)</p>
+<p>Seed (Rust)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Vugu (Go)</p>
+<code class='shell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin/JS</p>
 <code class='shell'
 ></code
 >
