@@ -327,6 +327,10 @@ div.codeblock.bubaloop p + code.javascript {
 
 /* html */
 
+.bubaloop.html a {
+	color: #8AD100;
+}
+
 .bubaloop.highlight.html strong {
 	background-color: #00A6FF;
 	box-shadow: 0 0 0 6px #00A6FF; /* h v blur spread color */
