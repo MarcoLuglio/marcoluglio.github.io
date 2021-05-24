@@ -1013,6 +1013,10 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.dart .annotation {
+	color: #7F8EA3;
+}
+
 .bubaloop.dart .comment,
 .bubaloop.dart .comment a {
 	color: #D10077;

@@ -11091,6 +11091,7 @@ const DartLexer = class DartLexer extends Lexer {
 			new DartKeywordToken(),
 			new DartTypesToken(),
 			new DartPunctuationToken(),
+			new DartAnnotationToken(),
 
 			// comments
 			new CLineCommentToken(),
@@ -11669,6 +11670,91 @@ const DartSymbolIterator = class DartSymbolIterator  extends SourcePatternIterat
 
 	}
 
+};
+
+
+
+const DartAnnotationPatternIterator = class DartAnnotationPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_allowSpaceCharacter: {value: false, writable: true},
+			_isSpaceCharacter: {value: isSpaceCharacterRegex}
+		});
+		this._matchFunction = this._matchAt;
+		Object.seal(this);
+	}
+
+	_matchAt(matchCharacter) {
+		if (matchCharacter === '@') {
+			this._matchFunction = this._matchContent;
+			this._isComplete = true; // TODO não é bem assim
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchContent(matchCharacter) {
+
+		if (matchCharacter === '(') {
+			this._isComplete = false;
+			this._allowSpaceCharacter = true;
+			return true;
+		}
+
+		if (matchCharacter === ')') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === false
+			) {
+
+			return true;
+		}
+
+		if (this._matchLineBreak(matchCharacter)
+			&& this._isComplete
+			) {
+
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Dart annotations
+ */
+const DartAnnotationToken = class DartAnnotationToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('annotation', new DartAnnotationPatternIterator());
+	}
 };
 
 
