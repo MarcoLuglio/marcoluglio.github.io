@@ -15649,7 +15649,6 @@ End Sub</code>
 
 <h2 id='async'>Async / Execução em paralelo</h2>
 
-<!-- tasks, promises e futures, deferreds, generators, events/delegates -->
 
 
 <h3 id='generators'>Generators</h3>
@@ -17130,7 +17129,198 @@ for (let resultado of animadorIterator) {
 
 
 
-<h3 id='tasks'>Tasks e Corrotinas</h3>
+<h3 id='eventos'>Observer (eventos, callbacks e delegates)</span></h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+
+<h3 id='corrotinas'>Corrotinas <span>(futures, tasks, promises, deferreds, await, green threads…)</span></h3>
+
+
 
 <div class='comparison'>
 
@@ -17400,7 +17590,31 @@ wait(semaforo)</code
 
 <div class='codeblock'>
 <p>Kotlin</p>
-<code class='kotlin'></code>
+<code class='kotlin'>import kotlinx.coroutines.*
+
+// runBlocking turns main into an async function
+fun main() = runBlocking {
+
+	val deferred: Deferred<Int> = async {
+		loadData()
+	}
+
+	println("waiting...")
+	println(deferred.await())
+
+}
+
+suspend fun loadData(): Int {
+	println("loading...")
+	delay(1000L)
+	println("loaded!")
+	return 42
+}
+
+// channels
+// https://play.kotlinlang.org/hands-on/Introduction%20to%20Coroutines%20and%20Channels/08_Channels
+// Flow class</code
+>
 </div>
 
 <div class='codeblock'>
@@ -17506,6 +17720,7 @@ namespace MarcoLuglio.TaskExample {
 		public static void Main(string[] args) {
 			// async não pode ser usado no método
 			// main, então chamamos no objeto
+			// FIXME novas versões podem ter async main
 			var mainObject = new MainClass();
 			mainObject.main();
 		}
@@ -17599,8 +17814,7 @@ workAsync('some value')
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// https://pub.dev/documentation/threading/latest/</code
 >
 </div>
 
@@ -17643,7 +17857,8 @@ asyncio.run(main())</code
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>// https://stackoverflow.com/questions/3451138/simple-thread-sample-delphi
+// https://edn.embarcadero.com/article/22411</code
 >
 </div>
 
@@ -20123,28 +20338,28 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -20168,7 +20383,7 @@ compra1 = ResultadoCaixa(967, 1000, 33)</code
 <div class='codeblock'>
 <p>PHP</p>
 <code class='php'
->// <a href='https://wiki.php.net/rfc/structs'>proposal</a>
+>// <a href='https://wiki.php.net/rfc/structs'>acompanhe essa feature</a>
 // meanwhile use associative arrays
 
 // TODO</code
@@ -26165,6 +26380,204 @@ JavaScript ainda não chegou lá.</p>
 </section>
 
 
+
+<section>
+
+<h2 id='templateid'>Arquitetura de plug-ins <span>(carregamento de bibliotecas em runtime)</span></h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>// https://medium.com/learning-the-go-programming-language/writing-modular-go-programs-with-plugins-ec46381ee1a9</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://flutter.dev/docs/development/packages-and-plugins/developing-packages</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
 <section>
 
 <h2 id='networking'><abbr>Networking</abbr></h2>
@@ -26536,8 +26949,7 @@ task.resume()</code
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>// Spring Boot</code
 >
 </div>
 
@@ -26584,7 +26996,10 @@ using (var reader = new System.IO.StreamReader(responseStream, Encoding.UTF8)) {
 http.createServer(function (req, res) {
 	res.write('Hello World!');
 	res.end();
-}).listen(8080);</code
+}).listen(8080);
+
+// or with express https://expressjs.com/en/starter/hello-world.html
+// https://expressjs.com/en/advanced/best-practice-performance.html</code
 >
 
 <p>JavaScript - client.js</p>
@@ -26597,28 +27012,28 @@ http.createServer(function (req, res) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://dart.dev/server
+// https://github.com/subfuzion/dart-flutter-fullstack-demo/blob/main/backend/bin/server.dart</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -26902,28 +27317,28 @@ channel.ShutdownAsync().Wait();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -27124,28 +27539,28 @@ func main() {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -27426,28 +27841,28 @@ socket.addEventListener('message', function (event) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -27705,28 +28120,28 @@ func main() {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -28094,28 +28509,28 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -28178,6 +28593,206 @@ var fromJsonList = JsonSerializer
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
+<h2 id='webassembly'>Web Assembly</h2>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='rust'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+<code class='go'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+<code class='objectivec'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
 ></code
 >
 </div>
@@ -28395,12 +29010,29 @@ var fromJsonList = JsonSerializer
 -->
 
 <!--
-swift lazy e guard
+swift guard
 
 rust loop {}
 rust string types, for instance br##"..."##, my parser does not support this
 https://doc.rust-lang.org/reference/tokens.html
 https://doc.rust-lang.org/book/appendix-02-operators.html#non-operator-symbols
+
+rust nested import
+use {
+	futures::{
+		future::{BoxFuture, FutureExt},
+		task::{waker_ref, ArcWake},
+	},
+	std::{
+		future::Future,
+		sync::mpsc::{sync_channel, Receiver, SyncSender},
+		sync::{Arc, Mutex},
+		task::{Context, Poll},
+		time::Duration,
+	},
+	// The timer we wrote in the previous section:
+	timer_future::TimerFuture,
+};
 
 Cast um tipo para string chama tostring?
 
