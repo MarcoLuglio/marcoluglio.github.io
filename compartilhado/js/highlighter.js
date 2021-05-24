@@ -6577,6 +6577,7 @@ const KotlinLexer = class KotlinLexer extends Lexer {
 			new KotlinKeywordToken(),
 			new KotlinTypesToken(),
 			new KotlinPunctuationToken(),
+			new KotlinAnnotationToken(),
 
 			// comments
 			new CLineCommentToken(),
@@ -7475,6 +7476,14 @@ const KotlinAnnotationPatternIterator = class KotlinAnnotationPatternIterator ex
 			return true;
 		}
 
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === true
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
 		if (this._matchLineBreak(matchCharacter)
 			&& this._isComplete
 			) {
@@ -7482,8 +7491,15 @@ const KotlinAnnotationPatternIterator = class KotlinAnnotationPatternIterator ex
 			return this._matchEnd(matchCharacter);
 		}
 
-		this._hasNext = false;
-		return false;
+		if (this._matchLineBreak(matchCharacter)
+			&& !this._isComplete
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -8536,6 +8552,14 @@ const JavaAnnotationPatternIterator = class JavaAnnotationPatternIterator extend
 			return true;
 		}
 
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === true
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
 		if (this._matchLineBreak(matchCharacter)
 			&& this._isComplete
 			) {
@@ -8543,8 +8567,15 @@ const JavaAnnotationPatternIterator = class JavaAnnotationPatternIterator extend
 			return this._matchEnd(matchCharacter);
 		}
 
-		this._hasNext = false;
-		return false;
+		if (this._matchLineBreak(matchCharacter)
+			&& !this._isComplete
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -10960,11 +10991,6 @@ const TypeScriptDecoratorPatternIterator = class TypeScriptDecoratorPatternItera
 			return true;
 		}
 
-		// TODO improve this
-		if (this._allowSpaceCharacter) {
-			return true;
-		}
-
 		if (!this._allowSpaceCharacter
 			&& this._isSpaceCharacter.test(matchCharacter) === false
 			) {
@@ -10972,17 +10998,30 @@ const TypeScriptDecoratorPatternIterator = class TypeScriptDecoratorPatternItera
 			return true;
 		}
 
-		// TODO
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === true
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
 		if (this._matchLineBreak(matchCharacter)
-			&& !this._allowSpaceCharacter
 			&& this._isComplete
 			) {
 
 			return this._matchEnd(matchCharacter);
 		}
 
-		this._hasNext = false;
-		return false;
+		if (this._matchLineBreak(matchCharacter)
+			&& !this._isComplete
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -11716,6 +11755,14 @@ const DartAnnotationPatternIterator = class DartAnnotationPatternIterator extend
 			return true;
 		}
 
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === true
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
 		if (this._matchLineBreak(matchCharacter)
 			&& this._isComplete
 			) {
@@ -11723,8 +11770,15 @@ const DartAnnotationPatternIterator = class DartAnnotationPatternIterator extend
 			return this._matchEnd(matchCharacter);
 		}
 
-		this._hasNext = false;
-		return false;
+		if (this._matchLineBreak(matchCharacter)
+			&& !this._isComplete
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -12370,6 +12424,14 @@ const PythonDecoratorPatternIterator = class PythonDecoratorPatternIterator exte
 			return true;
 		}
 
+		if (!this._allowSpaceCharacter
+			&& this._isSpaceCharacter.test(matchCharacter) === true
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
 		if (this._matchLineBreak(matchCharacter)
 			&& this._isComplete
 			) {
@@ -12377,8 +12439,15 @@ const PythonDecoratorPatternIterator = class PythonDecoratorPatternIterator exte
 			return this._matchEnd(matchCharacter);
 		}
 
-		this._hasNext = false;
-		return false;
+		if (this._matchLineBreak(matchCharacter)
+			&& !this._isComplete
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
 
 	}
 
