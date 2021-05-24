@@ -10063,7 +10063,7 @@ const JavaScriptLexer = class JavaScriptLexer extends Lexer {
 
 		this._pushInvisibleTokens();
 
-		this._tokenPool.push(new JSLabelToken());
+		// this._tokenPool.push(new JSLabelToken()); // Disabled until I have better rules for object properties
 		this._tokenPool.push(new JSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
