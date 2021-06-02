@@ -6,11 +6,6 @@
 	<title>Código fonte de geradores e validadores de inscrição estadual, cpf e cnpj</title>
 	<link rel='stylesheet' href='../../compartilhado/css/main.css' />
 	<link rel='stylesheet' href='css/home.css' />
-	<script type='module' src='../../compartilhado/js/utils.js'></script>
-	<script type='module' src='../../compartilhado/js/index.js'></script>
-	<script type='module' src='../../compartilhado/js/highlighter.js'></script>
-	<script type='module' src='../../compartilhado/js/highlightEnhancer.js'></script>
-	<script type='module' src='js/home.js'></script>
 </head>
 <body>
 
@@ -44,8 +39,8 @@
 
 		<p>
 			O documento com a definição da estrutura da inscrição estadual do Acre e dígitos verificadores pode ser encontrado em:
-			<a href='http://www.sintegra.gov.br/Cad_Estados/cad_AC.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AC.html</a> ou
-			<a href='http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp'>http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp</a>
+			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_AC.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AC.html</a> ou
+			<a rel='external nofollow' href='http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp'>http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AC.asp</a>
 		</p>
 
 		<p>Números de inscrição estadual do Acre fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
@@ -61,12 +56,12 @@
 
 			<div class='codeblock'>
 
-				<p>main.rs - Gerador</p>
+				<p>Rust Gerador</p>
 				<code class='rust'
 ></code
 				>
 
-				<p>main.rs - Validador</p>
+				<p>Rust Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -75,24 +70,24 @@
 
 			<div class='codeblock'>
 
-				<p>main.cpp - Gerador</p>
+				<p>C++ Gerador</p>
 				<code class='cpp'
 ></code
 				>
 
-				<p>main.cpp - Validador</p>
+				<p>C++ Validador</p>
 				<code class='cs'
 ></code
 				>
 			</div>
 
 			<div class='codeblock'>
-				<p>Program.cs - Gerador</p>
+				<p>C# Gerador</p>
 				<code class='cs'
 ></code
 				>
 
-				<p>Program.cs - Validador</p>
+				<p>C# Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -101,12 +96,137 @@
 
 			<div class='codeblock'>
 
-					<p>main.js - Gerador</p>
-					<code class='javascript'
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
 ></code
 				>
 
-				<p>main.js - Validador</p>
+				<p>JavaScript Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='ieac'>Alagoas</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do Acre e dígitos verificadores pode ser encontrado em:
+			<a rel='external nofollow' href='http://www.sefaz.al.gov.br/calculo'>http://www.sefaz.al.gov.br/calculo</a> ou
+			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_AL.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AL.html</a>
+		</p>
+
+		<p>Números de inscrição estadual do Acre fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradoriealinput' type='text' /><button id='geradorieacbtn' type='button'>gerar/completar inscrição estadual do alagoas</button>
+				<br /><input id='validadoriealinput' type='text' /><button id='validadorieacbtn' type='button'>validar inscrição estadual do alagoas</button>
+			</p>
+		</form>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>Rust Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>Rust Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>C++ Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>C++ Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>C# Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>C# Validador</p>
+				<code class='cs'
+>public bool ValidarInscricaoEstadualAlagoas(string inscricaoEstadual) {
+
+	if (inscricaoEstadual.Length != 9) {
+		return false;
+	}
+
+	if (inscricaoEstadual.Substring(0, 2) != "24") {
+		return false;
+	}
+
+	// não tenho certeza se isso ainda é válido
+	/*var tipoEmpresa = inscricaoEstadual.Substring(2, 1);
+	if (tipoEmpresa != "0" // normal
+		&& tipoEmpresa != "3" // produtor rural
+		&& tipoEmpresa != "5" // substituta
+		&& tipoEmpresa != "7" // micro empresa ambulante
+		&& tipoEmpresa != "8" // micro empresa
+		) {
+		return false;
+	}*/
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	int resto = 0;
+	var semente = inscricaoEstadual.Substring(0, inscricaoEstadual.Length - 1);
+
+	// dígito verificador
+
+	var soma = SomarProdutos(
+		semente,
+		new int[] { <strong>9, 8, 7, 6, 5, 4, 3, 2</strong> }
+	);
+
+	soma *= 10;
+
+	resto = soma - (soma / 11) * 11;
+	if (resto == 10) {
+		resto = 0;
+	}
+
+	semente += resto;
+
+	if (semente == inscricaoEstadual) {
+		return true;
+	}
+
+	return false;
+
+}</code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
+></code
+				>
+
+				<p>JavaScript Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -629,7 +749,7 @@
 			</div>
 
 			<div class='codeblock'>
-				<p>Gerador</p>
+				<p>C# Gerador</p>
 				<code class='cs'
 >public string GerarInscricaoEstadualPR() {
 
@@ -671,7 +791,7 @@
 }</code
 				>
 
-				<p>Validador</p>
+				<p>C# Validador</p>
 				<code class='cs'
 >public bool ValidarInscricaoEstadualParana(string inscricaoEstadual) {
 	return <strong>ValidarInscricaoEstadualModulo11</strong>(
@@ -734,8 +854,8 @@ private bool ValidarInscricaoEstadualModulo11(
 			</div>
 
 			<div class='codeblock'>
-					<p>main.js</p>
-					<code class='javascript'
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
 >function gerarInscricaoEstadualPR() {
 
 	let soma = 0;
@@ -775,6 +895,12 @@ private bool ValidarInscricaoEstadualModulo11(
 
 }</code
 				>
+
+				<p>JavaScript Validador</p>
+				<code class='javascript'
+></code
+				>
+
 			</div>
 
 		</div>
@@ -1574,6 +1700,11 @@ function gerarCpf() {
 	</section>
 
 
+<script type='module' src='../../compartilhado/js/utils.js'></script>
+<script type='module' src='../../compartilhado/js/index.js'></script>
+<script type='module' src='../../compartilhado/js/highlighter.js'></script>
+<script type='module' src='../../compartilhado/js/highlightEnhancer.js'></script>
+<script type='module' src='js/home.js'></script>
 
 </body>
 </html>
