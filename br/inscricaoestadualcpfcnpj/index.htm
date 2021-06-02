@@ -11,8 +11,9 @@
 
 	<h1>Código fonte de geradores de inscrição estadual, cpf e cnpj</h1>
 	<p>
-		Para validar geralmente recorremos a <a href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é apenas 32 bits, mas se precisarmos de uma biblioteca 64 bits ou quando queremos gerar dados em massa para testes?
+		Para validar podemos recorrer a <a rel='external nofollow' href='http://www.sintegra.gov.br/download.html' rel='external nofollow'>dll do sintegra (DLL3.zip)</a> que é <strong>apenas 32 bits,</strong> mas se precisarmos de uma biblioteca 64 bits ou quando queremos gerar dados em massa para testes?
 		Geradores online podem funcionar bem para testes únicos, ou individuais, mas para testes automatizados ou geração de arquivos é bom ter o código fonte, ou uma dll compatível com C, tanto x86 quanto x64.
+		A referência geral dos cálculos pode ser encontrada em: <a rel='external nofollow' href='http://www.sintegra.gov.br/insc_est.html'>http://www.sintegra.gov.br/insc_est.html</a>.
 		Já que pela internet achei basicamente códigos em Pascal ou Basic, segue o código fonte dos geradores de inscrição estadual em linguagens mais portáteis por assim dizer.
 		Eu também criei um <a href='https://addons.mozilla.org/en-US/firefox/addon/gerador-cpf-cnpj-ie/'>gerador para Firefox</a> que cria números com um clique apenas.
 	</p>
@@ -47,8 +48,8 @@
 
 		<form>
 			<p>
-				<input id='geradorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='geradorieacbtn' type='button'>gerar/completar inscrição estadual do acre</button>
-				<br /><input id='validadorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='validadorieacbtn' type='button'>validar inscrição estadual do acre</button>
+				<input id='geradorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='geradorieacbtn' type='button'>gerar/completar inscrição estadual do Acre</button>
+				<br /><input id='validadorieacinput' type='text' pattern='\d{2}\.\d{3}\.\d{3}-\d{3}\/\d{2}' placeholder='12.345.678-912/34' /><button id='validadorieacbtn' type='button'>validar inscrição estadual do Acre</button>
 			</p>
 		</form>
 
@@ -89,7 +90,67 @@
 
 				<p>C# Validador</p>
 				<code class='cs'
-></code
+>public bool ValidarInscricaoEstadualAcre(string inscricaoEstadual) {
+
+	if (inscricaoEstadual.Substring(0, 2) != "01") {
+		return false;
+	}
+
+	return <strong>ValidarInscricaoEstadualModulo11</strong>(
+		inscricaoEstadual,
+		new int[] { <strong>5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2</strong> },
+		2
+	);
+
+}
+
+private bool ValidarInscricaoEstadualModulo11(
+	string inscricaoEstadual,
+	int[] multiplicadores,
+	int digitosVerificadores = 1,
+	bool padLeft = false
+	) {
+
+	if ((inscricaoEstadual.Length - 1) &gt; multiplicadores.Length) {
+		return false;
+	}
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	var inscricaoEstadualPadding = inscricaoEstadual.PadLeft(
+		multiplicadores.Length + 1,
+		'0'
+	);
+
+	var semente = inscricaoEstadualPadding.Substring(
+		0,
+		inscricaoEstadualPadding.Length - digitosVerificadores
+	);
+
+	// dígitos verificadores
+
+	int soma = 0;
+
+	for (var i = 0; i &lt; digitosVerificadores; i++) {
+
+		soma = SomarProdutos(
+			semente,
+			multiplicadores
+		);
+
+		semente += CalculoModulo11(soma);
+
+	}
+
+	if (semente == inscricaoEstadualPadding) {
+		return true;
+	}
+
+	return false;
+
+}</code
 				>
 
 			</div>
@@ -113,17 +174,17 @@
 		<h3 id='ieac'>Alagoas</h3>
 
 		<p>
-			O documento com a definição da estrutura da inscrição estadual do Acre e dígitos verificadores pode ser encontrado em:
+			O documento com a definição da estrutura da inscrição estadual do Alagoas e dígitos verificadores pode ser encontrado em:
 			<a rel='external nofollow' href='http://www.sefaz.al.gov.br/calculo'>http://www.sefaz.al.gov.br/calculo</a> ou
 			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_AL.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AL.html</a>
 		</p>
 
-		<p>Números de inscrição estadual do Acre fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+		<p>Números de inscrição estadual do Alagoas fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
 
 		<form>
 			<p>
-				<input id='geradoriealinput' type='text' /><button id='geradorieacbtn' type='button'>gerar/completar inscrição estadual do alagoas</button>
-				<br /><input id='validadoriealinput' type='text' /><button id='validadorieacbtn' type='button'>validar inscrição estadual do alagoas</button>
+				<input id='geradoriealinput' type='text' /><button id='geradoriealbtn' type='button'>gerar/completar inscrição estadual do Alagoas</button>
+				<br /><input id='validadoriealinput' type='text' /><button id='validadoriealbtn' type='button'>validar inscrição estadual do Alagoas</button>
 			</p>
 		</form>
 
@@ -235,18 +296,32 @@
 
 		</div>
 
-		<h3 id='ieam'>Amazonas</h3>
+		<h3 id='ieap'>Amapá</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do Amapá e dígitos verificadores pode ser encontrado em:
+			<a rel='external nofollow' href='http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AP.asp'>http://apl03.sefaz.al.gov.br/sintegra/sintegra/cad_AP.asp</a>
+		</p>
+
+		<p>Números de inscrição estadual do Amapá fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradorieapinput' type='text' /><button id='geradorieapbtn' type='button'>gerar/completar inscrição estadual do Amapá</button>
+				<br /><input id='validadorieapinput' type='text' /><button id='validadorieapbtn' type='button'>validar inscrição estadual do Amapá</button>
+			</p>
+		</form>
 
 		<div class='comparison'>
 
 			<div class='codeblock'>
 
-				<p>main.rs - Gerador</p>
+				<p>Rust Gerador</p>
 				<code class='rust'
 ></code
 				>
 
-				<p>main.rs - Validador</p>
+				<p>Rust Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -255,24 +330,128 @@
 
 			<div class='codeblock'>
 
-				<p>main.cpp - Gerador</p>
+				<p>C++ Gerador</p>
 				<code class='cpp'
 ></code
 				>
 
-				<p>main.cpp - Validador</p>
+				<p>C++ Validador</p>
 				<code class='cs'
 ></code
 				>
 			</div>
 
 			<div class='codeblock'>
-				<p>Program.cs - Gerador</p>
+				<p>C# Gerador</p>
 				<code class='cs'
 ></code
 				>
 
-				<p>Program.cs - Validador</p>
+				<p>C# Validador</p>
+				<code class='cs'
+>public bool ValidarInscricaoEstadualAmapa(string inscricaoEstadual) {
+
+	if (inscricaoEstadual.Length != 9) {
+		return false;
+	}
+
+	if (inscricaoEstadual.Substring(0, 2) != "03") {
+		return false;
+	}
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	int resto = 0;
+	var semente = inscricaoEstadual.Substring(0, inscricaoEstadual.Length - 1);
+
+	// dígito verificador
+
+	var soma = SomarProdutos(
+		semente,
+		new int[] { <strong>9, 8, 7, 6, 5, 4, 3, 2</strong> }
+	);
+
+	var faixaP = UInt32.Parse(inscricaoEstadual.Substring(2, 6));
+	byte p = 0;
+	byte d = 0;
+	if (faixaP &gt; 0 && faixaP &lt; 17001) {
+		p = 5;
+		d = 0;
+	} else if (faixaP &gt; 17000 && faixaP &lt; 19023) {
+		p = 9;
+		d = 1;
+	} else if (faixaP &gt; 19022) {
+		p = 0;
+		d = 0;
+	}
+
+	soma += p;
+
+	resto = soma % 11;
+	resto = 11 - resto;
+	if (resto == 10) {
+		resto = 0;
+	} else if (resto == 11) {
+		resto = d;
+	}
+
+	semente += resto;
+
+	if (semente == inscricaoEstadual) {
+		return true;
+	}
+
+	return false;
+
+}</code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
+></code
+				>
+
+				<p>JavaScript Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='ieam'>Amazonas</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do Amazonas e dígitos verificadores pode ser encontrado em:
+			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_AM.html'>http://www.sintegra.gov.br/Cad_Estados/cad_AM.html</a>
+		</p>
+
+		<p>Números de inscrição estadual do Amazonas fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradorieaminput' type='text' /><button id='geradorieambtn' type='button'>gerar/completar inscrição estadual do Amazonas</button>
+				<br /><input id='validadorieaminput' type='text' /><button id='validadorieambtn' type='button'>validar inscrição estadual do Amazonas</button>
+			</p>
+		</form>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>Rust Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>Rust Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -281,12 +460,268 @@
 
 			<div class='codeblock'>
 
-					<p>main.js - Gerador</p>
-					<code class='javascript'
+				<p>C++ Gerador</p>
+				<code class='cpp'
 ></code
 				>
 
-				<p>main.js - Validador</p>
+				<p>C++ Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>C# Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>C# Validador</p>
+				<code class='cs'
+>public bool ValidarInscricaoEstadualAmazonas(string inscricaoEstadual) {
+	return <strong>ValidarInscricaoEstadualModulo11Faixa9a2</strong>(inscricaoEstadual);
+}
+
+private static bool ValidarInscricaoEstadualModulo11Faixa9a2(string inscricaoEstadual) {
+	return <strong>ValidarInscricaoEstadualModulo11</strong>(
+		inscricaoEstadual,
+		new int[] { <strong>9, 8, 7, 6, 5, 4, 3, 2</strong> },
+		1,
+		true
+	);
+}
+
+private bool ValidarInscricaoEstadualModulo11(
+	string inscricaoEstadual,
+	int[] multiplicadores,
+	int digitosVerificadores = 1,
+	bool padLeft = false
+	) {
+
+	if ((inscricaoEstadual.Length - 1) &gt; multiplicadores.Length) {
+		return false;
+	}
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	var inscricaoEstadualPadding = inscricaoEstadual.PadLeft(
+		multiplicadores.Length + 1,
+		'0'
+	);
+
+	var semente = inscricaoEstadualPadding.Substring(
+		0,
+		inscricaoEstadualPadding.Length - digitosVerificadores
+	);
+
+	// dígitos verificadores
+
+	int soma = 0;
+
+	for (var i = 0; i &lt; digitosVerificadores; i++) {
+
+		soma = SomarProdutos(
+			semente,
+			multiplicadores
+		);
+
+		semente += CalculoModulo11(soma);
+
+	}
+
+	if (semente == inscricaoEstadualPadding) {
+		return true;
+	}
+
+	return false;
+
+}</code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
+></code
+				>
+
+				<p>JavaScript Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+		<h3 id='ieba'>Bahia</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual da Bahia e dígitos verificadores pode ser encontrado em:
+			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_XX.html'>http://www.sintegra.gov.br/Cad_Estados/cad_XX.html</a> ou
+			<a rel='external nofollow' href='http://'>http://</a>
+		</p>
+
+		<p>Números de inscrição estadual da Bahia fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradoriebainput' type='text' /><button id='geradoriebabtn' type='button'>gerar/completar inscrição estadual do Bahia</button>
+				<br /><input id='validadoriebainput' type='text' /><button id='validadoriebabtn' type='button'>validar inscrição estadual do Bahia</button>
+			</p>
+		</form>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>Rust Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>Rust Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>C++ Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>C++ Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>C# Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>C# Validador</p>
+				<code class='cs'
+>public bool ValidarInscricaoEstadualBahia(string inscricaoEstadual) {
+
+	if (inscricaoEstadual.Length &gt; 9) { // pode ser 8 ou 9
+		return false;
+	}
+
+	if (!somenteNumeros.IsMatch(inscricaoEstadual)) {
+		return false;
+	}
+
+	var inscricaoEstadualPadding = inscricaoEstadual.PadLeft(9, '0');
+
+	int soma = 0;
+	var semente = inscricaoEstadualPadding.Substring(0, inscricaoEstadualPadding.Length - 2);
+	var multiplicadores = new int[] { 9, 8, 7, 6, 5, 4, 3, 2 };
+
+	int digitoVerificador1 = 0;
+	int digitoVerificador2 = 0;
+
+	var primeiroDigito = inscricaoEstadualPadding.Substring(0, 1);
+	CalculoModuloBahia calculoModuloBahia = CalculoModuloDummy;
+
+	if (primeiroDigito == "0"
+		|| primeiroDigito == "1"
+		|| primeiroDigito == "2"
+		|| primeiroDigito == "3"
+		|| primeiroDigito == "4"
+		|| primeiroDigito == "5"
+		|| primeiroDigito == "8"
+		) {
+
+		calculoModuloBahia = CalculoModulo10Bahia;
+
+	} else if (primeiroDigito == "6"
+		|| primeiroDigito == "7"
+		|| primeiroDigito == "9"
+		) {
+
+		calculoModuloBahia = CalculoModulo11;
+
+	}
+
+	// dígito verificador 2 (sim, aqui é o inverso)
+
+	soma = SomarProdutos(
+		semente,
+		multiplicadores
+	);
+
+	digitoVerificador2 = calculoModuloBahia(soma);
+
+	semente += digitoVerificador2;
+
+	// dígito verificador 1
+
+	soma = SomarProdutos(
+		semente,
+		multiplicadores
+	);
+
+	digitoVerificador1 = calculoModuloBahia(soma);
+
+	semente = inscricaoEstadualPadding.Substring(0, inscricaoEstadualPadding.Length - 2) + digitoVerificador1 + digitoVerificador2;
+
+	if (semente == inscricaoEstadualPadding) {
+		return true;
+	}
+
+	return false;
+
+}
+
+private delegate int CalculoModuloBahia(int soma);
+
+private int CalculoModulo10Bahia(int soma) {
+	int resto = soma % 10;
+	if (resto != 0) {
+		resto = 10 - resto;
+	}
+	return resto;
+}
+
+private int CalculoModulo11(int soma) {
+	int resto = soma % 11;
+
+	if (resto &lt; 2) {
+		resto = 0;
+	} else {
+		resto = 11 - resto;
+	}
+
+	return resto;
+}
+
+private int CalculoModuloDummy(int soma) {
+	return 0;
+}</code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
+></code
+				>
+
+				<p>JavaScript Validador</p>
 				<code class='cs'
 ></code
 				>
@@ -1705,6 +2140,85 @@ function gerarCpf() {
 <script type='module' src='../../compartilhado/js/highlighter.js'></script>
 <script type='module' src='../../compartilhado/js/highlightEnhancer.js'></script>
 <script type='module' src='js/home.js'></script>
+
+<!--
+
+	<h3 id='ieXX'>XX</h3>
+
+		<p>
+			O documento com a definição da estrutura da inscrição estadual do XX e dígitos verificadores pode ser encontrado em:
+			<a rel='external nofollow' href='http://www.sintegra.gov.br/Cad_Estados/cad_XX.html'>http://www.sintegra.gov.br/Cad_Estados/cad_XX.html</a> ou
+			<a rel='external nofollow' href='http://'>http://</a>
+		</p>
+
+		<p>Números de inscrição estadual do XX fáceis de lembrar são: <strong>??</strong> e <strong>??</strong>.</p>
+
+		<form>
+			<p>
+				<input id='geradorieXXinput' type='text' /><button id='geradorieXXbtn' type='button'>gerar/completar inscrição estadual do XX</button>
+				<br /><input id='validadorieXXinput' type='text' /><button id='validadorieXXbtn' type='button'>validar inscrição estadual do XX</button>
+			</p>
+		</form>
+
+		<div class='comparison'>
+
+			<div class='codeblock'>
+
+				<p>Rust Gerador</p>
+				<code class='rust'
+></code
+				>
+
+				<p>Rust Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>C++ Gerador</p>
+				<code class='cpp'
+></code
+				>
+
+				<p>C++ Validador</p>
+				<code class='cs'
+></code
+				>
+			</div>
+
+			<div class='codeblock'>
+				<p>C# Gerador</p>
+				<code class='cs'
+></code
+				>
+
+				<p>C# Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+			<div class='codeblock'>
+
+				<p>JavaScript Gerador</p>
+				<code class='javascript'
+></code
+				>
+
+				<p>JavaScript Validador</p>
+				<code class='cs'
+></code
+				>
+
+			</div>
+
+		</div>
+
+-->
 
 </body>
 </html>
