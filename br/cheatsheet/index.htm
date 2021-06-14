@@ -17500,7 +17500,15 @@ namespace TaskExample {
 
 <p>Swift - Console</p>
 <code class='swift'
->// libdispatch ou Grande Central Dispatch
+>// async await - swift 5.5+
+func someFunction() async throws -> [Int] {
+	try await someOtherFunction()
+	return 1
+}
+
+// TODO use detach to call async from sync
+
+// libdispatch ou Grande Central Dispatch
 import Dispatch
 
 // funções auxiliares para simplificar sincronização
@@ -17613,7 +17621,7 @@ suspend fun loadData(): Int {
 
 // channels
 // https://play.kotlinlang.org/hands-on/Introduction%20to%20Coroutines%20and%20Channels/08_Channels
-// Flow class</code
+// Flow https://kotlinlang.org/docs/reference/coroutines/flow.html#flows</code
 >
 </div>
 
@@ -18087,9 +18095,9 @@ auto referencia&amp; = ref(*dataQueue);</code
 
 	<div class='pair'>
 
-		<div>
+<div>
 
-		<p>C++ - Model.hpp</p>
+<p>C++ - Model.hpp</p>
 <code class='cpp'
 >#pragma once
 
@@ -19056,28 +19064,28 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) =&gt; {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 
@@ -19138,7 +19146,7 @@ for t in threads:
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>// https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/chapters/11_Concurrency.html</code
 >
 </div>
 
@@ -19152,7 +19160,7 @@ for t in threads:
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+># https://ruby-doc.org/core-2.5.0/Thread.html</code
 >
 </div>
 
@@ -24568,33 +24576,31 @@ namespace MarcoLuglio.OpOvExample {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
+<p>Dart</p>
+<code class='dart'
+>// https://dart.dev/guides/language/language-tour#methods</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
+<p>JavaScript</p>
+<code class='javascript'
+>// https://github.com/tc39/proposal-operator-overloading</code
+>
+</div>
 
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 
@@ -24624,6 +24630,48 @@ class Color(Enum):
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 -
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
 </div>
 
 </div>
@@ -25111,7 +25159,28 @@ namespace MarcoLuglio.IndexerExample {
 
 </div>
 
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>class Test {
+	Map data = {
+		"a": 1,
+		"b": 2
+	};
 
+	operator [](index) => data[index];
+	operator []=(index, value) { data[index] = value; }
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
@@ -25175,28 +25244,12 @@ console.log(indexedCollection["tuesday"]);</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -25469,6 +25522,51 @@ var aClassAttribute = (AClassAttribute) Attribute.GetCustomAttribute(
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>class AnAnnotation {
+	final String name;
+	final String description;
+	const Todo(this.name, this.description);
+}
+
+@AnAnnotation('Chibi', 'Rename class')
+class AnnotatedClass {
+	@AnAnnotation('Tuwaise', 'Change fielld type')
+	int annotatedValue;
+}
+
+AnnotatedClass annotatedClass = new AnnotatedClass();
+InstanceMirror im = reflect(annotatedClass);
+ClassMirror classMirror = im.type;
+
+classMirror.metadata.forEach((metadata) {
+	if (metadata.reflectee is Todo) {
+		print(metadata.reflectee.name);
+		print(metadata.reflectee.description);
+	}
+});
+
+for (var v in classMirror.declarations.values) {
+	if (!v.metadata.isEmpty) {
+		if (v.metadata.first.reflectee is Todo) {
+			print(v.metadata.first.reflectee.name);
+			print(v.metadata.first.reflectee.description);
+		}
+	}
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// <a href='https://github.com/tc39/proposal-decorators'>acompanhe essa feature</a></code
@@ -25476,28 +25574,12 @@ var aClassAttribute = (AClassAttribute) Attribute.GetCustomAttribute(
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -25820,12 +25902,7 @@ namespace FFIExample {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
--
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
+<p>Dart</p>
 -
 </div>
 
@@ -25835,7 +25912,12 @@ namespace FFIExample {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
 -
 </div>
 
@@ -26143,33 +26225,6 @@ namespace MarcoLuglio.FFIExample {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->// No navegador não existe, mas veja
-// <a href='https://webassembly.github.io/'>Web Assembly</a>
-// Já usando node.js veja o <a href='https://github.com/node-ffi/node-ffi'>plug-in FFI</a></code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
->// calls a host function
-flash.external.ExternalInterface.call('calcular', 1);
-
-// then the host needs to interface with c</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
 >import 'dart:ffi'
@@ -26185,6 +26240,33 @@ main() {
 
 	// calcular(1);
 }</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>// No navegador não existe, mas veja
+// <a href='https://webassembly.github.io/'>Web Assembly</a>
+// Já usando node.js veja o <a href='https://github.com/node-ffi/node-ffi'>plug-in FFI</a></code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>// calls a host function
+flash.external.ExternalInterface.call('calcular', 1);
+
+// then the host needs to interface with c</code
 >
 </div>
 
@@ -26375,8 +26457,6 @@ C# possui uma sintaxe limpa para interagir com <abbr title="Application Programm
 Java pode até ser bonitinho dentro do arquivo Java, mas o arquivo C que interage com ele é bastante complexo. Tanto que foram criadas ferramentas que geram parte deste arquivo automaticamente.<br />
 JavaScript ainda não chegou lá.</p>
 
-
-
 </section>
 
 
@@ -26445,7 +26525,22 @@ JavaScript ainda não chegou lá.</p>
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support</code
+>// https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://flutter.dev/docs/development/packages-and-plugins/developing-packages</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
 >
 </div>
 
@@ -26462,21 +26557,6 @@ JavaScript ainda não chegou lá.</p>
 <code class='actionscript'
 >
 </code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->// https://flutter.dev/docs/development/packages-and-plugins/developing-packages</code
 >
 </div>
 
@@ -26987,7 +27067,22 @@ using (var reader = new System.IO.StreamReader(responseStream, Encoding.UTF8)) {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://dart.dev/server
+// https://github.com/subfuzion/dart-flutter-fullstack-demo/blob/main/backend/bin/server.dart</code
+>
+</div>
 
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript - server.mjs - nodejs</p>
 <code class='javascript'
 >import http from 'http';
@@ -27016,22 +27111,6 @@ http.createServer(function (req, res) {
 <code class='actionscript'
 >
 </code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->// https://dart.dev/server
-// https://github.com/subfuzion/dart-flutter-fullstack-demo/blob/main/backend/bin/server.dart</code
 >
 </div>
 
@@ -27309,16 +27388,8 @@ channel.ShutdownAsync().Wait();</code
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -27333,11 +27404,16 @@ channel.ShutdownAsync().Wait();</code
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
 >
 </code
 >
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -27531,16 +27607,8 @@ func main() {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -27555,8 +27623,16 @@ func main() {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -27804,8 +27880,71 @@ func main() {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>// use java libraries
+
+import org.java_websocket.client.WebSocketClient
+import org.java_websocket.handshake.ServerHandshake
+import org.json.JSONException
+import org.json.JSONObject
+
+import java.lang.Exception
+import java.net.URI
+import javax.net.ssl.SSLSocketFactory
+
+	private lateinit var webSocketClient: WebSocketClient
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+	}
+
+	override fun onResume() {
+		super.onResume()
+		initWebSocket()
+	}
+
+	override fun onPause() {
+		super.onPause()
+		webSocketClient.close()
+	}
+
+	private fun initWebSocket() {
+		val coinbaseUri: URI? = URI("wss://ab.com")
+		createWebSocketClient(coinbaseUri)
+	}
+
+	private fun createWebSocketClient(coinbaseUri: URI?) {
+
+		webSocketClient = object : WebSocketClient(coinbaseUri) {
+
+			override fun onOpen(handshakedata: ServerHandshake?) {
+				subscribe()
+			}
+
+			override fun onMessage(message: String?) {
+				setUpBtcPriceText(message)
+			}
+
+			override fun onClose(code: Int, reason: String?, remote: Boolean) {
+				unsubscribe()
+			}
+
+			override fun onError(ex: Exception?) {
+				// ex?.message
+			}
+
+		}
+
+	}
+
+	private fun subscribe() {
+		webSocketClient.send(
+			// json string here
+		)
+	}
+
+// use https://square.github.io/okhttp/
+// use https://ktor.io/docs/creating-web-socket-chat.html</code
 >
 </div>
 
@@ -27822,6 +27961,36 @@ func main() {
 <code class='cs'
 >// <a href='https://marcoluglio.github.io/br/tutorialwebsockets/'>https://marcoluglio.github.io/br/tutorialwebsockets/</a>
 // <a href='https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0'></a>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-5.0</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://api.dart.dev/stable/2.13.1/dart-io/WebSocket-class.html
+
+final channel = WebSocketChannel.connect(
+	Uri.parse('wss://echo.websocket.org'),
+);
+
+StreamBuilder(
+	stream: channel.stream,
+	builder: (context, snapshot) {
+		return Text(snapshot.hasData ? '${snapshot.data}' : '');
+	},
+)
+
+channel.sink.add('Hello!');
+
+channel.sink.close();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
 >
 </div>
 
@@ -27843,22 +28012,6 @@ socket.addEventListener('message', function (event) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -28112,18 +28265,9 @@ func main() {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
->
-</code
+<p>Dart</p>
+<code class='dart'
+>// https://api.dart.dev/stable/2.13.1/dart-io/Socket-class.html</code
 >
 </div>
 
@@ -28136,8 +28280,16 @@ func main() {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -28458,8 +28610,20 @@ extension Restaurant {
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->
-</code
+>import kotlinx.serialization.json
+
+//...
+
+@Serializable
+data class User(val name:String, val yearOfBirth:Int)
+
+val data = User("Louis", 1901)
+val string = Json.encodeToString(data)
+println(string) // {"name":"Louis","yearOfBirth":1901}
+
+val obj = Json.decodeFromString(string)
+// val obj = Json.parse(User.serializer(), string)
+println(obj) // User(name=Louis, yearOfBirth=1901)</code
 >
 </div>
 
@@ -28501,10 +28665,75 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://dart.dev/guides/json
+
+// using json_serializable package
+import 'package:json_annotation/json_annotation.dart';
+part 'user.g.dart';
+
+@JsonSerializable()
+class User {
+
+	User(this.name, this.email);
+
+	String name;
+	String email;
+
+	factory User.fromJson(Map&lt;String, dynamic&gt; json) => _$UserFromJson(json);
+
+	Map&lt;String, dynamic&gt; toJson() => _$UserToJson(this);
+
+}
+
+Map&lt;String, dynamic&gt; userMap = jsonDecode(jsonString);
+var user = User.fromJson(userMap);
+
+// using
+
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_collection/built_collection.dart';
+
+part 'person.g.dart';
+
+abstract class Person implements Built&lt;Person, PersonBuilder&gt; {
+
+	static Serializer&lt;Person&gt; get serializer =&gt; _$personSerializer;
+
+	// Can never be null.
+	int get id;
+
+	@nullable
+	int get age;
+
+	@nullable
+	@BuiltValueField(wireName: 'first_name')
+	String get firstName;
+
+	@nullable
+	BuiltList&lt;String&gt; get hobbies;
+
+	Person._();
+	factory Person([void Function(PersonBuilder) updates]) = _$Person;
+}
+
+// TODO</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>const fromJson:SomeType = JSON.parse('{ "a": "b" }');</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->const fromJson = JSON.parse('{ "a": "b" }');
-</code
+>const fromJson = JSON.parse('{ "a": "b" }');</code
 >
 </div>
 
@@ -28517,26 +28746,18 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->
-</code
->
-</div>
-
-<div class='codeblock'>
 <p>Python</p>
 <code class='python'
->
-</code
+>import json
+
+toJson = {
+	"a": "b"
+}
+
+jsonString = json.dumps(x)
+
+# no native direct mapping...
+parsedTuples = json.loads(jsonString)</code
 >
 </div>
 
@@ -28680,16 +28901,8 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -28704,8 +28917,16 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -28777,7 +28998,7 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format (AssemblyScript)</p>
 <code class='webassembly'
 ></code
 >
@@ -28881,16 +29102,8 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -28905,8 +29118,16 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -28978,7 +29199,7 @@ var fromJsonList = JsonSerializer
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format (AssemblyScript)</p>
 <code class='webassembly'
 ></code
 >
@@ -29033,6 +29254,9 @@ use {
 	// The timer we wrote in the previous section:
 	timer_future::TimerFuture,
 };
+
+Atributos, annotations e decorators na minha cheatsheet. Ver marker interfaces, mas elas não podem ser des-herdadas
+Serialization, serializable
 
 Cast um tipo para string chama tostring?
 
