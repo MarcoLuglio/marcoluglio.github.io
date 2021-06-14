@@ -5727,6 +5727,7 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 	constructor() {
 		super('keyword', [
 
+			'@escaping',
 			'@IBAction',
 			'@IBDesignable',
 			'@IBInspectable',
@@ -5736,7 +5737,10 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 
 			'#selector',
 
+			'actor',
 			'as',
+			'async',
+			'await',
 			'case',
 			'catch',
 			'class',
