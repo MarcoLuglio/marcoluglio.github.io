@@ -251,16 +251,12 @@ public class OlaMundo {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript - Olá Mundo - main.js</p>
-<code class='javascript'
->console.log('Olá Mundo')</code
->
-</div>
-
-<div class='codeblock bubaloop'>
-<p>ActionScript - Olá Mundo - main.as</p>
-<code class='actionscript generic bubaloop'
-><span class='symbol'>trace</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>)</span></code
+<p>Dart - Olá Mundo - main.dart</p>
+<code class='dart'
+>// requer uma função main
+void main() {
+	print('Olá Mundo');
+}</code
 >
 </div>
 
@@ -272,12 +268,16 @@ public class OlaMundo {
 </div>
 
 <div class='codeblock'>
-<p>Dart - Olá Mundo - main.dart</p>
-<code class='dart'
->// requer uma função main
-void main() {
-	print('Olá Mundo');
-}</code
+<p>JavaScript - Olá Mundo - main.js</p>
+<code class='javascript'
+>console.log('Olá Mundo')</code
+>
+</div>
+
+<div class='codeblock bubaloop'>
+<p>ActionScript - Olá Mundo - main.as</p>
+<code class='actionscript generic bubaloop'
+><span class='symbol'>trace</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>)</span></code
 >
 </div>
 
@@ -335,10 +335,8 @@ end Main;</code
 <div class='codeblock'>
 <p>Object Pascal (Delphi) - Olá Mundo - main.dpr</p>
 <code class='objectpascal'
->{
-	requer uma função main
-	mas pode ter um nome diferente
-}
+>// requer uma função main
+// mas pode ter um nome diferente
 program Main;
 
 begin
@@ -606,6 +604,17 @@ Process virtual machine (<abbr title='Common language runtime'>CLR</abbr>)
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<br />Stack based vm (Dart VM)
+<br />com Ahead of time (AOT) ou Just in Time (JIT) compilation</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+É transcompilada para JavaScript
+<br />Não é executada diretamente
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 Interpretada + Just in time compiler
 <br />Runtime dentro dos navegadores ou Node.js
@@ -619,17 +628,6 @@ Interpretada + Just in time compiler
 <p>ActionScript</p>
 Process virtual machine (<abbr title='ActionScript Virtual Machine'>AVM2</abbr>)
 </div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-É transcompilada para JavaScript
-<br />Não é executada diretamente
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<br />Stack based vm (Dart VM)
-<br />com Ahead of time (AOT) ou Just in Time (JIT) compilation</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -845,23 +843,8 @@ int someFunction(/* bloco */ int arg) {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->// linha
-
-/*
-bloco
-*/
-
-function someFunction(/* bloco */ arg) {
-	return 0;
-}</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >// linha
 
 /*
@@ -882,8 +865,23 @@ bloco
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>// linha
+
+/*
+bloco
+*/
+
+function someFunction(/* bloco */ arg) {
+	return 0;
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >// linha
 
 /*
@@ -1080,21 +1078,6 @@ bloco
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
--
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
--
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
--
-</div>
-
-<div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
 >/*
@@ -1109,6 +1092,21 @@ bloco
 
 */</code
 >
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+-
 </div>
 
 <div class='codeblock'>
@@ -1274,6 +1272,22 @@ bloco
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>// #region vs code foldable
+// #endregion</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// #region vs code foldable
@@ -1284,24 +1298,7 @@ bloco
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->
-</code
+></code
 >
 </div>
 
@@ -1684,6 +1681,22 @@ fun someFunction(arg1:Int): Int {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >/**
@@ -1729,22 +1742,6 @@ function someFunction(arg1) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -2007,6 +2004,32 @@ unsafe {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>var x = 5 // tipo implícito
+int x = 5 // tipo explícito
+
+int x = 5; // variável
+final int x = 5; // assign only once constant
+const int x = 5; // compile time constant
+
+// não precisa ser inicializada na declaração
+final int x;
+x = 5;
+
+// lazy
+late int x = expensiveCall();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
@@ -2028,35 +2051,7 @@ useSemDeclarar = 5;</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->var x = 5 // tipo implícito
-int x = 5 // tipo explícito
-
-int x = 5; // variável
-final int x = 5; // assign only once constant
-const int x = 5; // compile time constant
-
-// não precisa ser inicializada na declaração
-final int x;
-x = 5;
-
-// lazy
-late int x = expensiveCall();</code
+></code
 >
 </div>
 
@@ -2099,8 +2094,7 @@ $$$$a; // retorna Bar
 $$$$$a; // retorna a
 
 $$$$$$a; // retorna Hello
-$$$$$$$a; // retorna World
-</code
+$$$$$$$a; // retorna World</code
 >
 </div>
 
@@ -2308,6 +2302,21 @@ var (x, y) = Pair(1, 2)</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// <a href='https://github.com/dart-lang/language/issues/207'>check progress</a>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -2319,22 +2328,6 @@ var (x, y) = Pair(1, 2)</code
 <p>ActionScript</p>
 <code class='actionscript'
 >
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->// <a href='https://github.com/dart-lang/language/issues/207'>check progress</a>
 </code
 >
 </div>
@@ -2558,6 +2551,22 @@ var @int = "muito confuso";
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >let eu1;
@@ -2584,22 +2593,6 @@ let $if = "meio confuso";
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -2853,6 +2846,22 @@ var o = (k != null) ? k : 10; // o será do tipo int?</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
@@ -2872,22 +2881,6 @@ let n = (k || k === 0) ? k : 10;</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -3140,6 +3133,22 @@ oitoOuOitenta = !oitoOuOitenta;
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// tipo Boolean
@@ -3169,28 +3178,12 @@ var bObjProto = new Boolean({});*/</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -3556,33 +3549,33 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -3836,33 +3829,33 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -4001,33 +3994,33 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -4237,6 +4230,22 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 
 <table>
@@ -4252,28 +4261,12 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -4378,33 +4371,33 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -4529,33 +4522,33 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -4749,33 +4742,33 @@ JavaScript só possui um tipo numérico.</p>
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -5038,33 +5031,33 @@ var l5 = 1L;
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -5194,6 +5187,22 @@ var dc = 1m;                 </code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// double
@@ -5207,28 +5216,12 @@ let d6 = .7;                 </code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -5432,6 +5425,22 @@ int x1 = -0X0123456789ABCDEF;
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// notação científica
@@ -5459,28 +5468,12 @@ let x1 = -0X0123456789ABCDEF;
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -5594,6 +5587,22 @@ var p1 = 00.1;               </code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >let i1 = 10;
@@ -5602,28 +5611,12 @@ let p1 = 01;                 </code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -5948,6 +5941,22 @@ to the nearest double or float value.
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
@@ -5974,28 +5983,12 @@ if (i === j) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -6114,6 +6107,22 @@ private void recebeByte(byte numero) {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// só usa um único tipo numérico double
@@ -6122,28 +6131,12 @@ private void recebeByte(byte numero) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -6260,6 +6253,22 @@ var i = Convert.ToInt64(s);</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >parseInt('1111', 2); // base 2
@@ -6280,28 +6289,12 @@ parseFloat('3.14some non-digit characters');</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -6423,6 +6416,22 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// só usa strings
@@ -6431,28 +6440,12 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -6842,6 +6835,22 @@ var beeGees = calvinHarris.Replace("love", "looove");
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict';
@@ -6891,28 +6900,12 @@ let beeGees = calvinHarris.replace('love', 'looove');
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -7135,33 +7128,33 @@ stringBuilder.ToString();</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -7584,6 +7577,22 @@ var tamanho = mdPrePopulada.Length
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >let vazia = [];
@@ -7633,28 +7642,12 @@ let tamanho = mdPrePopulada.length;
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -7862,6 +7855,22 @@ lista.Add(1);</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -7871,28 +7880,12 @@ lista.push(1);</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -8102,6 +8095,22 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// Não existe uma definição
@@ -8115,28 +8124,12 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -8302,6 +8295,22 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript - Mark and Sweep GC</p>
 <code class='javascript'
 >// weak maps
@@ -8310,28 +8319,12 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -8803,33 +8796,33 @@ namespace MarcoLuglio.PonteirosExample {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -9041,6 +9034,22 @@ delegate void StrategyFunctionDelegate();</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -9049,28 +9058,12 @@ delegate void StrategyFunctionDelegate();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -9237,30 +9230,6 @@ delegate void StrategyFunctionDelegate();</code
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
 >
@@ -9306,7 +9275,30 @@ if (number &gt; 0) {
 
 
 bool condition1;
-bool condition2;
+bool condition2;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
+>
 </code
 >
 </div>
@@ -9851,16 +9843,8 @@ do {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -9875,8 +9859,16 @@ do {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -10123,6 +10115,22 @@ for (animalName, legCount) in numberOfLegs {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >for (item of collection) {
@@ -10138,28 +10146,12 @@ for (item in collection) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -10310,33 +10302,33 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -10487,16 +10479,8 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -10511,8 +10495,16 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -10956,6 +10948,22 @@ var switchValue = id switch
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// label e break / continue
@@ -11001,28 +11009,12 @@ switch (id) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -11392,6 +11384,22 @@ superior(retorno)</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// declaração de função
@@ -11438,28 +11446,12 @@ normal.call(this, 'dadaísmo'); // o parâmetro texto terá o valor 'dadaísmo' 
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -11789,6 +11781,22 @@ if (!OutExample(c)) {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// tipos primitivos por valor
@@ -11797,28 +11805,12 @@ if (!OutExample(c)) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -11989,6 +11981,22 @@ public void Point(int x, int y = 4) { /**/ }
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// a assinatura das funções não é verificada ao chamá-las
@@ -12005,28 +12013,12 @@ function point(x, y) {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -12263,6 +12255,22 @@ var ex = new NamedArgs(
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// usar builder pattern
@@ -12271,28 +12279,12 @@ var ex = new NamedArgs(
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -12442,33 +12434,33 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -12917,7 +12909,21 @@ Imprimir(@"resumo", 1, Enumerable.Range(2, 4), @"capítulo 2");</code
 >
 </div>
 
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 
@@ -12961,28 +12967,12 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -13291,6 +13281,22 @@ superior({(x:Int) -&gt; Int in
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >function superior(funcao) {
@@ -13320,28 +13326,12 @@ superior((x) =&gt; {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -13608,6 +13598,22 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >function externa() {
@@ -13624,28 +13630,12 @@ mydoubler = myfunc(2)
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -13972,6 +13962,22 @@ public class MainClassClosure {
 >
 </div>
 
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
 <!-- TODO testar captura de variáveis -->
 
 <div class='codeblock'>
@@ -14003,28 +14009,12 @@ console.log(closure()); // 2</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -14267,6 +14257,22 @@ val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -14275,28 +14281,12 @@ val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -14759,6 +14749,22 @@ define(['dentroDoModulo'], (DentroDoModulo) =&gt; {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript - DentroDoModulo.js</p>
 <code class='javascript'
 >'use strict';
@@ -14777,28 +14783,12 @@ let meuObjeto = new DentroDoModulo();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -15005,6 +14995,22 @@ extension methods podem acessar private?
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// export import
@@ -15017,28 +15023,12 @@ extension methods podem acessar private?
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -15481,6 +15471,22 @@ try {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >try {
@@ -15504,28 +15510,12 @@ try {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -15774,6 +15764,22 @@ namespace MarcoLuglio.ClosureGeneratorExample {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 
 <p>JavaScript - animar.js</p>
 <code class='javascript'
@@ -15841,22 +15847,6 @@ do {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -16169,6 +16159,22 @@ namespace MarcoLuglio.GeneratorExample {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 
 <p>JavaScript - animarClosure.js</p>
 <code class='javascript'
@@ -16237,22 +16243,6 @@ do {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -16579,13 +16569,8 @@ fun main() {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
--
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -16600,8 +16585,13 @@ fun main() {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -16939,6 +16929,22 @@ namespace MarcoLuglio.GeneratorExample {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 
 <p>JavaScript - Iterator.js</p>
 <code class='javascript'
@@ -17030,22 +17036,6 @@ for (let resultado of animadorIterator) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -17198,16 +17188,8 @@ for (let resultado of animadorIterator) {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript</p>
-<code class='javascript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -17222,8 +17204,16 @@ for (let resultado of animadorIterator) {
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+<code class='javascript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -17770,6 +17760,21 @@ namespace MarcoLuglio.TaskExample {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>// https://pub.dev/documentation/threading/latest/</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// async await
@@ -17808,21 +17813,6 @@ workAsync('some value')
 <code class='actionscript'
 >
 </code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
->// https://pub.dev/documentation/threading/latest/</code
 >
 </div>
 
@@ -18997,6 +18987,22 @@ onmessage = (event) =&gt; {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 
 <p>JavaScript - sharedThread1.js</p>
 <code class='javascript'
@@ -19066,22 +19072,6 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) =&gt; {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>TypeScript</p>
-<code class='typescript'
->
-</code
->
-</div>
-
-<div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
 >
 </code
 >
@@ -19406,6 +19396,22 @@ public class C {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >'use strict'; // modo estrito</code
@@ -19413,28 +19419,12 @@ public class C {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -19593,33 +19583,33 @@ population.Item1;</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -19835,6 +19825,22 @@ for beverage in Beverage.allCases {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// ver Symbol</code
@@ -19842,28 +19848,12 @@ for beverage in Beverage.allCases {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -20338,16 +20328,9 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 >
 </div>
 
-
-
 <div class='codeblock'>
-<p>JavaScript</p>
--
-</div>
-
-<div class='codeblock'>
-<p>ActionScript</p>
-<code class='actionscript'
+<p>Dart</p>
+<code class='dart'
 >
 </code
 >
@@ -20362,8 +20345,13 @@ var otherPerson = person with { LastName = "Hanselman" }; // with</code
 </div>
 
 <div class='codeblock'>
-<p>Dart</p>
-<code class='dart'
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+<code class='actionscript'
 >
 </code
 >
@@ -20652,6 +20640,22 @@ end</code
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -20660,28 +20664,12 @@ end</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -21017,7 +21005,7 @@ final class R {
 
 	public fun descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	private fun calcularFidelidade():Int {
@@ -21044,7 +21032,7 @@ public class ResultadoCaixa constructor(val total:Int, val valorPago:Int) {
 
 	public fun descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	private fun calcularFidelidade():Int {
@@ -21086,12 +21074,12 @@ class D : C, P, Q {
 	public ResultadoCaixa(int total, int valorPago) {
 		this.total = total;
 		this.valorPago = valorPago;
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	public void descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	private int calcularFidelidade() {
@@ -21130,12 +21118,12 @@ class D : C, P, Q {
 	public ResultadoCaixa(int total, int valorPago) {
 		this.total = total;
 		this.valorPago = valorPago;
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	public void descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	// c# 7
@@ -21172,6 +21160,22 @@ class D : C, P, Q {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >const ResultadoCaixa = class ResultadoCaixa {
@@ -21190,7 +21194,7 @@ class D : C, P, Q {
 
 	descontarFidelidade() {
 		this.total = this.calcularFidelidade();
-		this.troco = this.valorPago - this.troco;
+		this.troco = this.valorPago - this.total;
 	}
 
 	calcularFidelidade() {
@@ -21205,28 +21209,12 @@ compra1.descontarFidelidade();</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -21236,11 +21224,11 @@ compra1.descontarFidelidade();</code
 	def __init__(self, total, valorPago):
 		self.total = total
 		self.valorPago = valorPago
-		self.troco = self.valorPago - self.troco
+		self.troco = self.valorPago - self.total
 
 	def descontarFidelidade(self):
 		self.total = self.calcularFidelidade()
-		self.troco = self.valorPago - self.troco
+		self.troco = self.valorPago - self.total
 
 	def calcularFidelidade(self):
 		return self.total - 1
@@ -21432,6 +21420,22 @@ Set compra1 = new ResutadoCaixa
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -21440,28 +21444,12 @@ Set compra1 = new ResutadoCaixa
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -21744,6 +21732,22 @@ class A {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >const A = class A {
@@ -21776,28 +21780,12 @@ a.prop = '';</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -22018,6 +22006,22 @@ public interface Desenhavel {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -22026,28 +22030,12 @@ public interface Desenhavel {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -22407,7 +22395,21 @@ class C : IA, IB {
 >
 </div>
 
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>JavaScript</p>
@@ -22415,35 +22417,17 @@ class C : IA, IB {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
 -
 </div>
-
-
 
 <div class='codeblock'>
 <p>PHP</p>
@@ -22712,6 +22696,22 @@ sealed class B : A {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >class A {
@@ -22734,28 +22734,12 @@ let b = Object.create(a, {});</code
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -22916,33 +22900,33 @@ abstract class C : B() {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 -
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -23145,6 +23129,22 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// JavaScript não tem classes
@@ -23156,28 +23156,12 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -23326,6 +23310,22 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >
@@ -23334,28 +23334,12 @@ class AbstractBaseClass(ABC):
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -23602,6 +23586,22 @@ public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 </div>
 
 <div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
 >// tipagem dinâmica
@@ -23610,28 +23610,12 @@ public sealed class RegrasCombinadas&lt;T&gt; where T : U, V, new() {
 </div>
 
 <div class='codeblock'>
-	<p>ActionScript</p>
-	<code class='actionscript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>TypeScript</p>
-	<code class='typescript'
-	>
-	</code
-	>
-	</div>
-
-	<div class='codeblock'>
-	<p>Dart</p>
-	<code class='dart'
-	>
-	</code
-	>
-	</div>
+<p>ActionScript</p>
+<code class='actionscript'
+>
+</code
+>
+</div>
 
 <div class='codeblock'>
 <p>Python</p>
@@ -28490,8 +28474,7 @@ func main() {
 <div class='codeblock'>
 <p>C++</p>
 <code class='cpp'
->
-</code
+>// use an external library</code
 >
 </div>
 
@@ -28764,36 +28747,116 @@ parsedTuples = json.loads(jsonString)</code
 <div class='codeblock'>
 <p>PHP</p>
 <code class='php'
->
-</code
+>$json = '{"foo-bar": 12345}';
+
+$obj = json_decode($json);
+print $obj->{'foo-bar'};</code
 >
 </div>
 
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
-></code
+># use external library</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>with Ada.Text_IO;
+with GNATCOLL.JSON;
+
+procedure JSON_Test is
+
+	use Ada.Text_IO;
+	use GNATCOLL.JSON;
+
+	JSON_String:constant String := "{""name"":""Pingu"",""born"":1986}";
+
+	Penguin:JSON_Value := Create_Object;
+	Parents:JSON_Array;
+
+begin
+
+	Penguin.Set_Field(
+		Field_Name => "name",
+		Field      => "Linux"
+	);
+
+	Penguin.Set_Field(
+		Field_Name => "born",
+		Field      => 1992
+	);
+
+	Append(Parents, Create("Linus Torvalds"));
+	Append(Parents, Create("Alan Cox"));
+	Append(Parents, Create("Greg Kroah-Hartman"));
+
+	Penguin.Set_Field(
+		Field_Name => "parents",
+		Field      => Parents
+	);
+
+	Put_Line(Penguin.Write);
+
+	Penguin := Read(JSON_String, "json.errors");
+
+	Penguin.Set_Field(
+		Field_Name => "born",
+		Field      => 1986
+	);
+
+	Parents := Empty_Array;
+	Append(Parents, Create("Otmar Gutmann"));
+	Append(Parents, Create("Silvio Mazzola"));
+
+	Penguin.Set_Field(
+		Field_Name => "parents",
+		Field      => Parents
+	);
+
+	Put_Line (Penguin.Write);
+
+end JSON_Test;</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>uses System.JSON;
+
+procedure ParseJSonValue;
+var
+	JSonValue:TJSonValue;
+	st:String;
+	Branch:String;
+begin
+	st := '{"data":{"results":[{"Branch":"ACCT590003"}]}}';
+	JsonValue := TJSonObject.ParseJSONValue(st);
+	Branch := JsonValue.GetValue<string>('data.results[0].Branch');
+	JsonValue.Free;
+end;
+
+// embarcadero has 2 more libraries to work with
+// <a rel='external nofollow' href='http://docwiki.embarcadero.com/RADStudio/Sydney/en/JSON'>http://docwiki.embarcadero.com/RADStudio/Sydney/en/JSON</a></code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>require 'json'
+
+source = '{"a": "foo", "b": 1.0, "c": true, "d": false, "e": null}'
+ruby = JSON.parse(source, {object_class: OpenStruct})
+
+json = '["foo", 1, 1.0, 2.0e2, true, false, null]'
+ruby = JSON.parse(json)
+
+json = '{"a": "foo", "b": 1, "c": 1.0, "d": 2.0e2, "e": true, "f": false, "g": null}'
+ruby = JSON.parse(json)</code
 >
 </div>
 
