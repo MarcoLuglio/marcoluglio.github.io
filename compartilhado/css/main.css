@@ -22,6 +22,50 @@
 	font-style: normal;
 }
 
+:root {
+
+	--background-light-color: #FBFBFB;
+	--background-dark-color: #2E2F31;
+
+	--foreground-light-color: #505B66;
+	--foreground-dark-color: #B6C2D3;
+
+	--punctuation-light-color: #7F8EA3;
+	--punctuation-dark-color: #788598;
+
+	--comments-light-color: #D10077;
+	--comments-dark-color: #D10077; /* TODO */
+
+	--keywords-light-color: #0040B4;
+	--keywords-dark-color: #0076E6;
+
+	--boolean-light-color: #0040B4;
+	--boolean-dark-color: #0076E6;
+
+	--numbers-light-color: #0040B4;
+	--numbers-dark-color: #0076E6;
+
+	--strings-light-color: #0099FF;
+	--strings-dark-color: #00A6FF;
+
+	--chars-light-color: #0076E6;
+	--chars-dark-color: #0077FF; /* TODO */
+
+	--types-light-color: #8AD100;
+	--types-dark-color: #91E500;
+
+	--attributes-light-color: #7F8EA3;
+	--attributes-dark-color: #788598;
+
+	--labels-light-color: #8D00FF;
+	--labels-dark-color: #8D00FF; /* TODO */
+
+	/*
+	#505B66 used for dark directives?
+	*/
+
+}
+
 html * {
 	margin: 0;
 	padding: 0;
@@ -32,7 +76,14 @@ body {
 	font-size: 14px;
 	line-height: 22px;
 	padding: 20px;
-	color: #505B66;
+	color: var(--foreground-light-color);
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: var(--foreground-dark-color);
+		background-color: #000000;
+	}
 }
 
 h1,
@@ -118,7 +169,13 @@ blockquote {
 }
 
 a {
-	color: #D10077;
+	color: var(--comments-light-color);
+}
+
+@media (prefers-color-scheme: dark) {
+	a {
+		color: var(--comments-dark-color);
+	}
 }
 
 .shortcut {
@@ -274,11 +331,19 @@ code .toggle {
 }
 
 div.codeblock.bubaloop {
-	color: #505B66;
-	background-color: #FBFBFB;
+	color: var(--foreground-light-color);
+	background-color: var(--background-light-color);
 	background-image: url(../imagens/fundoBubaloop.png);
 	background-position: left top;
 	background-repeat: no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+	div.codeblock.bubaloop {
+		color: var(--foreground-dark-color);
+		background-color: var(--background-dark-color);
+		background-image: url(../imagens/fundoBubaloop.png);
+	}
 }
 
 div.codeblock.bubaloop p {
@@ -289,10 +354,17 @@ div.codeblock.bubaloop p {
 	padding-bottom: 3px;
 	font-weight: bold;
 	border-bottom: 1px solid #ffffff;
-	border-right: 5px solid #D10077;
+	border-right: 5px solid var(--comments-light-color);
 	background-image: url(../imagens/fundoBubaloop.png);
 	background-position: left top;
 	background-repeat: no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+	div.codeblock.bubaloop p {
+		border-bottom: 1px solid #000000;
+		border-right: 5px solid var(--comments-dark-color);
+	}
 }
 
 div.codeblock.bubaloop p + code {
@@ -329,13 +401,13 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight strong.comment {
-	background-color: #D10077;
-	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
+	background-color: var(--comments-light-color);
+	box-shadow: 0 0 0 6px var(--comments-light-color); /* h v blur spread color */
 	z-index: 1;
 }
 
 .bubaloop.highlight strong.small.comment {
-	box-shadow: 0 0 0 4px #D10077; /* h v blur spread color */
+	box-shadow: 0 0 0 4px var(--comments-light-color); /* h v blur spread color */
 }
 
 .bubaloop.highlight strong .type {
@@ -351,36 +423,650 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
-/* generic */
+/* common */
 
 .bubaloop.generic .keyword,
+.bubaloop.rust .keyword,
+.bubaloop.go .keyword,
+.bubaloop.swift .keyword,
+.bubaloop.cs .keyword,
+.bubaloop.kotlin .keyword,
+.bubaloop.java .keyword,
+.bubaloop.javascript .keyword,
+.bubaloop.dart .javascript,
+.bubaloop.python .keyword,
+.bubaloop.ruby .keyword,
+.bubaloop.php .keyword,
+.bubaloop.sql .keyword {
+	color: var(--keywords-light-color);
+}
+
 .bubaloop.generic .number,
-.bubaloop.generic .boolean {
-	color: #0040B4;
+.bubaloop.rust .number,
+.bubaloop.go .number,
+.bubaloop.swift .number,
+.bubaloop.cs .number,
+.bubaloop.kotlin .number,
+.bubaloop.java .number,
+.bubaloop.javascript .number,
+.bubaloop.dart .number,
+.bubaloop.python .number,
+.bubaloop.ruby .number,
+.bubaloop.php .number,
+.bubaloop.sql .number {
+	color: var(--numbers-light-color);
 }
 
-.bubaloop.generic .type {
-	color: #8AD100;
+.bubaloop.generic .boolean,
+.bubaloop.rust .boolean,
+.bubaloop.go .boolean,
+.bubaloop.swift .boolean,
+.bubaloop.cs .boolean,
+.bubaloop.kotlin .boolean,
+.bubaloop.java .boolean,
+.bubaloop.javascript .boolean,
+.bubaloop.dart .boolean,
+.bubaloop.python .boolean,
+.bubaloop.ruby .boolean,
+.bubaloop.php .boolean,
+.bubaloop.sql .boolean {
+	color: var(--boolean-light-color);
 }
 
-.bubaloop.generic .operator {
+.bubaloop.generic .type,
+.bubaloop.rust .type,
+.bubaloop.go .type,
+.bubaloop.swift .type,
+.bubaloop.cs .type,
+.bubaloop.kotlin .type,
+.bubaloop.java .type,
+.bubaloop.javascript .type,
+.bubaloop.dart .type,
+.bubaloop.python .type,
+.bubaloop.ruby .type,
+.bubaloop.php .type,
+.bubaloop.sql .type {
+	color: var(--types-light-color);
+}
+
+.bubaloop.highlight.generic strong .type,
+.bubaloop.highlight.rust strong .type,
+.bubaloop.highlight.go strong .type,
+.bubaloop.highlight.swift strong .type,
+.bubaloop.highlight.cs strong .type,
+.bubaloop.highlight.kotlin strong .type,
+.bubaloop.highlight.java strong .type,
+.bubaloop.highlight.javascript strong .type,
+.bubaloop.highlight.dart strong .type,
+.bubaloop.highlight.python strong .type,
+.bubaloop.highlight.ruby strong .type,
+.bubaloop.highlight.php strong .type,
+.bubaloop.highlight.sql strong .type {
+	color: #8a008a;
+}
+
+.bubaloop.generic .operator,
+.bubaloop.rust .operator,
+.bubaloop.go .operator,
+.bubaloop.swift .operator,
+.bubaloop.cs .operator,
+.bubaloop.kotlin .operator,
+.bubaloop.java .operator,
+.bubaloop.javascript .operator,
+.bubaloop.dart .operator,
+.bubaloop.python .operator,
+.bubaloop.ruby .operator,
+.bubaloop.php .operator,
+.bubaloop.sql .operator {
+	color: var(--punctuation-light-color);
+}
+
+.bubaloop.highlight.generic strong .operator,
+.bubaloop.highlight.rust strong .operator,
+.bubaloop.highlight.go strong .operator,
+.bubaloop.highlight.swift strong .operator,
+.bubaloop.highlight.cs strong .operator,
+.bubaloop.highlight.kotlin strong .operator,
+.bubaloop.highlight.java strong .operator,
+.bubaloop.highlight.javascript strong .operator,
+.bubaloop.highlight.dart strong .operator,
+.bubaloop.highlight.python strong .operator,
+.bubaloop.highlight.ruby strong .operator,
+.bubaloop.highlight.php strong .operator,
+.bubaloop.highlight.sql strong .operator {
+	color: #505B66;
+}
+
+.bubaloop.generic .comment,
+.bubaloop.generic .comment a,
+.bubaloop.rust .comment,
+.bubaloop.rust .comment a,
+.bubaloop.go .comment,
+.bubaloop.go .comment a,
+.bubaloop.swift .comment,
+.bubaloop.swift .comment a,
+.bubaloop.cs .comment,
+.bubaloop.cs .comment a,
+.bubaloop.kotlin .comment,
+.bubaloop.kotlin .comment a,
+.bubaloop.java .comment,
+.bubaloop.java .comment a,
+.bubaloop.javascript .comment,
+.bubaloop.javascript .comment a,
+.bubaloop.dart .comment,
+.bubaloop.dart .comment a,
+.bubaloop.python .comment,
+.bubaloop.python .comment a,
+.bubaloop.ruby .comment,
+.bubaloop.ruby .comment a,
+.bubaloop.php .comment,
+.bubaloop.php .comment a,
+.bubaloop.sql .comment,
+.bubaloop.sql .comment a {
+	color: var(--comments-light-color);
+}
+
+.bubaloop.highlight.generic strong .comment,
+.bubaloop.highlight.generic strong .comment a,
+.bubaloop.highlight.rust strong .comment,
+.bubaloop.highlight.rust strong .comment a,
+.bubaloop.highlight.go strong .comment,
+.bubaloop.highlight.go strong .comment a,
+.bubaloop.highlight.swift strong .comment,
+.bubaloop.highlight.swift strong .comment a,
+.bubaloop.highlight.cs strong .comment,
+.bubaloop.highlight.cs strong .comment a,
+.bubaloop.highlight.kotlin strong .comment,
+.bubaloop.highlight.kotlin strong .comment a,
+.bubaloop.highlight.java strong .comment,
+.bubaloop.highlight.java strong .comment a,
+.bubaloop.highlight.javascript strong .comment,
+.bubaloop.highlight.javascript strong .comment a,
+.bubaloop.highlight.dart strong .comment,
+.bubaloop.highlight.dart strong .comment a,
+.bubaloop.highlight.python strong .comment,
+.bubaloop.highlight.python strong .comment a,
+.bubaloop.highlight.ruby strong .comment,
+.bubaloop.highlight.ruby strong .comment a,
+.bubaloop.highlight.php strong .comment,
+.bubaloop.highlight.php strong .comment a,
+.bubaloop.highlight.sql strong .comment,
+.bubaloop.highlight.sql strong .comment a {
+	color: #ffffff;
+}
+
+.bubaloop.generic .directive,
+.bubaloop.go .directive,
+.bubaloop.swift .directive,
+.bubaloop.cs .directive {
 	color: #7F8EA3;
 }
 
-.bubaloop.generic .comment {
-	color: #D10077;
+.bubaloop.generic .string,
+.bubaloop.rust .string,
+.bubaloop.go .string,
+.bubaloop.swift .string,
+.bubaloop.cs .string,
+.bubaloop.kotlin .string,
+.bubaloop.java .string,
+.bubaloop.javascript .string,
+.bubaloop.dart .string,
+.bubaloop.python .string,
+.bubaloop.ruby .string,
+.bubaloop.php .string,
+.bubaloop.sql .string {
+	color: var(--strings-light-color);
 }
 
-.bubaloop.generic .directive {
-	color: #D10077; /* TODO test color */
+.bubaloop.highlight.generic strong .string,
+.bubaloop.highlight.rust strong .string,
+.bubaloop.highlight.go strong .string,
+.bubaloop.highlight.swift strong .string,
+.bubaloop.highlight.cs strong .string,
+.bubaloop.highlight.kotlin strong .string,
+.bubaloop.highlight.java strong .string,
+.bubaloop.highlight.javascript strong .string,
+.bubaloop.highlight.dart strong .string,
+.bubaloop.highlight.python strong .string,
+.bubaloop.highlight.ruby strong .string,
+.bubaloop.highlight.php strong .string,
+.bubaloop.highlight.sql strong .string {
+	color: #ffffff;
 }
 
-.bubaloop.generic .string {
-	color: #0099FF;
+.bubaloop.generic .char,
+.bubaloop.rust .char,
+.bubaloop.go .char,
+.bubaloop.swift .char,
+.bubaloop.cs .char,
+.bubaloop.kotlin .char,
+.bubaloop.java .char {
+	color: var(--chars-light-color);
 }
 
-.bubaloop.generic .char {
-	color: #0077FF;
+.bubaloop.highlight.generic strong .char,
+.bubaloop.highlight.rust strong .char,
+.bubaloop.highlight.go strong .char,
+.bubaloop.highlight.swift strong .char,
+.bubaloop.highlight.cs strong .char,
+.bubaloop.highlight.kotlin strong .char {
+	color: #ffffff;
+}
+
+.bubaloop.generic .attribute,
+.bubaloop.rust .attribute,
+.bubaloop.go .attribute,
+.bubaloop.swift .attribute,
+.bubaloop.cs .attribute,
+.bubaloop.kotlin .annotation,
+.bubaloop.java .annotation,
+.bubaloop.javascript .decorator,
+.bubaloop.dart .annotation,
+.bubaloop.python .attribute, /* TODO check this */
+.bubaloop.python .decorator {
+	color: var(--attributes-light-color);
+}
+
+.bubaloop.generic .label,
+.bubaloop.rust .label,
+.bubaloop.go .label,
+.bubaloop.swift .label,
+.bubaloop.cs .label,
+.bubaloop.kotlin .label,
+.bubaloop.java .label,
+.bubaloop.javascript .label {
+	color: var(--labels-light-color);
+}
+
+/* Rust */
+
+.bubaloop.rust .lifetime {
+	color: #8D00FF;
+}
+
+/* C# */
+
+.bubaloop.cs .vstring, /* verbatim (@) strings */
+.bubaloop.cs .istring { /* interpolated ($) strings */
+	color: var(--strings-light-color);
+}
+
+.bubaloop.highlight.cs strong .vstring,
+.bubaloop.highlight.cs strong .istring {
+	color: #ffffff;
+}
+
+/* Kotlin */
+
+.bubaloop.kotlin .rawstring {
+	color: var(--strings-light-color);
+}
+
+.bubaloop.highlight.kotlin strong .rawstring {
+	color: #ffffff;
+}
+
+/* JavaScript */
+
+.bubaloop.javascript .istring { /* interpolated (`) strings */
+	color: var(--strings-light-color);
+}
+
+.bubaloop.javascript .regex {
+	color: #8D00FF;
+}
+
+.bubaloop.javascript .functionName {
+	color: #0040B4;
+}
+
+.bubaloop.javascript .memberAccessOperator {
+	color: inherit;
+}
+
+.bubaloop.javascript .argumentsDelimiter,
+.bubaloop.javascript .argumentsSeparator,
+.bubaloop.javascript .objectDelimiter,
+.bubaloop.javascript .objectSeparator,
+.bubaloop.javascript .propertySeparator,
+.bubaloop.javascript .arrayDelimiter,
+.bubaloop.javascript .arraySeparator {
+	color: #000000;
+}
+
+/* PHP */
+.bubaloop.php .tag {
+	color: #7F8EA3;
+}
+
+/* SQL */
+
+.bubaloop.sql .function {
+	color: #8D00FF;
+}
+
+@media (prefers-color-scheme: dark) {
+
+	.bubaloop.generic .keyword,
+	.bubaloop.rust .keyword,
+	.bubaloop.go .keyword,
+	.bubaloop.swift .keyword,
+	.bubaloop.cs .keyword,
+	.bubaloop.kotlin .keyword,
+	.bubaloop.java .keyword,
+	.bubaloop.javascript .keyword,
+	.bubaloop.dart .keyword,
+	.bubaloop.python .keyword,
+	.bubaloop.ruby .keyword,
+	.bubaloop.php .keyword,
+	.bubaloop.sql .keyword {
+		color: var(--keywords-dark-color);
+	}
+
+	.bubaloop.generic .number,
+	.bubaloop.rust .number,
+	.bubaloop.go .number,
+	.bubaloop.swift .number,
+	.bubaloop.cs .number,
+	.bubaloop.kotlin .number,
+	.bubaloop.java .number,
+	.bubaloop.javascript .number,
+	.bubaloop.dart .number,
+	.bubaloop.python .number,
+	.bubaloop.ruby .number,
+	.bubaloop.php .number,
+	.bubaloop.sql .number {
+		color: var(--numbers-dark-color);
+	}
+
+	.bubaloop.generic .boolean,
+	.bubaloop.rust .boolean,
+	.bubaloop.go .boolean,
+	.bubaloop.swift .boolean,
+	.bubaloop.cs .boolean,
+	.bubaloop.kotlin .boolean,
+	.bubaloop.java .boolean,
+	.bubaloop.javascript .boolean,
+	.bubaloop.dart .boolean,
+	.bubaloop.python .boolean,
+	.bubaloop.ruby .boolean,
+	.bubaloop.php .boolean,
+	.bubaloop.sql .boolean {
+		color: var(--boolean-dark-color);
+	}
+
+	.bubaloop.generic .type,
+	.bubaloop.rust .type,
+	.bubaloop.go .type,
+	.bubaloop.swift .type,
+	.bubaloop.cs .type,
+	.bubaloop.kotlin .type,
+	.bubaloop.java .type,
+	.bubaloop.javascript .type,
+	.bubaloop.dart .type,
+	.bubaloop.python .type,
+	.bubaloop.ruby .type,
+	.bubaloop.php .type,
+	.bubaloop.sql .type {
+		color: var(--types-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .type,
+	.bubaloop.highlight.rust strong .type,
+	.bubaloop.highlight.go strong .type,
+	.bubaloop.highlight.swift strong .type,
+	.bubaloop.highlight.cs strong .type,
+	.bubaloop.highlight.kotlin strong .type,
+	.bubaloop.highlight.java strong .type,
+	.bubaloop.highlight.javascript strong .type,
+	.bubaloop.highlight.dart strong .type,
+	.bubaloop.highlight.python strong .type,
+	.bubaloop.highlight.ruby strong .type,
+	.bubaloop.highlight.php strong .type,
+	.bubaloop.highlight.sql strong .type {
+		color: #8a008a;
+	}
+
+	.bubaloop.generic .operator,
+	.bubaloop.rust .operator,
+	.bubaloop.go .operator,
+	.bubaloop.swift .operator,
+	.bubaloop.cs .operator,
+	.bubaloop.kotlin .operator,
+	.bubaloop.java .operator,
+	.bubaloop.javascript .operator,
+	.bubaloop.dart .operator,
+	.bubaloop.python .operator,
+	.bubaloop.ruby .operator,
+	.bubaloop.php .operator,
+	.bubaloop.sql .operator {
+		color: var(--punctuation-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .operator,
+	.bubaloop.highlight.rust strong .operator,
+	.bubaloop.highlight.go strong .operator,
+	.bubaloop.highlight.swift strong .operator,
+	.bubaloop.highlight.cs strong .operator,
+	.bubaloop.highlight.kotlin strong .operator,
+	.bubaloop.highlight.java strong .operator,
+	.bubaloop.highlight.javascript strong .operator,
+	.bubaloop.highlight.dart strong .operator,
+	.bubaloop.highlight.python strong .operator,
+	.bubaloop.highlight.ruby strong .operator,
+	.bubaloop.highlight.php strong .operator,
+	.bubaloop.highlight.sql strong .operator {
+		color: #505B66;
+	}
+
+	.bubaloop.generic .comment,
+	.bubaloop.generic .comment a,
+	.bubaloop.rust .comment,
+	.bubaloop.rust .comment a,
+	.bubaloop.go .comment,
+	.bubaloop.go .comment a,
+	.bubaloop.swift .comment,
+	.bubaloop.swift .comment a,
+	.bubaloop.cs .comment,
+	.bubaloop.cs .comment a,
+	.bubaloop.kotlin .comment,
+	.bubaloop.kotlin .comment a,
+	.bubaloop.java .comment,
+	.bubaloop.java .comment a,
+	.bubaloop.javascript .comment,
+	.bubaloop.javascript .comment a,
+	.bubaloop.dart .comment,
+	.bubaloop.dart .comment a,
+	.bubaloop.python .comment,
+	.bubaloop.python .comment a,
+	.bubaloop.ruby .comment,
+	.bubaloop.ruby .comment a,
+	.bubaloop.php .comment,
+	.bubaloop.php .comment a,
+	.bubaloop.sql .comment,
+	.bubaloop.sql .comment a {
+		color: var(--comments-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .comment,
+	.bubaloop.highlight.generic strong .comment a,
+	.bubaloop.highlight.rust strong .comment,
+	.bubaloop.highlight.rust strong .comment a,
+	.bubaloop.highlight.go strong .comment,
+	.bubaloop.highlight.go strong .comment a,
+	.bubaloop.highlight.swift strong .comment,
+	.bubaloop.highlight.swift strong .comment a,
+	.bubaloop.highlight.cs strong .comment,
+	.bubaloop.highlight.cs strong .comment a,
+	.bubaloop.highlight.kotlin strong .comment,
+	.bubaloop.highlight.kotlin strong .comment a,
+	.bubaloop.highlight.java strong .comment,
+	.bubaloop.highlight.java strong .comment a,
+	.bubaloop.highlight.javascript strong .comment,
+	.bubaloop.highlight.javascript strong .comment a,
+	.bubaloop.highlight.dart strong .comment,
+	.bubaloop.highlight.dart strong .comment a,
+	.bubaloop.highlight.python strong .comment,
+	.bubaloop.highlight.python strong .comment a,
+	.bubaloop.highlight.ruby strong .comment,
+	.bubaloop.highlight.ruby strong .comment a,
+	.bubaloop.highlight.php strong .comment,
+	.bubaloop.highlight.php strong .comment a,
+	.bubaloop.highlight.sql strong .comment,
+	.bubaloop.highlight.sql strong .comment a {
+		color: #ffffff;
+	}
+
+	.bubaloop.generic .directive,
+	.bubaloop.go .directive,
+	.bubaloop.swift .directive,
+	.bubaloop.cs .directive {
+		color: #7F8EA3;
+	}
+
+	.bubaloop.generic .string,
+	.bubaloop.rust .string,
+	.bubaloop.go .string,
+	.bubaloop.swift .string,
+	.bubaloop.cs .string,
+	.bubaloop.kotlin .string,
+	.bubaloop.java .string,
+	.bubaloop.javascript .string,
+	.bubaloop.dart .string,
+	.bubaloop.python .string,
+	.bubaloop.ruby .string,
+	.bubaloop.php .string,
+	.bubaloop.sql .string {
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .string,
+	.bubaloop.highlight.rust strong .string,
+	.bubaloop.highlight.go strong .string,
+	.bubaloop.highlight.swift strong .string,
+	.bubaloop.highlight.cs strong .string,
+	.bubaloop.highlight.kotlin strong .string,
+	.bubaloop.highlight.java strong .string,
+	.bubaloop.highlight.javascript strong .string,
+	.bubaloop.highlight.dart strong .string,
+	.bubaloop.highlight.python strong .string,
+	.bubaloop.highlight.ruby strong .string,
+	.bubaloop.highlight.php strong .string,
+	.bubaloop.highlight.sql strong .string {
+		color: #ffffff;
+	}
+
+	.bubaloop.generic .char,
+	.bubaloop.rust .char,
+	.bubaloop.go .char,
+	.bubaloop.swift .char,
+	.bubaloop.cs .char,
+	.bubaloop.kotlin .char,
+	.bubaloop.java .char {
+		color: var(--chars-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .char,
+	.bubaloop.highlight.rust strong .char,
+	.bubaloop.highlight.go strong .char,
+	.bubaloop.highlight.swift strong .char,
+	.bubaloop.highlight.cs strong .char,
+	.bubaloop.highlight.kotlin strong .char {
+		color: #ffffff;
+	}
+
+	.bubaloop.generic .attribute,
+	.bubaloop.rust .attribute,
+	.bubaloop.go .attribute,
+	.bubaloop.swift .attribute,
+	.bubaloop.cs .attribute,
+	.bubaloop.kotlin .annotation,
+	.bubaloop.java .annotation,
+	.bubaloop.javascript .decorator,
+	.bubaloop.dart .annotation,
+	.bubaloop.python .attribute, /* TODO check this */
+	.bubaloop.python .decorator {
+		color: var(--attributes-dark-color);
+	}
+
+	.bubaloop.generic .label,
+	.bubaloop.rust .label,
+	.bubaloop.go .label,
+	.bubaloop.swift .label,
+	.bubaloop.cs .label,
+	.bubaloop.kotlin .label,
+	.bubaloop.java .label,
+	.bubaloop.javascript .label {
+		color: var(--labels-dark-color);
+	}
+
+	/* Rust */
+
+	.bubaloop.rust .lifetime {
+		color: #8D00FF;
+	}
+
+	/* C# */
+
+	.bubaloop.cs .vstring, /* verbatim (@) strings */
+	.bubaloop.cs .istring { /* interpolated ($) strings */
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop.highlight.cs strong .vstring,
+	.bubaloop.highlight.cs strong .istring {
+		color: #ffffff;
+	}
+
+	/* Kotlin */
+
+	.bubaloop.kotlin .rawstring {
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop.highlight.kotlin strong .rawstring {
+		color: #ffffff;
+	}
+
+	/* JavaScript */
+
+	.bubaloop.javascript .istring { /* interpolated (`) strings */
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop.javascript .regex {
+		color: #8D00FF;
+	}
+
+	.bubaloop.javascript .functionName {
+		color: #0040B4;
+	}
+
+	.bubaloop.javascript .memberAccessOperator {
+		color: inherit;
+	}
+
+	.bubaloop.javascript .argumentsDelimiter,
+	.bubaloop.javascript .argumentsSeparator,
+	.bubaloop.javascript .objectDelimiter,
+	.bubaloop.javascript .objectSeparator,
+	.bubaloop.javascript .propertySeparator,
+	.bubaloop.javascript .arrayDelimiter,
+	.bubaloop.javascript .arraySeparator {
+		color: #000000;
+	}
+
+	/* PHP */
+	.bubaloop.php .tag {
+		color: #7F8EA3;
+	}
+
+	/* SQL */
+
+	.bubaloop.sql .function {
+		color: #8D00FF;
+	}
+
 }
 
 /* html */
@@ -480,108 +1166,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop .shell .comment,
 .bubaloop.shell .comment {
 	color: #D10077;
-}
-
-/* Rust */
-
-.bubaloop.rust .keyword,
-.bubaloop.rust .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.rust strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.rust .type {
-	color: #8AD100;
-}
-
-.bubaloop.rust .string {
-	color: #0099FF;
-}
-
-.bubaloop.rust .char {
-	color: #0076E6;
-}
-
-.bubaloop.highlight.rust strong .string,
-.bubaloop.highlight.rust strong .char {
-	color: #ffffff;
-}
-
-.bubaloop.rust .comment,
-.bubaloop.rust .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.rust strong .comment,
-.bubaloop.highlight.rust strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.rust .attribute,
-.bubaloop.rust .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.rust strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.rust .lifetime,
-.bubaloop.rust .label {
-	color: #8D00FF;
-}
-
-/* Go */
-
-.bubaloop.go .keyword,
-.bubaloop.go .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.go strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.go .type {
-	color: #8AD100;
-}
-
-.bubaloop.go .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.go strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.go .directive {
-	color: #7F8EA3;
-}
-
-.bubaloop.go .comment,
-.bubaloop.go .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.go strong .comment,
-.bubaloop.highlight.go strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.go .attribute,
-.bubaloop.go .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.go strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.go .label {
-	color: #8D00FF;
 }
 
 /* C++ */
@@ -692,410 +1276,11 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
-/* Swift */
-
-.bubaloop.swift .keyword,
-.bubaloop.swift .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.swift strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.swift .type {
-	color: #8AD100;
-}
-
-.bubaloop.swift .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.swift strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.swift .comment,
-.bubaloop.swift .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.swift strong .comment,
-.bubaloop.highlight.swift strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.swift .directive,
-.bubaloop.swift .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.swift strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.swift .label {
-	color: #8D00FF;
-}
-
-/* Kotlin */
-
-.bubaloop.kotlin .keyword,
-.bubaloop.kotlin .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.kotlin strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.kotlin .type {
-	color: #8AD100;
-}
-
-.bubaloop.kotlin .string,
-.bubaloop.kotlin .rawstring {
-	color: #0099FF;
-}
-
-.bubaloop.kotlin .char {
-	color: #0077FF;
-}
-
-.bubaloop.highlight.kotlin strong .string,
-.bubaloop.highlight.kotlin strong .rawstring,
-.bubaloop.highlight.kotlin strong .char {
-	color: #ffffff;
-}
-
-.bubaloop.kotlin .annotation {
-	color: #7F8EA3;
-}
-
-.bubaloop.kotlin .comment,
-.bubaloop.kotlin .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.kotlin strong .comment,
-.bubaloop.highlight.kotlin strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.kotlin .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.kotlin strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.kotlin .label {
-	color: #8D00FF;
-}
-
-/* Java */
-
-.bubaloop.java .keyword,
-.bubaloop.java .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.java strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.java .type {
-	color: #8AD100;
-}
-
-.bubaloop.java .string {
-	color: #0099FF;
-}
-
-.bubaloop.java .char {
-	color: #0077FF;
-}
-
-.bubaloop.highlight.java strong .string,
-.bubaloop.highlight.java strong .char {
-	color: #ffffff;
-}
-
-.bubaloop.java .annotation {
-	color: #7F8EA3;
-}
-
-.bubaloop.java .comment,
-.bubaloop.java .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.java strong .comment,
-.bubaloop.highlight.java strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.java .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.java strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.java .label {
-	color: #8D00FF;
-}
-
-/* C# */
-
-.bubaloop.cs .keyword,
-.bubaloop.cs .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.cs strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.cs .type {
-	color: #8AD100;
-}
-
-.bubaloop.cs .string,
-.bubaloop.cs .vstring, /* verbatim (@) strings */
-.bubaloop.cs .istring { /* interpolated ($) strings */
-	color: #0099FF;
-}
-
-.bubaloop.cs .char {
-	color: #0076E6;
-}
-
-.bubaloop.highlight.cs strong .string,
-.bubaloop.highlight.cs strong .vstring,
-.bubaloop.highlight.cs strong .istring,
-.bubaloop.highlight.cs strong .char {
-	color: #ffffff;
-}
-
-.bubaloop.cs .comment,
-.bubaloop.cs .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.cs strong .comment,
-.bubaloop.highlight.cs strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.cs .directive,
-.bubaloop.cs .operator,
-.bubaloop.cs .attribute {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.cs strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.cs .label {
-	color: #8D00FF;
-}
-
-/* JavaScript */
-
-.bubaloop.highlight.javascript strong {
-	color: #101010;
-	background-color: hsl(195, 100%, 50%);
-	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
-	position: relative;
-	z-index: 2;
-}
-
-.bubaloop.highlight.javascript strong.small {
-	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
-}
-
-.bubaloop.highlight.javascript strong.comment {
-	background-color: #D10077;
-	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
-	z-index: 1;
-}
-
-.bubaloop.javascript .keyword,
-.bubaloop.javascript .functionName,
-.bubaloop.javascript .number,
-.bubaloop.javascript .boolean {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.javascript strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.javascript .type {
-	color: #8AD100;
-}
-
-.bubaloop.javascript .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.javascript strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.javascript .regex,
-.bubaloop.javascript .label {
-	color: #8D00FF;
-}
-
-.bubaloop.javascript .comment,
-.bubaloop.javascript .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.javascript strong .comment,
-.bubaloop.highlight.javascript strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.javascript .decorator,
-.bubaloop.javascript .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.javascript strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.javascript .memberAccessOperator {
-	color: inherit;
-}
-
-.bubaloop.javascript .argumentsDelimiter,
-.bubaloop.javascript .argumentsSeparator,
-.bubaloop.javascript .objectDelimiter,
-.bubaloop.javascript .objectSeparator,
-.bubaloop.javascript .propertySeparator,
-.bubaloop.javascript .arrayDelimiter,
-.bubaloop.javascript .arraySeparator {
-	color: #000000;
-}
-
-/* Dart */
-
-.bubaloop.dart .keyword,
-.bubaloop.dart .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.dart strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.dart .type {
-	color: #8AD100;
-}
-
-.bubaloop.dart .string { /* interpolated ($) strings */
-	color: #0099FF;
-}
-
-/*.bubaloop.dart .char {
-	color: #0076E6;
-}*/
-
-.bubaloop.highlight.dart strong .string/*,
-.bubaloop.highlight.dart strong .char*/ {
-	color: #ffffff;
-}
-
-.bubaloop.dart .annotation {
-	color: #7F8EA3;
-}
-
-.bubaloop.dart .comment,
-.bubaloop.dart .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.dart strong .comment,
-.bubaloop.highlight.dart strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.dart .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.dart strong .operator {
-	color: #505B66;
-}
-
-/*.bubaloop.dart .label {
-	color: #8D00FF;
-}*/
-
-/* Python */
-
-.bubaloop.python .keyword,
-.bubaloop.python .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.python strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.python .type {
-	color: #8AD100;
-}
-
-.bubaloop.python .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.python strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.python .comment,
-.bubaloop.python .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.python strong .comment,
-.bubaloop.highlight.python strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.python .attribute,
-.bubaloop.python .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.python strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.python .decorator {
-	color: #7F8EA3;
-}
-
-/* PHP */
-.bubaloop.php .tag {
-	color: #7F8EA3;
-}
-
 /* Visual Basic, Ada, Object Pascal, Smalltalk, Common Lisp, Haskell */
 
 .bubaloop.highlight.visualbasic strong,
 .bubaloop.highlight.ada strong,
 .bubaloop.highlight.objectpascal strong,
-.bubaloop.highlight.ruby strong,
 .bubaloop.highlight.smalltalk strong,
 .bubaloop.highlight.commonlisp strong,
 .bubaloop.highlight.haskell strong {
@@ -1109,7 +1294,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.visualbasic strong.small,
 .bubaloop.highlight.ada strong.small,
 .bubaloop.highlight.objectpascal strong.small,
-.bubaloop.highlight.ruby strong.small,
 .bubaloop.highlight.smalltalk strong.small,
 .bubaloop.highlight.commonlisp strong.small,
 .bubaloop.highlight.haskell strong.small {
@@ -1119,7 +1303,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.visualbasic strong.comment,
 .bubaloop.highlight.ada strong.comment,
 .bubaloop.highlight.objectpascal strong.comment,
-.bubaloop.highlight.ruby strong.comment,
 .bubaloop.highlight.smalltalk strong.comment,
 .bubaloop.highlight.commonlisp strong.comment,
 .bubaloop.highlight.haskell strong.comment {
@@ -1141,8 +1324,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.ada .number,
 .bubaloop.objectpascal .keyword,
 .bubaloop.objectpascal .number,
-.bubaloop.ruby .keyword,
-.bubaloop.ruby .number,
 .bubaloop.smalltalk .keyword,
 .bubaloop.smalltalk .number,
 .bubaloop.commonlisp .keyword,
@@ -1169,7 +1350,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.visualbasic .string,
 .bubaloop.ada .string,
 .bubaloop.objectpascal .string,
-.bubaloop.ruby .string,
 .bubaloop.smalltalk .string,
 .bubaloop.commonlisp .string,
 .bubaloop.haskell .string {
@@ -1179,7 +1359,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.visualbasic strong .string,
 .bubaloop.highlight.ada strong .string,
 .bubaloop.highlight.objectpascal strong .string,
-.bubaloop.highlight.ruby strong .string,
 .bubaloop.highlight.smalltalk strong .string,
 .bubaloop.highlight.commonlisp strong .string,
 .bubaloop.highlight.haskell strong .string {
@@ -1192,8 +1371,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.ada .comment a,
 .bubaloop.objectpascal .comment,
 .bubaloop.objectpascal .comment a,
-.bubaloop.ruby .comment,
-.bubaloop.ruby .comment a,
 .bubaloop.smalltalk .comment,
 .bubaloop.smalltalk .comment a,
 .bubaloop.commonlisp .comment,
@@ -1209,8 +1386,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.ada strong .comment a,
 .bubaloop.highlight.objectpascal strong .comment,
 .bubaloop.highlight.objectpascal strong .comment a,
-.bubaloop.highlight.ruby strong .comment,
-.bubaloop.highlight.ruby strong .comment a,
 .bubaloop.highlight.smalltalk strong .comment,
 .bubaloop.highlight.smalltalk strong .comment a,
 .bubaloop.highlight.commonlisp strong .comment,
@@ -1221,52 +1396,24 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.visualbasic .directive,
+.bubaloop.visualbasic .attribute,
 .bubaloop.visualbasic .operator,
 .bubaloop.ada .operator,
 .bubaloop.objectpascal .operator,
-.bubaloop.ruby .operator,
 .bubaloop.smalltalk .operator,
 .bubaloop.commonlisp .operator,
 .bubaloop.haskell .operator {
 	color: #7F8EA3;
 }
 
+.bubaloop.highlight.visualbasic strong .attribute,
 .bubaloop.highlight.visualbasic strong .operator,
 .bubaloop.highlight.ada strong .operator,
 .bubaloop.highlight.objectpascal strong .operator,
-.bubaloop.highlight.ruby strong .operator,
 .bubaloop.highlight.smalltalk strong .operator,
 .bubaloop.highlight.commonlisp strong .operator,
 .bubaloop.highlight.haskell strong .operator {
 	color: #505B66;
-}
-
-/* SQL */
-
-.bubaloop.sql .keyword,
-.bubaloop.sql .number,
-.bubaloop.sql .boolean {
-	color: #0040B4;
-}
-
-.bubaloop.sql .string {
-	color: #0099FF;
-}
-
-.bubaloop.sql .type {
-	color: #8AD100;
-}
-
-.bubaloop.sql .comment {
-	color: #D10077;
-}
-
-.bubaloop.sql .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.sql .function {
-	color: #8D00FF;
 }
 
 /* webassembly */
@@ -1415,6 +1562,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.java .annotation,
 .bubaloop.highlight.kotlin .annotation,
 .bubaloop.highlight.python .decorator,
+.bubaloop.highlight.visualbasic .attribute,
 
 .bubaloop.highlight.javascript .variableName,
 .bubaloop.highlight.javascript .functionName,

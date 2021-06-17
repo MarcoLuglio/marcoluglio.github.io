@@ -20,6 +20,16 @@
 	background-color: hsl(0deg, 0%, 100%);
 }
 
+@media (prefers-color-scheme: dark) {
+	.scroll .indice {
+		background-color: hsl(0deg, 0%, 0%);
+	}
+
+	.scroll .indice h2 {
+		background-color: hsl(0deg, 0%, 0%);
+	}
+}
+
 .scroll .indice:hover {
 	margin-left: -20px;
 }
