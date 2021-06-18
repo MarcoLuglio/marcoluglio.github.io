@@ -34,7 +34,7 @@
 	--punctuation-dark-color: #788598;
 
 	--comments-light-color: #D10077;
-	--comments-dark-color: #D10077; /* TODO */
+	--comments-dark-color: #B80068; /* TODO */
 
 	--keywords-light-color: #0040B4;
 	--keywords-dark-color: #0076E6;
@@ -63,6 +63,15 @@
 	/*
 	#505B66 used for dark directives?
 	*/
+
+	--shell-parameters-light-color: #8AD100;
+	--shell-parameters-dark-color: #91E500;
+
+	--highlight-light-color: hsl(195, 100%, 50%);
+	--highlight-dark-color: hsl(201, 100%, 43%);
+
+	--highlight-comments-light-color: #D10077;
+	--highlight-comments-dark-color: #9E006F;
 
 }
 
@@ -362,7 +371,7 @@ div.codeblock.bubaloop p {
 
 @media (prefers-color-scheme: dark) {
 	div.codeblock.bubaloop p {
-		border-bottom: 1px solid #000000;
+		border-bottom: 1px solid #444444;
 		border-right: 5px solid var(--comments-dark-color);
 	}
 }
@@ -389,25 +398,25 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.highlight strong {
 	color: #101010;
-	background-color: hsl(195, 100%, 50%);
-	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
+	background-color: var(--highlight-light-color);
+	box-shadow: 0 0 0 6px var(--highlight-light-color); /* h v blur spread color */
 	position: relative;
 	z-index: 2;
 	mix-blend-mode: normal;
 }
 
 .bubaloop.highlight strong.small {
-	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
+	box-shadow: 0 0 0 4px var(--highlight-light-color); /* h v blur spread color */
 }
 
 .bubaloop.highlight strong.comment {
-	background-color: var(--comments-light-color);
-	box-shadow: 0 0 0 6px var(--comments-light-color); /* h v blur spread color */
+	background-color: var(--highlight-comments-light-color);
+	box-shadow: 0 0 0 6px var(--highlight-comments-light-color); /* h v blur spread color */
 	z-index: 1;
 }
 
 .bubaloop.highlight strong.small.comment {
-	box-shadow: 0 0 0 4px var(--comments-light-color); /* h v blur spread color */
+	box-shadow: 0 0 0 4px var(--highlight-comments-light-color); /* h v blur spread color */
 }
 
 .bubaloop.highlight strong .type {
@@ -421,6 +430,49 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight strong .comment,
 .bubaloop.highlight strong .comment a {
 	color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+
+	.bubaloop strong {
+		background-color: #F3F3F3;
+		box-shadow: 0 0 0 6px #F3F3F3; /* h v blur spread color */
+		mix-blend-mode: darken;
+	}
+
+	.bubaloop.highlight strong {
+		color: #101010;
+		background-color: var(--highlight-dark-color);
+		box-shadow: 0 0 0 6px var(--highlight-dark-color); /* h v blur spread color */
+		mix-blend-mode: normal;
+	}
+
+	.bubaloop.highlight strong.small {
+		box-shadow: 0 0 0 4px var(--highlight-dark-color); /* h v blur spread color */
+	}
+
+	.bubaloop.highlight strong.comment {
+		background-color: var(--highlight-comments-dark-color);
+		box-shadow: 0 0 0 6px var(--highlight-comments-dark-color); /* h v blur spread color */
+	}
+
+	.bubaloop.highlight strong.small.comment {
+		box-shadow: 0 0 0 4px var(--highlight-comments-dark-color); /* h v blur spread color */
+	}
+
+	.bubaloop.highlight strong .type {
+		color: #8a008a;
+	}
+
+	.bubaloop.highlight strong .operator {
+		color: #505B66;
+	}
+
+	.bubaloop.highlight strong .comment,
+	.bubaloop.highlight strong .comment a {
+		color: #ffffff;
+	}
+
 }
 
 /* common */
@@ -1155,17 +1207,43 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop .shell .keyword,
 .bubaloop.shell .keyword {
-	color: #0040B4;
+	color: var(--keywords-light-color);
 }
 
 .bubaloop .shell .parameter,
 .bubaloop.shell .parameter {
-	color: #8AD100;
+	color: var(--shell-parameters-light-color);
 }
 
 .bubaloop .shell .comment,
 .bubaloop.shell .comment {
-	color: #D10077;
+	color: var(--comments-light-color);
+}
+
+@media (prefers-color-scheme: dark) {
+
+	.bubaloop.highlight .shell strong,
+	.bubaloop.highlight.shell strong {
+		color: #000000;
+		background-color: #606060; /* TODO */
+		box-shadow: 0 0 0 6px #606060; /* h v blur spread color */
+	}
+
+	.bubaloop .shell .keyword,
+	.bubaloop.shell .keyword {
+		color: var(--keywords-dark-color);
+	}
+
+	.bubaloop .shell .parameter,
+	.bubaloop.shell .parameter {
+		color: var(--shell-parameters-dark-color);
+	}
+
+	.bubaloop .shell .comment,
+	.bubaloop.shell .comment {
+		color: var(--comments-dark-color);
+	}
+
 }
 
 /* C++ */
@@ -1676,6 +1754,13 @@ code:hover .highlightControls {
 	border: 1px solid #EEEEEE;
 	padding-left: 6px;
 	font-size: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.tiposprimitivos th,
+	.tiposprimitivos td {
+		border: 1px solid #444444;
+	}
 }
 
 .tiposprimitivos .codeblock p {
