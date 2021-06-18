@@ -363,7 +363,7 @@ div.codeblock.bubaloop p {
 	padding-bottom: 3px;
 	font-weight: bold;
 	border-bottom: 1px solid #ffffff;
-	border-right: 5px solid var(--comments-light-color);
+	border-right: 5px solid var(--highlight-comments-light-color);
 	background-image: url(../imagens/fundoBubaloop.png);
 	background-position: left top;
 	background-repeat: no-repeat;
@@ -371,8 +371,8 @@ div.codeblock.bubaloop p {
 
 @media (prefers-color-scheme: dark) {
 	div.codeblock.bubaloop p {
-		border-bottom: 1px solid #444444;
-		border-right: 5px solid var(--comments-dark-color);
+		border-bottom-color: #444444;
+		border-right-color: var(--highlight-comments-dark-color);
 	}
 }
 
@@ -435,9 +435,9 @@ div.codeblock.bubaloop p + code {
 @media (prefers-color-scheme: dark) {
 
 	.bubaloop strong {
-		background-color: #F3F3F3;
-		box-shadow: 0 0 0 6px #F3F3F3; /* h v blur spread color */
-		mix-blend-mode: darken;
+		background-color: #39393C; /* #2E2F31; */
+		box-shadow: 0 0 0 6px #39393C; /* h v blur spread color */
+		mix-blend-mode: lighten;
 	}
 
 	.bubaloop.highlight strong {
@@ -1759,7 +1759,7 @@ code:hover .highlightControls {
 @media (prefers-color-scheme: dark) {
 	.tiposprimitivos th,
 	.tiposprimitivos td {
-		border: 1px solid #444444;
+		border-color: #444444;
 	}
 }
 
