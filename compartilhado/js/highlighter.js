@@ -4,11 +4,11 @@ import { StringIterator } from './utils.js';
 
 // TODO Implementar os tokens html. Quais? Já não implementei isso?
 
-const isLetterCharacterRegex = /[a-zA-Z]/;
-const isWordCharacterRegex = /\w/;
-const isNumberCharacterRegex = /\d/;
-const isSpaceCharacterRegex = /\s/;
-const isAlphaNumericRegex = /^[A-Za-z0-9]$/gi;
+const isLetterCharacterRegex = /[a-zA-Z]/i;
+const isWordCharacterRegex = /\w/i;
+const isNumberCharacterRegex = /\d/i;
+const isSpaceCharacterRegex = /\s/i;
+const isAlphaNumericCharacterRegex = /^[A-Za-z0-9]$/i; // TODO do I need gi instead?
 
 // #region Base classes
 
@@ -742,7 +742,7 @@ const CCharPatternIterator = class CCharPatternIterator {
 
 	_matchContent(matchCharacter) {
 
-		if (isAlphaNumericRegex.test(matchCharacter)) {
+		if (isAlphaNumericCharacterRegex.test(matchCharacter)) {
 			this._matchFunction = this._matchEndQuote;
 			return true;
 		}
@@ -1969,6 +1969,8 @@ const RustKeywordToken = class RustKeywordToken extends SourceSimpleCharacterSeq
 		super('keyword', [
 
 			'as',
+			'async',
+			// 'await',
 			'break',
 			'const',
 			'continue',
@@ -2102,7 +2104,15 @@ const RustTypesToken = class RustTypesToken extends SourceSimpleCharacterSequenc
 			'usize',
 
 			'Any',
+
+			// enums and variants, worth putting in their owmn token
 			'Option',
+			'None',
+			'Some',
+			'Result',
+			'Ok',
+			'Err',
+
 			'String',
 			'thread',
 
@@ -2111,7 +2121,24 @@ const RustTypesToken = class RustTypesToken extends SourceSimpleCharacterSequenc
 			'Receiver',
 			'&str',
 			'&amp;str',
-			'&lt;&amp;str&gt;'
+			'&lt;&amp;str&gt;',
+			'Error',
+
+			'Default',
+			'Formatter',
+			'Index',
+			'IndexMut',
+
+			'App',
+			'HttpRequest',
+			'HttpServer',
+			'Responder',
+			'TcpListener',
+			'TcpStream',
+
+			'T',
+			'U',
+			'V'
 
 		]);
 
@@ -2140,7 +2167,7 @@ const RustPunctuationToken = class RustPunctuationToken extends SourceSimpleChar
 			'[',
 			']',
 			',',
-			//'?',
+			'?',
 			':',
 			'::',
 			';',
@@ -2185,7 +2212,16 @@ const RustPunctuationToken = class RustPunctuationToken extends SourceSimpleChar
 			'_',
 			'@',
 			'..',
-			'...'
+			'...',
+
+			// namespaces actually
+			'std::',
+			'std::collections',
+			'std::default',
+			'std::fmt',
+			'std::ops',
+			'std::sync',
+			'std::sync::mpsc'
 
 		]);
 
@@ -2831,7 +2867,7 @@ const RustLifetimePatternIterator = class RustLifetimePatternIterator extends So
 		super();
 		Object.defineProperties(this, {
 			_isLetterCharacter: {value: isLetterCharacterRegex},
-			_isNumberCharacter: {value: isNumberCharacterRegex}
+			_isAlphaNumericCharacter: {value: isAlphaNumericCharacterRegex}
 		});
 		this._matchFunction = this._matchStartQuote;
 		Object.seal(this);
@@ -2849,7 +2885,7 @@ const RustLifetimePatternIterator = class RustLifetimePatternIterator extends So
 	_matchLetter(matchCharacter) {
 
 		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
-			this._isComplete = true;
+			//this._isComplete = true;
 			this._matchFunction = this._matchContentOrEnd;
 			return true;
 		}
@@ -2861,10 +2897,8 @@ const RustLifetimePatternIterator = class RustLifetimePatternIterator extends So
 
 	_matchContentOrEnd(matchCharacter) {
 
-		if (!this._isNumberCharacter.test(matchCharacter)
-			|| !this._isLetterCharacter.test(matchCharacter)
-			) {
-
+		if (!this._isAlphaNumericCharacter.test(matchCharacter)) {
+			this._isComplete = true;
 			return this._matchEnd(matchCharacter);
 		}
 
@@ -2987,9 +3021,9 @@ const GoLexer = class GoLexer extends Lexer {
 		this._pushLiteralTokens();
 		this._pushInvisibleTokens();
 		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
-		if (this._isFirstTokenOfLine(tokenSequence)) {
+		/*if (this._isFirstTokenOfLine(tokenSequence)) {
 			this._tokenPool.push(new GoLabelToken());
-		}
+		}*/
 		//this._tokenPool.push(new GoSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -3997,9 +4031,9 @@ const CppLexer = class CppLexer extends Lexer {
 		this._pushInvisibleTokens();
 
 		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
-		if (this._isFirstTokenOfLine(tokenSequence)) {
+		/*if (this._isFirstTokenOfLine(tokenSequence)) {
 			this._tokenPool.push(new CppLabelToken());
-		}
+		}*/
 		this._tokenPool.push(new CppSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -4310,7 +4344,11 @@ const CppTypesToken = class CppTypesToken extends Token {
 				'thread',
 				'uniform_int_distribution',
 				'vector',
-				'void'
+				'void',
+
+				'T',
+				'U',
+				'V'
 
 			])}
 		});
@@ -5628,9 +5666,9 @@ const SwiftLexer = class SwiftLexer extends Lexer {
 		this._pushInvisibleTokens();
 
 		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
-		if (this._isFirstTokenOfLine(tokenSequence)) {
+		/*if (this._isFirstTokenOfLine(tokenSequence)) {
 			this._tokenPool.push(new SwiftLabelToken());
-		}
+		}*/
 		//this._tokenPool.push(new SwiftSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -5751,6 +5789,7 @@ const SwiftKeywordToken = class SwiftKeywordToken extends SourceSimpleCharacterS
 			'deinit',
 			'didSet',
 			'do',
+			'else',
 			'enum',
 			'extension',
 			'fallthrough',
@@ -5864,7 +5903,11 @@ const SwiftTypesToken = class SwiftTypesToken extends Token {
 
 				'NSThread',
 				'pthread_t',
-				'pthread_attr_t'
+				'pthread_attr_t',
+
+				'T',
+				'U',
+				'V'
 
 				// TODO Coloco os compatibilidade com C?
 
@@ -6690,6 +6733,7 @@ const KotlinKeywordToken = class KotlinKeywordToken extends SourceSimpleCharacte
 			'inline',
 			'interface',
 			'internal',
+			'is',
 			'lateinit',
 			'new',
 			'noinline',
@@ -6717,6 +6761,7 @@ const KotlinKeywordToken = class KotlinKeywordToken extends SourceSimpleCharacte
 			'throws',
 			'try',
 			'typealias',
+			'typeof',
 			'val',
 			'var',
 			'vararg',
@@ -6772,13 +6817,18 @@ const KotlinTypesToken = class KotlinTypesToken extends Token {
 				'String',
 				'CharSequence',
 				'Unit',
+				'void', // from Java only
 
 				'ArrayList',
 				'Pair',
 				'Runnable',
 				'StringBuilder',
 				'Thread',
-				'InterruptedException'
+				'InterruptedException',
+
+				'T',
+				'U',
+				'V'
 
 			])}
 		});
@@ -7817,16 +7867,21 @@ const JavaTypesToken = class JavaTypesToken extends Token {
 				'Executors',
 				'ExecutorService',
 				'Future',
+				'FutureTask',
 				'Iterable',
 				'Iterator',
-				'FutureTask',
 				'Runnable',
 				'StringBuilder',
 				'Supplier',
+				'Task',
 				'Thread',
 
 				'ExecutionException',
-				'InterruptedException'
+				'InterruptedException',
+
+				'T',
+				'U',
+				'V'
 
 			])}
 		});
@@ -7966,7 +8021,12 @@ const JavaPunctuationToken = class JavaPunctuationToken extends SourceSimpleChar
 			'&gt;&gt;&gt;=', // bitwise left shift
 			'&lt;&lt;=', // bitwise right shift
 
-			'...'
+			'...',
+
+			'System.out',
+			'java.util',
+			'java.util.concurrent',
+			'java.util.function'
 
 		]);
 
@@ -8734,9 +8794,9 @@ const CsLexer = class CsLexer extends Lexer {
 		this._pushInvisibleTokens();
 
 		// TODO melhorar isso, se não a cada token vai fazer um loop pra verificar se é o primeiro da linha
-		if (this._isFirstTokenOfLine(tokenSequence)) {
+		/*if (this._isFirstTokenOfLine(tokenSequence)) {
 			this._tokenPool.push(new CSLabelToken());
-		}
+		}*/
 		this._tokenPool.push(new CSSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
@@ -8991,8 +9051,14 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'StringBuilder',
 				'Task',
 				'Thread',
+				'Console',
 
-				'Queue'
+				'Attribute',
+				'Queue',
+
+				'T',
+				'U',
+				'V'
 
 			])}
 		});
@@ -9137,7 +9203,12 @@ const CSPunctuationToken = class CSPunctuationToken extends SourceSimpleCharacte
 			'^=', // bitwise xor
 			// '~=', // bitwise not não existe
 			'&gt;&gt;=', // bitwise left shift
-			'&lt;&lt;=' // bitwise right shift
+			'&lt;&lt;=', // bitwise right shift
+
+			'System',
+			'System.Collections',
+			'System.Collections.Generic',
+			'System.Threading.Tasks'
 
 		]);
 
@@ -12500,13 +12571,13 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 			this._tokenPool.length,
 
 			// language
-			new VbKeywordToken(),
-			new VbTypesToken(),
-			new VbPunctuationToken(),
+			new VBKeywordToken(),
+			new VBTypesToken(),
+			new VBPunctuationToken(),
 
 			// comments
-			new VbLineCommentToken(),
-			new VbDirectiveToken(),
+			new VBLineCommentToken(),
+			new VBDirectiveToken(),
 
 			new CDirectiveToken()
 
@@ -12516,8 +12587,8 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 		this._pushInvisibleTokens();
 
 		// FIXME não pode ter espaço em branco na frente dele
-		this._tokenPool.push(new VbLabelToken());
-		//this._tokenPool.push(new VbSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+		this._tokenPool.push(new VBLabelToken());
+		//this._tokenPool.push(new VBSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
 
@@ -12525,10 +12596,11 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 		this._tokenPool.splice(
 			this._tokenPool.length,
 			0,
-			//new VbNumericLiteralToken(),*/
+			//new VBNumericLiteralToken(),*/
 			new TempDecimalLiteralToken(),
-			new VbDateLiteralToken(),
-			new VbStringLiteralToken()
+			new VBDateLiteralToken(),
+			new VBStringLiteralToken(),
+			new VBAttributeToken()
 		);
 	}
 
@@ -12572,7 +12644,7 @@ const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
 
 
 
-const VbLineCommentPatternIterator = class VbLineCommentPatternIterator extends SourcePatternIterator {
+const VBLineCommentPatternIterator = class VBLineCommentPatternIterator extends SourcePatternIterator {
 
 	constructor() {
 		super();
@@ -12621,9 +12693,9 @@ const VbLineCommentPatternIterator = class VbLineCommentPatternIterator extends 
 /**
  * Token for Visual Basic line comments
  */
-const VbLineCommentToken = class VbLineCommentToken extends SourcePatternIteratorToken {
+const VBLineCommentToken = class VBLineCommentToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('comment lineComment', new VbLineCommentPatternIterator());
+		super('comment lineComment', new VBLineCommentPatternIterator());
 	}
 };
 
@@ -12632,7 +12704,7 @@ const VbLineCommentToken = class VbLineCommentToken extends SourcePatternIterato
 /**
  * Token for Visual Basic keywords
  */
-const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenceToken {
+const VBKeywordToken = class VBKeywordToken extends SourceSimpleCharacterSequenceToken {
 
 	constructor() {
 		super('keyword', [
@@ -12719,7 +12791,7 @@ const VbKeywordToken = class VbKeywordToken extends SourceSimpleCharacterSequenc
 /**
  * Token for Visual Basic types
  */
-const VbTypesToken = class VbTypesToken extends Token {
+const VBTypesToken = class VBTypesToken extends Token {
 
 	constructor() {
 
@@ -12800,7 +12872,7 @@ const VbTypesToken = class VbTypesToken extends Token {
 /**
  * Token for Visual Basic punctuation
  */
-const VbPunctuationToken = class VbPunctuationToken extends SourceSimpleCharacterSequenceToken {
+const VBPunctuationToken = class VBPunctuationToken extends SourceSimpleCharacterSequenceToken {
 
 	constructor() {
 
@@ -12840,7 +12912,7 @@ const VbPunctuationToken = class VbPunctuationToken extends SourceSimpleCharacte
 
 
 
-const VbStringPatternIterator = class VbStringPatternIterator {
+const VBStringPatternIterator = class VBStringPatternIterator {
 
 	constructor() {
 
@@ -12924,15 +12996,15 @@ const VbStringPatternIterator = class VbStringPatternIterator {
 /**
  * Token for Visual Basic strings
  */
-const VbStringLiteralToken = class VbStringLiteralToken extends SourcePatternIteratorToken {
+const VBStringLiteralToken = class VBStringLiteralToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('string', new VbStringPatternIterator());
+		super('string', new VBStringPatternIterator());
 	}
 };
 
 
 
-const VbDatePatternIterator = class VbDatePatternIterator {
+const VBDatePatternIterator = class VBDatePatternIterator {
 
 	constructor() {
 
@@ -13006,9 +13078,9 @@ const VbDatePatternIterator = class VbDatePatternIterator {
 /**
  * Token for Visual Basic dates
  */
-const VbDateLiteralToken = class VbDateLiteralToken extends SourcePatternIteratorToken {
+const VBDateLiteralToken = class VBDateLiteralToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('date', new VbDatePatternIterator());
+		super('date', new VBDatePatternIterator());
 	}
 };
 
@@ -13017,7 +13089,7 @@ const VbDateLiteralToken = class VbDateLiteralToken extends SourcePatternIterato
 /**
  * Token for Visual Basic directives
  */
-const VbDirectiveToken = class VbDirectiveToken extends SourceSimpleCharacterSequenceToken {
+const VBDirectiveToken = class VBDirectiveToken extends SourceSimpleCharacterSequenceToken {
 
 	constructor() {
 		super('directive', [
@@ -13035,7 +13107,7 @@ const VbDirectiveToken = class VbDirectiveToken extends SourceSimpleCharacterSeq
 
 
 
-const VbLabelIterator = class VbLabelIterator  extends SourcePatternIterator {
+const VBLabelIterator = class VBLabelIterator  extends SourcePatternIterator {
 
 	constructor() {
 
@@ -13085,11 +13157,144 @@ const VbLabelIterator = class VbLabelIterator  extends SourcePatternIterator {
 
 
 /**
- * Token for Vb labels
+ * Token for VB labels
  */
-const VbLabelToken = class VbLabelToken extends SourcePatternIteratorToken {
+const VBLabelToken = class VBLabelToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('label', new VbLabelIterator());
+		super('label', new VBLabelIterator());
+	}
+};
+
+
+
+const VBAttributePatternIterator = class VBAttributePatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+
+		Object.defineProperties(this, {
+			_isAlphaNumericCharacter: {value: isAlphaNumericCharacterRegex},
+			_isSpaceCharacter: {value: isSpaceCharacterRegex},
+			_bracesNestingLevel: {value: 0, writable: true}
+		});
+
+		this._matchFunction = this._matchStartBracket;
+		Object.seal(this);
+	}
+
+	_matchStartBracket(matchCharacter) {
+		if (matchCharacter === '[') {
+			this._matchFunction = this._matchAttributeNameBeginning;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchAttributeNameBeginning(matchCharacter) {
+
+		// TODO talvez testar com regex se é uma letra ou identificador válido
+		// não sei quais as regras para nomear atributos
+		if (matchCharacter === ']') {
+			this._hasNext = false;
+			return false;
+		}
+
+		if (!this._isAlphaNumericCharacter.test(matchCharacter)
+			&& !this._isSpaceCharacter.test(matchCharacter)
+			&& matchCharacter != ':'
+			&& matchCharacter != '.'
+			&& matchCharacter != ','
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		this._matchFunction = this._matchAttributeName;
+		return true;
+
+	}
+
+	_matchAttributeName(matchCharacter) {
+
+		if (matchCharacter === ']') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		if (!this._isAlphaNumericCharacter.test(matchCharacter)
+			&& !this._isSpaceCharacter.test(matchCharacter)
+			&& matchCharacter != ':'
+			&& matchCharacter != '.'
+			&& matchCharacter != ','
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
+
+	}
+
+	_matchEndQuote(matchCharacter) {
+
+		if (matchCharacter === '"') {
+			this._matchFunction = this._matchContentOrBrace;
+		}
+
+		return true;
+
+	}
+
+	_matchContentOrBrace(matchCharacter) {
+
+		if (matchCharacter === ']') {
+			this._hasNext = false;
+			return false;
+		}
+
+		if (matchCharacter === '"') {
+			this._matchFunction = this._matchEndQuote;
+			return true;
+		}
+
+		// FIXME Melhorar isso
+		// se tiver strings dentro do atributo, tenho que seguir as regras delas
+		// ou então no lexer, só permito atributos depois de operadores
+		if (matchCharacter !== '"'
+			&& !this._isAlphaNumericCharacter.test(matchCharacter)
+			&& !this._isSpaceCharacter.test(matchCharacter)
+			&& matchCharacter != ':'
+			&& matchCharacter != '.'
+			&& matchCharacter != ','
+			) {
+
+			this._hasNext = false;
+			return false;
+		}
+
+		return true;
+
+	}
+
+	_matchEndBracket(matchCharacter) {
+		if (matchCharacter === ']') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+};
+
+
+
+const VBAttributeToken = class VBAttributeToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('attribute', new VBAttributePatternIterator());
 	}
 };
 
@@ -13385,7 +13590,11 @@ const AdaTypesToken = class AdaTypesToken extends Token {
 				'int',
 				'long',
 				'unsigned',
-				'double'
+				'double',
+
+				'JSON_Value',
+				'JSON_Array'
+
 			])}
 		});
 
@@ -14058,7 +14267,9 @@ const ObjectPascalTypesToken = class ObjectPascalTypesToken extends Token {
 				'EPropReadOnly',
 				'EPropWriteOnly',
 				'EThread',
-				'EVariantError'
+				'EVariantError',
+
+				'TJSonValue'
 
 			])}
 		});
@@ -14366,18 +14577,23 @@ const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSeq
 			'else',
 			'elsif',
 			'end',
+			'for',
 			'if',
+			'in',
+			'lambda',
 			'loop',
 			'module',
 			'private',
 			'protected',
 			'require',
+			'return',
 			'self',
 			'undef',
 			'unless',
 			'until',
 			'when',
 			'while',
+			'yield',
 
 			'Struct',
 
@@ -14412,7 +14628,11 @@ const RubyTypesToken = class RubyTypesToken extends Token {
 			type: {value: 'type'},
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'Numeric',
+				'String',
 				'range', // TODO
+				'OpenStruct',
+				'JSON'
 			])}
 		});
 
@@ -14487,8 +14707,10 @@ const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleChar
 			':',
 			'...',
 			'::',
-			'&.',
-			'&amp;.',
+			'&',
+			'&amp;',
+			// '&.', // not sure if and what this is
+			// '&amp;.',
 			'<',
 			'>',
 			'<=',
@@ -14501,19 +14723,28 @@ const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleChar
 			'==',
 			'===',
 			'!=',
+			'=~',
+			'!~',
 			'<=>',
 			'&lt;=&gt;',
 			'+=',
 			'-=',
 			'*=',
+			'**=',
 			'/=',
 			'%=',
 			'||=',
 			'&&=',
+			'|=',
+			'&=',
 			'<<',
 			'>>',
 			'&lt;&lt;',
 			'&gt;&gt;',
+			'=<<',
+			'=>>',
+			'=&lt;&lt;',
+			'=&gt;&gt;',
 			'?',
 			'!',
 			'not',
@@ -14533,8 +14764,8 @@ const RubyPunctuationToken = class RubyPunctuationToken extends SourceSimpleChar
 			'/',
 			'%',
 			'^',
-			':',
-			','
+			',',
+			'defined?'
 		]);
 
 	}
@@ -14552,6 +14783,7 @@ const RubyStringPatternIterator = class RubyStringPatternIterator {
 		Object.defineProperties(this, {
 			_hasNext: {value: true, writable: true},
 			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
 			_matchFunction: {value: context._matchStartQuote, writable: true},
 			_isEscaped: {value: false, writable: true}
 		});
@@ -14577,7 +14809,11 @@ const RubyStringPatternIterator = class RubyStringPatternIterator {
 
 	_matchStartQuote(matchCharacter) {
 
-		if (matchCharacter === '"') {
+		if (matchCharacter === "'"
+			|| matchCharacter === '"'
+			) {
+
+			this._quoteType = matchCharacter;
 			this._matchFunction = this._matchContentOrEndQuote;
 			return true;
 		}
@@ -14589,22 +14825,23 @@ const RubyStringPatternIterator = class RubyStringPatternIterator {
 
 	_matchContentOrEndQuote(matchCharacter) {
 
-		if (matchCharacter === '"') {
-
-			if (this._isEscaped) {
-				this._isEscaped = false;
-			} else {
-				this._isEscaped = true;
-			}
-
+		/*if (this._isEscaped) {
+			this._isEscaped = false;
 			return true;
-
 		}
 
-		// se aspas não foi seguido de outras aspas
-		// termina a string imediatamente
-		if (this._isEscaped) {
-			return this._matchEnd(matchCharacter);
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}*/
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType) {
+			this._matchFunction = this._matchEnd;
 		}
 
 		return true;
@@ -14618,6 +14855,22 @@ const RubyStringPatternIterator = class RubyStringPatternIterator {
 		this._hasNext = false;
 		this._isComplete = true;
 		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
 	}
 
 };
@@ -14704,15 +14957,37 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 	constructor() {
 		super('keyword', [
 
+			'below',
 			'case',
+			// 'collect', // not sure what that is
 			'cond',
+			'defclass',
+			'defconstant',
+			'defmacro',
+			'defpackage',
+			'defparameter',
+			'defun',
+			'defvar',
+			'do',
+			'for',
+			'from',
 			'if',
+			'in',
+			// 'inspect',
+			'iter',
+			'lambda',
 			'let',
 			'let*',
-			'defvar',
-			'defparameter',
-			'defconstant',
+			'loop',
+			'nil',
+			'set',
+			// 'decf',
+			// 'incf',
+			'setf',
+			'setq',
+			'over',
 			'then',
+			'to',
 			'unless',
 			'when',
 
