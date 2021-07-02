@@ -24,9 +24,11 @@
 	Fui parcialmente inspirado no <a rel='external nofollow' href='http://www.25hoursaday.com/CsharpVsJava.html'>artigo icônico de Dare Obasanjo comparando C# e Java</a>.
 </p>
 <p>
-	É quase como um Rust vs Go vs C++ vs Swift vs Kotlin vs Java vs C# vs JavaScript vs Dart vs Python :P
-	Mas também estou começando a comparar duas linguagens funcionais (Lisp e Haskell) e linguagens de mais baixo nível como Web Assembly text format (AssemblyScript), LLVM e Assembly.
-	E linguagens que de algum modo foram ou ainda são populares como TypeScript, ActionScript, Ada, Objective-C, Object Pascal (Delphi), <abbr title='Visual Basic 6'>VB6</abbr> e PHP.
+	É quase como um Rust vs Go vs C++ vs Swift vs Kotlin vs Java vs C# vs JavaScript vs TypeScript vs Dart vs Python :P
+	Mas também estou começando a comparar duas linguagens funcionais (Lisp e Haskell).
+	Linguagens de mais baixo nível como Web Assembly text format (AssemblyScript), LLVM e Assembly.
+	Linguagens interpretadas como Ruby e PHP (populares em hospedagens compartilhadas) e <abbr title='Visual Basic 6'>VB6</abbr> e Smalltalk nessa categoria também.
+	Finalmente, linguagens que de algum modo foram ou ainda são populares como ActionScript, Ada, Objective-C e Object Pascal (Delphi).
 </p>
 
 <p>
@@ -730,9 +732,9 @@ fn someFunction(/* bloco */ arg1:i32) -&gt; i32 {
 </div>
 
 <div class='codeblock'>
-	<p>Go</p>
-	<code class='go'
-	>// linha
+<p>Go</p>
+<code class='go'
+>// linha
 
 /*
 bloco
@@ -849,7 +851,11 @@ int someFunction(/* bloco */ int arg) {
 
 /*
 bloco
-*/</code
+*/
+
+int someFunction(/* bloco */ int arg) {
+	return 0;
+}</code
 >
 </div>
 
@@ -860,7 +866,11 @@ bloco
 
 /*
 bloco
-*/</code
+*/
+
+function someFunction(/* bloco */ arg:number):number {
+	return 0;
+}</code
 >
 </div>
 
@@ -886,7 +896,11 @@ function someFunction(/* bloco */ arg) {
 
 /*
 bloco
-*/</code
+*/
+
+function someFunction(/* bloco */ arg:int):int {
+	return 0;
+}</code
 >
 </div>
 
@@ -909,7 +923,11 @@ string sendo usada como comentário de bloco
 
 /*
 bloco
-*/</code
+*/
+
+function someFunction(/* bloco */ int $arg):int {
+	return 0;
+}</code
 >
 </div>
 
@@ -938,8 +956,7 @@ bloco
 
 (*
 bloco
-*)
-</code
+*)</code
 >
 </div>
 
@@ -950,6 +967,8 @@ bloco
 
 =begin
 bloco
+o end precisa ocupar
+uma linha separada
 =end</code
 >
 </div>
@@ -2803,7 +2822,7 @@ let p = k != nil ? k : 10 // p será do tipo Int?
 var k:Int? = null
 var l:AClass? = null
 val m = l?.propriedade // m recebe null
-let n = l!!.propriedade // lança erro se l for null
+val n = l!!.propriedade // lança erro se l for null
 
 // null coalescing operator
 val o = k ?: 10 // o será do tipo Int</code
@@ -2848,8 +2867,11 @@ var o = (k != null) ? k : 10; // o será do tipo int?</code
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// nullables devem ter o tipo especificado
+// em sua declaração
+int? k = null;
+
+// TODO testar propriedades</code
 >
 </div>
 
@@ -2900,7 +2922,9 @@ k = None</code
 <p>PHP</p>
 <code class='php'
 >
-</code
+
+// qualquer tipo é sempre nullable
+$k = null;</code
 >
 </div>
 
@@ -2923,35 +2947,29 @@ Dim x: x = Empty
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>-- somente tipos access (<q>ponteiros</q>)
+-- podem ter o valor null
+type T_MyType_Access is access T_MyType;
+
+-- TODO</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
-></code
+>// ponteiros podem ter o valor nil
+// TODO Varint pode também?</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
->nil</code
 >
-</div>
 
-<div class='codeblock'>
-<p>Smalltalk</p>
-<code class='smalltalk'
-></code
->
-</div>
-
-<div class='codeblock'>
-<p>Ruby</p>
-<code class='ruby'
-></code
+# qualquer tipo é sempre nullable
+k = nil</code
 >
 </div>
 
@@ -11616,7 +11634,37 @@ retorno = ComParametroERetorno(param, param2)</code
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>def normal()
+	#
+end
+
+alias semExpressao normal
+
+def retorno()
+	return 'retorno'
+end
+
+def retornoMisturado(numero)
+	if numero > 0
+		return 'texto'
+	end
+	return 25
+end
+
+
+
+
+
+def superior
+	yield
+end
+
+normal()
+retorno()
+retornoMisturado(-1)
+retornoMisturado(1)
+superior &method(:normal)
+superior &method(:retorno)</code
 >
 </div>
 
@@ -12331,7 +12379,22 @@ named_args(tooMany = 2, args = 1, toRemember = false)</code
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>def named_args(
+	tooMany:,
+	args:,
+	toRemember:,
+	theirMeaning: 'a',
+	byPosition: 'b'
+	)
+
+	#
+end
+
+named_args(
+	tooMany: 2,
+	args: 1,
+	toRemember: false
+)</code
 >
 </div>
 
@@ -12580,7 +12643,7 @@ imprimirSimples!("resumo", 1, 2, 5);</code
 <code class='rust'
 >// argumentos de todos os tipos
 
-// TODO terminar exemplo</code
+// TODO</code
 >
 </div>
 
@@ -12790,7 +12853,7 @@ imprimir(titulo: "resumo", paginas: 1, 2...5, "capítulo 2")</code
 <code class='kotlin'
 >// argumentos do mesmo tipo
 
-imprimirSimples(String titulo, vararg paginas:Int) {
+imprimirSimples(titulo:String, vararg paginas:Int) {
 	/*for (int pagina : paginas) {
 		System.out.println(String.format("Imprimindo página %1", pagina));
 	}*/
@@ -12803,7 +12866,7 @@ imprimirSimples("resumo", 1, 2, 5);</code
 <code class='kotlin'
 >// argumentos de todos os tipos
 
-/*void imprimir(String titulo, Object... paginas) {
+/*void imprimir(titulo:String, Object... paginas) {
 	for (Object valor : paginas) {
 		if (valor instanceof Integer) {
 			System.out.println(String.format("Imprimindo página %d", valor));
@@ -12948,8 +13011,8 @@ imprimirSimples("resumo", 1, 2, 5);</code
 
 // argumentos de todos os tipos
 
-function imprimir(titulo, ...valores) {
-	for (let valor of valores) {
+function imprimir(titulo, ...paginas) {
+	for (let valor of paginas) {
 		if (Number.isInteger(valor)) {
 			console.log(`Imprimindo página ${valor}`);
 		} else if ((valor.begin || valor.begin === 0)
@@ -12975,13 +13038,29 @@ imprimir("resumo", 1, {begin: 2, end: 5}, "capítulo 2");</code
 </div>
 
 <div class='codeblock'>
+
 <p>Python</p>
 <code class='python'
->def imprimirSimples(titulo, *paginas):
-for pagina in paginas:
-	print("Imprimindo página " + pagina)
-</code
+># argumentos do mesmo tipo
+
+def imprimirSimples(titulo, *paginas):
+	for pagina in paginas:
+		print("Imprimindo página " + pagina)
+
+imprimirSimples()</code
 >
+
+<p>Python</p>
+<code class='python'
+># argumentos de todos os tipos
+
+def imprimir(titulo, *paginas):
+	for valor in paginas:
+		# TODO
+
+imprimir()</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -13022,10 +13101,39 @@ Imprimir "resumo", 1, 2, 5</code>
 </div>
 
 <div class='codeblock'>
+
 <p>Ruby</p>
 <code class='ruby'
-></code
+># argumentos do mesmo tipo
+
+def imprimirSimples(titulo, *paginas)
+	for pagina in paginas
+		puts "Imprimindo página #{pagina}"
+	end
+end
+
+imprimirSimples("resumo", 1, 2, 5);</code
 >
+
+<p>Ruby</p>
+<code class='ruby'
+># argumentos de todos os tipos
+
+def imprimir(titulo, *paginas)
+	for valor in paginas
+		if valor.is_a? Numeric
+			puts "Imprimindo página #{valor}"
+		elsif (defined?(valor.begin) || (defined?(valor.begin) && valor.begin === 0)) && defined?(valor.end)
+			puts "Imprimindo páginas #{valor.begin} até #{valor.end}"
+		else
+			puts "Imprimindo outra coisa"
+		end
+	end
+end
+
+imprimir("resumo", 1, 2..5, "capítulo 2")</code
+>
+
 </div>
 
 <div class='codeblock'>
@@ -13086,14 +13194,14 @@ Imprimir "resumo", 1, 2, 5</code>
 >fn main() {
 
 	// Increment via closures and functions.
-	fn function(i: i32) -&gt; i32 { i + 1 }
+	fn function(i:i32) -&gt; i32 { i + 1 }
 
 	// Closures are anonymous, here we are binding them to references
 	// Annotation is identical to function annotation but is optional
 	// as are the `{}` wrapping the body. These nameless functions
 	// are assigned to appropriately named variables.
-	let closure_annotated = |i: i32| -&gt; i32 { i + 1 };
-	let closure_inferred  = |i     |          i + 1  ;
+	let closure_annotated = |i:i32| -&gt; i32 { i + 1 };
+	let closure_inferred  = |i    |          i + 1  ;
 
 	let i = 1;
 	// Call the function and closures.
@@ -13172,7 +13280,7 @@ superior({(x:Int) -&gt; Int in
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
->val sum: (Int, Int) -&gt; Int = { x: Int, y: Int -&gt; x + y }
+>val sum:(Int, Int) -&gt; Int = { x:Int, y:Int -&gt; x + y }
 
 // suporta closures tb</code
 >
@@ -13379,7 +13487,12 @@ mydoubler = myfunc(2)
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
+>def adder(a, b)
+	lambda { a + b }
+end
+
+adder_fn = adder(1, 2)
+adder_fn.call</code
 >
 </div>
 
@@ -14225,11 +14338,11 @@ typeCurrentStrategy(1, 2) // 2</code
 // ugh...
 typealias StrategySignature = (Int, Int) -&gt; Int
 
-fun addStrategy(i1:Int, i2:Int) : Int {
+fun addStrategy(i1:Int, i2:Int) :Int {
 	return i1 + i2
 }
 
-val multiplyStrategy = fun(i1:Int, i2:Int) : Int {
+val multiplyStrategy = fun(i1:Int, i2:Int) :Int {
 	i1 * i2
 }
 
@@ -14514,52 +14627,6 @@ int main() {
 
 		<div>
 
-<p>C++ Microsoft - DentroDoModulo.hpp</p>
-<code class='cpp'
->
-#pragma once
-
-namespace marcoluglio {
-	class DentroDoModulo {};
-}</code
->
-
-		</div>
-
-		<div>
-
-<p>C++ - DentroDoModulo.cpp</p>
-<code class='cpp'
->
-#include "DentroDoModulo.hpp"
-
-namespace marcoluglio {
-	//
-}</code
->
-
-		</div>
-
-	</div>
-
-<p>C++ - main.cpp</p>
-<code class='cpp'
->#include "DentroDoModulo.hpp"
-
-int main(int argc, const char* argv[]) {
-	using marcoluglio::DentroDoModulo;
-	DentroDoModulo meuObjeto = DentroDoModulo();
-}</code
->
-
-</div>
-
-<div class='codeblock'>
-
-	<div class='pair'>
-
-		<div>
-
 <p>C++ - DentroDoModulo.hpp</p>
 <code class='cpp'
 >#ifndef MARCOLUGLIO_DENTRODOMODULO_HPP_INCLUDED
@@ -14674,7 +14741,7 @@ int main(int argc, const char* argv[]) {
 
 import UIKit
 
-class DentroDoModulo: UIViewController {
+class DentroDoModulo : UIViewController {
 }</code
 >
 
@@ -14732,23 +14799,6 @@ class MainClass {
 </div>
 
 <div class='codeblock'>
-<p>JavaScript compatibilidade</p>
-<code class='javascript'
->'use strict';
-
-define('dentroDoModulo', () =&gt; {
-	const DentroDoModulo = class DentroDoModulo() { /**/ }
-	return DentroDoModulo;
-});
-
-define(['dentroDoModulo'], (DentroDoModulo) =&gt; {
-	let meuObjeto = new DentroDoModulo();
-});
-</code
->
-</div>
-
-<div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
 >
@@ -14779,6 +14829,27 @@ export default class DentroDoModulo { /**/ }</code
 import DentroDoModulo from 'DentroDoModulo';
 
 let meuObjeto = new DentroDoModulo();</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript compatibilidade</p>
+<code class='javascript'
+>'use strict';
+
+// AMD
+
+define('dentroDoModulo', () =&gt; {
+	const DentroDoModulo = class DentroDoModulo() { /**/ }
+	return DentroDoModulo;
+});
+
+define(['dentroDoModulo'], (DentroDoModulo) =&gt; {
+	let meuObjeto = new DentroDoModulo();
+});
+
+// CommonJS
+// TODO</code
 >
 </div>
 
@@ -16529,7 +16600,7 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// overload de ()
-	operator fun invoke(): Float? {
+	operator fun invoke():Float? {
 
 		if (this.tempoAtual &lt;= this.tempo) {
 			this.passo = this.fim - (this.delta * (this.tempo - this.tempoAtual))
@@ -18453,14 +18524,14 @@ fun main() {
 	parallelThread.start()
 
 	// alternativa 2: interface Runnable
-	val parallelRunnable: Runnable = ParallelRunnable(dataQueue)
+	val parallelRunnable:Runnable = ParallelRunnable(dataQueue)
 	val parallelRunnableThread = Thread(parallelRunnable)
 	parallelRunnableThread.start()
 
 	// alternativa 3: lambda Runnable
 	// ou interface funcional Runnable
 	val lambda = Runnable {
-		var element: String?
+		var element:String?
 		var sair = false
 		while (!sair) {
 			// dataQueue capturado pelo lambda
@@ -18481,7 +18552,7 @@ fun main() {
 		parallelThread.join()
 		parallelRunnableThread.join()
 		lambdaRunnable.join()
-	} catch (e: InterruptedException) {
+	} catch (e:InterruptedException) {
 		// fazer alguma coisa
 	}
 
@@ -20091,19 +20162,33 @@ func main() {
 // de variáveis sem nenhuma outra
 // funcionalidade extra
 struct ResultadoCaixa {
-	public var total:int
-	public var valorPago:int
-	public var troco:int
+	int total;
+	int valorPago;
+	int troco;
 };
 
 // sempre que utilizarmos o nome
 // do tipo definido com uma struct
 // precisamos incluir a palavra struct
 // antes do nome do tipo
+struct ResultadoCaixa compra1 = {
+	.total = 967,
+	.valorPago = 1000,
+	.troco = 33
+};
+
+// ou
 struct ResultadoCaixa compra1;
 compra1.total = 967;
 compra1.valorPago = 1000;
-compra1.troco = 33;</code
+compra1.troco = 33;
+
+// ou ainda
+struct ResultadoCaixa compra1 = {
+	967,
+	1000,
+	33
+};</code
 >
 </div>
 
@@ -20122,8 +20207,8 @@ public struct ResultadoCaixa {
 
 let compra1 = ResultadoCaixa(
 	total: 967,
-	valorPago:1000,
-	troco:33
+	valorPago: 1000,
+	troco: 33
 )
 
 
@@ -20443,8 +20528,8 @@ program Main;
 begin
 
 	compra1.Total := 967;
-	compra1.ValorPago =: 1000;
-	compra1.Troco =: 33;
+	compra1.ValorPago := 1000;
+	compra1.Troco := 33;
 
 	// ou com with
 
@@ -20459,10 +20544,10 @@ end.
 
 // structs podem ter a parte final
 // variável
-type type TResultadoCaixa2 = record
-	fieldList1: type1;
+type TResultadoCaixa2 = record
+	fieldList1:type1;
 		...
-	fieldListn: typen;
+	fieldListn:typen;
 	case tag: ordinalType of
 		constantList1: (variant1);
 		...
@@ -21178,7 +21263,10 @@ class D : C, P, Q {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->const ResultadoCaixa = class ResultadoCaixa {
+>// note que JavaScript não possui classes de verdade
+// apenas objetos que herdam de outros objetos diretamente
+// prototype based inheritance
+const ResultadoCaixa = class ResultadoCaixa {
 
 	constructor(total, valorPago) {
 
@@ -21336,7 +21424,16 @@ Set compra1 = new ResutadoCaixa
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>(defclass resultadoCaixa() (
+	(name
+		:initarg :name
+		:accessor name
+	)
+	(lisper
+		:initform nil
+		:accessor lisper
+	)
+))</code
 >
 </div>
 
@@ -21646,18 +21743,18 @@ class A {
 	}
 
 	// getter
-	var stringRepresentation: String
+	var stringRepresentation:String
 	get() = this.toString()
 
 	// getter e setter
-	var stringRepresentation2: String
+	var stringRepresentation2:String
 	get() = this.toString()
 	set(value) {
 		setDataFromString(value)
 	}
 
 	// com visibilidades diferentes
-	var stringRepresentation3: String
+	var stringRepresentation3:String
 	get() = this.toString()
 	private set(value) {
 		setDataFromString(value)
@@ -22269,9 +22366,9 @@ let o2 = D()</code
 	fun foo() { print("A") }
 	fun bar()
 
-	val prop: Int // abstract
+	val prop:Int // abstract
 
-	val propertyWithImplementation: String
+	val propertyWithImplementation:String
 		get() = "foo"
 
 }
@@ -23813,7 +23910,7 @@ pub struct MusicNote {
 <strong>}</strong>
 
 impl fmt::Display for MusicNote {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+	fn fmt(&amp;self, formatter:&amp;mut fmt::Formatter) -&gt; fmt::Result {
 		write!(formatter, "{}{}", self.step, self.semitone)
 	}
 }</code
@@ -23851,7 +23948,7 @@ pub enum Step {
 }
 
 impl fmt::Display for Step {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+	fn fmt(&amp;self, formatter:&amp;mut fmt::Formatter) -&gt; fmt::Result {
 		match *self {
 			Step::Do  | Step::C =&gt; write!(formatter, "Do"),
 			Step::Re  | Step::D =&gt; write!(formatter, "Re"),
@@ -23879,7 +23976,7 @@ impl Default for Semitone {
 }
 
 impl fmt::Display for Semitone {
-	fn fmt(&amp;self, formatter: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+	fn fmt(&amp;self, formatter:&amp;mut fmt::Formatter) -&gt; fmt::Result {
 		match *self {
 			Semitone::None =&gt; write!(formatter, ""),
 			Semitone::Natural =&gt; write!(formatter, "♮"),
@@ -24237,7 +24334,7 @@ print(musicNote) // Do♯</code
 		self.semitone = semitone
 	}
 
-	public var description: String {
+	public var description:String {
 		return "\(self.step)\(self.semitone)"
 	}
 
@@ -24248,7 +24345,7 @@ print(musicNote) // Do♯</code
 }
 
 <strong>// posso fazer isso estático tb dentro da classe MusicNote</strong>
-<strong class='small'>func + (left: MusicNote, right: Semitone) -&gt; MusicNote {</strong>
+<strong class='small'>func + (left:MusicNote, right:Semitone) -&gt; MusicNote {</strong>
 
 	if right == Semitone.none {
 		return left
@@ -24305,7 +24402,7 @@ public enum Step : UInt8, CustomStringConvertible {
 	case a
 	case b
 
-	public var description: String {
+	public var description:String {
 		switch self {
 			case .do, .c:
 				return "Do"
@@ -24335,7 +24432,7 @@ public enum Semitone : Int8, CustomStringConvertible {
 	case sharp = 1
 	case doubleSharp = 2
 
-	public var description: String {
+	public var description:String {
 		switch self {
 			case .none:
 				return ""
@@ -24425,7 +24522,7 @@ namespace MarcoLuglio.OpOvExample {
 
 namespace MarcoLuglio.OpOvExample {
 
-	<strong>public final class MusicNote {</strong>
+	<strong>public sealed class MusicNote {</strong>
 
 		<strong>public static MusicNote operator +(MusicNote note, Semitone semitone) {</strong>
 
@@ -25039,7 +25136,7 @@ print(subscriptCollection["monday", 1]);</code
 
 <p>Kotlin - IndexedCollection.kt</p>
 <code class='kotlin'
->class Point(val x: Int, val y: Int)
+>class Point(val x:Int, val y:Int)
 operator fun Point.get(i) = Point(-x, -y)
 
 val point = Point(10, 20)
@@ -25406,10 +25503,10 @@ func main() {
 <p>Kotlin</p>
 <code class='kotlin'
 >@Target(AnnotationTarget.CLASS)
-annotation class AClassAnnotation(val aParam: String)
+annotation class AClassAnnotation(val aParam:String)
 
 @Target(AnnotationTarget.FUNCTION)
-annotation class AMethodAnnotation(val aParam: String)
+annotation class AMethodAnnotation(val aParam:String)
 
 @AClassAnnotation("metadata about class")
 class AnnotatedClass {
@@ -25973,13 +26070,13 @@ end Nutricao;</code
 <p>Object Pascal (Delphi)</p>
 <code class='objectpascal'
 >type TObj = object
-private
-	Caption:ShortString;
-public
-	constructor init;
-	destructor done;
-	procedure SetCaption(AValue:String);
-	function GetCaption:String;
+	private
+		Caption:ShortString;
+	public
+		constructor init;
+		destructor done;
+		procedure SetCaption(AValue:String);
+		function GetCaption:String;
 end;
 
 type point = record
@@ -25988,14 +26085,14 @@ end;
 
 type RPoint = record
 	case Boolean of
-		False : (X,Y,Z:Real);
-		True : (R,theta,phi:Real);
+		False: (X,Y,Z:Real);
+		True: (R,theta,phi:Real);
 end;
 
 type BetterRPoint = record
 	case UsePolar:Boolean of
-		False : (X,Y,Z:Real);
-		True : (R,theta,phi:Real);
+		False: (X,Y,Z:Real);
+		True: (R,theta,phi:Real);
 end;
 
 function Calcular(Porcao:Single):TabelaNutricional; cdecl;
@@ -26658,17 +26755,17 @@ JavaScript ainda não chegou lá.</p>
 use actix_web::{web, App, HttpRequest, HttpServer, Responder};
 
 #[get("/")]
-async fn index(_req: HttpRequest) -&gt; impl Responder {
+async fn index(_req:HttpRequest) -&gt; impl Responder {
 	"Hello from the index page!"
 }
 
-async fn greet(req: HttpRequest) -&gt; impl Responder {
+async fn greet(req:HttpRequest) -&gt; impl Responder {
 	let name = req.match_info().get("name").unwrap_or("World");
 	format!("Hello {}!", &name)
 }
 
 #[actix_web::main]
-async fn main() -&gt; std::io::Result&lt;()&gt; {
+async fn main() -&gt; Result&lt;()&gt; {
 	HttpServer::new(|| {
 		App::new()
 			.service(index)
@@ -26695,7 +26792,8 @@ fn main() {
 	// TODO handle SIGINT, SIGTERM, etc.
 
 	println!("Starting go server on port 80");
-	let listener = TcpListener::bind("0.0.0.0:80"); // containers must use 0.0.0.0! localhost or 127.0.0.1 do not work!
+	// containers must use 0.0.0.0! localhost or 127.0.0.1 do not work!
+	let listener = TcpListener::bind("0.0.0.0:80");
 
 	match listener {
 		Ok(result) =&gt; {
@@ -26707,7 +26805,7 @@ fn main() {
 
 }
 
-fn listen_incoming_connections(listener:std::net::TcpListener) -&gt; Result&lt;(), std::io::Error&gt; {
+fn listen_incoming_connections(listener:TcpListener) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	for stream in listener.incoming() {
 		handle_connection(stream?)?;
@@ -26717,7 +26815,7 @@ fn listen_incoming_connections(listener:std::net::TcpListener) -&gt; Result&lt;(
 
 }
 
-fn handle_connection(mut stream: TcpStream) -&gt; Result&lt;usize, std::io::Error&gt; {
+fn handle_connection(mut stream:TcpStream) -&gt; Result&lt;usize, std::io::Error&gt; {
 
 	let mut buffer = [0; 1024];
 	let buffer_result = stream.read(&mut buffer)?; // TODO implement timeouts
@@ -26734,14 +26832,12 @@ fn handle_connection(mut stream: TcpStream) -&gt; Result&lt;usize, std::io::Erro
 	} else if buffer.starts_with(get) {
 		handle_get(buffer, stream)?;
 	} else {
-
 		println!("TODO 404")
 		/*(
 			"HTTP/1.1 404 NOT FOUND",
 			"content-type: text/html".to_string(),
 			"404.html"
 		)*/
-
 	};
 
 	Ok(buffer_result)
@@ -26751,7 +26847,7 @@ fn handle_connection(mut stream: TcpStream) -&gt; Result&lt;usize, std::io::Erro
 // formato das respostas
 // https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
 
-fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
+fn handle_options(buffer:[u8; 1024], mut stream:TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, headers) = (
 		"HTTP/1.1 200 OK",
@@ -26773,7 +26869,7 @@ fn handle_options(buffer:[u8; 1024], mut stream: TcpStream) -&gt; Result&lt;(), 
 
 }
 
-fn handle_get(buffer:[u8; 1024], mut stream: TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
+fn handle_get(buffer:[u8; 1024], mut stream:TcpStream) -&gt; Result&lt;(), std::io::Error&gt; {
 
 	let (status_line, mut headers, filename) = (
 		"HTTP/1.1 200 OK",
@@ -27875,9 +27971,9 @@ import java.lang.Exception
 import java.net.URI
 import javax.net.ssl.SSLSocketFactory
 
-	private lateinit var webSocketClient: WebSocketClient
+	private lateinit var webSocketClient:WebSocketClient
 
-	override fun onCreate(savedInstanceState: Bundle?) {
+	override fun onCreate(savedInstanceState:Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 	}
@@ -27893,27 +27989,27 @@ import javax.net.ssl.SSLSocketFactory
 	}
 
 	private fun initWebSocket() {
-		val coinbaseUri: URI? = URI("wss://ab.com")
+		val coinbaseUri:URI? = URI("wss://ab.com")
 		createWebSocketClient(coinbaseUri)
 	}
 
-	private fun createWebSocketClient(coinbaseUri: URI?) {
+	private fun createWebSocketClient(coinbaseUri:URI?) {
 
 		webSocketClient = object : WebSocketClient(coinbaseUri) {
 
-			override fun onOpen(handshakedata: ServerHandshake?) {
+			override fun onOpen(handshakedata:ServerHandshake?) {
 				subscribe()
 			}
 
-			override fun onMessage(message: String?) {
+			override fun onMessage(message: tring?) {
 				setUpBtcPriceText(message)
 			}
 
-			override fun onClose(code: Int, reason: String?, remote: Boolean) {
+			override fun onClose(code:Int, reason:String?, remote:Boolean) {
 				unsubscribe()
 			}
 
-			override fun onError(ex: Exception?) {
+			override fun onError(ex:Exception?) {
 				// ex?.message
 			}
 
@@ -29296,7 +29392,8 @@ ruby = JSON.parse(json)</code
 <!--
 swift guard
 
-rust loop {}
+rust/ruby loop {}
+
 rust string types, for instance br##"..."##, my parser does not support this
 https://doc.rust-lang.org/reference/tokens.html
 https://doc.rust-lang.org/book/appendix-02-operators.html#non-operator-symbols
