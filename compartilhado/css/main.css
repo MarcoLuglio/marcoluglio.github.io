@@ -483,16 +483,27 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .keyword,
 .bubaloop.rust .keyword,
 .bubaloop.go .keyword,
+.bubaloop.cpp .keyword,
 .bubaloop.swift .keyword,
 .bubaloop.cs .keyword,
 .bubaloop.kotlin .keyword,
 .bubaloop.java .keyword,
 .bubaloop.javascript .keyword,
-.bubaloop.dart .javascript,
+.bubaloop.dart .keyword,
 .bubaloop.python .keyword,
 .bubaloop.ruby .keyword,
 .bubaloop.php .keyword,
 .bubaloop.sql .keyword {
+	color: var(--keywords-light-color);
+}
+
+.bubaloop.objc .keyword,
+.bubaloop.visualbasic .keyword,
+.bubaloop.ada .keyword,
+.bubaloop.objectpascal .keyword,
+.bubaloop.smalltalk .keyword,
+.bubaloop.commonlisp .keyword,
+.bubaloop.haskell .keyword {
 	color: var(--keywords-light-color);
 }
 
@@ -505,6 +516,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.generic .keyword,
 .bubaloop.highlight.rust .keyword,
 .bubaloop.highlight.go .keyword,
+.bubaloop.highlight.cpp .keyword,
 .bubaloop.highlight.swift .keyword,
 .bubaloop.highlight.cs .keyword,
 .bubaloop.highlight.kotlin .keyword,
@@ -518,6 +530,16 @@ div.codeblock.bubaloop p + code {
 	/*color: var(--highlight-keywords-light-color);*/
 }
 
+.bubaloop.highlight.objc .keyword,
+.bubaloop.highlight.visualbasic .keyword,
+.bubaloop.highlight.ada .keyword,
+.bubaloop.highlight.objectpascal .keyword,
+.bubaloop.highlight.smalltalk .keyword,
+.bubaloop.highlight.commonlisp .keyword,
+.bubaloop.highlight.haskell .keyword {
+	/*color: var(--highlight-keywords-light-color);*/
+}
+
 .bubaloop.highlight.webassembly .keyword,
 .bubaloop.highlight.llvm .keyword,
 .bubaloop.highlight.assembly .keyword {
@@ -527,6 +549,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .number,
 .bubaloop.rust .number,
 .bubaloop.go .number,
+.bubaloop.cpp .number,
 .bubaloop.swift .number,
 .bubaloop.cs .number,
 .bubaloop.kotlin .number,
@@ -540,6 +563,16 @@ div.codeblock.bubaloop p + code {
 	color: var(--numbers-light-color);
 }
 
+.bubaloop.objectivec .number,
+.bubaloop.visualbasic .number,
+.bubaloop.ada .number,
+.bubaloop.objectpascal .number,
+.bubaloop.smalltalk .number,
+.bubaloop.commonlisp .number,
+.bubaloop.haskell .number {
+	color: var(--numbers-light-color);
+}
+
 .bubaloop.webassembly .number,
 .bubaloop.llvm .number,
 .bubaloop.assembly .number {
@@ -549,6 +582,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .boolean,
 .bubaloop.rust .boolean,
 .bubaloop.go .boolean,
+.bubaloop.cpp .boolean,
 .bubaloop.swift .boolean,
 .bubaloop.cs .boolean,
 .bubaloop.kotlin .boolean,
@@ -562,6 +596,16 @@ div.codeblock.bubaloop p + code {
 	color: var(--boolean-light-color);
 }
 
+.bubaloop.objectivec .boolean,
+.bubaloop.visualbasic .boolean,
+.bubaloop.ada .boolean,
+.bubaloop.objectpascal .boolean,
+.bubaloop.smalltalk .boolean,
+.bubaloop.commonlisp .boolean,
+.bubaloop.haskell .boolean {
+	color: var(--boolean-light-color);
+}
+
 .bubaloop.webassembly .boolean,
 .bubaloop.llvm .boolean,
 .bubaloop.assembly .boolean {
@@ -571,6 +615,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .type,
 .bubaloop.rust .type,
 .bubaloop.go .type,
+.bubaloop.cpp .type,
 .bubaloop.swift .type,
 .bubaloop.cs .type,
 .bubaloop.kotlin .type,
@@ -584,6 +629,14 @@ div.codeblock.bubaloop p + code {
 	color: var(--types-light-color);
 }
 
+.bubaloop.objectivec .type,
+.bubaloop.visualbasic .type,
+.bubaloop.ada .type,
+.bubaloop.objectpascal .type,
+.bubaloop.haskell .type {
+	color: var(--types-light-color);
+}
+
 .bubaloop.webassembly .type,
 .bubaloop.llvm .type,
 .bubaloop.assembly .type {
@@ -593,6 +646,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.generic strong .type,
 .bubaloop.highlight.rust strong .type,
 .bubaloop.highlight.go strong .type,
+.bubaloop.highlight.cpp strong .type,
 .bubaloop.highlight.swift strong .type,
 .bubaloop.highlight.cs strong .type,
 .bubaloop.highlight.kotlin strong .type,
@@ -606,6 +660,14 @@ div.codeblock.bubaloop p + code {
 	color: #8a008a;
 }
 
+.bubaloop.highlight.objectivec strong .type,
+.bubaloop.highlight.visualbasic strong .type,
+.bubaloop.highlight.ada strong .type,
+.bubaloop.highlight.objectpascal strong .type,
+.bubaloop.highlight.haskell strong .type {
+	color: #8a008a;
+}
+
 .bubaloop.highlight.webassembly strong .type,
 .bubaloop.highlight.llvm strong .type,
 .bubaloop.highlight.assembly strong .type {
@@ -615,6 +677,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .operator,
 .bubaloop.rust .operator,
 .bubaloop.go .operator,
+.bubaloop.cpp .operator,
 .bubaloop.swift .operator,
 .bubaloop.cs .operator,
 .bubaloop.kotlin .operator,
@@ -628,6 +691,16 @@ div.codeblock.bubaloop p + code {
 	color: var(--punctuation-light-color);
 }
 
+.bubaloop.objectivec .operator,
+.bubaloop.visualbasic .operator,
+.bubaloop.ada .operator,
+.bubaloop.objectpascal .operator,
+.bubaloop.smalltalk .operator,
+.bubaloop.commonlisp .operator,
+.bubaloop.haskell .operator {
+	color: var(--punctuation-light-color);
+}
+
 .bubaloop.webassembly .operator,
 .bubaloop.llvm .operator,
 .bubaloop.assembly .operator {
@@ -637,6 +710,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.generic strong .operator,
 .bubaloop.highlight.rust strong .operator,
 .bubaloop.highlight.go strong .operator,
+.bubaloop.highlight.cpp strong .operator,
 .bubaloop.highlight.swift strong .operator,
 .bubaloop.highlight.cs strong .operator,
 .bubaloop.highlight.kotlin strong .operator,
@@ -647,6 +721,16 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.ruby strong .operator,
 .bubaloop.highlight.php strong .operator,
 .bubaloop.highlight.sql strong .operator {
+	color: #505B66;
+}
+
+.bubaloop.highlight.objectivec strong .operator,
+.bubaloop.highlight.visualbasic strong .operator,
+.bubaloop.highlight.ada strong .operator,
+.bubaloop.highlight.objectpascal strong .operator,
+.bubaloop.highlight.smalltalk strong .operator,
+.bubaloop.highlight.commonlisp strong .operator,
+.bubaloop.highlight.haskell strong .operator {
 	color: #505B66;
 }
 
@@ -662,6 +746,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.rust .comment a,
 .bubaloop.go .comment,
 .bubaloop.go .comment a,
+.bubaloop.cpp .comment,
+.bubaloop.cpp .comment a,
 .bubaloop.swift .comment,
 .bubaloop.swift .comment a,
 .bubaloop.cs .comment,
@@ -685,6 +771,23 @@ div.codeblock.bubaloop p + code {
 	color: var(--comments-light-color);
 }
 
+.bubaloop.objectivec .comment,
+.bubaloop.objectivec .comment a,
+.bubaloop.visualbasic .comment,
+.bubaloop.visualbasic .comment a,
+.bubaloop.ada .comment,
+.bubaloop.ada .comment a,
+.bubaloop.objectpascal .comment,
+.bubaloop.objectpascal .comment a,
+.bubaloop.smalltalk .comment,
+.bubaloop.smalltalk .comment a,
+.bubaloop.commonlisp .comment,
+.bubaloop.commonlisp .comment a,
+.bubaloop.haskell .comment,
+.bubaloop.haskell .comment a {
+	color: var(--comments-light-color);
+}
+
 .bubaloop.webassembly .comment,
 .bubaloop.webassembly .comment a,
 .bubaloop.llvm .comment,
@@ -700,6 +803,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.rust strong .comment a,
 .bubaloop.highlight.go strong .comment,
 .bubaloop.highlight.go strong .comment a,
+.bubaloop.highlight.cpp strong .comment,
+.bubaloop.highlight.cpp strong .comment a,
 .bubaloop.highlight.swift strong .comment,
 .bubaloop.highlight.swift strong .comment a,
 .bubaloop.highlight.cs strong .comment,
@@ -723,6 +828,23 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.highlight.objectivec strong .comment,
+.bubaloop.highlight.objectivec strong .comment a,
+.bubaloop.highlight.visualbasic strong .comment,
+.bubaloop.highlight.visualbasic strong .comment a,
+.bubaloop.highlight.ada strong .comment,
+.bubaloop.highlight.ada strong .comment a,
+.bubaloop.highlight.objectpascal strong .comment,
+.bubaloop.highlight.objectpascal strong .comment a,
+.bubaloop.highlight.smalltalk strong .comment,
+.bubaloop.highlight.smalltalk strong .comment a,
+.bubaloop.highlight.commonlisp strong .comment,
+.bubaloop.highlight.commonlisp strong .comment a,
+.bubaloop.highlight.haskell strong .comment,
+.bubaloop.highlight.haskell strong .comment a {
+	color: #ffffff;
+}
+
 .bubaloop.highlight.webassembly strong .comment,
 .bubaloop.highlight.webassembly strong .comment a,
 .bubaloop.highlight.llvm strong .comment,
@@ -734,14 +856,21 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.generic .directive,
 .bubaloop.go .directive,
+.bubaloop.cpp .directive,
 .bubaloop.swift .directive,
 .bubaloop.cs .directive {
+	color: #7F8EA3;
+}
+
+.bubaloop.objectivec .directive,
+.bubaloop.visualbasic .directive {
 	color: #7F8EA3;
 }
 
 .bubaloop.generic .string,
 .bubaloop.rust .string,
 .bubaloop.go .string,
+.bubaloop.cpp .string,
 .bubaloop.swift .string,
 .bubaloop.cs .string,
 .bubaloop.kotlin .string,
@@ -755,6 +884,16 @@ div.codeblock.bubaloop p + code {
 	color: var(--strings-light-color);
 }
 
+.bubaloop.objectivec .string,
+.bubaloop.visualbasic .string,
+.bubaloop.ada .string,
+.bubaloop.objectpascal .string,
+.bubaloop.smalltalk .string,
+.bubaloop.commonlisp .string,
+.bubaloop.haskell .string {
+	color: var(--strings-light-color);
+}
+
 .bubaloop.webassembly .string,
 .bubaloop.llvm .string,
 .bubaloop.assembly .string {
@@ -764,6 +903,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.generic strong .string,
 .bubaloop.highlight.rust strong .string,
 .bubaloop.highlight.go strong .string,
+.bubaloop.highlight.cpp strong .string,
 .bubaloop.highlight.swift strong .string,
 .bubaloop.highlight.cs strong .string,
 .bubaloop.highlight.kotlin strong .string,
@@ -777,6 +917,16 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.highlight.objectivec strong .string,
+.bubaloop.highlight.visualbasic strong .string,
+.bubaloop.highlight.ada strong .string,
+.bubaloop.highlight.objectpascal strong .string,
+.bubaloop.highlight.smalltalk strong .string,
+.bubaloop.highlight.commonlisp strong .string,
+.bubaloop.highlight.haskell strong .string {
+	color: #ffffff;
+}
+
 .bubaloop.highlight.webassembly strong .string,
 .bubaloop.highlight.llvm strong .string,
 .bubaloop.highlight.assembly strong .string {
@@ -786,6 +936,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.generic .char,
 .bubaloop.rust .char,
 .bubaloop.go .char,
+.bubaloop.cpp .char,
 .bubaloop.swift .char,
 .bubaloop.cs .char,
 .bubaloop.kotlin .char,
@@ -793,12 +944,22 @@ div.codeblock.bubaloop p + code {
 	color: var(--chars-light-color);
 }
 
+.bubaloop.objectivec .char {
+	color: var(--chars-light-color);
+}
+
 .bubaloop.highlight.generic strong .char,
 .bubaloop.highlight.rust strong .char,
 .bubaloop.highlight.go strong .char,
+.bubaloop.highlight.cpp strong .char,
 .bubaloop.highlight.swift strong .char,
 .bubaloop.highlight.cs strong .char,
-.bubaloop.highlight.kotlin strong .char {
+.bubaloop.highlight.kotlin strong .char,
+.bubaloop.highlight.java strong .char {
+	color: #ffffff;
+}
+
+.bubaloop.highlight.objectivec strong .char {
 	color: #ffffff;
 }
 
@@ -816,14 +977,42 @@ div.codeblock.bubaloop p + code {
 	color: var(--attributes-light-color);
 }
 
+.bubaloop.visualbasic .attribute {
+	color: var(--attributes-light-color);
+}
+
+.bubaloop.highlight.generic strong .attribute,
+.bubaloop.highlight.rust strong .attribute,
+.bubaloop.highlight.go strong .attribute,
+.bubaloop.highlight.swift strong .attribute,
+.bubaloop.highlight.cs strong .attribute,
+.bubaloop.highlight.kotlin strong .annotation,
+.bubaloop.highlight.java strong .annotation,
+.bubaloop.highlight.javascript strong .decorator,
+.bubaloop.highlight.dart strong .annotation,
+.bubaloop.highlight.python strong .attribute, /* TODO check this */
+.bubaloop.highlight.python strong .decorator {
+	color: var(--attributes-light-color);
+}
+
+.bubaloop.highlight.visualbasic strong .attribute {
+	color: #505B66;
+}
+
 .bubaloop.generic .label,
 .bubaloop.rust .label,
 .bubaloop.go .label,
+.bubaloop.cpp .label,
 .bubaloop.swift .label,
 .bubaloop.cs .label,
 .bubaloop.kotlin .label,
 .bubaloop.java .label,
 .bubaloop.javascript .label {
+	color: var(--labels-light-color);
+}
+
+.bubaloop.objectivec .label,
+.bubaloop.visualbasic .label {
 	color: var(--labels-light-color);
 }
 
@@ -836,6 +1025,16 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.rust .lifetime {
 	color: #8D00FF;
+}
+
+/* C++ */
+
+.bubaloop.cpp .rstring {
+	color: var(--strings-light-color);
+}
+
+.bubaloop.highlight.cpp strong .rstring {
+	color: #ffffff;
 }
 
 /* C# */
@@ -910,11 +1109,42 @@ div.codeblock.bubaloop p + code {
 	color: #8D00FF;
 }
 
+/* Objective-C */
+
+.bubaloop.objectivec .objcstring {
+	color: #0099FF;
+}
+
+.bubaloop.highlight.objectivec strong .objcstring {
+	color: #ffffff;
+}
+
+.bubaloop.objectivec .objcchar {
+	color: #0076E6;
+}
+
+.bubaloop.highlight.objectivec strong .objcchar {
+	color: #ffffff;
+}
+
+/* Visual Basic */
+
+.bubaloop.visualbasic .date {
+	color: #8D00FF;
+}
+
+.bubaloop.visualbasic .functionName {
+	color: #0040B4;
+}
+
+
+
 @media (prefers-color-scheme: dark) {
 
 	.bubaloop.generic .keyword,
 	.bubaloop.rust .keyword,
 	.bubaloop.go .keyword,
+	.bubaloop.cpp .keyword,
 	.bubaloop.swift .keyword,
 	.bubaloop.cs .keyword,
 	.bubaloop.kotlin .keyword,
@@ -928,6 +1158,16 @@ div.codeblock.bubaloop p + code {
 		color: var(--keywords-dark-color);
 	}
 
+	.bubaloop.objc .keyword,
+	.bubaloop.visualbasic .keyword,
+	.bubaloop.ada .keyword,
+	.bubaloop.objectpascal .keyword,
+	.bubaloop.smalltalk .keyword,
+	.bubaloop.commonlisp .keyword,
+	.bubaloop.haskell .keyword {
+		color: var(--keywords-dark-color);
+	}
+
 	.bubaloop.webassembly .keyword,
 	.bubaloop.llvm .keyword,
 	.bubaloop.assembly .keyword {
@@ -937,6 +1177,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.generic .keyword,
 	.bubaloop.highlight.rust .keyword,
 	.bubaloop.highlight.go .keyword,
+	.bubaloop.highlight.cpp .keyword,
 	.bubaloop.highlight.swift .keyword,
 	.bubaloop.highlight.cs .keyword,
 	.bubaloop.highlight.kotlin .keyword,
@@ -950,6 +1191,16 @@ div.codeblock.bubaloop p + code {
 		color: var(--highlight-keywords-dark-color);
 	}
 
+	.bubaloop.highlight.objc .keyword,
+	.bubaloop.highlight.visualbasic .keyword,
+	.bubaloop.highlight.ada .keyword,
+	.bubaloop.highlight.objectpascal .keyword,
+	.bubaloop.highlight.smalltalk .keyword,
+	.bubaloop.highlight.commonlisp .keyword,
+	.bubaloop.highlight.haskell .keyword {
+		/*color: var(--highlight-keywords-dark-color);*/
+	}
+
 	.bubaloop.highlight.webassembly .keyword,
 	.bubaloop.highlight.llvm .keyword,
 	.bubaloop.highlight.assembly .keyword {
@@ -959,6 +1210,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.generic .number,
 	.bubaloop.rust .number,
 	.bubaloop.go .number,
+	.bubaloop.cpp .number,
 	.bubaloop.swift .number,
 	.bubaloop.cs .number,
 	.bubaloop.kotlin .number,
@@ -972,6 +1224,16 @@ div.codeblock.bubaloop p + code {
 		color: var(--numbers-dark-color);
 	}
 
+	.bubaloop.objectivec .number,
+	.bubaloop.visualbasic .number,
+	.bubaloop.ada .number,
+	.bubaloop.objectpascal .number,
+	.bubaloop.smalltalk .number,
+	.bubaloop.commonlisp .number,
+	.bubaloop.haskell .number {
+		color: var(--numbers-dark-color);
+	}
+
 	.bubaloop.webassembly .number,
 	.bubaloop.llvm .number,
 	.bubaloop.assembly .number {
@@ -981,6 +1243,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.generic .boolean,
 	.bubaloop.rust .boolean,
 	.bubaloop.go .boolean,
+	.bubaloop.cpp .boolean,
 	.bubaloop.swift .boolean,
 	.bubaloop.cs .boolean,
 	.bubaloop.kotlin .boolean,
@@ -994,6 +1257,16 @@ div.codeblock.bubaloop p + code {
 		color: var(--boolean-dark-color);
 	}
 
+	.bubaloop.objectivec .boolean,
+	.bubaloop.visualbasic .boolean,
+	.bubaloop.ada .boolean,
+	.bubaloop.objectpascal .boolean,
+	.bubaloop.smalltalk .boolean,
+	.bubaloop.commonlisp .boolean,
+	.bubaloop.haskell .boolean {
+		color: var(--boolean-dark-color);
+	}
+
 	.bubaloop.webassembly .boolean,
 	.bubaloop.llvm .boolean,
 	.bubaloop.assembly .boolean {
@@ -1003,6 +1276,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.generic .type,
 	.bubaloop.rust .type,
 	.bubaloop.go .type,
+	.bubaloop.cpp .type,
 	.bubaloop.swift .type,
 	.bubaloop.cs .type,
 	.bubaloop.kotlin .type,
@@ -1016,6 +1290,14 @@ div.codeblock.bubaloop p + code {
 		color: var(--types-dark-color);
 	}
 
+	.bubaloop.objectivec .type,
+	.bubaloop.visualbasic .type,
+	.bubaloop.ada .type,
+	.bubaloop.objectpascal .type,
+	.bubaloop.haskell .type {
+		color: var(--types-dark-color);
+	}
+
 	.bubaloop.webassembly .type,
 	.bubaloop.llvm .type,
 	.bubaloop.assembly .type {
@@ -1025,6 +1307,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.generic strong .type,
 	.bubaloop.highlight.rust strong .type,
 	.bubaloop.highlight.go strong .type,
+	.bubaloop.highlight.cpp strong .type,
 	.bubaloop.highlight.swift strong .type,
 	.bubaloop.highlight.cs strong .type,
 	.bubaloop.highlight.kotlin strong .type,
@@ -1038,6 +1321,14 @@ div.codeblock.bubaloop p + code {
 		color: #8a008a;
 	}
 
+	.bubaloop.highlight.objectivec strong .type,
+	.bubaloop.highlight.visualbasic strong .type,
+	.bubaloop.highlight.ada strong .type,
+	.bubaloop.highlight.objectpascal strong .type,
+	.bubaloop.highlight.haskell strong .type {
+		color: #8a008a;
+	}
+
 	.bubaloop.highlight.webassembly strong .type,
 	.bubaloop.highlight.llvm strong .type,
 	.bubaloop.highlight.assembly strong .type {
@@ -1047,6 +1338,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.generic .operator,
 	.bubaloop.rust .operator,
 	.bubaloop.go .operator,
+	.bubaloop.cpp .operator,
 	.bubaloop.swift .operator,
 	.bubaloop.cs .operator,
 	.bubaloop.kotlin .operator,
@@ -1060,6 +1352,16 @@ div.codeblock.bubaloop p + code {
 		color: var(--punctuation-dark-color);
 	}
 
+	.bubaloop.objectivec .operator,
+	.bubaloop.visualbasic .operator,
+	.bubaloop.ada .operator,
+	.bubaloop.objectpascal .operator,
+	.bubaloop.smalltalk .operator,
+	.bubaloop.commonlisp .operator,
+	.bubaloop.haskell .operator {
+		color: var(--punctuation-dark-color);
+	}
+
 	.bubaloop.webassembly .operator,
 	.bubaloop.llvm .operator,
 	.bubaloop.assembly .operator {
@@ -1069,6 +1371,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.generic strong .operator,
 	.bubaloop.highlight.rust strong .operator,
 	.bubaloop.highlight.go strong .operator,
+	.bubaloop.highlight.cpp strong .operator,
 	.bubaloop.highlight.swift strong .operator,
 	.bubaloop.highlight.cs strong .operator,
 	.bubaloop.highlight.kotlin strong .operator,
@@ -1079,6 +1382,16 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.ruby strong .operator,
 	.bubaloop.highlight.php strong .operator,
 	.bubaloop.highlight.sql strong .operator {
+		color: #505B66;
+	}
+
+	.bubaloop.highlight.objectivec strong .operator,
+	.bubaloop.highlight.visualbasic strong .operator,
+	.bubaloop.highlight.ada strong .operator,
+	.bubaloop.highlight.objectpascal strong .operator,
+	.bubaloop.highlight.smalltalk strong .operator,
+	.bubaloop.highlight.commonlisp strong .operator,
+	.bubaloop.highlight.haskell strong .operator {
 		color: #505B66;
 	}
 
@@ -1094,6 +1407,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.rust .comment a,
 	.bubaloop.go .comment,
 	.bubaloop.go .comment a,
+	.bubaloop.cpp .comment,
+	.bubaloop.cpp .comment a,
 	.bubaloop.swift .comment,
 	.bubaloop.swift .comment a,
 	.bubaloop.cs .comment,
@@ -1117,6 +1432,23 @@ div.codeblock.bubaloop p + code {
 		color: var(--comments-dark-color);
 	}
 
+	.bubaloop.objectivec .comment,
+	.bubaloop.objectivec .comment a,
+	.bubaloop.visualbasic .comment,
+	.bubaloop.visualbasic .comment a,
+	.bubaloop.ada .comment,
+	.bubaloop.ada .comment a,
+	.bubaloop.objectpascal .comment,
+	.bubaloop.objectpascal .comment a,
+	.bubaloop.smalltalk .comment,
+	.bubaloop.smalltalk .comment a,
+	.bubaloop.commonlisp .comment,
+	.bubaloop.commonlisp .comment a,
+	.bubaloop.haskell .comment,
+	.bubaloop.haskell .comment a {
+		color: var(--comments-dark-color);
+	}
+
 	.bubaloop.webassembly .comment,
 	.bubaloop.webassembly .comment a,
 	.bubaloop.llvm .comment,
@@ -1132,6 +1464,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.rust strong .comment a,
 	.bubaloop.highlight.go strong .comment,
 	.bubaloop.highlight.go strong .comment a,
+	.bubaloop.highlight.cpp strong .comment,
+	.bubaloop.highlight.cpp strong .comment a,
 	.bubaloop.highlight.swift strong .comment,
 	.bubaloop.highlight.swift strong .comment a,
 	.bubaloop.highlight.cs strong .comment,
@@ -1155,6 +1489,23 @@ div.codeblock.bubaloop p + code {
 		color: #ffffff;
 	}
 
+	.bubaloop.highlight.objectivec strong .comment,
+	.bubaloop.highlight.objectivec strong .comment a,
+	.bubaloop.highlight.visualbasic strong .comment,
+	.bubaloop.highlight.visualbasic strong .comment a,
+	.bubaloop.highlight.ada strong .comment,
+	.bubaloop.highlight.ada strong .comment a,
+	.bubaloop.highlight.objectpascal strong .comment,
+	.bubaloop.highlight.objectpascal strong .comment a,
+	.bubaloop.highlight.smalltalk strong .comment,
+	.bubaloop.highlight.smalltalk strong .comment a,
+	.bubaloop.highlight.commonlisp strong .comment,
+	.bubaloop.highlight.commonlisp strong .comment a,
+	.bubaloop.highlight.haskell strong .comment,
+	.bubaloop.highlight.haskell strong .comment a {
+		color: #ffffff;
+	}
+
 	.bubaloop.highlight.webassembly strong .comment,
 	.bubaloop.highlight.webassembly strong .comment a,
 	.bubaloop.highlight.llvm strong .comment,
@@ -1166,14 +1517,21 @@ div.codeblock.bubaloop p + code {
 
 	.bubaloop.generic .directive,
 	.bubaloop.go .directive,
+	.bubaloop.cpp .directive,
 	.bubaloop.swift .directive,
 	.bubaloop.cs .directive {
+		color: #7F8EA3;
+	}
+
+	.bubaloop.objectivec .directive,
+	.bubaloop.visualbasic .directive {
 		color: #7F8EA3;
 	}
 
 	.bubaloop.generic .string,
 	.bubaloop.rust .string,
 	.bubaloop.go .string,
+	.bubaloop.cpp .string,
 	.bubaloop.swift .string,
 	.bubaloop.cs .string,
 	.bubaloop.kotlin .string,
@@ -1187,15 +1545,26 @@ div.codeblock.bubaloop p + code {
 		color: var(--strings-dark-color);
 	}
 
+	.bubaloop.objectivec .string,
+	.bubaloop.visualbasic .string,
+	.bubaloop.ada .string,
+	.bubaloop.objectpascal .string,
+	.bubaloop.smalltalk .string,
+	.bubaloop.commonlisp .string,
+	.bubaloop.haskell .string {
+		color: var(--strings-dark-color);
+	}
+
 	.bubaloop.webassembly .string,
 	.bubaloop.llvm .string,
 	.bubaloop.assembly .string {
-		color: var(--strings-light-color);
+		color: var(--strings-dark-color);
 	}
 
 	.bubaloop.highlight.generic strong .string,
 	.bubaloop.highlight.rust strong .string,
 	.bubaloop.highlight.go strong .string,
+	.bubaloop.highlight.cpp strong .string,
 	.bubaloop.highlight.swift strong .string,
 	.bubaloop.highlight.cs strong .string,
 	.bubaloop.highlight.kotlin strong .string,
@@ -1209,6 +1578,16 @@ div.codeblock.bubaloop p + code {
 		color: #ffffff;
 	}
 
+	.bubaloop.highlight.objectivec strong .string,
+	.bubaloop.highlight.visualbasic strong .string,
+	.bubaloop.highlight.ada strong .string,
+	.bubaloop.highlight.objectpascal strong .string,
+	.bubaloop.highlight.smalltalk strong .string,
+	.bubaloop.highlight.commonlisp strong .string,
+	.bubaloop.highlight.haskell strong .string {
+		color: #ffffff;
+	}
+
 	.bubaloop.highlight.webassembly strong .string,
 	.bubaloop.highlight.llvm strong .string,
 	.bubaloop.highlight.assembly strong .string {
@@ -1218,6 +1597,7 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.generic .char,
 	.bubaloop.rust .char,
 	.bubaloop.go .char,
+	.bubaloop.cpp .char,
 	.bubaloop.swift .char,
 	.bubaloop.cs .char,
 	.bubaloop.kotlin .char,
@@ -1225,12 +1605,22 @@ div.codeblock.bubaloop p + code {
 		color: var(--chars-dark-color);
 	}
 
+	.bubaloop.objectivec .char {
+		color: var(--chars-dark-color);
+	}
+
 	.bubaloop.highlight.generic strong .char,
 	.bubaloop.highlight.rust strong .char,
 	.bubaloop.highlight.go strong .char,
+	.bubaloop.highlight.cpp strong .char,
 	.bubaloop.highlight.swift strong .char,
 	.bubaloop.highlight.cs strong .char,
-	.bubaloop.highlight.kotlin strong .char {
+	.bubaloop.highlight.kotlin strong .char,
+	.bubaloop.highlight.java strong .char {
+		color: #ffffff;
+	}
+
+	.bubaloop.highlight.objectivec strong .char {
 		color: #ffffff;
 	}
 
@@ -1248,14 +1638,42 @@ div.codeblock.bubaloop p + code {
 		color: var(--attributes-dark-color);
 	}
 
+	.bubaloop.visualbasic .attribute {
+		color: var(--attributes-dark-color);
+	}
+
+	.bubaloop.highlight.generic strong .attribute,
+	.bubaloop.highlight.rust strong .attribute,
+	.bubaloop.highlight.go strong .attribute,
+	.bubaloop.highlight.swift strong .attribute,
+	.bubaloop.highlight.cs strong .attribute,
+	.bubaloop.highlight.kotlin strong .annotation,
+	.bubaloop.highlight.java strong .annotation,
+	.bubaloop.highlight.javascript strong .decorator,
+	.bubaloop.highlight.dart strong .annotation,
+	.bubaloop.highlight.python strong .attribute, /* TODO check this */
+	.bubaloop.highlight.python strong .decorator {
+		color: var(--attributes-dark-color);
+	}
+
+	.bubaloop.highlight.visualbasic strong .attribute {
+		color: #505B66;
+	}
+
 	.bubaloop.generic .label,
 	.bubaloop.rust .label,
 	.bubaloop.go .label,
+	.bubaloop.cpp .label,
 	.bubaloop.swift .label,
 	.bubaloop.cs .label,
 	.bubaloop.kotlin .label,
 	.bubaloop.java .label,
 	.bubaloop.javascript .label {
+		color: var(--labels-dark-color);
+	}
+
+	.bubaloop.objectivec .label,
+	.bubaloop.visualbasic .label {
 		color: var(--labels-dark-color);
 	}
 
@@ -1268,6 +1686,16 @@ div.codeblock.bubaloop p + code {
 
 	.bubaloop.rust .lifetime {
 		color: #8D00FF;
+	}
+
+	/* C++ */
+
+	.bubaloop.cpp .rstring {
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop.highlight.cpp strong .rstring {
+		color: #ffffff;
 	}
 
 	/* C# */
@@ -1340,6 +1768,34 @@ div.codeblock.bubaloop p + code {
 
 	.bubaloop.sql .function {
 		color: #8D00FF;
+	}
+
+	/* Objective-C */
+
+	.bubaloop.objectivec .objcstring {
+		color: #0099FF;
+	}
+
+	.bubaloop.highlight.objectivec strong .objcstring {
+		color: #ffffff;
+	}
+
+	.bubaloop.objectivec .objcchar {
+		color: #0076E6;
+	}
+
+	.bubaloop.highlight.objectivec strong .objcchar {
+		color: #ffffff;
+	}
+
+	/* Visual Basic */
+
+	.bubaloop.visualbasic .date {
+		color: #8D00FF;
+	}
+
+	.bubaloop.visualbasic .functionName {
+		color: #0040B4;
 	}
 
 }
@@ -1469,116 +1925,9 @@ div.codeblock.bubaloop p + code {
 
 }
 
-/* C++ */
-
-.bubaloop.cpp .keyword,
-.bubaloop.cpp .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.cpp strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.cpp .type {
-	color: var(--types-light-color);
-}
-
-.bubaloop.cpp .string,
-.bubaloop.cpp .rstring {
-	color: var(--strings-light-color);
-}
-
-.bubaloop.cpp .char {
-	color: var(--chars-light-color);
-}
-
-.bubaloop.highlight.cpp strong .string,
-.bubaloop.highlight.cpp strong .rstring,
-.bubaloop.highlight.cpp strong .char {
-	color: #ffffff;
-}
-
-.bubaloop.cpp .comment,
-.bubaloop.cpp .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.cpp strong .comment,
-.bubaloop.highlight.cpp strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.cpp .directive,
-.bubaloop.cpp .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.cpp strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.cpp .label {
-	color: #8D00FF;
-}
-
-/* Objective-C */
-
-.bubaloop.objectivec .keyword,
-.bubaloop.objectivec .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.objectivec strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.objectivec .type {
-	color: #8AD100;
-}
-
-.bubaloop.objectivec .string,
-.bubaloop.objectivec .objcstring {
-	color: #0099FF;
-}
-
-.bubaloop.objectivec .char,
-.bubaloop.objectivec .objcchar {
-	color: #0076E6;
-}
-
-.bubaloop.highlight.objectivec strong .string,
-.bubaloop.highlight.objectivec strong .objcstring,
-.bubaloop.highlight.objectivec strong .char,
-.bubaloop.highlight.objectivec strong .objcchar {
-	color: #ffffff;
-}
-
-.bubaloop.objectivec .comment,
-.bubaloop.objectivec .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.objectivec strong .comment,
-.bubaloop.highlight.objectivec strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.objectivec .directive,
-.bubaloop.objectivec .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.objectivec strong .operator {
-	color: #505B66;
-}
-
-.bubaloop.objectivec .label {
-	color: #8D00FF;
-}
-
 /* Visual Basic, Ada, Object Pascal, Smalltalk, Common Lisp, Haskell */
 
+/*
 .bubaloop.highlight.visualbasic strong,
 .bubaloop.highlight.ada strong,
 .bubaloop.highlight.objectpascal strong,
@@ -1587,7 +1936,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.haskell strong {
 	color: #101010;
 	background-color: hsl(195, 100%, 50%);
-	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color */
+	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color * /
 	position: relative;
 	z-index: 2;
 }
@@ -1598,7 +1947,7 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.smalltalk strong.small,
 .bubaloop.highlight.commonlisp strong.small,
 .bubaloop.highlight.haskell strong.small {
-	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color */
+	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color * /
 }
 
 .bubaloop.highlight.visualbasic strong.comment,
@@ -1608,114 +1957,11 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.commonlisp strong.comment,
 .bubaloop.highlight.haskell strong.comment {
 	background-color: #D10077;
-	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color */
+	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color * /
 	z-index: 1;
 }
+*/
 
-.bubaloop.visualbasic .date,
-.bubaloop.visualbasic .label {
-	color: #8D00FF;
-}
-
-.bubaloop.visualbasic .keyword,
-.bubaloop.visualbasic .functionName,
-.bubaloop.visualbasic .number,
-.bubaloop.visualbasic .boolean,
-.bubaloop.ada .keyword,
-.bubaloop.ada .number,
-.bubaloop.objectpascal .keyword,
-.bubaloop.objectpascal .number,
-.bubaloop.smalltalk .keyword,
-.bubaloop.smalltalk .number,
-.bubaloop.commonlisp .keyword,
-.bubaloop.commonlisp .number,
-.bubaloop.haskell .keyword,
-.bubaloop.haskell .number {
-	color: #0040B4;
-}
-
-.bubaloop.highlight.visualbasic strong .type,
-.bubaloop.highlight.ada strong .type,
-.bubaloop.highlight.objectpascal strong .type,
-.bubaloop.highlight.haskell strong .type {
-	color: #8a008a;
-}
-
-.bubaloop.visualbasic .type,
-.bubaloop.ada .type,
-.bubaloop.objectpascal .type,
-.bubaloop.haskell .type {
-	color: #8AD100;
-}
-
-.bubaloop.visualbasic .string,
-.bubaloop.ada .string,
-.bubaloop.objectpascal .string,
-.bubaloop.smalltalk .string,
-.bubaloop.commonlisp .string,
-.bubaloop.haskell .string {
-	color: #0099FF;
-}
-
-.bubaloop.highlight.visualbasic strong .string,
-.bubaloop.highlight.ada strong .string,
-.bubaloop.highlight.objectpascal strong .string,
-.bubaloop.highlight.smalltalk strong .string,
-.bubaloop.highlight.commonlisp strong .string,
-.bubaloop.highlight.haskell strong .string {
-	color: #ffffff;
-}
-
-.bubaloop.visualbasic .comment,
-.bubaloop.visualbasic .comment a,
-.bubaloop.ada .comment,
-.bubaloop.ada .comment a,
-.bubaloop.objectpascal .comment,
-.bubaloop.objectpascal .comment a,
-.bubaloop.smalltalk .comment,
-.bubaloop.smalltalk .comment a,
-.bubaloop.commonlisp .comment,
-.bubaloop.commonlisp .comment a,
-.bubaloop.haskell .comment,
-.bubaloop.haskell .comment a {
-	color: #D10077;
-}
-
-.bubaloop.highlight.visualbasic strong .comment,
-.bubaloop.highlight.visualbasic strong .comment a
-.bubaloop.highlight.ada strong .comment,
-.bubaloop.highlight.ada strong .comment a,
-.bubaloop.highlight.objectpascal strong .comment,
-.bubaloop.highlight.objectpascal strong .comment a,
-.bubaloop.highlight.smalltalk strong .comment,
-.bubaloop.highlight.smalltalk strong .comment a,
-.bubaloop.highlight.commonlisp strong .comment,
-.bubaloop.highlight.commonlisp strong .comment a,
-.bubaloop.highlight.haskell strong .comment,
-.bubaloop.highlight.haskell strong .comment a {
-	color: #ffffff;
-}
-
-.bubaloop.visualbasic .directive,
-.bubaloop.visualbasic .attribute,
-.bubaloop.visualbasic .operator,
-.bubaloop.ada .operator,
-.bubaloop.objectpascal .operator,
-.bubaloop.smalltalk .operator,
-.bubaloop.commonlisp .operator,
-.bubaloop.haskell .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.highlight.visualbasic strong .attribute,
-.bubaloop.highlight.visualbasic strong .operator,
-.bubaloop.highlight.ada strong .operator,
-.bubaloop.highlight.objectpascal strong .operator,
-.bubaloop.highlight.smalltalk strong .operator,
-.bubaloop.highlight.commonlisp strong .operator,
-.bubaloop.highlight.haskell strong .operator {
-	color: #505B66;
-}
 
 /* highlighter */
 
