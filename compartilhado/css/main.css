@@ -73,6 +73,9 @@
 	--highlight-comments-light-color: #D10077;
 	--highlight-comments-dark-color: #9E006F;
 
+	--highlight-keywords-light-color: hsl(195, 100%, 50%);
+	--highlight-keywords-dark-color: hsl(210, 100%, 25%);
+
 }
 
 html * {
@@ -493,6 +496,34 @@ div.codeblock.bubaloop p + code {
 	color: var(--keywords-light-color);
 }
 
+.bubaloop.webassembly .keyword,
+.bubaloop.llvm .keyword,
+.bubaloop.assembly .keyword {
+	color: var(--keywords-light-color);
+}
+
+.bubaloop.highlight.generic .keyword,
+.bubaloop.highlight.rust .keyword,
+.bubaloop.highlight.go .keyword,
+.bubaloop.highlight.swift .keyword,
+.bubaloop.highlight.cs .keyword,
+.bubaloop.highlight.kotlin .keyword,
+.bubaloop.highlight.java .keyword,
+.bubaloop.highlight.javascript .keyword,
+.bubaloop.highlight.dart .keyword,
+.bubaloop.highlight.python .keyword,
+.bubaloop.highlight.ruby .keyword,
+.bubaloop.highlight.php .keyword,
+.bubaloop.highlight.sql .keyword {
+	/*color: var(--highlight-keywords-light-color);*/
+}
+
+.bubaloop.highlight.webassembly .keyword,
+.bubaloop.highlight.llvm .keyword,
+.bubaloop.highlight.assembly .keyword {
+	/*color: var(--highlight-keywords-light-color);*/
+}
+
 .bubaloop.generic .number,
 .bubaloop.rust .number,
 .bubaloop.go .number,
@@ -506,6 +537,12 @@ div.codeblock.bubaloop p + code {
 .bubaloop.ruby .number,
 .bubaloop.php .number,
 .bubaloop.sql .number {
+	color: var(--numbers-light-color);
+}
+
+.bubaloop.webassembly .number,
+.bubaloop.llvm .number,
+.bubaloop.assembly .number {
 	color: var(--numbers-light-color);
 }
 
@@ -525,6 +562,12 @@ div.codeblock.bubaloop p + code {
 	color: var(--boolean-light-color);
 }
 
+.bubaloop.webassembly .boolean,
+.bubaloop.llvm .boolean,
+.bubaloop.assembly .boolean {
+	color: var(--boolean-light-color);
+}
+
 .bubaloop.generic .type,
 .bubaloop.rust .type,
 .bubaloop.go .type,
@@ -538,6 +581,12 @@ div.codeblock.bubaloop p + code {
 .bubaloop.ruby .type,
 .bubaloop.php .type,
 .bubaloop.sql .type {
+	color: var(--types-light-color);
+}
+
+.bubaloop.webassembly .type,
+.bubaloop.llvm .type,
+.bubaloop.assembly .type {
 	color: var(--types-light-color);
 }
 
@@ -557,6 +606,12 @@ div.codeblock.bubaloop p + code {
 	color: #8a008a;
 }
 
+.bubaloop.highlight.webassembly strong .type,
+.bubaloop.highlight.llvm strong .type,
+.bubaloop.highlight.assembly strong .type {
+	color: #8a008a;
+}
+
 .bubaloop.generic .operator,
 .bubaloop.rust .operator,
 .bubaloop.go .operator,
@@ -573,6 +628,12 @@ div.codeblock.bubaloop p + code {
 	color: var(--punctuation-light-color);
 }
 
+.bubaloop.webassembly .operator,
+.bubaloop.llvm .operator,
+.bubaloop.assembly .operator {
+	color: var(--punctuation-light-color);
+}
+
 .bubaloop.highlight.generic strong .operator,
 .bubaloop.highlight.rust strong .operator,
 .bubaloop.highlight.go strong .operator,
@@ -586,6 +647,12 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.ruby strong .operator,
 .bubaloop.highlight.php strong .operator,
 .bubaloop.highlight.sql strong .operator {
+	color: #505B66;
+}
+
+.bubaloop.highlight.webassembly strong .operator,
+.bubaloop.highlight.llvm strong .operator,
+.bubaloop.highlight.assembly strong .operator {
 	color: #505B66;
 }
 
@@ -618,6 +685,15 @@ div.codeblock.bubaloop p + code {
 	color: var(--comments-light-color);
 }
 
+.bubaloop.webassembly .comment,
+.bubaloop.webassembly .comment a,
+.bubaloop.llvm .comment,
+.bubaloop.llvm .comment a,
+.bubaloop.assembly .comment,
+.bubaloop.assembly .comment a {
+	color: var(--comments-light-color);
+}
+
 .bubaloop.highlight.generic strong .comment,
 .bubaloop.highlight.generic strong .comment a,
 .bubaloop.highlight.rust strong .comment,
@@ -647,6 +723,15 @@ div.codeblock.bubaloop p + code {
 	color: #ffffff;
 }
 
+.bubaloop.highlight.webassembly strong .comment,
+.bubaloop.highlight.webassembly strong .comment a,
+.bubaloop.highlight.llvm strong .comment,
+.bubaloop.highlight.llvm strong .comment a,
+.bubaloop.highlight.assembly strong .comment,
+.bubaloop.highlight.assembly strong .comment a {
+	color: #ffffff;
+}
+
 .bubaloop.generic .directive,
 .bubaloop.go .directive,
 .bubaloop.swift .directive,
@@ -670,6 +755,12 @@ div.codeblock.bubaloop p + code {
 	color: var(--strings-light-color);
 }
 
+.bubaloop.webassembly .string,
+.bubaloop.llvm .string,
+.bubaloop.assembly .string {
+	color: var(--strings-light-color);
+}
+
 .bubaloop.highlight.generic strong .string,
 .bubaloop.highlight.rust strong .string,
 .bubaloop.highlight.go strong .string,
@@ -683,6 +774,12 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.ruby strong .string,
 .bubaloop.highlight.php strong .string,
 .bubaloop.highlight.sql strong .string {
+	color: #ffffff;
+}
+
+.bubaloop.highlight.webassembly strong .string,
+.bubaloop.highlight.llvm strong .string,
+.bubaloop.highlight.assembly strong .string {
 	color: #ffffff;
 }
 
@@ -727,6 +824,11 @@ div.codeblock.bubaloop p + code {
 .bubaloop.kotlin .label,
 .bubaloop.java .label,
 .bubaloop.javascript .label {
+	color: var(--labels-light-color);
+}
+
+.bubaloop.llvm .label,
+.bubaloop.assembly .label {
 	color: var(--labels-light-color);
 }
 
@@ -791,6 +893,17 @@ div.codeblock.bubaloop p + code {
 	color: #7F8EA3;
 }
 
+/* Assembly */
+
+.bubaloop.assembly .section,
+.bubaloop.assembly .segment {
+	color: #8D00FF;
+}
+
+.bubaloop.assembly .register {
+	color: #7F8EA3;
+}
+
 /* SQL */
 
 .bubaloop.sql .function {
@@ -815,6 +928,34 @@ div.codeblock.bubaloop p + code {
 		color: var(--keywords-dark-color);
 	}
 
+	.bubaloop.webassembly .keyword,
+	.bubaloop.llvm .keyword,
+	.bubaloop.assembly .keyword {
+		color: var(--keywords-dark-color);
+	}
+
+	.bubaloop.highlight.generic .keyword,
+	.bubaloop.highlight.rust .keyword,
+	.bubaloop.highlight.go .keyword,
+	.bubaloop.highlight.swift .keyword,
+	.bubaloop.highlight.cs .keyword,
+	.bubaloop.highlight.kotlin .keyword,
+	.bubaloop.highlight.java .keyword,
+	.bubaloop.highlight.javascript .keyword,
+	.bubaloop.highlight.dart .keyword,
+	.bubaloop.highlight.python .keyword,
+	.bubaloop.highlight.ruby .keyword,
+	.bubaloop.highlight.php .keyword,
+	.bubaloop.highlight.sql .keyword {
+		color: var(--highlight-keywords-dark-color);
+	}
+
+	.bubaloop.highlight.webassembly .keyword,
+	.bubaloop.highlight.llvm .keyword,
+	.bubaloop.highlight.assembly .keyword {
+		color: var(--highlight-keywords-dark-color);
+	}
+
 	.bubaloop.generic .number,
 	.bubaloop.rust .number,
 	.bubaloop.go .number,
@@ -828,6 +969,12 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.ruby .number,
 	.bubaloop.php .number,
 	.bubaloop.sql .number {
+		color: var(--numbers-dark-color);
+	}
+
+	.bubaloop.webassembly .number,
+	.bubaloop.llvm .number,
+	.bubaloop.assembly .number {
 		color: var(--numbers-dark-color);
 	}
 
@@ -847,6 +994,12 @@ div.codeblock.bubaloop p + code {
 		color: var(--boolean-dark-color);
 	}
 
+	.bubaloop.webassembly .boolean,
+	.bubaloop.llvm .boolean,
+	.bubaloop.assembly .boolean {
+		color: var(--boolean-dark-color);
+	}
+
 	.bubaloop.generic .type,
 	.bubaloop.rust .type,
 	.bubaloop.go .type,
@@ -860,6 +1013,12 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.ruby .type,
 	.bubaloop.php .type,
 	.bubaloop.sql .type {
+		color: var(--types-dark-color);
+	}
+
+	.bubaloop.webassembly .type,
+	.bubaloop.llvm .type,
+	.bubaloop.assembly .type {
 		color: var(--types-dark-color);
 	}
 
@@ -879,6 +1038,12 @@ div.codeblock.bubaloop p + code {
 		color: #8a008a;
 	}
 
+	.bubaloop.highlight.webassembly strong .type,
+	.bubaloop.highlight.llvm strong .type,
+	.bubaloop.highlight.assembly strong .type {
+		color: #8a008a;
+	}
+
 	.bubaloop.generic .operator,
 	.bubaloop.rust .operator,
 	.bubaloop.go .operator,
@@ -895,6 +1060,12 @@ div.codeblock.bubaloop p + code {
 		color: var(--punctuation-dark-color);
 	}
 
+	.bubaloop.webassembly .operator,
+	.bubaloop.llvm .operator,
+	.bubaloop.assembly .operator {
+		color: var(--punctuation-dark-color);
+	}
+
 	.bubaloop.highlight.generic strong .operator,
 	.bubaloop.highlight.rust strong .operator,
 	.bubaloop.highlight.go strong .operator,
@@ -908,6 +1079,12 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.ruby strong .operator,
 	.bubaloop.highlight.php strong .operator,
 	.bubaloop.highlight.sql strong .operator {
+		color: #505B66;
+	}
+
+	.bubaloop.highlight.webassembly strong .operator,
+	.bubaloop.highlight.llvm strong .operator,
+	.bubaloop.highlight.assembly strong .operator {
 		color: #505B66;
 	}
 
@@ -940,6 +1117,15 @@ div.codeblock.bubaloop p + code {
 		color: var(--comments-dark-color);
 	}
 
+	.bubaloop.webassembly .comment,
+	.bubaloop.webassembly .comment a,
+	.bubaloop.llvm .comment,
+	.bubaloop.llvm .comment a,
+	.bubaloop.assembly .comment,
+	.bubaloop.assembly .comment a {
+		color: var(--comments-dark-color);
+	}
+
 	.bubaloop.highlight.generic strong .comment,
 	.bubaloop.highlight.generic strong .comment a,
 	.bubaloop.highlight.rust strong .comment,
@@ -969,6 +1155,15 @@ div.codeblock.bubaloop p + code {
 		color: #ffffff;
 	}
 
+	.bubaloop.highlight.webassembly strong .comment,
+	.bubaloop.highlight.webassembly strong .comment a,
+	.bubaloop.highlight.llvm strong .comment,
+	.bubaloop.highlight.llvm strong .comment a,
+	.bubaloop.highlight.assembly strong .comment,
+	.bubaloop.highlight.assembly strong .comment a {
+		color: #ffffff;
+	}
+
 	.bubaloop.generic .directive,
 	.bubaloop.go .directive,
 	.bubaloop.swift .directive,
@@ -992,6 +1187,12 @@ div.codeblock.bubaloop p + code {
 		color: var(--strings-dark-color);
 	}
 
+	.bubaloop.webassembly .string,
+	.bubaloop.llvm .string,
+	.bubaloop.assembly .string {
+		color: var(--strings-light-color);
+	}
+
 	.bubaloop.highlight.generic strong .string,
 	.bubaloop.highlight.rust strong .string,
 	.bubaloop.highlight.go strong .string,
@@ -1005,6 +1206,12 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.ruby strong .string,
 	.bubaloop.highlight.php strong .string,
 	.bubaloop.highlight.sql strong .string {
+		color: #ffffff;
+	}
+
+	.bubaloop.highlight.webassembly strong .string,
+	.bubaloop.highlight.llvm strong .string,
+	.bubaloop.highlight.assembly strong .string {
 		color: #ffffff;
 	}
 
@@ -1049,6 +1256,11 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.kotlin .label,
 	.bubaloop.java .label,
 	.bubaloop.javascript .label {
+		color: var(--labels-dark-color);
+	}
+
+	.bubaloop.llvm .label,
+	.bubaloop.assembly .label {
 		color: var(--labels-dark-color);
 	}
 
@@ -1110,6 +1322,17 @@ div.codeblock.bubaloop p + code {
 
 	/* PHP */
 	.bubaloop.php .tag {
+		color: #7F8EA3;
+	}
+
+	/* Assembly */
+
+	.bubaloop.assembly .section,
+	.bubaloop.assembly .segment {
+		color: #8D00FF;
+	}
+
+	.bubaloop.assembly .register {
 		color: #7F8EA3;
 	}
 
@@ -1258,16 +1481,16 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.cpp .type {
-	color: #8AD100;
+	color: var(--types-light-color);
 }
 
 .bubaloop.cpp .string,
 .bubaloop.cpp .rstring {
-	color: #0099FF;
+	color: var(--strings-light-color);
 }
 
 .bubaloop.cpp .char {
-	color: #0076E6;
+	color: var(--chars-light-color);
 }
 
 .bubaloop.highlight.cpp strong .string,
@@ -1492,86 +1715,6 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.commonlisp strong .operator,
 .bubaloop.highlight.haskell strong .operator {
 	color: #505B66;
-}
-
-/* webassembly */
-
-.bubaloop.webassembly .keyword,
-.bubaloop.webassembly .number {
-	color: #0040B4;
-}
-
-.bubaloop.webassembly .type {
-	color: #8AD100;
-}
-
-.bubaloop.webassembly .string {
-	color: #0099FF;
-}
-
-.bubaloop.webassembly .comment {
-	color: #D10077;
-}
-
-.bubaloop.webassembly .operator {
-	color: #7F8EA3;
-}
-
-/* llvm */
-
-.bubaloop.llvm .keyword,
-.bubaloop.llvm .number {
-	color: #0040B4;
-}
-
-.bubaloop.llvm .type {
-	color: #8AD100;
-}
-
-.bubaloop.llvm .string {
-	color: #0099FF;
-}
-
-.bubaloop.llvm .comment {
-	color: #D10077;
-}
-
-.bubaloop.llvm .operator {
-	color: #7F8EA3;
-}
-
-.bubaloop.llvm .label {
-	color: #8D00FF;
-}
-
-/* assembly */
-
-.bubaloop.assembly .keyword,
-.bubaloop.assembly .number {
-	color: #0040B4;
-}
-
-.bubaloop.assembly .section,
-.bubaloop.assembly .segment,
-.bubaloop.assembly .label {
-	color: #8D00FF;
-}
-
-.bubaloop.assembly .type {
-	color: #8AD100;
-}
-
-.bubaloop.assembly .string {
-	color: #0099FF;
-}
-
-.bubaloop.assembly .comment {
-	color: #D10077;
-}
-
-.bubaloop.assembly .operator,
-.bubaloop.assembly .register {
-	color: #7F8EA3;
 }
 
 /* highlighter */
