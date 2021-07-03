@@ -26,7 +26,7 @@
 <p>
 	É quase como um Rust vs Go vs C++ vs Swift vs Kotlin vs Java vs C# vs JavaScript vs TypeScript vs Dart vs Python :P
 	Mas também estou começando a comparar duas linguagens funcionais (Lisp e Haskell).
-	Linguagens de mais baixo nível como Web Assembly text format (AssemblyScript), LLVM e Assembly.
+	Linguagens de mais baixo nível como Web Assembly text format, LLVM e Assembly.
 	Linguagens interpretadas como Ruby e PHP (populares em hospedagens compartilhadas) e <abbr title='Visual Basic 6'>VB6</abbr> e Smalltalk nessa categoria também.
 	Finalmente, linguagens que de algum modo foram ou ainda são populares como ActionScript, Ada, Objective-C e Object Pascal (Delphi).
 </p>
@@ -278,8 +278,8 @@ void main() {
 
 <div class='codeblock bubaloop'>
 <p>ActionScript - Olá Mundo - main.as</p>
-<code class='actionscript generic bubaloop'
-><span class='symbol'>trace</span><span class='operator'>(</span><span class='string'>'Olá Mundo'</span><span class='operator'>)</span></code
+<code class='actionscript'
+>trace('Olá Mundo')</code
 >
 </div>
 
@@ -292,23 +292,23 @@ void main() {
 
 <div class='codeblock bubaloop'>
 <p>PHP - Olá Mundo - index.php</p>
-<code class='php generic bubaloop'
-><span class='tag openTag'>&lt;?=</span> <span class='string'>'Olá Mundo'</span> <span class='tag closeTag'>?&gt;</span>
+<code class='php'
+><span class='tag openTag'>&lt;?=</span> 'Olá Mundo' <span class='tag closeTag'>?&gt;</span>
 
 ou
 
-<span class='tag openTag'>&lt;?php</span> <span class='keyword'>echo</span> <span class='string'>'Olá Mundo'</span> <span class='tag closeTag'>?&gt;</span>
+<span class='tag openTag'>&lt;?php</span> echo 'Olá Mundo' <span class='tag closeTag'>?&gt;</span>
 
 ou
 
-<span class='tag openTag'>&lt;?php</span> <span class='keyword'>echo</span> <span class='string'>&lt;&lt;&lt;'EOD'
+<span class='tag openTag'>&lt;?php</span> echo &lt;&lt;&lt;'EOD'
 Olá Mundo
-EOD;</span> <span class='tag closeTag'>?&gt;</span>
+EOD; <span class='tag closeTag'>?&gt;</span>
 
 embora o primeiro código que você
 vai escrever provavelmente seja
 
-<span class='tag openTag'>&lt;?php</span> <span class='symbol'>phpinfo</span><span class='operator'>();</span> <span class='tag closeTag'>?&gt;</span></code
+<span class='tag openTag'>&lt;?php</span> phpinfo(); <span class='tag closeTag'>?&gt;</span></code
 >
 </div>
 
@@ -349,8 +349,8 @@ end.</code
 
 <div class='codeblock bubaloop'>
 <p>Ruby - Olá Mundo - main.rb</p>
-<code class='ruby generic bubaloop'
->puts <span class='string'>"Olá Mundo"</span></code
+<code class='ruby'
+>puts "Olá Mundo"</code
 >
 </div>
 
@@ -381,7 +381,7 @@ end.</code
 
 <div class='codeblock'>
 
-	<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+	<p>Web Assembly text format - main.wasm</p>
 	<code class='webassembly'
 >(<span class='keyword'>module</span>
 
@@ -515,7 +515,7 @@ WebAssembly
 	<li>C++ / Objective-C</li>
 	<li>LLVM <abbr title='Intermediate representation'>IR</abbr></li>
 	<li>Assembly</li>
-	<li>Web Assembly text format (AssemblyScript)</li>
+	<li>Web Assembly text format</li>
 </ol>
 
 <p>
@@ -543,7 +543,7 @@ WebAssembly
 	LLVM <abbr title='Intermediate representation'>IR</abbr> TODO<br />
 	Assembly é completamente diferente dos demais. Se bem organizado para este exemplo simples, até fica bastante legível, embora verboso.
 	A ordem invertida dos argumentos e nome da função é pouco intuitiva.<br />
-	Web Assembly text format (AssemblyScript)
+	Web Assembly text format
 </p>
 
 </section>
@@ -682,7 +682,7 @@ ou interpretada
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 Stack based vm
 </div>
 
@@ -1003,7 +1003,7 @@ bloco
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ><span class='comment'>;; linha</span>
 </code
@@ -1202,7 +1202,7 @@ bloco
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 -
 </div>
 
@@ -1293,8 +1293,11 @@ bloco
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// region idea intellij foldable
+// endregion
+
+// #region vs code foldable
+// #endregion</code
 >
 </div>
 
@@ -1388,7 +1391,7 @@ bloco
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -1702,8 +1705,19 @@ fun someFunction(arg1:Int): Int {
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>/// To reference parameter names
+/// in the comment we use square
+/// brackets [arg1] and unstructured
+/// text.
+///
+/// Markdown is supported, particularly,
+/// examples use triple backtics
+/// ```dart
+/// min(5, 3) == 3
+/// ```
+int someFunction(int arg1) {
+	return 0;
+}</code
 >
 </div>
 
@@ -1840,7 +1854,7 @@ def some_function(arg1: int):
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -2429,7 +2443,7 @@ list($x, $y) = [1, 2];
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -2682,7 +2696,7 @@ let $if = "meio confuso";
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -2768,7 +2782,7 @@ let q = n.unwrap(); // q será do tipo i32</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->*a := nil
+>*k := nil
 // nil para ponteiros
 // e tipos que não são structs,
 // array, slice, map, string, rune,
@@ -2976,32 +2990,66 @@ k = nil</code
 <div class='codeblock'>
 <p>Smalltalk</p>
 <code class='smalltalk'
-></code
+>
+<span class='comment'>"qualquer variável é sempre nullable"</span>
+<span class='operator'>|</span><span class='symbol'>k</span><span class='operator'>|</span>
+<span class='symbol'>k</span> <span class='operator'>:=</span> <span class='keyword'>nil</span></code
 >
 </div>
 
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>nil
+()</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
-></code
+>-- null em Haskell se chama bottom
+-- como Haskell só tem constantes
+-- uma constante com valor bottom
+-- não seria muito útil
+-- mas existe um tipo Maybe
+-- que pode conter Nothing ou Just
+
+f::Int -&gt; Maybe Int
+f 0 = Nothing
+f x = Just x
+
+g::Int -&gt; Maybe Int
+g 100 = Nothing
+g x = Just x
+
+h::Int -&gt; Maybe Int
+h x = case f x of
+		Just n -&gt; g n
+		Nothing -&gt; Nothing
+
+h'::Int -&gt; Maybe Int
+h' x = do n &lt;- f x
+		  g n</code
 >
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
-
+<p>Web Assembly text format</p>
+<code class='webassembly'
+><span class='operator'>(</span><span class='keyword'>module</span>
+	<strong><span class='operator'>(</span><span class='keyword'>memory</span> <span class='symbol'>$k</span> <span class='number'>0</span><span class='operator'>)</span></strong>
+	<span class='operator'>(</span><span class='keyword'>export</span> <span class='string'>"memory"</span> <span class='operator'>(</span><span class='keyword'>memory</span> <span class='symbol'>$k</span><span class='operator'>)</span><span class='operator'>)</span>
+<span class='operator'>)</span></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+><span class='comment'>; somente ponteiros</span>
+<span class='symbol'>@k</span> <span class='operator'>=</span> <span class='keyword'>global</span> <span class='type'>i8*</span> <span class='keyword'>null</span></code
+>
 </div>
 
 <div class='codeblock'>
@@ -3098,12 +3146,9 @@ oitoOuOitenta = false
 // converte para true
 oitoOuOitenta = !oitoOuOitenta
 
-// Skips initial space characters,
-// or optional -/+ sign followed by zeroes.
-// Returns YES on encountering one of
-// "Y", "y", "T", "t", or a digit 1-9.
-// It ignores any trailing characters.
-var boolValue:Bool { get }</code
+// lame...
+let toParse = "true"
+let parsed = toParse.lowercaseString == "true"</code
 >
 </div>
 
@@ -3117,7 +3162,9 @@ oitoOuOitenta = false
 // converte para true
 oitoOuOitenta = !oitoOuOitenta
 
-// TODO parse boolean</code
+// parse
+var toParse = "true"
+var parsed = toParse?.toBoolean()</code
 >
 </div>
 
@@ -3125,13 +3172,15 @@ oitoOuOitenta = !oitoOuOitenta
 <p>Java</p>
 <code class='java'
 >// tipo boolean
-boolean oitoOuOitenta = true;
+var oitoOuOitenta = true;
 oitoOuOitenta = false;
 
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
 
-// TODO Boolean.parseBoolean</code
+// parse
+var toParse = "true";
+var parsed = Boolean.parseBoolean(toParse);</code
 >
 </div>
 
@@ -3145,16 +3194,31 @@ oitoOuOitenta = false;
 // converte para true
 oitoOuOitenta = !oitoOuOitenta;
 
-// TODO Boolean.Parse
-// Boolean.TryParse tb</code
+// parse
+var toParse = "true";
+
+var parsed = Boolean.Parse(toParse);
+
+// ou
+
+var parsed = false;
+var success = Boolean.TryParse(toParse, out parsed);</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// tipo bool
+var oitoOuOitenta = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+
+// lame...
+var toParse = 'true';
+var parsed = toParse.toLowerCase() == 'true';</code
 >
 </div>
 
@@ -3297,7 +3361,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -3568,10 +3632,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>int</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -3589,10 +3660,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+
+<table>
+	<caption>Signed Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>int</td><td>? bits</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -3601,13 +3679,67 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
-
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -3629,7 +3761,9 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -3848,10 +3982,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -3869,10 +4000,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+
+<table>
+	<caption>Unsigned Integer</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>uint</td><td>? bits</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -3881,14 +4019,81 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
--
+<code class='llvm'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -4013,10 +4218,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -4034,10 +4236,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -4056,13 +4255,81 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
--
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -4249,10 +4516,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>double</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -4280,10 +4554,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+
+<table>
+	<caption>Floating Point (IEEE-754)</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>Number</td><td>64 bits</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -4292,8 +4573,67 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
@@ -4324,6 +4664,13 @@ oitoOuOitenta = Not oitoOuOitenta</code
 	</tbody>
 </table>
 
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -4390,10 +4737,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>Dart</p>
-<code class='dart'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -4411,10 +4755,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -4423,14 +4764,79 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 -
+</div>
 
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -4527,6 +4933,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>C#</p>
+
 <table>
 	<caption>Numeric</caption>
 	<thead>
@@ -4537,6 +4944,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><td>Complex</td><td>?</td></tr>
 	</tbody>
 </table>
+
 </div>
 
 <div class='codeblock'>
@@ -4557,7 +4965,17 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>JavaScript</p>
--
+
+<table>
+	<caption>Numeric</caption>
+	<thead>
+		<tr><th>tipo</th><th>tamanho</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>BigInt</td><td>?</td></tr>
+	</tbody>
+</table>
+
 </div>
 
 <div class='codeblock'>
@@ -4574,14 +4992,79 @@ oitoOuOitenta = Not oitoOuOitenta</code
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 -
+</div>
 
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -4794,14 +5277,79 @@ JavaScript só possui um tipo numérico.</p>
 </div>
 
 <div class='codeblock'>
-<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
 
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+<code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 -
+</div>
 
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -5051,8 +5599,31 @@ var l5 = 1L;
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// TODO
+
+// int
+var i1 = 1;
+var i2 = -1;
+var i3 = 2147483648;
+var i4 = -2147483649;
+
+
+
+
+
+
+
+
+
+
+
+
+
+var u1 = 9223372036854775808;
+
+// lança exceção?
+// ?
+var e1 = 9223372036854775808;</code
 >
 </div>
 
@@ -5066,7 +5637,9 @@ var l5 = 1L;
 
 <div class='codeblock'>
 <p>JavaScript</p>
--
+<code class='javascript'
+>let i1 = 1n;</code
+>
 </div>
 
 <div class='codeblock'>
@@ -5085,8 +5658,79 @@ var l5 = 1L;
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+<code class='assembly'
 ></code
 >
 </div>
@@ -5249,6 +5893,14 @@ let d6 = .7;                 </code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ></code
@@ -5256,18 +5908,66 @@ let d6 = .7;                 </code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -5501,6 +6201,14 @@ let x1 = -0X0123456789ABCDEF;
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ></code
@@ -5508,18 +6216,66 @@ let x1 = -0X0123456789ABCDEF;
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -5644,6 +6400,14 @@ let p1 = 01;                 </code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ></code
@@ -5651,18 +6415,66 @@ let p1 = 01;                 </code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -6003,8 +6815,9 @@ if (i === j) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var i:uint = 1;
+var j:int = 1;
+var k:Number = 1;</code
 >
 </div>
 
@@ -6016,6 +6829,14 @@ if (i === j) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ></code
@@ -6023,18 +6844,66 @@ if (i === j) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -6164,6 +7033,14 @@ private void recebeByte(byte numero) {
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 ></code
@@ -6171,18 +7048,66 @@ private void recebeByte(byte numero) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -6214,7 +7139,6 @@ let i = match s.parse::&lt;i32&gt;() {
 i, err := strconv.Atoi("-42")
 s := strconv.Itoa(-42)
 
-b, err := strconv.ParseBool("true")
 f, err := strconv.ParseFloat("3.1415", 64) // size 64
 i, err := strconv.ParseInt("-42", 10, 64) // base 10 size 64
 u, err := strconv.ParseUint("42", 10, 64) // base 10 size 64</code
@@ -6322,6 +7246,14 @@ parseFloat('3.14some non-digit characters');</code
 </div>
 
 <div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
 >Dim i As Integer = CInt((s))</code
@@ -6329,18 +7261,66 @@ parseFloat('3.14some non-digit characters');</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
 
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+<code class='webassembly'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
-
+<code class='llvm'
+></code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
-
+<code class='assembly'
+></code
+>
 </div>
 
 </div>
@@ -6531,7 +7511,7 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -6855,8 +7835,52 @@ var beeGees = calvinHarris.Replace("love", "looove");
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>var s1 = 'Single quotes work well for string literals.';
+var s2 = "Double quotes work just as well.";
+var s3 = 'It\'s easy to escape the string delimiter.';
+var s4 = "It's even easier to use the other delimiter.";
+
+var s1 = 'String '
+    'concatenation'
+    " works even over line breaks.";
+assert(s1 ==
+    'String concatenation works even over '
+        'line breaks.');
+
+var s2 = 'The + operator ' + 'works, as well.';
+assert(s2 == 'The + operator works, as well.');
+
+var s1 = '''
+You can create
+multi-line strings like this one.
+''';
+
+var s2 = """This is also a
+multi-line string.""";
+
+var s = r'In a raw string, not even \n gets special treatment.';
+
+// These work in a const string.
+const aConstNum = 0;
+const aConstBool = true;
+const aConstString = 'a constant string';
+
+// These do NOT work in a const string.
+var aNum = 0;
+var aBool = true;
+var aString = 'a string';
+const aConstList = [1, 2, 3];
+
+const validConstString = '$aConstNum $aConstBool $aConstString';
+// const invalidConstString = '$aNum $aBool $aString $aConstList';
+
+var sb = StringBuffer();
+sb
+	..write('Use a StringBuffer for ')
+	..writeAll(['efficient', 'string', 'creation'], ' ')
+	..write('.');
+
+var fullString = sb.toString();</code
 >
 </div>
 
@@ -7036,7 +8060,7 @@ simples = "A primeira faz ""tchan"""</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -7239,7 +8263,7 @@ stringBuilder.ToString();</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -7767,7 +8791,7 @@ Next</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -7972,7 +8996,7 @@ lista.Add 1</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -8214,7 +9238,7 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -8410,7 +9434,7 @@ object o = new object();</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -8907,7 +9931,7 @@ namespace MarcoLuglio.PonteirosExample {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -9148,7 +10172,7 @@ delegate void StrategyFunctionDelegate();</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -9719,7 +10743,7 @@ if not condition1
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
 >
@@ -9992,7 +11016,7 @@ end</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
 >
@@ -10412,7 +11436,7 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -10594,7 +11618,7 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
 >
@@ -11137,7 +12161,7 @@ End Select</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -11704,7 +12728,7 @@ superior &method(:retorno)</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -11941,7 +12965,7 @@ End Sub</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -12137,7 +13161,7 @@ End Sub</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -12420,7 +13444,7 @@ named_args(
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -12589,7 +13613,7 @@ named_args(
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -13158,7 +14182,7 @@ imprimir("resumo", 1, 2..5, "capítulo 2")</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -13518,7 +14542,7 @@ adder_fn.call</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -13815,7 +14839,7 @@ adder_fn.call</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -14195,7 +15219,7 @@ console.log(closure()); // 2</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -14467,7 +15491,7 @@ val subtractStrategy:StrategySignature = { i1, i2 -&gt; i1 - i2 }
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -14926,7 +15950,7 @@ define(['dentroDoModulo'], (DentroDoModulo) =&gt; {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 
 </div>
 
@@ -17356,7 +18380,7 @@ for (let resultado of animadorIterator) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
 >
@@ -25657,8 +26681,28 @@ for (var v in classMirror.declarations.values) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>package {
+
+	import flash.display.Sprite;
+
+	<strong>// pure .as file projects accepted metadata for the stage settings</strong>
+
+	<strong>[SWF(width="1024", height="768", backgroundColor='#405050', frameRate="60")]</strong>
+	public class MainStage extends Sprite {
+
+		public function MainStage() {
+
+			stage.quality = StageQuality.HIGH;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+
+			super();
+
+		}
+
+	}
+
+}</code
 >
 </div>
 
@@ -26265,7 +27309,10 @@ public final class TabelaNutricionalBibliotecaNative {
 
 	private native TabelaNutricional calcular(float porcao);
 
-}</code
+}
+
+// Also JNI
+// And look a new API proposal https://openjdk.java.net/jeps/412</code
 >
 </div>
 
@@ -26707,7 +27754,7 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript) - main.wasm</p>
+<p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
 >
@@ -29157,7 +30204,7 @@ ruby = JSON.parse(json)</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >
@@ -29358,7 +30405,7 @@ ruby = JSON.parse(json)</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format (AssemblyScript)</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >
@@ -29416,9 +30463,10 @@ use {
 };
 
 Atributos, annotations e decorators na minha cheatsheet. Ver marker interfaces, mas elas não podem ser des-herdadas
-Serialization, serializable
+Reflection
 
 Cast um tipo para string chama tostring?
+conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
 
 unions?
 Observar objetos KVO, notification center, reactive, etc..
@@ -29435,7 +30483,7 @@ https://docs.microsoft.com/en-us/dotnet/api/system.dynamic.expandoobject?redirec
 
 macros
 
-conversão de números com ? : e com += ver https://blog.jooq.org/2014/11/03/10-things-you-didnt-know-about-java/
+Serialization, serializable
 
 default parameter values, compare strings, valores não iniciados, type erasure,
 linq, traits, if (a = 1) if let while let, macros,
