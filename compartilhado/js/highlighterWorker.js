@@ -9,11 +9,11 @@ import {
 	JavaLexer,
 	CsLexer,
 	JavaScriptLexer,
-	/*ActionScriptLexer,
-	TypeScriptLexer,*/
+	// TypeScriptLexer,*/
 	DartLexer,
 	PythonLexer,
-	// PhpLexer,
+	PhpLexer,
+	ActionScriptLexer,
 	VisualBasic6Lexer,
 	AdaLexer,
 	ObjectPascalLexer,
@@ -84,11 +84,11 @@ self.onmessage = function (message) {
 			lexer = new JavaScriptLexer();
 			break;
 
-		/*case 'actionscript':
+		case 'actionscript':
 			lexer = new ActionScriptLexer();
 			break;
 
-		case 'typescript':
+		/*case 'typescript':
 			lexer = new TypeScriptLexer();
 			break;*/
 
@@ -100,9 +100,9 @@ self.onmessage = function (message) {
 			lexer = new PythonLexer();
 			break;
 
-		/*case 'php':
+		case 'php':
 			lexer = new PhpLexer();
-			break;*/
+			break;
 
 		case 'visualbasic':
 			lexer = new VisualBasic6Lexer();

@@ -7773,12 +7773,15 @@ const JavaKeywordToken = class JavaKeywordToken extends SourceSimpleCharacterSeq
 			'interface',
 			'native',
 			'new',
+			'non-sealed',
 			'package',
+			'permits',
 			'private',
 			'protected',
 			'public',
 			'record',
 			'return',
+			'sealed',
 			'static',
 			'strictfp',
 			'super',
@@ -12554,6 +12557,832 @@ const PythonDecoratorPatternIterator = class PythonDecoratorPatternIterator exte
 
 
 
+// #region PHP lexer
+
+/**
+ * Tokenizes PHP source code
+ */
+ const PhpLexer = class PhpLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		// se o último token foi uma literal, não incluir outras iterais em seguida
+
+		let lastToken = null;
+		let canBeLiteral = true;
+
+		if (tokenSequence) {
+			lastToken = this._getLastToken(tokenSequence);
+			canBeLiteral = this._getCanBeLiteral(lastToken);
+		}
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new PhpKeywordToken(),
+			new PhpTypesToken(),
+			new PhpPunctuationToken(),
+
+			// comments
+			new CLineCommentToken(),
+			new CBlockCommentToken()
+
+		);
+
+		if (canBeLiteral) {
+			this._pushLiteralTokens();
+		}
+
+		this._pushInvisibleTokens();
+
+		// this._tokenPool.push(new PhpLabelToken()); // Disabled until I have better rules for object properties
+		this._tokenPool.push(new PhpSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new PhpDecimalLiteralToken(),
+			new PhpStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+	_getCanBeLiteral(lastToken) {
+
+		if (lastToken
+			&& (
+				lastToken.type === 'number'
+				|| lastToken.type === 'string'
+				|| lastToken.type === 'symbol'
+				)
+			) {
+
+			return false;
+		}
+
+		return true;
+
+	}
+
+};
+
+
+
+/**
+ * Token for decimal numbers
+ */
+const PhpDecimalLiteralToken = class PhpDecimalLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new PhpDecimalPatternIterator());
+	}
+};
+
+
+
+/**
+ * Token for strings
+ */
+const PhpStringLiteralToken = class PhpStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new PhpStringPatternIterator());
+	}
+};
+
+
+
+/**
+ * Token for symbols
+ */
+const PhpSymbolToken = class PhpSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new PhpSymbolIterator());
+	}
+};
+
+
+
+/**
+ * Token for keywords
+ */
+const PhpKeywordToken = class PhpKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('keyword', [
+			'echo'
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for PHP types
+ */
+const PhpTypesToken = class PhpTypesToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('type', [
+			'int'
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for PHP punctuation
+ */
+const PhpPunctuationToken = class PhpPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			'.',
+			'(',
+			')',
+			'{',
+			'}',
+			'[',
+			']',
+			',',
+			':',
+			';',
+
+			'&amp;&amp;',
+			'||',
+			'+',
+			'++',
+			'-',
+			'--',
+			'*',
+			'/',
+			'%',
+			'==',
+			// '===',
+			'!',
+			'!=',
+			// '!==',
+			'&gt;',
+			'&gt;=',
+			'&lt;',
+			'&lt;=',
+
+			'=',
+			'+=',
+			'-=',
+			'*=',
+			'/=',
+			'%='
+
+		]);
+
+	}
+
+};
+
+
+
+
+const PhpDecimalPatternIterator = class PhpDecimalPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_hasMantissa: {value: false, writable: true},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
+		});
+		this._matchFunction = this._matchNumber;
+		Object.seal(this);
+	}
+
+	_matchNumber(matchCharacter) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '.' && !this._hasMantissa) {
+			this._hasMantissa = true;
+			this._isComplete = false;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+const PhpStringPatternIterator = class PhpStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === "'"
+			|| matchCharacter === '"' // TODO futuramente reimplementar isso com this.openType e this.closeType e as expressões
+			) {
+
+			this._quoteType = matchCharacter;
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (this._isEscaped) {
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType
+			|| (isLineBreak && this._quoteType !== '`')
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+const PhpSymbolIterator = class PhpSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchValidCharacter;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			|| matchCharacter === '$'
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+// #endregion
+
+
+
+// #region ActionScript lexer
+
+/**
+ * Tokenizes ActionScript source code
+ */
+ const ActionScriptLexer = class ActionScriptLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		// se o último token foi uma literal, não incluir outras iterais em seguida
+
+		let lastToken = null;
+		let canBeLiteral = true;
+
+		if (tokenSequence) {
+			lastToken = this._getLastToken(tokenSequence);
+			canBeLiteral = this._getCanBeLiteral(lastToken);
+		}
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new ASKeywordToken(),
+			new ASTypesToken(),
+			new ASPunctuationToken(),
+
+			// comments
+			new CLineCommentToken(),
+			new CBlockCommentToken()
+
+		);
+
+		if (canBeLiteral) {
+			this._pushLiteralTokens();
+		}
+
+		this._pushInvisibleTokens();
+
+		// this._tokenPool.push(new ASLabelToken()); // Disabled until I have better rules for object properties
+		this._tokenPool.push(new ASSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new ASDecimalLiteralToken(),
+			// new ASRegexLiteralToken(),
+			new ASStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+	_getCanBeLiteral(lastToken) {
+
+		if (lastToken
+			&& (
+				lastToken.type === 'number'
+				// || lastToken.type === 'regex'
+				|| lastToken.type === 'string'
+				|| lastToken.type === 'symbol'
+				)
+			) {
+
+			return false;
+		}
+
+		return true;
+
+	}
+
+};
+
+
+
+/**
+ * Token for decimal numbers
+ */
+const ASDecimalLiteralToken = class ASDecimalLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new ASDecimalPatternIterator());
+	}
+};
+
+
+
+/**
+ * Token for strings
+ */
+const ASStringLiteralToken = class ASStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new ASStringPatternIterator());
+	}
+};
+
+
+
+/**
+ * Token for symbols
+ */
+const ASSymbolToken = class ASSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new ASSymbolIterator());
+	}
+};
+
+
+
+/**
+ * Token for keywords
+ */
+const ASKeywordToken = class ASKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('keyword', [
+			'class',
+			'extends',
+			'for',
+			'function',
+			'import',
+			'package',
+			'public',
+			'super',
+			'this',
+			'var'
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for ActionScript types
+ */
+const ASTypesToken = class ASTypesToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('type', [
+
+			'int',
+			'Number',
+			'String',
+			'uint',
+			'void',
+
+			'MovieClip',
+			'Sprite'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+/**
+ * Token for ActionScript punctuation
+ */
+const ASPunctuationToken = class ASPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			'.',
+			'(',
+			')',
+			'{',
+			'}',
+			'[',
+			']',
+			',',
+			':',
+			';',
+
+			'&amp;&amp;',
+			'||',
+			'+',
+			'++',
+			'-',
+			'--',
+			'*',
+			'/',
+			'%',
+			'==',
+			'===',
+			'!',
+			'!=',
+			'!==',
+			'&gt;',
+			'&gt;=',
+			'&lt;',
+			'&lt;=',
+
+			'=',
+			'+=',
+			'-=',
+			'*=',
+			'/=',
+			'%='
+
+		]);
+
+	}
+
+};
+
+
+
+
+const ASDecimalPatternIterator = class ASDecimalPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			_hasMantissa: {value: false, writable: true},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
+		});
+		this._matchFunction = this._matchNumber;
+		Object.seal(this);
+	}
+
+	_matchNumber(matchCharacter) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '.' && !this._hasMantissa) {
+			this._hasMantissa = true;
+			this._isComplete = false;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+const ASStringPatternIterator = class ASStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_quoteType: {value: null, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === "'"
+			|| matchCharacter === '"' // TODO futuramente reimplementar isso com this.openType e this.closeType e as expressões
+			) {
+
+			this._quoteType = matchCharacter;
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (this._isEscaped) {
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === this._quoteType
+			|| (isLineBreak && this._quoteType !== '`')
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+const ASSymbolIterator = class ASSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchValidCharacter;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			|| matchCharacter === '$'
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+// #endregion
+
+
+
 // #region Visual Basic 6 lexer
 
 const VisualBasic6Lexer = class VisualBasic6Lexer extends Lexer {
@@ -14577,6 +15406,7 @@ const RubyKeywordToken = class RubyKeywordToken extends SourceSimpleCharacterSeq
 			'else',
 			'elsif',
 			'end',
+			'extend',
 			'for',
 			'if',
 			'in',
@@ -15481,6 +16311,7 @@ const HaskellLexer = class HaskellLexer extends Lexer {
 			// TODO separate in its own token
 			'True',
 			'False',
+			'Just',
 			'Nothing'
 
 		]);
@@ -15508,6 +16339,8 @@ const HaskellLexer = class HaskellLexer extends Lexer {
 			type: {value: 'type'},
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'Maybe',
+				'Int',
 				'Integral',
 				'Double'
 			])}
@@ -15851,11 +16684,11 @@ export {
 	JavaLexer,
 	CsLexer,
 	JavaScriptLexer,
-	/*ActionScriptLexer,
-	TypeScriptLexer,*/
+	// TypeScriptLexer,
 	DartLexer,
 	PythonLexer,
-	// PhpLexer,
+	PhpLexer,
+	ActionScriptLexer,
 	VisualBasic6Lexer,
 	AdaLexer,
 	ObjectPascalLexer,
