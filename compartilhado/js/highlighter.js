@@ -12593,6 +12593,7 @@ const PythonDecoratorPatternIterator = class PythonDecoratorPatternIterator exte
 
 			// comments
 			new CLineCommentToken(),
+			new PythonLineCommentToken(),
 			new CBlockCommentToken()
 
 		);
@@ -12689,7 +12690,9 @@ const PhpKeywordToken = class PhpKeywordToken extends SourceSimpleCharacterSeque
 	constructor() {
 
 		super('keyword', [
-			'echo'
+			'echo',
+			'function',
+			'return'
 		]);
 
 		Object.seal(this);
@@ -15328,6 +15331,7 @@ const RubyLexer = class RubyLexer extends Lexer {
 
 			// comments
 			new PythonLineCommentToken(),
+			new RubyBlockCommentToken(),
 			// new RubyDirectiveToken()
 
 		);
@@ -15714,6 +15718,105 @@ const RubyStringLiteralToken = class RubyStringLiteralToken extends SourcePatter
 	constructor() {
 		super('string', new RubyStringPatternIterator());
 	}
+};
+
+
+
+const RubyBlockCommentToken = class RubyBlockCommentToken extends Token {
+
+	constructor() {
+
+		super();
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			type: {value: 'comment blockComment'},
+			_matchFunction: {value: context._matchStartSequence, writable: true},
+			_startSequence: {value: new SourceSimpleCharacterSequenceToken('blockCommentStart', ['=begin'])},
+			_endSequence: {value: new SourceSimpleCharacterSequenceToken('blockCommentEnd', ['=end'])}
+		});
+
+		Object.seal(this);
+
+	}
+
+	/**
+	 * @param {String} matchCharacter
+	 * @param {Number} index Character index relative to the whole string being parsed
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+
+		if (!this._matchFunction(matchCharacter, index)) {
+			return;
+		}
+
+		if (!this._isInitialized) {
+			this._isInitialized = true;
+			this.begin = index;
+		}
+
+		this.characterSequence.push(matchCharacter);
+
+	}
+
+	_matchStartSequence(matchCharacter, index) {
+
+		this._startSequence.next(matchCharacter, index);
+
+		if (this._startSequence.isComplete) {
+			this._matchFunction = this._matchContent;
+			return this._matchFunction(matchCharacter);
+		}
+
+		if (this._startSequence.hasNext()) {
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter, index) {
+
+		if (matchCharacter === '=') { // TODO improve this
+			this._matchFunction = this._matchEndSequence;
+			return this._matchFunction(matchCharacter);
+		}
+
+		return true;
+
+	}
+
+	_matchEndSequence(matchCharacter, index) {
+
+		this._endSequence.next(matchCharacter, index);
+
+		if (this._endSequence.isComplete) {
+			this._matchFunction = this._matchEnd;
+			return this._matchFunction(matchCharacter);
+		}
+
+		if (this._endSequence.hasNext()) {
+			return true;
+		}
+
+		// FIXME resetar endSequence
+		this._matchFunction = this._matchContent;
+		return this._matchFunction(matchCharacter);
+
+	}
+
+	/**
+	 * Indica que o pattern já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter, index) {
+		this._complete();
+		return false;
+	}
+
 };
 
 
