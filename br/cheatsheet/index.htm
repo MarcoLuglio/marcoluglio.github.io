@@ -911,7 +911,12 @@ function someFunction(/* bloco */ arg:int):int {
 
 """
 string sendo usada como comentário de bloco
-"""</code
+"""
+
+# Django also
+# supports {# your comment #}
+# and {% comment "your comment" %}
+# as a block comment</code
 >
 </div>
 
@@ -969,7 +974,11 @@ bloco
 bloco
 o end precisa ocupar
 uma linha separada
-=end</code
+=end
+
+# ruby on rails also
+# supports &lt;%# comment %&gt;
+# as a block comment</code
 >
 </div>
 
@@ -1320,7 +1329,12 @@ bloco
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
-></code
+>// Adobe Animate/Flash and FlashDevelop
+// are able to collapse any scope or
+// selected portions of the source code
+
+// #region vs code foldable
+// #endregion</code
 >
 </div>
 
@@ -1637,7 +1651,7 @@ KDoc
 @param arg1 The argument of the function
 @return The result of the function call
 */
-fun someFunction(arg1:Int): Int {
+fun someFunction(arg1:Int):Int {
 	return 0
 }</code
 >
@@ -1775,8 +1789,19 @@ function someFunction(arg1) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>/**
+* ASDoc
+* &lt;p&gt;Html such as &lt;code&gt;myMethod&lt;/code&gt; is allowed.
+* Notice that you do not use the paragraph tag in the
+* first paragraph of the description.&lt;/p&gt;
+*
+* @param arg1 The argument of the function
+* @return The result of the function call
+* @see someOtherMethod
+*/
+function someFunction(arg1:int):int {
+	return 0;
+}</code
 >
 </div>
 
@@ -2084,7 +2109,13 @@ useSemDeclarar = 5;</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
-></code
+>var x = 5; // tipo dinâmico
+x = 'dynamic type';
+var x:int = 5; // tipo explícito
+
+
+const x = 5; // constante
+const x:int = 5; // constante</code
 >
 </div>
 
@@ -2360,8 +2391,7 @@ var (x, y) = Pair(1, 2)</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>-</code
 >
 </div>
 
@@ -2626,8 +2656,18 @@ let $if = "meio confuso";
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var eu1;
+var _ = 'bem sucinto';
+var _123 = 'meio confuso';
+var _if = 'meio confuso';
+
+var $ = 'bem sucinto';
+var $$ = 'bem sucinto';
+var $123 = 'meio confuso';
+var $if = 'meio confuso';
+
+var π = 3.14159;
+var 你好 = "你好世界";</code
 >
 </div>
 
@@ -2918,7 +2958,16 @@ let n = (k || k === 0) ? k : 10;</code
 <p>ActionScript</p>
 <code class='actionscript'
 >
-</code
+
+// qualquer tipo é sempre nullable
+var k = null;
+var l = (k && k.propriedade) ? k.propriedade : null;
+
+// null coalescing operator
+var m = k || 10;
+
+// ok mas não é idiomático
+var n = (k || k === 0) ? k : 10;</code
 >
 </div>
 
@@ -3262,8 +3311,31 @@ var bObjProto = new Boolean({});*/</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// tipo Boolean
+var oitoOuOitenta = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;
+
+// TODO falar de falsy e truthy e !!
+
+// falsy
+var bZero = new Boolean(0);
+var bNull = new Boolean(null);
+var bEmptyString = new Boolean('');
+var bFalse = new Boolean(false);
+var bNaN = new Boolean(NaN);
+var bUndefined = new Boolean(undefined);
+
+// truthy
+var bTrueString = new Boolean('true');
+var bFalseString = new Boolean('false');
+var bSuLin = new Boolean('Su Lin');
+var bArray = new Boolean([]);
+var bObj = new Boolean({});
+var bInfinity = new Boolean(Infinity);
+var bNInfinity = new Boolean(-Infinity);</code
 >
 </div>
 
@@ -3667,7 +3739,8 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><th>tipo</th><th>tamanho</th></tr>
 	</thead>
 	<tbody>
-		<tr><td>int</td><td>? bits</td></tr>
+		<tr><td>int</td><td>32 bits</td></tr>
+		<tr><td>Number</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -4007,7 +4080,8 @@ oitoOuOitenta = Not oitoOuOitenta</code
 		<tr><th>tipo</th><th>tamanho</th></tr>
 	</thead>
 	<tbody>
-		<tr><td>uint</td><td>? bits</td></tr>
+		<tr><td>uint</td><td>32 bits</td></tr>
+		<tr><td>Number</td><td>64 bits</td></tr>
 	</tbody>
 </table>
 
@@ -4980,10 +5054,7 @@ oitoOuOitenta = Not oitoOuOitenta</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -5645,8 +5716,17 @@ var e1 = 9223372036854775808;</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var i1 = 1; // Number
+
+var i2:int = 2147483648; // overflows
+var i3 = 2147483648; // Number
+
+// avisa underflow 2147483647
+var i4:int = -2147483649; // underflows
+var i5 = -2147483649; // Number
+
+// u32
+var u1:uint = 2147483648;</code
 >
 </div>
 
@@ -5880,8 +5960,13 @@ let d6 = .7;                 </code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// double
+var d1 = 1;
+var d2 = -1;
+var d3 = 2147483648;
+var d4 = -2147483649;
+var d5 = 1.0;
+var d6 = .7;</code
 >
 </div>
 
@@ -6188,8 +6273,22 @@ let x1 = -0X0123456789ABCDEF;
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// notação científica
+var c1 = 1e0;
+var c2 = 1e-1;
+var c3 = -.7e-2;
+
+
+
+
+
+// ignora leading zeroes
+var i1 = 01234567;
+var i2 = -01234567;
+
+// notação hexadecimal
+var cor = 0xff0000;
+var x1 = -0X0123456789ABCDEF;</code
 >
 </div>
 
@@ -6356,7 +6455,7 @@ val p2 = 00.1                </code
 <code class='cs'
 >var i1 = 10;
 var p1 = 01;
-var p1 = 00.1;               </code
+var p2 = 00.1;               </code
 >
 </div>
 
@@ -6387,8 +6486,9 @@ let p1 = 01;                 </code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var i1 = 10;
+var p1 = 01;
+var p2 = 00.1;               </code
 >
 </div>
 
@@ -6815,9 +6915,35 @@ if (i === j) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->var i:uint = 1;
-var j:int = 1;
-var k:Number = 1;</code
+>var i32_1:int = 2;
+var i32_2:int = 4;
+var i32_min:int = int.MIN_VALUE;
+var i32_max:int = int.MAX_VALUE;
+var n_max:int = Number.MAX_VALUE;
+
+var i64_1:Number = i32_max as Number; // explicit conversion 2147483647 (Number)
+var i32cast_1:int = (n_max as int); // explicit conversion 0 (int)
+
+// explicit conversion
+var adicao1 = i32_max + 1; // 2147483648 (Number)
+var adicao2 = i64_1 + (i32_1 as Number); // 2147483649 (Number)
+var adicao3 = i64_1 + (i32_max as Number); // 4294967294 (Number)
+
+// explicit conversion
+var subtracao1 = i32_min - 1; // -2147483649 (Number)
+var subtracao2 = (i32cast_1 as Number) - i32_1; // -2 (Number)
+var subtracao3 = (i32cast_1 as Number) - i32_max; // -2147483647 (Number)
+
+// explicit conversion
+var multiplicacao1 = i32_1 * i32_2; // 8 (int)
+var multiplicacao2 = i32_max * i32_1; // 4294967294 (Number)
+var multiplicacao3 = (i32_1 as Number) * i64_1; // 4294967294 (Number)
+
+// explicit conversion
+var divisao1 = i32_2 / i32_1; // 2 (int)
+var divisao2 = i32_1 / i32_2; // 0.5 (Number)
+var divisao3 = (i32cast_1 as Number) / i32_1; // 0 (Number)
+var divisao4 = (i32_2 as Number) / i32_1; // 2 (Number)</code
 >
 </div>
 
@@ -7220,6 +7346,7 @@ parseInt('15 * 3', 10);
 parseInt('15e2', 10);
 parseInt('FXX123', 16);
 
+
 // dangerous, no base specified
 // chooses base depending on string format
 parseFloat('3.14');
@@ -7233,8 +7360,23 @@ parseFloat('3.14some non-digit characters');</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>parseInt('1111', 2); // 15
+parseInt('15,123', 10); // 15
+parseInt('15 * 3', 10); // 15
+parseInt('15e2', 10); // 15
+parseInt('FXX123', 16); // 15
+parseInt('FXX123', 10); // NaN
+
+
+// dangerous, no base specified
+// chooses base depending on string format
+parseInt('FXX123'); // 15
+parseFloat('3.14'); // 3.14
+parseFloat('314e-2'); // 3.14
+parseFloat('0.0314E+2'); // 3.14
+parseInt('015', 10); // 15
+parseInt('015', 8); // 13
+parseFloat('3.14some non-digit characters'); // 3.14</code
 >
 </div>
 
@@ -7440,8 +7582,8 @@ NSNumber* someChar = [NSNumber numberWithChar:'T'];</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// só usa strings
+// não possui chars</code
 >
 </div>
 
@@ -7944,8 +8086,49 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var simples = 'A primeira faz "tchan"';
+var dupla = "A segunda faz 'tchun'";
+
+
+const iara = "mãe d'água";
+const modoDificil = 'O\'Reilly';
+var html = '<em class="especial">ênfase</em>';
+
+var calvinHarris = 'how deep\nis your love'; // 2 linhas
+
+var pareceMasNaoE = 'começa e \
+termina na mesma linha?'; // 1 linha apenas
+
+// concatenação
+var josePauloPaes = 'Meu amor é simples, Dora,\n' +
+'Como a água e o pão.\n' +
+'\n' +
+'Como o céu refletido\n' +
+'Nas pupilas de um cão.';
+
+// várias linhas
+var leminskiTemplate = 'Merda é veneno.\n\
+No entanto, não há nada\n\
+que seja mais bonito\n\
+que uma bela cagada.\n\
+Cagam ricos, cagam pobres,\n\
+cagam reis e cagam fadas.\n\
+Não há merda que se compare\n\
+à bosta da pessoa amada.';
+
+
+
+
+
+
+var emoji = '😍';
+var es5 = '\uD83D\uDE0D'; // code units / surrogates
+
+
+// string é imutável, então seus métodos retornam novas instâncias
+var beeGees = calvinHarris.replace('love', 'looove');
+
+'Gritando'.toUpperCase(); // retorna 'GRITANDO'</code
 >
 </div>
 
@@ -8192,10 +8375,7 @@ stringBuilder.ToString();</code
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
