@@ -8866,8 +8866,48 @@ let tamanho = mdPrePopulada.length;
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>var vazia = [];
+
+
+
+// uma dimensão
+var preAlocada:Array = new Array(10);
+preAlocada:Array = new Array(17);
+var prePopulada:Array = ["p", "r", "e"];
+
+
+var linha:uint = 0;
+var coluna:uint = 2;
+
+// multi dimensional
+var mdPrePopulada:Array = [
+	[0, 1, 2, 3],
+	[4, 5, 6, 7]
+];
+
+
+
+
+// O tipo Array não é capaz de restringir
+// o tipo de seu conteúdo. Podemos
+// inclusive armazenar tipos misturados
+// Portanto não é 100% seguro especificar
+// um tipo quando obtemos o valor de uma Array.
+
+preAlocada[5] = 16000;
+
+var indice0 = prePopulada[0];
+var two = mdPrePopulada[linha][coluna];
+
+for (var valor in prePopulada) {
+	//
+}
+
+
+
+
+
+var tamanho = mdPrePopulada.length;</code
 >
 </div>
 
@@ -9016,7 +9056,7 @@ lista.push(1);</code
 <p>Go</p>
 <code class='go'
 >var lista []int // em go se chamam slices
-listaPreAlocada := make([]int, 1)
+listaPreAlocada := make([]int, 10)
 // slices são imutáveis, assim como strings
 lista = append(lista, 1)
 listaPreAlocada = append(listaPreAlocada, 1)</code
@@ -9105,7 +9145,20 @@ lista.push(1);</code
 <p>ActionScript</p>
 <code class='actionscript'
 >
-</code
+var lista = []; // arrays são listas
+lista.push(1);
+
+// também temos Vector, que é tipado e tem outras otimizações
+var lista:Vector.&lt;String&gt;
+lista = new Vector.&lt;String&gt;();
+
+var listaPreAlocada:Vector.&lt;String&gt; = new Vector.&lt;String&gt;(10);
+var listaTamanhoFixo:Vector.&lt;String&gt; = new Vector.&lt;String&gt;(10, true);
+var listaPrePopulada:Vector.&lt;String&gt; = new &lt;String&gt;['p', 'r', 'e'];
+
+listaPreAlocada.push(1);
+listaTamanhoFixo.push(1); // erro
+listaPrePopulada.push(1);</code
 >
 </div>
 
@@ -9348,8 +9401,11 @@ object o = new object();</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// Mesmo tipos primitivos
+// são objetos, porém
+// imutáveis.
+// não está claro se usa
+// stack ou não</code
 >
 </div>
 
@@ -9543,8 +9599,7 @@ object o = new object();</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>// weak references</code
 >
 </div>
 
@@ -10040,10 +10095,7 @@ namespace MarcoLuglio.PonteirosExample {
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -10282,8 +10334,8 @@ delegate void StrategyFunctionDelegate();</code
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>static const MyClass:Class = int;
+var ert:* = new MyClass();</code
 >
 </div>
 

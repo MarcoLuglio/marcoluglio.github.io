@@ -13202,6 +13202,7 @@ const ASTypesToken = class ASTypesToken extends SourceSimpleCharacterSequenceTok
 
 			'Array',
 			'Boolean',
+			'Class',
 			'Date',
 			'Error',
 			'Function',
