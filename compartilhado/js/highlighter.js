@@ -11425,7 +11425,7 @@ const DartTypesToken = class DartTypesToken extends Token {
 				'Map', // Map<KeyType, ValueType>
 				'Never',
 				'Object',
-				// 'Set', // <Type>{}
+				'Set', // <Type>{}
 				'Stream',
 				'String',
 				'Symbol',
@@ -13097,16 +13097,90 @@ const ASKeywordToken = class ASKeywordToken extends SourceSimpleCharacterSequenc
 	constructor() {
 
 		super('keyword', [
+
+			'as',
+			'break',
+			'case',
+			'catch',
 			'class',
+			'const',
+			'default',
+			'delete',
+			'do',
+			'dynamic',
+			'each',
+			'else',
 			'extends',
+			'final',
+			'finally',
 			'for',
 			'function',
+			'get',
+			'if',
+			'implements',
 			'import',
+			'in',
+			'include',
+			'instanceof',
+			'interface',
+			'internal',
+			'is',
+			'namespace',
+			'native',
+			'new',
+			'override',
 			'package',
+			'private',
+			'protected',
 			'public',
+			'return',
+			'set',
+			'static',
 			'super',
+			'switch',
 			'this',
-			'var'
+			'throw',
+			'to',
+			'try',
+			'typeof',
+			'use',
+			'var',
+			'while',
+			'with',
+
+			// reserved
+			'abstract',
+			'export',
+			'throws',
+			'boolean',
+			'float',
+			'to',
+			'byte',
+			'goto',
+			'transient',
+			'cast',
+			'intrinsic',
+			'type',
+			'char',
+			'long',
+			'let',
+			'defer',
+			'virtual',
+			'debugger',
+			'prototype',
+			'volatile',
+			'double',
+			'short',
+			'enum',
+			'synchronized',
+
+			// TODO put in a separate token
+			'Infinity',
+			'NaN',
+			'null',
+			'undefined',
+			'true',
+			'false'
 		]);
 
 		Object.seal(this);
@@ -13126,14 +13200,32 @@ const ASTypesToken = class ASTypesToken extends SourceSimpleCharacterSequenceTok
 
 		super('type', [
 
+			'Array',
+			'Boolean',
+			'Date',
+			'Error',
+			'Function',
 			'int',
 			'Number',
+			'Null',
+			'Object',
+			'RegExp',
 			'String',
+			'Vector',
 			'uint',
 			'void',
+			'XML',
+			'XMLList',
 
+			'DisplayObject',
+			'IEventDispatcher',
 			'MovieClip',
-			'Sprite'
+			'Sprite',
+			'TextField'
+
+			// AS4
+			// 'ArrayList'
+			// 'double'
 
 		]);
 
@@ -13163,10 +13255,26 @@ const ASPunctuationToken = class ASPunctuationToken extends SourceSimpleCharacte
 			']',
 			',',
 			':',
+			'::',
 			';',
 
 			'&amp;&amp;',
+			'&amp;&amp;=',
 			'||',
+			'||=',
+			'~',
+			'&amp;',
+			'&amp;=',
+			'|',
+			'|=',
+			'^',
+			'^=',
+			'&gt;&gt;',
+			'&gt;&gt;=',
+			'&gt;&gt;&gt;',
+			'&gt;&gt;&gt;=',
+			'&lt;&lt;',
+			'&lt;&lt;=',
 			'+',
 			'++',
 			'-',
@@ -13177,6 +13285,7 @@ const ASPunctuationToken = class ASPunctuationToken extends SourceSimpleCharacte
 			'==',
 			'===',
 			'!',
+			'?',
 			'!=',
 			'!==',
 			'&gt;',
