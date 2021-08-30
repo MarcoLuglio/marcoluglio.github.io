@@ -85,6 +85,7 @@
 			<li>C++ 1985</li>
 			<li>Object Pascal 1986</li>
 			<li>Erlang 1986</li>
+			<li>HyperTalk 1987</li>
 		</ul>
 	</li>
 
@@ -7479,6 +7480,290 @@ parseFloat('3.14some non-digit characters'); // 3.14</code
 
 <section>
 
+<h2 id='unitsofmeasorement'>Units of measurement</h2>
+<p>Check <a rel='external nofollow' href='https://gmpreussner.com/research/dimensional-analysis-in-programming-languages'>https://gmpreussner.com/research/dimensional-analysis-in-programming-languages</a> for a much more in depth coverage of this topic.</p>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+<code class='cpp'
+>// check macros
+// https://stackoverflow.com/questions/60790226/custom-literals-via-rust-macros
+// check libraries
+// https://github.com/iliekturtles/uom
+// https://github.com/paholg/dimensioned
+// </code
+>
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>// uses boost
+
+struct length_base_dimension : base_dimension&lt;length_base_dimension, 1&gt; { };
+struct mass_base_dimension : base_dimension&lt;mass_base_dimension, 2&gt; { };
+struct time_base_dimension : base_dimension&lt;time_base_dimension, 3&gt; { };
+
+typedef length_base_dimension::dimension_type length_dimension;
+typedef mass_base_dimension::dimension_type mass_dimension;
+typedef time_base_dimension::dimension_type time_dimension;
+
+typedef derived_dimension&lt;length_base_dimension, 2&gt;::type area_dimension;
+typedef derived_dimension&lt;mass_base_dimension, 1,
+	length_base_dimension, 2,
+	time_base_dimension, -2&gt;::type energy_dimension;
+
+struct meter_base_unit : base_unit&lt;meter_base_unit, length_dimension, 1&gt; { };
+struct kilogram_base_unit : base_unit&lt;kilogram_base_unit, mass_dimension, 2&gt; { };
+struct second_base_unit : base_unit&lt;second_base_unit, time_dimension, 3&gt; { };
+
+typedef make_system&lt;
+	meter_base_unit,
+	kilogram_base_unit,
+	second_base_unit&gt;::type mks_system;
+
+typedef unit&lt;dimensionless_type, mks_system&gt;      dimensionless;
+typedef unit&lt;length_dimension, mks_system&gt;        length;
+typedef unit&lt;mass_dimension, mks_system&gt;          mass;
+typedef unit&lt;time_dimension, mks_system&gt;          time;
+
+BOOST_UNITS_STATIC_CONSTANT(meter, length);
+BOOST_UNITS_STATIC_CONSTANT(meters, length);
+BOOST_UNITS_STATIC_CONSTANT(kilogram, mass);
+BOOST_UNITS_STATIC_CONSTANT(kilograms, mass);
+BOOST_UNITS_STATIC_CONSTANT(second, time);
+BOOST_UNITS_STATIC_CONSTANT(seconds, time);
+
+template&lt;&gt; struct base_unit_info&lt;test::meter_base_unit&gt; {
+	static std::string name() { return "meter"; }
+	static std::string symbol() { return "m"; }
+};
+
+template&lt;&gt; struct base_unit_info&lt;test::kilogram_base_unit&gt;
+{
+	static std::string name() { return "kilogram"; }
+	static std::string symbol() { return "kg"; }
+};
+
+template&lt;&gt; struct base_unit_info&lt;test::second_base_unit&gt;
+{
+	static std::string name() { return "second"; }
+	static std::string symbol() { return "s"; }
+};
+
+Unit systems defined in this way may then be used as follows:
+
+quantity&lt;length&gt; L(2.0 * meters);
+quantity&lt;energy&gt; E = kilograms * pow&lt;2&gt;(L / seconds);
+
+quantity&lt;length, std::complex&lt;double&gt; &gt; L(std::complex&lt;double&gt;(3.0, 4.0) * meters);
+quantity&lt;energy, std::complex&lt;double&gt; &gt; E(kilograms * pow&lt;2&gt;(L / seconds));
+
+const double dimless = (L/L);</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>// check <a rel='external nofollow' href='https://jcp.org/en/jsr/detail?id=363'>JSR 363</a>
+import javax.measure;</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+-
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+	<p>Ada</p>
+	<code class='ada'
+	>-- https://www.adacore.com/gems/gem-136-how-tall-is-a-kilogram
+type Mks_Type is new Long_Long_Float
+with
+  Dimension_System => (
+	(Unit_Name => Meter,    Unit_Symbol => 'm',   Dim_Symbol => 'L'),
+	(Unit_Name => Second,   Unit_Symbol => 's',   Dim_Symbol => 'T'),
+	...
+
+subtype Length is Mks_Type
+with
+  Dimension => (Symbol => 'm',
+	Meter  => 1,
+	others => 0);
+
+subtype Time is Mks_Type
+with
+  Dimension => (Symbol => 's',
+	Second => 1,
+	others => 0);
+
+m : constant Length := 1.0;
+s : constant Time := 1.0;
+
+cm : constant Length := 1.0E-02;
+km : constant Length := 1.0E+03;
+min : constant Time := 60.0 * s;
+hour : constant Time := 60.0 * min;
+
+subtype Area is Mks_Type
+with
+  Dimension => (
+	Meter  => 2,
+	others => 0);
+
+subtype Speed is Mks_Type
+with
+  Dimension => (
+	Meter  =>  1,
+	Second => -1,
+	others =>  0);
+
+procedure Foo is
+subtype Acceleration is Mks_Type
+  with Dimension => ("m/sec^2", 1, 0, -2, others => 0);
+
+G : constant Acceleration := 9.81 * M / (S ** 2);
+T : Time := 10.0 * S;
+Distance : Length;
+begin
+Distance := 0.5 * G * T ** 2;
+Put (Distance, Aft => 2, Exp => 0);
+end Foo</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+>[&lt;Measure&gt;] type kg            // declaration of base unit types
+[&lt;Measure&gt;] type m
+[&lt;Measure&gt;] type s
+
+let mass = 2.0&lt;kg&gt;
+let gravity = 9.81&lt;m/s^2&gt;
+let force = mass * gravity     // 19.62&lt;kg m/s^2&gt;
+
+[&lt;Measure&gt;] type N = kg m/s^2  // declaration of derived unit type
+
+let force2 = 19.62&lt;N&gt;          // same as 'force'</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+-
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
+
+
+
+<section>
+
 <h2 id='tiposchar'>Chars</h2>
 
 <div class='comparison'>
@@ -8086,7 +8371,9 @@ let beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->var simples = 'A primeira faz "tchan"';
+>
+
+var simples = 'A primeira faz "tchan"';
 var dupla = "A segunda faz 'tchun'";
 
 
@@ -8119,8 +8406,6 @@ Não há merda que se compare\n\
 
 
 
-
-
 var emoji = '😍';
 var es5 = '\uD83D\uDE0D'; // code units / surrogates
 
@@ -8135,8 +8420,11 @@ var beeGees = calvinHarris.replace('love', 'looove');
 <div class='codeblock'>
 <p>Python</p>
 <code class='python'
->simples = 'A primeira faz "tchan"'
+>
+
+simples = 'A primeira faz "tchan"'
 dupla = "A segunda faz 'tchun'"
+
 
 iara = "mãe d'água"
 modoDificil = 'O\'Reilly'; # TODO verificar isso
@@ -8173,6 +8461,7 @@ let emoji = '😍';
 let es5 = '\uD83D\uDE0D'; // code units / surrogates
 let es6 = '\u{1F60D}'; // code point
 -->
+
 
 # string é imutável, então seus métodos retornam novas instâncias
 beeGees = calvinHarris.replace('love', 'looove');
@@ -10548,8 +10837,8 @@ if (number &gt; 0) {
 // logical operators
 
 
-bool condition1;
-bool condition2;</code
+bool condition1 = true;
+bool condition2 = true;</code
 >
 </div>
 
@@ -10573,7 +10862,75 @@ bool condition2;</code
 <p>ActionScript</p>
 <code class='actionscript'
 >
-</code
+
+
+
+var number:int = 10;
+
+if (number &gt; 0) {
+	// positivo
+} else if (number &lt; 0) {
+	// negativo
+} else {
+	// zero
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// logical operators
+
+
+var condition1:Boolean = true;
+var condition2:Boolean = true;
+
+// short circuit
+if (condition1 &amp;&amp; condition2) {
+	myTextField.appendText('both true');
+}
+
+// short circuit
+if (condition1 || condition2) {
+	myTextField.appendText('both true');
+}
+
+
+
+
+
+if (condition1 != condition2) {
+	myTextField.appendText('both true');
+}
+
+if (condition1 == false) {
+	myTextField.appendText('both true');
+}
+
+if (!condition1) {
+	myTextField.appendText('both true');
+}</code
 >
 </div>
 
@@ -10875,7 +11232,7 @@ end
 
 
 
-
+# logical
 
 
 condition1 = true
@@ -11096,7 +11453,7 @@ repeat {
 
 do {
 	// ...
-} while (i &lt; 10) // y is visible here!</code
+} while (i &lt; 10) // i is visible here!</code
 >
 </div>
 
@@ -11135,16 +11492,28 @@ do {
 <div class='codeblock'>
 <p>JavaScript</p>
 <code class='javascript'
->
-</code
+>while (i &lt; 10) {
+	// ...
+}
+
+
+do {
+	// ...
+} while (i &lt; 10)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>while (i &lt; 10) {
+	// ...
+}
+
+
+do {
+	// ...
+} while (i &lt; 10)</code
 >
 </div>
 
@@ -11422,8 +11791,26 @@ for (item in collection) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>for each (var item in collection) {
+	trace(item);
+}
+
+for (item in collection) {
+	trace(collection[item]);
+}
+
+// TODO check if behavior
+// is similar to JavaScript
+
+var collection:Array = ['p', 'r', 'e'];
+// or
+var collection:Vector.&lt;Object&gt; = new Vector.&lt;Object&gt;['p', 'r', 'e'];
+
+collection.forEach(function callback(item:*, index:int, arr:Array):void {
+	trace(item.prop);
+	// or
+	trace(arr[index]);
+});</code
 >
 </div>
 
@@ -11598,10 +11985,7 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 
 <div class='codeblock'>
 <p>ActionScript</p>
-<code class='actionscript'
->
-</code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -11779,8 +12163,9 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 <div class='codeblock'>
 <p>ActionScript</p>
 <code class='actionscript'
->
-</code
+>for (var i:int = 0; i &lt; 3; i++) {
+	//
+}</code
 >
 </div>
 

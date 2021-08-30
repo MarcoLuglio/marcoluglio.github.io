@@ -497,7 +497,8 @@ div.codeblock.bubaloop p + code {
 	color: var(--keywords-light-color);
 }
 
-.bubaloop.objc .keyword,
+.bubaloop.objectivec .keyword,
+.bubaloop.actionscript .keyword,
 .bubaloop.visualbasic .keyword,
 .bubaloop.ada .keyword,
 .bubaloop.objectpascal .keyword,
@@ -530,7 +531,8 @@ div.codeblock.bubaloop p + code {
 	/*color: var(--highlight-keywords-light-color);*/
 }
 
-.bubaloop.highlight.objc .keyword,
+.bubaloop.highlight.objectivec .keyword,
+.bubaloop.highlight.actionscript .keyword,
 .bubaloop.highlight.visualbasic .keyword,
 .bubaloop.highlight.ada .keyword,
 .bubaloop.highlight.objectpascal .keyword,
@@ -564,6 +566,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .number,
+.bubaloop.actionscript .number,
 .bubaloop.visualbasic .number,
 .bubaloop.ada .number,
 .bubaloop.objectpascal .number,
@@ -597,6 +600,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .boolean,
+.bubaloop.actionscript .boolean,
 .bubaloop.visualbasic .boolean,
 .bubaloop.ada .boolean,
 .bubaloop.objectpascal .boolean,
@@ -630,6 +634,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .type,
+.bubaloop.actionscript .type,
 .bubaloop.visualbasic .type,
 .bubaloop.ada .type,
 .bubaloop.objectpascal .type,
@@ -661,6 +666,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight.objectivec strong .type,
+.bubaloop.highlight.actionscript strong .type,
 .bubaloop.highlight.visualbasic strong .type,
 .bubaloop.highlight.ada strong .type,
 .bubaloop.highlight.objectpascal strong .type,
@@ -692,6 +698,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .operator,
+.bubaloop.actionscript .operator,
 .bubaloop.visualbasic .operator,
 .bubaloop.ada .operator,
 .bubaloop.objectpascal .operator,
@@ -725,6 +732,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight.objectivec strong .operator,
+.bubaloop.highlight.actionscript strong .operator,
 .bubaloop.highlight.visualbasic strong .operator,
 .bubaloop.highlight.ada strong .operator,
 .bubaloop.highlight.objectpascal strong .operator,
@@ -773,6 +781,8 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.objectivec .comment,
 .bubaloop.objectivec .comment a,
+.bubaloop.actionscript .comment,
+.bubaloop.actionscript .comment a,
 .bubaloop.visualbasic .comment,
 .bubaloop.visualbasic .comment a,
 .bubaloop.ada .comment,
@@ -830,6 +840,8 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.highlight.objectivec strong .comment,
 .bubaloop.highlight.objectivec strong .comment a,
+.bubaloop.highlight.actionscript strong .comment,
+.bubaloop.highlight.actionscript strong .comment a,
 .bubaloop.highlight.visualbasic strong .comment,
 .bubaloop.highlight.visualbasic strong .comment a,
 .bubaloop.highlight.ada strong .comment,
@@ -885,6 +897,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.objectivec .string,
+.bubaloop.actionscript .string,
 .bubaloop.visualbasic .string,
 .bubaloop.ada .string,
 .bubaloop.objectpascal .string,
@@ -918,6 +931,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight.objectivec strong .string,
+.bubaloop.highlight.actionscript strong .string,
 .bubaloop.highlight.visualbasic strong .string,
 .bubaloop.highlight.ada strong .string,
 .bubaloop.highlight.objectpascal strong .string,
@@ -977,6 +991,7 @@ div.codeblock.bubaloop p + code {
 	color: var(--attributes-light-color);
 }
 
+.bubaloop.actionscript .attribute,
 .bubaloop.visualbasic .attribute {
 	color: var(--attributes-light-color);
 }
@@ -995,6 +1010,7 @@ div.codeblock.bubaloop p + code {
 	color: var(--attributes-light-color);
 }
 
+.bubaloop.highlight.actionscript strong .attribute,
 .bubaloop.highlight.visualbasic strong .attribute {
 	color: #505B66;
 }
