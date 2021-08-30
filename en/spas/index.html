@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html
 	xmlns='http://www.w3.org/1999/xhtml'
-	lang='pt-BR'
-	xml:lang='pt-br'
+	lang='en-US'
+	xml:lang='en-us'
 	>
 <head>
 	<title>Single page applications</title>
@@ -545,6 +545,26 @@ class App extends StatelessWidget {
 				<strong>)</strong>
 
 			<strong>}</strong>
+
+			/*
+			onGenerateRoute: (settings) {
+
+				// Handle '/'
+				if (settings.name == '/') {
+				  return MaterialPageRoute(builder: (context) => HomeScreen());
+				}
+
+				// Handle '/details/:id'
+				var uri = Uri.parse(settings.name);
+				if (uri.pathSegments.length == 2 && uri.pathSegments.first == 'details') {
+					var id = uri.pathSegments[1];
+					return MaterialPageRoute(builder: (context) => DetailScreen(id: id));
+				}
+
+				return MaterialPageRoute(builder: (context) => UnknownScreen());
+
+			}
+			*/
 
 		);
 
@@ -1252,10 +1272,8 @@ class _TimelineState extends State<Timeline> {
 						textStyle: const TextStyle(fontSize: 20),
 					),*/
 					onPressed: () {
-						Navigator.push(
-							context,
-							MaterialPageRoute(builder: (context) => SecondRoute()),
-						)
+						Navigator.pushNamed(context, 'languages/${entry.name}')
+						// arguments: ScreenArguments(entry.name)
 					},
 					child: const Text('${entry.name} - ${entry.year}')
 				),
@@ -2357,7 +2375,7 @@ export default function Language(props) {
 <div class='codeblock'>
 <p>Flutter (Dart)</p>
 <code class='shell'
-></code
+>// https://flutter.dev/docs/cookbook/forms/validation</code
 >
 </div>
 
@@ -2457,7 +2475,8 @@ export default function Language(props) {
 <div class='codeblock'>
 <p>Flutter (Dart)</p>
 <code class='shell'
-></code
+>// https://api.flutter.dev/flutter/widgets/Focus-class.html
+// https://flutter.dev/docs/cookbook/forms/focus</code
 >
 </div>
 
@@ -2646,6 +2665,24 @@ export default function Language(props) {
 </p>
 
 </section>
+-->
+
+<!--
+clipboard
+voice
+indexeddb
+pwa support
+https://docs.microsoft.com/en-us/aspnet/core/blazor/components/event-handling?view=aspnetcore-5.0#focus-an-element
+
+bases
+https://en.wikipedia.org/wiki/Superior_highly_composite_number
+
+6   senary ("seximal")
+12  duodecimal ("dozenal") rotated digit two and reversed or rotated digit three for 11 and 12
+60  sexagesimal
+120 ?
+360 no name / degrees
+
 -->
 
 
