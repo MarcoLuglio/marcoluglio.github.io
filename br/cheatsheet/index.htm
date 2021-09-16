@@ -9346,9 +9346,26 @@ lista.push(1);</code
 <code class='go'
 >var lista []int // em go se chamam slices
 listaPreAlocada := make([]int, 10)
+listaPrePopulada := := []string{"p", "r", "e"}
 // slices são imutáveis, assim como strings
 lista = append(lista, 1)
-listaPreAlocada = append(listaPreAlocada, 1)</code
+listaPreAlocada = append(listaPreAlocada, 1)
+
+// Go não tem uma função para remover itens
+// Temos duas opções
+
+// remover um item sem manter ordem (tempo constante)
+// copia o último item sobre o item que vai ser removido
+pre[i] = pre[len(pre)-1]
+pre[len(pre)-1] = ""
+
+// remover um item mantendo a ordem (curva tempo n)
+// move todos os item para a esquerda
+copy(pre[i:], pre[i+1:])
+pre[len(pre)-1] = ""
+
+// apaga o último item
+pre = pre[:len(pre)-1]</code
 >
 </div>
 
@@ -9997,10 +10014,10 @@ object o = new object();</code
 let p:*const i32 = ptr::null();
 let p:*mut i32 = ptr::null();
 
-let x = 5;
+let x = 90;
 let raw = &amp;x as *const i32;
 
-let mut y = 10;
+let mut y = 95;
 let raw_mut = &amp;mut y as *mut i32;
 
 let points_at = unsafe { *raw };
@@ -10021,7 +10038,36 @@ unsafe {
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
-></code
+>intOriginal := 90
+segundoIntOriginal = 95
+
+ponteiroDeInt := &amp;intOriginal
+fmt.Println(*ponteiroDeInt) // 90
+
+ponteiroDeInt = &amp;segundoIntOriginal
+fmt.Println(*ponteiroDeInt) // 95
+
+var outroPonteiroDeInt = &amp;intOriginal
+var maisUmPonteiroDeInt int*
+aindaMaisUmPonteiroDeInt := new(int)
+aindaMaisUmPonteiroDeInt = &amp;intOriginal
+
+*ponteiroDeInt = 5
+fmt.Println(*ponteiroDeInt) // 5
+
+// TODO
+
+// const int* ponteiroDeInt = &amp;intOriginal;
+
+// podemos atribuir endereços aleatórios de memória para ponteiros ??
+
+// ponteiro de array
+
+// ponteiros para funções?
+
+// void* ponteiroGenerico;
+
+// int** ponteiroDePonteiro;</code
 >
 </div>
 
@@ -12532,7 +12578,17 @@ var title = switch (person) {
 	case Dali, Picasso      -&gt; "painter";
 	case Mozart, Prokofiev  -&gt; "composer";
 	case Goethe, Dostoevsky -&gt; "writer";
-};</code
+};
+
+// match - java 17+
+switch (o) {
+	case null     -> System.out.println("null");
+	case String s -> System.out.println("String");
+	case Color c  -> System.out.println("Color with " + Color.values().length + " values");
+	case Point p  -> System.out.println("Record class: " + p.toString());
+	case int[] ia -> System.out.println("Array of ints of length" + ia.length);
+	default       -> System.out.println("Something else");
+}</code
 >
 </div>
 
@@ -24416,6 +24472,14 @@ class B() : A() {
 
 final class B extends A {
 	// super
+}
+
+sealed class C permits D {
+	//
+}
+
+final class D extends C {
+	//
 }</code
 >
 </div>
