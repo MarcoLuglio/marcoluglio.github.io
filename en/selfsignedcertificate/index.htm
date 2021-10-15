@@ -77,7 +77,7 @@
 		<div class='codeblock'>
 			<p>Powershell as administrator - certificate additional info</p>
 			<code class='generic'
-				>New-SelfSignedCertificate -Subject "C=your country code,ST=your state,L=your city name,O=your organization" -CertStore "cert:\LocalMachine\My" -DnsName "yoursitedomain.com"</code
+				>New-SelfSignedCertificate -Subject "C=your country code,ST=your state,L=your city name,O=your organization,OU=your organization unit" -CertStore "cert:\LocalMachine\My" -DnsName "yoursitedomain.com"</code
 			>
 		</div>
 
@@ -146,24 +146,42 @@
 		<div class='codeblock'>
 			<p>zsh or bash + openssl</p>
 			<code class='generic'
-				>openssl req -x509 -sha256 -nodes -newkey rsa:2048 -subj "/C=your country code/ST=your state/L=your city name/O=your organization/OU=Org/CN=yoursitedomain.com" -days 3650 -keyout privateKey.key -out certificate.crt
-				 </code
+				>openssl req -x509 -sha256 -nodes -newkey rsa:2048 -subj "/C=your country code/ST=your state/L=your city name/O=your organization/OU=your organization unit/CN=yoursitedomain.com" -days 3650 -keyout privateKey.key -out certificate.crt</code
 			>
 		</div>
 
 		<div class='codeblock'>
 			<p>zsh or bash + openssl</p>
 			<code class='generic'
-				>openssl req -x509 -sha256 -nodes -newkey rsa:2048 -subj "/C=your country code/ST=your state/L=your city name/O=your organization/OU=Org/CN=yoursitedomain.com" -days 3650 -keyout privateKey.key -out certificate.crt
-				 </code
+				>openssl req -x509 -sha256 -nodes -newkey rsa:2048 -config certificate.conf -days 3650 -keyout privateKey.key -out certificate.crt</code
 			>
 		</div>
 
 		<div class='codeblock'>
-			<p>zsh or bash + openssl</p>
+			<p>certificate.conf</p>
 			<code class='generic'
-				>openssl req -x509 -sha256 -nodes -newkey rsa:2048 -subj "/C=your country code/ST=your state/L=your city name/O=your organization/OU=your organization unit/CN=yoursitedomain.com" -days 3650 -keyout privateKey.key -out certificate.crt
-				 </code
+>[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+x509_extensions = v3_req
+distinguished_name = dn
+
+[dn]
+C = your country code
+ST = your state
+L = your city
+O = your organization
+OU = your organization unit
+emailAddress = your@email.com
+CN = yoursitedomain.com
+
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = *.%HOSTNAME%.%DOT%
+DNS.2 = %HOSTNAME%.%DOT%</code
 			>
 		</div>
 
