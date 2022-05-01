@@ -17,14 +17,354 @@
 </head>
 <body>
 
+<div class='codeblock'>
+<p>licuid</p>
+<code class='licuid'
+>// linha
+/* bloco /* bloco aninhado */ bloco */
 
+name implicit = 100_000 // assume i{d} if nothing is specified
+name partImplicit = 100_000{d} // assume i if nothing is specified
+name explicit:i{d} = 100_000
+name explicit:i = 100_000{d}
+name scientific = -100_000_p-6 // TODO check this
+
+name dozenal = 100_000{z} // 248_832 in base ten
+name byteFlags = 0100_0011{b}
+
+name real = 100_000.00 // assume {d} if nothing is specified
+name scientific = -100_000.00_p-6
+
+// TODO create fixed point alternatives
+// based on the floating types below
+// bits order sign, exponent, number
+// float16  sign 1 bit, number 10 bits,  exponent 5 bits (31)
+// float32  sign 1 bit, number 23 bits,  exponent 8 bits (255)
+//                           8_388_608 * 10^31
+// float64  sign 1 bit, number 52 bits,  exponent 11 bits (2047)
+//               4_503_599_627_370_496 * 10^2047
+// x86 ext  sign 1 bit, number 64 bits,  exponent 15 bits (32767)
+// float128 sign 1 bit, number 112 bits, exponent 15 bits
+
+
+// TODO constant, or var if name defines a constant
+// TODO lazy
+// TODO casting and conversion
+// TODO option and null safety
+// TODO a form of big integer and big decimal
+// TODO ranges to constrain numbers
+
+
+
+// integer divided in parts
+
+alias rgb = i8{255}:i8{255}:i8{255}
+
+name rgbColor:i8{255}:i8{255}:i8{255} = FF:00:00
+name rgbColor:rgb = FF:00:00
+name rgbColor = FF{255}:00{255}:00{255}
+
+name rgbColor:i8{d}:i8{d}:i8{d} = 255:00:00
+name rgbColor:rgb = 255:00:00
+name rgbColor = 255{255}:00{255}:00{255}
+
+// TODO check this, how can I split an integer with multiple units? (imperial?)
+// TODO can I annotate units of measurement with # instead of putting between {}? If I need to put more things between {}, then no.
+
+measure default = i{d}
+measure hoursTotal = i{d}
+measure hours = i8{h}
+measure minutes = i8{m}
+measure seconds = i8{m}
+alias time = hours:minutes:seconds
+
+name timeOrAngle:i{d}:i8{m}:i8{m} = 10:25:59
+name timeOverflows:hours:minutes:seconds = 10:25:59
+name timeOverflows:time = 10:25:59
+name timeOverflows = 10{hours}:25{minutes}:59{seconds}
+name timeOrAngle = 34{d}:25{m}:59{m}
+name timeOnly = 34{hoursTotal}:25{minutes}:59{seconds}
+
+
+name dayOverflows:i{30}:i8{h}:i8{m}:i8{m} = 1:10:25:59
+name dayOverflows:i{30}|i8{h}:i8{m}:i8{m} = 1|10:25:59
+// allow | as a third divider?
+// Comma is a divider already, between the integer and decimal parts.
+// How to define timestamps? And locales for printing?
+// Locales could be similar to strings
+name dayOverflows = 10{30}:10{h}:25{m}:59{m}
+
+// TODO datetime needs a custom class to check when it overflows. Maybe nickname could be a function signature in this case with the desired divided type as the function return?? Need to think about it
+// TODO how to convert from degrees to radians and gradians?
+
+// TODO codebars and QR code standards support would be great
+
+name something:number = 100_000.00
+
+
+
+// text is i18n by default
+
+name i18n = `Hello world!` // assume {runtime} if nothing is specified and get from OS?
+
+name i18n:text = `Hello world!`{en-us}
+
+name i18n:text{en-us}:text{pt-br} =
+	`Hello world!`
+	:`Olá mundo!`
+
+name i18n =
+	`Hello world!`{en-us}
+	:`Olá mundo!`{pt-br}
+
+name i18n = `
+	This is
+	multiline
+		with a single indentation
+	then back.
+	Spaces before and after are ignored
+	`
+
+// TODO building and interpolating strings
+
+
+
+/*
+-----------------------
+| move            | m |
+| line            | l |
+| horizontal line | h |
+| vertical line   | v |
+| eliptical arc   | a |
+| n bézier        | b |
+| close.          | z |
+-----------------------
+*/
+
+name path:bézier = m 0 0             // move to x:0, y:0, implicit if omitted?
+				   l 10 10           // line to x:10, y:10
+				   b{4} 15 18, 22 10 // bézier quadratic curve
+									 // p1 x:10 y:10
+									 // c1 x:15 y:18
+									 // c2 x:22 y:10
+									 // p2 x:22, y:11
+				   m  22, 11         // p2 x:22, y:11
+				   z                 // p2 x:22, y:11
+
+// TODO easier to make smooth connections between curves?
+// TODO combine or intersect bézier paths
+// TODO geometric places?
+
+// not sure about this, think a bit more
+name aThing = something // always copy value
+alias aThing = something // reference to something
+
+
+// type aliasing
+
+alias bezier = bézier
+
+alias onOff = binary{
+	on = true,  // 0000_0001{b} ?
+	off = false // 0000_0000{b} ?
+}
+alias yesNo = binary{
+	yes = true,
+	no = false
+}
+alias highLow = binary{
+	high = true,
+	low = false
+}
+alias openClose = binary{
+	open = true,
+	close = false
+}
+
+alias selection = ternary{
+	unselected = 1, // 0000_0001{b}
+	mixed = 3,      // 0000_0011{b}
+	selected = 2    // 0000_0010{b}
+}
+alias comparison3 = ternary{
+	lessThan = 1,
+	equal = 3,
+	greaterThan = 2
+}
+
+// maybe use enums + flags for this
+// also, is there a way to use only two bits for this?
+// Probably that’s a compiler concern?
+// TODO enums
+// TODO tuples
+
+
+
+// action signature alias
+alias strategy = (a:i, b:i) c:binary
+alias strategy = (:i, :i) :binary
+
+name preAllocatedList:i8[10][5] = [][]
+preAllocatedList[10][5] = 80 // 1 based index
+
+alias table2d = i8[][] // TODO check this, array, combine with {x}
+
+// TODO array slices for easily selecting parts of an array
+// TODO lists
+// TODO dictionaries
+
+# public // TODO if I need to type this often it may be tiresome, might turn it into a keyword
+# T conditions
+# U conditions
+# sideEffects
+action genericArg(a:T) b:U {
+	//
+}
+
+// TODO call generic action
+
+# private
+# memoize -1, 1
+action isPositive(a:i8) result:binary = false {
+
+	// assign a value to b at any time
+	// use end keyword if we need to return early
+	if a &gt; 0 and a &lt; 9 {
+
+		result = true
+		end
+
+	} else if a &gt; -9 or a &lt; 0 {
+
+		result = false
+		end
+
+	} else if a in -9…0 {
+
+
+
+	}
+
+
+	if a &lt;=&gt; b is comparison3.lessThan {
+
+		result = true
+		end
+
+	}
+
+	// something else here, think of a better example.
+
+	// TODO will use is for equality comparison?
+
+}
+
+// TODO in out ref params
+
+
+
+// TODO structs(type) and traits or interfaces
+
+# public
+type a = type {
+
+	// TODO constructors or initializers
+
+	# private
+	action isPositive(a:i8) result:binary = false |
+		// ...
+	|
+
+	// This looks like a parameterized class
+	# public // TODO makes sense to put visibility here?
+	name i18nAlt1:getSet{text} = {
+
+		action get {
+			i18n = `Hello world!`{en-us}
+			:`Olá mundo!`{pt-br}
+		}
+
+		action set {
+			i18n = value
+		}
+
+	}
+
+	// This looks like an inner class
+	name i18nAlt2:getSet{
+
+		# public
+		action get() i18n:text {
+			// ...
+		}
+
+		# private
+		action set(i18n:text) {
+			// ...
+		}
+
+	}
+
+
+	# private
+	name i18n:text = `Hello world!`{en-us}
+
+}
+
+// TODO how to instantiate?
+
+
+
+// flow control
+
+@level1
+for i in 1…5 {
+
+	@level2
+	for j in 1…5 {
+
+		@level3
+		for k in 1…5 {
+			continue @level2
+		}
+
+	}
+
+}
+
+@level1 {
+
+	@level2 {
+
+		@level3 {
+			break @level2 // Fortran uses exit instead of break
+			// TODO why did I want to do this??
+		}
+
+	}
+
+}</code
+>
+</div>
+
+<div class='codeblock'>
+<p>javascript</p>
+<code class='javascript'
+>@Input({})
+class a {
+	// ...
+}</code
+>
+</div>
+
+<!--
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
 >var a = '0';</code
 >
 </div>
-<!--
+
 <div class='codeblock'>
 <p>Swift</p>
 <code class='swift'

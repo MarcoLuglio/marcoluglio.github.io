@@ -13245,6 +13245,7 @@ const ASPunctuationToken = class ASPunctuationToken extends SourceSimpleCharacte
 
 	constructor() {
 
+		// check https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/operators.html
 		super('operator', [
 
 			'.',
@@ -16784,6 +16785,979 @@ const HaskellBlockCommentPatternIterator = class HaskellBlockCommentPatternItera
 
 
 
+// #region Licuid lexer
+
+
+
+const LicuidParser = class LicuidParser {
+
+	constructor(lexer, syntactic, semantic) {
+
+		Object.defineProperties(this, {
+			_lexerParser: {value: lexerParser},
+			_syntacticParser: {value: syntacticParser},
+			_semanticParser: {value: semanticParser}
+		});
+
+		Object.seal(this);
+
+	}
+
+	async parseAsync(source) {
+		const tokenSequence = await this._lexerParser.parseAsync(source);
+		const abstractSyntaxTree = await this._syntacticParser.parseAsync(tokenSequence);
+		const actionTree = await this._semanticParser.parseAsync(abstractSyntaxTree);
+		return actionTree;
+	}
+
+}
+
+
+const LicuidLexerParser = class LicuidLexerParser {
+
+	constructor() {
+
+		Object.defineProperties(this, {
+			_tokenPool: {value: []},
+			_token: {value: null, writable: true},
+			_completeToken: {value: null, writable: true},
+			_characters: {value: null, writable: true},
+			_index: {value: 0, writable: true},
+
+			_lastToken: {value: null, writable: true},
+			_lastNonWhitespaceToken: {value: null, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	async parseAsync(source) {
+
+		const context = this; // TODO arrow talvez não precise de context
+
+		const tokenSequencePromise = new Promise((resolve, reject) => {
+			try {
+				const tokenSequence = context.parse(source);
+				resolve(tokenSequence);
+			} catch (erro) {
+				reject(erro);
+			}
+		});
+
+		return tokenSequencePromise;
+
+	}
+
+	parse(source) {
+
+		const sourceIterator = new StringIterator(source);
+		let tokenSequence = [];
+
+		tokenSequence.splice(0);
+
+		this._resetTokens();
+
+		while (sourceIterator.hasNext()) {
+			this._characters = sourceIterator.next();
+			this._index = sourceIterator.pointer;
+			this._iterate(tokenSequence);
+		}
+
+		this._characters = END_OF_FILE;
+		this._index += 1;
+		this._iterate(tokenSequence);
+
+		return tokenSequence;
+
+	}
+
+	_iterate(tokenSequence) {
+
+		this._matchTokens();
+		this._cleanTokenPool();
+
+		if (this._tokenPool.length === 0) {
+
+			if (this._completeToken) {
+
+				tokenSequence.push(this._completeToken);
+
+				this._lastToken = this._completeToken;
+
+				if (!this._completeToken.ignore
+					&& this._completeToken.type !== 'whitespace'
+					&& this._completeToken.type !== 'endOfLine'
+					) {
+
+					this._lastNonWhitespaceToken = this._completeToken;
+				}
+
+				this._completeToken = null;
+
+			}
+
+			this._resetTokens(tokenSequence);
+			this._matchTokens();
+
+		}
+
+	}
+
+	_matchTokens() {
+
+		for (let i = this._tokenPool.length - 1; i > -1; i--) {
+
+			this._token = this._tokenPool[i];
+
+			if (this._token.hasNext()) {
+				this._token.next(this._characters, this._index);
+			}
+
+		}
+
+	}
+
+	_cleanTokenPool() {
+
+		for (let i = this._tokenPool.length - 1; i > -1; i--) {
+
+			this._token = this._tokenPool[i];
+
+			if (this._token.isComplete) {
+				this._completeToken = this._token;
+			}
+
+			// tira do pool
+			if (this._token.isComplete || !this._token.hasNext()) {
+				this._tokenPool.splice(i, 1);
+			}
+
+		}
+
+	}
+
+	_resetTokens(tokenSequence) {
+
+		if (this._lastNonWhitespaceToken !== null
+			&& this._lastNonWhitespaceToken.type === 'keyword'
+			&& (
+				this._lastNonWhitespaceToken.characterSequence.join('') === 'name'
+				|| this._lastNonWhitespaceToken.characterSequence.join('') === 'action'
+				|| this._lastNonWhitespaceToken.characterSequence.join('') === 'type'
+				|| this._lastNonWhitespaceToken.characterSequence.join('') === 'measure'
+				|| this._lastNonWhitespaceToken.characterSequence.join('') === 'alias'
+				)
+			) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				new LicuidSymbolToken(),
+
+				// language
+				new LicuidKeywordToken(),
+				new LicuidTypeSpecToken(),
+				new LicuidAssignmentToken(),
+				new LicuidPunctuationToken(),
+				new LicuidMetaToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+		// number formats after
+		} else if (this._lastToken !== null
+			&& this._lastToken.type === 'type'
+			) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				new LicuidNumberFormatToken(),
+				new LicuidStringI18nToken(),
+				// new LicuidTypeValueToken(),
+
+				// language
+				new LicuidKeywordToken(),
+				new LicuidTypeSpecToken(),
+				new LicuidAssignmentToken(),
+				new LicuidPunctuationToken(),
+				new LicuidMetaToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+		// i18n right after string
+		} else if (this._lastToken !== null
+			&& this._lastToken.type === 'string'
+			) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				new LicuidStringI18nToken(),
+
+				// language
+				new LicuidKeywordToken(),
+				new LicuidTypeSpecToken(),
+				new LicuidAssignmentToken(),
+				new LicuidPunctuationToken(),
+				new LicuidMetaToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+		} else {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				// language
+				new LicuidKeywordToken(),
+				new LicuidTypeSpecToken(),
+				new LicuidAssignmentToken(),
+				new LicuidPunctuationToken(),
+				new LicuidMetaToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+			// FIXME não pode ter espaço em branco na frente dele
+			// this._tokenPool.push(new LicuidSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+		}
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new LicuidTypeToken(),
+			new LicuidDecimalLiteralToken(),
+			new LicuidStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+};
+
+
+
+/**
+ * AKA Scanner
+ */
+const LicuidSyntacticParser = class LicuidSyntacticParser {
+
+	async parseAsync(tokenSequence) {
+
+		const context = this; // TODO arrow talvez não precise de context
+
+		const abstractSyntaxTreePromise = new Promise((resolve, reject) => {
+			try {
+				const abstractSyntaxTree = context.parse(tokenSequence);
+				resolve(abstractSyntaxTree);
+			} catch (erro) {
+				reject(erro);
+			}
+		});
+
+		return abstractSyntaxTreePromise;
+
+	}
+
+	parse(tokenSequence) {
+
+		// return abstract syntax tree
+
+	}
+
+}
+
+
+
+const LicuidSemanticParser = class LicuidSemanticParser {
+
+	async parseAsync(abstractSyntaxTree) {
+
+		const context = this; // TODO arrow talvez não precise de context
+
+		const actionTreePromise = new Promise((resolve, reject) => {
+			try {
+				const actionTree = context.parse(abstractSyntaxTree);
+				resolve(actionTree);
+			} catch (erro) {
+				reject(erro);
+			}
+		});
+
+		return actionTreePromise;
+
+	}
+
+	parse(abstractSyntaxTree) {
+
+		// return action tree
+
+	}
+
+}
+
+
+
+/**
+ * Token for Licuid keywords
+ */
+ const LicuidKeywordToken = class LicuidKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'action',
+			'alias',
+			'and',
+			'break',
+			'continue',
+			'else',
+			'end',
+			'for',
+			'if',
+			'in',
+			'is',
+			'measure',
+			'name',
+			'or',
+			'type',
+			'value',
+			'while',
+			'xor',
+
+			// literals
+			// TODO separate in its own token
+			'true',
+			'false'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+/**
+ * Token for Licuid type specification
+ */
+ const LicuidTypeSpecToken = class LicuidTypeSpecToken extends SourceSimpleCharacterSequenceToken {
+	constructor() {
+		super('operator', [':']);
+		Object.seal(this);
+	}
+};
+
+
+
+/**
+ * Token for Licuid assignment
+ */
+const LicuidAssignmentToken = class LicuidAssignmentToken extends SourceSimpleCharacterSequenceToken {
+	constructor() {
+		super('operator', ['=']);
+		Object.seal(this);
+	}
+};
+
+
+
+/**
+ * Token for Licuid punctuation
+ */
+ const LicuidPunctuationToken = class LicuidPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+			'(',
+			')',
+			'>',
+			'&gt;',
+			'>=',
+			'&gt;=',
+			'<',
+			'&lt;',
+			'<=',
+			'&lt;=',
+			'<=>',
+			'&lt;=&gt;',
+			'.',
+			':',
+			'|',
+			'…',
+			'...'
+		]);
+
+	}
+
+};
+
+
+
+/**
+ * Token for Licuid built-in types
+ */
+ const LicuidTypeToken = class LicuidTypeToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('type', [
+			'i',
+			'i8',
+			'i16',
+			'i32',
+			'i64',
+			'i128',
+			'u',
+			'u8',
+			'u16',
+			'u32',
+			'u64',
+			'u128',
+			'number',
+			'binary',
+			'ternary',
+			'text',
+			'getSet',
+			'bézier',
+			'bezier'
+		]);
+
+	}
+
+};
+
+
+
+const LicuidDecimalLiteralToken = class LicuidDecimalLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('number', new LicuidDecimalPatternIterator());
+	}
+};
+
+
+
+const LicuidDecimalPatternIterator = class LicuidDecimalPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		Object.defineProperties(this, {
+			// _hasMantissa: {value: false, writable: true},
+			_isNumberCharacter: {value: isNumberCharacterRegex}
+		});
+		this._matchFunction = this._matchNumber;
+		Object.seal(this);
+	}
+
+	// pode ter _ . | separando os números
+
+	_matchNumber(matchCharacter, index) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			this._isComplete = true;
+			return true;
+		}
+
+		/*if (matchCharacter === '.' && !this._hasMantissa) {
+			this._hasMantissa = true;
+			this._isComplete = false;
+			return true;
+		}*/
+
+		if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
+			this._isComplete = false;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+const LicuidNumberFormatToken = class LicuidNumberFormatToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('typeValue', new LicuidNumberFormatIterator());
+	}
+};
+
+
+
+const LicuidNumberFormatIterator = class LicuidNumberFormatIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_isNumberCharacter: {value: isNumberCharacterRegex},
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartBrace, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartBrace(matchCharacter) {
+
+		if (matchCharacter === '{') {
+			this._matchFunction = this._matchContentOrEndBrace;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndBrace(matchCharacter) {
+
+		if (this._isNumberCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		// FIXME cannot mix numbers and letters
+
+		if (matchCharacter === 'b'
+			|| matchCharacter === 'q'
+			|| matchCharacter === 's'
+			|| matchCharacter === 'o'
+			|| matchCharacter === 'd'
+			|| matchCharacter === 'z'
+			|| matchCharacter === 'x'
+			|| matchCharacter === 'h'
+			|| matchCharacter === 'm'
+			|| matchCharacter === 'g'
+			) {
+
+			this._matchFunction = this._matchEndBrace;
+			return true;
+		}
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '}') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		return false;
+
+	}
+
+	_matchEndBrace(matchCharacter) {
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '}') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Licuid strings
+ */
+ const LicuidStringLiteralToken = class LicuidStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new LicuidStringPatternIterator());
+	}
+};
+
+
+
+const LicuidStringPatternIterator = class LicuidStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === '`') {
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		if (matchCharacter === '`') {
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+const LicuidStringI18nToken = class LicuidStringI18nToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('i18n', new LicuidStringI18nIterator());
+	}
+};
+
+
+
+const LicuidStringI18nIterator = class LicuidStringI18nIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartBrace, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartBrace(matchCharacter) {
+
+		if (matchCharacter === '{') {
+			this._matchFunction = this._matchContentOrEndBrace;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndBrace(matchCharacter) {
+
+		if (this._isLetterCharacter.test(matchCharacter)
+			|| matchCharacter === '-' // TODO need some control over the placement of this
+			) {
+
+			return true;
+		}
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '}') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+/**
+ * Token for Licuid meta information
+ */
+const LicuidMetaToken = class LicuidMetaToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('meta', new LicuidMetaPatternIterator());
+	}
+};
+
+
+
+/**
+ * Token for Licuid symbols
+ */
+ const LicuidSymbolToken = class LicuidSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new LicuidSymbolIterator());
+	}
+};
+
+
+
+const LicuidSymbolIterator = class LicuidSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchBeginningValidCharacter;
+
+	}
+
+	_matchBeginningValidCharacter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchValidCharacter;
+			this._isComplete = true;
+			return true;
+		}
+
+		if (matchCharacter === '_') {
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+const LicuidMetaPatternIterator = class LicuidMetaPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchHash;
+		Object.seal(this);
+	}
+
+	_matchHash(matchCharacter) {
+		if (matchCharacter === '#') {
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+// #endregion
+
+
+
+
 
 
 
@@ -16912,5 +17886,9 @@ export {
 	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/
+	LicuidLexerParser,
+	LicuidSyntacticParser,
+	LicuidSemanticParser,
+	LicuidParser,
 	Highlighter
 };

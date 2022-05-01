@@ -24,6 +24,10 @@ import {
 	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/
+	LicuidLexerParser,
+	LicuidSyntacticParser,
+	LicuidSemanticParser,
+	LicuidParser,
 	Highlighter
 } from './highlighter.js';
 
@@ -31,105 +35,112 @@ import {
 
 const highlighter = new Highlighter();
 
-self.onmessage = function (message) {
+self.onmessage = async function (message) {
 
 	const codeBlocksIndex = message.data[0];
 	const codeBlockIndex = message.data[1];
 	const parser = message.data[2];
 	const source = message.data[3];
 
-	let lexer;
+	let lexerParser;
 
 	// TODO avoid recreating lexers
 
 	switch (parser) {
 
 		case 'html':
-			lexer = new HtmlLexer();
+			lexerParser = new HtmlLexer();
 			break;
 
 		case 'rust':
-			lexer = new RustLexer();
+			lexerParser = new RustLexer();
 			break;
 
 		case 'go':
-			lexer = new GoLexer();
+			lexerParser = new GoLexer();
 			break;
 
 		case 'cpp':
-			lexer = new CppLexer();
+			lexerParser = new CppLexer();
 			break;
 
 		case 'objectivec':
-			lexer = new ObjectiveCLexer();
+			lexerParser = new ObjectiveCLexer();
 			break;
 
 		case 'swift':
-			lexer = new SwiftLexer();
+			lexerParser = new SwiftLexer();
 			break;
 
 		case 'kotlin':
-			lexer = new KotlinLexer();
+			lexerParser = new KotlinLexer();
 			break;
 
 		case 'java':
-			lexer = new JavaLexer();
+			lexerParser = new JavaLexer();
 			break;
 
 		case 'cs':
-			lexer = new CsLexer();
+			lexerParser = new CsLexer();
 			break;
 
 		case 'javascript':
-			lexer = new JavaScriptLexer();
+			lexerParser = new JavaScriptLexer();
 			break;
 
 		case 'actionscript':
-			lexer = new ActionScriptLexer();
+			lexerParser = new ActionScriptLexer();
 			break;
 
 		/*case 'typescript':
-			lexer = new TypeScriptLexer();
+			lexerParser = new TypeScriptLexer();
 			break;*/
 
 		case 'dart':
-			lexer = new DartLexer();
+			lexerParser = new DartLexer();
 			break;
 
 		case 'python':
-			lexer = new PythonLexer();
+			lexerParser = new PythonLexer();
 			break;
 
 		case 'php':
-			lexer = new PhpLexer();
+			lexerParser = new PhpLexer();
 			break;
 
 		case 'visualbasic':
-			lexer = new VisualBasic6Lexer();
+			lexerParser = new VisualBasic6Lexer();
 			break;
 
 		case 'ada':
-			lexer = new AdaLexer();
+			lexerParser = new AdaLexer();
 			break;
 
 		case 'objectpascal':
-			lexer = new ObjectPascalLexer();
+			lexerParser = new ObjectPascalLexer();
 			break;
 
 		case 'ruby':
-			lexer = new RubyLexer();
+			lexerParser = new RubyLexer();
 			break;
 
 		/*case 'smalltalk':
-			lexer = new SmalltalkLexer();
+			lexerParser = new SmalltalkLexer();
 			break;*/
 
 		case 'commonlisp':
-			lexer = new CommonLispLexer();
+			lexerParser = new CommonLispLexer();
 			break;
 
 		case 'haskell':
-			lexer = new HaskellLexer();
+			lexerParser = new HaskellLexer();
+			break;
+
+		case 'licuid':
+			lexerParser = new LicuidLexerParser();
+			/*const syntacticParser = new LicuidSyntacticParser();
+			const semanticParser = new LicuidSemanticParser();
+			const licuidParser = new LicuidParser(lexerParser, syntacticParser, semanticParser);*/
 			break;
 
 		default:
@@ -138,12 +149,17 @@ self.onmessage = function (message) {
 
 	}
 
-	lexer.parseAsync(source) // TODO make async await
+	const tokens = await lexerParser.parseAsync(source);
+	const highlightedSource = await highlighter.highlightAsync(source, tokens);
+	self.postMessage([codeBlocksIndex, codeBlockIndex, highlightedSource]);
+
+	/*
 		.then((tokens) => {
 			return highlighter.highlightAsync(source, tokens);
 		})
 		.then((highlightedSource) => {
 			self.postMessage([codeBlocksIndex, codeBlockIndex, highlightedSource]);
 		});
+	*/
 
 }

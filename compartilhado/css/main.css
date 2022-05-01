@@ -48,11 +48,17 @@
 	--strings-light-color: #0099FF;
 	--strings-dark-color: #00A6FF;
 
+	--i18n-light-color: #BDD7EE;
+	--i18n-dark-color: #BDD7EE;
+
 	--chars-light-color: #0076E6;
 	--chars-dark-color: #0077FF; /* TODO */
 
 	--types-light-color: #8AD100;
 	--types-dark-color: #91E500;
+
+	--type-values-light-color: #C5E0B3;
+	--type-values-dark-color: #C5E0B3;
 
 	--attributes-light-color: #7F8EA3;
 	--attributes-dark-color: #788598;
@@ -1889,6 +1895,113 @@ div.codeblock.bubaloop p + code {
 .bubaloop.html .comment,
 .bubaloop.css .comment {
 	color: #91E500;
+}
+
+/* Licuid */
+
+.bubaloop .licuid .keyword,
+.bubaloop.licuid .keyword {
+	color: var(--keywords-light-color);
+}
+
+/*
+.bubaloop .licuid .symbol,
+.bubaloop.licuid .symbol {
+	color: #ff0000;
+}
+*/
+
+.bubaloop .licuid .operator,
+.bubaloop.licuid .operator {
+	color: var(--punctuation-light-color);
+}
+
+.bubaloop .licuid .comment,
+.bubaloop .licuid .comment a,
+.bubaloop.licuid .comment,
+.bubaloop.licuid .comment a {
+	color: var(--comments-light-color);
+}
+
+.bubaloop .licuid .type,
+.bubaloop.licuid .type {
+	color: var(--types-light-color);
+}
+
+.bubaloop .licuid .typeValue,
+.bubaloop.licuid .typeValue {
+	color: var(--type-values-light-color);
+}
+
+.bubaloop .licuid .string,
+.bubaloop.licuid .string {
+	color: var(--strings-light-color);
+}
+
+.bubaloop .licuid .i18n,
+.bubaloop.licuid .i18n {
+	color: var(--i18n-light-color);
+}
+
+.bubaloop .licuid .number,
+.bubaloop.licuid .number {
+	color: var(--numbers-light-color);
+}
+
+.bubaloop .licuid .meta,
+.bubaloop.licuid .meta {
+	color: var(--attributes-light-color);
+}
+
+@media (prefers-color-scheme: dark) {
+
+	.bubaloop .licuid .keyword,
+	.bubaloop.licuid .keyword {
+		color: var(--keywords-dark-color);
+	}
+
+	.bubaloop .licuid .operator,
+	.bubaloop.licuid .operator {
+		color: var(--punctuation-dark-color);
+	}
+
+	.bubaloop .licuid .comment,
+	.bubaloop .licuid .comment a,
+	.bubaloop.licuid .comment,
+	.bubaloop.licuid .comment a {
+		color: var(--comments-light-color);
+	}
+
+	.bubaloop .licuid .type,
+	.bubaloop.licuid .type {
+		color: var(--types-dark-color);
+	}
+
+	.bubaloop .licuid .typeValue,
+	.bubaloop.licuid .typeValue {
+		color: var(--type-values-dark-color);
+	}
+
+	.bubaloop .licuid .string,
+	.bubaloop.licuid .string {
+		color: var(--strings-dark-color);
+	}
+
+	.bubaloop .licuid .i18n,
+	.bubaloop.licuid .i18n {
+		color: var(--i18n-dark-color);
+	}
+
+	.bubaloop .licuid .number,
+	.bubaloop.licuid .number {
+		color: var(--numbers-dark-color);
+	}
+
+	.bubaloop .licuid .meta,
+	.bubaloop.licuid .meta {
+		color: var(--attributes-dark-color);
+	}
+
 }
 
 /* Shell */
