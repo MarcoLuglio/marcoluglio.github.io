@@ -1180,7 +1180,7 @@ div.codeblock.bubaloop p + code {
 		color: var(--keywords-dark-color);
 	}
 
-	.bubaloop.objc .keyword,
+	.bubaloop.objectivec .keyword,
 	.bubaloop.actionscript .keyword,
 	.bubaloop.visualbasic .keyword,
 	.bubaloop.ada .keyword,
@@ -1214,7 +1214,7 @@ div.codeblock.bubaloop p + code {
 		color: var(--highlight-keywords-dark-color);
 	}
 
-	.bubaloop.highlight.objc .keyword,
+	.bubaloop.highlight.objectivec .keyword,
 	.bubaloop.highlight.actionscript .keyword,
 	.bubaloop.highlight.visualbasic .keyword,
 	.bubaloop.highlight.ada .keyword,
