@@ -187,8 +187,8 @@ const SourcePatternIterator = class SourcePatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	/**
@@ -618,8 +618,8 @@ const CStringPatternIterator = class CStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -724,8 +724,8 @@ const CCharPatternIterator = class CCharPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -1251,8 +1251,8 @@ const HtmlAttributeValuePatternIterator = class HtmlAttributeValuePatternIterato
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -2579,8 +2579,8 @@ const RustStringPatternIterator = class RustStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -3529,8 +3529,8 @@ const GoStringPatternIterator = class GoStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -5422,8 +5422,8 @@ const ObjCCharPatternIterator = class ObjCCharPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchAt(matchCharacter) {
@@ -5536,8 +5536,8 @@ const ObjCStringPatternIterator = class ObjCStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchAt(matchCharacter) {
@@ -6313,8 +6313,8 @@ const SwiftStringPatternIterator = class SwiftStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -6424,8 +6424,8 @@ const SwiftMultilineStringPatternIterator = class SwiftMultilineStringPatternIte
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote1(matchCharacter) {
@@ -7280,8 +7280,8 @@ const KotlinStringPatternIterator = class KotlinStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -7391,8 +7391,8 @@ const KotlinRawStringPatternIterator = class KotlinRawStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote1(matchCharacter) {
@@ -8369,8 +8369,8 @@ const JavaStringPatternIterator = class JavaStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -17292,8 +17292,8 @@ const LicuidDecimalPatternIterator = class LicuidDecimalPatternIterator extends 
 	constructor() {
 		super();
 		Object.defineProperties(this, {
-			// _hasMantissa: {value: false, writable: true},
-			_isNumberCharacter: {value: isNumberCharacterRegex}
+			_isNumberCharacter: {value: isNumberCharacterRegex},
+			_startIndex: {value: 0, writable: true}
 		});
 		this._matchFunction = this._matchNumber;
 		Object.seal(this);
@@ -17308,18 +17308,13 @@ const LicuidDecimalPatternIterator = class LicuidDecimalPatternIterator extends 
 			return true;
 		}
 
-		/*if (matchCharacter === '.' && !this._hasMantissa) {
-			this._hasMantissa = true;
-			this._isComplete = false;
-			return true;
-		}*/
-
 		if (index > 0 && matchCharacter === '_') { // TODO melhorar isso
 			this._isComplete = false;
 			return true;
 		}
 
 		if (this._isComplete) {
+			console.log('index: ' + index + ' char: ' + matchCharacter);
 			return this._matchEnd(matchCharacter);
 		}
 
@@ -17368,8 +17363,8 @@ const LicuidNumberFormatIterator = class LicuidNumberFormatIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartBrace(matchCharacter) {
@@ -17502,8 +17497,8 @@ const LicuidStringPatternIterator = class LicuidStringPatternIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartQuote(matchCharacter) {
@@ -17577,8 +17572,8 @@ const LicuidStringI18nIterator = class LicuidStringI18nIterator {
 	/**
 	 * @retuns {Boolean} true se o caractere match, false se não
 	 */
-	next(matchCharacter) {
-		return this._matchFunction(matchCharacter);
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
 	}
 
 	_matchStartBrace(matchCharacter) {
