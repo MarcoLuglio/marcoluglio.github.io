@@ -13,6 +13,9 @@ const _keysMap = [];
 _keysMap[8]	= 'Backspace';
 _keysMap[9]	= 'Tab';
 _keysMap[13]	= 'Enter';
+_keysMap[16]	= 'Shift';
+_keysMap[17]	= 'Control';
+_keysMap[18]	= 'Alt';
 _keysMap[27]	= 'Escape';
 _keysMap[32]	= 'Spacebar';
 _keysMap[33]	= 'PageUp';
@@ -73,6 +76,7 @@ _keysMap[105]	= 'Numpad9';
 _keysMap[106]	= 'NumpadMultiply';
 _keysMap[107]	= 'NumpadAdd';
 _keysMap[109]	= 'NumpadSubtract';
+
 Object.freeze(_keysMap);
 
 const getKey = (evento) => {
