@@ -104,7 +104,6 @@ section {
 	width: 960px;
 	height: 280px;
 	position: relative; /* three.js vai mudar para absolut */
-	overflow: hidden;
 	cursor: pointer;
 	background-color: #ffffff;
 	opacity: 0.2;
