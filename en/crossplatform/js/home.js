@@ -1,0 +1,115 @@
+import { domReadyPromise } from '../../../compartilhado/js/utils.js';
+import { Index } from '../../../compartilhado/js/index.js';
+import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.js';
+
+
+
+(async function() {
+
+	const tiposBlocos = [
+		//'cpp',
+		'cs',
+		'dart',
+		//'go',
+		'html',
+		//'java',
+		'javascript',
+		//'kotlin',
+		//'llvm',
+		//'python',
+		'rust',
+		'shell',
+		//'swift',
+		'toml'//,
+		//'webassembly'
+	];
+
+	const blocosDeCodigo = [];
+
+	const highlighterWorker = new Worker('../../../compartilhado/js/highlighterWorker.js', { type: 'module' });
+
+	highlighterWorker.onmessage = (event) => {
+
+		const codeBlocksIndex = event.data[0];
+		const codeBlockIndex = event.data[1];
+		const highlightedSource = event.data[2];
+
+		let blocoDeCodigo = blocosDeCodigo[codeBlocksIndex][codeBlockIndex];
+		blocoDeCodigo.classList.add('bubaloop')
+		blocoDeCodigo.innerHTML = highlightedSource;
+		const highlightEnhancer = new HighlightEnhancer(blocoDeCodigo);
+
+	};
+
+	await domReadyPromise();
+
+	try {
+		const index = new Index('indexList', 3, false);
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
+
+	try {
+
+		// Array.from is map
+
+		Array.from(
+			document.querySelectorAll('div.codeblock'),
+			divCodigo => divCodigo.classList.add('bubaloop')
+		);
+
+		// TODO não vai bloquear a UI por muito tempo se fizer assim de uma vez só?
+		Array.from(
+			tiposBlocos,
+			(tipoBloco, tipoBlocoIndice) => {
+				blocosDeCodigo[tipoBlocoIndice] = document.querySelectorAll(`code.${tipoBloco}`);
+			}
+		);
+
+		// TODO refatorar, tá difícil de ler...
+		Array.from(
+
+			blocosDeCodigo,
+
+			(blocosDeCodigoTipo, blocosDeCodigoTipoIndice) => {
+
+				Array.from(
+
+					blocosDeCodigoTipo,
+
+					(blocoDeCodigo, blocoDeCodigoIndice) => {
+
+						const source = blocoDeCodigo.innerHTML;
+						highlighterWorker.postMessage([
+							blocosDeCodigoTipoIndice,
+							blocoDeCodigoIndice,
+							tiposBlocos[blocosDeCodigoTipoIndice], // ugh...
+							source
+						]); // TODO posso passar um objeto ao invés de uma array??
+
+					}
+
+				);
+
+			}
+
+		);
+
+		// TODO add bubaloop theme to code.generic and highlight it. will need to breakdown highlightHelper
+
+	} catch (erro) {
+		console.error('Erro ao iniciar a página. ' + erro + '\n' + erro.stack);
+	}
+
+	window.addEventListener('scroll', evento => {
+
+		if (window.pageYOffset <= 280) { // TODO magic constant...
+			document.body.classList.remove('scroll');
+			return;
+		}
+
+		document.body.classList.add('scroll');
+
+	});
+
+})();
