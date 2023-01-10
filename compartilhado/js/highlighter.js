@@ -9051,6 +9051,9 @@ const CSTypesToken = class CSTypesToken extends Token {
 				'Func',
 				'IEnumerable',
 				'IEnumerator',
+				'IObservable',
+				'IObserver',
+				'IDisposable',
 				'StringBuilder',
 				'Task',
 				'Thread',
@@ -9058,6 +9061,8 @@ const CSTypesToken = class CSTypesToken extends Token {
 
 				'Attribute',
 				'Queue',
+				'List',
+				'EventArgs',
 
 				'T',
 				'U',
