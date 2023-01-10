@@ -19187,7 +19187,9 @@ observableSubject.Subscribe(observer);
 <div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->using System.Collections.ObjectModel;
+>// C# observable collections
+
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
 void ObservableCollection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
@@ -19197,7 +19199,10 @@ void ObservableCollection_CollectionChanged(object? sender, NotifyCollectionChan
 
 var observableCollection = new ObservableCollection&lt;Subject&gt;();
 observableCollection.CollectionChanged += ObservableCollection_CollectionChanged;
-observableCollection.Add(new Subject());</code
+observableCollection.Add(new Subject());
+
+// C# also has an interface called INotifyPropertyChanged
+// but this one is more commonly used with UI components</code
 >
 </div>
 
