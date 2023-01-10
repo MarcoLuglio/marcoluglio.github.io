@@ -18995,10 +18995,209 @@ for (let resultado of animadorIterator) {
 </div>
 
 <div class='codeblock'>
+<p>C# - Subject.cs</p>
+<code class='cs'
+>// C# idiomatic (delegates)
+
+namespace ObserverPattern {
+
+	// delegate method signature for custom events
+	public delegate void DelegateHandler(Object sender, CustomEventArgs e);
+
+	public sealed class Subject {
+
+		// uses default method signature
+		public event EventHandler? StandardEventChanged;
+
+		// uses raw method signature
+		public event EventHandler&lt;CustomEventArgs&gt;? CustomEventChanged;
+
+		// uses delegate signature alias
+		public event DelegateHandler? DelegateChanged;
+
+		// the changed events will only have a value assigned
+		// when a delegate method is registered for them using +=
+		// which is why we always check for null before invoking it
+		// one way to avoid the null check is to use a strategy pattern
+
+		private void StandardInvoke() {
+			this.StandardEventChanged?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void CustomInvoke(int customProperty) {
+			var customEventArgs = new CustomEventArgs();
+			customEventArgs.CustomProperty = customProperty;
+			this.CustomEventChanged?.Invoke(this, customEventArgs);
+		}
+
+		private void DelegateInvoke(int customProperty) {
+			var customEventArgs = new CustomEventArgs();
+			customEventArgs.CustomProperty = customProperty;
+			this.DelegateChanged?.Invoke(this, customEventArgs);
+		}
+
+	}
+
+}</code
+>
+<p>C# - CustomEvent.cs</p>
+<code class='cs'
+>namespace ObserverPattern {
+	public sealed class CustomEventArgs : EventArgs {
+		public int CustomProperty { get; set; }
+	}
+}</code
+>
+<p>C# - Program.cs</p>
+<code class='cs'
+>using ObserverPattern;
+
+void Subject_Changed(object? sender, EventArgs e) {
+	Console.WriteLine(@"Event handler");
+}
+
+void Subject_CustomEventChanged(object? sender, CustomEventArgs e) {
+	Console.WriteLine(e.CustomProperty);
+}
+
+var subject = new Subject();
+
+subject.StandardEventChanged += Subject_Changed;
+subject.CustomEventChanged += Subject_CustomEventChanged;
+
+// using a lambda
+subject.CustomEventChanged += (object? sender, CustomEventArgs e) =&gt; {
+	Console.WriteLine(e.CustomProperty);
+};</code
+>
+</div>
+
+<div class='codeblock'>
+
+<p>C# - Observer.cs</p>
+<code class='cs'
+>// C# observer interfaces
+
+namespace ObserverPattern {
+
+	public sealed class Observer&lt;T&gt; : IObserver&lt;T&gt; {
+
+		#region IObserver&lt;T&gt; interface
+
+		public void OnCompleted() {
+			throw new NotImplementedException();
+		}
+
+		public void OnError(Exception error) {
+			throw new NotImplementedException();
+		}
+
+		public void OnNext(T value) {
+			Console.WriteLine(value);
+		}
+
+		#endregion
+
+	}
+
+}</code
+>
+
+<p>C# - Observable.cs</p>
+<code class='cs'
+>namespace ObserverPattern {
+
+	public sealed class Observable&lt;T&gt; : IObservable&lt;T&gt; {
+
+		List&lt;IObserver&lt;T&gt;&gt; observers;
+
+		public Observable() {
+			this.observers = new List&lt;IObserver&lt;T&gt;&gt;();
+		}
+
+		// this is what will broadcast the updates to observers
+		// it should be called whenever the value changes in the subject
+		// my be hard to fit this in a generic class
+		private void Invoke(T value) {
+			foreach (var observer in this.observers) {
+				observer.OnNext(value);
+			}
+		}
+
+		#region IObservable&lt;T&gt; interface
+
+		public IDisposable Subscribe(IObserver&lt;T&gt; observer) {
+
+			if (!this.observers.Contains(observer)) {
+				this.observers.Add(observer);
+			}
+
+			var unsubscriber = new Unsubscriber&lt;T&gt;(observers, observer);
+			return unsubscriber;
+
+		}
+
+		#endregion
+
+	}
+
+}</code
+>
+
+<p>C# - Unsubcriber.cs</p>
+<code class='cs'
+>namespace ObserverPattern {
+
+	internal sealed class Unsubscriber&lt;T&gt; : IDisposable {
+
+		private List&lt;IObserver&lt;T&gt;&gt; observers;
+		private IObserver&lt;T&gt; observer;
+
+		public Unsubscriber(List&lt;IObserver&lt;T&gt;&gt; observers, IObserver&lt;T&gt; observer) {
+			this.observers = observers;
+			this.observer = observer;
+		}
+
+		public void Dispose() {
+			if (!(this.observer == null)) {
+				this.observers.Remove(this.observer);
+			}
+		}
+
+	}
+
+}</code
+>
+
+<p>C# - Program.cs</p>
+<code class='cs'
+>// C# observable collections
+// usually used along UI
+
+using ObserverPattern;
+
+var observableSubject = new Observable&lt;Subject&gt;();
+var observer = new Observer&lt;Subject&gt;();
+observableSubject.Subscribe(observer);
+// call something on observableSubject that triggers invoke</code
+>
+
+</div>
+
+<div class='codeblock'>
 <p>C#</p>
 <code class='cs'
->
-</code
+>using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
+void ObservableCollection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
+	// get e.Action and collection indexes to
+	// find which items where added or removed
+}
+
+var observableCollection = new ObservableCollection&lt;Subject&gt;();
+observableCollection.CollectionChanged += ObservableCollection_CollectionChanged;
+observableCollection.Add(new Subject());</code
 >
 </div>
 
