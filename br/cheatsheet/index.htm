@@ -19006,34 +19006,67 @@ namespace ObserverPattern {
 
 	public sealed class Subject {
 
+		// there are many ways which we can define an event delegate function in C#
+
 		// uses default method signature
-		public event EventHandler? StandardEventChanged;
+		public event EventHandler StandardEventChanged = delegate {};
 
 		// uses raw method signature
-		public event EventHandler&lt;CustomEventArgs&gt;? CustomEventChanged;
+		public event EventHandler&lt;CustomEventArgs&gt; CustomEventChanged = delegate {};
 
 		// uses delegate signature alias
-		public event DelegateHandler? DelegateChanged;
+		public event DelegateHandler DelegateChanged = delegate {};
 
-		// the changed events will only have a value assigned
-		// when a delegate method is registered for them using +=
-		// which is why we always check for null before invoking it
-		// one way to avoid the null check is to use a strategy pattern
+		// Action used as alias for EventHandler signature
+		public event Action&lt;object?, CustomEventArgs&gt; ActionAliasEventChanged = (sender, e) =&gt; {};
+
+		// generic Action signature
+		public event Action&lt;int, bool&gt; GenericActionEventChanged = (value1, value2) => {};
+
+		// the “event” properties will only have values assigned if
+		// we init them with a lambda, anonymous delegate funtion,
+		// reference to a function or when a delegate method is
+		// registered for them using +=
+		// which is why we need to check for null before invoking it
+		// if we didn’t previously initialized them
+
+		// there’s also a couple of ways to call the registered delegates
+		// we can mix and match how we init and call them.
 
 		private void StandardInvoke() {
-			this.StandardEventChanged?.Invoke(this, EventArgs.Empty);
+			// call .Invoke (does not use reflection, DynimicInvoke does, however)
+			this.StandardEventChanged.Invoke(this, EventArgs.Empty);
 		}
 
 		private void CustomInvoke(int customProperty) {
+			// call ?.Invoke for checking if we have delegates
+			// before trying to execute them
+			// wouldn’t be necessary since we initilized the event
+			// with a lambda, but I’m leaving this as an example
 			var customEventArgs = new CustomEventArgs();
 			customEventArgs.CustomProperty = customProperty;
 			this.CustomEventChanged?.Invoke(this, customEventArgs);
 		}
 
 		private void DelegateInvoke(int customProperty) {
+			// call it as if it was a simple function
 			var customEventArgs = new CustomEventArgs();
 			customEventArgs.CustomProperty = customProperty;
-			this.DelegateChanged?.Invoke(this, customEventArgs);
+			this.DelegateChanged(this, customEventArgs);
+		}
+
+		private void ActionAliasInvoke(int customProperty) {
+			// check if we have delegates before trying to
+			// call them as a simple function
+			var customEventArgs = new CustomEventArgs();
+			customEventArgs.CustomProperty = customProperty;
+			if (this.ActionAliasEventChanged != null) {
+				this.ActionAliasEventChanged(this, customEventArgs);
+			}
+		}
+
+		private void GenericActionInvoke(int customProperty) {
+			this.GenericActionEventChanged.Invoke(1, true);
 		}
 
 	}
@@ -19060,10 +19093,20 @@ void Subject_CustomEventChanged(object? sender, CustomEventArgs e) {
 	Console.WriteLine(e.CustomProperty);
 }
 
+void Subject_ActionAliasEventChanged(object? sender, CustomEventArgs e) {
+	Console.WriteLine(e.CustomProperty);
+}
+
+void Subject_GenericActionEventChanged(int arg1, bool arg2) {
+	Console.WriteLine(arg1.ToString(), arg2);
+}
+
 var subject = new Subject();
 
 subject.StandardEventChanged += Subject_Changed;
 subject.CustomEventChanged += Subject_CustomEventChanged;
+subject.ActionAliasEventChanged += Subject_ActionAliasEventChanged;
+subject.GenericActionEventChanged += Subject_GenericActionEventChanged;
 
 // using a lambda
 subject.CustomEventChanged += (object? sender, CustomEventArgs e) =&gt; {
