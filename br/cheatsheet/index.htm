@@ -383,7 +383,7 @@ end.</code
 <div class='codeblock'>
 <p>F#</p>
 <code class='fs'
-></code
+>printfn "Olá Mundo"</code
 >
 </div>
 
@@ -1026,7 +1026,14 @@ bloco
 <div class='codeblock'>
 <p>F#</p>
 <code class='fs'
-></code
+>// linha
+
+(*
+bloco
+*)
+
+let someFunction (* bloco *) _x =
+    0</code
 >
 </div>
 
@@ -1231,9 +1238,7 @@ bloco
 
 <div class='codeblock'>
 <p>F#</p>
-<code class='fs'
-></code
->
+-
 </div>
 
 <div class='codeblock'>
@@ -2333,13 +2338,17 @@ minhaFuncao paramA = paramA * valorB
 <div class='codeblock'>
 <p>F#</p>
 <code class='fs'
-></code
+>let x = 0 // constante</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Web Assembly text format</p>
-
+<code class='webassembly'>(module
+	(memory $0 0)
+	i32.const 0
+)</code
+>
 </div>
 
 <div class='codeblock'>
