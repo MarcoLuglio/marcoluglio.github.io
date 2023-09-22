@@ -134,7 +134,7 @@ const buildScene = (sceneManager) => {
 	sceneManager.add(objectF5);
 	sceneManager.add(objectF6);
 
-	sceneManager.frame(objectB, false); // FIXME ver melhor maneira de verificar enquadramento inicial
+	sceneManager.frame(objectF, false); // FIXME ver melhor maneira de verificar enquadramento inicial
 	window.location.hash = '_biografia';
 
 };
