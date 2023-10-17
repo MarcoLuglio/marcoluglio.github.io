@@ -14522,6 +14522,7 @@ const AdaTypesToken = class AdaTypesToken extends Token {
 			type: {value: 'type'},
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'Boolean',
 				'range',
 				'Integer',
 				'integer',
@@ -16787,6 +16788,149 @@ const HaskellBlockCommentPatternIterator = class HaskellBlockCommentPatternItera
 
 // #endregion
 
+
+
+// #region LLVM lexer
+
+
+
+const LlvmLexer = class LlvmLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new LlvmKeywordToken()//,
+			// new LlvmTypesToken(),
+			// new LlvmPunctuationToken(),
+
+			// comments
+			// new SimulaLineCommentToken()
+
+		);
+
+		// this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+		// FIXME não pode ter espaço em branco na frente dele
+		//this._tokenPool.push(new HaskellSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	/*
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			//new HaskellNumericLiteralToken(),
+			new TempDecimalLiteralToken(),
+			new CStringLiteralToken()
+			//new HaskellStringLiteralToken()
+		);
+	}
+	*/
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+	/**
+	 * Gets last meaningful token
+	 * @param tokenSequence Sequence of tokens parsed so far by the lexer
+	 */
+	_getLastToken(tokenSequence) {
+
+		let lastToken = null;
+
+		for (let i = tokenSequence.length; i > 0; i--) {
+
+			lastToken = tokenSequence[i - 1];
+
+			if (!lastToken.ignore
+				&& lastToken.type !== 'whitespace'
+				&& lastToken.type !== 'endOfLine'
+				) {
+
+				return lastToken;
+			}
+
+		}
+
+		return null;
+
+	}
+
+};
+
+
+
+/**
+ * Token for LLVM instructions keywords
+ */
+ const LlvmKeywordToken = class LlvmKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'br',
+			'invoke',
+			'ret',
+			'switch',
+			'unwind',
+
+			'add',
+			'sub',
+			'mult',
+			'div',
+			'rem',
+			'setcc',
+
+			'and',
+			'or',
+			'xor',
+			'shl',
+			'shr',
+
+			'malloc',
+			'free',
+			'alloca',
+			'load',
+			'store',
+			'getelementptr',
+
+			'phi',
+			'cast',
+			'to',
+			'call',
+			'vanext',
+			'vaarg'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+// #endregion
 
 
 
