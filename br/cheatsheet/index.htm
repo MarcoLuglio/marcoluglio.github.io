@@ -3003,8 +3003,14 @@ int? k = null;
 <div class='codeblock'>
 <p>TypeScript</p>
 <code class='typescript'
->
-</code
+>// não existem tipos nullable
+// mas é possível declarar um union
+// que pode conter null e outros valores
+
+type NullableNumber = number | undefined | null;
+let k:NullableNumber = null;
+
+let n = l!.propriedade(); // somente em tempo de compilação</code
 >
 </div>
 
@@ -3316,7 +3322,6 @@ oitoOuOitenta = !oitoOuOitenta;
 
 // parse
 var toParse = "true";
-
 var parsed = Boolean.Parse(toParse);
 
 // ou
@@ -3345,8 +3350,12 @@ var parsed = toParse.toLowerCase() == 'true';</code
 <div class='codeblock'>
 <p>TypeScript</p>
 <code class='typescript'
->
-</code
+>// tipo Boolean
+let oitoOuOitenta:boolean = true;
+oitoOuOitenta = false;
+
+// converte para true
+oitoOuOitenta = !oitoOuOitenta;</code
 >
 </div>
 
@@ -3415,9 +3424,9 @@ var bNInfinity = new Boolean(-Infinity);</code
 <code class='python'
 ># tipo Boolean
 oitoOuOitenta = True
-oitoOuOitenta = False;
+oitoOuOitenta = False
 
-# converte para true
+# converte para True
 oitoOuOitenta = not oitoOuOitenta
 
 # falsy
@@ -3454,17 +3463,32 @@ objects for which
 <div class='codeblock'>
 <p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
 <code class='visualbasic'
->Dim oitoOuOitenta: oitoOuOitenta = True
+>
+Dim oitoOuOitenta: oitoOuOitenta = True
 oitoOuOitenta = False
 
-oitoOuOitenta = Not oitoOuOitenta</code
+' converte para True
+oitoOuOitenta = Not oitoOuOitenta
+
+' parse
+Dim toParse As String: toParse = "true"
+Dim parsed As Boolean: parsed = CBool(toParse)</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>-- Usa enums: type Boolean is (False, True);
+X:Boolean := True;
+X := False;
+
+-- converte para True
+X := not X;
+
+-- tricky due to letter casing
+ToParse: constant String := "True";
+Parsed:Boolean := Boolean'Value(ToParse);</code
 >
 </div>
 
@@ -3499,6 +3523,13 @@ oitoOuOitenta = Not oitoOuOitenta</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -31384,6 +31415,13 @@ ruby = JSON.parse(json)</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
