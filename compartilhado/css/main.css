@@ -648,7 +648,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.visualbasic .type,
 .bubaloop.ada .type,
 .bubaloop.objectpascal .type,
-.bubaloop.haskell .type {
+.bubaloop.haskell .type,
+.bubaloop.fs .type {
 	color: var(--types-light-color);
 }
 
@@ -680,7 +681,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.visualbasic strong .type,
 .bubaloop.highlight.ada strong .type,
 .bubaloop.highlight.objectpascal strong .type,
-.bubaloop.highlight.haskell strong .type {
+.bubaloop.highlight.haskell strong .type,
+.bubaloop.highlight.fs strong .type {
 	color: #8a008a;
 }
 
@@ -1337,7 +1339,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.visualbasic .type,
 	.bubaloop.ada .type,
 	.bubaloop.objectpascal .type,
-	.bubaloop.haskell .type {
+	.bubaloop.haskell .type,
+	.bubaloop.fs .type {
 		color: var(--types-dark-color);
 	}
 

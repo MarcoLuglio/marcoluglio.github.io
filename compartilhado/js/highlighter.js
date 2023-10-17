@@ -16812,6 +16812,7 @@ const FsLexer = class LlvmLexer extends Lexer {
 
 			// language
 			new FSKeywordToken(),
+			new FSTypesToken(),
 			new FSPunctuationToken(),
 
 			// comments
@@ -16887,6 +16888,78 @@ const FSKeywordToken = class FsKeywordToken extends SourceSimpleCharacterSequenc
 
 		Object.seal(this);
 
+	}
+
+};
+
+
+
+/**
+ * Token for F# types
+ */
+const FSTypesToken = class FSTypesToken extends Token {
+
+	constructor() {
+
+		super();
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			type: {value: 'type'},
+			_matchFunction: {value: context._matchTypesSequence, writable: true},
+			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+				'int'
+			])}
+		});
+
+		Object.seal(this);
+
+	}
+
+	/**
+	 * @param {String} matchCharacter
+	 * @param {Number} index Character index relative to the whole string being parsed
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+
+		if (!this._matchFunction(matchCharacter, index)) {
+			return;
+		}
+
+		if (!this._isInitialized) {
+			this._isInitialized = true;
+			this.begin = index;
+		}
+
+		this.characterSequence.push(matchCharacter);
+
+	}
+
+	_matchTypesSequence(matchCharacter, index) {
+
+		this._typesSequence.next(matchCharacter, index);
+
+		if (this._typesSequence.isComplete) {
+			return this._matchEnd(matchCharacter, index);
+		}
+
+		if (this._typesSequence.hasNext()) {
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/**
+	 * Indica que o pattern já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter, index) {
+		this._complete();
+		return false;
 	}
 
 };
