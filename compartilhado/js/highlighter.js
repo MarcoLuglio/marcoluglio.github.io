@@ -16029,7 +16029,7 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 			'let',
 			'let*',
 			'loop',
-			'nil',
+			'not',
 			'set',
 			// 'decf',
 			// 'incf',
@@ -16042,8 +16042,10 @@ const CommonLispKeywordToken = class CommonLispKeywordToken extends SourceSimple
 			'when',
 
 			// literals
-			'true',
-			'false',
+			// 'true',
+			// 'false',
+			// 't',
+			'nil',
 			'null'
 
 		]);
@@ -16781,6 +16783,250 @@ const HaskellBlockCommentPatternIterator = class HaskellBlockCommentPatternItera
  const HaskellBlockCommentToken = class HaskellBlockCommentToken extends SourcePatternIteratorToken {
 	constructor() {
 		super('comment blockComment', new HaskellBlockCommentPatternIterator());
+	}
+};
+
+
+
+// #endregion
+
+
+
+// #region F# lexer
+
+
+
+const FsLexer = class LlvmLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new FSKeywordToken(),
+			new FSPunctuationToken(),
+
+			// comments
+			new CLineCommentToken(),
+			new FSBlockCommentToken()
+
+		);
+
+		// this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+}
+
+
+
+/**
+ * Token for LLVM instructions keywords
+ */
+const FSKeywordToken = class FsKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'as',
+			'async',
+			'class',
+			'do',
+			'do!',
+			'end',
+			'elif',
+			'else',
+			'finally',
+			'for',
+			'fun',
+			'if',
+			'in',
+			'internal',
+			'let',
+			'let!',
+			'match',
+			'member',
+			'module',
+			'mutable',
+			'new',
+			'not',
+			'of',
+			'open',
+			'private',
+			'rec',
+			'return',
+			'then',
+			'try',
+			'type',
+			'use',
+			'with',
+
+			'true',
+			'false'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+const FSPunctuationToken = class CSPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			'.',
+			':',
+			';',
+			',',
+			'|>',
+			'|&gt;',
+			'->',
+			'-&gt;',
+			'<-',
+			'&lt;-',
+			'*',
+			'%',
+			'=',
+			'<>',
+			'&lt,&gt;',
+			'&&',
+			'&amp;&amp;',
+			'||',
+
+			'|',
+			'(',
+			')',
+			'[',
+			']',
+			'{',
+			'}'
+
+		]);
+
+	}
+
+};
+
+
+
+const FSBlockCommentPatternIterator = class FSBlockCommentPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_nestingLevel: {value: 0, writable: true}
+		});
+
+		this._matchFunction = this._matchBeginSlash;
+		Object.seal(this);
+
+	}
+
+	_matchBeginSlash(matchCharacter) {
+
+		if (matchCharacter === '(') {
+			this._matchFunction = this._matchBeginStar;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchBeginStar(matchCharacter) {
+
+		if (matchCharacter === '*') {
+			this._matchFunction = this._matchContent;
+			this._nestingLevel++;
+			return true;
+		}
+
+		if (this._nestingLevel > 0) {
+			this._matchFunction = this._matchContent;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContent(matchCharacter) {
+
+		if (matchCharacter === '(') {
+			this._matchFunction = this._matchBeginStar;
+		}
+
+		if (matchCharacter === '*') {
+			this._matchFunction = this._matchEndSlash;
+		}
+
+		return true;
+
+	}
+
+	_matchEndSlash(matchCharacter) {
+
+		if (matchCharacter === ')') {
+			this._nestingLevel--;
+			if (this._nestingLevel === 0) {
+				this._matchFunction = this._matchEnd;
+			} else {
+				this._matchFunction = this._matchContent;
+			}
+		} else if (matchCharacter === '*') {
+			// não fazer nada
+			// ou em outras palavras
+			// this._matchFunction = this._matchEndSlash;
+		} else {
+			this._matchFunction = this._matchContent;
+		}
+
+		return true;
+
+	}
+
+};
+
+/**
+ * Token for FS block comments
+ */
+ const FSBlockCommentToken = class FSBlockCommentToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('comment blockComment', new FSBlockCommentPatternIterator());
 	}
 };
 
@@ -18027,6 +18273,7 @@ export {
 	// SmalltalkLexer,
 	CommonLispLexer,
 	HaskellLexer,
+	FsLexer,
 	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/

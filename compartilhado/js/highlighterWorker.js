@@ -9,7 +9,7 @@ import {
 	JavaLexer,
 	CsLexer,
 	JavaScriptLexer,
-	// TypeScriptLexer,*/
+	// TypeScriptLexer,
 	DartLexer,
 	PythonLexer,
 	PhpLexer,
@@ -21,6 +21,7 @@ import {
 	//SmalltalkLexer,
 	CommonLispLexer,
 	HaskellLexer,
+	FsLexer,
 	/*AssemblyScriptLexer,
 	LLVMLexer,
 	AssemblyLexer,*/
@@ -134,6 +135,10 @@ self.onmessage = async function (message) {
 
 		case 'haskell':
 			lexerParser = new HaskellLexer();
+			break;
+
+		case 'fs':
+			lexerParser = new FsLexer();
 			break;
 
 		case 'licuid':

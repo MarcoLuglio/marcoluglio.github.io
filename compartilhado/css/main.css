@@ -510,7 +510,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.objectpascal .keyword,
 .bubaloop.smalltalk .keyword,
 .bubaloop.commonlisp .keyword,
-.bubaloop.haskell .keyword {
+.bubaloop.haskell .keyword,
+.bubaloop.fs .keyword {
 	color: var(--keywords-light-color);
 }
 
@@ -544,7 +545,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal .keyword,
 .bubaloop.highlight.smalltalk .keyword,
 .bubaloop.highlight.commonlisp .keyword,
-.bubaloop.highlight.haskell .keyword {
+.bubaloop.highlight.haskell .keyword,
+.bubaloop.highlight.fs .keyword {
 	/*color: var(--highlight-keywords-light-color);*/
 }
 
@@ -578,7 +580,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.objectpascal .number,
 .bubaloop.smalltalk .number,
 .bubaloop.commonlisp .number,
-.bubaloop.haskell .number {
+.bubaloop.haskell .number,
+.bubaloop.fs .number {
 	color: var(--numbers-light-color);
 }
 
@@ -612,7 +615,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.objectpascal .boolean,
 .bubaloop.smalltalk .boolean,
 .bubaloop.commonlisp .boolean,
-.bubaloop.haskell .boolean {
+.bubaloop.haskell .boolean,
+.bubaloop.fs .boolean {
 	color: var(--boolean-light-color);
 }
 
@@ -710,7 +714,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.objectpascal .operator,
 .bubaloop.smalltalk .operator,
 .bubaloop.commonlisp .operator,
-.bubaloop.haskell .operator {
+.bubaloop.haskell .operator,
+.bubaloop.fs .operator {
 	color: var(--punctuation-light-color);
 }
 
@@ -744,7 +749,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal strong .operator,
 .bubaloop.highlight.smalltalk strong .operator,
 .bubaloop.highlight.commonlisp strong .operator,
-.bubaloop.highlight.haskell strong .operator {
+.bubaloop.highlight.haskell strong .operator,
+.bubaloop.highlight.fs strong .operator {
 	color: #505B66;
 }
 
@@ -800,7 +806,9 @@ div.codeblock.bubaloop p + code {
 .bubaloop.commonlisp .comment,
 .bubaloop.commonlisp .comment a,
 .bubaloop.haskell .comment,
-.bubaloop.haskell .comment a {
+.bubaloop.haskell .comment a,
+.bubaloop.fs .comment,
+.bubaloop.fs .comment a {
 	color: var(--comments-light-color);
 }
 
@@ -859,7 +867,9 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.commonlisp strong .comment,
 .bubaloop.highlight.commonlisp strong .comment a,
 .bubaloop.highlight.haskell strong .comment,
-.bubaloop.highlight.haskell strong .comment a {
+.bubaloop.highlight.haskell strong .comment a,
+.bubaloop.highlight.fs strong .comment,
+.bubaloop.highlight.fs strong .comment a {
 	color: #ffffff;
 }
 
@@ -909,7 +919,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.objectpascal .string,
 .bubaloop.smalltalk .string,
 .bubaloop.commonlisp .string,
-.bubaloop.haskell .string {
+.bubaloop.haskell .string,
+.bubaloop.fs .string {
 	color: var(--strings-light-color);
 }
 
@@ -943,7 +954,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal strong .string,
 .bubaloop.highlight.smalltalk strong .string,
 .bubaloop.highlight.commonlisp strong .string,
-.bubaloop.highlight.haskell strong .string {
+.bubaloop.highlight.haskell strong .string,
+.bubaloop.highlight.fs strong .string {
 	color: #ffffff;
 }
 
@@ -1187,7 +1199,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.objectpascal .keyword,
 	.bubaloop.smalltalk .keyword,
 	.bubaloop.commonlisp .keyword,
-	.bubaloop.haskell .keyword {
+	.bubaloop.haskell .keyword,
+	.bubaloop.fs .keyword {
 		color: var(--keywords-dark-color);
 	}
 
@@ -1221,7 +1234,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.objectpascal .keyword,
 	.bubaloop.highlight.smalltalk .keyword,
 	.bubaloop.highlight.commonlisp .keyword,
-	.bubaloop.highlight.haskell .keyword {
+	.bubaloop.highlight.haskell .keyword,
+	.bubaloop.highlight.fs .keyword {
 		/*color: var(--highlight-keywords-dark-color);*/
 	}
 
@@ -1255,7 +1269,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.objectpascal .number,
 	.bubaloop.smalltalk .number,
 	.bubaloop.commonlisp .number,
-	.bubaloop.haskell .number {
+	.bubaloop.haskell .number,
+	.bubaloop.fs .number {
 		color: var(--numbers-dark-color);
 	}
 
@@ -1289,7 +1304,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.objectpascal .boolean,
 	.bubaloop.smalltalk .boolean,
 	.bubaloop.commonlisp .boolean,
-	.bubaloop.haskell .boolean {
+	.bubaloop.haskell .boolean,
+	.bubaloop.fs .boolean {
 		color: var(--boolean-dark-color);
 	}
 
@@ -1387,7 +1403,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.objectpascal .operator,
 	.bubaloop.smalltalk .operator,
 	.bubaloop.commonlisp .operator,
-	.bubaloop.haskell .operator {
+	.bubaloop.haskell .operator,
+	.bubaloop.fs .operator {
 		color: var(--punctuation-dark-color);
 	}
 
@@ -1421,7 +1438,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.objectpascal strong .operator,
 	.bubaloop.highlight.smalltalk strong .operator,
 	.bubaloop.highlight.commonlisp strong .operator,
-	.bubaloop.highlight.haskell strong .operator {
+	.bubaloop.highlight.haskell strong .operator,
+	.bubaloop.highlight.fs strong .operator {
 		color: #505B66;
 	}
 
@@ -1477,7 +1495,9 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.commonlisp .comment,
 	.bubaloop.commonlisp .comment a,
 	.bubaloop.haskell .comment,
-	.bubaloop.haskell .comment a {
+	.bubaloop.haskell .comment a,
+	.bubaloop.fs .comment,
+	.bubaloop.fs .comment a {
 		color: var(--comments-dark-color);
 	}
 
@@ -1536,7 +1556,9 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.commonlisp strong .comment,
 	.bubaloop.highlight.commonlisp strong .comment a,
 	.bubaloop.highlight.haskell strong .comment,
-	.bubaloop.highlight.haskell strong .comment a {
+	.bubaloop.highlight.haskell strong .comment a,
+	.bubaloop.highlight.fs strong .comment,
+	.bubaloop.highlight.fs strong .comment a {
 		color: #ffffff;
 	}
 
@@ -1586,7 +1608,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.objectpascal .string,
 	.bubaloop.smalltalk .string,
 	.bubaloop.commonlisp .string,
-	.bubaloop.haskell .string {
+	.bubaloop.haskell .string,
+	.bubaloop.fs .string {
 		color: var(--strings-dark-color);
 	}
 
@@ -1620,7 +1643,8 @@ div.codeblock.bubaloop p + code {
 	.bubaloop.highlight.objectpascal strong .string,
 	.bubaloop.highlight.smalltalk strong .string,
 	.bubaloop.highlight.commonlisp strong .string,
-	.bubaloop.highlight.haskell strong .string {
+	.bubaloop.highlight.haskell strong .string,
+	.bubaloop.highlight.fs strong .string {
 		color: #ffffff;
 	}
 
@@ -2068,7 +2092,7 @@ div.codeblock.bubaloop p + code {
 
 }
 
-/* Visual Basic, Ada, Object Pascal, Smalltalk, Common Lisp, Haskell */
+/* Visual Basic, Ada, Object Pascal, Smalltalk, Common Lisp, Haskell, F# */
 
 /*
 .bubaloop.highlight.visualbasic strong,
@@ -2076,7 +2100,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal strong,
 .bubaloop.highlight.smalltalk strong,
 .bubaloop.highlight.commonlisp strong,
-.bubaloop.highlight.haskell strong {
+.bubaloop.highlight.haskell strong,
+.bubaloop.highlight.fs strong {
 	color: #101010;
 	background-color: hsl(195, 100%, 50%);
 	box-shadow: 0 0 0 6px hsl(195, 100%, 50%); /* h v blur spread color * /
@@ -2089,7 +2114,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal strong.small,
 .bubaloop.highlight.smalltalk strong.small,
 .bubaloop.highlight.commonlisp strong.small,
-.bubaloop.highlight.haskell strong.small {
+.bubaloop.highlight.haskell strong.small,
+.bubaloop.highlight.fs strong.small {
 	box-shadow: 0 0 0 4px hsl(195, 100%, 50%); /* h v blur spread color * /
 }
 
@@ -2098,7 +2124,8 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.objectpascal strong.comment,
 .bubaloop.highlight.smalltalk strong.comment,
 .bubaloop.highlight.commonlisp strong.comment,
-.bubaloop.highlight.haskell strong.comment {
+.bubaloop.highlight.haskell strong.comment,
+.bubaloop.highlight.fs strong.comment {
 	background-color: #D10077;
 	box-shadow: 0 0 0 6px #D10077; /* h v blur spread color * /
 	z-index: 1;
