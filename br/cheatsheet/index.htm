@@ -2544,6 +2544,13 @@ list($x, $y) = [1, 2];
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 
 </div>
@@ -2807,6 +2814,13 @@ var 你好 = "你好世界";</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 
 </div>
@@ -2964,6 +2978,15 @@ int a = null; // erro
 Integer k = null;
 AClass l = null;
 Integer m = (l != null) ? l.propriedade : null;
+
+// Lombok possui a anotação
+@NonNull
+Integer k = 0;
+
+// IntelliJ e Eclipse possuem uma anotação para auxiliar
+// na checagem de nullables
+@NotNull
+Integer k = 0;
 
 // não possui operador específico para null
 int n = (k != null) ? k : 10; // n aceita ser do tipo int ou Integer</code
@@ -3127,7 +3150,9 @@ k = nil</code
 <p>Common Lisp</p>
 <code class='commonlisp'
 >nil
-()</code
+()
+
+;; thereʼs also null, which contains nil…</code
 >
 </div>
 
@@ -3157,6 +3182,13 @@ h x = case f x of
 h'::Int -&gt; Maybe Int
 h' x = do n &lt;- f x
 		  g n</code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
 >
 </div>
 
@@ -3502,9 +3534,28 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>Ruby</p>
 <code class='ruby'
-></code
->
-</div>
+>oitoOuOitenta = true
+oitoOuOitenta = false
+
+# converte para true
+oitoOuOitenta = !oitoOuOitenta
+oitoOuOitenta = (not oitoOuOitenta)
+
+# lame…
+toParse = "true"
+parsed = toParse.to_s.downcase == "true"
+
+
+# falsy
+
+# false
+# nil
+
+
+# truthy
+
+# everything else</code
+></div>
 
 <div class='codeblock'>
 <p>Smalltalk</p>
@@ -3516,7 +3567,23 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>Common Lisp</p>
 <code class='commonlisp'
-></code
+>;; t is true and nil is false
+(let((oitoOuOitenta t))
+	(setq oitoOuOitenta nil)
+
+	;; converte para t
+	(setq oitoOuOitenta (not oitoOuOitenta))
+	;; or (null) instead of (not)
+
+	;; lame…
+	(let(
+		(toParse "True")
+		parsed
+		)
+
+		(setq parsed (string-equal toParse "true"))
+	)
+)</code
 >
 </div>
 
@@ -3530,7 +3597,22 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>F#</p>
 <code class='fs'
-></code
+>// idiomatic
+// TODO
+let IfThenElseExpression aBool =
+let result = if aBool then 42 else 0
+			 // note that the else case must be specified
+printfn "result=%i" result
+
+// statements + mutable
+let mutable oitoOuOitenta = true
+oitoOuOitenta &lt;- false
+
+// converte para true
+oitoOuOitenta &lt;- not false
+
+// parse
+// TODO</code
 >
 </div>
 
@@ -3911,6 +3993,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -4252,6 +4341,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -4483,6 +4579,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -4806,6 +4909,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -4992,6 +5102,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -5217,6 +5334,13 @@ Parsed:Boolean := Boolean'Value(ToParse);</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -5502,6 +5626,13 @@ JavaScript só possui um tipo numérico.</p>
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -5897,6 +6028,13 @@ var u1:uint = 2147483648;</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -6132,6 +6270,13 @@ var d6 = .7;</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -6459,6 +6604,13 @@ var x1 = -0X0123456789ABCDEF;</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -6654,6 +6806,13 @@ var p2 = 00.1;               </code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -7114,6 +7273,13 @@ var divisao4 = (i32_2 as Number) / i32_1; // 2 (Number)</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
@@ -7313,6 +7479,13 @@ private void recebeByte(byte numero) {
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -7542,6 +7715,13 @@ parseFloat('3.14some non-digit characters'); // 3.14</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -11479,6 +11659,13 @@ if not condition1
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
@@ -11764,6 +11951,13 @@ end</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
 ></code
@@ -12030,6 +12224,13 @@ Next</code
 >
 </div>
 
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
 </div>
 
 <h3 id='foreachrange'>for each + ranges</h3>
@@ -12194,6 +12395,13 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -12377,6 +12585,13 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -12935,6 +13150,13 @@ End Select</code
 </div>
 
 <div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
 <p>Web Assembly text format</p>
 
 </div>
@@ -13483,6 +13705,13 @@ superior &method(:retorno)</code
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
 ></code
 >
 </div>
@@ -21508,8 +21737,12 @@ public class C {
 <div class='codeblock'>
 <p>TypeScript</p>
 <code class='typescript'
->
-</code
+>/// &lt;reference path="…" /&gt;
+/// &lt;reference types="…" /&gt;
+/// &lt;reference lib="…" /&gt;
+/// &lt;reference no-default-lib="true" /&gt;
+/// &lt;amd-module /&gt;
+/// &lt;amd-dependency /&gt;</code
 >
 </div>
 
