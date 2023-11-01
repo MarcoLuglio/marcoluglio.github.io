@@ -30,6 +30,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 		'commonlisp',
 		'haskell',
 		'fs',
+		'llvm',
 		'licuid',
 		//'sql',
 		'webassembly',

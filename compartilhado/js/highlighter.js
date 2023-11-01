@@ -16796,7 +16796,7 @@ const HaskellBlockCommentPatternIterator = class HaskellBlockCommentPatternItera
 
 
 
-const FsLexer = class LlvmLexer extends Lexer {
+const FsLexer = class FsLexer extends Lexer {
 
 	constructor() {
 		super();
@@ -16841,7 +16841,7 @@ const FsLexer = class LlvmLexer extends Lexer {
 
 
 /**
- * Token for LLVM instructions keywords
+ * Token for F# instructions keywords
  */
 const FSKeywordToken = class FsKeywordToken extends SourceSimpleCharacterSequenceToken {
 
@@ -17128,11 +17128,12 @@ const LlvmLexer = class LlvmLexer extends Lexer {
 			this._tokenPool.length,
 
 			// language
-			new LlvmKeywordToken()//,
-			// new LlvmTypesToken(),
-			// new LlvmPunctuationToken(),
+			new LlvmKeywordToken(),
+			new LlvmTypesToken(),
+			new LlvmPunctuationToken(),
 
 			// comments
+			new CommonLispLineCommentToken()
 			// new SimulaLineCommentToken()
 
 		);
@@ -17206,11 +17207,32 @@ const LlvmLexer = class LlvmLexer extends Lexer {
 	constructor() {
 		super('keyword', [
 
+			'external',
+			'global',
+			'private',
+
+			'asm',
 			'br',
+			'byval',
+			'callbr',
+			'catchswitch',
+			'catchret',
+			'cleanupret',
+			'declare',
+			'define',
+			'indirectbr',
 			'invoke',
+			'prefix',
+			'resume',
 			'ret',
+			'sret',
 			'switch',
+			'unreachable',
 			'unwind',
+
+			'constant',
+			'noalias',
+			'nocapture',
 
 			'add',
 			'sub',
@@ -17231,17 +17253,182 @@ const LlvmLexer = class LlvmLexer extends Lexer {
 			'load',
 			'store',
 			'getelementptr',
+			'gc',
 
-			'phi',
-			'cast',
-			'to',
+			'alignstack',
 			'call',
+			'cast',
+			'inteldialect',
+			'metadata',
+			'phi',
+			'sideeffect',
+			'to',
+			'vaarg',
 			'vanext',
-			'vaarg'
+
+			'true',
+			'false',
+			'none',
+			'null',
+			'undef'
 
 		]);
 
 		Object.seal(this);
+
+	}
+
+};
+
+
+
+const LlvmTypesToken = class LlvmTypesToken extends Token {
+
+	constructor() {
+
+		super();
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			type: {value: 'type'},
+			_matchFunction: {value: context._matchTypesSequence, writable: true},
+			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
+
+				'half',
+				'bfloat',
+				'float',
+				'double',
+				'f128',
+				'x86_fp80',
+				'ppc_fp128',
+
+				// iN - any bit width from 1 bit to 223(about 8 million) can be specified.
+				'i1',
+				'i8',
+				'i16',
+				'i32',
+				'i64',
+
+				'x86_amx',
+				'x86_mmx',
+
+				'label',
+				'metadata',
+				'ptr',
+				'token',
+				'void'
+
+			])}
+		});
+
+		Object.seal(this);
+
+	}
+
+	/**
+	 * @param {String} matchCharacter
+	 * @param {Number} index Character index relative to the whole string being parsed
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+
+		if (!this._matchFunction(matchCharacter, index)) {
+			return;
+		}
+
+		if (!this._isInitialized) {
+			this._isInitialized = true;
+			this.begin = index;
+		}
+
+		this.characterSequence.push(matchCharacter);
+
+	}
+
+	_matchTypesSequence(matchCharacter, index) {
+
+		this._typesSequence.next(matchCharacter, index);
+
+		if (this._typesSequence.isComplete) {
+			this._matchFunction = this._matchEnd;
+			return this._matchFunction(matchCharacter);
+		}
+
+		if (this._typesSequence.hasNext()) {
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	/*_matchTypeOperator(matchCharacter, index) {
+
+		if (matchCharacter === '?') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		} else if (matchCharacter === '*') {
+			return true;
+		} else if (matchCharacter === '[') {
+			this._matchFunction = this._matchCommaOrEndBracket;
+			return true;
+		}
+
+		return this._matchEnd(matchCharacter, index);
+
+	}
+
+	_matchCommaOrEndBracket(matchCharacter, index) {
+
+		if (matchCharacter === ']') {
+			this._matchFunction = this._matchTypeOperator;
+			return true;
+		}
+
+		if (matchCharacter === ',') {
+			//
+			return true;
+		}
+
+		return this._matchEnd(matchCharacter, index);// FIXME separar num outro token, pra reconhecer int e int[] mas não int[
+
+	}*/
+
+	/**
+	 * Indica que o pattern já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter, index) {
+		this._complete();
+		return false;
+	}
+
+};
+
+
+
+const LlvmPunctuationToken = class LlvmPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			';',
+			',',
+			'x',
+			'!',
+			'=',
+			'(',
+			')',
+			'[',
+			']',
+			'<',
+			'>',
+			'{',
+			'}'
+
+		]);
 
 	}
 
@@ -18347,9 +18534,9 @@ export {
 	CommonLispLexer,
 	HaskellLexer,
 	FsLexer,
-	/*AssemblyScriptLexer,
-	LLVMLexer,
-	AssemblyLexer,*/
+	//AssemblyScriptLexer,
+	LlvmLexer,
+	//AssemblyLexer,
 	LicuidLexerParser,
 	LicuidSyntacticParser,
 	LicuidSemanticParser,

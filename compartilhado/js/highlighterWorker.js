@@ -22,9 +22,9 @@ import {
 	CommonLispLexer,
 	HaskellLexer,
 	FsLexer,
-	/*AssemblyScriptLexer,
-	LLVMLexer,
-	AssemblyLexer,*/
+	//AssemblyScriptLexer,
+	LlvmLexer,
+	//AssemblyLexer,
 	LicuidLexerParser,
 	LicuidSyntacticParser,
 	LicuidSemanticParser,
@@ -139,6 +139,10 @@ self.onmessage = async function (message) {
 
 		case 'fs':
 			lexerParser = new FsLexer();
+			break;
+
+		case 'llvm':
+			lexerParser = new LlvmLexer();
 			break;
 
 		case 'licuid':
