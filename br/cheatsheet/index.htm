@@ -391,21 +391,21 @@ end.</code
 
 	<p>Web Assembly text format - main.wasm</p>
 	<code class='webassembly'
->(<span class='keyword'>module</span>
+>(module
 
-	<span class='comment'>;; web assembly does not interact with the DOM</span>
-	<span class='comment'>;; so we must import certain browser functions</span>
-	(<span class='keyword'>import</span> <span class='string'>"console"</span> <span class='string'>"log"</span> (<span class='keyword'>func</span> <span class='symbol'>$log</span> (<span class='keyword'>param</span> <span class='type'>i32</span> <span class='type'>i32</span>)))
-	(<span class='keyword'>import</span> <span class='string'>"js"</span> <span class='string'>"mem"</span> (<span class='keyword'>memory</span> <span class='number'>1</span>))
+	;; web assembly does not interact with the DOM
+	;; so we must import certain browser functions
+	(import "console" "log" (func $log (param i32 i32)))
+	(import "js" "mem" (memory 1))
 
-	(<span class='keyword'>data</span> (<span class='type'>i32</span>.const <span class='number'>0</span>)
-		<span class='string'>"Hello World"</span>
+	(data (i32.const 0)
+		"Hello World"
 	)
 
-	(<span class='keyword'>func</span> (<span class='keyword'>export</span> <span class='string'>"main"</span>)
-		<span class='type'>i32</span>.const <span class='number'>0</span> <span class='comment'>;; pass offset 0 to log</span>
-		<span class='type'>i32</span>.const <span class='number'>11</span> <span class='comment'>;; pass length 11 to log</span>
-		<span class='keyword'>call</span> <span class='symbol'>$log</span>
+	(func (export "main")
+		i32.const 0 ;; pass offset 0 to log
+		i32.const 11 ;; pass length 11 to log
+		call $log
 	)
 
 )</code
@@ -1040,8 +1040,7 @@ let someFunction (* bloco *) _x =
 <div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
-><span class='comment'>;; linha</span>
-</code
+>;; linha</code
 >
 </div>
 
@@ -3205,10 +3204,10 @@ let monad = Maybe(x)
 <div class='codeblock'>
 <p>Web Assembly text format</p>
 <code class='webassembly'
-><span class='operator'>(</span><span class='keyword'>module</span>
-	<strong><span class='operator'>(</span><span class='keyword'>memory</span> <span class='symbol'>$k</span> <span class='number'>0</span><span class='operator'>)</span></strong>
-	<span class='operator'>(</span><span class='keyword'>export</span> <span class='string'>"memory"</span> <span class='operator'>(</span><span class='keyword'>memory</span> <span class='symbol'>$k</span><span class='operator'>)</span><span class='operator'>)</span>
-<span class='operator'>)</span></code
+>(module
+	<strong>(memory $k 0)</strong>
+	(export "memory" (memory $k))
+)</code
 >
 </div>
 
