@@ -23,6 +23,7 @@ import {
 	HaskellLexer,
 	FsLexer,
 	//AssemblyScriptLexer,
+	WebAssemblyLexer,
 	LlvmLexer,
 	//AssemblyLexer,
 	LicuidLexerParser,
@@ -139,6 +140,10 @@ self.onmessage = async function (message) {
 
 		case 'fs':
 			lexerParser = new FsLexer();
+			break;
+
+		case 'webassembly':
+			lexerParser = new WebAssemblyLexer();
 			break;
 
 		case 'llvm':

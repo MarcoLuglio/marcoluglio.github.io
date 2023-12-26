@@ -30,12 +30,11 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 		'commonlisp',
 		'haskell',
 		'fs',
-		'llvm',
-		'licuid',
 		//'sql',
 		'webassembly',
 		'llvm',
-		'assembly'
+		'assembly',
+		'licuid'
 	];
 
 	const blocosDeCodigo = [];
@@ -117,7 +116,7 @@ import { HighlightEnhancer } from '../../../compartilhado/js/highlightEnhancer.j
 
 	window.addEventListener('scroll', evento => {
 
-		if (window.pageYOffset <= 1080) { // TODO magic constant...
+		if (window.pageYOffset <= 1080) { // TODO magic constant for the page height...
 			document.body.classList.remove('scroll');
 			return;
 		}

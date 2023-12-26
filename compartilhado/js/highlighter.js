@@ -17109,6 +17109,345 @@ const FSBlockCommentPatternIterator = class FSBlockCommentPatternIterator extend
 
 
 
+// #region WebAssembly lexer
+
+const WebAssemblyLexer = class WebAssemblyLexer extends Lexer {
+
+	constructor() {
+		super();
+		Object.seal(this);
+	}
+
+	_resetTokens(tokenSequence) {
+
+		this._tokenPool.splice(
+
+			0,
+			this._tokenPool.length,
+
+			// language
+			new WebAssemblyKeywordToken(),
+			new WebAssemblyPunctuationToken(),
+
+			// comments
+			new WebAssemblyLineCommentToken()//,
+
+			// new CDirectiveToken()
+
+		);
+
+		this._pushLiteralTokens();
+		this._pushInvisibleTokens();
+
+		this._tokenPool.push(new WebAssemblySymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+
+	}
+
+	_pushLiteralTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			//new WebAssemblyDecimalLiteralToken(),
+			new TempDecimalLiteralToken(),
+			//new WebAssemblyNumericLiteralToken(),
+			new WebAssemblyStringLiteralToken()
+		);
+	}
+
+	_pushInvisibleTokens() {
+		this._tokenPool.splice(
+			this._tokenPool.length,
+			0,
+			new HtmlEmphasisToken(),
+			new WhitespaceToken(),
+			new EndOfLineToken()
+		);
+	}
+
+};
+
+
+
+const WebAssemblyKeywordToken = class WebAssemblyKeywordToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('keyword', [
+
+			'module',
+			'import',
+			'export',
+			'data',
+			'memory',
+			'global',
+			'func',
+			'param',
+			'mut',
+			'start',
+			'if',
+			'br_if',
+			'then',
+			'else',
+			'call',
+			'loop'
+
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+const WebAssemblyPunctuationToken = class WebAssemblyPunctuationToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+
+		super('operator', [
+
+			'(',
+			')',
+			'.'
+
+		]);
+
+	}
+
+};
+
+
+
+const WebAssemblyLineCommentPatternIterator = class WebAssemblyLineCommentPatternIterator extends SourcePatternIterator {
+
+	constructor() {
+		super();
+		this._matchFunction = this._matchSemiColon;
+		Object.seal(this);
+	}
+
+	_matchSemiColon(matchCharacter) {
+		if (matchCharacter === ';') { // FIXME needs ;;
+			this._matchFunction = this._matchSameLine;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSameLine(matchCharacter) {
+		this._isComplete = true;
+		// any except line break
+		if (this._matchLineBreak(matchCharacter)) {
+			return this._matchEnd(matchCharacter);
+		}
+		return true;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+/**
+ * Token for WebAssembly line comments
+ */
+ const WebAssemblyLineCommentToken = class WebAssemblyLineCommentToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('comment lineComment', new WebAssemblyLineCommentPatternIterator());
+	}
+};
+
+
+
+const WebAssemblyStringPatternIterator = class WebAssemblyStringPatternIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartQuote, writable: true},
+			_isEscaped: {value: false, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter) {
+		return this._matchFunction(matchCharacter);
+	}
+
+	_matchStartQuote(matchCharacter) {
+
+		if (matchCharacter === '"') {
+			this._matchFunction = this._matchContentOrEndQuote;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndQuote(matchCharacter) {
+
+		let isLineBreak = this._matchLineBreak(matchCharacter);
+
+		if (this._isEscaped && !isLineBreak) { // line break não é escapável em c#
+			this._isEscaped = false;
+			return true;
+		}
+
+		if (matchCharacter === '\\') {
+			this._isEscaped = true;
+			return true;
+		}
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '"'
+			|| isLineBreak
+			) {
+
+			this._matchFunction = this._matchEnd;
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+	_matchLineBreak(matchCharacter) {
+
+		if (matchCharacter === '\n'
+			|| matchCharacter === '\r'
+			|| matchCharacter === '\u2028'
+			|| matchCharacter === '\u2029'
+			|| matchCharacter === null // EOF
+			) {
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+};
+
+
+
+const WebAssemblyStringLiteralToken = class WebAssemblyStringLiteralToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('string', new WebAssemblyStringPatternIterator());
+	}
+};
+
+
+
+const WebAssemblySymbolToken = class WebAssemblySymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new WebAssemblySymbolIterator());
+	}
+};
+
+
+
+const WebAssemblySymbolIterator = class WebAssemblySymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchBeginningValidCharacter;
+
+	}
+
+	_matchBeginningValidCharacter(matchCharacter) {
+
+
+		if (matchCharacter === '$') {
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			//|| matchCharacter === '@' // confirmar isso
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+// #endregion
+
+
+
 // #region LLVM lexer
 
 
@@ -17638,9 +17977,38 @@ const LicuidLexerParser = class LicuidLexerParser {
 				0,
 				this._tokenPool.length,
 
-				new LicuidNumberFormatToken(),
+				new LicuidDecimalBaseToken(),
 				new LicuidStringI18nToken(),
-				// new LicuidTypeValueToken(),
+				new LicuidNumberSpecToken(),
+
+				// language
+				new LicuidKeywordToken(),
+				new LicuidTypeSpecToken(),
+				new LicuidAssignmentToken(),
+				new LicuidPunctuationToken(),
+				new LicuidMetaToken(),
+
+				// comments
+				new CLineCommentToken(),
+				new NestedBlockCommentToken()
+
+			);
+
+			this._pushLiteralTokens();
+			this._pushInvisibleTokens();
+
+		// base or range right after number
+		} else if (this._lastToken !== null
+			&& this._lastToken.type === 'number'
+			) {
+
+			this._tokenPool.splice(
+
+				0,
+				this._tokenPool.length,
+
+				new LicuidDecimalBaseToken(),
+				new LicuidNumberSpecToken(),
 
 				// language
 				new LicuidKeywordToken(),
@@ -17982,15 +18350,18 @@ const LicuidDecimalPatternIterator = class LicuidDecimalPatternIterator extends 
 
 
 
-const LicuidNumberFormatToken = class LicuidNumberFormatToken extends SourcePatternIteratorToken {
+/**
+ * Token for licuid decimal numbers base (2, 8, 10, 12, etc.)
+ */
+const LicuidDecimalBaseToken = class LicuidDecimalBaseToken extends SourcePatternIteratorToken {
 	constructor() {
-		super('typeValue', new LicuidNumberFormatIterator());
+		super('numberBase', new LicuidDecimalBaseIterator());
 	}
 };
 
 
 
-const LicuidNumberFormatIterator = class LicuidNumberFormatIterator {
+const LicuidDecimalBaseIterator = class LicuidDecimalBaseIterator {
 
 	constructor() {
 
@@ -18175,6 +18546,89 @@ const LicuidStringPatternIterator = class LicuidStringPatternIterator {
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Indica que a string já terminou no caractere anterior
+	 */
+	_matchEnd(matchCharacter) {
+		this._hasNext = false;
+		this._isComplete = true;
+		return false;
+	}
+
+};
+
+
+
+const LicuidNumberSpecToken = class LicuidNumberSpecToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('numberDetails', new LicuidNumberSpecIterator());
+	}
+};
+
+
+
+const LicuidNumberSpecIterator = class LicuidNumberSpecIterator {
+
+	constructor() {
+
+		const context = this;
+
+		Object.defineProperties(this, {
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_hasNext: {value: true, writable: true},
+			_isComplete: {value: false, writable: true},
+			_matchFunction: {value: context._matchStartBrace, writable: true}
+		});
+
+		Object.seal(this);
+
+	}
+
+	get isComplete() {
+		return this._isComplete;
+	}
+
+	hasNext() {
+		return this._hasNext;
+	}
+
+	/**
+	 * @retuns {Boolean} true se o caractere match, false se não
+	 */
+	next(matchCharacter, index) {
+		return this._matchFunction(matchCharacter, index);
+	}
+
+	_matchStartBrace(matchCharacter) {
+
+		if (matchCharacter === '{') {
+			this._matchFunction = this._matchContentOrEndBrace;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchContentOrEndBrace(matchCharacter) {
+
+		if (this._isLetterCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		// encontrou o caractere final
+		// passa para a próxima função de match só pra fechar
+		// no próximo next
+		if (matchCharacter === '}') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		return false;
 
 	}
 
@@ -18534,8 +18988,9 @@ export {
 	CommonLispLexer,
 	HaskellLexer,
 	FsLexer,
-	//AssemblyScriptLexer,
+	WebAssemblyLexer,
 	LlvmLexer,
+	//AssemblyScriptLexer,
 	//AssemblyLexer,
 	LicuidLexerParser,
 	LicuidSyntacticParser,
