@@ -11678,7 +11678,27 @@ if not condition1
 <div class='codeblock'>
 <p>Web Assembly text format - main.wasm</p>
 <code class='webassembly'
-></code
+>i32.const 0 ;; change to positive number (true) if you want to run the if block
+(if
+	(then
+		i32.const 1
+		call $log ;; should log '1'
+	)
+	(else
+		i32.const 0
+		call $log ;; should log '0'
+	)
+)
+
+;; ou usar a instrução br
+
+(loop $my_loop
+	;; if $i is less than 10 branch to loop
+	global.get $i
+	i32.const 10
+	i32.lt_s
+	br_if $my_loop
+)</code
 >
 </div>
 
