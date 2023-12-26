@@ -17127,6 +17127,7 @@ const WebAssemblyLexer = class WebAssemblyLexer extends Lexer {
 
 			// language
 			new WebAssemblyKeywordToken(),
+			new WebAssemblyTypesToken(),
 			new WebAssemblyPunctuationToken(),
 
 			// comments
@@ -17182,14 +17183,41 @@ const WebAssemblyKeywordToken = class WebAssemblyKeywordToken extends SourceSimp
 			'func',
 			'param',
 			'mut',
+			'return',
 			'start',
+			'block',
+			'end',
 			'if',
 			'br_if',
 			'then',
 			'else',
+			'select',
 			'call',
-			'loop'
+			'loop',
+			'drop',
+			'unreachable',
+			'nop'
 
+		]);
+
+		Object.seal(this);
+
+	}
+
+};
+
+
+
+const WebAssemblyTypesToken = class WebAssemblyTypesToken extends SourceSimpleCharacterSequenceToken {
+
+	constructor() {
+		super('type', [
+			'i32',
+			'i64',
+			'f32',
+			'f64',
+			'v128',
+			'externref'
 		]);
 
 		Object.seal(this);
@@ -17222,12 +17250,21 @@ const WebAssemblyLineCommentPatternIterator = class WebAssemblyLineCommentPatter
 
 	constructor() {
 		super();
-		this._matchFunction = this._matchSemiColon;
+		this._matchFunction = this._matchSemiColon1;
 		Object.seal(this);
 	}
 
-	_matchSemiColon(matchCharacter) {
-		if (matchCharacter === ';') { // FIXME needs ;;
+	_matchSemiColon1(matchCharacter) {
+		if (matchCharacter === ';') {
+			this._matchFunction = this._matchSemiColon2;
+			return true;
+		}
+		this._hasNext = false;
+		return false;
+	}
+
+	_matchSemiColon2(matchCharacter) {
+		if (matchCharacter === ';') {
 			this._matchFunction = this._matchSameLine;
 			return true;
 		}
