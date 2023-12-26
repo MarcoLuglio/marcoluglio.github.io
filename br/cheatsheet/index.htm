@@ -3181,7 +3181,17 @@ h x = case f x of
 
 h'::Int -&gt; Maybe Int
 h' x = do n &lt;- f x
-		  g n</code
+		  g n
+
+-- Haskell possui o operador >>=
+-- para extrair valores de Maybe
+-- é o operador que está na logo
+-- da linguagem
+
+let monad = Maybe(x)
+	>>= f
+	>>= \n -> g(n)
+</code
 >
 </div>
 
