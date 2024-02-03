@@ -109,7 +109,7 @@
 			<p>
 				Proficient mostly in <strong>C#</strong> / .NET, <strong>TypeScript</strong> and <strong>JavaScript.</strong> To a smaller extent on <strong>Rust</strong>, <strong>C++ and <strong>Java</strong>.</strong>
 				Many <strong>web/cloud (Azure) projects</strong> and some <strong>mobile/desktop</strong> ones.
-				<strong>DevOps</strong>, infrastructure as code with Kubernetes and Terraform, git, source version control strategies and <abbr title='continuous integration / continuous deployment'>CI/CD</abbr> pipelines.
+				<strong>DevOps</strong>, infrastructure as code, git, source version control and deployment strategies, <abbr title='continuous integration / continuous deployment'>CI/CD</abbr> pipelines.
 				Write <a href='#_artigos'>articles about programming</a> in general.
 				Give lectures.
 				Experience with offshore teams and multinational companies.
@@ -333,286 +333,21 @@
 				<!-- Math.cos(30 * Math.PI / 180) = 0.8660254037844387 -->
 
 			</svg>
-			<script>
-				(() => {
-
-					'use strict';
-
-					const skills = [
-						{
-							name: 'core',
-							svgId: 'lightBlueChart',
-							labelColor: '#448BC9',
-							topCapColor: '#519AD4',
-							list: [
-								{ name: 'i18n', score: 5 },
-								{ name: 'metrics', score: 6 },
-								{ name: 'oauth', score: 7 },
-								{ name: 'azure/aws', score: 7 },
-								{ name: 'ux', score: 8 },
-								{ name: 'bdd/tdd', score: 8 },
-								{ name: 'ddd', score: 8 },
-								{ name: 'infra as code', score: 8 },
-								{ name: 'devops', score: 8 },
-								{ name: 'git', score: 9 },
-								{ name: 'architecture', score: 9 },
-								{ name: 'design patterns', score: 10 },
-								{ name: 'agile', score: 10 }
-							]
-						},
-						{
-							name: 'front-end',
-							svgId: 'grayChart',
-							labelColor: '#788598',
-							topCapColor: '#A9B7C9',
-							list: [
-								{ name: 'speech', score: 3 },
-								{ name: 'sockets', score: 4 },
-								{ name: 'web assembly', score: 5 },
-								{ name: 'pwa', score: 5 },
-								{ name: 'webforms/mvc', score: 6 },
-								{ name: 'maps', score: 7 },
-								{ name: 'angular/ngrx', score: 7 },
-								{ name: 'react/redux', score: 8 },
-								{ name: 'e2e tests', score: 9 },
-								{ name: 'css/responsive', score: 10 },
-								{ name: 'js/ts', score: 10 }
-							]
-						},
-						{
-							name: 'back-end',
-							svgId: 'magentaChart',
-							labelColor: '#E72E88',
-							topCapColor: '#FF54A6',
-							list: [
-								{ name: 'machine learning', score: 2 },
-								{ name: 'c++/rust', score: 4 },
-								{ name: 'wcf/soap', score: 6 },
-								{ name: 'tests', score: 7 },
-								{ name: 'graphql', score: 7 },
-								{ name: 'grpc', score: 7 },
-								{ name: 'serverless', score: 7 },
-								{ name: 'containers', score: 8 },
-								{ name: 'microservices', score: 8 },
-								{ name: 'swagger/raml', score: 8 },
-								{ name: 'rest', score: 9 },
-								{ name: 'c#', score: 10 }
-							]
-						},
-						{
-							name: 'storage',
-							svgId: 'wineChart',
-							labelColor: '#731744',
-							topCapColor: '#A32161',
-							list: [
-								{ name: 'service bus', score: 7 },
-								{ name: 'kafka', score: 6 },
-								{ name: 'indexeddb', score: 6 },
-								{ name: 'cosmosdb', score: 7 },
-								{ name: 'mongodb', score: 8 },
-								{ name: 'dapper', score: 7 },
-								{ name: 'entity fw', score: 8 },
-								{ name: 't-sql', score: 9 }
-							]
-						}
-					];
-
-					const chartsWidth = 300;
-					const chartsHeight = 10;
-					const chartThickness = 25;
-					const degrees30 = 30 * Math.PI / 180;
-					const sin30 = Math.sin(degrees30);
-					const cos30 = Math.cos(degrees30);
-					const labelMarginH = 10;
-					const labelOffsetY = 18;
-
-					const charts = document.querySelector('#chart');
-					const svgNamespace = 'http://www.w3.org/2000/svg';
-
-					function plotChart(skillGroup) {
-
-						const points = [];
-						let tempList = skillGroup.list;
-						const numberOfPoints = 1 + tempList.length;
-						let i = 1;
-
-						points.push({
-							x: 0,
-							y: 300
-						});
-
-						for (const skill of tempList) {
-
-							const segment = chartsWidth * i;
-
-							points.push({
-								x: segment * cos30 / numberOfPoints,
-								y: 300 - (segment * sin30 / numberOfPoints) - (chartsHeight * skill.score)
-							});
-
-							i++;
-						}
-
-						points.push({
-							x: chartsWidth * cos30,
-							y: 300 - (chartsWidth * sin30)
-						});
-
-						// TODO
-
-						// para o right
-						// acrescentar primeira ponta com offset após primeira
-						// offset nos pontos intermediários
-						// acrescentar última ponta com offset antes da última primeira
-
-						// para left
-						// acrescentar as pontas com offset
-						// acrescentar primeira ponta com offset após primeira
-						// acrescentar pontos intermediários com offset em qual order?
-						// acrescentar última ponta com offset antes da última primeira
-
-						const chart = document.querySelector(`#${skillGroup.svgId}`);
-						const leftFace = chart.querySelector('.leftFace');
-						const rightFace = chart.querySelector('.rightFace');
-
-						let skillText = document.createElementNS(svgNamespace, 'g');
-						let previousPoint = points[0];
-
-						let leftSvgPoint = charts.createSVGPoint();
-						leftSvgPoint.x = points[0].x;
-						leftSvgPoint.y = points[0].y;
-						leftFace.points.appendItem(leftSvgPoint);
-
-
-						i = 0;
-
-						for (const point of points) {
-
-							leftSvgPoint = charts.createSVGPoint();
-							leftSvgPoint.x = point.x - (chartThickness * cos30);
-							leftSvgPoint.y = point.y - (chartThickness * sin30);
-							leftFace.points.appendItem(leftSvgPoint);
-
-							let rightSvgPoint = charts.createSVGPoint();
-							rightSvgPoint.x = point.x;
-							rightSvgPoint.y = point.y;
-							rightFace.points.appendItem(rightSvgPoint);
-
-							if (previousPoint != point && i > 1 && i < points.length - 1) {
-
-								let topCap = document.createElementNS(svgNamespace, 'polygon');
-
-								let topCapPoint = charts.createSVGPoint();
-								topCapPoint.x = previousPoint.x;
-								topCapPoint.y = previousPoint.y;
-								topCap.points.appendItem(topCapPoint);
-
-								topCapPoint = charts.createSVGPoint();
-								topCapPoint.x = previousPoint.x - (chartThickness * cos30);
-								topCapPoint.y = previousPoint.y - (chartThickness * sin30);
-								topCap.points.appendItem(topCapPoint);
-
-								topCapPoint = charts.createSVGPoint();
-								topCapPoint.x = point.x - (chartThickness * cos30);
-								topCapPoint.y = point.y - (chartThickness * sin30);
-								topCap.points.appendItem(topCapPoint);
-
-								topCapPoint = charts.createSVGPoint();
-								topCapPoint.x = point.x;
-								topCapPoint.y = point.y;
-								topCap.points.appendItem(topCapPoint);
-
-								// TODO calcular cor dos caps baseado na inclinação...
-								topCap.setAttribute('fill', skillGroup.topCapColor);
-
-								chart.appendChild(topCap);
-
-							}
-
-							previousPoint = point;
-							i++;
-
-						}
-
-						i = 1;
-						const lastChild = chart.childNodes.length;
-
-						for (const point of points) {
-
-							// there are two extra points, one at the start, and another at the end
-							// hence we get the skill at i - 1
-							if (!skillGroup.list[i-1]) {
-								continue;
-							}
-
-							let skillTextLabel = document.createElementNS(svgNamespace, 'text');
-							skillTextLabel.setAttribute('x', 40); // default layout, will be calculated later to fit the text
-							skillTextLabel.setAttribute('y', 15);
-							skillTextLabel.setAttribute('dominant-baseline', 'middle');
-							skillTextLabel.setAttribute('text-anchor', 'middle');
-							skillTextLabel.setAttribute('fill', 'white');
-							let skillTextLabelNode = document.createTextNode(skillGroup.list[i-1].name);
-							skillTextLabel.appendChild(skillTextLabelNode);
-
-							let skillTextRect = document.createElementNS(svgNamespace, 'rect');
-
-							// default layout, will be calculated later to fit the text
-							skillTextRect.setAttribute('x', 0);
-							skillTextRect.setAttribute('y', 0);
-							skillTextRect.setAttribute('width', 80);
-							skillTextRect.setAttribute('height', 28);
-
-							skillTextRect.setAttribute('fill', skillGroup.labelColor);
-
-							skillText.appendChild(skillTextRect);
-							skillText.appendChild(skillTextLabel);
-							chart.insertBefore(skillText, chart.childNodes[lastChild]);
-
-							// measure is only possible after the element has been added to the document
-							let skillTextBoundingBox = skillTextLabel.getBBox();
-							let skillTextWidth = skillTextBoundingBox.width;
-							let skillTextRectWidth = skillTextWidth + labelMarginH;
-							let skillTextRectCenterX = skillTextRectWidth / 2;
-							//let skillTextHeight = skillTextBoundingBox.height;
-							skillTextRect.setAttribute('width', skillTextRectWidth);
-							skillTextLabel.setAttribute('x', skillTextRectCenterX);
-
-							let skillTextOffsetX = points[i].x - (chartThickness * cos30 / 2) - (skillTextRectCenterX * cos30);
-							let skillTextOffsetY = points[i].y - (chartThickness * sin30 / 2) - 28 - (skillTextRectCenterX * sin30) - labelOffsetY;
-							skillText.setAttribute('transform', `translate(${skillTextOffsetX} ${skillTextOffsetY}) skewY(30) scale(0.8660 1)`); // TODO calculate translation
-
-							skillText = document.createElementNS(svgNamespace, 'g');
-							i++;
-
-						}
-
-						leftSvgPoint = charts.createSVGPoint();
-						leftSvgPoint.x = points[points.length - 1].x;
-						leftSvgPoint.y = points[points.length - 1].y;
-						leftFace.points.appendItem(leftSvgPoint);
-
-					}
-
-					for (let skillGroup of skills) {
-						plotChart(skillGroup);
-					}
-
-				})();
-			</script>
 
 		</div>
 
 	</section>
 
 	<section id='softwares' class='sub softwares'>
-		<h2>Softwares</h2>
+		<h2>Softwares &amp; libraries</h2>
 		<div>
 			<ul>
-				<li>Visual Studio, VS Code, XCode, Android Studio, Intellij Idea, Sublime Text;</li>
-				<li>Postman, Soap UI, Fiddler, Wireshark;<li>
-				<li>Docker, Bash, Git, Azure DevOps;</li>
-				<li>MongoDB Compass, SQL Server Management Studio;</li>
-				<li>Adobe XD, Illustrator, Photoshop.</li>
+				<li>Visual Studio, VS Code, XCode, Android Studio;</li>
+				<li>Polly, GraphQL, Swagger, Postman, Fiddler, Soap UI, Wireshark;<li>
+				<li>Docker, Helm, Kubernetes, Terraform, Bash, Git, Azure DevOps;</li>
+				<li>Service Bus, Kafka, MassTransit;</li>
+				<li>CosmosDB, MongoDB, Redis, SQL Server, IndexedDB, Entity Framework;</li>
+				<li>xUnit, MSTest, Selenium, SpecFlow.</li>
 			</ul>
 		</div>
 	</section>
@@ -774,6 +509,274 @@
 	</main>
 
 	<!-- scripts -->
+
+	<!-- skills chart -->
+	<script>
+		(() => {
+
+			'use strict';
+
+			const skills = [
+				{
+					name: 'core',
+					svgId: 'lightBlueChart',
+					labelColor: '#448BC9',
+					topCapColor: '#519AD4',
+					list: [
+						{ name: 'i18n', score: 5 },
+						{ name: 'metrics', score: 6 },
+						{ name: 'oauth', score: 7 },
+						{ name: 'azure/aws', score: 7 },
+						{ name: 'ux', score: 8 },
+						{ name: 'bdd/tdd', score: 8 },
+						{ name: 'ddd', score: 8 },
+						{ name: 'infra as code', score: 8 },
+						{ name: 'devops', score: 8 },
+						{ name: 'git', score: 9 },
+						{ name: 'architecture', score: 9 },
+						{ name: 'design patterns', score: 10 },
+						{ name: 'agile', score: 10 }
+					]
+				},
+				{
+					name: 'front-end',
+					svgId: 'grayChart',
+					labelColor: '#788598',
+					topCapColor: '#A9B7C9',
+					list: [
+						{ name: 'speech', score: 3 },
+						{ name: 'sockets', score: 4 },
+						{ name: 'web assembly', score: 5 },
+						{ name: 'pwa', score: 5 },
+						{ name: 'webforms/mvc', score: 6 },
+						{ name: 'maps', score: 7 },
+						{ name: 'angular/ngrx', score: 7 },
+						{ name: 'react/redux', score: 8 },
+						{ name: 'e2e tests', score: 9 },
+						{ name: 'css/responsive', score: 10 },
+						{ name: 'js/ts', score: 10 }
+					]
+				},
+				{
+					name: 'back-end',
+					svgId: 'magentaChart',
+					labelColor: '#E72E88',
+					topCapColor: '#FF54A6',
+					list: [
+						{ name: 'machine learning', score: 2 },
+						{ name: 'c++/rust', score: 4 },
+						{ name: 'wcf/soap', score: 6 },
+						{ name: 'tests', score: 7 },
+						{ name: 'graphql', score: 7 },
+						{ name: 'grpc', score: 7 },
+						{ name: 'serverless', score: 7 },
+						{ name: 'containers', score: 8 },
+						{ name: 'microservices', score: 8 },
+						{ name: 'swagger/raml', score: 8 },
+						{ name: 'rest', score: 9 },
+						{ name: 'c#', score: 10 }
+					]
+				},
+				{
+					name: 'storage',
+					svgId: 'wineChart',
+					labelColor: '#731744',
+					topCapColor: '#A32161',
+					list: [
+						{ name: 'service bus', score: 7 },
+						{ name: 'kafka', score: 6 },
+						{ name: 'indexeddb', score: 6 },
+						{ name: 'cosmosdb', score: 7 },
+						{ name: 'mongodb', score: 8 },
+						{ name: 'dapper', score: 7 },
+						{ name: 'entity fw', score: 8 },
+						{ name: 't-sql', score: 9 }
+					]
+				}
+			];
+
+			const chartsWidth = 300;
+			const chartsHeight = 10;
+			const chartThickness = 25;
+			const degrees30 = 30 * Math.PI / 180;
+			const sin30 = Math.sin(degrees30);
+			const cos30 = Math.cos(degrees30);
+			const labelMarginH = 10;
+			const labelOffsetY = 18;
+
+			const charts = document.querySelector('#chart');
+			const svgNamespace = 'http://www.w3.org/2000/svg';
+
+			function plotChart(skillGroup) {
+
+				const points = [];
+				let tempList = skillGroup.list;
+				const numberOfPoints = 1 + tempList.length;
+				let i = 1;
+
+				points.push({
+					x: 0,
+					y: 300
+				});
+
+				for (const skill of tempList) {
+
+					const segment = chartsWidth * i;
+
+					points.push({
+						x: segment * cos30 / numberOfPoints,
+						y: 300 - (segment * sin30 / numberOfPoints) - (chartsHeight * skill.score)
+					});
+
+					i++;
+				}
+
+				points.push({
+					x: chartsWidth * cos30,
+					y: 300 - (chartsWidth * sin30)
+				});
+
+				// TODO
+
+				// para o right
+				// acrescentar primeira ponta com offset após primeira
+				// offset nos pontos intermediários
+				// acrescentar última ponta com offset antes da última primeira
+
+				// para left
+				// acrescentar as pontas com offset
+				// acrescentar primeira ponta com offset após primeira
+				// acrescentar pontos intermediários com offset em qual order?
+				// acrescentar última ponta com offset antes da última primeira
+
+				const chart = document.querySelector(`#${skillGroup.svgId}`);
+				const leftFace = chart.querySelector('.leftFace');
+				const rightFace = chart.querySelector('.rightFace');
+
+				let skillText = document.createElementNS(svgNamespace, 'g');
+				let previousPoint = points[0];
+
+				let leftSvgPoint = charts.createSVGPoint();
+				leftSvgPoint.x = points[0].x;
+				leftSvgPoint.y = points[0].y;
+				leftFace.points.appendItem(leftSvgPoint);
+
+
+				i = 0;
+
+				for (const point of points) {
+
+					leftSvgPoint = charts.createSVGPoint();
+					leftSvgPoint.x = point.x - (chartThickness * cos30);
+					leftSvgPoint.y = point.y - (chartThickness * sin30);
+					leftFace.points.appendItem(leftSvgPoint);
+
+					let rightSvgPoint = charts.createSVGPoint();
+					rightSvgPoint.x = point.x;
+					rightSvgPoint.y = point.y;
+					rightFace.points.appendItem(rightSvgPoint);
+
+					if (previousPoint != point && i > 1 && i < points.length - 1) {
+
+						let topCap = document.createElementNS(svgNamespace, 'polygon');
+
+						let topCapPoint = charts.createSVGPoint();
+						topCapPoint.x = previousPoint.x;
+						topCapPoint.y = previousPoint.y;
+						topCap.points.appendItem(topCapPoint);
+
+						topCapPoint = charts.createSVGPoint();
+						topCapPoint.x = previousPoint.x - (chartThickness * cos30);
+						topCapPoint.y = previousPoint.y - (chartThickness * sin30);
+						topCap.points.appendItem(topCapPoint);
+
+						topCapPoint = charts.createSVGPoint();
+						topCapPoint.x = point.x - (chartThickness * cos30);
+						topCapPoint.y = point.y - (chartThickness * sin30);
+						topCap.points.appendItem(topCapPoint);
+
+						topCapPoint = charts.createSVGPoint();
+						topCapPoint.x = point.x;
+						topCapPoint.y = point.y;
+						topCap.points.appendItem(topCapPoint);
+
+						// TODO calcular cor dos caps baseado na inclinação...
+						topCap.setAttribute('fill', skillGroup.topCapColor);
+
+						chart.appendChild(topCap);
+
+					}
+
+					previousPoint = point;
+					i++;
+
+				}
+
+				i = 1;
+				const lastChild = chart.childNodes.length;
+
+				for (const point of points) {
+
+					// there are two extra points, one at the start, and another at the end
+					// hence we get the skill at i - 1
+					if (!skillGroup.list[i-1]) {
+						continue;
+					}
+
+					let skillTextLabel = document.createElementNS(svgNamespace, 'text');
+					skillTextLabel.setAttribute('x', 40); // default layout, will be calculated later to fit the text
+					skillTextLabel.setAttribute('y', 15);
+					skillTextLabel.setAttribute('dominant-baseline', 'middle');
+					skillTextLabel.setAttribute('text-anchor', 'middle');
+					skillTextLabel.setAttribute('fill', 'white');
+					let skillTextLabelNode = document.createTextNode(skillGroup.list[i-1].name);
+					skillTextLabel.appendChild(skillTextLabelNode);
+
+					let skillTextRect = document.createElementNS(svgNamespace, 'rect');
+
+					// default layout, will be calculated later to fit the text
+					skillTextRect.setAttribute('x', 0);
+					skillTextRect.setAttribute('y', 0);
+					skillTextRect.setAttribute('width', 80);
+					skillTextRect.setAttribute('height', 28);
+
+					skillTextRect.setAttribute('fill', skillGroup.labelColor);
+
+					skillText.appendChild(skillTextRect);
+					skillText.appendChild(skillTextLabel);
+					chart.insertBefore(skillText, chart.childNodes[lastChild]);
+
+					// measure is only possible after the element has been added to the document
+					let skillTextBoundingBox = skillTextLabel.getBBox();
+					let skillTextWidth = skillTextBoundingBox.width;
+					let skillTextRectWidth = skillTextWidth + labelMarginH;
+					let skillTextRectCenterX = skillTextRectWidth / 2;
+					//let skillTextHeight = skillTextBoundingBox.height;
+					skillTextRect.setAttribute('width', skillTextRectWidth);
+					skillTextLabel.setAttribute('x', skillTextRectCenterX);
+
+					let skillTextOffsetX = points[i].x - (chartThickness * cos30 / 2) - (skillTextRectCenterX * cos30);
+					let skillTextOffsetY = points[i].y - (chartThickness * sin30 / 2) - 28 - (skillTextRectCenterX * sin30) - labelOffsetY;
+					skillText.setAttribute('transform', `translate(${skillTextOffsetX} ${skillTextOffsetY}) skewY(30) scale(0.8660 1)`); // TODO calculate translation
+
+					skillText = document.createElementNS(svgNamespace, 'g');
+					i++;
+
+				}
+
+				leftSvgPoint = charts.createSVGPoint();
+				leftSvgPoint.x = points[points.length - 1].x;
+				leftSvgPoint.y = points[points.length - 1].y;
+				leftFace.points.appendItem(leftSvgPoint);
+
+			}
+
+			for (let skillGroup of skills) {
+				plotChart(skillGroup);
+			}
+
+		})();
+	</script>
 
 	<!-- bibliotecas de terceiros -->
 	<script src="../js/three.js"></script>
