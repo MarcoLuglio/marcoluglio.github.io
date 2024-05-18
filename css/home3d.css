@@ -453,7 +453,7 @@ section > div {
 
 .formacaoacademica {
 	width: 830px;
-	height: 420px; /* 360 */
+	height: 380px;
 }
 
 .formacaoacademica > div {
@@ -511,7 +511,7 @@ section > div {
 /* =========== */
 
 .experiencia {
-	height: 360px;
+	height: 450px;
 }
 
 .experiencia > div > div {
