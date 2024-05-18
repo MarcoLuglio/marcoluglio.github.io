@@ -14,18 +14,9 @@ const buildScene = (sceneManager) => {
 		.rotation(0, 0, 0)
 		.build();
 
-	const objectB = new Css3DObjectBuilder()
-		.element('mapas')
-		.copy(objectA)
-		.translateX(-350)
-		.translateY(380)
-		.rotateZ(35)
-		.rotateX(-35)
-		.build();
-
 	const objectC = new Css3DObjectBuilder()
 		.element('interacoes')
-		.copy(objectB)
+		.copy(objectA)
 		.translateX(-350)
 		.translateY(380)
 		.rotateZ(35)
@@ -105,7 +96,6 @@ const buildScene = (sceneManager) => {
 		.build();
 
 	sceneManager.add(objectA);
-	sceneManager.add(objectB);
 	sceneManager.add(objectC);
 	sceneManager.add(objectD);
 	sceneManager.add(objectE);
