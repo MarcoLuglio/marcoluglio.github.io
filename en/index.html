@@ -38,7 +38,15 @@
 	<body>
 
 	<div class='topo'>
-		<div class='gravatar'><img src='../imagens/marcoluglio.jpg' alt='Marco Luglio' /></div>
+		<div class='gravatar'
+			><picture>
+				<source srcset="../imagens/marcoluglio.avif" type="image/avif" />
+				<source srcset="../imagens/marcoluglio.heic" type="image/heic" />
+				<source srcset="../imagens/marcoluglio.webp" type="image/webp" />
+				<img src="../imagens/marcoluglio.jpg" alt="Marco Luglio" />
+				</picture
+			></div
+		>
 		<header>
 			<h1>Marco Luglio</h1>
 			<h2>Full Stack Software Engineer</h2>
@@ -48,16 +56,13 @@
 				<a href='#artigos'>Articles</a>
 				<a href='#desenhos'>Drawing</a>
 				<a href='#interacoes'>Interactions</a>
-				<a href='#mapas'>Maps</a>
 				<a href='#contato'>Contact</a>
 			</div>
 			<div id='menuBiografia' class='menuBiografia'>
 				<a href='#biografia'><abbr title="Too long, didn't read">TL;DR</abbr></a>
 				<a href='#experiencia'>Experience</a>
-				<a href='#dominiotecnico'>Skills</a>
 				<a href='#idiomas'>Languages</a>
 				<a href='#formacaoacademica'>Education</a>
-				<a href='#softwares'>Softwares</a>
 				<a href='#antigamente'>Used to have</a>
 			</div>
 		</nav>
@@ -107,28 +112,30 @@
 			<!--<h3>TL;DR</h3>-->
 			<h3>Full Stack software engineer since 2005</h3>
 			<p>
-				Proficient mostly in <strong>C#</strong> / .NET, <strong>TypeScript</strong> and <strong>JavaScript.</strong> To a smaller extent on <strong>Rust</strong>, <strong>C++ and <strong>Java</strong>.</strong>
+				<strong>Full stack software engineer since 2005.</strong>
+				Proficient mostly in <strong>C#</strong> / .NET, <strong>TypeScript</strong> and <strong>JavaScript.</strong>
+				To a smaller extent on <strong>Rust</strong> and <strong>Java</strong>.</strong>
 				Many <strong>web/cloud (Azure) projects</strong> and some <strong>mobile/desktop</strong> ones.
 				<strong>DevOps</strong>, infrastructure as code, git, source version control and deployment strategies, <abbr title='continuous integration / continuous deployment'>CI/CD</abbr> pipelines.
 				Write <a href='#_artigos'>articles about programming</a> in general.
 				Give lectures.
+				Worked with <strong>UX</strong> for 10+ years.
 				Experience with offshore teams and multinational companies.
 				Fluent english.
 				Knowledge about agile practices, design patterns, <abbr title='application programming interface'>API</abbr> design, microservices, containers, serverless, queues, NoSQL, <abbr title='Single page applications'>SPAs</abbr>, web assembly, OAuth and tests.
-				Worked with <strong>UX</strong> for 10+ years.
 				Recently diagnosed with high abilities (top 4%).
-				Married.
+				Divorced.
 				No kids.
 			</p>
 
 			<h3>Searching for a position as</h3>
-			<p>Full stack software engineer for cloud and automation projects. Next career goal is to become a software architect.</p>
+			<p>Full stack cloud software engineer. Future software architect.</p>
 
 			<h3>Besides programming I've been</h3>
 			<p><a href='#_artigos'>Writing articles,</a> giving lectures, performing usability evaluations, defining quality processes.</p>
 
 			<h3>Personal projects</h3>
-			<p>Programming gamepads. Home automation. Trying to find some time to learn to play an electric guitar and fly airplanes.</p>
+			<p>Programming gamepads. Arduino (home automation). Bicycle, learning to play an electric guitar and playing flight simulators.</p>
 
 			<ul id='menuBio' class='linksBio'
 				><li><a href='#experiencia'>Experience</a></li
@@ -157,10 +164,6 @@
 				<dd><meter value="12" min="0" max="24">50%</meter></dd>
 				<dt>Spanish</dt>
 				<dd><meter value="7" min="0" max="24">29%</meter></dd>
-				<dt>German</dt>
-				<dd><meter value="1" min="0" max="24">4%</meter></dd>
-				<dt>Japanese</dt>
-				<dd><meter value="1" min="0" max="24">4%</meter></dd>
 			</dl>
 		</div>
 
@@ -173,20 +176,10 @@
 		<div>
 
 			<p>
-				<time datetime='2023'>2023</time>
+				<time datetime='2023'>2018 – 2023</time>
 				<span
 					><strong
-						>Rust and WebAssembly with TypeScript</strong
-					>
-					Course on Udemy</span
-				>
-			</p>
-
-			<p>
-				<time datetime='2020'>2020<br />2020</time>
-				<span
-					><strong
-						>OAuth, Microservices, React, Docker, Angular, NgRx and others</strong
+						>Rust and WebAssembly with TypeScript, OAuth, Microservices, React, Docker, Angular, NgRx and others</strong
 					>
 					Courses on Pluralsight and Udemy</span
 				>
@@ -209,18 +202,18 @@
 			</p>
 
 			<p>
-				<time datetime='2013'>2013<br />2012</time>
+				<time datetime='2013'>2014</time>
 				<span
-					><strong>Mobile apps and cloud computing with Azure</strong>
-					Graduate School Universidade Positivo and UTFPR (both unconcluded)</span
+					><strong>Official Dojo Training</strong>
+					In-person workshop by Sitepen in Atlanta – GO</span
 				>
 			</p>
 
 			<p>
-				<time datetime='2010'>2010</time>
+				<time datetime='2013'>2013<br />2012</time>
 				<span
-					><strong>Interface design for mobile devices</strong>
-					In-person workshop Faber Ludens</span
+					><strong>Mobile apps and cloud computing with Azure</strong>
+					Graduate School Universidade Positivo and UTFPR (both unconcluded)</span
 				>
 			</p>
 
@@ -234,122 +227,6 @@
 
 		</div>
 
-	</section>
-
-	<section id='dominiotecnico' class='sub dominiotecnico'>
-
-		<h2>Skills</h2>
-
-		<div>
-
-			<svg id='chart' width="800" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg">
-
-				<style>
-					text {
-						font: normal 16px Oswald;
-					}
-				</style>
-
-				<defs>
-					<linearGradient id="darkBlueGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0" style="stop-color:#004CD6"/>
-						<stop offset="1" style="stop-color:#00266B"/>
-					</linearGradient>
-					<linearGradient id="darkBlueGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0" style="stop-color:#004CD6"/>
-						<stop offset="1" style="stop-color:#00266B"/>
-					</linearGradient>
-					<linearGradient id="lightBlueGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0" style="stop-color:#448BC9"/>
-						<stop offset="1" style="stop-color:#1A5589"/>
-					</linearGradient>
-					<linearGradient id="lightBlueGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0" style="stop-color:#448BC9"/>
-						<stop offset="1" style="stop-color:#1A5589"/>
-					</linearGradient>
-					<linearGradient id="grayGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0" style="stop-color:#A9B4C4"/>
-						<stop offset="1" style="stop-color:#838C99"/>
-					</linearGradient>
-					<linearGradient id="grayGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0" style="stop-color:#A9B4C4"/>
-						<stop offset="1" style="stop-color:#838C99"/>
-					</linearGradient>
-					<linearGradient id="magentaGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0.3748" style="stop-color:#E72E88"/>
-						<stop offset="1" style="stop-color:#94275C"/>
-					</linearGradient>
-					<linearGradient id="magentaGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0.3748" style="stop-color:#E72E88"/>
-						<stop offset="1" style="stop-color:#94275C"/>
-					</linearGradient>
-					<linearGradient id="wineGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0.3748" style="stop-color:#731744"/>
-						<stop offset="1" style="stop-color:#280A19"/>
-					</linearGradient>
-					<linearGradient id="wineGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0.3748" style="stop-color:#731744"/>
-						<stop offset="1" style="stop-color:#280A19"/>
-					</linearGradient>
-					<linearGradient id="limeGradientRight" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="60" y2="300">
-						<stop offset="0" style="stop-color:#8AD100"/>
-						<stop offset="1" style="stop-color:#5E8F00"/>
-					</linearGradient>
-					<linearGradient id="limeGradientLeft" gradientUnits="userSpaceOnUse" x1="60" y1="162.68" x2="0" y2="282.68">
-						<stop offset="0" style="stop-color:#8AD100"/>
-						<stop offset="1" style="stop-color:#5E8F00"/>
-					</linearGradient>
-				</defs>
-
-				<!--
-				<g id='darkBlueChart'>
-					<g></g>
-					<polygon class='leftFace' points='' />
-					<polygon class='rightFace' points='' fill="url('#darkBlueGradientRight')" />
-				</g>
-				-->
-				<g id='lightBlueChart' transform="translate(60 30)">
-					<polygon class='leftFace' points='' fill="url('#lightBlueGradientLeft')" />
-					<polygon class='rightFace' points='' fill="url('#lightBlueGradientRight')" />
-				</g>
-				<g id='grayChart' transform="translate(220 30)">
-					<polygon class='leftFace' points='' fill="url('#grayGradientLeft')" />
-					<polygon class='rightFace' points='' fill="url('#grayGradientRight')" />
-				</g>
-				<g id='magentaChart' transform="translate(380 30)">
-					<polygon class='leftFace' points='' fill="url('#magentaGradientLeft')" />
-					<polygon class='rightFace' points='' fill="url('#magentaGradientRight')" />
-				</g>
-				<g id='wineChart' transform="translate(530 30)">
-					<polygon class='leftFace' points='' fill="url('#wineGradientLeft')" />
-					<polygon class='rightFace' points='' fill="url('#wineGradientRight')" />
-				</g>
-				<g id='limeChart'>
-					<polygon class='leftFace' points='' fill="url('#limeGradientLeft')" />
-					<polygon class='rightFace' points='' fill="url('#limeGradientRight')" />
-				</g>
-
-				<!--isometric transform-->
-				<!-- Math.cos(30 * Math.PI / 180) = 0.8660254037844387 -->
-
-			</svg>
-
-		</div>
-
-	</section>
-
-	<section id='softwares' class='sub softwares'>
-		<h2>Softwares &amp; libraries</h2>
-		<div>
-			<ul>
-				<li>Visual Studio, VS Code, XCode, Android Studio;</li>
-				<li>Polly, GraphQL, Swagger, Postman, Fiddler, Soap UI, Wireshark;<li>
-				<li>Docker, Helm, Kubernetes, Terraform, Bash, Git, Azure DevOps;</li>
-				<li>Service Bus, Kafka, MassTransit;</li>
-				<li>CosmosDB, MongoDB, Redis, SQL Server, IndexedDB, Entity Framework;</li>
-				<li>xUnit, MSTest, Selenium, SpecFlow.</li>
-			</ul>
-		</div>
 	</section>
 
 	<section id='experiencia' class='sub experiencia'>
@@ -366,15 +243,21 @@
 					</p>
 					<p>
 						<strong><abbr title='manufacturing operations information technology'>MOIT</abbr>:</strong>
-						Equipment calibration Angular responsive <abbr title='progressive web application'>PWA</abbr> with back-end in C#, Entity Framework <abbr title='object-relational mapping'>ORM</abbr> and SQL Server.
-						Ambitious app project for automating and improving its replication process to refineries and chem plants using
-						React, web sockets (SignalR), <abbr title='command query responsability segregation'>CQRS</abbr>, <abbr title='domain driven design'>DDD</abbr>, C# GraphQL, Azure functions, dependency injection, Kafka, MongoDB and <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> with Azure pipelines.
+						Equipment calibration app for automating and improving its replication process to refineries and chem plants using React+Redux, OAuth + Azure Active Directory, web sockets (SignalR), microservices, <abbr title='command query responsability segregation'>CQRS</abbr>, <abbr title='domain driven design'>DDD</abbr>, C# GraphQL, gRPC, Azure functions, dependency injection, Kafka, MongoDB and <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> with Azure pipelines.
 						Planned enhancements using speech recognition and machine learning.
-						End to end test automation.
+						End to end test automation with Selenium and improvements in test documentation.
+						Maintenance of current <abbr title='progressive web application'>PWA</abbr> responsive calibration app written in Angular+NgRx backed by REST APIs in C#, Entity Framework <abbr title='object-relational mapping'>ORM</abbr>, SQL Server and infrastructure as code with Terraform.
+						Effort into publishing existing APIs to Mulesoft catalog using RAML/Swagger, implementing <abbr title='hypermedia as the engine of application state'>HATEOAS</abbr>, i18n GUI.
+						All APIs monitored with App Insights.
+						Interviewing candidates for developer positions.
+
 						<strong><abbr title='chemicals information technology'>ChemIT</abbr>:</strong>
 						Stabilizing and improving an integration between SAP and Salesforce using a Java containerized application in Kubernetes with MongoDB.
-						Architecting a new version of this integration using C# with performance and reliability as the primary goals.
-						Migrating <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> Azure pipelines to GitHub pipelines.
+						Architecting a new version of this integration using C# with performance and reliability as the primary goals using messaging with Mass Transit + Service Bus, Polly, caching.
+						Migrating <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> Azure pipelines to GitHub pipelines with Docker files and bash.
+						Possible improvement with helm.
+						Usage of Salesforce cloud debugging tools (similar to Azure snapshot debugger).
+
 						<strong>Everywhere I go:</strong>
 						Care with onboarding process and knowledge sharing through wiki and training sessions.
 						Agile methodologies.
@@ -387,14 +270,13 @@
 				<div>
 					<p>Luceo <span>(my company) 2015 - today</span></p>
 					<p>
-						Worked with companies of different segments suchs as <abbr title='business process modeling'>BPM</abbr>, banking, car tracking, industrial kitchen and startups.
+						Worked with companies of different segments such as <abbr title='business process modeling'>BPM</abbr>, banking, aviation, car tracking, industrial kitchen and civil construction
 						Gave in-person and online lectures.
 						Performed usability evaluation, built prototypes.
-						Apps and systems integration using <abbr title='domain driven design'>DDD</abbr>, dependency injection, Azure DevOps and  <abbr title='continuous integration / continuous delivery'>CI/CD</abbr>.
-						Front-end: <abbr title='progressive web application'>PWA</abbr>, ES6, responsive layout.
+						Apps and systems integration using TDD, <abbr title='domain driven design'>DDD</abbr>, dependency injection, Azure DevOps and  <abbr title='continuous integration / continuous delivery'>CI/CD</abbr>.
+						Front-end: <abbr title='progressive web application'>PWA</abbr>, google maps API, responsive layouts.
 						Back-end: C# web stack (API, <abbr title='windows communication foundation'>WCF</abbr>/<abbr title='simple object access protocol'>SOAP</abbr>, MVC, WebForms, Entity Framework and Dapper <abbr title='object-relational mapping'>ORM</abbr>s).
-						Desktop app in C#, Visual Basic 6 and Crystal reports.
-						Native mobile app.
+						Small projects in AWS.
 						<a href='#_artigos'>Writing articles</a>.
 					</p>
 				</div>
@@ -423,7 +305,6 @@
 				<br />Trying to do some home automation when I'm more inspired.</p
 			>
 			<p>Had a blog about usability and virtual media.</p>
-			<p>Have a PHP <abbr>MVC</abbr> abandoned framework project.</p>
 			<p>Wrote a <abbr title='Java micro edition'>JME</abbr> expenses control app for old Nokia phones.</p>
 		</div>
 	</section>
@@ -463,10 +344,6 @@
 					<li><a href='../br/tutorialwebsockets/'>Web sockets</a></li>
 					<li><a href='../br/inscricaoestadualcpfcnpj/'><abbr title='Inscrição Estadual'>IE</abbr>, CPF and CNPJ generators</a></li>
 					<li><a href='../br/codigodebarras/'>Barcodes (EAN13, <abbr title='Interleaved 2 of 5'>ITF</abbr>, Febraban)</a></li>
-					<!--
-					<li><a href='../br/tutorialintern/'>Intern missing tutorial</a></li>
-					<li><a href='../br/tutorialemberjs/'>EmberJS before you sink</a></li>
-					-->
 				</ul>
 			</section>
 
@@ -507,276 +384,6 @@
 	</section>
 
 	</main>
-
-	<!-- scripts -->
-
-	<!-- skills chart -->
-	<script>
-		(() => {
-
-			'use strict';
-
-			const skills = [
-				{
-					name: 'core',
-					svgId: 'lightBlueChart',
-					labelColor: '#448BC9',
-					topCapColor: '#519AD4',
-					list: [
-						{ name: 'i18n', score: 5 },
-						{ name: 'metrics', score: 6 },
-						{ name: 'oauth', score: 7 },
-						{ name: 'azure/aws', score: 7 },
-						{ name: 'ux', score: 8 },
-						{ name: 'bdd/tdd', score: 8 },
-						{ name: 'ddd', score: 8 },
-						{ name: 'infra as code', score: 8 },
-						{ name: 'devops', score: 8 },
-						{ name: 'git', score: 9 },
-						{ name: 'architecture', score: 9 },
-						{ name: 'design patterns', score: 10 },
-						{ name: 'agile', score: 10 }
-					]
-				},
-				{
-					name: 'front-end',
-					svgId: 'grayChart',
-					labelColor: '#788598',
-					topCapColor: '#A9B7C9',
-					list: [
-						{ name: 'speech', score: 3 },
-						{ name: 'sockets', score: 4 },
-						{ name: 'web assembly', score: 5 },
-						{ name: 'pwa', score: 5 },
-						{ name: 'webforms/mvc', score: 6 },
-						{ name: 'maps', score: 7 },
-						{ name: 'angular/ngrx', score: 7 },
-						{ name: 'react/redux', score: 8 },
-						{ name: 'e2e tests', score: 9 },
-						{ name: 'css/responsive', score: 10 },
-						{ name: 'js/ts', score: 10 }
-					]
-				},
-				{
-					name: 'back-end',
-					svgId: 'magentaChart',
-					labelColor: '#E72E88',
-					topCapColor: '#FF54A6',
-					list: [
-						{ name: 'machine learning', score: 2 },
-						{ name: 'rust', score: 4 },
-						{ name: 'wcf/soap', score: 6 },
-						{ name: 'tests', score: 7 },
-						{ name: 'graphql', score: 7 },
-						{ name: 'grpc', score: 7 },
-						{ name: 'serverless', score: 7 },
-						{ name: 'containers', score: 8 },
-						{ name: 'microservices', score: 8 },
-						{ name: 'swagger/raml', score: 8 },
-						{ name: 'rest', score: 9 },
-						{ name: 'c#', score: 10 }
-					]
-				},
-				{
-					name: 'storage',
-					svgId: 'wineChart',
-					labelColor: '#731744',
-					topCapColor: '#A32161',
-					list: [
-						{ name: 'service bus', score: 7 },
-						{ name: 'kafka', score: 6 },
-						{ name: 'indexeddb', score: 6 },
-						{ name: 'cosmosdb', score: 7 },
-						{ name: 'mongodb', score: 8 },
-						{ name: 'dapper', score: 7 },
-						{ name: 'entity fw', score: 8 },
-						{ name: 't-sql', score: 9 }
-					]
-				}
-			];
-
-			const chartsWidth = 300;
-			const chartsHeight = 10;
-			const chartThickness = 25;
-			const degrees30 = 30 * Math.PI / 180;
-			const sin30 = Math.sin(degrees30);
-			const cos30 = Math.cos(degrees30);
-			const labelMarginH = 10;
-			const labelOffsetY = 18;
-
-			const charts = document.querySelector('#chart');
-			const svgNamespace = 'http://www.w3.org/2000/svg';
-
-			function plotChart(skillGroup) {
-
-				const points = [];
-				let tempList = skillGroup.list;
-				const numberOfPoints = 1 + tempList.length;
-				let i = 1;
-
-				points.push({
-					x: 0,
-					y: 300
-				});
-
-				for (const skill of tempList) {
-
-					const segment = chartsWidth * i;
-
-					points.push({
-						x: segment * cos30 / numberOfPoints,
-						y: 300 - (segment * sin30 / numberOfPoints) - (chartsHeight * skill.score)
-					});
-
-					i++;
-				}
-
-				points.push({
-					x: chartsWidth * cos30,
-					y: 300 - (chartsWidth * sin30)
-				});
-
-				// TODO
-
-				// para o right
-				// acrescentar primeira ponta com offset após primeira
-				// offset nos pontos intermediários
-				// acrescentar última ponta com offset antes da última primeira
-
-				// para left
-				// acrescentar as pontas com offset
-				// acrescentar primeira ponta com offset após primeira
-				// acrescentar pontos intermediários com offset em qual order?
-				// acrescentar última ponta com offset antes da última primeira
-
-				const chart = document.querySelector(`#${skillGroup.svgId}`);
-				const leftFace = chart.querySelector('.leftFace');
-				const rightFace = chart.querySelector('.rightFace');
-
-				let skillText = document.createElementNS(svgNamespace, 'g');
-				let previousPoint = points[0];
-
-				let leftSvgPoint = charts.createSVGPoint();
-				leftSvgPoint.x = points[0].x;
-				leftSvgPoint.y = points[0].y;
-				leftFace.points.appendItem(leftSvgPoint);
-
-
-				i = 0;
-
-				for (const point of points) {
-
-					leftSvgPoint = charts.createSVGPoint();
-					leftSvgPoint.x = point.x - (chartThickness * cos30);
-					leftSvgPoint.y = point.y - (chartThickness * sin30);
-					leftFace.points.appendItem(leftSvgPoint);
-
-					let rightSvgPoint = charts.createSVGPoint();
-					rightSvgPoint.x = point.x;
-					rightSvgPoint.y = point.y;
-					rightFace.points.appendItem(rightSvgPoint);
-
-					if (previousPoint != point && i > 1 && i < points.length - 1) {
-
-						let topCap = document.createElementNS(svgNamespace, 'polygon');
-
-						let topCapPoint = charts.createSVGPoint();
-						topCapPoint.x = previousPoint.x;
-						topCapPoint.y = previousPoint.y;
-						topCap.points.appendItem(topCapPoint);
-
-						topCapPoint = charts.createSVGPoint();
-						topCapPoint.x = previousPoint.x - (chartThickness * cos30);
-						topCapPoint.y = previousPoint.y - (chartThickness * sin30);
-						topCap.points.appendItem(topCapPoint);
-
-						topCapPoint = charts.createSVGPoint();
-						topCapPoint.x = point.x - (chartThickness * cos30);
-						topCapPoint.y = point.y - (chartThickness * sin30);
-						topCap.points.appendItem(topCapPoint);
-
-						topCapPoint = charts.createSVGPoint();
-						topCapPoint.x = point.x;
-						topCapPoint.y = point.y;
-						topCap.points.appendItem(topCapPoint);
-
-						// TODO calcular cor dos caps baseado na inclinação...
-						topCap.setAttribute('fill', skillGroup.topCapColor);
-
-						chart.appendChild(topCap);
-
-					}
-
-					previousPoint = point;
-					i++;
-
-				}
-
-				i = 1;
-				const lastChild = chart.childNodes.length;
-
-				for (const point of points) {
-
-					// there are two extra points, one at the start, and another at the end
-					// hence we get the skill at i - 1
-					if (!skillGroup.list[i-1]) {
-						continue;
-					}
-
-					let skillTextLabel = document.createElementNS(svgNamespace, 'text');
-					skillTextLabel.setAttribute('x', 40); // default layout, will be calculated later to fit the text
-					skillTextLabel.setAttribute('y', 15);
-					skillTextLabel.setAttribute('dominant-baseline', 'middle');
-					skillTextLabel.setAttribute('text-anchor', 'middle');
-					skillTextLabel.setAttribute('fill', 'white');
-					let skillTextLabelNode = document.createTextNode(skillGroup.list[i-1].name);
-					skillTextLabel.appendChild(skillTextLabelNode);
-
-					let skillTextRect = document.createElementNS(svgNamespace, 'rect');
-
-					// default layout, will be calculated later to fit the text
-					skillTextRect.setAttribute('x', 0);
-					skillTextRect.setAttribute('y', 0);
-					skillTextRect.setAttribute('width', 80);
-					skillTextRect.setAttribute('height', 28);
-
-					skillTextRect.setAttribute('fill', skillGroup.labelColor);
-
-					skillText.appendChild(skillTextRect);
-					skillText.appendChild(skillTextLabel);
-					chart.insertBefore(skillText, chart.childNodes[lastChild]);
-
-					// measure is only possible after the element has been added to the document
-					let skillTextBoundingBox = skillTextLabel.getBBox();
-					let skillTextWidth = skillTextBoundingBox.width;
-					let skillTextRectWidth = skillTextWidth + labelMarginH;
-					let skillTextRectCenterX = skillTextRectWidth / 2;
-					//let skillTextHeight = skillTextBoundingBox.height;
-					skillTextRect.setAttribute('width', skillTextRectWidth);
-					skillTextLabel.setAttribute('x', skillTextRectCenterX);
-
-					let skillTextOffsetX = points[i].x - (chartThickness * cos30 / 2) - (skillTextRectCenterX * cos30);
-					let skillTextOffsetY = points[i].y - (chartThickness * sin30 / 2) - 28 - (skillTextRectCenterX * sin30) - labelOffsetY;
-					skillText.setAttribute('transform', `translate(${skillTextOffsetX} ${skillTextOffsetY}) skewY(30) scale(0.8660 1)`); // TODO calculate translation
-
-					skillText = document.createElementNS(svgNamespace, 'g');
-					i++;
-
-				}
-
-				leftSvgPoint = charts.createSVGPoint();
-				leftSvgPoint.x = points[points.length - 1].x;
-				leftSvgPoint.y = points[points.length - 1].y;
-				leftFace.points.appendItem(leftSvgPoint);
-
-			}
-
-			for (let skillGroup of skills) {
-				plotChart(skillGroup);
-			}
-
-		})();
-	</script>
 
 	<!-- bibliotecas de terceiros -->
 	<script src="../js/three.js"></script>
