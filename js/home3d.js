@@ -2,7 +2,7 @@ import { Css3DObjectBuilder, Menu, SceneManager } from './navigation3d.js';
 import { DrawingCanvas } from './drawingCanvas.js';
 import { Languages } from './languages.js';
 import { Parallax } from './parallax.js';
-import { converter, domReadyPromise, LoopManager } from './utils.js';
+import { domReadyPromise, LoopManager } from './utils.js';
 
 
 
@@ -88,22 +88,6 @@ const buildScene = (sceneManager) => {
 		.translateZ(offsetFZ + 40)
 		.build();
 
-	const objectF3 = new Css3DObjectBuilder()
-		.element('dominiotecnico')
-		.copy(ancoraBiografia)
-		.rotateX(intervaloRotacaoBiografia * 3)
-		.translateX(offsetEspiralBiografia * 3)
-		.translateZ(offsetFZ + 120)
-		.build();
-
-	const objectF4 = new Css3DObjectBuilder()
-		.element('softwares')
-		.copy(ancoraBiografia)
-		.rotateX(intervaloRotacaoBiografia * 4)
-		.translateX(offsetEspiralBiografia * 4)
-		.translateZ(offsetFZ)
-		.build();
-
 	const objectF5 = new Css3DObjectBuilder()
 		.element('experiencia')
 		.copy(ancoraBiografia)
@@ -129,8 +113,6 @@ const buildScene = (sceneManager) => {
 
 	sceneManager.add(objectF1);
 	sceneManager.add(objectF2);
-	sceneManager.add(objectF3);
-	sceneManager.add(objectF4);
 	sceneManager.add(objectF5);
 	sceneManager.add(objectF6);
 
@@ -159,32 +141,7 @@ const buildScene = (sceneManager) => {
 	const menuBiografia = new Menu('menuBiografia');
 	const menuBio = new Menu('menuBio'); // inline menu in hte tl;dr content
 
-	/*
-	const domMenuBio = document.getElementById('menuBiografia');
-	const domMenuArtigos = document.getElementById('menuArtigos');
-
-	menuNav.addEventListener('click', (evento) => {
-		let label = evento.target.innerText.toLowerCase();
-		switch (label) {
-			case 'biografia':
-				domMenuArtigos.style.display = 'none';
-				domMenuBio.style.display = 'flex';
-				break;
-			case 'artigos':
-				domMenuBio.style.display = 'none';
-				domMenuArtigos.style.display = 'flex';
-				break;
-			default:
-				domMenuBio.style.display = 'none';
-				domMenuArtigos.style.display = 'none';
-				break;
-		}
-	});
-
-	domMenuBio.style.display = 'flex'; // TODO melhorar isso
-	*/
-
-	buildScene(sceneManager); // TODO não focar em um inicialmente, mas deixar o círculo rodando suavemente e posicionar a câmera no meio
+	buildScene(sceneManager);
 
 	// TODO loop manager deveria pausar o loop quando a janela perde foco ou não tem foco
 	loopManager.loop((deltaTime) => {
