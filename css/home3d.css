@@ -2,6 +2,13 @@ a {
 	font-family: inherit;
 }
 
+/* Cores */
+/* ===== */
+
+:root {
+	--highlight-color: #00DE27; /*#CE004F;*/
+}
+
 /* Cabeçalho */
 /* ========= */
 
@@ -65,7 +72,7 @@ nav div {
 
 nav a {
 	font-size: 18px;
-	color: #E52E78;
+	color: var(--highlight-color);
 	padding-left: 5px;
 	padding-right: 5px;
 	text-decoration: none;
@@ -189,26 +196,8 @@ section > div {
 	padding-bottom: 35px;
 }
 
-.mapas {
-	width: 825px;
-}
-
-.mapa {
-	width: 750px;
-	height: 275px;
-}
-
-/* texto dos balões do google maps */
-.gm-style .gm-style-iw {
-	color: hsl(0, 0%, 30%);
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 10px;
-	font-weight: bold;
-}
-
 .biografia {
-	height: 350px;
+	height: 380px;
 }
 
 .biografia > div {
@@ -373,7 +362,7 @@ section > div {
 	/*vertical-align: baseline;*/
 	font-size: 31px;
 	line-height: 31px;
-	color: #E52E78;
+	color: var(--highlight-color);
 	/*color: hsl(0, 0%, 30%);
 	transform-origin: left top;*/
 	transform: none;
@@ -385,7 +374,7 @@ section > div {
 }
 
 .sub time {
-	color: #E52E78;
+	color: var(--highlight-color);
 }
 
 .idiomas {
@@ -505,28 +494,17 @@ section > div {
 	display: block;
 }
 
-.dominiotecnico {
-	width: 830px;
-	height: 390px; /* 360 */
-}
-
 /* Softwares */
 /* ========= */
 
-.softwares,
 .etc {
 	width: 870px;
 	height: 210px;
 }
 
 .experiencia h2,
-.softwares h2,
 .antigamente h2 {
 	margin-bottom: 12px;
-}
-
-.softwares ul {
-	list-style-type: none;
 }
 
 /* Experiencia */

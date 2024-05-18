@@ -22,6 +22,13 @@
 	font-style: normal;
 }
 
+/* Cores */
+/* ===== */
+
+:root {
+	--highlight-color: #00DE27; /*#CE004F;*/
+}
+
 /* Geral */
 /* ===== */
 
@@ -72,14 +79,6 @@ h2 {
 }
 
 a {
-	color: #CE004F;
+	color: var(--highlight-color);
 	font-family: Oswald;
-}
-
-/* ? */
-/* ====== */
-
-body {
-	/*display: flex;
-	flex-direction: column;*/
 }
