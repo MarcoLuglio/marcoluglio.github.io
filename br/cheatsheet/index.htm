@@ -228,7 +228,13 @@ fun main(args: Array&lt;String&gt;) {
 <div class='codeblock'>
 <p>Java - Olá Mundo - OlaMundo.java</p>
 <code class='java'
->public class OlaMundo {
+>// Java 21+
+void main() {
+	System.out.println("Olá Mundo");
+}
+
+// Java 20-
+public class OlaMundo {
 	// requer um método estático main em uma classe
 	public static void main(String[] args) {
 		System.out.println("Olá Mundo");
@@ -691,6 +697,9 @@ ou interpretada
 
 <div class='codeblock'>
 <p>F#</p>
+Process virtual machine (<abbr title='Common language runtime'>CLR</abbr>)
+<br />Stack based vm
+<br />* .NET native é nativo
 </div>
 
 <div class='codeblock'>
@@ -1958,7 +1967,7 @@ JavaScript, assim como C++ não possui padrão de documentação. Porém, o caso
 
 <section>
 
-<h2 id='declaracaodevariaveis'>Declaração de Variáveis</h2>
+<h2 id='declaracaodevariaveis'>Declaração de Variáveis (e constantes)</h2>
 
 <div class='comparison'>
 
@@ -2170,7 +2179,9 @@ const x:int = 5; // constante</code
 # erros de digitação podem introduzir bugs
 # indesejados...
 x = 5
-x = 'dynamic type'</code
+x = 'dynamic type'
+
+x:int = 5</code
 >
 </div>
 
@@ -3076,7 +3087,14 @@ var n = (k || k === 0) ? k : 10;</code
 >
 
 # qualquer tipo é sempre nullable
-k = None</code
+k = None
+
+# mas podemos deixar explícito em funções com
+
+from typing import Union, Optional
+
+def foo(arg:Optional[int] = None) -> None:
+def foo(arg:int | None) -> int | None:</code
 >
 </div>
 
@@ -11675,7 +11693,7 @@ if not condition1
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format - main.wasm</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 >i32.const 0
 ;; change to positive number (true)
@@ -11706,7 +11724,14 @@ if not condition1
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
 <code class='llvm'
-></code
+>if:
+	%cond = icmp eq i32 %a, %b
+	br i1 %cond, label %then, label %else
+then:
+	ret i32 1 ;; or jump to label endIf
+else:
+	ret i32 0
+endIf:</code
 >
 </div>
 
@@ -11989,7 +12014,7 @@ end</code
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format - main.wasm</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >
@@ -12628,7 +12653,7 @@ for tickMark in stride(from: 0, through: minutes, by: minuteInterval) {
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format - main.wasm</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >
@@ -17235,14 +17260,14 @@ extension methods podem acessar private?
 
 <section>
 
-<h2 id='excecoes'>Exceções</h2>
+<h2 id='excecoes'>Exceções e falhas</h2>
 
 <div class='comparison'>
 
 <div class='codeblock'>
 <p>Rust</p>
 <code class='rust multipart'
->// retornar múltiplos valores com Result&lt;R, E&gt;
+>// retorna múltiplos valores com Result&lt;R, E&gt;
 
 fn may_return_error(x:i32) -&gt; Result&lt;i32, &amp;'static str&gt; {
 	None =&gt; Err("Error"), // retorna um erro
@@ -17297,7 +17322,7 @@ let result = r#try!(may_panic()); // 2018 legacy</code
 <div class='codeblock'>
 <p>Go</p>
 <code class='go'
->// retornar múltiplos valores
+>// retorna múltiplos valores
 
 func mayReturnError(fileName string) (content string, err error) {
 
@@ -17362,6 +17387,19 @@ try {
 	// roda se jogou uma exceção
 } catch (...) {
 	// roda sempre, independente se uma exceção ocorreu ou não
+}
+
+// ou retorna múltiplos valores com expected&lt;R, E&gt;
+// C++23 +
+
+#include &lt;expected&gt;
+
+auto mayReturnError(int x) -> std::expected&lt;int, parse_error&gt; {
+	if (x != 0) {
+		return x;
+	} else {
+		return std::unexpected(parse_error::invalid_input);
+	}
 }</code
 >
 
@@ -17466,7 +17504,34 @@ let result = try! podeOuNao()
 <div class='codeblock'>
 <p>Kotlin</p>
 <code class='kotlin'
-></code
+>try {
+	throw Exception() // gera uma exceção
+} catch (ex:Exception) {
+	// roda se jogou uma exceção
+} finally {
+	// roda sempre
+}
+
+try {
+	// sem finally
+} catch {
+	// roda se jogou uma exceção
+}
+
+try {
+	// sem catch
+} finally {
+	// roda sempre
+}
+
+// ou retorna múltiplos valores com Result&lt;T&gt;
+// não é necessário especificar o tipo da exceção
+// pois ela sempre herda da classe Throwable
+
+if (x != 0) {
+	return Result.failure(Exception())
+}
+return Result.success(x)</code
 >
 </div>
 
@@ -17491,51 +17556,43 @@ let result = try! podeOuNao()
 
 <p>Java - Main.java</p>
 <code class='java'
->public class Main {
+>// para outras funções, é esperado que
+// a exceção seja tratada dentro dela mesma
+void main() {
 
-	// para outras funções, é esperado que
-	// a exceção seja tratada dentro dela mesma
-	public static void main(String[] args) {
+	PodeOuNao problematico = new PodeOuNao();
 
-		PodeOuNao problematico = new PodeOuNao();
+	// para tratar exceções
 
-		// para tratar exceções
+	// obrigatório tratar ou indicar que vai propagar
+	<strong class='small'>try {</strong>
+		<strong>problematico.checkedMethod();</strong>
+	<strong class='small'>} catch (Exception ex) {</strong>
+		// roda se jogou uma exceção
+	<strong>} finally {</strong>
+		// roda sempre
+	<strong>}</strong>
 
-		// obrigatório tratar ou indicar que vai propagar
-		<strong class='small'>try {</strong>
-			<strong>problematico.checkedMethod();</strong>
-		<strong class='small'>} catch (Exception ex) {</strong>
-			// roda se jogou uma exceção
-		<strong>} finally {</strong>
-			// roda sempre
-		<strong>}</strong>
-
-		problematico.uncheckedMethod();
-
-	}
+	problematico.uncheckedMethod();
 
 }</code
 >
 
 <p>Java - Main.java</p>
 <code class='java'
->public class Main {
+>void main() {
 
-	public static void main(String[] args) {
+	PodeOuNao problematico = new PodeOuNao();
 
-		PodeOuNao problematico = new PodeOuNao();
+	// para tratar exceções
 
-		// para tratar exceções
-
-		// opcional tratar ou indicar que vai propagar
-		try {
-			problematico.uncheckedMethod();
-		} catch (Exception ex) {
-			// roda se jogou uma exceção
-		} finally {
-			// roda sempre
-		}
-
+	// opcional tratar ou indicar que vai propagar
+	try {
+		problematico.uncheckedMethod();
+	} catch (Exception ex) {
+		// roda se jogou uma exceção
+	} finally {
+		// roda sempre
 	}
 
 }</code
@@ -17585,15 +17642,69 @@ try {
 	// sem catch
 } finally {
 	// roda sempre
-}</code
+}
+
+// não existe um tipo específico para retornar múltiplos valores
+// podemos usar tipos genéricos, tuples, ou alguns métodos de
+// APIs usam bool TryMetodo(out T Result), porém essa assinatura
+// não retorna mais detalhes sobre o erro</code
 >
 </div>
 
 <div class='codeblock'>
 <p>Dart</p>
 <code class='dart'
->
-</code
+>// para erros que não devem ser pegos, usar a classe Error
+
+// try on catch finally com Exception
+try {
+	throw Exception()
+} on Exception catch (ex) {
+	print('Exception details:\n $e');
+} catch (ex, s) {
+	print('Exception details:\n $e');
+	print('Stack trace:\n $s');
+} finally {
+	//
+}
+
+// ou retorna múltiplos valores com records
+
+// poderia definir o retorno como (int, Exception)
+// e recuperar os valores pela posição apenas
+({int x, Exception ex}) mayReturnError(int x) {
+	if (x != 0) {
+		return (x, null);
+	}
+	return (x, Exception());
+};
+
+var result = mayReturnError(1);
+
+print(result.x);
+print(result.ex);
+print(result.$1);
+print(result.$2);
+
+try {
+	throw Exception("Error"); // gera uma exceção
+} on (ex) {
+	// roda se jogou uma exceção
+} finally {
+	// roda sempre
+}
+
+try {
+	// sem on ou finally
+} catch {
+	// roda se jogou uma exceção
+}
+
+try {
+	// sem on ou catch
+} finally {
+	// roda sempre
+}</code
 >
 </div>
 
@@ -17703,7 +17814,7 @@ End Sub</code>
 <div class='codeblock'>
 <p>Ada</p>
 <code class='ada'
-></code
+>-- raise begin exception when</code
 >
 </div>
 
@@ -17738,7 +17849,11 @@ End Sub</code>
 <div class='codeblock'>
 <p>Haskell</p>
 <code class='haskell'
-></code
+>-- retorna múltiplos valores com Either a b
+
+mayReturnError :: Float -&gt; Either String Float
+mayReturnError 0 = Left "Divison by zero"
+mayReturnError x = Right (x)</code
 >
 </div>
 
@@ -17748,7 +17863,10 @@ End Sub</code>
 	<li>a</li>
 </ol>
 
-<p>A</p>
+<p>
+	A página oficial do Kotlin possui alguns <a rel='external nofollow' href='https://kotlinlang.org/docs/exceptions.html#checked-exceptions'>links e citações sobre checked exceptions.</a>
+	Me parece que diversos autores não recomendam seu uso.
+</p>
 
 </section>
 
@@ -19651,7 +19769,7 @@ observableCollection.Add(new Subject());
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format - main.wasm</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >
@@ -24924,6 +25042,8 @@ End Sub</code
 
 <h3 id='heranca'>Herança</h3>
 
+<!-- TODO instanciar e colocar ordem de execução dos construtores -->
+
 <div class='comparison'>
 
 <div class='codeblock'>
@@ -29037,7 +29157,7 @@ JavaScript ainda não chegou lá.</p>
 </div>
 
 <div class='codeblock'>
-<p>Web Assembly text format - main.wasm</p>
+<p>Web Assembly text format</p>
 <code class='webassembly'
 ></code
 >

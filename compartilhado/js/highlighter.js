@@ -6826,6 +6826,9 @@ const KotlinTypesToken = class KotlinTypesToken extends Token {
 				'Thread',
 				'InterruptedException',
 
+				'Exception',
+				'Result',
+
 				'T',
 				'U',
 				'V'
@@ -16562,9 +16565,14 @@ const HaskellLexer = class HaskellLexer extends Lexer {
 			_matchFunction: {value: context._matchTypesSequence, writable: true},
 			_typesSequence: {value: new SourceSimpleCharacterSequenceToken('type', [
 				'Maybe',
+				'Either',
 				'Int',
 				'Integral',
-				'Double'
+				'Float',
+				'Double',
+				'String',
+				'Left',
+				'Right'
 			])}
 		});
 
@@ -17179,6 +17187,7 @@ const WebAssemblyKeywordToken = class WebAssemblyKeywordToken extends SourceSimp
 			'export',
 			'data',
 			'memory',
+			'local',
 			'global',
 			'func',
 			'param',
@@ -17189,6 +17198,7 @@ const WebAssemblyKeywordToken = class WebAssemblyKeywordToken extends SourceSimp
 			'end',
 			'if',
 			'br_if',
+			'br_table',
 			'then',
 			'else',
 			'select',
@@ -17517,8 +17527,8 @@ const LlvmLexer = class LlvmLexer extends Lexer {
 		// this._pushLiteralTokens();
 		this._pushInvisibleTokens();
 
-		// FIXME não pode ter espaço em branco na frente dele
-		//this._tokenPool.push(new HaskellSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
+		this._tokenPool.push(new LlvmLabelToken());
+		this._tokenPool.push(new LlvmSymbolToken()); //  DEIXE POR ÚLTIMO para garantir que alternativas mais específicas sejam priorizadas
 
 	}
 
@@ -17641,6 +17651,9 @@ const LlvmLexer = class LlvmLexer extends Lexer {
 			'to',
 			'vaarg',
 			'vanext',
+
+			'icmp',
+			'eq',
 
 			'true',
 			'false',
@@ -17805,6 +17818,128 @@ const LlvmPunctuationToken = class LlvmPunctuationToken extends SourceSimpleChar
 			'}'
 
 		]);
+
+	}
+
+};
+
+
+
+const LlvmLabelIterator = class LlvmLabelIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isLetterCharacter: {value: isLetterCharacterRegex},
+			_isWordCharacter: {value: isWordCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchLetter;
+
+	}
+
+	_matchLetter(matchCharacter) {
+
+		if (matchCharacter !== null && this._isLetterCharacter.test(matchCharacter)) {
+			this._matchFunction = this._matchWordOrColon;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchWordOrColon(matchCharacter) {
+
+		if (matchCharacter !== null && this._isWordCharacter.test(matchCharacter)) {
+			return true;
+		}
+
+		if (matchCharacter === ':') {
+			this._matchFunction = this._matchEnd;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+};
+
+
+
+/**
+ * Token for Llvm labels
+ */
+const LlvmLabelToken = class LlvmLabelToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('label', new LlvmLabelIterator());
+	}
+};
+
+
+
+const LlvmSymbolToken = class LlvmSymbolToken extends SourcePatternIteratorToken {
+	constructor() {
+		super('symbol', new LlvmSymbolIterator());
+	}
+};
+
+
+
+const LlvmSymbolIterator = class LlvmSymbolIterator  extends SourcePatternIterator {
+
+	constructor() {
+
+		super();
+
+		Object.defineProperties(this, {
+			_isWordCharacter: {value: isWordCharacterRegex},
+			_isLetterCharacter: {value: isLetterCharacterRegex}
+		});
+
+		Object.seal(this);
+
+		this._matchFunction = this._matchBeginningValidCharacter;
+
+	}
+
+	_matchBeginningValidCharacter(matchCharacter) {
+
+
+		if (matchCharacter === '%') {
+			this._matchFunction = this._matchValidCharacter;
+			return true;
+		}
+
+		this._hasNext = false;
+		return false;
+
+	}
+
+	_matchValidCharacter(matchCharacter) {
+
+		if (matchCharacter === '_'
+			//|| matchCharacter === '@' // confirmar isso
+			|| (matchCharacter !== null && this._isWordCharacter.test(matchCharacter))
+			) {
+
+			this._isComplete = true;
+			return true;
+		}
+
+		if (this._isComplete) {
+			return this._matchEnd(matchCharacter);
+		}
+
+		this._hasNext = false;
+		return false;
 
 	}
 
