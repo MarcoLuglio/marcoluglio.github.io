@@ -5,7 +5,7 @@
 	margin-left: calc(-20px - 330px);
 	overflow: scroll;
 	z-index: 3;
-	background-color: hsl(0deg, 0%, 100%);
+	background-color: #2E2F31;
 	width: 350px;
 	transition: margin-left 300ms;
 }
@@ -17,7 +17,12 @@
 	margin-top: 0;
 	padding-left: 20px;
 	padding-top: 30px;
-	background-color: hsl(0deg, 0%, 100%);
+	color: #00D9D2;
+	background-color: #494B4F;
+}
+
+.scroll .indice a {
+	color: #B6C2D3;
 }
 
 @media (prefers-color-scheme: dark) {

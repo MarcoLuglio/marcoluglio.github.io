@@ -24,7 +24,7 @@
 
 :root {
 
-	--background-light-color: #FBFBFB;
+	--background-light-color: hsl(209, 100%, 99%);
 	--background-dark-color: #2E2F31;
 
 	--foreground-light-color: #505B66;
@@ -33,32 +33,35 @@
 	--punctuation-light-color: #7F8EA3;
 	--punctuation-dark-color: #788598;
 
-	--comments-light-color: #D10077;
+	--comments-light-color: #accad0;
 	--comments-dark-color: #B80068; /* TODO */
 
-	--keywords-light-color: #0040B4;
+	--keywords-light-color: hsl(183, 100%, 45%);/*#0040B4;*/
 	--keywords-dark-color: #0076E6;
 
 	--boolean-light-color: #0040B4;
 	--boolean-dark-color: #0076E6;
 
-	--numbers-light-color: #0040B4;
+	--numbers-light-color: #006e70;
 	--numbers-dark-color: #0076E6;
 
-	--strings-light-color: #0099FF;
+	--number-details-light-color: #89B7ED;
+	--number-details-dark-color: #89B7ED; /* TODO */
+
+	--strings-light-color: #9c004d;
 	--strings-dark-color: #00A6FF;
 
 	--i18n-light-color: #BDD7EE;
-	--i18n-dark-color: #BDD7EE;
+	--i18n-dark-color: #BDD7EE; /* TODO */
 
 	--chars-light-color: #0076E6;
 	--chars-dark-color: #0077FF; /* TODO */
 
-	--types-light-color: #8AD100;
+	--types-light-color: #00a6b9;/*#8AD100;*/
 	--types-dark-color: #91E500;
 
-	--type-values-light-color: #C5E0B3;
-	--type-values-dark-color: #C5E0B3;
+	--type-details-light-color: #C5E0B3;
+	--type-details-dark-color: #C5E0B3; /* TODO */
 
 	--attributes-light-color: #7F8EA3;
 	--attributes-dark-color: #788598;
@@ -73,10 +76,10 @@
 	--shell-parameters-light-color: #8AD100;
 	--shell-parameters-dark-color: #91E500;
 
-	--highlight-light-color: hsl(195, 100%, 50%);
+	--highlight-light-color: hsl(183, 100%, 45%);/*hsl(195, 100%, 50%);*/
 	--highlight-dark-color: hsl(201, 100%, 43%);
 
-	--highlight-comments-light-color: #D10077;
+	--highlight-comments-light-color: #9E006F;
 	--highlight-comments-dark-color: #9E006F;
 
 	--highlight-keywords-light-color: hsl(195, 100%, 50%);
@@ -211,7 +214,7 @@ a {
 }
 
 code {
-	font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', Consolas, 'SF Mono', Menlo, 'Courier New', Courier;
+	font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'SF Mono', Menlo, 'Courier New', Courier;
 	white-space: pre;
 	overflow-x: auto;
 }
@@ -371,8 +374,9 @@ div.codeblock.bubaloop p {
 	padding-top: 2px;
 	padding-bottom: 3px;
 	font-weight: bold;
+	color: #00BFB9;
 	border-bottom: 1px solid #ffffff;
-	border-right: 5px solid var(--highlight-comments-light-color);
+	background-color: #DBE1ED;
 	background-image: url(../imagens/fundoBubaloop.png);
 	background-position: left top;
 	background-repeat: no-repeat;
@@ -1148,7 +1152,7 @@ div.codeblock.bubaloop p + code {
 /* Objective-C */
 
 .bubaloop.objectivec .objcstring {
-	color: #0099FF;
+	color: var(--strings-light-color);
 }
 
 .bubaloop.highlight.objectivec strong .objcstring {
@@ -1971,7 +1975,7 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop .licuid .typeValue,
 .bubaloop.licuid .typeValue {
-	color: var(--type-values-light-color);
+	color: var(--type-details-light-color);
 }
 
 .bubaloop .licuid .string,
@@ -1984,9 +1988,25 @@ div.codeblock.bubaloop p + code {
 	color: var(--i18n-light-color);
 }
 
+.bubaloop .licuid .type + .numberBase,
+.bubaloop.licuid .type + .numberBase,
+.bubaloop .licuid .type + .numberDetails,
+.bubaloop.licuid .type + .numberDetails,
+.bubaloop .licuid .type + .i18n,
+.bubaloop.licuid .type + .i18n {
+	color: var(--type-details-light-color);
+}
+
 .bubaloop .licuid .number,
 .bubaloop.licuid .number {
 	color: var(--numbers-light-color);
+}
+
+.bubaloop .licuid .numberBase,
+.bubaloop.licuid .numberBase,
+.bubaloop .licuid .numberDetails,
+.bubaloop.licuid .numberDetails {
+	color: var(--number-details-light-color);
 }
 
 .bubaloop .licuid .meta,
@@ -2020,7 +2040,7 @@ div.codeblock.bubaloop p + code {
 
 	.bubaloop .licuid .typeValue,
 	.bubaloop.licuid .typeValue {
-		color: var(--type-values-dark-color);
+		color: var(--type-details-dark-color);
 	}
 
 	.bubaloop .licuid .string,
@@ -2033,9 +2053,19 @@ div.codeblock.bubaloop p + code {
 		color: var(--i18n-dark-color);
 	}
 
+	.bubaloop .licuid .type + .i18n,
+	.bubaloop.licuid .type + .i18n {
+		color: var(--type-details-dark-color);
+	}
+
 	.bubaloop .licuid .number,
 	.bubaloop.licuid .number {
 		color: var(--numbers-dark-color);
+	}
+
+	.bubaloop .licuid .numberDetails,
+	.bubaloop.licuid .numberDetails {
+		color: var(--number-values-dark-color);
 	}
 
 	.bubaloop .licuid .meta,
