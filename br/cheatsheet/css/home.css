@@ -2,7 +2,7 @@
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	margin-left: calc(-20px - 330px);
+	margin-left: calc(-40px - 330px);
 	overflow: scroll;
 	z-index: 3;
 	background-color: #2E2F31;
@@ -36,7 +36,7 @@
 }
 
 .scroll .indice:hover {
-	margin-left: -20px;
+	margin-left: -40px;
 }
 
 .scroll #indice {
