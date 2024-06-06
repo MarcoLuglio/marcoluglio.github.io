@@ -566,8 +566,8 @@ Efeito de mancha da sombra; quanto maior o valor, maior a mancha.
 
 		this._context.save();
 
-		this._context.strokeStyle = 'hsl(195, 100%, 50%)';
-		this._context.shadowColor = 'hsl(195, 100%, 50%)';
+		this._context.strokeStyle = 'hsl(178, 100%, 35%)';
+		this._context.shadowColor = 'hsl(178, 100%, 35%)';
 		this._context.lineWidth = 1;
 		//this._context.setLineDash([5, 5]);
 
@@ -599,8 +599,8 @@ Efeito de mancha da sombra; quanto maior o valor, maior a mancha.
 
 		this._context.save();
 
-		this._context.strokeStyle = 'hsl(215, 100%, 50%)';
-		this._context.shadowColor = 'hsl(215, 100%, 50%)';
+		this._context.strokeStyle = 'hsl(178, 100%, 65%)';
+		this._context.shadowColor = 'hsl(178, 100%, 65%)';
 		this._context.lineWidth = 1;
 
 		this._context.beginPath();
@@ -668,8 +668,8 @@ Efeito de mancha da sombra; quanto maior o valor, maior a mancha.
 
 		this._context.save();
 
-		this._context.strokeStyle = 'hsl(336, 78%, 54%)';
-		this._context.shadowColor = 'hsl(336, 78%, 54%)';
+		this._context.strokeStyle = 'hsl(331, 53%, 41%)';
+		this._context.shadowColor = 'hsl(336, 53%, 41%)';
 		this._context.lineWidth = 1;
 
 		this._context.beginPath();
