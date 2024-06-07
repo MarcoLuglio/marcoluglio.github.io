@@ -20556,7 +20556,7 @@ int main(int argc, const char* argv[]) {
 
 <code class='cpp'
 ><strong>// TODO verificar isso tudo</strong>
-<strong>// PS: unique_ptr devolve um ponteiro não copiável quando desreferenciado</strong>
+<strong class='comment small'>// PS: unique_ptr devolve um ponteiro não copiável quando desreferenciado</strong>
 auto dataQueue = make_unique<span>&lt;<span>Model</span>&gt;</span>();
 auto copia = *dataQueue; // erro: não copiável
 <strong>// por isso precisamos passar para as threads, um ponteiro do ponteiro</strong>
@@ -21497,7 +21497,7 @@ let <strong class='small'>webWorkerOp1</strong> = new <strong class='small'>Shar
 
 // envia mensagens para a worker thread compartilhada
 webWorkerOp1<strong>.port</strong>.postMessage(['algum', 'valor']);
-webWorkerOp1<strong>.port</strong>.postMessage([10, 20]);
+webWorkerOp1<strong class='small'>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
@@ -21515,7 +21515,7 @@ let <strong>webWorkerOp2</strong> = new <strong>SharedWorker(</strong>'worker.js
 
 // envia mensagens para a worker thread compartilhada
 webWorkerOp2<strong>.port</strong>.postMessage(['misturar', 2]);
-webWorkerOp2<strong>.port</strong>.postMessage([10, 20]);
+webWorkerOp2<strong class='small'>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
@@ -23246,6 +23246,192 @@ end</code
 </div>
 
 </div>
+
+
+
+<section>
+
+<h3 id='records'>Records</h3>
+
+<div class='comparison'>
+
+<div class='codeblock'>
+<p>Rust</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Go</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>C++</p>
+<code class='cpp'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Objective-C</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Swift</p>
+<code class='swift'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Kotlin</p>
+<code class='kotlin'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Java</p>
+<code class='java'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>C#</p>
+<code class='cs'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>Dart</p>
+<code class='dart'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>TypeScript</p>
+<code class='typescript'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>JavaScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>ActionScript</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Python</p>
+<code class='python'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p>PHP</p>
+<code class='php'
+>
+</code
+>
+</div>
+
+<div class='codeblock'>
+<p><abbr title='Visual Basic for Applications'>VBA</abbr> / <abbr title='Visual Basic 6'>VB6</abbr></p>
+-
+</div>
+
+<div class='codeblock'>
+<p>Ada</p>
+<code class='ada'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Object Pascal (Delphi)</p>
+<code class='objectpascal'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Ruby</p>
+<code class='ruby'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Smalltalk</p>
+<code class='smalltalk'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Common Lisp</p>
+<code class='commonlisp'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Haskell</p>
+<code class='haskell'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>F#</p>
+<code class='fs'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Web Assembly text format</p>
+-
+</div>
+
+<div class='codeblock'>
+<p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
+</div>
+
+<div class='codeblock'>
+<p>Assembly</p>
+-
+</div>
+
+</div>
+
+<ol>
+	<li>a</li>
+</ol>
+
+<p>A</p>
+
+</section>
 
 
 
@@ -28228,7 +28414,7 @@ def say_whee():
 
 <section>
 
-<h2 id='templateid'>Interface Binária C <span>Foreign Function Interface</span></h2>
+<h2 id='ffi'>Interface Binária C <span>Foreign Function Interface</span></h2>
 
 
 
@@ -28994,7 +29180,7 @@ JavaScript ainda não chegou lá.</p>
 
 <section>
 
-<h2 id='templateid'>Arquitetura de plug-ins <span>(carregamento de bibliotecas em runtime)</span></h2>
+<h2 id='plugins'>Arquitetura de plug-ins <span>(carregamento de bibliotecas em runtime)</span></h2>
 
 <div class='comparison'>
 
