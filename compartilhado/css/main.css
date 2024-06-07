@@ -24,7 +24,7 @@
 
 :root {
 
-	--background-light-color: hsl(209, 100%, 99%);
+	--background-light-color: hsl(209deg, 100%, 99%);
 	--background-dark-color: #2E2F31;
 
 	--foreground-light-color: #505B66;
@@ -36,13 +36,13 @@
 	--comments-light-color: #accad0;
 	--comments-dark-color: #B80068; /* TODO */
 
-	--keywords-light-color: hsl(183, 100%, 45%);/*#0040B4;*/
+	--keywords-light-color: hsl(183deg, 100%, 45%);/*#0040B4;*/
 	--keywords-dark-color: #0076E6;
 
 	--boolean-light-color: #0040B4;
 	--boolean-dark-color: #0076E6;
 
-	--numbers-light-color: #006e70;
+	--numbers-light-color: hsl(183deg, 100%, 45%);
 	--numbers-dark-color: #0076E6;
 
 	--number-details-light-color: #89B7ED;
@@ -66,8 +66,8 @@
 	--attributes-light-color: #7F8EA3;
 	--attributes-dark-color: #788598;
 
-	--labels-light-color: #8D00FF;
-	--labels-dark-color: #8D00FF; /* TODO */
+	--labels-light-color: #FF0048;
+	--labels-dark-color: #FF0048; /* TODO */
 
 	/*
 	#505B66 used for dark directives?
@@ -76,14 +76,20 @@
 	--shell-parameters-light-color: #8AD100;
 	--shell-parameters-dark-color: #91E500;
 
-	--highlight-light-color: hsl(183, 100%, 45%);/*hsl(195, 100%, 50%);*/
-	--highlight-dark-color: hsl(201, 100%, 43%);
+	--highlight-light-color: hsl(183deg, 100%, 45%);/*hsl(195, 100%, 50%);*/
+	--highlight-dark-color: hsl(201deg, 100%, 43%);
 
-	--highlight-comments-light-color: #9E006F;
-	--highlight-comments-dark-color: #9E006F;
+	--highlight-comments-light-color: hsl(202deg, 41%, 45%);/*#9E006F;*/
+	--highlight-comments-dark-color: hsl(202deg, 41%, 45%);
 
-	--highlight-keywords-light-color: hsl(195, 100%, 50%);
-	--highlight-keywords-dark-color: hsl(210, 100%, 25%);
+	--highlight-keywords-light-color: hsl(0deg, 100%, 100%);
+	--highlight-keywords-dark-color: hsl(210deg, 100%, 25%);
+
+	--highlight-boolean-light-color: hsl(0deg, 100%, 100%);
+	--highlight-boolean-dark-color: hsl(210deg, 100%, 25%);
+
+	--highlight-numbers-light-color: hsl(0deg, 100%, 100%);
+	--highlight-numbers-dark-color: hsl(210deg, 100%, 25%);
 
 }
 
@@ -392,7 +398,6 @@ div.codeblock.bubaloop p {
 
 div.codeblock.bubaloop p + code {
 	margin-top: 0;
-	/*padding-top: 0;*/
 }
 
 .bubaloop strong,
@@ -405,8 +410,8 @@ div.codeblock.bubaloop p + code {
 /* general */
 
 .bubaloop strong {
-	background-color: #F3F3F3;
-	box-shadow: 0 0 0 6px #F3F3F3; /* h v blur spread color */
+	background-color: hsl(202deg, 41%, 96%);
+	box-shadow: 0 0 0 6px hsl(202deg, 41%, 96%); /* h v blur spread color */
 	mix-blend-mode: darken;
 }
 
@@ -420,7 +425,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.highlight strong.small {
-	box-shadow: 0 0 0 4px var(--highlight-light-color); /* h v blur spread color */
+	box-shadow: 0 0 0 3px var(--highlight-light-color); /* h v blur spread color */
 }
 
 .bubaloop.highlight strong.comment {
@@ -526,21 +531,21 @@ div.codeblock.bubaloop p + code {
 	color: var(--keywords-light-color);
 }
 
-.bubaloop.highlight.generic .keyword,
-.bubaloop.highlight.rust .keyword,
-.bubaloop.highlight.go .keyword,
-.bubaloop.highlight.cpp .keyword,
-.bubaloop.highlight.swift .keyword,
-.bubaloop.highlight.cs .keyword,
-.bubaloop.highlight.kotlin .keyword,
-.bubaloop.highlight.java .keyword,
-.bubaloop.highlight.javascript .keyword,
-.bubaloop.highlight.dart .keyword,
-.bubaloop.highlight.python .keyword,
-.bubaloop.highlight.ruby .keyword,
-.bubaloop.highlight.php .keyword,
-.bubaloop.highlight.sql .keyword {
-	/*color: var(--highlight-keywords-light-color);*/
+.bubaloop.highlight.generic strong .keyword,
+.bubaloop.highlight.rust strong .keyword,
+.bubaloop.highlight.go strong .keyword,
+.bubaloop.highlight.cpp strong .keyword,
+.bubaloop.highlight.swift strong .keyword,
+.bubaloop.highlight.cs strong .keyword,
+.bubaloop.highlight.kotlin strong .keyword,
+.bubaloop.highlight.java strong .keyword,
+.bubaloop.highlight.javascript strong .keyword,
+.bubaloop.highlight.dart strong .keyword,
+.bubaloop.highlight.python strong .keyword,
+.bubaloop.highlight.ruby strong .keyword,
+.bubaloop.highlight.php strong .keyword,
+.bubaloop.highlight.sql strong .keyword {
+	color: var(--highlight-keywords-light-color);
 }
 
 .bubaloop.highlight.objectivec .keyword,
@@ -552,13 +557,13 @@ div.codeblock.bubaloop p + code {
 .bubaloop.highlight.commonlisp .keyword,
 .bubaloop.highlight.haskell .keyword,
 .bubaloop.highlight.fs .keyword {
-	/*color: var(--highlight-keywords-light-color);*/
+	color: var(--highlight-keywords-light-color);
 }
 
 .bubaloop.highlight.webassembly .keyword,
 .bubaloop.highlight.llvm .keyword,
 .bubaloop.highlight.assembly .keyword {
-	/*color: var(--highlight-keywords-light-color);*/
+	color: var(--highlight-keywords-light-color);
 }
 
 .bubaloop.generic .number,
@@ -576,6 +581,23 @@ div.codeblock.bubaloop p + code {
 .bubaloop.php .number,
 .bubaloop.sql .number {
 	color: var(--numbers-light-color);
+}
+
+.bubaloop.highlight.generic strong .number,
+.bubaloop.highlight.rust strong .number,
+.bubaloop.highlight.go strong .number,
+.bubaloop.highlight.cpp strong .number,
+.bubaloop.highlight.swift strong .number,
+.bubaloop.highlight.cs strong .number,
+.bubaloop.highlight.kotlin strong .number,
+.bubaloop.highlight.java strong .number,
+.bubaloop.highlight.javascript strong .number,
+.bubaloop.highlight.dart strong .number,
+.bubaloop.highlight.python strong .number,
+.bubaloop.highlight.ruby strong .number,
+.bubaloop.highlight.php strong .number,
+.bubaloop.highlight.sql strong .number {
+	color: var(--highlight-numbers-light-color);
 }
 
 .bubaloop.objectivec .number,
@@ -1065,7 +1087,7 @@ div.codeblock.bubaloop p + code {
 /* Rust */
 
 .bubaloop.rust .lifetime {
-	color: #8D00FF;
+	color: #FF0048;
 }
 
 /* C++ */
@@ -1107,7 +1129,7 @@ div.codeblock.bubaloop p + code {
 }
 
 .bubaloop.javascript .regex {
-	color: #8D00FF;
+	color: #FF0048;
 }
 
 .bubaloop.javascript .functionName {
@@ -1137,7 +1159,7 @@ div.codeblock.bubaloop p + code {
 
 .bubaloop.assembly .section,
 .bubaloop.assembly .segment {
-	color: #8D00FF;
+	color: #FF0048;
 }
 
 .bubaloop.assembly .register {
@@ -1147,7 +1169,7 @@ div.codeblock.bubaloop p + code {
 /* SQL */
 
 .bubaloop.sql .function {
-	color: #8D00FF;
+	color: #FF0048;
 }
 
 /* Objective-C */
@@ -1171,7 +1193,7 @@ div.codeblock.bubaloop p + code {
 /* Visual Basic */
 
 .bubaloop.visualbasic .date {
-	color: #8D00FF;
+	color: #FF0048;
 }
 
 .bubaloop.visualbasic .functionName {
@@ -1753,7 +1775,7 @@ div.codeblock.bubaloop p + code {
 	/* Rust */
 
 	.bubaloop.rust .lifetime {
-		color: #8D00FF;
+		color: #FF0048;
 	}
 
 	/* C++ */
@@ -1795,7 +1817,7 @@ div.codeblock.bubaloop p + code {
 	}
 
 	.bubaloop.javascript .regex {
-		color: #8D00FF;
+		color: #FF0048;
 	}
 
 	.bubaloop.javascript .functionName {
@@ -1825,7 +1847,7 @@ div.codeblock.bubaloop p + code {
 
 	.bubaloop.assembly .section,
 	.bubaloop.assembly .segment {
-		color: #8D00FF;
+		color: #FF0048;
 	}
 
 	.bubaloop.assembly .register {
@@ -1835,7 +1857,7 @@ div.codeblock.bubaloop p + code {
 	/* SQL */
 
 	.bubaloop.sql .function {
-		color: #8D00FF;
+		color: #FF0048;
 	}
 
 	/* Objective-C */
@@ -1859,7 +1881,7 @@ div.codeblock.bubaloop p + code {
 	/* Visual Basic */
 
 	.bubaloop.visualbasic .date {
-		color: #8D00FF;
+		color: #FF0048;
 	}
 
 	.bubaloop.visualbasic .functionName {
