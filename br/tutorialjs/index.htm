@@ -4753,7 +4753,7 @@ let <strong class='small'>webWorkerOp1</strong> = new <strong class='small'>Shar
 
 // envia mensagens para a worker thread compartilhada
 webWorkerOp1<strong>.port</strong>.postMessage(['algum', 'valor']);
-webWorkerOp1<strong>.port</strong>.postMessage([10, 20]);
+webWorkerOp1<strong class='small'>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
@@ -4771,7 +4771,7 @@ let <strong>webWorkerOp2</strong> = new <strong>SharedWorker(</strong>'worker.js
 
 // envia mensagens para a worker thread compartilhada
 webWorkerOp2<strong>.port</strong>.postMessage(['misturar', 2]);
-webWorkerOp2<strong>.port</strong>.postMessage([10, 20]);
+webWorkerOp2<strong class='small'>.port</strong>.postMessage([10, 20]);
 
 // callback para recepção de mensagens
 // da worker thread
@@ -4843,10 +4843,10 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 	&lt;meta charset='utf-8' /&gt;
 	&lt;script src='//code.jquery.com/jquery-1.10.2.min.js'&gt;&lt;/script&gt;
 	<strong>&lt;script src='seosoquenaoS3.js'&gt;&lt;/script&gt;</strong>
-<strong>&lt;/head&gt;</strong>
+<strong class='small'>&lt;/head&gt;</strong>
 &lt;body&gt;
 	<strong>&lt;h1 id='tagTitulo'&gt;</strong>Acessibilidade e SEO&lt;/h1&gt;
-	<strong>&lt;p id='tagParagrafo'&gt;</strong>
+	<strong class='small'>&lt;p id='tagParagrafo'&gt;</strong>
 		Sim pequeno gafanhoto, html tem mais de 100 tags
 		diferentes além de table e div.
 	&lt;/p&gt;
@@ -4864,7 +4864,7 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 
 	// pega elementos da página pela id e os torna manipuláveis dentro do JavaScript
 	var titulo = document<strong>.getElementById('tagTitulo');</strong>
-	var paragrafo = document<strong>.getElementById('tagParagrafo');</strong>
+	var paragrafo = document<strong class='small'>.getElementById('tagParagrafo');</strong>
 
 	titulo.innerHTML = 'Black hat SEO';
 	paragrafo.attributes.add('style', 'display: none');
@@ -4873,7 +4873,7 @@ webWorkerOp2<strong>.port</strong>.onmessage = (event) => {
 
 <strong>// Espera o documento estar pronto para buscar na página</strong>
 <strong class='small'>jQuery(document).ready(</strong>function(evento) {
-	<strong>init();</strong>
+	<strong class='small'>init();</strong>
 }<strong>);</strong></code
 >
 </div>
