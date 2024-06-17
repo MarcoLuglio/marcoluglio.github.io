@@ -1,179 +1,104 @@
 <!DOCTYPE html>
-<html
-	xmlns='http://www.w3.org/1999/xhtml'
-	lang='en-US'
-	xml:lang='en-US'
-	>
+<html lang='en'>
 
-	<head>
+<head>
+	<meta charset='UTF-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<title>3D CSS tests</title>
+	<link href='../css/main.css' rel='stylesheet' type='text/css' media='screen, tv' />
+</head>
 
-		<meta charset='UTF-8' />
+<body>
+<div style='position: absolute; top: 0px; left: 0px; transform-style: preserve-3d; transform: rotateX(35deg) rotateY(45deg);'>
 
-		<!-- mobile tags -->
-		<!-- <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' /> -->
+	<!--
+	var M = matmul([[1, 0, 0], [0, cos(rx), -sin(rx)], [0, sin(rx), cos(rx)]],
+		[[cos(rz), -sin(rz), 0], [sin(rz), cos(rz), 0], [0, 0, 1]]);
+	M = toAffine(M);
+	if (!Is2D) {
+		const p = .0000 * Scale;  // doesn't make it better
+		M = affinemul([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, -p, 1]], M);
+	}
+	M = affinemul([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1. / Scale]], M);
 
-		<!-- FB Open Graph tags -->
-		<meta property='og:title' content='Marco Luglio' />
-		<meta property='og:type' content='website' />
-		<meta property='og:image' content='TODO' />
-		<meta property='og:url' content='http://marcoluglio.github.io' />
-		<meta property='og:locale' content='en_US' />
-		<meta property='fb:admins' content='1418167237' />
+	// calculate the position of the origin on screen
+	var win_w = canvas.width, win_h = canvas.height;
+	var control = $("control"),
+		ctr_w = Math.min(control.offsetWidth + 20, win_w), ctr_h = Math.min(control.offsetHeight + 20, win_h);
+	var Center = [win_w * win_w * win_h - ctr_w * ctr_w * ctr_h, win_w * win_h * win_h - ctr_w * ctr_h * ctr_h];
+	var A = 0.5 / (win_w * win_h - ctr_w * ctr_h);
+	Center[0] *= A, Center[1] *= A; Center[1] = Center[1];
+	M = affinemul([[1, 0, 0, Center[0]], [0, -1, 0, Center[1]], [0, 0, 1, 0], [0, 0, 0, 1]], M);
+	-->
 
-		<!-- ícone da barra de tarefas 64x64 px -->
-		<!--<link rel='icon' href='/favicon.ico' type='image/x-icon'>-->
-
-		<!-- Esses só na página 'about me' -->
-		<link rel='me' title='Marco Luglio' href='https://www.linkedin.com/in/marcodejulho/?locale=en_US' />
-		<link rel='me' title='Marco Luglio' href='https://www.facebook.com/marcoluglio2008' />
-		<link rel='me' title='Marco Luglio' href='https://stackoverflow.com/users/14263/marco-luglio' />
-
-		<!-- Formatação da página -->
-		<link href='../css/principal.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
-		<link href='../css/home3d.css' rel='stylesheet' type='text/css' media='screen, projection, tv' />
-
-		<title>Marco Luglio - Full Stack Software Engineer</title>
-
-	</head>
-	<body>
-
-	<div class='topo'>
-		<div class='gravatar'
-			><picture>
-				<source srcset="../imagens/marcoluglio.avif" type="image/avif" />
-				<source srcset="../imagens/marcoluglio.heic" type="image/heic" />
-				<source srcset="../imagens/marcoluglio.webp" type="image/webp" />
-				<img src="../imagens/marcoluglio.jpg" alt="Marco Luglio" />
-				</picture
-			></div
+	<header>
+		<h1 class='top'>Marco Luglio</h1>
+		<h2 class='front'>Full<br />Stack Software Engineer</h2>
+		<picture class='right'>
+			<source srcset='../images/marcoluglio.avif' type='image/avif' />
+			<source srcset='../images/marcoluglio.heic' type='image/heic' />
+			<source srcset='../images/marcoluglio.webp' type='image/webp' />
+			<img src='../images/marcoluglio.jpg' decoding='async' alt='Marco Luglio' />
+			</picture
 		>
-		<header>
-			<h1>Marco Luglio</h1>
-			<h2>Full Stack Software Engineer</h2>
-		</header>
-		<nav>
-			<div id='menuNav'>
-				<a href='#artigos'>Articles</a>
-				<a href='#desenhos'>Drawing</a>
-				<a href='#interacoes'>Interactions</a>
-				<a href='#contato'>Contact</a>
-			</div>
-			<div id='menuBiografia' class='menuBiografia'>
-				<a href='#biografia'><abbr title="Too long, didn't read">TL;DR</abbr></a>
-				<a href='#experiencia'>Experience</a>
-				<a href='#idiomas'>Languages</a>
-				<a href='#formacaoacademica'>Education</a>
-				<a href='#antigamente'>Used to have</a>
-			</div>
-		</nav>
-	</div>
+	</header>
 
-	<div class='rodape'>
-		<footer>
+	<section id='tldr'>
+		<h2 class='front'><abbr title='too long; didnʼt read'>TL;DR</abbr></h2>
+		<p class='top'>
+			<strong>Full stack software engineer since 2005.</strong>
+			Proficient mostly in <strong>C#</strong> / .NET, <strong>TypeScript</strong> and <strong>JavaScript.</strong>
+			To a smaller extent on <strong>Rust</strong> and <strong>Java.</strong>
+			Many <strong>web/cloud (Azure) projects</strong> and some <strong>mobile/desktop</strong> ones.
+			<strong>DevOps</strong>, infrastructure as code, git, source version control and deployment strategies, <abbr title='continuous integration / continuous deployment'>CI/CD</abbr> pipelines.
+			Write <a href='#_artigos'>articles about programming</a> in general.
+			Give lectures.
+			Worked with <strong>UX</strong> for 10+ years.
+			Experience with offshore teams and multinational companies.
+			Fluent english.
+			Knowledge about agile practices, design patterns, <abbr title='application programming interface'>API</abbr> design, microservices, containers, serverless, queues, NoSQL, <abbr title='Single page applications'>SPAs</abbr>, web assembly, OAuth and tests.
+			Recently diagnosed with high abilities (top 4%).
+			Divorced.
+			No kids.
+		</p>
+		<div class='front'>
 			<p>
-				Highly experimental and unstable web site. Friendly source code ;) Check new features and design patterns in use.
+				<strong>Professional objective</strong>
+				Full stack cloud software engineer. Future software architect.
 			</p>
-		</footer>
-	</div>
-
-	<main>
-
-	<section id='contato' class='contato'>
-		<h2>Contact</h2>
-		<div>
-			<h3>Marco Luglio</h3>
-			<ul
-				><li
-					><a href='tel:41996126365'>+55 41 996-126-365</a><br />
-					<a href='mailto:marcodejulho [at] gmail.com'>marcodejulho [at] gmail.com</a
-					></li
-				><li
-					><a href='https://stackoverflow.com/users/14263/marco-luglio'><img alt='Stack Overflow' src='../imagens/stackoverflow.svg' /></a>
-					<a href='https://www.linkedin.com/in/marcodejulho/?locale=en_US'><img alt='LinkedIn' src='../imagens/linkedin.svg' /></a>
-					<a href='https://www.facebook.com/marcoluglio2008'><img alt='Facebook' src='../imagens/fb.svg' /></a
-					></li
-				></ul
-			>
-			<p
-				>Curitiba - South Brazil
-				<br />(where it ❄️ snows ❄️)</p
-			>
+			<p>
+				<strong>Besides programming I've been</strong>
+				<a href='#_artigos'>Writing articles,</a> giving lectures, performing usability evaluations, defining quality processes.
+			</p>
 		</div>
 	</section>
 
-	<section id='biografia' class='biografia'>
+	<section id='experience'>
 
-		<h2><abbr title="Too long, didn't read">TL;DR</abbr></h2>
+		<h2 class='top'>Experience</h2>
 
-		<div>
-
-			<p class='linksBio'><a href='resume/resume.pdf'><abbr>PDF</abbr> resumé / Lebenslauf</a></p>
-
-			<!--<h3>TL;DR</h3>-->
-			<h3>Full Stack software engineer since 2005</h3>
+		<div class='front'>
+			<h3>ExxonMobil</h3>
 			<p>
-				<strong>Full stack software engineer since 2005.</strong>
-				Proficient mostly in <strong>C#</strong> / .NET, <strong>TypeScript</strong> and <strong>JavaScript.</strong>
-				To a smaller extent on <strong>Rust</strong> and <strong>Java</strong>.</strong>
-				Many <strong>web/cloud (Azure) projects</strong> and some <strong>mobile/desktop</strong> ones.
-				<strong>DevOps</strong>, infrastructure as code, git, source version control and deployment strategies, <abbr title='continuous integration / continuous deployment'>CI/CD</abbr> pipelines.
-				Write <a href='#_artigos'>articles about programming</a> in general.
-				Give lectures.
-				Worked with <strong>UX</strong> for 10+ years.
-				Experience with offshore teams and multinational companies.
-				Fluent english.
-				Knowledge about agile practices, design patterns, <abbr title='application programming interface'>API</abbr> design, microservices, containers, serverless, queues, NoSQL, <abbr title='Single page applications'>SPAs</abbr>, web assembly, OAuth and tests.
-				Recently diagnosed with high abilities (top 4%).
-				Divorced.
-				No kids.
+				<abbr>MOIT</abbr>: Equipment calibration app for automating and improving its replication process to refineries and chem plants using React+Redux, OAuth + Azure Active Directory, web sockets (SignalR), microservices, CQRS, DDD, C# GraphQL, gRPC, Azure functions, dependency injection, Kafka, MongoDB and CI/CD with Azure pipelines. Planned enhancements using speech recognition and machine learning. End to end test automation with Selenium and improvements in test documentation. Maintenance of current PWA responsive calibration app written in Angular+NgRx backed by REST APIs in C#, Entity Framework ORM, SQL Server and infrastructure as code with Terraform. Effort into publishing existing APIs to Mulesoft catalog using RAML/Swagger, implementing HATEOAS, i18n GUI. All APIs monitored with App Insights. Interviewing candidates for developer positions.
+			</p>
+			<p>
+				<abbr>ChemIT</abbr>: Stabilizing and improving an integration between SAP and Salesforce using a Java containerized application in Kubernetes with MongoDB. Architecting a new version of this integration using C# with performance and reliability as the primary goals using messaging with Mass Transit.
 			</p>
 
-			<h3>Searching for a position as</h3>
-			<p>Full stack cloud software engineer. Future software architect.</p>
-
-			<h3>Besides programming I've been</h3>
-			<p><a href='#_artigos'>Writing articles,</a> giving lectures, performing usability evaluations, defining quality processes.</p>
-
-			<h3>Personal projects</h3>
-			<p>Programming gamepads. Arduino (home automation). Bicycle, learning to play an electric guitar and playing flight simulators.</p>
-
-			<ul id='menuBio' class='linksBio'
-				><li><a href='#experiencia'>Experience</a></li
-				><li><a href='#dominiotecnico'>Skills</a></li
-				><li><a href='#idiomas'>Languages</a></li
-				><li><a href='#formacaoacademica'>Education</a></li
-				><li><a href='#softwares'>Softwares</a></li
-				><li><a href='#antigamente'>Used to have</a></li
-				></ul
-			>
-
+			<h3>Luceo <span>(my company)</span></h3>
+			<p>
+				Worked with companies of different segments such as BPM, banking, aviation, car tracking, industrial kitchen and civil construction. Gave in‑person and online lectures. Performed usability evaluations, built prototypes. Apps and systems integration using TDD, DDD, dependency injection, Azure DevOps and CI/CD. Front-end: PWA, responsive layouts, google maps API. Back-end: C# web stack (API, WCF/SOAP, MVC, WebForms, EF and Dapper ORMs). Small projects in AWS.
+			</p>
 		</div>
 
 	</section>
 
-	<section id='idiomas' class='sub idiomas'>
+	<section id='education'>
 
-		<h2>Languages</h2>
+		<h2 class='top'>Education</h2>
 
-		<div>
-			<div class='legendaIdiomas'><span>basic</span><span>fluent</span></div>
-			<dl>
-				<dt>English</dt>
-				<dd><meter value="24" min="0" max="24">100%</meter></dd>
-				<dt>French</dt>
-				<dd><meter value="12" min="0" max="24">50%</meter></dd>
-				<dt>Spanish</dt>
-				<dd><meter value="7" min="0" max="24">29%</meter></dd>
-			</dl>
-		</div>
-
-	</section>
-
-	<section id='formacaoacademica' class='sub formacaoacademica'>
-
-		<h2>Education</h2>
-
-		<div>
+		<div class='right'>
 
 			<p>
 				<time datetime='2023'>2018 – 2023</time>
@@ -229,178 +154,48 @@
 
 	</section>
 
-	<section id='experiencia' class='sub experiencia'>
-
-		<h2>Experience</h2>
-
+	<section id='languages'>
+		<h2>Languages</h2>
 		<div>
-
-			<div>
-				<time datetime='2019'>2019<br /></time>
-				<div>
-					<p>
-						<a rel='external nofollow' href='https://corporate.exxonmobil.com'>ExxonMobil</a> <span> 2019 - today</span>
-					</p>
-					<p>
-						<strong><abbr title='manufacturing operations information technology'>MOIT</abbr>:</strong>
-						Equipment calibration app for automating and improving its replication process to refineries and chem plants using React+Redux, OAuth + Azure Active Directory, web sockets (SignalR), microservices, <abbr title='command query responsability segregation'>CQRS</abbr>, <abbr title='domain driven design'>DDD</abbr>, C# GraphQL, gRPC, Azure functions, dependency injection, Kafka, MongoDB and <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> with Azure pipelines.
-						Planned enhancements using speech recognition and machine learning.
-						End to end test automation with Selenium and improvements in test documentation.
-						Maintenance of current <abbr title='progressive web application'>PWA</abbr> responsive calibration app written in Angular+NgRx backed by REST APIs in C#, Entity Framework <abbr title='object-relational mapping'>ORM</abbr>, SQL Server and infrastructure as code with Terraform.
-						Effort into publishing existing APIs to Mulesoft catalog using RAML/Swagger, implementing <abbr title='hypermedia as the engine of application state'>HATEOAS</abbr>, i18n GUI.
-						All APIs monitored with App Insights.
-						Interviewing candidates for developer positions.
-
-						<strong><abbr title='chemicals information technology'>ChemIT</abbr>:</strong>
-						Stabilizing and improving an integration between SAP and Salesforce using a Java containerized application in Kubernetes with MongoDB.
-						Architecting a new version of this integration using C# with performance and reliability as the primary goals using messaging with Mass Transit + Service Bus, Polly, caching.
-						Migrating <abbr title='continuous integration / continuous delivery'>CI/CD</abbr> Azure pipelines to GitHub pipelines with Docker files and bash.
-						Possible improvement with helm.
-						Usage of Salesforce cloud debugging tools (similar to Azure snapshot debugger).
-
-						<strong>Everywhere I go:</strong>
-						Care with onboarding process and knowledge sharing through wiki and training sessions.
-						Agile methodologies.
-					</p>
-				</div>
-			</div>
-
-			<div>
-				<time datetime='2015'>2015</time>
-				<div>
-					<p>Luceo <span>(my company) 2015 - today</span></p>
-					<p>
-						Worked with companies of different segments such as <abbr title='business process modeling'>BPM</abbr>, banking, aviation, car tracking, industrial kitchen and civil construction
-						Gave in-person and online lectures.
-						Performed usability evaluation, built prototypes.
-						Apps and systems integration using TDD, <abbr title='domain driven design'>DDD</abbr>, dependency injection, Azure DevOps and  <abbr title='continuous integration / continuous delivery'>CI/CD</abbr>.
-						Front-end: <abbr title='progressive web application'>PWA</abbr>, google maps API, responsive layouts.
-						Back-end: C# web stack (API, <abbr title='windows communication foundation'>WCF</abbr>/<abbr title='simple object access protocol'>SOAP</abbr>, MVC, WebForms, Entity Framework and Dapper <abbr title='object-relational mapping'>ORM</abbr>s).
-						Small projects in AWS.
-						<a href='#_artigos'>Writing articles</a>.
-					</p>
-				</div>
-			</div>
-
-			<div>
-				<time datetime='2012'>2012</time>
-				<div>
-					<p><a rel='external nofollow' href='http://www.ici.curitiba.org.br'>ICI</a> <span>2012 – 2014</span></p>
-					<p>
-						Content web portals in C# Asp.Net WebForms, researching and evaluating usability and accessibility, optimizing page loading time, SEO, compatibility with older browsers.
-						<a rel='external nofollow' href='https://curitiba.pr.gov.br'>Town hall site</a> and expenses audit sector of the Paraná state (<a rel='external nofollow' href='https://www.tce.pr.gov.br'>TCE-PR</a>).
-					</p>
-				</div>
-			</div>
-
-		</div>
-
-	</section>
-
-	<section id='antigamente' class='sub antigamente'>
-		<h2>Used to have</h2>
-		<div>
-			<p
-				>I have an Arduino (actually an MSP430 and an ESP32 if you're into microcontrollers).
-				<br />Trying to do some home automation when I'm more inspired.</p
-			>
-			<p>Had a blog about usability and virtual media.</p>
-			<p>Wrote a <abbr title='Java micro edition'>JME</abbr> expenses control app for old Nokia phones.</p>
+			<div class='legendaIdiomas'><span>basic</span><span>fluent</span></div>
+			<dl>
+				<dt>English</dt>
+				<dd><meter value="24" min="0" max="24">100%</meter></dd>
+				<dt>French</dt>
+				<dd><meter value="12" min="0" max="24">50%</meter></dd>
+				<dt>Spanish</dt>
+				<dd><meter value="7" min="0" max="24">29%</meter></dd>
+			</dl>
 		</div>
 	</section>
 
-	<section id='artigos' class='artigos'>
-
-		<h2>Articles</h2>
-
-		<div>
-
-			<section class='comparacaolinguagens'>
-				<h3>Languages comparison</h3>
-				<a href='../br/cheatsheet/'
-					><ul>
-						<li>Rust</li>
-						<li>Go</li>
-						<li>C++</li>
-						<li>Objective-C</li>
-						<li>Swift</li>
-						<li>Kotlin</li>
-						<li>Java</li>
-						<li>C#</li>
-						<li>JavaScript</li>
-						<li>Python</li>
-						<li>VB6</li>
-						</ul
-					></a
-				>
-			</section>
-
-			<section>
-				<h3>Short</h3>
-				<ul>
-					<li><a href='../en/spas/'><abbr>SPA</abbr>s compared</a></li>
-					<li><a href='../br/filas/'>Queues</a></li>
-					<li><a href='../br/docker/'>Docker</a></li>
-					<li><a href='../br/tutorialwebsockets/'>Web sockets</a></li>
-					<li><a href='../br/inscricaoestadualcpfcnpj/'><abbr title='Inscrição Estadual'>IE</abbr>, CPF and CNPJ generators</a></li>
-					<li><a href='../br/codigodebarras/'>Barcodes (EAN13, <abbr title='Interleaved 2 of 5'>ITF</abbr>, Febraban)</a></li>
-				</ul>
-			</section>
-
-			<section>
-				<h3>Long</h3>
-				<ul>
-					<li><a href='../br/dozero/'>From zero to hero</a></li>
-					<li><a href='../br/webassembly/'>Web assembly with Rust</a></li>
-					<li><a href='../br/tutorialjs/'>Politically incorrect JavaScript</a></li>
-				</ul>
-			</section>
-
-		</div>
-
+	<section id='personal'>
+		<h2>Personal</h2>
+		<p>
+			Programming gamepads, bicycle, aviation, Arduino (home automation), learning electric guitar
+		</p>
 	</section>
 
-	<section id='desenhos' class='desenhos'>
-		<h2>Drawing</h2>
-		<div>
-			<p>Parameterized drawings using<br /> geometric calculus (inspect page source code)</p>
-			<canvas id='tangente' width='300' height='190'></canvas>
-		</div>
+	<section id='contact'>
+		<h2>Contact</h2>
+		<ul
+			><li
+				><a href='tel:41996126365'>+55 41 996-126-365</a><br />
+				<a href='mailto:marcodejulho [at] gmail.com'>marcodejulho [at] gmail.com</a
+				></li
+			><li
+				><a href='https://stackoverflow.com/users/14263/marco-luglio'><img alt='Stack Overflow' src='../images/stackoverflow.svg' /></a>
+				<a href='https://www.linkedin.com/in/marcodejulho/?locale=en_US'><img alt='LinkedIn' src='../images/linkedin.svg' /></a>
+				<a href='https://www.facebook.com/marcoluglio2008'><img alt='Facebook' src='../images/fb.svg' /></a
+				></li
+			></ul
+		>
+		<p
+			>Curitiba - South Brazil
+			<br />(where it ❄️ snows ❄️)</p
+		>
 	</section>
 
-	<section id='interacoes' class='interacoes'>
-		<h2>Interaction</h2>
-		<div>
-			<p>Tailored interactions.</p>
-			<div id='paralaxe' class='paralaxe'>
-				<p>Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.</p>
-			</div>
-		</div>
-	</section>
-
-	</main>
-
-	<!-- bibliotecas de terceiros -->
-	<script src="../js/three.js"></script>
-	<script src="../js/CSS3DRenderer.js"></script>
-
-	<!-- bibliotecas gerais -->
-	<script src="../js/utils.js" type="module"></script>
-	<script src="../js/animation.js" type="module"></script>
-	<script src="../js/navigation3d.js" type="module"></script>
-
-	<!-- seções individuais -->
-	<script src="../js/drawingCanvas.js" type="module"></script>
-	<script src="../js/parallax.js" type="module"></script>
-	<script src="../js/languages.js" type="module"></script>
-
-	<!-- página inicial -->
-	<script src="../js/home3d.js" type="module"></script>
-
-	<!--
-	Hey, since you made this far, let me tell you a secret.
-	You can use the W A S D, R T keys to navigate more freely through the site ;)
-	-->
-
-	</body>
+</div>
+</body>
 </html>

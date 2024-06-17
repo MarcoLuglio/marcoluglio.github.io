@@ -1,0 +1,247 @@
+/* Fonts */
+/* ====== */
+
+@font-face {
+	font-family: 'Code';
+	src: url('../fonts/code_bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Abadi MT Condensed';
+	src: url('../fonts/abalc.ttf') format('ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Colors */
+/* ===== */
+
+:root {
+	--highlight-color: hsl(178deg, 100%, 43%);
+	--highligth-graybg-color: hsl(178deg, 48%, 42.5%);
+	--text-whitebg-color: hsl(216deg, 16%, 57%);
+	--strong-whitebg-color: hsl(210deg, 12%, 36%);
+
+	--top-bgcolor: hsl(220deg, 33%, 89%);
+	--left-bgcolor: hsl(218deg, 100%, 98%);
+	--top-bgcolor2: hsl(223deg, 30%, 95%);
+
+	--top-black-bg-color: hsl(220deg, 4%, 30%);
+	--left-black-bg-color: hsl(220deg, 3%, 19%);
+	--right-black-bg-color: hsl(240deg, 4%, 5%);
+
+	--text-font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+
+	--width: 136px;
+	--height: 155px;
+	--depth: 155px;
+}
+
+/* Reset */
+/* ===== */
+
+html * {
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	color: var(--text-whitebg-color);
+}
+
+ul {
+	list-style-type: none;
+}
+
+/* Home */
+/* ==== */
+
+body {
+	transform-style: preserve-3d;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Code, Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 29px;
+}
+
+p {
+	color: var(--text-whitebg-color);
+	font-family: var(--text-font-family);
+	font-size: 16px;
+	line-height: 21px;
+	letter-spacing: 0.05em;
+}
+
+p strong {
+	font-weight: normal;
+	color: var(--strong-whitebg-color);
+}
+
+.front {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	transform-origin: right center;
+}
+
+.right {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	transform-origin: left center;
+	transform: rotateY(270deg);
+	/* translate z w/ negative values */
+}
+
+.top {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	transform-origin: left top;
+	transform: rotateX(270deg);
+	/* translate z w/ negative values */
+}
+
+header,
+section {
+	/*position: absolute;
+	top: 0px;
+	left: 0px;*/
+	transform-style: preserve-3d;
+}
+
+header {
+	--corner-margin: 6px;
+}
+
+header .top {
+	--padding-top: 46px;
+
+	color: var(--strong-whitebg-color);
+	background-color: var(--top-bgcolor);
+
+	width: var(--depth); /* this face is rotated around Z */
+	height: calc(var(--width) - var(--padding-top) - var(--corner-margin));
+	padding-top: var(--padding-top);
+	padding-bottom: var(--corner-margin);
+	transform: rotateZ(270deg) rotateY(270deg); /* this face is rotated around Z */
+
+	font-size: 38px;
+	text-align: center;
+}
+
+header .front {
+	color: var(--highlight-color);
+	background-color: var(--left-bgcolor);
+
+	width: calc(var(--width) - var(--corner-margin));
+	height: calc(var(--height) - var(--corner-margin));
+	padding-right: var(--corner-margin);
+	padding-top: var(--corner-margin);
+
+	font-family: var(--text-font-family);
+	font-size: 22px;
+	line-height: 25px;
+	letter-spacing: 0.05em;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+header picture.right {
+	transform: rotateY(270deg) translateZ(calc(0px - var(--width)));
+}
+
+#tldr h2,
+#languages h2,
+#contact h2 {
+	color: var(--highlight-color);
+}
+
+#tldr h2 {
+	transform: translateX(calc(var(--width) + 37px)) translateY(calc(var(--height) - 37px)) translateZ(var(--depth));
+}
+
+#tldr h2 + p {
+	background-color: var(--top-bgcolor2);
+
+	width: 373px;
+	padding-left: calc(var(--width) + 37px);
+	padding-top: 14px;
+	transform: translateY(calc(var(--height) + 4px)) translateZ(var(--depth)) rotateX(270deg);
+}
+
+/*
+#languages h2,
+#contact h2 {
+	background-color: var(--left-bgcolor);
+}
+
+#tldr p:first-of-type {
+	background-color: var(--top-bgcolor2);
+	width: 350px;
+	padding: 17px;
+	padding-top: 40px;
+	padding-left: 170px;
+	transform: var(--transform-top);
+}
+
+#tldr p {
+	width: 350px;
+	transform: var(--transform-left);
+}
+
+#experience h2 {
+	color: var(--highlight-color);
+	transform: var(--transform-top);
+}
+
+#personal h2 {
+	color: var(--highlight-graybg-color);
+	background-color: var(--top-bgcolor);
+	transform: var(--transform-top);
+}
+
+#experience h2 {
+	background-color: var(--top-black-bg-color);
+}
+
+#experience h3,
+#experience p {
+	background-color: var(--left-black-bg-color);
+	width: 300px;
+	transform: var(--transform-left);
+}
+
+#personal p,
+#contact ul,
+#contact p {
+	background-color: var(--left-bgcolor);
+	width: 150px;
+	transform: var(--transform-left);
+}
+
+#education h2 {
+	color: var(--highlight-color); /* TODO white * /
+	background-color: var(--top-black-bg-color);
+	transform: rotateX(-45deg) rotateZ(-45deg);
+}
+
+#education div {
+	background-color: var(--right-black-bg-color);
+	width: 200px;
+	transform: var(--transform-right);
+}
+
+#languages > div {
+	background-color: var(--top-black-bg-color);
+	width: 200px;
+	transform: var(--transform-top);
+}
+*/

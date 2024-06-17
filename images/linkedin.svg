@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Camada_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#515C67;stroke-width:1.5;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M1.1,1v48h48V1H1.1z M15.3,41.9H8.2V19h7.1V41.9z M11.8,15.9c-2.3,0-4.1-1.9-4.1-4.1c0-2.3,1.8-4.1,4.1-4.1
+			c2.3,0,4.1,1.9,4.1,4.1C15.9,14,14,15.9,11.8,15.9z M42,41.9h-7.1V30.8c0-2.7,0-6.1-3.7-6.1c-3.7,0-4.3,2.9-4.3,5.9v11.3h-7.1V19
+			h6.8v3.1h0.1c1-1.8,3.3-3.7,6.7-3.7c7.2,0,8.5,4.7,8.5,10.9V41.9z"/>
+</svg>
