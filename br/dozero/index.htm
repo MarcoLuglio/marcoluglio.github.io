@@ -790,6 +790,43 @@ git branch -d features/static-html</code
 		>
 	</div>
 
+	<div class='codeblock'>
+		<p>main.tf</p>
+		<code class='json'
+			># Configure the Azure provider
+terraform {
+required_providers {
+	azurerm = {
+	source  = "hashicorp/azurerm"
+	version = "~> 3.0.2"
+	}
+}
+
+required_version = ">= 1.1.0"
+}
+
+provider "azurerm" {
+features {}
+}
+
+resource "azurerm_resource_group" "rg" {
+name     = "myTFResourceGroup"
+location = "westus2"
+}</code
+		>
+	</div>
+
+	<div class='codeblock'>
+		<p>terminal (sh like)</p>
+		<code class='shell'
+			>terraform init
+			terraform fmt
+			terraform validate
+			terraform plan
+			terraform apply</code
+		>
+	</div>
+
 
 
 	<script type='module' src='../../compartilhado/js/utils.js'></script>
