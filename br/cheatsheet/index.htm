@@ -1457,11 +1457,17 @@ bloco
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+></code
+>
 
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
+<code class='assembly'
+></code
+>
 
 </div>
 
@@ -2363,12 +2369,43 @@ minhaFuncao paramA = paramA * valorB
 
 <div class='codeblock'>
 <p>LLVM <abbr title='Intermediate representation'>IR</abbr></p>
+<code class='llvm'
+>; variável global mutável
+<span class='symbol globalSymbol'>@x</span> = <span class='keyword'>global</span> <span class='type'>i32</span> <span class='number'>5</span>
 
+; constante global imutável
+<span class='symbol globalSymbol'>@const_x</span> = <span class='keyword'>private constant</span> <span class='type'>i32</span> <span class='number'>5</span>
+
+define <span class='type'>i32</span> <span class='symbol globalSymbol'>@someFunction</span>() {
+	; variável local na memória
+	<span class='symbol localsymbol'>%local_x</span> = <span class='keyword'>alloca</span> <span class='type'>i32</span>
+	<span class='keyword'>store</span> <span class='type'>i32</span> <span class='number'>5</span>, <span class='type'>i32*</span> <span class='symbol localsymbol'>%local_x</span>
+	<span class='keyword'>store</span> <span class='type'>i32</span> <span class='number'>6</span>, <span class='type'>i32*</span> <span class='symbol localsymbol'>%local_x</span>
+	<span class='keyword'>load</span> <span class='type'>i32</span>, <span class='type'>i32*</span> <span class='symbol localsymbol'>%local_x</span>
+}</code
+>
 </div>
 
 <div class='codeblock'>
 <p>Assembly</p>
+<code class='assembly'
+><span class='keyword'>section</span> <span class='section segment'>.data</span>
 
+	<span class='comment lineComment'>; variável: reserva e inicializa 32 bits</span>
+	<span class='symbol'>x</span> <span class='type' title='define double word'>dd</span> <span class='number'>5</span>
+
+	<span class='comment lineComment'>; constante simbólica: não ocupa memória</span>
+	<span class='symbol'>const_x</span> <span class='keyword' title='define a constant'>equ</span> <span class='number'>5</span>
+
+<span class='keyword'>section</span> <span class='section segment'>.text</span>
+	<span class='keyword'>global</span> <span class='label'>_start</span>
+
+<span class='label'>_start:</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits accumulator register'>eax</span><span class='operator'>,</span> <span class='symbol'>const_x</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='symbol'>[x]</span><span class='operator'>,</span> <span class='register' title='32 bits accumulator register'>eax</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='register' title='32 bits accumulator register'>eax</span><span class='operator'>,</span> <span class='number'>6</span>
+	<span class='keyword instruction' title='copy data to destination (register or memory) from source (register, memory or literal)'>mov</span> <span class='symbol'>[x]</span><span class='operator'>,</span> <span class='register' title='32 bits accumulator register'>eax</span></code
+>
 </div>
 
 </div>
